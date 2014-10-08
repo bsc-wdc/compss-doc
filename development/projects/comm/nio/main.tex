@@ -9,9 +9,14 @@
 \title{\textbf{NIO API Implementation}}
 \author{\copyright 2002-2014 BSC (www.bsc.es)\\pedro.benedicteillescas@bsc.es}
 \date{}
-\begin{document}
 
+
+
+\begin{document}
 \maketitle
+\tableofcontents
+\listoffigures
+\clearpage
 
 \section{General behavior}
 \label{sec:general_behavior}
@@ -27,34 +32,33 @@
 		\item \textbf{NIO:}
 			Asynchronous network level transfer using the Java NIO library.
 		\item \textbf{TransferManagerItf:}
-			
+			Manages the active transfers.
 		\item \textbf{NIOTransferManager:}
-			
+			NIO implementation of TransferManagerItf.
 		\item \textbf{TransferManager:}
-			
+			Static class used by MessageHandlerImpl to call the TransferManagerItf methods.
 		\item \textbf{Packet:}
-			
+			Unit of data transfer between NIO and TransferManager.
 		\item \textbf{Event:}
-			
+			Some occurrence that happened in NIO and needs to be notified to TransferManager.
 		\item \textbf{MessageHandler:}
-			
+			Interface with the callback functions that the TransferManager can use to communicate events to the application user.
 		\item \textbf{MessageHandlerImpl:}
-			
+			Implementation of the MessageHandler interface.
 		\item \textbf{Connection:}
-			
+			Represents a connection between two nodes.
 		\item \textbf{NIOConnection:}
-			
+			NIO implementation of a Connection.
 		\item \textbf{Transfer:}
-			
+			Represents a transfer between two nodes using an existing connection.
 		\item \textbf{Node:}
-			
+			Represents a network interface of a machine.
 		\item \textbf{NIONode:}
-			
+			NIO implementation of Node. Uses a unique pair IP address-port.
 		\item \textbf{CommException:}
-			
+			Exception in some network related method.
 		\item \textbf{NIOException:}
-			
-
+			NIO implementation of CommException.
 		\end{itemize}
 
 	\subsection{Threads}
@@ -121,20 +125,6 @@
 	\end{figure}
 	If the output queue is empty, nothing will be written and an event will be sent to the TransferManager, as explained in the next section.
 	
-\subsection{Events}
-	In order to notify the TransferManager thread of important events that happen on the NIO thread, an event queue is used. There can be 3 different events:
-	\begin{figure}[H]
-	\centering
-	\includegraphics[width=120mm]{img/drawing7.eps}
-	\caption[NIO events]{NIO events}
-	\label{drawing7}
-	\end{figure}
-	\begin{itemize}
-		\item Error: there has been an error while connecting, reading, writing or finishing a connection. TransferManager will notify the MessageHandler of the error.
-		\item More to write: in order to fill the output buffer with more packets, the TransferManager has to be notified that a number of packets have been consumed. The NIO thread will issue a More\_to\_write event when he has written to the network buffer PACKETS\_NOTIFY number of packets. This variable can be modified in the NIO configuration file.
-		\item Write empty: if a NIO socket is ready to write and finds its output queue empty, it will issue a Write\_empty event. This can be caused because there is not more data to send, or because the More\_to\_write event has not been treated yet.
-	\end{itemize}
-	
 \subsection{Socket changes}
 	When a socket needs to change an interest (for instance as a part of the connection process), it must register its new interest on the selector. However 
 	-socket changes need to change selector
@@ -155,8 +145,24 @@
 		\item Data: the file or serialized object.
 	\end{itemize}
 
-\section{TransferManager}
+\section{Events}
+	In order to notify the TransferManager thread of important events that happen on the NIO thread, an event queue is used. There can be 3 different events:
+	\begin{figure}[H]
+	\centering
+	\includegraphics[width=120mm]{img/drawing7.eps}
+	\caption[NIO events]{NIO events}
+	\label{drawing7}
+	\end{figure}
+	\begin{itemize}
+		\item Error: there has been an error while connecting, reading, writing or finishing a connection. TransferManager will notify the MessageHandler of the error.
+		\item More to write: in order to fill the output buffer with more packets, the TransferManager has to be notified that a number of packets have been consumed. The NIO thread will issue a More\_to\_write event when he has written to the network buffer PACKETS\_NOTIFY number of packets. This variable can be modified in the NIO configuration file.
+		\item Write empty: if a NIO socket is ready to write and finds its output queue empty, it will issue a Write\_empty event. This can be caused because there is not more data to send, or because the More\_to\_write event has not been treated yet.
+	\end{itemize}
 
+\section{TransferManager}
+	TransferManager manages the different active transfers. Each connection can only have one active transfer at the same time.\\
+	The TransferManager thread loops through the run() function looking for incoming packets or events. 
+	
 \section{Connection}
 
 \section{Transfer}
