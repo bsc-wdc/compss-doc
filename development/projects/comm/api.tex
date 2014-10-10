@@ -1,0 +1,169 @@
+\documentclass[10pt]{article}
+\usepackage{listings}
+\usepackage{fullpage}
+
+\title{\textbf{NIO API}}
+\author{pedro.benedicteillescas@bsc.es\\\copyright 2002-2014 BSC (www.bsc.es)}
+\date{}
+\begin{document}
+
+\maketitle
+
+\section{TransferManager calls}
+\begin{itemize}
+
+	\item \textbf{Initialize}
+	\begin{lstlisting}
+void init(String s, MessageHandler message)
+	\end{lstlisting}
+	Initializes connector s (for instance "NIO") and TransferManager with the associated MessageHandler.
+	\item \textbf{Start server}
+	\begin{lstlisting}
+void startServer(Node n)
+	\end{lstlisting}
+	Opens a server in the node.
+	\item \textbf{Start connection}
+	\begin{lstlisting}
+Connection startConnection(Node n)
+	\end{lstlisting}
+	Connects to a node.
+	\item \textbf{Shutdown}
+	\begin{lstlisting}
+void shutdown()
+	\end{lstlisting}
+	Shutdowns TransferManager and NIO.
+\end{itemize}
+
+\section{Connection calls}
+
+\begin{itemize}
+
+	\item \textbf{Send command}
+	\begin{lstlisting}
+void sendCommand(Object o)
+	\end{lstlisting}
+	Sends a command through this connection. The object sent must implement the Java interface Serializable.
+	
+	\item \textbf{Send data file}
+	\begin{lstlisting}
+void sendDataFile(String s)
+	\end{lstlisting}
+	Sends the file with the passed name through this connection.
+	
+	\item \textbf{Send data object}
+	\begin{lstlisting}
+void sendDataObject(Object o)
+	\end{lstlisting}
+	Sends a data object through this connection. The object sent must implement the Java interface Serializable.
+	
+	\item \textbf{Receive object}
+	\begin{lstlisting}
+void receive()
+	\end{lstlisting}
+	Receive an object through this connection.
+	
+	\item \textbf{Receive object/file}
+	\begin{lstlisting}
+void receive(String s)
+	\end{lstlisting}
+	Receive an object or file with the passed name through this connection.
+	
+	\item \textbf{Receive object}
+	\begin{lstlisting}
+void receiveDataObject()
+	\end{lstlisting}
+	Receive an object through this connection.
+	
+	\item \textbf{Finish connection}
+	\begin{lstlisting}
+void finishConnection(Transfer t)
+	\end{lstlisting}
+	Finishes the connection related with the transfer.
+\end{itemize}
+
+\section{MessageHandler callbacks to implement}
+\begin{itemize}
+	\item \textbf{Initialize}
+	\begin{lstlisting}
+void init();
+	\end{lstlisting}
+	Initialization routines.
+	
+	\item \textbf{Error handler}
+	\begin{lstlisting}
+void errorHandler(Connection, Transfer, NIOException);
+	\end{lstlisting}
+	The transfer could not be completed.
+	
+	\item \textbf{Data received}
+	\begin{lstlisting}
+void dataReceived(Connection, Transfer);
+	\end{lstlisting}
+	New data received. If the data destination is a file, it has already been written to disk. If the destination is an object, it can be reached using t.object.
+	
+	\item \textbf{Command received}
+	\begin{lstlisting}
+void commandReceived(Connection, Transfer);
+	\end{lstlisting}
+	New command received.
+	
+	\item \textbf{Write transfer finished}
+	\begin{lstlisting}
+void writeFinished(Connection, Transfer);
+	\end{lstlisting}
+	A write transfer initiated by this node has finished.
+	
+	\item \textbf{Conexion finished}
+	\begin{lstlisting}
+void connectionFinished(Connection);
+	\end{lstlisting}
+	A connection finished by this node has successfully finished.
+	
+	\item \textbf{Shutdown}
+	\begin{lstlisting}
+void shutdown();
+	\end{lstlisting}
+	Shutdown method.
+	
+\end{itemize}
+
+\section{How to use the API}
+	The NIO API is connection oriented. This means that in order to send or receive data a connection is needed. First, one node must start a server. Then another node can start a connection to that server. Once the connection has been started, the node that started the connection must send data. When the other node received the data, the appropriate callback will be called (commandReceived or dataReceived), and then the connection can be finished or reused to send data back.
+	\\It is important to note that a connection always needs to have something to do next. This means that after each sequence of sends, there must be either a receive or finishConnection.
+
+\section{Starting the NIO API}
+	\begin{lstlisting}
+NIOTest nt = new NIOTest();
+TransferManager.init("NIO", nt);
+	\end{lstlisting}
+	To start the NIO API create an instance of the MessageHandler implementation (in this case NIOTest). Then use the static method init of TransferManager.\\
+
+\section{Examples}
+\begin{itemize}
+	\item \textbf{Start a server}
+	\begin{lstlisting}
+Node n = (Node) new NIONode(ip, port);
+TransferManager.startServer(n);
+	\end{lstlisting}
+	Start a new Server that listens to incoming connections.
+	\item \textbf{Start a connection and send a command}
+	\begin{lstlisting}
+Node n = new Node(ip, port);
+Connection c = TransferManager.startConnection(n);
+c.sendCommand(object);
+	\end{lstlisting}
+	Create a new Connection to the desired node. Then send the command (always serialized as an object) through the previously established connection.
+\item \textbf{Send a file through an existing connection and finish the connection afterwards}
+	\begin{lstlisting}
+c.sendDataFile(fileName);
+c.finishConnection();
+	\end{lstlisting}
+	Send a file with fileName name, and finish the connection when the file has been sent.
+	
+\item \textbf{Receive a file or object through an existing connection}
+	\begin{lstlisting}
+c.receive(fileName);
+	\end{lstlisting}
+	Receive an object or file (with the specified name) through an existing connection.
+\end{itemize}
+\end{document}
