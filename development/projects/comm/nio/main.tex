@@ -126,11 +126,13 @@
 	If the output queue is empty, nothing will be written and an event will be sent to the TransferManager, as explained in the next section.
 	
 \subsection{Socket changes}
-	When a socket needs to change an interest (for instance as a part of the connection process), it must register its new interest on the selector. However 
-	-socket changes need to change selector
-	-changes from selector must be made from the same thread
-	-solution: queue that is handled by NIO thread (since is the same that uses the selector)
-\subsection{Packets}
+	When a socket needs to change an interest (for instance as a part of the connection process), it must register its new interest on the selector. However, these changes can not be done concurrently between both threads, and since synchronizing the selector would be a major performance drawback, the NIO thread is the one in charge of doing these changes. The same proceeding is done when a socket needs to unregister a key.\\
+	A new queue called pendingChanges is created in NIO to manage the changes to the selector. The accesses to this queue are synchronized, and the TransferManager thread uses this queue to make changes to the selector.
+
+\section{TransferManager}
+	TransferManager manages the different active transfers. Each connection can only have one active transfer at the same time.\\
+	The TransferManager thread loops through the run() function looking for incoming packets or events. 
+	\subsection{Packets}
 	Whether an object or a file is being sent, the transmission starts with a 16-byte header, followed by the data.
 	\begin{figure}[H]
 	\centering
@@ -158,13 +160,16 @@
 		\item More to write: in order to fill the output buffer with more packets, the TransferManager has to be notified that a number of packets have been consumed. The NIO thread will issue a More\_to\_write event when he has written to the network buffer PACKETS\_NOTIFY number of packets. This variable can be modified in the NIO configuration file.
 		\item Write empty: if a NIO socket is ready to write and finds its output queue empty, it will issue a Write\_empty event. This can be caused because there is not more data to send, or because the More\_to\_write event has not been treated yet.
 	\end{itemize}
-
-\section{TransferManager}
-	TransferManager manages the different active transfers. Each connection can only have one active transfer at the same time.\\
-	The TransferManager thread loops through the run() function looking for incoming packets or events. 
-	
 \section{Connection}
-
+	Since NIO is connection oriented, the Connection class represents a unique connection between two nodes. This connection is used to send and receive data.\\
+	Internally, a connection works with transfers. Transfers can be a send, receive or shutdown.
+	\begin{figure}[H]
+	\centering
+	\includegraphics[width=45mm]{img/drawing9.eps}
+	\caption[Connection queues]{Connection queues}
+	\label{drawing9}
+	\end{figure}
+	There are three elements that manage the transfers: a queue, an actual and a pending queue. The queue is where the elements yet to process are stored, in the order they were issued. The actual transfer is the one being processed now. The pending queue is where the transfers that have finished but have yet to notify the MessageHandler are stored.
 \section{Transfer}
 	A Transfer represents a single transfer send or received through an existing Connection between two nodes. Each transfer has a direction, a type and a destination.
 	\begin{itemize}
@@ -178,7 +183,7 @@
 			\begin{itemize}
 				\item Object: the object to send must implement the Serializable interface.
 				\item File: in order to send/receive a file, the name of the file must be sent through a command, since a data message will only send the file contents.
-				\item Note (TODO): usually when one node sends a file, the other expects to receive a file; and one one node sends an object, the other expects to receive an object. However, when a serialized object has been written to a file, this node can send a file, and the destination node can receive an object, so that instead of writing to disk, then reading and then deserializing, direct deserialization can be applied.
+				\item Note : usually when one node sends a file, the other expects to receive a file; and one one node sends an object, the other expects to receive an object. However, when a serialized object has been written to a file, this node can send a file, and the destination node can receive an object, so that instead of writing to disk, then reading and then deserializing, direct deserialization can be applied.
 			\end{itemize}
 	\end{itemize}
 	\subsection{Streams}
