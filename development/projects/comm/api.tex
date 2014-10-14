@@ -66,13 +66,13 @@ void receive()
 	\begin{lstlisting}
 void receive(String s)
 	\end{lstlisting}
-	Receive an object or file with the passed name through this connection.
+	Receive an object or file through this connection. If the data received is from a file, it will write it in disc with name s.
 	
 	\item \textbf{Receive object}
 	\begin{lstlisting}
 void receiveDataObject()
 	\end{lstlisting}
-	Receive an object through this connection.
+	Receive a data object through this connection. This method ensures that the data received will be saved as an object, despite the format it had in its node of origin.
 	
 	\item \textbf{Finish connection}
 	\begin{lstlisting}
@@ -87,35 +87,35 @@ void finishConnection(Transfer t)
 	\begin{lstlisting}
 void init();
 	\end{lstlisting}
-	Initialization routines.
+	Initialization routine.
 	
 	\item \textbf{Error handler}
 	\begin{lstlisting}
-void errorHandler(Connection, Transfer, NIOException);
+void errorHandler(Connection c, Transfer t, NIOException e);
 	\end{lstlisting}
 	The transfer could not be completed.
 	
 	\item \textbf{Data received}
 	\begin{lstlisting}
-void dataReceived(Connection, Transfer);
+void dataReceived(Connection c, Transfer t);
 	\end{lstlisting}
 	New data received. If the data destination is a file, it has already been written to disk. If the destination is an object, it can be reached using t.object.
 	
 	\item \textbf{Command received}
 	\begin{lstlisting}
-void commandReceived(Connection, Transfer);
+void commandReceived(Connection c, Transfer t);
 	\end{lstlisting}
 	New command received.
 	
 	\item \textbf{Write transfer finished}
 	\begin{lstlisting}
-void writeFinished(Connection, Transfer);
+void writeFinished(Connection c, Transfer t);
 	\end{lstlisting}
 	A write transfer initiated by this node has finished.
 	
-	\item \textbf{Conexion finished}
+	\item \textbf{Connection finished}
 	\begin{lstlisting}
-void connectionFinished(Connection);
+void connectionFinished(Connection c);
 	\end{lstlisting}
 	A connection finished by this node has successfully finished.
 	
