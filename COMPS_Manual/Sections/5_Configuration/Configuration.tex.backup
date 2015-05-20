@@ -1,0 +1,423 @@
+\section{COMPSs Configuration}
+\label{sec:COMPSsConfiguration}
+
+COMPSs SDK VM is a preconfigured light 64-bit Xubuntu distribution providing the necessary set of tools to develop COMPSs applications. The development environment includes an {\bf Eclipse IDE}, the {\bf COMPSs framework} and a set of {\bf sample applications} in order to ease the comprehension of the programing model in a more straightforward way.
+
+The COMPSs framework is installed in {\it /opt/COMPSs/}.
+
+For the development of new projects in Eclipse please remember to add the reference to the COMPSs runtime adding {\it /opt/COMPSs/Runtime/rt/compss-rt.jar} as referenced library. 
+
+Please note that in case of changing the number of available cores in the physical SDK machine, this should be reflected in the COMPSs configurations files, {\bf resources.xml} ({\it LimitOfTasks}) and {\bf project.xml} ({\it CPUCount}), as indicated in the picture.
+
+{\bf project.xml}
+
+\begin{lstlisting}[language=xml]
+user@bsccompss:~$ cat /opt/COMPSs/Runtime/xml/projects/project.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+    <!--Description for any physical node-->
+    <Worker Name="localhost">
+        <InstallDir>/IT_worker/</InstallDir>
+        <WorkingDir>/home/user/</WorkingDir>
+        <User>user</User>
+        <LimitOfTasks>2</LimitOfTasks>
+    </Worker>
+</Project>
+\end{lstlisting}
+
+{\bf resources.xml}
+
+\begin{lstlisting}[language=xml]
+user@bsccompss:~$ cat /opt/COMPSs/Runtime/xml/resources/resources.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<ResourceList>
+    <!--Description for any physical node-->
+    <Resource Name=“localhost">
+        <Capabilities>
+            <Host>
+                <TaskCount>0</TaskCount>
+                <Queue>short</Queue>
+                <Queue/>
+            </Host>
+            <Processor>
+                <Architecture>IA32</Architecture>
+                <Speed>3.0</Speed>
+                <CPUCount>2</CPUCount>
+            </Processor>
+            <OS>
+                <OSType>Linux</OSType>
+                <MaxProcessesPerUser>32</MaxProcessesPerUser>
+            </OS>
+            <StorageElement>
+                <Size>30</Size>
+            </StorageElement>
+            <Memory>
+                <PhysicalSize>2</PhysicalSize>
+                <VirtualSize>8</VirtualSize>
+            </Memory>
+                <ApplicationSoftware>
+                <Software>Java</Software>
+            </ApplicationSoftware>
+            <Service/>
+            <VO/>
+            <Cluster/>
+            <FileSystem/>
+            <NetworkAdaptor/>
+            <JobPolicy/>
+            <AccessControlPolicy/>
+        </Capabilities>
+        <Requirements/>
+    </Resource>
+</ResourceList>
+\end{lstlisting}
+     
+In order to use external resources to execute the applications, the following steps have to be followed:
+
+\begin{enumerate}
+ \item Install the COMPSs framework on the new resources following the installation manual available at \url{http://www.bsc.es/compss}.
+ \item Edit the {\bf resources.xml} and {\bf project.xml} files in the master machine (the SDK VM) in order to be aware of the new resources (Section \ref{sec:SampleApps}).
+ \item Create/set the WorkingDir in the path specified in {\bf project.xml}.
+ \item Set SSH passwordless access to the rest of the remote resources.
+ \item In case of cloud resources the application will be deployed automatically, and this, should be set up on COMPSs configuration files. In case of static resources, deploy the  application manually on the new ones (see section \ref{subsec:compiling_and_packaging_apps} and \ref{subsec:running_apps}).
+\end{enumerate}
+
+\subsection{Cluster configuration (static resources)}
+
+On the following lines, we provide examples about configuration files for Grid and Cluster environments, which can serve as a reference. They can also be compared to the examples previously provided to see the differences in such scenarios.
+
+\subsubsection{Resources}
+
+\begin{lstlisting}[language=xml]
+<?xml version="1.0" encoding="UTF-8"?>
+<ResourceList>
+    <!--Description for any physical node-->
+    
+    <Resource Name="172.20.200.18">
+        <Capabilities>
+            <Host>
+                <TaskCount>0</TaskCount>
+                <Queue>short</Queue>
+                <Queue/>
+            </Host>
+            <Processor>
+                <Architecture>IA32</Architecture>
+                <Speed>3.0</Speed>
+                <CPUCount>1</CPUCount>
+            </Processor>
+            <OS>
+                <OSType>Linux</OSType>
+                <MaxProcessesPerUser>32</MaxProcessesPerUser>
+            </OS>
+            <StorageElement>
+                <Size>30</Size>
+            </StorageElement>
+            ...
+            <Memory>
+                <PhysicalSize>1</PhysicalSize>
+                <VirtualSize>8</VirtualSize>
+            </Memory>
+            <ApplicationSoftware>
+                <Software>Java</Software>
+            </ApplicationSoftware>
+            <Service/>
+            <VO/>
+            <Cluster/>
+            <FileSystem/>
+            <NetworkAdaptor/>
+            <JobPolicy/>
+            <AccessControlPolicy/>
+        </Capabilities>
+        <Requirements/>
+    </Resource>
+    
+    <Resource Name="172.20.200.19">
+    ...
+    </Resource>
+    
+<ResourceList>
+\end{lstlisting}
+
+\subsubsection{Project}
+\begin{lstlisting}[language=xml]
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+  <!--Description for any physical node-->
+    
+  <Worker Name="172.20.200.18">
+    <InstallDir>/opt/COMPSs/Runtime/scripts/system/</InstallDir>
+    <WorkingDir>/tmp/</WorkingDir>
+    <User>user</User>
+    <LimitOfTasks>1</LimitOfTasks>
+  </Worker>
+    
+  <Worker Name="172.20.200.19">
+  ...
+  </Worker>
+    
+  ...
+</Project>
+\end{lstlisting}
+
+\subsection{Shared Disks configuration}
+Configuring shared disks on the runtime configuration might reduce the amount of data transfers improving the application performance. To indicate a shared disk hosted in the master node, the resources list in the resources.xml file must include a disk tag describing the disk and the mount point. The following example of resources.xml states that in the master node there is a shared disk labelled {\it sharedDisk0} mounted on the {\it /home/user} directory.
+
+\begin{lstlisting}[language=xml]
+<?xml version="1.0" encoding="UTF-8"?>
+<ResourceList>
+    <Disk Name="sharedDisk0">
+        <MountPoint>/home/user</MountPoint>
+    </Disk>
+<ResourceList>
+\end{lstlisting}
+
+On the other side, also worker nodes description in the {\bf resource.xml} file should declare the shared disks mounted on them to avoid data transfers as done for {\it sharedDisk0} in the following example. Though, the example only contains the definition of a single shared disk, the Disks tag can have multiple disk child nodes.
+
+\begin{lstlisting}[language=xml]
+<Resource Name="172.20.200.18">
+    <Capabilities>
+    ...
+    </Capabilities>
+    <Requirements/>
+    <Disks>
+        <Disk Name="sharedDisk0">
+            <MountPoint>/home/user</MountPoint>
+        </Disk>
+    </Disks>
+</Resource>
+\end{lstlisting}
+
+\subsection{Cloud Provider configuration (dynamic resources)}
+
+The COMPSs runtime communicates with the Cloud by means of Cloud connectors. Each connector implements the interaction of the runtime with a given Cloud provider, more precisely by supporting four basic operations: ask for the price of a certain VM in the provider, get the time needed to create a VM, create a new VM and terminate a VM.
+
+Connectors abstract the runtime from the particular API of each provider; furthermore, this design facilitates the addition of new connectors for other providers.
+
+The next subsections describe the basic configuration options for Cloud provider connectors and provide a description of each of the connectors currently available.
+
+Connectors can be configured by providing some information in the {\bf resources.xml} and {\bf project.xml} files. These files are located at $<COMPSs\_INSTALL\_DIR>/xml/projects$ and $<COMPSs\_INSTALL\_DIR>/xml/resources$. The example folders in these directories contain some respective examples for different backends.
+
+\subsubsection{Resources}
+The resources.xml file can contain one or more tags {\bf $<CloudProvider>$} that encompass the information about a particular Cloud provider, associated to a given connector. The tag must have an attribute {\bf name} to uniquely identify the provider. Table \ref{tab:conf_resources_xml} summarizes the information to be specified by the user inside this tag.
+
+
+\begin{longtable}{| p{0.50\textwidth} | p{0.50\textwidth} |}
+\hline
+Server			&		Endpoint of the provider’s server	\\
+\hline
+Connector		&		Class that implements the connector	\\
+\hline
+\textbf{
+ImageList
+\begin{itemize}
+ \item Image
+ \begin{itemize}
+  \item Architecture
+  \item OSType
+  \item ApplicationSoftware
+  \begin{itemize}
+   \item Software
+  \end{itemize}
+  \item SharedDisks
+  \begin{itemize}
+   \item Disk
+  \end{itemize}
+ \end{itemize}
+\end{itemize}
+}
+&
+Multiple entries of VM templates
+\begin{itemize}
+ \item VM image
+ \begin{itemize}
+  \item Architeture of the VM image
+  \item Operative System installed in the VM image
+  \item Multiple entries of software installed in the VM image
+  \begin{itemize}
+   \item Software installed in the VM image
+  \end{itemize}
+  \item Multiple entries of shared disks mounted in the VM image
+  \begin{itemize}
+   \item Disk description
+  \end{itemize}
+ \end{itemize}
+\end{itemize}
+\\
+\hline
+\textbf{
+InstanceTypes
+\begin{itemize}
+ \item Resource
+ \begin{itemize}
+  \item Capabilities
+  \begin{itemize}
+   \item Processor
+   \item StorageElement
+   \item Memory
+  \end{itemize}
+ \end{itemize}
+\end{itemize}
+}
+& 
+Multiple entries of resource templates
+\begin{itemize}
+ \item Instance type offered by the provider
+ \begin{itemize}
+  \item Hardware details of instance type
+  \begin{itemize}
+   \item Architecture and number of available cores
+   \item Size in GB of the storage
+   \item PhysicalSize, in GB of the available RAM
+  \end{itemize}
+ \end{itemize}
+\end{itemize}
+\\
+\hline
+\caption{Configuration of resources.xml file, tag $<CloudProvider>$}
+\label{tab:conf_resources_xml}
+\end{longtable}
+
+
+\subsubsection{Project}
+The project.xml complements the information about Cloud providers specified in the resources.xml file. This file can contain a {\bf $<Cloud>$} tag where to specify a list of providers, each with a {\bf $<Provider>$} tag, whose {\bf name} attribute must match one of the providers in the {\it resources.xml} file. Thus, the {\it project.xml} file must contain a subset of the providers specified in the resources.xml file. Table \ref{tab:conf_project_xml_cloud} summarizes the information to be specified by the user in the {\bf $<Provider>$} tags of the {\it project.xml} file.
+
+\begin{table}[h]
+\footnotesize
+\begin{center}
+\begin{tabularx}{\textwidth}{|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|}
+\hline
+InitialVMs	&	Number of VM to be created at the beginning of the application	\\
+\hline
+minVMCount	&	Minimum number of VMs available in the computation	\\
+\hline
+maxVMCount	&	Maximum number of VMs available in the computation	\\
+\hline
+Provider 	&	Multiple entries of Cloud providers	\\
+\hline
+\end{tabularx}
+\caption{Configuration of project.xml file, tag $<Cloud>$\label{tab:conf_project_xml_cloud}}
+\end{center}
+\end{table}
+
+
+\begin{longtable}{| p{0.43\textwidth} | p{0.57\textwidth} |}
+\hline
+LimitOfVMs	&	Maximum number of VMs allowed by the provider	\\
+\hline
+Property
+\begin{itemize}
+ \item Name
+ \item Value
+\end{itemize}
+&
+Multiple entries of provider-specific properties
+\begin{itemize}
+ \item Name of the property
+ \item Value of the property
+\end{itemize}
+\\
+\hline
+ImageList
+\begin{itemize}
+ \item Image
+ \begin{itemize}
+  \item InstallDir
+  \item WorkingDir
+  \item User
+  \item Package
+  \begin{itemize}
+   \item Source
+   \item Target
+   \item InstalledSoftware
+  \end{itemize}
+ \end{itemize}
+\end{itemize}
+& 
+Multiple entries of VM images available at the provider
+\begin{itemize}
+ \item VM image
+  \begin{itemize}
+   \item Path of the COMPSs worker scripts in the image
+   \item COMPSs working directory in the deployed instances
+   \item Account username
+   \item Multiple entries of local packages that have to be deployed in new instances
+   \begin{itemize}
+    \item Local path of the package
+    \item Path where to deploy the package in the new instance
+    \item List of software included in the package
+  \end{itemize}
+ \end{itemize}
+\end{itemize}
+\\
+\hline
+InstanceTypes
+\begin{itemize}
+ \item Resource
+\end{itemize}
+& 
+List of resource types that are available in the provider
+\begin{itemize}
+ \item Resource description
+\end{itemize}
+
+\\
+\hline
+\caption{Configuration of project.xml file, tag $<Provider>$}
+\label{tab:conf_project_xml_provider}
+\end{longtable}
+
+
+\subsection{Connectors}
+\subsubsection{Amazon EC2}
+
+The COMPSs runtime features a connector to interact with the Amazon Elastic Compute Cloud (EC2).
+
+Amazon EC2 offers a well-defined pricing system for VM rental. A total of 8 pricing zones are established, corresponding to 8 different locations of Amazon datacenters around the globe. Besides, inside each zone, several per-hour prices exist for VM instances with different capabilities. The EC2 connector stores the prices of standard on-demand VM instance types (t1.micro, m1.small, m1.medium, m1.large and m1.xlarge) for each zone. Spot instances are not currently supported by the connector.
+
+When the COMPSs runtime chooses to create a VM in the Amazon public Cloud, the EC2 connector receives the information about the requested characteristics of the new VM, namely the number of cores, memory, disk and architecture (32/64 bits). According to that information, the connector tries to find the VM instance type in Amazon that better matches those characteristics and then requests the creation of a new VM instance of that type.
+
+Once an EC2 VM is created, a whole hour slot is paid in advance; for that reason, the connector keeps the VM alive at least during such period, saving it for later use if necessary. When the task load decreases and a VM is no longer used, the connector puts it aside if the hour slot has not expired yet, instead of terminating it. After that, if the task load increases again and the EC2 connector requests a VM, first the set of saved VMs is examined in order to find a VM that is compatible with the requested characteristics. If one is found, the VM is reused and becomes eligible again for the execution of tasks; hence, the cost and time to create a new VM are not paid. A VM is only destroyed when the end of its hour slot is approaching and it is still in saved state.
+
+Table \ref{tab:conf_project_xml_provider} summarizes the provider-specific properties that must be defined in the project.xml file for the Amazon EC2 connector.
+
+\begin{longtable}{| p{0.3\textwidth} | p{0.7\textwidth} |}
+\hline
+{\bf Placement }    &   Location of the amazon datacentre to use \\
+\hline
+Access Key Id       &   Identifier of the access key of the Amazon EC2 account \\
+\hline
+Secret Key Id       &   Identifier of the secret key of the Amazon EC2 account \\
+\hline
+Key host location   &   Path to the SSH key in the local host, used to connect to the VMs \\
+\hline
+KeyPair name        &   Name of the key pair to use \\
+\hline
+SecurityGroup name  &   Name of the security group to use \\
+\hline
+\caption{Properties of the Amazon EC2 connector.}
+\label{tab:ec2_connector_properties}
+\end{longtable}
+
+\subsubsection{rOCCI Connector}
+In order to execute a COMPSs application in the cloud, the rOCCI connector has to be configured properly. The connector uses the rOCCI binary client\footnote{https://appdb.egi.eu/store/software/rocci.cli} (version newer or equal than 4.2.5) which has to be installed in the node where the COMPSs main application is executed.
+
+This connector needs additional files providing details about the resource templates available on each provider. This file is located under $<COMPSs\_INSTALL\_DIR>/xml/templates$ path. Additionally, the user must define the virtual images flavour and instance types offered by each provider; thus, when the runtime asks for the creation of a VM, the connector selects the appropriate image and resource template according to the requirements (in terms of CPU, memory, disk, etc) by invoking the rOCCI client through Mixins (heritable classes that override and extend the base templates).
+
+Table 5 contains the rOCCI specific properties that must be defined in the project.xml file.
+
+
+%                 Table 5 - rOCCI extensions in the project.xml file
+% Provider
+% ca-path     Path to CA certificates directory
+% user-cred   Path of the VOMS proxy
+% auth        Authentication method, x509 only supported
+% owner
+%             Optional. Used by the VENUS-C Job Manager (PMES)
+% jobname
+
+%           Table 6 - Configuration of the <provider>.xml templates file
+% Instance    Multiple entries of resource templates.
+% Type        Name of the resource template. It has to be the same name than in the previous files
+% CPU         Number of cores
+% Memory      Size in GB of the available RAM
+% Disk        Size in GB of the storage
+% Price       Cost per hour of the instance

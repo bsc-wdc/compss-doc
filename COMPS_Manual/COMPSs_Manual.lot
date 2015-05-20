@@ -1,0 +1,8 @@
+\contentsline {table}{\numberline {1}{Configuration of resources.xml file, tag $<CloudProvider>$}}{24}{table.1}
+\contentsline {table}{\numberline {2}{\ignorespaces Configuration of project.xml file, tag $<Cloud>$}}{24}{table.2}
+\contentsline {table}{\numberline {3}{Configuration of project.xml file, tag $<Provider>$}}{25}{table.3}
+\contentsline {table}{\numberline {4}{Properties of the Amazon EC2 connector.}}{27}{table.4}
+\contentsline {table}{\numberline {5}{rOCCI extensions in the project.xml file.}}{27}{table.5}
+\contentsline {table}{\numberline {6}{Configuration of the $<provider>.xml$ templates file.}}{27}{table.6}
+\contentsline {table}{\numberline {7}{Arguments of the {\it @task} decorator.}}{42}{table.7}
+\contentsline {table}{\numberline {8}{COMPSs Python API functions.}}{43}{table.8}

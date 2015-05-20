@@ -1,0 +1,64 @@
+\contentsline {section}{\numberline {1}COMP Superscalar (COMPSs)}{1}{section.1}
+\contentsline {section}{\numberline {2}Developing COMPSs applications}{2}{section.2}
+\contentsline {subsection}{\numberline {2.1}Main application code}{2}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Remote methods code}{4}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Java annotated interface}{4}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Equivalent remote methods}{6}{subsection.2.4}
+\contentsline {section}{\numberline {3}Running COMPSs applications}{9}{section.3}
+\contentsline {subsection}{\numberline {3.1}Compiling and Packaging the application}{9}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Running the application}{10}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Logging the execution}{10}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Execution results}{11}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Exploring the final execution graph}{11}{subsection.3.5}
+\contentsline {subsection}{\numberline {3.6}COMPSs monitoring system}{12}{subsection.3.6}
+\contentsline {section}{\numberline {4}Sample applications}{14}{section.4}
+\contentsline {subsection}{\numberline {4.1}Matrix multiplication}{14}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Sparse LU decomposition}{15}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}BLAST Workflow}{15}{subsection.4.3}
+\contentsline {section}{\numberline {5}COMPSs Configuration}{18}{section.5}
+\contentsline {subsection}{\numberline {5.1}Cluster configuration (static resources)}{20}{subsection.5.1}
+\contentsline {subsubsection}{\numberline {5.1.1}Resources}{20}{subsubsection.5.1.1}
+\contentsline {subsubsection}{\numberline {5.1.2}Project}{21}{subsubsection.5.1.2}
+\contentsline {subsection}{\numberline {5.2}Shared Disks configuration}{21}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Cloud Provider configuration (dynamic resources)}{22}{subsection.5.3}
+\contentsline {subsubsection}{\numberline {5.3.1}Resources}{23}{subsubsection.5.3.1}
+\contentsline {subsubsection}{\numberline {5.3.2}Project}{24}{subsubsection.5.3.2}
+\contentsline {subsection}{\numberline {5.4}Connectors}{26}{subsection.5.4}
+\contentsline {subsubsection}{\numberline {5.4.1}Amazon EC2}{26}{subsubsection.5.4.1}
+\contentsline {subsubsection}{\numberline {5.4.2}rOCCI Connector}{27}{subsubsection.5.4.2}
+\contentsline {section}{\numberline {6}Bindings}{28}{section.6}
+\contentsline {subsection}{\numberline {6.1}C/C++}{28}{subsection.6.1}
+\contentsline {subsubsection}{\numberline {6.1.1}Programming Model}{28}{subsubsection.6.1.1}
+\contentsline {paragraph}{\numberline {6.1.1.1}Task Selection}{28}{paragraph.6.1.1.1}
+\contentsline {paragraph}{\numberline {6.1.1.2}Value and Object return}{29}{paragraph.6.1.1.2}
+\contentsline {paragraph}{\numberline {6.1.1.3}Main Program}{30}{paragraph.6.1.1.3}
+\contentsline {paragraph}{\numberline {6.1.1.4}Functions file}{31}{paragraph.6.1.1.4}
+\contentsline {paragraph}{\numberline {6.1.1.5}Other Source Files}{32}{paragraph.6.1.1.5}
+\contentsline {paragraph}{\numberline {6.1.1.6}Class Serialization}{32}{paragraph.6.1.1.6}
+\contentsline {paragraph}{\numberline {6.1.1.7}Method \IeC {\textendash } Task}{33}{paragraph.6.1.1.7}
+\contentsline {paragraph}{\numberline {6.1.1.8}XML configuration files}{35}{paragraph.6.1.1.8}
+\contentsline {subsubsection}{\numberline {6.1.2}Application Compilation}{36}{subsubsection.6.1.2}
+\contentsline {subsubsection}{\numberline {6.1.3}Application Environment}{37}{subsubsection.6.1.3}
+\contentsline {subsubsection}{\numberline {6.1.4}Application Execution}{37}{subsubsection.6.1.4}
+\contentsline {subsubsection}{\numberline {6.1.5}Matmul Execution Graph}{38}{subsubsection.6.1.5}
+\contentsline {subsection}{\numberline {6.2}Python}{38}{subsection.6.2}
+\contentsline {subsubsection}{\numberline {6.2.1}Programming Model}{39}{subsubsection.6.2.1}
+\contentsline {paragraph}{\numberline {6.2.1.1}Task Selection}{39}{paragraph.6.2.1.1}
+\contentsline {paragraph}{\numberline {6.2.1.2}Main Program}{42}{paragraph.6.2.1.2}
+\contentsline {subparagraph}{\numberline {6.2.1.2.1}Future Objects}{43}{subparagraph.6.2.1.2.1}
+\contentsline {paragraph}{\numberline {6.2.1.3}Important Notes}{45}{paragraph.6.2.1.3}
+\contentsline {subsubsection}{\numberline {6.2.2}Application Execution}{45}{subsubsection.6.2.2}
+\contentsline {paragraph}{\numberline {6.2.2.1}Environment}{45}{paragraph.6.2.2.1}
+\contentsline {paragraph}{\numberline {6.2.2.2}Command}{45}{paragraph.6.2.2.2}
+\contentsline {section}{\numberline {7}Tracing}{47}{section.7}
+\contentsline {subsection}{\numberline {7.1}Trace Command}{47}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Application Instrumentation}{47}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}Trace Visualization}{49}{subsection.7.3}
+\contentsline {subsubsection}{\numberline {7.3.1}Trace Loading}{49}{subsubsection.7.3.1}
+\contentsline {subsubsection}{\numberline {7.3.2}Configuration File}{49}{subsubsection.7.3.2}
+\contentsline {subsubsection}{\numberline {7.3.3}View Adjustment}{51}{subsubsection.7.3.3}
+\contentsline {subsection}{\numberline {7.4}Trace Interpretation}{53}{subsection.7.4}
+\contentsline {subsection}{\numberline {7.5}Trace Analysis}{53}{subsection.7.5}
+\contentsline {subsubsection}{\numberline {7.5.1}Graphical Analysis}{54}{subsubsection.7.5.1}
+\contentsline {subsubsection}{\numberline {7.5.2}Numerical Analysis}{55}{subsubsection.7.5.2}
+\contentsline {subsubsection}{\numberline {7.5.3}Other Trace examples}{58}{subsubsection.7.5.3}

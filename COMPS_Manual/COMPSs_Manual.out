@@ -1,0 +1,64 @@
+\BOOKMARK [1][-]{section.1}{COMP Superscalar \(COMPSs\)}{}% 1
+\BOOKMARK [1][-]{section.2}{Developing COMPSs applications}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Main application code}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Remote methods code}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Java annotated interface}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{Equivalent remote methods}{section.2}% 6
+\BOOKMARK [1][-]{section.3}{Running COMPSs applications}{}% 7
+\BOOKMARK [2][-]{subsection.3.1}{Compiling and Packaging the application}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.2}{Running the application}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.3}{Logging the execution}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.4}{Execution results}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.5}{Exploring the final execution graph}{section.3}% 12
+\BOOKMARK [2][-]{subsection.3.6}{COMPSs monitoring system}{section.3}% 13
+\BOOKMARK [1][-]{section.4}{Sample applications}{}% 14
+\BOOKMARK [2][-]{subsection.4.1}{Matrix multiplication}{section.4}% 15
+\BOOKMARK [2][-]{subsection.4.2}{Sparse LU decomposition}{section.4}% 16
+\BOOKMARK [2][-]{subsection.4.3}{BLAST Workflow}{section.4}% 17
+\BOOKMARK [1][-]{section.5}{COMPSs Configuration}{}% 18
+\BOOKMARK [2][-]{subsection.5.1}{Cluster configuration \(static resources\)}{section.5}% 19
+\BOOKMARK [3][-]{subsubsection.5.1.1}{Resources}{subsection.5.1}% 20
+\BOOKMARK [3][-]{subsubsection.5.1.2}{Project}{subsection.5.1}% 21
+\BOOKMARK [2][-]{subsection.5.2}{Shared Disks configuration}{section.5}% 22
+\BOOKMARK [2][-]{subsection.5.3}{Cloud Provider configuration \(dynamic resources\)}{section.5}% 23
+\BOOKMARK [3][-]{subsubsection.5.3.1}{Resources}{subsection.5.3}% 24
+\BOOKMARK [3][-]{subsubsection.5.3.2}{Project}{subsection.5.3}% 25
+\BOOKMARK [2][-]{subsection.5.4}{Connectors}{section.5}% 26
+\BOOKMARK [3][-]{subsubsection.5.4.1}{Amazon EC2}{subsection.5.4}% 27
+\BOOKMARK [3][-]{subsubsection.5.4.2}{rOCCI Connector}{subsection.5.4}% 28
+\BOOKMARK [1][-]{section.6}{Bindings}{}% 29
+\BOOKMARK [2][-]{subsection.6.1}{C/C++}{section.6}% 30
+\BOOKMARK [3][-]{subsubsection.6.1.1}{Programming Model}{subsection.6.1}% 31
+\BOOKMARK [4][-]{paragraph.6.1.1.1}{Task Selection}{subsubsection.6.1.1}% 32
+\BOOKMARK [4][-]{paragraph.6.1.1.2}{Value and Object return}{subsubsection.6.1.1}% 33
+\BOOKMARK [4][-]{paragraph.6.1.1.3}{Main Program}{subsubsection.6.1.1}% 34
+\BOOKMARK [4][-]{paragraph.6.1.1.4}{Functions file}{subsubsection.6.1.1}% 35
+\BOOKMARK [4][-]{paragraph.6.1.1.5}{Other Source Files}{subsubsection.6.1.1}% 36
+\BOOKMARK [4][-]{paragraph.6.1.1.6}{Class Serialization}{subsubsection.6.1.1}% 37
+\BOOKMARK [4][-]{paragraph.6.1.1.7}{Method \205 Task}{subsubsection.6.1.1}% 38
+\BOOKMARK [4][-]{paragraph.6.1.1.8}{XML configuration files}{subsubsection.6.1.1}% 39
+\BOOKMARK [3][-]{subsubsection.6.1.2}{Application Compilation}{subsection.6.1}% 40
+\BOOKMARK [3][-]{subsubsection.6.1.3}{Application Environment}{subsection.6.1}% 41
+\BOOKMARK [3][-]{subsubsection.6.1.4}{Application Execution}{subsection.6.1}% 42
+\BOOKMARK [3][-]{subsubsection.6.1.5}{Matmul Execution Graph}{subsection.6.1}% 43
+\BOOKMARK [2][-]{subsection.6.2}{Python}{section.6}% 44
+\BOOKMARK [3][-]{subsubsection.6.2.1}{Programming Model}{subsection.6.2}% 45
+\BOOKMARK [4][-]{paragraph.6.2.1.1}{Task Selection}{subsubsection.6.2.1}% 46
+\BOOKMARK [4][-]{paragraph.6.2.1.2}{Main Program}{subsubsection.6.2.1}% 47
+\BOOKMARK [5][-]{subparagraph.6.2.1.2.1}{Future Objects}{paragraph.6.2.1.2}% 48
+\BOOKMARK [4][-]{paragraph.6.2.1.3}{Important Notes}{subsubsection.6.2.1}% 49
+\BOOKMARK [3][-]{subsubsection.6.2.2}{Application Execution}{subsection.6.2}% 50
+\BOOKMARK [4][-]{paragraph.6.2.2.1}{Environment}{subsubsection.6.2.2}% 51
+\BOOKMARK [4][-]{paragraph.6.2.2.2}{Command}{subsubsection.6.2.2}% 52
+\BOOKMARK [1][-]{section.7}{Tracing}{}% 53
+\BOOKMARK [2][-]{subsection.7.1}{Trace Command}{section.7}% 54
+\BOOKMARK [2][-]{subsection.7.2}{Application Instrumentation}{section.7}% 55
+\BOOKMARK [2][-]{subsection.7.3}{Trace Visualization}{section.7}% 56
+\BOOKMARK [3][-]{subsubsection.7.3.1}{Trace Loading}{subsection.7.3}% 57
+\BOOKMARK [3][-]{subsubsection.7.3.2}{Configuration File}{subsection.7.3}% 58
+\BOOKMARK [3][-]{subsubsection.7.3.3}{View Adjustment}{subsection.7.3}% 59
+\BOOKMARK [2][-]{subsection.7.4}{Trace Interpretation}{section.7}% 60
+\BOOKMARK [2][-]{subsection.7.5}{Trace Analysis}{section.7}% 61
+\BOOKMARK [3][-]{subsubsection.7.5.1}{Graphical Analysis}{subsection.7.5}% 62
+\BOOKMARK [3][-]{subsubsection.7.5.2}{Numerical Analysis}{subsection.7.5}% 63
+\BOOKMARK [3][-]{subsubsection.7.5.3}{Other Trace examples}{subsection.7.5}% 64
