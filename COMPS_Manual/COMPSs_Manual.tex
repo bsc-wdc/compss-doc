@@ -1,18 +1,18 @@
 \documentclass[a4paper,12pt]{article}
 
 \usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
 \usepackage[dvips]{hyperref}
-
 \usepackage{fontenc}
 \usepackage{graphicx}
 \usepackage{makeidx}
-\usepackage{listings}
 \usepackage{color}
 \usepackage{multirow}
 \usepackage{tabularx}
 \usepackage{longtable}
 \usepackage{url}
 \usepackage{titlesec}
+\usepackage{listings}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,13 +25,14 @@
 \author{\huge{User Guide}}
 \date{\huge{Version 1.2}}
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%% DOCUMENT %%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 
-  %%%%%%%%%%%% TITLE PAGE %%%%%%%%%%%%
+  %%%%%%%%%%%% TITLE PAGE %%%%%%%%%%%%%
   
   \hypersetup{pageanchor=false}
   \begin{titlepage}
@@ -54,8 +55,8 @@
   \listoftables
     
   \newpage
-  
-  %%%%%%%%%% CONTENTS %%%%%%%%%% 
+
+  %%%%%%%%%%%%% CONTENTS %%%%%%%%%%%%%%
   
   \pagenumbering{arabic}
     
@@ -72,8 +73,8 @@
   \input{./Sections/6_Bindings/Bindings.tex}
            
   \input{./Sections/7_Tracing/Tracing.tex}
-  
-  %%%%%%%% END PAGE %%%%%%%%%
+
+  %%%%%%%%%%%%% END PAGE %%%%%%%%%%%%%%
 
   \newpage
 
@@ -85,5 +86,4 @@
   \end{center}    
   \vspace*{\fill} 
            
-        
 \end{document}

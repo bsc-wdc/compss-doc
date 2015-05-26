@@ -397,27 +397,50 @@ SecurityGroup name  &   Name of the security group to use \\
 \label{tab:ec2_connector_properties}
 \end{longtable}
 
+\vspace{-1.0cm}
+
 \subsubsection{rOCCI Connector}
-In order to execute a COMPSs application in the cloud, the rOCCI connector has to be configured properly. The connector uses the rOCCI binary client\footnote{https://appdb.egi.eu/store/software/rocci.cli} (version newer or equal than 4.2.5) which has to be installed in the node where the COMPSs main application is executed.
+In order to execute a COMPSs application in the cloud, the rOCCI connector has to be configured properly. The connector uses the rOCCI binary client\footnote{\url{https://appdb.egi.eu/store/software/rocci.cli}} (version newer or equal than 4.2.5) which has to be installed in the node where the COMPSs main application is executed.
 
 This connector needs additional files providing details about the resource templates available on each provider. This file is located under $<COMPSs\_INSTALL\_DIR>/xml/templates$ path. Additionally, the user must define the virtual images flavour and instance types offered by each provider; thus, when the runtime asks for the creation of a VM, the connector selects the appropriate image and resource template according to the requirements (in terms of CPU, memory, disk, etc) by invoking the rOCCI client through Mixins (heritable classes that override and extend the base templates).
 
-Table 5 contains the rOCCI specific properties that must be defined in the project.xml file.
+Table \ref{tab:rOCCI_extensions} contains the rOCCI specific properties that must be defined in the project.xml file.
 
+\begin{longtable}{| p{0.25\textwidth} | p{0.75\textwidth} |}
+\hline
+{\bf Provider }    &  \\
+\hline
+ca-path     &   Path to CA certificates directory \\
+\hline
+user-cred   &   Path of the VOMS proxy \\
+\hline
+auth        &   Authentication method, x509 only supported \\
+\hline
+owner & \multirow{2}{*}{Optional. Used by the VENUS-C Job Manager (PMES)} \\
+\cline{1-1}
+jobname &  \\
+\hline
+\caption{rOCCI extensions in the project.xml file.}
+\label{tab:rOCCI_extensions}
+\end{longtable}
 
-%                 Table 5 - rOCCI extensions in the project.xml file
-% Provider
-% ca-path     Path to CA certificates directory
-% user-cred   Path of the VOMS proxy
-% auth        Authentication method, x509 only supported
-% owner
-%             Optional. Used by the VENUS-C Job Manager (PMES)
-% jobname
+\vspace{-0.75cm}
 
-%           Table 6 - Configuration of the <provider>.xml templates file
-% Instance    Multiple entries of resource templates.
-% Type        Name of the resource template. It has to be the same name than in the previous files
-% CPU         Number of cores
-% Memory      Size in GB of the available RAM
-% Disk        Size in GB of the storage
-% Price       Cost per hour of the instance
+\begin{longtable}{| p{0.25\textwidth} | p{0.75\textwidth} |}
+\hline
+{\bf Instance} & Multiple entries of resource templates. \\
+\hline
+Type   &    Name of the resource template. It has to be the same name than in the previous files \\
+\hline
+CPU    &    Number of cores \\
+\hline
+Memory &    Size in GB of the available RAM \\
+\hline
+Disk   &    Size in GB of the storage \\
+\hline
+Price  &    Cost per hour of the instance \\
+\hline
+\caption{Configuration of the $<provider>.xml$ templates file.}
+\label{tab:rOCCI_configuration}
+\end{longtable}
+

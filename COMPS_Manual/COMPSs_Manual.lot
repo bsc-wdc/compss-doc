@@ -1,3 +1,4 @@
+\select@language {english}
 \contentsline {table}{\numberline {1}{Configuration of resources.xml file, tag $<CloudProvider>$}}{24}{table.1}
 \contentsline {table}{\numberline {2}{\ignorespaces Configuration of project.xml file, tag $<Cloud>$}}{24}{table.2}
 \contentsline {table}{\numberline {3}{Configuration of project.xml file, tag $<Provider>$}}{25}{table.3}

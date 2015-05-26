@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/TeX Live for SUSE Linux) (format=pdflatex 2015.5.12)  20 MAY 2015 15:49
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/TeX Live for SUSE Linux) (format=pdflatex 2015.5.12)  26 MAY 2015 11:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -240,6 +240,21 @@ Now handling font encoding U ...
    defining Unicode char U+2122 (decimal 8482)
    defining Unicode char U+2423 (decimal 9251)
 ))
+(/usr/share/texmf/tex/generic/babel/babel.sty
+Package: babel 2013/05/16 v3.9f The Babel package
+
+(/usr/share/texmf/tex/generic/babel-english/english.ldf
+Language: english 2012/08/20 v3.3p English support from the babel system
+
+(/usr/share/texmf/tex/generic/babel/babel.def
+File: babel.def 2013/05/16 v3.9f Babel common definitions
+\babel@savecnt=\count87
+\U@D=\dimen103
+)
+\l@canadian = a dialect from \language\l@american 
+\l@australian = a dialect from \language\l@british 
+\l@newzealand = a dialect from \language\l@british 
+))
 (/usr/share/texmf/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
 
@@ -301,16 +316,16 @@ Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
 (/usr/share/texmf/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 )
-\@linkdim=\dimen103
-\Hy@linkcounter=\count87
-\Hy@pagecounter=\count88
+\@linkdim=\dimen104
+\Hy@linkcounter=\count88
+\Hy@pagecounter=\count89
 
 (/usr/share/texmf/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count89
+\Hy@SavedSpaceFactor=\count90
 
 (/usr/share/texmf/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -335,16 +350,16 @@ Package hyperref Info: Plain pages OFF on input line 4458.
 Package hyperref Info: Backreferencing OFF on input line 4463.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4688.
-\c@Hy@tempcnt=\count90
+\c@Hy@tempcnt=\count91
 (/usr/share/texmf/tex/latex/url/url.sty
 \Urlmuskip=\muskip10
 Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5041.
-\XeTeXLinkMargin=\dimen104
-\Fld@menulength=\count91
-\Field@Width=\dimen105
-\Fld@charsize=\dimen106
+\XeTeXLinkMargin=\dimen105
+\Fld@menulength=\count92
+\Field@Width=\dimen106
+\Fld@charsize=\dimen107
 Package hyperref Info: Hyper figures OFF on input line 6295.
 Package hyperref Info: Link nesting OFF on input line 6300.
 Package hyperref Info: Hyper index ON on input line 6303.
@@ -354,17 +369,17 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6320.
 Package hyperref Info: PDF/A mode OFF on input line 6325.
 LaTeX Info: Redefining \ref on input line 6365.
 LaTeX Info: Redefining \pageref on input line 6369.
-\Hy@abspage=\count92
-\c@Item=\count93
-\c@Hfootnote=\count94
+\Hy@abspage=\count93
+\c@Item=\count94
+\c@Hfootnote=\count95
 )
 
 Package hyperref Message: Driver (autodetected): hpdftex.
 
 (/usr/share/texmf/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
-\Fld@listcount=\count95
-\c@bookmark@seq@number=\count96
+\Fld@listcount=\count96
+\c@bookmark@seq@number=\count97
 
 (/usr/share/texmf/tex/latex/oberdiek/rerunfilecheck.sty
 Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
@@ -392,39 +407,14 @@ Package graphics Info: Driver file: pdftex.def on input line 91.
 
 (/usr/share/texmf/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
-\Gread@gobject=\count97
+\Gread@gobject=\count98
 ))
-\Gin@req@height=\dimen107
-\Gin@req@width=\dimen108
+\Gin@req@height=\dimen108
+\Gin@req@width=\dimen109
 )
 (/usr/share/texmf/tex/latex/base/makeidx.sty
 Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
 )
-(/usr/share/texmf/tex/latex/listings/listings.sty
-\lst@mode=\count98
-\lst@gtempboxa=\box26
-\lst@token=\toks17
-\lst@length=\count99
-\lst@currlwidth=\dimen109
-\lst@column=\count100
-\lst@pos=\count101
-\lst@lostspace=\dimen110
-\lst@width=\dimen111
-\lst@newlines=\count102
-\lst@lineno=\count103
-\lst@maxwidth=\dimen112
-
-(/usr/share/texmf/tex/latex/listings/lstmisc.sty
-File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
-\c@lstnumber=\count104
-\lst@skipnumbers=\count105
-\lst@framebox=\box27
-)
-(/usr/share/texmf/tex/latex/listings/listings.cfg
-File: listings.cfg 2007/02/22 1.4 listings configuration
-))
-Package: listings 2007/02/22 1.4 (Carsten Heinz)
-
 (/usr/share/texmf/tex/latex/graphics/color.sty
 Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
 
@@ -434,26 +424,26 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 Package color Info: Driver file: pdftex.def on input line 130.
 )
 (/usr/share/texmf/tex/latex/multirow/multirow.sty
-\bigstrutjot=\dimen113
+\bigstrutjot=\dimen110
 )
 (/usr/share/texmf/tex/latex/tools/tabularx.sty
 Package: tabularx 1999/01/07 v2.07 `tabularx' package (DPC)
 
 (/usr/share/texmf/tex/latex/tools/array.sty
 Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
-\col@sep=\dimen114
-\extrarowheight=\dimen115
-\NC@list=\toks18
+\col@sep=\dimen111
+\extrarowheight=\dimen112
+\NC@list=\toks17
 \extratabsurround=\skip44
 \backup@length=\skip45
 )
-\TX@col@width=\dimen116
-\TX@old@table=\dimen117
-\TX@old@col=\dimen118
-\TX@target=\dimen119
-\TX@delta=\dimen120
-\TX@cols=\count106
-\TX@ftn=\toks19
+\TX@col@width=\dimen113
+\TX@old@table=\dimen114
+\TX@old@col=\dimen115
+\TX@target=\dimen116
+\TX@delta=\dimen117
+\TX@cols=\count99
+\TX@ftn=\toks18
 )
 (/usr/share/texmf/tex/latex/tools/longtable.sty
 Package: longtable 2004/02/01 v4.11 Multi-page Table package (DPC)
@@ -461,51 +451,76 @@ Package: longtable 2004/02/01 v4.11 Multi-page Table package (DPC)
 \LTright=\skip47
 \LTpre=\skip48
 \LTpost=\skip49
-\LTchunksize=\count107
-\LTcapwidth=\dimen121
-\LT@head=\box28
-\LT@firsthead=\box29
-\LT@foot=\box30
-\LT@lastfoot=\box31
-\LT@cols=\count108
-\LT@rows=\count109
-\c@LT@tables=\count110
-\c@LT@chunks=\count111
-\LT@p@ftn=\toks20
+\LTchunksize=\count100
+\LTcapwidth=\dimen118
+\LT@head=\box26
+\LT@firsthead=\box27
+\LT@foot=\box28
+\LT@lastfoot=\box29
+\LT@cols=\count101
+\LT@rows=\count102
+\c@LT@tables=\count103
+\c@LT@chunks=\count104
+\LT@p@ftn=\toks19
 )
 (/usr/share/texmf/tex/latex/titlesec/titlesec.sty
 Package: titlesec 2011/12/15 v2.10.0 Sectioning titles
-\ttl@box=\box32
+\ttl@box=\box30
 \beforetitleunit=\skip50
 \aftertitleunit=\skip51
-\ttl@plus=\dimen122
-\ttl@minus=\dimen123
-\ttl@toksa=\toks21
-\titlewidth=\dimen124
-\titlewidthlast=\dimen125
-\titlewidthfirst=\dimen126
-) (./configuration.tex
+\ttl@plus=\dimen119
+\ttl@minus=\dimen120
+\ttl@toksa=\toks20
+\titlewidth=\dimen121
+\titlewidthlast=\dimen122
+\titlewidthfirst=\dimen123
+)
+(/usr/share/texmf/tex/latex/listings/listings.sty
+\lst@mode=\count105
+\lst@gtempboxa=\box31
+\lst@token=\toks21
+\lst@length=\count106
+\lst@currlwidth=\dimen124
+\lst@column=\count107
+\lst@pos=\count108
+\lst@lostspace=\dimen125
+\lst@width=\dimen126
+\lst@newlines=\count109
+\lst@lineno=\count110
+\lst@maxwidth=\dimen127
+
+(/usr/share/texmf/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
+\c@lstnumber=\count111
+\lst@skipnumbers=\count112
+\lst@framebox=\box32
+)
+(/usr/share/texmf/tex/latex/listings/listings.cfg
+File: listings.cfg 2007/02/22 1.4 listings configuration
+))
+Package: listings 2007/02/22 1.4 (Carsten Heinz)
+ (./configuration.tex
 (/usr/share/texmf/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2004/09/05 1.3 listings language file
 )) (./COMPSs_Manual.aux)
 \openout1 = `COMPSs_Manual.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
 \AtBeginShipoutBox=\box33
-Package hyperref Info: Link coloring OFF on input line 32.
+Package hyperref Info: Link coloring OFF on input line 33.
 
 (/usr/share/texmf/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -513,11 +528,11 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texmf/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count112
+\c@section@level=\count113
 )
-LaTeX Info: Redefining \ref on input line 32.
-LaTeX Info: Redefining \pageref on input line 32.
-LaTeX Info: Redefining \nameref on input line 32.
+LaTeX Info: Redefining \ref on input line 33.
+LaTeX Info: Redefining \pageref on input line 33.
+LaTeX Info: Redefining \nameref on input line 33.
 
 (./COMPSs_Manual.out) (./COMPSs_Manual.out)
 \@outlinefile=\write3
@@ -526,16 +541,16 @@ LaTeX Info: Redefining \nameref on input line 32.
 
 (/usr/share/texmf/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count113
-\scratchdimen=\dimen127
+\scratchcounter=\count114
+\scratchdimen=\dimen128
 \scratchbox=\box34
-\nofMPsegments=\count114
-\nofMParguments=\count115
+\nofMPsegments=\count115
+\nofMParguments=\count116
 \everyMPshowfont=\toks22
-\MPscratchCnt=\count116
-\MPscratchDim=\dimen128
-\MPnumerator=\count117
-\makeMPintoPDFobject=\count118
+\MPscratchCnt=\count117
+\MPscratchDim=\dimen129
+\MPnumerator=\count118
+\makeMPintoPDFobject=\count119
 \everyMPtoPDFconversion=\toks23
 ) (/usr/share/texmf/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
@@ -552,30 +567,30 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\c@lstlisting=\count119
-Package hyperref Info: Option `pageanchor' set `false' on input line 36.
+\c@lstlisting=\count120
+Package hyperref Info: Option `pageanchor' set `false' on input line 37.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 39.
+(Font)              <14.4> on input line 40.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 39.
+(Font)              <7> on input line 40.
 
 <./Figures/bsc_280.jpg, id=261, 648.7437pt x 174.1707pt>
 File: ./Figures/bsc_280.jpg Graphic file (type jpg)
 
 <use ./Figures/bsc_280.jpg>
-Package pdftex.def Info: ./Figures/bsc_280.jpg used on input line 41.
+Package pdftex.def Info: ./Figures/bsc_280.jpg used on input line 42.
 (pdftex.def)             Requested size: 341.43306pt x 91.66689pt.
  [1
 
 {/usr/share/texmf/fonts/map/pdftex/updmap/pdftex.map} <./Figures/bsc_280.jpg>]
-Package hyperref Info: Option `pageanchor' set `true' on input line 46.
+Package hyperref Info: Option `pageanchor' set `true' on input line 47.
  (./COMPSs_Manual.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 3.
+(Font)              <12> on input line 4.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 3.
+(Font)              <8> on input line 4.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 3.
+(Font)              <6> on input line 4.
  [1
 
 ])
@@ -597,13 +612,13 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 ]
 (./Sections/1_Introduction/Introduction.tex
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 10.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 14.
 
 (/usr/share/texmf/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 10.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 14.
 )
 (./Sections/2_Developing_Apps/Development.tex [1
 
@@ -614,7 +629,10 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 44.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 50.
- [3] [4] [5] [6] [7])
+ [3] [4] [5] [6]
+LaTeX Font Info:    Font shape `OMS/cmr/bx/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/b/n' tried instead on input line 219.
+ [7])
 (./Sections/3_Running_Apps/Running.tex [8]
 (/usr/share/texmf/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2004/09/05 1.3 listings language file
@@ -622,121 +640,121 @@ File: lstlang1.sty 2004/09/05 1.3 listings language file
 (/usr/share/texmf/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2004/09/05 1.3 listings language file
 )
-<./Sections/3_Running_Apps/Figures/example_package.jpeg, id=537, 317.185pt x 25
+<./Sections/3_Running_Apps/Figures/example_package.jpeg, id=543, 317.185pt x 25
 7.96375pt>
 File: ./Sections/3_Running_Apps/Figures/example_package.jpeg Graphic file (type
  jpg)
  <use ./Sections/3_Running_Apps/Figures/example_package.jpeg>
 Package pdftex.def Info: ./Sections/3_Running_Apps/Figures/example_package.jpeg
- used on input line 29.
+ used on input line 33.
 (pdftex.def)             Requested size: 170.71652pt x 138.84567pt.
 
 [9
 
  <./Sections/3_Running_Apps/Figures/example_package.jpeg>]
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 49.
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 53.
 
 (/usr/share/texmf/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 49.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 53.
 
-<./Sections/3_Running_Apps/Figures/compss_execution.jpeg, id=549, 681.54625pt x
+<./Sections/3_Running_Apps/Figures/compss_execution.jpeg, id=555, 681.54625pt x
  324.21124pt>
 File: ./Sections/3_Running_Apps/Figures/compss_execution.jpeg Graphic file (typ
 e jpg)
  <use ./Sections/3_Running_Apps/Figures/compss_execution.jpeg>
 Package pdftex.def Info: ./Sections/3_Running_Apps/Figures/compss_execution.jpe
-g used on input line 54.
+g used on input line 58.
 (pdftex.def)             Requested size: 370.49881pt x 176.24886pt.
 
-Overfull \hbox (0.489pt too wide) in paragraph at lines 67--68
+Overfull \hbox (0.489pt too wide) in paragraph at lines 72--75
 []\OT1/cmr/m/n/12 On the other hand, the \OT1/cmr/bx/n/12 re-sources.log \OT1/c
 mr/m/n/12 file, that can be found in \OT1/cmr/bx/n/12 $HOME-
  []
 
 [10 <./Sections/3_Running_Apps/Figures/compss_execution.jpeg>]
-<./Sections/3_Running_Apps/Figures/available_resources.jpeg, id=563, 707.64375p
+<./Sections/3_Running_Apps/Figures/available_resources.jpeg, id=570, 707.64375p
 t x 245.91875pt>
 File: ./Sections/3_Running_Apps/Figures/available_resources.jpeg Graphic file (
 type jpg)
 
 <use ./Sections/3_Running_Apps/Figures/available_resources.jpeg>
 Package pdftex.def Info: ./Sections/3_Running_Apps/Figures/available_resources.
-jpeg used on input line 71.
+jpeg used on input line 78.
 (pdftex.def)             Requested size: 370.49881pt x 128.75655pt.
 
-<./Sections/3_Running_Apps/Figures/task_log1.jpeg, id=564, 315.1775pt x 76.285p
+<./Sections/3_Running_Apps/Figures/task_log1.jpeg, id=571, 315.1775pt x 76.285p
 t>
 File: ./Sections/3_Running_Apps/Figures/task_log1.jpeg Graphic file (type jpg)
  <use ./Sections/3_Running_Apps/Figures/task_log1.jpeg>
 Package pdftex.def Info: ./Sections/3_Running_Apps/Figures/task_log1.jpeg used 
-on input line 81.
+on input line 89.
 (pdftex.def)             Requested size: 234.00238pt x 56.6374pt.
 
-<./Sections/3_Running_Apps/Figures/task_log2.jpeg, id=565, 387.4475pt x 105.393
+<./Sections/3_Running_Apps/Figures/task_log2.jpeg, id=572, 387.4475pt x 105.393
 75pt>
 File: ./Sections/3_Running_Apps/Figures/task_log2.jpeg Graphic file (type jpg)
  <use ./Sections/3_Running_Apps/Figures/task_log2.jpeg>
 Package pdftex.def Info: ./Sections/3_Running_Apps/Figures/task_log2.jpeg used 
-on input line 82.
+on input line 90.
 (pdftex.def)             Requested size: 234.00238pt x 63.65485pt.
  [11 <./Sections/3_Running_Apps/Figures/available_resources.jpeg> <./Sections/3
 _Running_Apps/Figures/task_log1.jpeg> <./Sections/3_Running_Apps/Figures/task_l
 og2.jpeg>]
-<./Sections/3_Running_Apps/Figures/dependency_graph.jpeg, id=571, 221.82875pt x
+<./Sections/3_Running_Apps/Figures/dependency_graph.jpeg, id=577, 221.82875pt x
  516.93124pt>
 File: ./Sections/3_Running_Apps/Figures/dependency_graph.jpeg Graphic file (typ
 e jpg)
  <use ./Sections/3_Running_Apps/Figures/dependency_graph.jpeg>
 Package pdftex.def Info: ./Sections/3_Running_Apps/Figures/dependency_graph.jpe
-g used on input line 98.
+g used on input line 107.
 (pdftex.def)             Requested size: 117.00119pt x 272.64711pt.
 
-<./Sections/3_Running_Apps/Figures/compss_monitoring.jpeg, id=573, 1286.8075pt 
+<./Sections/3_Running_Apps/Figures/compss_monitoring.jpeg, id=579, 1286.8075pt 
 x 613.29124pt>
 File: ./Sections/3_Running_Apps/Figures/compss_monitoring.jpeg Graphic file (ty
 pe jpg)
  <use ./Sections/3_Running_Apps/Figures/compss_monitoring.jpeg>
 Package pdftex.def Info: ./Sections/3_Running_Apps/Figures/compss_monitoring.jp
-eg used on input line 113.
+eg used on input line 125.
 (pdftex.def)             Requested size: 350.99762pt x 167.28465pt.
 )
 (./Sections/4_Sample_Apps/Sample.tex [12 <./Sections/3_Running_Apps/Figures/dep
 endency_graph.jpeg>] [13 <./Sections/3_Running_Apps/Figures/compss_monitoring.j
 peg>]
-<./Sections/4_Sample_Apps/Figures/matrix.jpeg, id=586, 543.02875pt x 139.52126p
+<./Sections/4_Sample_Apps/Figures/matrix.jpeg, id=592, 543.02875pt x 139.52126p
 t>
 File: ./Sections/4_Sample_Apps/Figures/matrix.jpeg Graphic file (type jpg)
  <use ./Sections/4_Sample_Apps/Figures/matrix.jpeg>
 Package pdftex.def Info: ./Sections/4_Sample_Apps/Figures/matrix.jpeg used on i
-nput line 15.
+nput line 23.
 (pdftex.def)             Requested size: 312.00119pt x 80.16661pt.
  [14
 
  <./Sections/4_Sample_Apps/Figures/matrix.jpeg>]
-<./Sections/4_Sample_Apps/Figures/SparseLU.jpeg, id=598, 316.18124pt x 54.9553p
+<./Sections/4_Sample_Apps/Figures/SparseLU.jpeg, id=604, 316.18124pt x 54.9553p
 t>
 File: ./Sections/4_Sample_Apps/Figures/SparseLU.jpeg Graphic file (type jpg)
  <use ./Sections/4_Sample_Apps/Figures/SparseLU.jpeg>
 Package pdftex.def Info: ./Sections/4_Sample_Apps/Figures/SparseLU.jpeg used on
- input line 39.
+ input line 50.
 (pdftex.def)             Requested size: 234.00238pt x 40.67213pt.
 
-<./Sections/4_Sample_Apps/Figures/blast_workflow.jpeg, id=599, 639.38875pt x 54
+<./Sections/4_Sample_Apps/Figures/blast_workflow.jpeg, id=605, 639.38875pt x 54
 4.0325pt>
 File: ./Sections/4_Sample_Apps/Figures/blast_workflow.jpeg Graphic file (type j
 pg)
  <use ./Sections/4_Sample_Apps/Figures/blast_workflow.jpeg>
 Package pdftex.def Info: ./Sections/4_Sample_Apps/Figures/blast_workflow.jpeg u
-sed on input line 62.
+sed on input line 79.
 (pdftex.def)             Requested size: 272.99881pt x 232.28577pt.
  [15 <./Sections/4_Sample_Apps/Figures/SparseLU.jpeg>] [16 <./Sections/4_Sample
 _Apps/Figures/blast_workflow.jpeg>]) (./Sections/5_Configuration/Configuration.
 tex
 [17]
-Overfull \hbox (24.91466pt too wide) in paragraph at lines 8--9
+Overfull \hbox (24.91466pt too wide) in paragraph at lines 11--13
 \OT1/cmr/m/n/12 the ref-er-ence to the COMPSs run-time adding \OT1/cmr/m/it/12 
 /opt/COMPSs/Runtime/rt/compss-
  []
@@ -746,38 +764,10 @@ File: lstlang1.sty 2004/09/05 1.3 listings language file
 )
 (/usr/share/texmf/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
-)
-
-! Package inputenc Error: Unicode char \u8:�\lst@FillFixed@\lst@EC� not set up 
-for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.35     <Resource Name=“localhost"
-                                     >
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.35     <Resource Name=“localhost"
-                                     >
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-[18
+) [18
 
 ] [19] [20] [21]
-Overfull \hbox (97.167pt too wide) in paragraph at lines 197--198
+Overfull \hbox (97.167pt too wide) in paragraph at lines 221--224
 \OT1/cmr/bx/n/12 sources.xml \OT1/cmr/m/n/12 and \OT1/cmr/bx/n/12 project.xml \
 OT1/cmr/m/n/12 files. These files are lo-cated at $\OML/cmm/m/it/12 < COMPSs[]I
 NSTALL[]DIR >
@@ -785,86 +775,86 @@ NSTALL[]DIR >
 
 [22]
 LaTeX Font Info:    Font shape `OMS/cmr/bx/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/b/n' tried instead on input line 226.
+(Font)              Font shape `OMS/cmsy/b/n' tried instead on input line 255.
 
-Underfull \hbox (badness 3623) in paragraph at lines 236--237
+Underfull \hbox (badness 3623) in paragraph at lines 265--266
 []\OT1/cmr/m/n/12 Software in-stalled in
  []
 
 
-Underfull \hbox (badness 2103) in paragraph at lines 263--264
+Underfull \hbox (badness 2103) in paragraph at lines 292--293
 []\OT1/cmr/m/n/12 Instance type of-fered by the
  []
 
 
-Underfull \hbox (badness 5161) in paragraph at lines 265--266
+Underfull \hbox (badness 5161) in paragraph at lines 294--295
 []\OT1/cmr/m/n/12 Hardware de-tails of in-
  []
 
 
-Overfull \hbox (25.19998pt too wide) in alignment at lines 203--277
+Overfull \hbox (25.19998pt too wide) in alignment at lines 232--306
  [] [] 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 277
+Underfull \vbox (badness 10000) detected at line 306
  []
 
 [23]
-Underfull \hbox (badness 1460) in paragraph at lines 339--340
+Underfull \hbox (badness 1460) in paragraph at lines 373--374
 []\OT1/cmr/m/n/12 Path of the COMPSs worker
  []
 
 
-Underfull \hbox (badness 1558) in paragraph at lines 364--364
+Underfull \hbox (badness 1558) in paragraph at lines 398--398
 []\OT1/cmr/m/n/12 Table 3: Con-fig-u-ra-tion of project.xml file, tag $\OML/cmm
 /m/it/12 <
  []
 
 
-Overfull \hbox (25.19998pt too wide) in alignment at lines 302--366
+Overfull \hbox (25.19998pt too wide) in alignment at lines 336--400
  [] [] 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 366
+Underfull \vbox (badness 10000) detected at line 400
  []
 
 [24] [25]
-Overfull \hbox (25.19998pt too wide) in alignment at lines 382--398
+Overfull \hbox (25.19998pt too wide) in alignment at lines 432--448
  [] [] 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 398
+Underfull \vbox (badness 10000) detected at line 448
  []
 
 [26]
-Overfull \hbox (95.59196pt too wide) in paragraph at lines 405--406
+Overfull \hbox (95.59196pt too wide) in paragraph at lines 458--464
 \OT1/cmr/m/n/12 tem-plates avail-able on each provider. This file is lo-cated u
 n-der $\OML/cmm/m/it/12 < COMPSs[]INSTALL[]DIR >
  []
 
 
-Overfull \hbox (25.19998pt too wide) in alignment at lines 409--425
+Overfull \hbox (25.19998pt too wide) in alignment at lines 468--484
  [] [] 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 425
+Underfull \vbox (badness 10000) detected at line 484
  []
 
 
-Overfull \hbox (25.19998pt too wide) in alignment at lines 429--445
+Overfull \hbox (25.19998pt too wide) in alignment at lines 488--504
  [] [] 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 445
+Underfull \vbox (badness 10000) detected at line 504
  []
 
 ) (./Sections/6_Bindings/Bindings.tex [27]
-Overfull \hbox (5.14868pt too wide) in paragraph at lines 6--7
+Overfull \hbox (5.14868pt too wide) in paragraph at lines 8--9
 []\OT1/cmr/m/n/12 The next sub-sec-tions de-scribe the lan-guage bind-ings pro-
 vided by COMPSs. 
  []
@@ -880,18 +870,18 @@ File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
 ) [28
 
 ] [29] [30]
-Overfull \hbox (10.14459pt too wide) in paragraph at lines 123--124
+Overfull \hbox (10.14459pt too wide) in paragraph at lines 147--149
 []\OT1/cmr/m/n/12 Synchronization on a pa-ram-e-ter can be done call-ing the \O
 T1/cmr/bx/n/12 compss[]wait[]on
  []
 
 [31] [32] [33] [34] [35] [36] [37]
-<./Sections/6_Bindings/Figures/matmul.jpeg, id=1140, 1065.9825pt x 624.3325pt>
+<./Sections/6_Bindings/Figures/matmul.jpeg, id=1145, 1065.9825pt x 624.3325pt>
 File: ./Sections/6_Bindings/Figures/matmul.jpeg Graphic file (type jpg)
 
 <use ./Sections/6_Bindings/Figures/matmul.jpeg>
 Package pdftex.def Info: ./Sections/6_Bindings/Figures/matmul.jpeg used on inpu
-t line 404.
+t line 458.
 (pdftex.def)             Requested size: 390.0pt x 228.41771pt.
  [38]
 (/usr/share/texmf/tex/latex/listings/lstlang1.sty
@@ -905,7 +895,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.465      fd = open(f, ‘r+
+l.537      fd = open(f, ‘r+
                              ’)
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -919,7 +909,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.465      fd = open(f, ‘r+
+l.537      fd = open(f, ‘r+
                              ’)
 You need to provide a definition with \DeclareInputText 
 or \DeclareInputMath before using this key.
@@ -932,7 +922,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.465      fd = open(f, ‘r+’)
+l.537      fd = open(f, ‘r+’)
                                  
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -946,42 +936,42 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.465      fd = open(f, ‘r+’)
+l.537      fd = open(f, ‘r+’)
                                  
 You need to provide a definition with \DeclareInputText 
 or \DeclareInputMath before using this key.
 
 
-Overfull \hbox (2.63579pt too wide) in paragraph at lines 501--501
+Overfull \hbox (2.63579pt too wide) in paragraph at lines 579--579
 []|[]| 
  []
 
 
-Overfull \hbox (25.19998pt too wide) in alignment at lines 497--515
+Overfull \hbox (25.19998pt too wide) in alignment at lines 575--593
  [] [] 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 515
+Underfull \vbox (badness 10000) detected at line 593
  []
 
 [41] [42]
-Overfull \hbox (2.88672pt too wide) in paragraph at lines 570--570
+Overfull \hbox (2.88672pt too wide) in paragraph at lines 654--654
 []|\OT1/cmr/m/n/12 compss[]open(file[]name,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 572--572
+Underfull \hbox (badness 10000) in paragraph at lines 656--656
 []|\OT1/cmr/m/n/12 compss[]wait[]on(obj,
  []
 
 
-Overfull \hbox (25.19998pt too wide) in alignment at lines 566--576
+Overfull \hbox (25.19998pt too wide) in alignment at lines 650--660
  [] [] 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 576
+Underfull \vbox (badness 10000) detected at line 660
  []
 
 [43] [44] (/usr/share/texmf/tex/latex/listings/lstlang1.sty
@@ -995,7 +985,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.674 ... where to search for the application’s 
+l.769 ... where to search for the application’s 
                                                   Python modules. The defaul...
 
 Your command was ignored.
@@ -1010,7 +1000,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.674 ... where to search for the application’s 
+l.769 ... where to search for the application’s 
                                                   Python modules. The defaul...
 
 You need to provide a definition with \DeclareInputText 
@@ -1024,7 +1014,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.674 ... where to search for the application’s 
+l.769 ... where to search for the application’s 
                                                   Python modules. The defaul...
 
 You need to provide a definition with \DeclareInputText 
@@ -1033,136 +1023,136 @@ or \DeclareInputMath before using this key.
 ) (./Sections/7_Tracing/Tracing.tex [46] [47
 
 ] [48] [49]
-<./Sections/7_Tracing/Figures/1.jpeg, id=1363, 303.1325pt x 627.34375pt>
+<./Sections/7_Tracing/Figures/1.jpeg, id=1368, 303.1325pt x 627.34375pt>
 File: ./Sections/7_Tracing/Figures/1.jpeg Graphic file (type jpg)
 
 <use ./Sections/7_Tracing/Figures/1.jpeg>
 Package pdftex.def Info: ./Sections/7_Tracing/Figures/1.jpeg used on input line
- 105.
+ 131.
 (pdftex.def)             Requested size: 175.49881pt x 363.2087pt.
 
-<./Sections/7_Tracing/Figures/2.jpeg, id=1364, 603.25375pt x 139.52126pt>
+<./Sections/7_Tracing/Figures/2.jpeg, id=1369, 603.25375pt x 139.52126pt>
 File: ./Sections/7_Tracing/Figures/2.jpeg Graphic file (type jpg)
 
 <use ./Sections/7_Tracing/Figures/2.jpeg>
 Package pdftex.def Info: ./Sections/7_Tracing/Figures/2.jpeg used on input line
- 112.
+ 138.
 (pdftex.def)             Requested size: 390.0pt x 90.19807pt.
  [50 <./Sections/7_Tracing/Figures/1.jpeg> <./Sections/7_Tracing/Figures/2.jpeg
 >]
-<./Sections/7_Tracing/Figures/3.jpeg, id=1370, 604.2575pt x 140.525pt>
+<./Sections/7_Tracing/Figures/3.jpeg, id=1375, 604.2575pt x 140.525pt>
 File: ./Sections/7_Tracing/Figures/3.jpeg Graphic file (type jpg)
 
 <use ./Sections/7_Tracing/Figures/3.jpeg>
 Package pdftex.def Info: ./Sections/7_Tracing/Figures/3.jpeg used on input line
- 130.
+ 157.
 (pdftex.def)             Requested size: 390.0pt x 90.69688pt.
 
-<./Sections/7_Tracing/Figures/4.jpeg, id=1371, 603.25375pt x 139.52126pt>
+<./Sections/7_Tracing/Figures/4.jpeg, id=1376, 603.25375pt x 139.52126pt>
 File: ./Sections/7_Tracing/Figures/4.jpeg Graphic file (type jpg)
 
 <use ./Sections/7_Tracing/Figures/4.jpeg>
 Package pdftex.def Info: ./Sections/7_Tracing/Figures/4.jpeg used on input line
- 145.
+ 172.
 (pdftex.def)             Requested size: 390.0pt x 90.19807pt.
 
-<./Sections/7_Tracing/Figures/5.jpeg, id=1372, 602.25pt x 343.2825pt>
+<./Sections/7_Tracing/Figures/5.jpeg, id=1377, 602.25pt x 343.2825pt>
 File: ./Sections/7_Tracing/Figures/5.jpeg Graphic file (type jpg)
 
 <use ./Sections/7_Tracing/Figures/5.jpeg>
 Package pdftex.def Info: ./Sections/7_Tracing/Figures/5.jpeg used on input line
- 161.
+ 188.
 (pdftex.def)             Requested size: 390.0pt x 222.3086pt.
  [51 <./Sections/7_Tracing/Figures/3.jpeg> <./Sections/7_Tracing/Figures/4.jpeg
 >]
-<./Sections/7_Tracing/Figures/6.jpeg, id=1377, 601.24625pt x 139.52126pt>
+<./Sections/7_Tracing/Figures/6.jpeg, id=1383, 601.24625pt x 139.52126pt>
 File: ./Sections/7_Tracing/Figures/6.jpeg Graphic file (type jpg)
 
 <use ./Sections/7_Tracing/Figures/6.jpeg>
 Package pdftex.def Info: ./Sections/7_Tracing/Figures/6.jpeg used on input line
- 177.
+ 204.
 (pdftex.def)             Requested size: 390.0pt x 90.50464pt.
 
-<./Sections/7_Tracing/Figures/6_2.jpeg, id=1378, 603.25375pt x 139.52126pt>
+<./Sections/7_Tracing/Figures/6_2.jpeg, id=1384, 603.25375pt x 139.52126pt>
 File: ./Sections/7_Tracing/Figures/6_2.jpeg Graphic file (type jpg)
 
 <use ./Sections/7_Tracing/Figures/6_2.jpeg>
 Package pdftex.def Info: ./Sections/7_Tracing/Figures/6_2.jpeg used on input li
-ne 184.
+ne 211.
 (pdftex.def)             Requested size: 390.0pt x 90.19807pt.
  [52 <./Sections/7_Tracing/Figures/5.jpeg> <./Sections/7_Tracing/Figures/6.jpeg
 > <./Sections/7_Tracing/Figures/6_2.jpeg>] <./Sections/7_Tracing/Figures/7.jpeg
-, id=1384, 602.25pt x 343.2825pt>
+, id=1389, 602.25pt x 343.2825pt>
 File: ./Sections/7_Tracing/Figures/7.jpeg Graphic file (type jpg)
 
 <use ./Sections/7_Tracing/Figures/7.jpeg>
 Package pdftex.def Info: ./Sections/7_Tracing/Figures/7.jpeg used on input line
- 203.
+ 232.
 (pdftex.def)             Requested size: 390.0pt x 222.3086pt.
  [53 <./Sections/7_Tracing/Figures/7.jpeg>] <./Sections/7_Tracing/Figures/8.jpe
-g, id=1389, 602.25pt x 343.2825pt>
+g, id=1394, 602.25pt x 343.2825pt>
 File: ./Sections/7_Tracing/Figures/8.jpeg Graphic file (type jpg)
 
 <use ./Sections/7_Tracing/Figures/8.jpeg>
 Package pdftex.def Info: ./Sections/7_Tracing/Figures/8.jpeg used on input line
- 218.
+ 250.
 (pdftex.def)             Requested size: 390.0pt x 222.3086pt.
 
-<./Sections/7_Tracing/Figures/9.jpeg, id=1390, 1519.6775pt x 690.58pt>
+<./Sections/7_Tracing/Figures/9.jpeg, id=1395, 1519.6775pt x 690.58pt>
 File: ./Sections/7_Tracing/Figures/9.jpeg Graphic file (type jpg)
 
 <use ./Sections/7_Tracing/Figures/9.jpeg>
 Package pdftex.def Info: ./Sections/7_Tracing/Figures/9.jpeg used on input line
- 231.
+ 270.
 (pdftex.def)             Requested size: 390.0pt x 177.21779pt.
 
-<./Sections/7_Tracing/Figures/10.jpeg, id=1391, 603.25375pt x 139.52126pt>
+<./Sections/7_Tracing/Figures/10.jpeg, id=1396, 603.25375pt x 139.52126pt>
 File: ./Sections/7_Tracing/Figures/10.jpeg Graphic file (type jpg)
 
 <use ./Sections/7_Tracing/Figures/10.jpeg>
 Package pdftex.def Info: ./Sections/7_Tracing/Figures/10.jpeg used on input lin
-e 238.
+e 277.
 (pdftex.def)             Requested size: 390.0pt x 90.19807pt.
  [54 <./Sections/7_Tracing/Figures/8.jpeg>]
-<./Sections/7_Tracing/Figures/11.jpeg, id=1396, 600.2425pt x 134.5025pt>
+<./Sections/7_Tracing/Figures/11.jpeg, id=1401, 600.2425pt x 134.5025pt>
 File: ./Sections/7_Tracing/Figures/11.jpeg Graphic file (type jpg)
 
 <use ./Sections/7_Tracing/Figures/11.jpeg>
 Package pdftex.def Info: ./Sections/7_Tracing/Figures/11.jpeg used on input lin
-e 253.
+e 299.
 (pdftex.def)             Requested size: 390.0pt x 87.39273pt.
  [55 <./Sections/7_Tracing/Figures/9.jpeg> <./Sections/7_Tracing/Figures/10.jpe
 g> <./Sections/7_Tracing/Figures/11.jpeg>] <./Sections/7_Tracing/Figures/12.jpe
-g, id=1401, 246.1697pt x 61.73062pt>
+g, id=1406, 246.1697pt x 61.73062pt>
 File: ./Sections/7_Tracing/Figures/12.jpeg Graphic file (type jpg)
 
 <use ./Sections/7_Tracing/Figures/12.jpeg>
 Package pdftex.def Info: ./Sections/7_Tracing/Figures/12.jpeg used on input lin
-e 262.
+e 310.
 (pdftex.def)             Requested size: 195.0pt x 48.90134pt.
 
-<./Sections/7_Tracing/Figures/13.jpeg, id=1402, 541.02126pt x 439.6425pt>
+<./Sections/7_Tracing/Figures/13.jpeg, id=1407, 541.02126pt x 439.6425pt>
 File: ./Sections/7_Tracing/Figures/13.jpeg Graphic file (type jpg)
 
 <use ./Sections/7_Tracing/Figures/13.jpeg>
 Package pdftex.def Info: ./Sections/7_Tracing/Figures/13.jpeg used on input lin
-e 271.
+e 322.
 (pdftex.def)             Requested size: 312.00119pt x 253.54381pt.
 
-<./Sections/7_Tracing/Figures/14.jpeg, id=1403, 525.46312pt x 504.38437pt>
+<./Sections/7_Tracing/Figures/14.jpeg, id=1408, 525.46312pt x 504.38437pt>
 File: ./Sections/7_Tracing/Figures/14.jpeg Graphic file (type jpg)
 
 <use ./Sections/7_Tracing/Figures/14.jpeg>
 Package pdftex.def Info: ./Sections/7_Tracing/Figures/14.jpeg used on input lin
-e 282.
+e 335.
 (pdftex.def)             Requested size: 312.00119pt x 299.49287pt.
 
-<./Sections/7_Tracing/Figures/15.jpeg, id=1404, 538.01pt x 433.62pt>
+<./Sections/7_Tracing/Figures/15.jpeg, id=1409, 538.01pt x 433.62pt>
 File: ./Sections/7_Tracing/Figures/15.jpeg Graphic file (type jpg)
 
 <use ./Sections/7_Tracing/Figures/15.jpeg>
 Package pdftex.def Info: ./Sections/7_Tracing/Figures/15.jpeg used on input lin
-e 291.
+e 346.
 (pdftex.def)             Requested size: 312.00119pt x 251.46669pt.
  [56 <./Sections/7_Tracing/Figures/12.jpeg> <./Sections/7_Tracing/Figures/13.jp
 eg>]
@@ -1170,29 +1160,29 @@ eg>]
 LaTeX Warning: Text page 57 contains only floats.
 
 [57 <./Sections/7_Tracing/Figures/14.jpeg> <./Sections/7_Tracing/Figures/15.jpe
-g>] <./Sections/7_Tracing/Figures/16.jpeg, id=1414, 1279.78125pt x 967.615pt>
+g>] <./Sections/7_Tracing/Figures/16.jpeg, id=1419, 1279.78125pt x 967.615pt>
 File: ./Sections/7_Tracing/Figures/16.jpeg Graphic file (type jpg)
 
 <use ./Sections/7_Tracing/Figures/16.jpeg>
 Package pdftex.def Info: ./Sections/7_Tracing/Figures/16.jpeg used on input lin
-e 302.
+e 359.
 (pdftex.def)             Requested size: 354.90143pt x 268.33179pt.
 
-<./Sections/7_Tracing/Figures/16_2.jpeg, id=1415, 1282.7925pt x 821.0675pt>
+<./Sections/7_Tracing/Figures/16_2.jpeg, id=1420, 1282.7925pt x 821.0675pt>
 File: ./Sections/7_Tracing/Figures/16_2.jpeg Graphic file (type jpg)
 
 <use ./Sections/7_Tracing/Figures/16_2.jpeg>
 Package pdftex.def Info: ./Sections/7_Tracing/Figures/16_2.jpeg used on input l
-ine 303.
+ine 360.
 (pdftex.def)             Requested size: 354.90143pt x 227.1536pt.
 ) [58 <./Sections/7_Tracing/Figures/16.jpeg> <./Sections/7_Tracing/Figures/16_2
 .jpeg>]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <24.88> on input line 84.
+(Font)              <24.88> on input line 85.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <20.74> on input line 84.
+(Font)              <20.74> on input line 85.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <17.28> on input line 84.
+(Font)              <17.28> on input line 85.
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 89.
  [59]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 89.
@@ -1204,27 +1194,28 @@ Package rerunfilecheck Info: File `COMPSs_Manual.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 89.
  ) 
 Here is how much of TeX's memory you used:
- 10029 strings out of 493315
- 142028 string characters out of 6145893
- 437414 words of memory out of 5000000
- 12440 multiletter control sequences out of 15000+600000
- 12367 words of font info for 44 fonts, out of 8000000 for 9000
+ 10358 strings out of 493315
+ 146058 string characters out of 6145893
+ 444857 words of memory out of 5000000
+ 12751 multiletter control sequences out of 15000+600000
+ 12930 words of font info for 46 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 35i,10n,60p,851b,1950s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 35i,10n,60p,402b,1901s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/share/texm
-f/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf/fonts/type1/publi
-c/amsfonts/cm/cmmi10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi1
-2.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/te
-xmf/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf/fonts/type1/publ
-ic/amsfonts/cm/cmr17.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr7.
-pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf
-/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public
-/amsfonts/cm/cmti12.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmtt10
-.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on COMPSs_Manual.pdf (64 pages, 2348449 bytes).
+f/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf/fonts/type1/publi
+c/amsfonts/cm/cmbx12.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi1
+0.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/t
+exmf/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf/fonts/type1/pub
+lic/amsfonts/cm/cmr12.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr1
+7.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/tex
+mf/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf/fonts/type1/public
+/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmti12
+.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/te
+xmf/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on COMPSs_Manual.pdf (64 pages, 2367465 bytes).
 PDF statistics:
- 1651 PDF objects out of 1728 (max. 8388607)
- 1526 compressed objects within 16 object streams
- 874 named destinations out of 1000 (max. 500000)
+ 1660 PDF objects out of 1728 (max. 8388607)
+ 1534 compressed objects within 16 object streams
+ 878 named destinations out of 1000 (max. 500000)
  663 words of extra memory for PDF output out of 10000 (max. 10000000)
 

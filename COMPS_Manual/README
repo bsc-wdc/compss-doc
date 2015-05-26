@@ -2,7 +2,6 @@
 - COMPSs User Manual -
 ----------------------
 
-
 Version: 1.2
 Revision: 3.7
 Project created with Kile.
@@ -10,13 +9,11 @@ Project created with Kile.
 
 Compile with Kile:
 ------------------
-pdflatex default configuration
+Default pdflatex configuration.
 For line adjustment press F10.
+Suggestion: use "evince" pdf viewer (does not require to close and open the pdf between compilations)
 
 
 Compile from command line:
 -------------------------
 pdflatex -interaction=nonstopmode COMPSs_Manual.tex 
-
-
-
