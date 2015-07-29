@@ -1,5 +1,5 @@
 \section{Developing COMPSs applications}
-\label{Developing}
+\label{sec:Developing}
 
 In this section the steps to develop a COMPSs application will be illustrated; the sequential {\bf Simple application}
 will be used to explain an application porting to COMPSs. The user is required to select a set of
@@ -33,8 +33,7 @@ The main application code of Simple app ({\bf Simple.java}) will be executed in 
 {\bf increment()} method. COMPSs, as mentioned above, will replace at execution time the call to this method
 generating a remote task on the remote node.
 
-\vspace{0.5cm}
-\begin{lstlisting} 
+\begin{lstlisting}
 package simple;
 
 import java.io.FileInputStream;
@@ -64,7 +63,9 @@ public class Simple {
     //----------------------------------------------//
     //           Execution of the program           //
     //----------------------------------------------//
-    //       SimpleImpl.increment(counterName);     //
+    
+    %*{\bf SimpleImpl.increment(counterName);}*)
+    
     //----------------------------------------------//
     //    Reading from an object stored in a File   //
     //----------------------------------------------//
@@ -85,7 +86,6 @@ public class Simple {
 The following code is the implementation of the remote method of the {\it Simple} application ({\bf SimpleImpl.java})
 that will be executed remotely by COMPSs.
 
-\vspace{0.5cm}
 \begin{lstlisting}
 package simple;
 
@@ -173,7 +173,6 @@ needs a single input parameter, a string containing a path to the file counterFi
 there are constraints on the minimum number of processors and minimum memory size needed to run the
 method.
 
-\vspace{0.5cm}
 \begin{lstlisting}
 package simple;
 
@@ -185,10 +184,10 @@ import  integratedtoolkit.types.annotations.Parameter.Type;
 
 public interface SimpleItf {
 
-@Constraints(processorCPUCount = 1, memoryPhysicalSize = 0.3f)
-  @Method(declaringClass = "simple.SimpleImpl")
+  %*{\bf @Constraints(processorCPUCount = 1, memoryPhysicalSize = 0.3f) }*)
+  %*{\bf @Method(declaringClass = "simple.SimpleImpl") }*)
   void increment(
-      @Parameter(type = Type.FILE, direction = Direction.INOUT)
+      %*{\bf @Parameter(type = Type.FILE, direction = Direction.INOUT) }*)
       String file
   );
 
@@ -216,12 +215,12 @@ The following code depicts an example where the developer sorts an integer array
 methods: merge sort and quick sort that are respectively hosted in the {\it packagepath.Mergesort} and
 {\it packagepath.Quicksort} classes.
 
-\vspace{0.5cm}
 \begin{lstlisting}
-@Method(declaringClass = { "packagepath.Mergesort",
-                           "packagepath.Quicksort"})
+%*{\bf @Method(declaringClass = \{ "packagepath.Mergesort", }*)
+                         %*{\bf "packagepath.Quicksort" \}) }*)
+                           
 void sort(
-    @Parameter(type = Type.OBJECT, direction = Direction.INOUT)
+    %*{\bf @Parameter(type = Type.OBJECT, direction = Direction.INOUT) }*)
     int[] array
 );
 \end{lstlisting}
@@ -232,13 +231,13 @@ Through the @Constraints annotation, developers can specify the common constrain
 methods. The following example states that for both sorting algorithms only one core is required to run the
 method.
 
-\vspace{0.5cm}
 \begin{lstlisting}
-@Constraints(processorCoreCount = 1)
-@Method(declaringClass = { "packagepath.Mergesort",
-                           "packagepath.Quicksort"})
+%*{\bf @Constraints(processorCoreCount = 1) }*)
+%*{\bf @Method(declaringClass = \{ "packagepath.Mergesort", }*) 
+                         %*{\bf "packagepath.Quicksort"\}) }*)
+
 void sort(
-    @Parameter(type = Type.OBJECT, direction = Direction.INOUT)
+    %*{\bf @Parameter(type = Type.OBJECT, direction = Direction.INOUT) }*)
     int[] array
 );
 \end{lstlisting}
@@ -250,16 +249,15 @@ implementation. Since the Mergesort has a higher memory consumption than the qui
 example sets a requirement of 1 core and 2GB of memory for the mergesort implementation and 1 core and
 500MB of memory for the quicksort.
 
-\vspace{0.5cm}
 \begin{lstlisting}
-@Constraints(processorCoreCount = 1)
-@MultiConstraints({
-        @Constraints(memoryPhysicalSize= (float)2.0),
-        @Constraints(memoryPhysicalSize= (float)0.5)})
-@Method(declaringClass = { "packagepath.Mergesort",
-                           "packagepath.Quicksort"})
+%*{\bf @Constraints(processorCoreCount = 1) }*)
+%*{\bf @MultiConstraints(\{ }*)
+        %*{\bf @Constraints(memoryPhysicalSize= (float)2.0), }*)
+        %*{\bf @Constraints(memoryPhysicalSize= (float)0.5)\}) }*)
+%*{\bf @Method(declaringClass = \{ "packagepath.Mergesort",  }*)
+                         %*{\bf "packagepath.Quicksort"\}) }*)
 void sort(
-    @Parameter(type = Type.OBJECT, direction = Direction.INOUT)
+    %*{\bf @Parameter(type = Type.OBJECT, direction = Direction.INOUT) }*)
     int[] array
 );
 \end{lstlisting}

@@ -18,39 +18,36 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%% CONFIGURATION %%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \input{configuration.tex}
+
 \title{\Huge{\bf COMP Superscalar}}
-\author{\huge{\textit{User Guide}}}
-\date{\huge{Version 1.3}}
+\author{\huge{User Guide}}
+\date{\huge{Version 1.2}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%% DOCUMENT %%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{document}
 
   %%%%%%%%%%%% TITLE PAGE %%%%%%%%%%%%%
+  
   \hypersetup{pageanchor=false}
-  \begin{titlepage} 
-    \begin{center} 
-      \includegraphics[width=0.3\textwidth]{./Figures/Logos/degradado-naranja-compss.jpg}~\\[1cm] 
-      \textsc{\LARGE COMP Superscalar}\\[1.5cm] 
-      
-      \HRule \\[0.4cm] 
-      { \huge \bfseries User Manual \\[0.4cm] } 
-      \HRule \\[1.5cm] 
-
-      { \large \textsc{Version: 1.3 }} \\
-      { \large \today } 
-      
-      \vfill 
-      % Bottom of the page
-      \includegraphics[width=0.5\textwidth]{./Figures/bsc_280.jpg}~\\[1cm]
-    \end{center} 
+  \begin{titlepage}
+    \maketitle
+     \begin{figure}[b!]
+      \centering
+      \includegraphics[width=120mm]{./Figures/bsc_280.jpg}
+      %\caption{BSC logo \label{bsc_logo}}
+     \end{figure}
+    \thispagestyle{empty}
   \end{titlepage}
   \hypersetup{pageanchor=true}
   
   %%%%%%%% TABLE OF CONTENTS %%%%%%%%%%
+  
   \pagenumbering{roman}
   \setcounter{tocdepth}{6}
   \tableofcontents
@@ -60,6 +57,7 @@
   \newpage
 
   %%%%%%%%%%%%% CONTENTS %%%%%%%%%%%%%%
+  
   \pagenumbering{arabic}
     
   \input{./Sections/1_Introduction/Introduction.tex}
@@ -77,6 +75,7 @@
   \input{./Sections/7_Tracing/Tracing.tex}
 
   %%%%%%%%%%%%% END PAGE %%%%%%%%%%%%%%
+
   \newpage
 
   \vspace*{\fill} 
