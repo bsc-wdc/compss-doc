@@ -53,4 +53,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%% OTHER CONFIGURATION %%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+% Horizontal line
+\newcommand{\HRule}{
+  \rule{\linewidth}{0.5mm}
+}
+
+% Color box for comments
+\newcommand{\colorComment}[1]{
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{0.8\textwidth}}
+        \cellcolor{orange}\begin{center}
+	  #1 \\
+        \end{center}
+        \\
+    \end{tabular}
+\end{table}
+}

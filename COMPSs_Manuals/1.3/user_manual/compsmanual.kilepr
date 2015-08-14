@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1.3
-lastDocument=Sections/1_Introduction/Introduction.tex
+lastDocument=COMPSs_Manual.tex
 masterDocument=COMPSs_Manual.tex
 name=COMPS Manual
 pkg_extIsRegExp=false
@@ -77,20 +77,20 @@ archive=true
 column=9
 encoding=UTF-8
 highlight=LaTeX
-line=64
+line=95
 mode=LaTeX
 open=true
 order=0
 
 [item:Sections/1_Introduction/Introduction.tex]
 archive=true
-column=24
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=5
+line=0
 mode=LaTeX
 open=true
-order=1
+order=2
 
 [item:Sections/2_Developing_Apps/Development.tex]
 archive=true
@@ -104,10 +104,10 @@ order=1
 
 [item:Sections/3_Running_Apps/Running.tex]
 archive=true
-column=0
+column=46
 encoding=UTF-8
 highlight=LaTeX
-line=126
+line=112
 mode=LaTeX
 open=false
 order=3
@@ -124,10 +124,10 @@ order=4
 
 [item:Sections/5_Configuration/Configuration.tex]
 archive=true
-column=57
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=50
+line=504
 mode=LaTeX
 open=false
 order=1
@@ -144,13 +144,13 @@ order=2
 
 [item:Sections/7_Tracing/Tracing.tex]
 archive=true
-column=12
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=174
+line=0
 mode=LaTeX
-open=false
-order=3
+open=true
+order=1
 
 [item:compsmanual.kilepr]
 archive=true
@@ -164,13 +164,13 @@ order=-1
 
 [view-settings,view=0,item:COMPSs_Manual.tex]
 CursorColumn=9
-CursorLine=64
+CursorLine=95
 JumpList=
-ViMarks=.,49,17,[,49,17,],49,17
+ViMarks=.,23,9,[,23,8,],23,9
 
 [view-settings,view=0,item:Sections/1_Introduction/Introduction.tex]
-CursorColumn=24
-CursorLine=5
+CursorColumn=0
+CursorLine=0
 JumpList=
 ViMarks=.,5,23,[,5,23,],5,23
 
@@ -181,8 +181,8 @@ JumpList=
 ViMarks=.,219,31,[,219,25,],219,31
 
 [view-settings,view=0,item:Sections/3_Running_Apps/Running.tex]
-CursorColumn=0
-CursorLine=126
+CursorColumn=46
+CursorLine=112
 JumpList=
 ViMarks=.,119,112,[,120,0,],-1,-1
 
@@ -193,8 +193,8 @@ JumpList=
 ViMarks=.,88,104,[,89,0,],-1,-1
 
 [view-settings,view=0,item:Sections/5_Configuration/Configuration.tex]
-CursorColumn=57
-CursorLine=50
+CursorColumn=0
+CursorLine=504
 JumpList=
 ViMarks=.,50,56,[,50,52,],50,56
 
@@ -205,7 +205,7 @@ JumpList=
 ViMarks=.,700,14,[,700,11,],700,14
 
 [view-settings,view=0,item:Sections/7_Tracing/Tracing.tex]
-CursorColumn=12
-CursorLine=174
+CursorColumn=0
+CursorLine=0
 JumpList=
-ViMarks=.,177,80,[,177,80,],177,81
+ViMarks=.,-1,-1,[,-1,-1,],-1,-1
