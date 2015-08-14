@@ -1,0 +1,34 @@
+\section{Additional Configuration}
+\label{sec:Additional_Configuration}
+
+
+\subsection{Configure SSH passwordless}
+By default, COMPSs uses SSH libraries for communication between nodes. Consequently, after COMPSs is installed on a set of machines,
+the SSH keys must be configured on those machines so that COMPSs can establish passwordless connections between them. This requires
+to install the OpenSSH package (if not present already) and follow these steps:
+\begin{enumerate}
+ \item Generate an SSH key pair
+       \begin{lstlisting}[language=bash]
+	  $ ssh-keygen -t dsa
+       \end{lstlisting}
+ \item Distribute the public key to all the machines and configure it as authorized
+       \begin{lstlisting}[language=bash]
+          For every machine:
+	  $ scp ~/.ssh/id_dsa.pub machine:./myDSA.pub
+	  $ ssh machine "cat ./myDSA.pub >> ~/.ssh/authorized_keys; rm ./myDSA.pub"
+       \end{lstlisting}
+ \item Check that passwordless SSH connections are working fine
+       \begin{lstlisting}[language=bash]
+          For every machine:
+	  $ ssh machine
+       \end{lstlisting}
+\end{enumerate}
+
+\subsection{Configure the COMPSs Cloud Connectors}
+This section provides information about the additional configuration needed for some Cloud Connectors.
+
+\subsubsection{OCCI (Open Cloud Computing Interface) connector}
+In order to execute a COMPSs application using cloud resources, the rOCCI (Ruby OCCI) connector has to be configured properly.
+The connector uses the rOCCI CLI client (upper versions from 4.2.5) which has to be installed in the node where the COMPSs main
+application runs. The client can be installed following the instructions detailed at 
+\url{http://appdb.egi.eu/store/software/rocci.cli}
