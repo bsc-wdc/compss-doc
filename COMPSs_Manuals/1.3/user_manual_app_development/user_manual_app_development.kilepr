@@ -86,7 +86,7 @@ highlight=LaTeX
 line=228
 mode=LaTeX
 open=false
-order=2
+order=1
 
 [item:Sections/3_Results_and_Logs/Results_and_Logs.tex]
 archive=true
@@ -96,7 +96,7 @@ highlight=LaTeX
 line=112
 mode=LaTeX
 open=false
-order=2
+order=1
 
 [item:Sections/4_Tools/Tools.tex]
 archive=true
@@ -106,7 +106,7 @@ highlight=LaTeX
 line=128
 mode=LaTeX
 open=false
-order=2
+order=1
 
 [item:Sections/5_Common_Issues/Common_Issues.tex]
 archive=true
@@ -116,9 +116,9 @@ highlight=LaTeX
 line=504
 mode=LaTeX
 open=false
-order=2
+order=1
 
-[item:user_manual_app_execution.kilepr]
+[item:user_manual_app_development.kilepr]
 archive=true
 column=1
 encoding=
