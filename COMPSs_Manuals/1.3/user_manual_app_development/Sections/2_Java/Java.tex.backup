@@ -1,0 +1,314 @@
+\section{Java}
+\label{sec:Java}
+
+In this section the steps to develop a COMPSs application will be illustrated; the sequential {\bf Simple application}
+will be used to explain an application porting to COMPSs. The user is required to select a set of
+methods, invoked in a sequential application, to be run as remote tasks on the available resources.
+
+A COMPSs application is composed of three parts:
+\begin{itemize}
+ \item {\bf Main application code:} the code that is executed sequentially and contains the calls to the user-selected methods that will be executed on the Cloud.
+ \item {\bf Remote methods code:} the implementation of the remote tasks.
+ \item {\bf Java annotated interface:} It declares the selected methods to be run as remote tasks and metadata used to schedule the tasks.
+\end{itemize}
+
+The main application code (sequential) will have the name of the application, always starting with capital
+letter, in this case will be {\bf Simple.java}. The Java annotated interface will be named as {\it application name+Itf.java} 
+in this case will be {\bf SimpleItf.java}. And the code that implements the remote tasks will be called as
+{\it application name + Impl.java}, in this case will be {\bf SimpleImpl.java}.
+
+All code examples are in the {\bf /home/user/workspace/} folder of the development environment.
+
+\subsection{Main application code}
+
+In COMPSs the application is kept completely unchanged, i.e. no API calls need to be included in the main
+application code in order to run the selected tasks on the nodes.
+
+The COMPSs runtime is in charge of replacing the invocations to the user-selected methods with the
+creation of remote tasks also taking care of the access to files from the main application code.
+
+Let’s consider the Simple application example that takes an integer as input parameter and increases it by one unit.
+
+The main application code of Simple app ({\bf Simple.java}) will be executed in a sequential way except the
+{\bf increment()} method. COMPSs, as mentioned above, will replace at execution time the call to this method
+generating a remote task on the remote node.
+
+\begin{lstlisting}[language=java]
+package simple;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import simple.SimpleImpl;
+
+public class Simple {
+
+  public static void main(String[] args) {
+    String counterName = "counter";
+    int initialValue = args[0];
+
+//------------------------------------------------------------//
+//Creation of the file which will contain the counter variable//
+//------------------------------------------------------------//
+    try {
+       FileOutputStream fos = new FileOutputStream(counterName);
+       fos.write(initialValue);
+       System.out.println("Initial counter value is "
+                           +initialValue);
+       fos.close();
+    }catch(IOException ioe) {
+       ioe.printStackTrace();
+    }
+    
+    //----------------------------------------------//
+    //           Execution of the program           //
+    //----------------------------------------------//
+    
+    %*{\bf SimpleImpl.increment(counterName);}*)
+    
+    //----------------------------------------------//
+    //    Reading from an object stored in a File   //
+    //----------------------------------------------//
+    try {
+       FileInputStream fis = new FileInputStream(counterName);
+       System.out.println("Final counter value is "+fis.read());
+       fis.close();
+    }catch(IOException ioe) {
+       ioe.printStackTrace();
+    }
+  }
+}
+\end{lstlisting}
+
+
+\subsection{Remote methods code}
+
+The following code is the implementation of the remote method of the {\it Simple} application ({\bf SimpleImpl.java})
+that will be executed remotely by COMPSs.
+
+\begin{lstlisting}[language=java]
+package simple;
+
+import  java.io.FileInputStream;
+import  java.io.FileOutputStream;
+import  java.io.IOException;
+import  java.io.FileNotFoundException;
+
+public class SimpleImpl {
+  public static void increment(String counterFile) {
+    try{
+      FileInputStream fis = new FileInputStream(counterFile);
+      int count = fis.read();
+      fis.close();
+      
+      FileOutputStream fos = new FileOutputStream(counterFile);
+      fos.write(++count);
+      fos.close();
+    }catch(FileNotFoundException fnfe){
+      fnfe.printStackTrace();
+    }catch(IOException ioe){
+      ioe.printStackTrace();
+    }
+  }
+}
+\end{lstlisting}
+
+
+\subsection{Java annotated interface}
+
+The Java interface is used to declare the methods to be executed remotely along with Java annotations that
+specify the necessary metadata about the tasks. The metadata can be of three different types:
+
+\begin{enumerate}
+ \item For each parameter of a method, the data type (currently {\it File} type, primitive types and the {\it String} type are supported) and its directions (IN, OUT or INOUT).
+ \item The Java class that contains the code of the method.
+ \item The constraints that a given resource must fulfil to execute the method, such as the number of processors or main memory size.
+\end{enumerate}
+
+Here follows a complete and detailed explanation of the usage of the metadata:
+
+\begin{itemize}
+ \item {\bf Method-level Metadata:} for each selected method, the following metadata has to be defined:
+       \begin{itemize}
+         \item {\bf @Method:} Mandatory. It specifies the class that implements the method.
+         \item {\bf @Constraints:} Mandatory. The user can specify the capabilities that a resource must have in order
+               to run a method. The COMPSs runtime will create a VM (in a cloud environment), that fits the
+               specified requirements in order to perform the execution.
+               \begin{itemize}
+                 \item Processor:
+                       \begin{itemize}
+			  \item \textbf{processorArchitecture} Required processor architecture \newline
+                                                               Default: "[unassigned]"
+			  \item \textbf{processorCPUCount} Required number of CPUs for the host \newline
+							   Default: 0
+			  \item \textbf{processorCoreCount} Required number of Cores \newline
+							    Default: 1
+			  \item \textbf{processorSpeed} Required processor frequency \newline
+							Default: 0.0f
+                       \end{itemize}
+                \item Memory:
+                       \begin{itemize}
+			  \item \textbf{memoryPhysicalSize} Required physical memory size in GBs \newline
+                                                            Default: 0.0f
+			  \item \textbf{memoryVirtualSize} Required virtual memory size in GBs \newline
+							   Default: 0.0f
+			  \item \textbf{memoryAccessTime} Top memory access time in nanoseconds \newline
+							  Default: 0.0f
+			  \item \textbf{memorySTR Minimal} Memory bandwith in GB/s \newline
+							   Default: 0.0f
+                       \end{itemize}
+                \item Storage:
+                       \begin{itemize}
+			  \item \textbf{storageElemSize} Amount of required storage space in GB \newline
+							 Default: 0.0f
+			  \item \textbf{storageElemAccessTime} Top access time to the storage system in milliseconds \newline
+							       Default: 0.0f
+			  \item \textbf{storageElemSTR Minimal} Storage bandwith in MB/s \newline
+								Default: 0.0f
+                       \end{itemize}
+                \item Miscellaneous:
+		       \begin{itemize}
+			  \item \textbf{operatingSystemType} Required operative system \newline
+							     Default: "[unassigned]"
+			  \item \textbf{hostQueue} Required queues \newline
+						   Default: "[unassigned]"
+			  \item \textbf{appSoftware} Required applications \newline
+						     Default: "[unassigned]"
+                       \end{itemize}
+               \end{itemize}
+       \end{itemize}
+
+ \item {\bf Parameter-level Metadata (@Parameter):} for each parameter and method, the user must define:
+       \begin{itemize}
+        \item {\bf Direction:} {\it Direction.IN, Direction.INOUT or Direction.OUT}
+        \item {\bf Type:} COMPSs supports the following types for task parameters:
+              \begin{itemize}
+               \item {\bf Basic types:} {\it Type.BOOLEAN, Type.CHAR, Type.BYTE, Type.SHORT, Type.INT, Type.LONG,
+                     Type.FLOAT, Type. DOUBLE}. They can only have {\bf IN} direction, since primitive types in Java are
+                     always passed by value.
+               \item {\bf String:} {\it Type.STRING}. It can only have {\bf IN} direction, since Java Strings are immutable.
+               \item {\bf File:} {\it Type.FILE}. It can have any direction (IN, OUT or INOUT). The real Java type associated
+                     with a FILE parameter is a String that contains the path to the file. However, if the user specifies
+                     a parameter as a FILE, COMPSs will treat it as such.
+               \item {\bf Object:} {\it Type.Object}. It can have any direction (IN, OUT or INOUT).
+              \end{itemize}
+        \item {\bf Return type:} Any object, a basic type or a generic class object.
+        \item {\bf Method modifiers:} the method has to be {\bf STATIC}.
+       \end{itemize}
+\end{itemize}
+
+    
+The Java annotated interface of the Simple app example (SimpleItf.java) declares the {\it Increment()} method
+that will be executed remotely. The method implementation can be found in simple.SimpleImpl class and
+needs a single input parameter, a string containing a path to the file counterFile. Besides, in this example
+there are constraints on the minimum number of processors and minimum memory size needed to run the
+method.
+
+\begin{lstlisting}[language=java]
+package simple;
+
+import  integratedtoolkit.types.annotations.Constraints;
+import  integratedtoolkit.types.annotations.Method;
+import  integratedtoolkit.types.annotations.Parameter;
+import  integratedtoolkit.types.annotations.Parameter.Direction;
+import  integratedtoolkit.types.annotations.Parameter.Type;
+
+public interface SimpleItf {
+
+  %*{\bf @Constraints(processorCPUCount = 1, memoryPhysicalSize = 0.3f) }*)
+  %*{\bf @Method(declaringClass = "simple.SimpleImpl") }*)
+  void increment(
+      %*{\bf @Parameter(type = Type.FILE, direction = Direction.INOUT) }*)
+      String file
+  );
+
+}
+\end{lstlisting}
+
+
+\subsection{Equivalent remote methods}
+Since version 1.2, the COMPSs programming model allows developers to define sets of equivalent remote
+methods. Thus, an invocation to any of the methods in the set might produce the execution of another
+method of the set in the remote resource.
+
+The coding of the application does not change, the remote methods are implemented as regular Java
+methods and the main code of the application is a sequential code that contains calls to these methods. The
+only component of the application that changes for defining a set of equivalent methods is the Java
+annotated interface.
+
+The programming model considers all the equivalent methods of a set as different implementations of the
+same method. Therefore, the name and parameters of all the implementations must coincide; the only
+difference is the class where the method is implemented. This is reflected in the attribute declaringClass of
+the @Method annotation. Instead of stating that the method is implemented in a single class, the
+programmer can define an array of declaring classes for the method.
+
+The following code depicts an example where the developer sorts an integer array using two different
+methods: merge sort and quick sort that are respectively hosted in the {\it packagepath.Mergesort} and
+{\it packagepath.Quicksort} classes.
+
+\begin{lstlisting}[language=java]
+%*{\bf @Method(declaringClass = \{ "packagepath.Mergesort", }*)
+                         %*{\bf "packagepath.Quicksort" \}) }*)
+                           
+void sort(
+    %*{\bf @Parameter(type = Type.OBJECT, direction = Direction.INOUT) }*)
+    int[] array
+);
+\end{lstlisting}
+
+As independent remote methods, the sets of equivalent methods might have common restrictions to be
+fulfilled by the resource hosting the execution. Or even, each implementation might have specific constraints.
+Through the @Constraints annotation, developers can specify the common constraints for a whole set of
+methods. The following example states that for both sorting algorithms only one core is required to run the
+method.
+
+\begin{lstlisting}[language=java]
+%*{\bf @Constraints(processorCoreCount = 1) }*)
+%*{\bf @Method(declaringClass = \{ "packagepath.Mergesort", }*) 
+                         %*{\bf "packagepath.Quicksort"\}) }*)
+
+void sort(
+    %*{\bf @Parameter(type = Type.OBJECT, direction = Direction.INOUT) }*)
+    int[] array
+);
+\end{lstlisting}
+
+However, these sorting algorithms have different memory consumption, thus each algorithm might require a
+specific amount of memory and that should be stated in the implementation constraints. For this purpose, the
+developer can add a @Multiconstraints annotation containing the specific constraints for each
+implementation. Since the Mergesort has a higher memory consumption than the quicksort, the following
+example sets a requirement of 1 core and 2GB of memory for the mergesort implementation and 1 core and
+500MB of memory for the quicksort.
+
+\begin{lstlisting}[language=java]
+%*{\bf @Constraints(processorCoreCount = 1) }*)
+%*{\bf @MultiConstraints(\{ }*)
+        %*{\bf @Constraints(memoryPhysicalSize= (float)2.0), }*)
+        %*{\bf @Constraints(memoryPhysicalSize= (float)0.5)\}) }*)
+%*{\bf @Method(declaringClass = \{ "packagepath.Mergesort",  }*)
+                         %*{\bf "packagepath.Quicksort"\}) }*)
+void sort(
+    %*{\bf @Parameter(type = Type.OBJECT, direction = Direction.INOUT) }*)
+    int[] array
+);
+\end{lstlisting}
+
+\subsection{Application Compilation}
+
+\subsection{Application Execution}
+In order to run a Java application with COMPSs, the script runcompss can be used. An example of an invocation of the script is:
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ runcompss simple.Simple 1
+\end{lstlisting}
+
+For full description about the options available for the runcompss command please check the \textit{COMPSs User Manual: Application
+Execution} available at our webpage \url{http://compss.bsc.es} . 
+\newline
+~ \newline
+
+In addition to Java, COMPSs supports the execution of applications written in other languages by 
+means of bindings. A binding manages the interaction of the not-Java application with the COMPSs 
+Java runtime, providing the necessary language translation.
+
+The next sections describe the Python and C/C++ language bindings provided by COMPSs.
