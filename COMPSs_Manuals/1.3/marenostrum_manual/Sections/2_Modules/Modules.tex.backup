@@ -1,19 +1,55 @@
-\section{RedHat-based distributions (yum)}
-\label{sec:RedHat_yum}
+\section{COMPSs Modules}
+\label{sec:Modules}
 
 
-\subsection{Prerequisites}
-The commands described on the following sections require root privileges and Internet connection.
-
-Once the installation process is finished, please log out and back in again to complete the installation. 
-
-\subsection{Package Repository}
-To add the package repository you can easily download our predefined lists by executing the following command:
+\subsection{Available modules}
+COMPSs is configured in MareNostrum (MN3) as a Linux Module. Type \textit{module available COMPSs} to list the available COMPSs modules 
+through Linux Module configuration and \textit{module load COMPSs/<version>} to load it.
 \begin{lstlisting}[language=bash]
-x86_64      :  wget http://compss.bsc.es/releases/repofiles/repo_rpm_centos_x86-64.repo -O /etc/yum.repos.d/compss-framework_x86-64.repo
-noarch      :  wget http://compss.bsc.es/releases/repofile/repo_rpm_centos_noarch.repo -O /etc/yum.repos.d/compss-framework_noarch.repo
+$ module available COMPss
+---------------------------- /apps/modules/modulefiles/tools ----------------------------
+COMPSs/0.0      COMPSs/0.2_Nested       COMPSs/1.1.2_gpfs       COMPSs/1.2       COMPSs/release(default)
+COMPSs/0.1      COMPSs/1.1.2_friman     COMPSs/1.1.2_scratch    COMPSs/1.3       COMPSs/trunk
+
+
+$ module load COMPSs/release
+load java/1.7.0u55 (PATH, MANPATH, JAVA_HOME, JAVA_ROOT, JAVA_BINDIR, SDK_HOME, JDK_HOME, JRE_HOME)
+load MKL/11.0.1 (LD_LIBRARY_PATH)
+load PYTHON/2.7.3 (PATH, MANPATH, LD_LIBRARY_PATH, C_INCLUDE_PATH)
+load COMPSs/release (PATH, MANPATH, IT_HOME)
 \end{lstlisting}
 
+The following command can be run to check if the correct COMPSs version has been loaded:
+\begin{lstlisting}[language=bash]
+$ runcompss --version
+COMPSs version 1.3
+
+\end{lstlisting}
+
+\subsection{Configuration}
+The COMPSs module contains \textbf{all} the COMPSs dependencies, including Java, Python and MKL. Each COMPSs module la loads different
+versions of its dependencies 
+
+Each COMPSs version loads its own 
+dependencies. Thus, to mantain the homogeneous
+enviorment please check your environment
+
+Since COMPSs jobs will use several nodes,
+To add the package repository you can easily download our predefined lists by executing the following command:
+\begin{lstlisting}[language=bash]
+x86_64      :  wget http://compss.bsc.es/releases/repofiles/repo_deb_x86-64.list -O /etc/apt/sources.list.d/compss-framework_x86-64.list
+noarch      :  wget http://compss.bsc.es/releases/repofiles/repo_deb_noarch.list -O /etc/apt/sources.list.d/compss-framework_noarch.list
+\end{lstlisting}
+
+Next you need to add the repository key by executing:
+\begin{lstlisting}[language=bash]
+wget -qO - http://compss.bsc.es/repo/debs/deb-gpg-bsc-grid.pub.key | apt-key add -
+\end{lstlisting}
+
+And finally, refresh the apt-get repositories:
+\begin{lstlisting}[language=bash]
+apt-get update
+\end{lstlisting}
 
 \subsection{Installation}
 Despite the fact that we recomend users to install the complete COMPSs Framework, we have built different packages to allow users
@@ -28,7 +64,7 @@ and skip to next section.}
        \newline
        To install this package please run:
        \begin{lstlisting}[language=bash]
-	  yum install compss-framework
+	  apt-get install compss-framework
        \end{lstlisting}
  \item \textbf{COMPSs Runtime} \newline
        Contains the COMPSs runtime to support the native functionalities. Install this package if you only need to support Java
@@ -36,7 +72,7 @@ and skip to next section.}
        \newline
        To install this package please run:
        \begin{lstlisting}[language=bash]
-	  yum install compss-runtime
+	  apt-get install compss-runtime
        \end{lstlisting}
        This package is composed of two sub-packages:
        \begin{itemize}
@@ -45,14 +81,14 @@ and skip to next section.}
 	      \newline
 	      To install this package please run:
 	      \begin{lstlisting}[language=bash]
-		  yum install compss-engine
+		  apt-get install compss-engine
 	      \end{lstlisting}
         \item \textbf{COMPSs Worker} \newline
               Contains the minimum installation to allow any machine run as a COMPSs worker.
               \newline
               To install this package please run:
 	      \begin{lstlisting}[language=bash]
-		  yum install compss-worker
+		  apt-get install compss-worker
 	      \end{lstlisting}
        \end{itemize}
 
@@ -61,7 +97,7 @@ and skip to next section.}
        \newline
        To install this package please run:
        \begin{lstlisting}[language=bash]
-	  yum install compss-bindings
+	  apt-get install compss-bindings
        \end{lstlisting}
        This package is composed of three sub-packages:
        \begin{itemize}
@@ -70,21 +106,21 @@ and skip to next section.}
 	      \newline
 	      To install this package please run:
 	      \begin{lstlisting}[language=bash]
-		  yum install compss-bindings-common
+		  apt-get install compss-bindings-common
 	      \end{lstlisting}
         \item \textbf{COMPSs C/C++ Binding} \newline
 	      Contains the C/C++ Binding
 	      \newline
 	      To install this package please run:
 	      \begin{lstlisting}[language=bash]
-		  yum install compss-c-binding
+		  apt-get install compss-c-binding
 	      \end{lstlisting}
         \item \textbf{COMPSs Python Binding} \newline
 	      Contains the Python Binding
 	      \newline
 	      To install this package please run:
 	      \begin{lstlisting}[language=bash]
-		  yum install compss-python-binding
+		  apt-get install compss-python-binding
 	      \end{lstlisting}
        \end{itemize}
 
@@ -93,7 +129,7 @@ and skip to next section.}
        \newline
        To install this package please run:
        \begin{lstlisting}[language=bash]
-	  yum install compss-tools
+	  apt-get install compss-tools
        \end{lstlisting}
        This package is composed of three sub-packages:
        \begin{itemize}
@@ -102,14 +138,14 @@ and skip to next section.}
 	      \newline
 	      To install this package please run:
 	      \begin{lstlisting}[language=bash]
-		  yum install compss-extrae
+		  apt-get install compss-extrae
 	      \end{lstlisting}
         \item \textbf{COMPSs Monitor} \newline
               Contains the COMPSs Monitor tool needed to monitor the application execution. 
               \newline
 	      To install this package please run:
 	      \begin{lstlisting}[language=bash]
-		  yum install compss-monitor
+		  apt-get install compss-monitor
 	      \end{lstlisting}
        \end{itemize}
 
@@ -118,7 +154,7 @@ and skip to next section.}
        \newline
        To install this package please run:
        \begin{lstlisting}[language=bash]
-	  yum install compss-cloud
+	  apt-get install compss-cloud
        \end{lstlisting}
 \end{itemize} 
 
