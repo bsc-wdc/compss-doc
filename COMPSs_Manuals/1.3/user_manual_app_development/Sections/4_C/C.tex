@@ -1,4 +1,4 @@
-\section{C Binding}
+\section{C/C++ Binding}
 \label{sec:C}
 
 COMPSs provides a binding for C and C++ applications. The new C++ version in the current release 
@@ -319,7 +319,9 @@ Command succesful.
 
 \emph{[The previous output has been cut for simplicity]}
 
-\subsection{Application Environment}
+
+\subsection{Application Execution}
+\subsubsection{Environment}
 The following environment variables must be defined before executing a COMPSs C/C++ application:
             
 \begin{center}
@@ -328,8 +330,7 @@ JAVA\_HOME: Java JDK installation directory
 (e.g. /usr/lib/jvm/java-7-openjdk/)
 \end{center}
 
-
-\subsection{Application Execution}
+\subsubsection{Command}
 After compiling the application, two directories are generated, the master and the worker directories. 
 The master directory contains a binary called as the main file, which is the master application, in our 
 example is called Matmul. The worker directory contains another binary called as the main file followed 
