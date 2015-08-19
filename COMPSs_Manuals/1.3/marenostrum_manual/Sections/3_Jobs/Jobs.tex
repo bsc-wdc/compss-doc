@@ -22,126 +22,104 @@ Usage: /apps/COMPSs/1.3/Runtime/scripts/user/enqueue_compss
                                             the application (in minutes)
                                             Default: 10
                                             
-    - -num_nodes=<int>                       Number of nodes to use
+    - -num_nodes=<int>                      Number of nodes to use
                                             Default: 2
                                             
-    - -queue_system=<name>                  Queue system to use: 
-                                            lsf | pbs | slurm
+    - -queue_system=<name>                  Queue system to use: lsf | pbs | slurm
                                             Default: lsf
                                             
     - -tasks_per_node=<int>                 Maximum number of simultaneous
                                             tasks running on a node
                                             Default: 16
                                             
-    - -master_working_dir=<path>            Working directory of the 
-                                            application
+    - -master_working_dir=<path>            Working directory of the application
                                             Default: .
                                             
-    - -worker_working_dir=<name>            Worker directory. 
-                                            Use: scratch | gpfs
+    - -worker_working_dir=<name>            Worker directory. Use: scratch | gpfs
                                             Default: scratch
                                             
-    - -tasks_in_master=<int>                Maximum number of tasks that
-                                            the master node can run as 
-                                            worker. Cannot exceed 
+    - -tasks_in_master=<int>                Maximum number of tasks that the master
+                                            node can run as worker. Cannot exceed 
                                             tasks_per_node.
                                             Default: 0
                                             
-    - -network=<name>                       Communication network for 
-                                            transfers:
+    - -network=<name>                       Communication network for transfers:
                                             default | infiniband | data.
                                             Default: default
                                             
   Runcompss catched parameters:
 
-    - -log_level=<level>, - -debug          Set the debug level: off | info 
-                                            | debug
+    - -log_level=<level>, - -debug          Set the debug level: off | info | debug
                                             Default: off
                                             
     - -tracing=<true|false>                 Enable tracing: true | false
                                             Default: false
                                             
-    - -comm=<path>                          Class that implements the 
-                                            adaptor for communications
-                                            Default: integratedtoolkit.nio
-                                            .master.NIOAdaptor
+    - -comm=<path>                          Class that implements the adaptor for 
+                                            communications
+                                            Default: integratedtoolkit.nio.master
+                                            .NIOAdaptor
                                             
-    - -library_path=<path>                  Non-standard directories to
-                                            search for libraries (e.g. 
-                                            Java JVM library, Python
+    - -library_path=<path>                  Non-standard directories to search for 
+                                            libraries (e.g. Java JVM library, Python
                                             library, C binding library) 
                                             Default: .
                                             
-    - -classpath=<path>                     Path for the application 
-                                            classes / modules
+    - -classpath=<path>                     Path for the application classes / modules
                                             Default: .
   Runcompss delegated parameters:
                                             
   Runtime configuration options:
     - -project=<path>                       Path to the project XML file
-                                            Default: /opt/COMPSs/Runtime/
-                                            configuration/xml/projects
-                                            /project.xml
+                                            Default: /opt/COMPSs/Runtime/configuration/
+                                            xml/projects/project.xml
                                             
     - -resources=<path>                     Path to the resources XML file
-                                            Default: /opt/COMPSs/Runtime/
-                                            configuration/xml/resources/
-                                            resources.xml
+                                            Default: /opt/COMPSs/Runtime/configuration/
+                                            xml/resources/resources.xml
                                             
-    - -lang=<name>                          Language of the application
-                                            (java/c/python)
+    - -lang=<name>                          Language of the application (java/c/python)
                                             Default: java
                                             
-    - -log_level=<level>, - -debug, -d      Set the debug level: off | 
-                                            info | debug
+    - -log_level=<level>, - -debug, -d      Set the debug level: off | info | debug
                                             Default: off
 
   Tools enablers:
-    - -graph=<bool>, - -graph, -g           Generation of the complete
-                                            graph (true/false)
-                                            When no value is provided it is 
-                                            set to true
+    - -graph=<bool>, - -graph, -g           Generation of the complete graph (true/false)
+                                            When no value is provided it is set to true
                                             Default: false
                                             
-    - -tracing=<bool>, - -tracing, -t       Generation of traces 
-                                            (true/false)
-                                            When no value is provided it is 
-                                            set to true
+    - -tracing=<bool>, - -tracing, -t       Generation of traces (true/false)
+                                            When no value is provided it is set to true
                                             Default: false
                                             
-    - -monitoring=<int>, - -monitoring, -m  Period between monitoring 
-                                            samples (milliseconds)
-                                            When no value is provided it is
-                                            set to 2000
+    - -monitoring=<int>, - -monitoring, -m  Period between monitoring samples 
+                                            (milliseconds) When no value is provided it 
+                                            is set to 2000
                                             Default: 0
 
   Advanced options:
-    - -comm=<path>                          Class that implements the 
-                                            adaptor for communications
-                                            Default: 
-                                            integratedtoolkit.nio.master.
+    - -comm=<path>                          Class that implements the adaptor for 
+                                            communications
+                                            Default: integratedtoolkit.nio.master.
                                             NIOAdaptor
                                             
-    - -library_path=<path>                  Non-standard directories to 
-                                            search for libraries (e.g. 
-                                            Java JVM library, Python 
+    - -library_path=<path>                  Non-standard directories to search for 
+                                            libraries (e.g. Java JVM library, Python 
                                             library, C binding library) 
                                             Default: .
                                             
-    - -classpath=<path>                     Path for the application  
-                                            classes / modules
+    - -classpath=<path>                     Path for the application classes / modules
                                             Default: .
                                             
     - -task_count=<int>                     Only for C/Python Bindings. 
-                                            Maximum number of different 
-                                            functions/methods invoked 
-                                            from the application that 
-                                            have been selected as tasks
+                                            Maximum number of different functions/methods
+                                            invoked from the application that have been 
+                                            selected as tasks
                                             Default: 50
                                             
     - -uuid=<int>                           Preset an application UUID
-                                            Default: Automatic random 
-                                            generation
+                                            Default: Automatic random Jobs.texgeneration
 
 * Application name:
     For Java applications:   Fully qualified name of the application
@@ -200,40 +178,3 @@ XXXX   bscXX  PEND  XX     login1     XX         COMPSs    Month Day Hour
 
 The specific COMPSs logs are stored under the \textit{~/.COMPSs/} folder; saved as a local \textit{runcompss} execution. For further 
 details please check \textit{COMPSs User Manual: Application Execution} available at our webpage \url{http://compss.bsc.es} .
-
-\subsection{Enabling COMPSs Monitor}
-\subsubsection{Configuration}
-As MareNostrum nodes are connection restricted, the better way to enable the \textit{COMPSs Monitor} is from the users local machine. 
-To do so please install the following packages:
-\begin{itemize}
- \item COMPSs Runtime
- \item COMPSs Monitor
- \item sshfs
-\end{itemize}
-
-For further details about the COMPSs packages installation and configuration please refer to the \textit{COMPSs Installation Manual} 
-available at our webpage \url{http://compss.bsc.es} . If you are not willing to install COMPSs in your local machine please consider
-to download our Virtual Machine available at our webpage. 
-\newline
-
-Once the packages have been installed and configured, users need to mount the sshfs directory as follows (\textit{MN\_USER} stands for 
-your MareNostrum user and the \textit{TARGET\_LOCAL\_FOLDER} to the local folder where you wish to deploy the MareNostrum files):
-\begin{lstlisting}[language=bash]
-compss@bsc:~$ scp $HOME/.ssh/id_dsa.pub ${MN_USER}@mn1.bsc.es:~/id_dsa_local.pub
-compss@bsc:~$ ssh MN_USER@mn1.bsc.es 
-                  "cat ~/id_dsa_local.pub >> ~/.ssh/authorized_keys; 
-                  rm ~/id_dsa_local.pub"
-compss@bsc:~$ mkdir -p TARGET_LOCAL_FOLDER/.COMPSs
-compss@bsc:~$ sshfs -o IdentityFile=$HOME/.ssh/id_dsa -o allow_other 
-                   MN_USER@mn1.bsc.es:~/.COMPSs 
-                   TARGET_LOCAL_FOLDER/.COMPSs
-\end{lstlisting}
-
-Whenever you wish to unmount the sshfs directory please run:
-\begin{lstlisting}[language=bash]
-compss@bsc:~$ sudo umount TARGET_LOCAL_FOLDER/.COMPSs
-\end{lstlisting}
-
-\subsubsection{Execution}
-Access the COMPSs Monitor through its webpage (\url{http://localhost:8080/compss-monitor} by default) and login with the 
-\textit{TARGET\_LOCAL\_FOLDER} to enable the COMPSs Monitor for MareNostrum. 

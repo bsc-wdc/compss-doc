@@ -33,7 +33,8 @@ and running applications. COMPSs Monitor is installed as a service and can be ea
 commands:
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ sudo service compss-monitor usage
-Usage: /usr/sbin/service compss-monitor {start|stop|reload|restart|try-restart|force-reload|status}
+Usage: /usr/sbin/service compss-monitor 
+           {start | stop | reload | restart | try-restart | force-reload | status}
 \end{lstlisting}
 
 \subsubsection{Service configuration}
@@ -62,9 +63,10 @@ compss@bsc:~$ firefox http://localhost:8080/compss-monitor &
 The COMPSs Monitor allows to monitor applications from different users and thus, users need to login first to grant access 
 to their applications. Once done, as shown in Figure \ref{fig:monitoring_interface}, the users can select any of their executed
 or on-going COMPSs applications and display it.
+\newpage
 \begin{figure}[thb!]
   \centering
-    \includegraphics[width=0.9\textwidth]{./Sections/4_Tools/Figures/compss_monitor.jpeg}
+    \includegraphics[width=0.95\textwidth]{./Sections/4_Tools/Figures/compss_monitor.jpeg}
     \caption{COMPSs monitoring interface}
 \end{figure}
 \label{fig:monitoring_interface}
@@ -125,7 +127,10 @@ performance based on the data shown in the trace.
 In order to obtain a post-execution trace file the option \textbf{-t}  must be added to the runcompss command. Next we provide an
 example of the command execution with the tracing option enabled for the Hmmer java application.
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ runcompss -t --classpath=/home/user/apps/hmmer/hmmer.jar hmmerobj.HMMPfam /sharedDisk/Hmmer/smart.HMMs.bin /sharedDisk/Hmmer/256seq /home/user/out.txt 2 8 -A 222
+compss@bsc:~$ runcompss -t --classpath=/home/compss/workspace_java/hmmer/jar/hmmer.jar 
+                        hmmerobj.HMMPfam 
+                        /sharedDisk/Hmmer/smart.HMMs.bin /sharedDisk/Hmmer/256seq 
+                        /home/compss/out.txt 2 8 -A 222
 \end{lstlisting}
  
 
@@ -218,7 +223,7 @@ The final trace file in \textit{Paraver} format (.\textit{prv}) can be found at 
 execution inside the trace folder. The fastest way to open it is calling directly the \textit{Paraver} binary using the trace-file name
 as arugment.
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ wxparaver /home/user/.COMPSs/hmmerobj.HMMPfam_01/trace/*.prv
+compss@bsc:~$ wxparaver /home/compss/.COMPSs/hmmerobj.HMMPfam_01/trace/*.prv
 \end{lstlisting}
  
 \paragraph{Configuration File}
@@ -231,7 +236,7 @@ After accepting the load of the configuration file, another window will appear t
 \begin{figure}[ht!]
   \centering
     \includegraphics[width=0.45\textwidth]{./Sections/4_Tools/Figures/1.jpeg}
-    \caption{Trace file}
+    \caption{Paraver menu}
 \end{figure}
 \label{fig:trace_1}
 
@@ -327,7 +332,7 @@ described in the previous section.
 \begin{figure}[ht!]
   \centering
     \includegraphics[width=1.0\textwidth]{./Sections/4_Tools/Figures/7.jpeg}
-    \caption{Trace interpretationg}
+    \caption{Trace interpretation}
 \end{figure}
 
 
@@ -398,7 +403,7 @@ default options in the ``New Histogram'' window that will appear.
 \begin{figure}[ht!]
   \centering
     \includegraphics[width=0.5\textwidth]{./Sections/4_Tools/Figures/12.jpeg}
-    \caption{Caption.}
+    \caption{Paraver Menu - New Histogram}
 \end{figure}
 
 After that, the following table is shown. In this case for each worker, the time spent 
@@ -409,21 +414,23 @@ a light-green for lower values to a dark-blue for higher ones. This conforms a c
 \begin{figure}[ht!]
   \centering
     \includegraphics[width=0.8\textwidth]{./Sections/4_Tools/Figures/13.jpeg}
-    \caption{Caption.}
+    \caption{Hmmpfam histogram}
 \end{figure}
  
 The previous table also gives, at the end of each column, some extra statistical 
 information for each type of tasks (as the total, average, maximum or minimum values, etc.).
 
+\newpage
 In the window properties of the main window we can change the semantic of the statistics 
-to see other factors rather than the time, for example, the number of burst.
+to see other factors rather than the time, for example, the number of bursts.
 
 \begin{figure}[ht!]
   \centering
     \includegraphics[width=0.8\textwidth]{./Sections/4_Tools/Figures/14.jpeg}
-    \caption{Caption.}
+    \caption{Paraver histogram options menu}
 \end{figure}
 
+\newpage
 In the same way as before, the following table shows for each worker the number of bursts 
 for each type of task, this is, the number or tasks executed of each type. Notice the gradient 
 scale from light-green to dark-blue changes with the new values.
@@ -431,9 +438,8 @@ scale from light-green to dark-blue changes with the new values.
 \begin{figure}[ht!]
   \centering
     \includegraphics[width=0.8\textwidth]{./Sections/4_Tools/Figures/15.jpeg}
-    \caption{Caption.}
+    \caption{Hmmpfam histogram with the number of bursts}
 \end{figure}
-
 
 \subsubsection{Other Trace examples}
 To end this section, let’s present some other examples of COMPSs traces. COMPSs traces can be 
@@ -444,10 +450,10 @@ pictures show traces with a greater number of workers and tasks.
   \centering
     \includegraphics[width=0.91\textwidth]{./Sections/4_Tools/Figures/16.jpeg}
     \includegraphics[width=0.91\textwidth]{./Sections/4_Tools/Figures/16_2.jpeg}
-    \caption{Caption.}
+    \caption{Examples of complex traces}
 \end{figure}
 
-
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%% IDE %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

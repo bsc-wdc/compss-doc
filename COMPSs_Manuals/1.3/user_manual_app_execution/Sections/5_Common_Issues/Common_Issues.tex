@@ -25,7 +25,7 @@ at the error messages produced inside each job. Users should notice that if ther
 inside the job is failing.
 
 \subsection{Tasks are not executed}
-If the tasks remain in \textit{Blocked} state means that there are no existing resouces matching the specific task constraints. 
+If the tasks remain in \textbf{Blocked} state means that there are no existing resouces matching the specific task constraints. 
 This error can be potentially caused by two facts: in one hand, because the resources are not correctly loaded into the runtime
 and, in the other hand, because the task constraints do not really match with any resource. 
 
@@ -52,5 +52,5 @@ compss@bsc:~$ scp ~/.ssh/id_dsa.pub user@resourceName:./mydsa.pub
 compss@bsc:~$ ssh user@resourceName "cat mydsa.pub >> ~/.ssh/authorized_keys; rm ./mydsa.pub"
 \end{lstlisting}
 
-These commands are a quick solution, for further details please check the \textit{Configure Passwordless Access} section 
+These commands are a quick solution, for further details please check the \textit{Additional Configuration} section 
 inside the \textit{COMPSs Installation Manual} available at our website \url{http://compss.bsc.es}.

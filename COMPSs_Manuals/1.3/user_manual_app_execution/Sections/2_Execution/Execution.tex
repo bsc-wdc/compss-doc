@@ -33,69 +33,55 @@ usage description.
 compss@bsc:~$ runcompss -h
   Runtime configuration options:
     - -project=<path>                       Path to the project XML file
-                                            Default: /opt/COMPSs/Runtime/
-                                            configuration/xml/projects
-                                            /project.xml
+                                            Default: /opt/COMPSs/Runtime/configuration/
+                                            xml/projects/project.xml
                                             
     - -resources=<path>                     Path to the resources XML file
-                                            Default: /opt/COMPSs/Runtime/
-                                            configuration/xml/resources/
-                                            resources.xml
+                                            Default: /opt/COMPSs/Runtime/configuration/
+                                            xml/resources/resources.xml
                                             
-    - -lang=<name>                          Language of the application
-                                            (java/c/python)
+    - -lang=<name>                          Language of the application (java/c/python)
                                             Default: java
                                             
-    - -log_level=<level>, - -debug, -d      Set the debug level: off | 
-                                            info | debug
+    - -log_level=<level>, - -debug, -d      Set the debug level: off | info | debug
                                             Default: off
 
   Tools enablers:
-    - -graph=<bool>, - -graph, -g           Generation of the complete
-                                            graph (true/false)
-                                            When no value is provided it is 
-                                            set to true
+    - -graph=<bool>, - -graph, -g           Generation of the complete graph (true/false)
+                                            When no value is provided it is set to true
                                             Default: false
                                             
-    - -tracing=<bool>, - -tracing, -t       Generation of traces 
-                                            (true/false)
-                                            When no value is provided it is 
-                                            set to true
+    - -tracing=<bool>, - -tracing, -t       Generation of traces (true/false)
+                                            When no value is provided it is set to true
                                             Default: false
                                             
-    - -monitoring=<int>, - -monitoring, -m  Period between monitoring 
-                                            samples (milliseconds)
-                                            When no value is provided it is
-                                            set to 2000
+    - -monitoring=<int>, - -monitoring, -m  Period between monitoring samples 
+                                            (milliseconds)
+                                            When no value is provided it is set to 2000
                                             Default: 0
 
   Advanced options:
-    - -comm=<path>                          Class that implements the 
-                                            adaptor for communications
-                                            Default: 
-                                            integratedtoolkit.nio.master.
+    - -comm=<path>                          Class that implements the adaptor for 
+                                            communications
+                                            Default: integratedtoolkit.nio.master.
                                             NIOAdaptor
                                             
-    - -library_path=<path>                  Non-standard directories to 
-                                            search for libraries (e.g. 
-                                            Java JVM library, Python 
+    - -library_path=<path>                  Non-standard directories to search for 
+                                            libraries (e.g. Java JVM library, Python 
                                             library, C binding library) 
                                             Default: .
                                             
-    - -classpath=<path>                     Path for the application  
-                                            classes / modules
+    - -classpath=<path>                     Path for the application classes / modules
                                             Default: .
                                             
     - -task_count=<int>                     Only for C/Python Bindings. 
-                                            Maximum number of different 
-                                            functions/methods invoked 
-                                            from the application that 
-                                            have been selected as tasks
+                                            Maximum number of different functions/methods
+                                            invoked from the application that have been 
+                                            selected as tasks
                                             Default: 50
                                             
     - -uuid=<int>                           Preset an application UUID
-                                            Default: Automatic random 
-                                            generation
+                                            Default: Automatic random generation
 \end{lstlisting}
 
 \subsection{Running a COMPSs application}
@@ -130,12 +116,14 @@ we can explicitly do this by exporting the \textbf{CLASSPATH} variable or by pro
 - -classpath value. Next, we provide another two ways to perform the same execution:
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ export CLASSPATH=$CLASSPATH:/home/compss/workspace_java/simple/jar/simple.jar
+compss@bsc:~$ export CLASSPATH=$CLASSPATH:
+                               /home/compss/workspace_java/simple/jar/simple.jar
 compss@bsc:~$ runcompss simple.Simple <initial_number>
 \end{lstlisting}
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ runcompss --classpath=/home/compss/workspace_java/simple/jar/simple.jar simple.Simple <initial_number>
+compss@bsc:~$ runcompss --classpath=/home/compss/workspace_java/simple/jar/simple.jar 
+                        simple.Simple <initial_number>
 \end{lstlisting}
 
 
@@ -198,7 +186,7 @@ managed by the system administrators. Its full definition schema can be found at
 \emph{/opt/COMPSs/Runtime/configuration/xml/resources/$resource_schema$.xsd}.
 
 The typical strcuture of this file is one entry per available resource defining its name, its capabilities and its requirements.
-Administrators can define several resource capabilities (see example in Listing \ref{lstlisting:resources.xml}) but we would like 
+Administrators can define several resource capabilities (see example in next listing) but we would like 
 to underline the importance of \textbf{Processor CoreCount}. This capability represents the number of available cores 
 in the resource and it is used to schedule the correct number of tasks into a resource. Thus, it becomes essential to define 
 it accordingly to the number of cores in the physical resource. 
@@ -245,7 +233,6 @@ compss@bsc:~$ cat /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
         </Resource>
 </ResourceList>
 \end{lstlisting}
-\label{lstlisting:resources.xml}
 
 
 \subsubsection{Project file}
@@ -256,7 +243,7 @@ usally change from execution to execution. Its full definition schema can be fou
 \emph{/opt/COMPSs/Runtime/configuration/xml/projects/$project_schema$.xsd}.
 
 The typical strcuture of this file is one entry per worker, indicating the the resource name that it uses and some configuration
-properties (see example in Figure \ref{lstlisting:project.xml}). We emphasize the importance of correctly defining the following 
+properties (see example in next listing). We emphasize the importance of correctly defining the following 
 entries:
 \begin{description}
  \item [installDir] Indicates the path of the COMPSs installation \textbf{inside the resource} (not necessarily the same 
@@ -315,12 +302,12 @@ special entry indicating only the name and the limit of tasks as shown in the fo
 \begin{lstlisting}[language=xml]
 <?xml version="1.0" encoding="UTF-8"?>
 <Project>
-	<!--Description for any physical node-->
-	<Worker Name="localhost">
-		...
-	</Worker>
-	
-	<Worker Name="http://bscgrid05.bsc.es:20390/hmmerobj/hmmerobj?wsdl">
+        <!--Description for any physical node-->
+        <Worker Name="localhost">
+               ...
+        </Worker>
+
+        <Worker Name="http://bscgrid05.bsc.es:20390/hmmerobj/hmmerobj?wsdl">
                <LimitOfTasks>3</LimitOfTasks>
         </Worker>
 </Project>
