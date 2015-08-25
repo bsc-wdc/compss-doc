@@ -1,7 +1,7 @@
 \section{Java}
 \label{sec:Java}
 
-In this section the steps to develop a COMPSs application will be illustrated; the sequential {\bf Simple application}
+In this section the steps to develop a java COMPSs application will be illustrated. The sequential \textit{Simple application}
 will be used to explain an application porting to COMPSs. The user is required to select a set of
 methods, invoked in a sequential application, to be run as remote tasks on the available resources.
 
@@ -294,11 +294,8 @@ void sort(
 \end{lstlisting}
 
 \subsection{Application Compilation}
-A java application needs to be packaged in a \textit{jar} file containing the source files and the \textit{Itf} annotation. If users
-are using an IDE (such as Eclipse or NetBeans) we recomend to add the \textit{compss-engine.jar} file to as an external file to the
-project (available at \textit{/opt/COMPSs/Runtime/compss-engine.jar}) to load the possible compilation errors. 
-
-Next we provide a set of commands to compile the Java Simple application detailed at the \textit{COMPSs Sample Applications} 
+A java application needs to be packaged in a \textit{jar} file containing the source files and the \textit{Itf} annotation.
+Next we provide a set of commands to compile the java Simple application detailed at the \textit{COMPSs Sample Applications} 
 available at our website \url{http://compss.bsc.es} .
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd workspace_java/simple/src/simple/
@@ -306,11 +303,20 @@ compss@bsc:~/workspace_java/simple/src/simple$ javac *.java
 compss@bsc:~/workspace_java/simple/src/simple$ jar cf simple.jar simple 
 \end{lstlisting}
 
+If users are using an IDE (such as Eclipse or NetBeans) we recomend to add the \textit{compss-engine.jar} file as an external file 
+to the project to load the possible compilation errors. The \textit{compss-engine.jar} file is available at your current 
+COMPSs installation under the path \textit{/opt/COMPSs/Runtime/compss-engine.jar}.
+
+To make things even easier, we have developed a COMPSs IDE which is an Integrated Development Environment to develop, compile,
+deploy and execute COMPSs applications. For further information about the \textit{COMPSs IDE} please check the \textit{COMPSs IDE
+User Guide} available at our webpage: \url{http://compss.bsc.es} .
+
 \subsection{Application Execution}
 In order to run a Java application with COMPSs, the script runcompss can be used. An example of an invocation of the script is:
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ runcompss simple.Simple 1
+compss@bsc:~$ runcompss --classpath=/home/compss/workspace_java/simple/jar/simple.jar 
+                        simple.Simple 1
 \end{lstlisting}
 
 For full description about the options available for the runcompss command please check the \textit{COMPSs User Manual: Application
