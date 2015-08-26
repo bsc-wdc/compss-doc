@@ -79,7 +79,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=104
 mode=LaTeX
-open=false
+open=true
 order=0
 
 [item:Sections/1_Introduction/Introduction.tex]
@@ -104,13 +104,13 @@ order=1
 
 [item:Sections/3_RedHat_zypper/RedHat_zypper.tex]
 archive=true
-column=8
+column=25
 encoding=UTF-8
 highlight=LaTeX
-line=31
+line=16
 mode=LaTeX
-open=false
-order=0
+open=true
+order=2
 
 [item:Sections/4_RedHat_yum/RedHat_yum.tex]
 archive=true
@@ -119,7 +119,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=30
 mode=LaTeX
-open=false
+open=true
 order=1
 
 [item:Sections/5_Additional_Configuration/Additional_Configuration.tex]
@@ -181,10 +181,10 @@ JumpList=
 ViMarks=.,35,20,[,35,20,],35,20
 
 [view-settings,view=0,item:Sections/3_RedHat_zypper/RedHat_zypper.tex]
-CursorColumn=8
-CursorLine=31
+CursorColumn=25
+CursorLine=16
 JumpList=
-ViMarks=.,31,7,[,31,0,],31,7
+ViMarks=.,16,25,[,16,25,],16,25
 
 [view-settings,view=0,item:Sections/4_RedHat_yum/RedHat_yum.tex]
 CursorColumn=8
