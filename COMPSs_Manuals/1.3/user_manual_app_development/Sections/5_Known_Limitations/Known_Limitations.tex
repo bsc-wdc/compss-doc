@@ -9,9 +9,14 @@ Consequently, COMPSs is beeing continously developed and has several on-going pr
 (1.3) has some limitations and we are working to solve them as soon as possible. Next, we provide a list of the major known
 limitations: 
 \begin{itemize}
- \item \textbf{Cannot catch exceptions} The current COMPSs version is not able to catch exceptions raised from a task.
- \item \textbf{Services types} The current COMPSs version can only work with RESTful services. Supporting Big Services is a 
- feature we are \textbf{not} planning to implment. [ JORGE ]
+ \item \textbf{Exceptions:} \newline The current COMPSs version is not able to catch exceptions raised from a task.
+ 
+ \item \textbf{Services types:} \newline The current COMPSs version only supports SOAP based services that implement the WS interoperability
+ standard. Supporting Big Services is a feature we are \textbf{not} planning to implment in the near future.
+ 
+ \item \textbf{NIO workspaces:} \newline The persistent workers implementation (NIO) has a unique \textit{Working Directory} per worker. That
+ means that tasks should not use hardcoded file names to avoid file colisions and tasks malfunction. We recommend to use files 
+ declared as task parameters, to manually create a sandbox inside each task execution and/or to generate temporary random file names. 
 \end{itemize}
 
 If you are willing to know the COMPSs development state you can check out our webpage \url{http://compss.bsc.es} or 

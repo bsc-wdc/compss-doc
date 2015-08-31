@@ -303,13 +303,36 @@ compss@bsc:~/workspace_java/simple/src/simple$ javac *.java
 compss@bsc:~/workspace_java/simple/src/simple$ jar cf simple.jar simple 
 \end{lstlisting}
 
+For a successfull compilation the \textit{compss-engine.jar} package must be provided by the CLASSPATH variable. The default COMPSs
+installation automatically inserts this package into the CLASSPATH but some users may have overwriten or deleted it. Please check
+that your environment variable CLASSPATH containts the \textit{compss-engine.jar} location by running the following command:
+\begin{lstlisting}[language=bash]
+$ echo $CLASSPATH | grep compss-engine
+\end{lstlisting}
+If the result of the previous command is empty it means that you are missing the \textit{compss-engine.jar} package in your classpath. 
+
+The easiest solution comes up by manually exporting the CLASSPATH variable into the user session:
+\begin{lstlisting}[language=bash]
+$ export CLASSPATH=$CLASSPATH:/opt/COMPSs/Runtime/compss-engine.jar
+\end{lstlisting}
+However, you will need to remember to export this variable every time you log out and back in again. Consequently, we recomend to 
+add this export to the \textit{.bashrc} file:
+\begin{lstlisting}[language=bash]
+$ echo "# COMPSs variables for Java compilation" >> ~/.bashrc
+$ echo "export CLASSPATH=$CLASSPATH:/opt/COMPSs/Runtime/compss-engine.jar" >> ~/.bashrc
+\end{lstlisting}
+
 If users are using an IDE (such as Eclipse or NetBeans) we recomend to add the \textit{compss-engine.jar} file as an external file 
 to the project to load the possible compilation errors. The \textit{compss-engine.jar} file is available at your current 
 COMPSs installation under the path \textit{/opt/COMPSs/Runtime/compss-engine.jar}.
 
+\colorComment{Attention: The \textit{compss-engine.jar} is installed inside the COMPSs installation directory. If you have performed
+a custom installation, the path of the package can be different.}
+
 To make things even easier, we have developed a COMPSs IDE which is an Integrated Development Environment to develop, compile,
 deploy and execute COMPSs applications. For further information about the \textit{COMPSs IDE} please check the \textit{COMPSs IDE
 User Guide} available at our webpage: \url{http://compss.bsc.es} .
+
 
 \subsection{Application Execution}
 In order to run a Java application with COMPSs, the script runcompss can be used. An example of an invocation of the script is:

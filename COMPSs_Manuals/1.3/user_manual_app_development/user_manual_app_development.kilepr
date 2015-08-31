@@ -117,13 +117,13 @@ order=1
 
 [item:Sections/5_Known_Limitations/Known_Limitations.tex]
 archive=true
-column=60
+column=34
 encoding=UTF-8
 highlight=LaTeX
-line=13
+line=11
 mode=LaTeX
-open=false
-order=1
+open=true
+order=0
 
 [item:configuration.tex]
 archive=true
@@ -176,10 +176,10 @@ JumpList=
 ViMarks=.,331,0,[,331,0,],331,0
 
 [view-settings,view=0,item:Sections/5_Known_Limitations/Known_Limitations.tex]
-CursorColumn=60
-CursorLine=13
+CursorColumn=34
+CursorLine=11
 JumpList=
-ViMarks=.,13,59,[,13,49,],13,59
+ViMarks=.,15,0,[,15,0,],15,0
 
 [view-settings,view=0,item:configuration.tex]
 CursorColumn=92

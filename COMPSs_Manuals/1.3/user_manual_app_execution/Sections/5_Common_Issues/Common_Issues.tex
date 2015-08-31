@@ -54,3 +54,62 @@ compss@bsc:~$ ssh user@resourceName "cat mydsa.pub >> ~/.ssh/authorized_keys; rm
 
 These commands are a quick solution, for further details please check the \textit{Additional Configuration} section 
 inside the \textit{COMPSs Installation Manual} available at our website \url{http://compss.bsc.es}.
+
+\subsection{Compilation error: @Method not found}
+When trying to compile java applications users get some of the following compilation errors:
+\begin{lstlisting}[language=bash]
+error: package integratedtoolkit.types.annotations does not exist
+import integratedtoolkit.types.annotations.Constraints;
+                                          ^
+error: package integratedtoolkit.types.annotations does not exist
+import integratedtoolkit.types.annotations.Method;
+                                          ^
+error: package integratedtoolkit.types.annotations does not exist
+import integratedtoolkit.types.annotations.Parameter;
+                                          ^
+error: package integratedtoolkit.types.annotations.Parameter does not exist
+import integratedtoolkit.types.annotations.Parameter.Direction;
+                                                    ^
+error: package integratedtoolkit.types.annotations.Parameter does not exist
+import integratedtoolkit.types.annotations.Parameter.Type;
+                                                    ^
+error: cannot find symbol
+@Parameter(type = Type.FILE, direction = Direction.INOUT)
+^
+  symbol:   class Parameter
+  location: interface APPLICATION_Itf
+  
+error: cannot find symbol
+@Constraints(processorCoreCount = 2)
+^
+  symbol:   class Constraints
+  location: interface APPLICATION_Itf
+  
+error: cannot find symbol
+@Method(declaringClass = "application.ApplicationImpl")
+^
+  symbol:   class Method
+  location: interface APPLICATION_Itf
+\end{lstlisting}
+
+All these errors are raised because the \textit{compss-engine.jar} is not available in the CLASSPATH. The default COMPSs installation
+automatically inserts this package into the CLASSPATH but some users may have overwriten or deleted it. Please check that your 
+environment variable CLASSPATH containts the \textit{compss-engine.jar} location by running the following command:
+\begin{lstlisting}[language=bash]
+$ echo $CLASSPATH | grep compss-engine
+\end{lstlisting}
+If the result of the previous command is empty it means that you are missing the \textit{compss-engine.jar} package in your classpath. 
+
+The easiest solution comes up by manually exporting the CLASSPATH variable into the user session:
+\begin{lstlisting}[language=bash]
+$ export CLASSPATH=$CLASSPATH:/opt/COMPSs/Runtime/compss-engine.jar
+\end{lstlisting}
+However, you will need to remember to export this variable every time you log out and back in again. Consequently, we recomend to 
+add this export to the \textit{.bashrc} file:
+\begin{lstlisting}[language=bash]
+$ echo "# COMPSs variables for Java compilation" >> ~/.bashrc
+$ echo "export CLASSPATH=$CLASSPATH:/opt/COMPSs/Runtime/compss-engine.jar" >> ~/.bashrc
+\end{lstlisting}
+
+\colorComment{Attention: The \textit{compss-engine.jar} is installed inside the COMPSs installation directory. If you have performed
+a custom installation, the path of the package can be different.}

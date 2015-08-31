@@ -186,7 +186,7 @@ explaining the available tags.
 \subsubsection{Resources file}
 The resources file provides information about \textbf{all} the available resources. This file should normally be 
 managed by the system administrators. Its full definition schema can be found at 
-\emph{/opt/COMPSs/Runtime/configuration/xml/resources/$resource_schema$.xsd}.
+\emph{/opt/COMPSs/Runtime/configuration/xml/resources/$resource\_schema$.xsd}.
 
 The typical strcuture of this file is one entry per available resource defining its name, its capabilities and its requirements.
 Administrators can define several resource capabilities (see example in next listing) but we would like 
@@ -233,6 +233,12 @@ compss@bsc:~$ cat /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
                         <AccessControlPolicy/>
                 </Capabilities>
                 <Requirements/>
+                <Adaptors>
+                        <Adaptor name="integratedtoolkit.nio.master.NIOAdaptor">
+                                <MinPort>43001</MinPort>
+                                <MaxPort>43002</MaxPort>
+                        </Adaptor>
+                </Adaptors>
         </Resource>
 </ResourceList>
 \end{lstlisting}
@@ -243,7 +249,7 @@ The project file provides specific execution information. Particullarly, it sele
 is the application going to be executed. Consequently, the resources that appear in this file are a \textbf{subset} of the 
 resources described in the \textit{resources.xml} file. This file should normally be managed by the application users and will
 usally change from execution to execution. Its full definition schema can be found at 
-\emph{/opt/COMPSs/Runtime/configuration/xml/projects/$project_schema$.xsd}.
+\emph{/opt/COMPSs/Runtime/configuration/xml/projects/$project\_schema$.xsd}.
 
 The typical strcuture of this file is one entry per worker, indicating the the resource name that it uses and some configuration
 properties (see example in next listing). We emphasize the importance of correctly defining the following 
@@ -359,7 +365,13 @@ which can serve as a reference
                 <Software>BLAST</Software>
             </ApplicationSoftware>
         </Capabilities>
-        <Disks/>
+        <Requirements/>
+        <Adaptors>
+            <Adaptor name="integratedtoolkit.nio.master.NIOAdaptor">
+                <MinPort>43001</MinPort>
+                <MaxPort>43002</MaxPort>
+            </Adaptor>
+        </Adaptors>
     </Resource>
     <Resource Name="hostname2.domain.es">
 	...
@@ -410,6 +422,9 @@ The following example states that the \textit{sharedDisk0} is mounted on resourc
     ...
     </Capabilities>
     <Requirements/>
+    <Adaptors>
+    ...
+    </Adaptors>
     <Disks>
         <Disk Name="sharedDisk0">
             <MountPoint>/home/user/mySharedDisk</MountPoint>
@@ -450,37 +465,45 @@ Connector		&		Class that implements the connector	\\
 \textbf{
 ImageList
 \begin{itemize}
- \item Image
- \begin{itemize}
-  \item Architecture
-  \item OSType
-  \item ApplicationSoftware
+  \item Image
   \begin{itemize}
-   \item Software
+      \item Architecture
+      \item OSType \newline
+      \item ApplicationSoftware \newline
+	  \begin{itemize}
+	  \item Software \newline
+	  \end{itemize}
+      \item SharedDisks \newline ~\newline
+	  \begin{itemize}
+	  \item Disk
+	  \end{itemize}
+      \item Adaptors \newline
+	  \begin{itemize}
+	  \item Adaptor
+	  \end{itemize}
   \end{itemize}
-  \item SharedDisks
-  \begin{itemize}
-   \item Disk
-  \end{itemize}
- \end{itemize}
 \end{itemize}
 }
 &
 Multiple entries of VM templates
 \begin{itemize}
- \item VM image
- \begin{itemize}
-  \item Architeture of the VM image
-  \item Operative System installed in the VM image
-  \item Multiple entries of software installed in the VM image
+  \item VM image
   \begin{itemize}
-   \item Software installed in the VM image
+    \item Architeture of the VM image
+    \item Operative System installed in the VM image
+    \item Multiple entries of software installed in the VM image
+      \begin{itemize}
+      \item Software installed in the VM image
+      \end{itemize}
+    \item Multiple entries of shared disks mounted in the VM image
+      \begin{itemize}
+      \item Disk description
+      \end{itemize}
+    \item Multiple entries of adaptors available at the VM image
+      \begin{itemize}
+      \item Adaptor name and specific properties
+      \end{itemize}
   \end{itemize}
-  \item Multiple entries of shared disks mounted in the VM image
-  \begin{itemize}
-   \item Disk description
-  \end{itemize}
- \end{itemize}
 \end{itemize}
 \\
 \hline
@@ -488,12 +511,12 @@ Multiple entries of VM templates
 \textbf{
 InstanceTypes
 \begin{itemize}
- \item Resource
+ \item Resource \newline
  \begin{itemize}
-  \item Capabilities
+  \item Capabilities \newline
   \begin{itemize}
-   \item Processor
-   \item StorageElement
+   \item Processor \newline
+   \item StorageElement \newline
    \item Memory
   \end{itemize}
  \end{itemize}
@@ -527,23 +550,26 @@ file \textbf{must} contain a subset of the providers specified in the \textit{re
 Table \ref{tab:conf_project_xml_cloud} summarizes the information that users need to specify inside the \textbf{$<Provider>$} 
 tag of the \textit{project.xml} file.
 
-\begin{table}[h]
-  \begin{center}
-    \begin{tabular}{| p{0.45\textwidth} | p{0.45\textwidth} |}
-      \hline
-      InitialVMs	&	Number of VM to be created at the beginning of the application	\\
-      \hline
-      minVMCount	&	Minimum number of VMs available in the computation	\\
-      \hline
-      maxVMCount	&	Maximum number of VMs available in the computation	\\
-      \hline
-      Provider 	&	Multiple entries of Cloud providers	\\
-      \hline
-    \end{tabular}
-    \caption{Configuration of project.xml file, tag $<Cloud>$}
-    \label{tab:conf_project_xml_cloud}
-  \end{center}
-\end{table}
+\bgroup
+  \def\arraystretch{1.5}
+  \begin{table}[h]
+    \begin{center}
+      \begin{tabular}{| p{0.45\textwidth} | p{0.45\textwidth} |}
+	\hline
+	InitialVMs	&	Number of VM to be created at the beginning of the application	\\
+	\hline
+	minVMCount	&	Minimum number of VMs available in the computation	\\
+	\hline
+	maxVMCount	&	Maximum number of VMs available in the computation	\\
+	\hline
+	Provider 	&	Multiple entries of Cloud providers	\\
+	\hline
+      \end{tabular}
+      \caption{Configuration of project.xml file, tag $<Cloud>$}
+      \label{tab:conf_project_xml_cloud}
+    \end{center}
+  \end{table}
+\egroup
 
 \newpage
 
@@ -566,17 +592,17 @@ tag of the \textit{project.xml} file.
   \\
   \hline
   
-  ImageList
+  ImageList \newline
   \begin{itemize}
   \item Image
   \begin{itemize}
-    \item InstallDir
-    \item WorkingDir
+    \item InstallDir \newline
+    \item WorkingDir \newline
     \item User
-    \item Package
+    \item Package \newline
     \begin{itemize}
     \item Source
-    \item Target
+    \item Target \newline
     \item InstalledSoftware
     \end{itemize}
   \end{itemize}
@@ -600,7 +626,7 @@ tag of the \textit{project.xml} file.
   \\
   \hline
   
-  InstanceTypes
+  InstanceTypes \newline
   \begin{itemize}
   \item Resource
   \end{itemize}
@@ -644,26 +670,23 @@ characteristics. If one is found, the VM is reused and becomes eligible again fo
 hence, the cost and time to create a new VM are not paid. A VM is only destroyed when the end of its hour 
 slot is approaching and it is still in saved state.
 
-Table \ref{tab:conf_project_xml_provider} summarizes the provider-specific properties that must be 
+Table \ref{tab:ec2_connector_properties} summarizes the provider-specific properties that must be 
 defined in the project.xml file for the Amazon EC2 connector.
-
-\begin{longtable}{| p{0.3\textwidth} | p{0.7\textwidth} |}
-\hline
-{\bf Placement }    &   Location of the amazon datacentre to use \\
-\hline
-Access Key Id       &   Identifier of the access key of the Amazon EC2 account \\
-\hline
-Secret Key Id       &   Identifier of the secret key of the Amazon EC2 account \\
-\hline
-Key host location   &   Path to the SSH key in the local host, used to connect to the VMs \\
-\hline
-KeyPair name        &   Name of the key pair to use \\
-\hline
-SecurityGroup name  &   Name of the security group to use \\
-\hline
-\caption{Properties of the Amazon EC2 connector.}
-\label{tab:ec2_connector_properties}
-\end{longtable}
+\bgroup
+  \def\arraystretch{1.5}
+  \begin{longtable}{| p{0.3\textwidth} | p{0.6\textwidth} |}
+  \hline
+  \textbf{Placement}  &   Location of the amazon datacentre to use \\ \hline
+  Access Key Id       &   Identifier of the access key of the Amazon EC2 account \\ \hline
+  Secret Key Id       &   Identifier of the secret key of the Amazon EC2 account \\ \hline
+  Key host location   &   Path to the SSH key in the local host, used to connect to the VMs \\ \hline
+  KeyPair name        &   Name of the key pair to use \\ \hline
+  SecurityGroup name  &   Name of the security group to use \\ \hline
+  
+  \caption{Properties of the Amazon EC2 connector.}
+  \label{tab:ec2_connector_properties}
+  \end{longtable}
+\egroup
 
 \paragraph{Cloud connectors: rOCCI}
 In order to execute a COMPSs application in the cloud, the rOCCI connector has to be configured properly. 
@@ -672,43 +695,45 @@ The connector uses the rOCCI binary client\footnote{\url{https://appdb.egi.eu/st
 application is executed.
 
 This connector needs additional files providing details about the resource templates available on 
-each provider. This file is located under $<COMPSs\_INSTALL\_DIR>/configuration/xml/templates$ path. 
+each provider. This file is located under $<COMPSs\_INSTALL\_DIR>/configuration/xml/templates$ path.
 Additionally, the user must define the virtual images flavour and instance types offered by each provider; 
 thus, when the runtime asks for the creation of a VM, the connector selects the appropriate image and 
 resource template according to the requirements (in terms of CPU, memory, disk, etc) by invoking the 
 rOCCI client through Mixins (heritable classes that override and extend the base templates).
 
-Table \ref{tab:rOCCI_extensions} contains the rOCCI specific properties that must be defined in the 
-project.xml file.
+Table \ref{tab:rOCCI_extensions} contains the rOCCI specific properties that must be defined under the \textit{Provider} tag in
+the \textit{project.xml} file and Table \ref{tab:rOCCI_extensions} contains the specific properties that must be defined
+under the \textit{Instance} tag.
 
-\begin{longtable}{| p{0.25\textwidth} | p{0.75\textwidth} |}
-\hline
-{\bf Provider }    &  \\
-\hline
-ca-path     &   Path to CA certificates directory \\
-\hline
-user-cred   &   Path of the VOMS proxy \\
-\hline
-auth        &   Authentication method, x509 only supported \\
-\hline
-owner & \multirow{2}{*}{Optional. Used by the VENUS-C Job Manager (PMES)} \\
-\cline{1-1}
-jobname &  \\
-\hline
-\caption{rOCCI extensions in the project.xml file.}
-\label{tab:rOCCI_extensions}
-\end{longtable}
+\bgroup
+  \def\arraystretch{1.5}
+  \begin{longtable}{| p{0.25\textwidth} | p{0.7\textwidth} |}
+      \hline
+      \textbf{Provider}    & \\ \hline
+      ca-path              & Path to CA certificates directory \\ \hline
+      user-cred            & Path of the VOMS proxy \\ \hline
+      auth                 & Authentication method, x509 only supported \\ \hline
+      owner                & \multirow{2}{*}{Optional. Used by the VENUS-C Job Manager (PMES)} \\
+                             \cline{1-1}
+      jobname              & \\ \hline
+      \caption{rOCCI extensions in the project.xml file.}
+      \label{tab:rOCCI_extensions}
+  \end{longtable}
+\egroup
 
 \vspace{-0.75cm}
 
-\begin{longtable}{| p{0.25\textwidth} | p{0.75\textwidth} |}
-\hline
-\textbf{Instance} 	& Multiple entries of resource templates. \\ \hline
-Type   			&    Name of the resource template. It has to be the same name than in the previous files \\ \hline
-CPU    			&    Number of cores \\ \hline
-Memory 			&    Size in GB of the available RAM \\ \hline
-Disk   			&    Size in GB of the storage \\ \hline
-Price  			&    Cost per hour of the instance \\ \hline
-\caption{Configuration of the $<provider>.xml$ templates file.}
-\label{tab:rOCCI_configuration}
-\end{longtable}
+\bgroup
+  \def\arraystretch{1.5}
+  \begin{longtable}{| p{0.25\textwidth} | p{0.7\textwidth} |}
+      \hline
+      \textbf{Instance} 	& Multiple entries of resource templates. \\ \hline
+      Type   			& Name of the resource template. It has to be the same name than in the previous files \\ \hline
+      CPU    			& Number of cores \\ \hline
+      Memory 			& Size in GB of the available RAM \\ \hline
+      Disk   			& Size in GB of the storage \\ \hline
+      Price  			& Cost per hour of the instance \\ \hline
+      \caption{Configuration of the $<provider>.xml$ templates file.}
+      \label{tab:rOCCI_configuration}
+  \end{longtable}
+\egroup
