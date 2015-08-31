@@ -67,10 +67,10 @@ Mode=LaTeX
 
 [item:COMPSs_User_Manual_App_Development.tex]
 archive=true
-column=57
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=102
+line=114
 mode=LaTeX
 open=false
 order=0
@@ -87,42 +87,42 @@ order=1
 
 [item:Sections/2_Java/Java.tex]
 archive=true
-column=12
+column=10
 encoding=UTF-8
 highlight=LaTeX
-line=311
+line=215
 mode=LaTeX
 open=false
 order=1
 
 [item:Sections/3_Python/Python.tex]
 archive=true
-column=18
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=75
+line=6
 mode=LaTeX
 open=false
 order=1
 
 [item:Sections/4_C/C.tex]
 archive=true
-column=0
+column=42
 encoding=UTF-8
 highlight=LaTeX
-line=331
+line=346
 mode=LaTeX
 open=false
 order=1
 
 [item:Sections/5_Known_Limitations/Known_Limitations.tex]
 archive=true
-column=34
+column=41
 encoding=UTF-8
 highlight=LaTeX
-line=11
+line=16
 mode=LaTeX
-open=true
+open=false
 order=0
 
 [item:configuration.tex]
@@ -146,8 +146,8 @@ open=false
 order=-1
 
 [view-settings,view=0,item:COMPSs_User_Manual_App_Development.tex]
-CursorColumn=57
-CursorLine=102
+CursorColumn=0
+CursorLine=114
 JumpList=
 ViMarks=.,102,57,[,102,57,],102,57
 
@@ -158,28 +158,28 @@ JumpList=
 ViMarks=.,5,23,[,5,23,],5,23
 
 [view-settings,view=0,item:Sections/2_Java/Java.tex]
-CursorColumn=12
-CursorLine=311
+CursorColumn=10
+CursorLine=215
 JumpList=
-ViMarks=.,311,11,[,311,11,],311,11
+ViMarks=.,215,9,[,215,9,],215,9
 
 [view-settings,view=0,item:Sections/3_Python/Python.tex]
-CursorColumn=18
-CursorLine=75
+CursorColumn=0
+CursorLine=6
 JumpList=
-ViMarks=.,75,21,[,75,21,],75,21
+ViMarks=.,191,47,[,191,47,],191,47
 
 [view-settings,view=0,item:Sections/4_C/C.tex]
-CursorColumn=0
-CursorLine=331
+CursorColumn=42
+CursorLine=346
 JumpList=
-ViMarks=.,331,0,[,331,0,],331,0
+ViMarks=.,346,41,[,346,30,],346,41
 
 [view-settings,view=0,item:Sections/5_Known_Limitations/Known_Limitations.tex]
-CursorColumn=34
-CursorLine=11
+CursorColumn=41
+CursorLine=16
 JumpList=
-ViMarks=.,15,0,[,15,0,],15,0
+ViMarks=.,16,40,[,16,32,],16,40
 
 [view-settings,view=0,item:configuration.tex]
 CursorColumn=92

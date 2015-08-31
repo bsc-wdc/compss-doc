@@ -111,57 +111,57 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=22
 mode=LaTeX
 open=false
 order=1
 
 [item:Sections/3_Debian/Debian.tex]
 archive=true
-column=0
+column=15
 encoding=UTF-8
 highlight=LaTeX
-line=30
+line=33
 mode=LaTeX
 open=false
 order=1
 
 [item:Sections/4_RedHat_zypper/RedHat_zypper.tex]
 archive=true
-column=25
+column=22
 encoding=UTF-8
 highlight=LaTeX
-line=16
+line=99
 mode=LaTeX
 open=false
 order=2
 
 [item:Sections/5_RedHat_yum/RedHat_yum.tex]
 archive=true
-column=8
+column=80
 encoding=UTF-8
 highlight=LaTeX
-line=30
+line=22
 mode=LaTeX
 open=false
 order=1
 
 [item:Sections/6_Supercomputers/Supercomputers.tex]
 archive=true
-column=8
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=30
+line=47
 mode=LaTeX
 open=false
 order=1
 
 [item:Sections/7_Additional_Configuration/Additional_Configuration.tex]
 archive=true
-column=29
+column=85
 encoding=UTF-8
 highlight=LaTeX
-line=63
+line=32
 mode=LaTeX
 open=false
 order=1
@@ -210,39 +210,39 @@ ViMarks=.,5,23,[,5,23,],5,23
 
 [view-settings,view=0,item:Sections/2_Packages_Description/Packages_Description.tex]
 CursorColumn=0
-CursorLine=0
+CursorLine=22
 JumpList=
-ViMarks=
+ViMarks=.,37,18,[,37,17,],37,18
 
 [view-settings,view=0,item:Sections/3_Debian/Debian.tex]
-CursorColumn=0
-CursorLine=30
+CursorColumn=15
+CursorLine=33
 JumpList=
-ViMarks=.,35,20,[,35,20,],35,20
+ViMarks=.,31,79,[,31,79,],31,79
 
 [view-settings,view=0,item:Sections/4_RedHat_zypper/RedHat_zypper.tex]
-CursorColumn=25
-CursorLine=16
+CursorColumn=22
+CursorLine=99
 JumpList=
-ViMarks=.,16,25,[,16,25,],16,25
+ViMarks=.,23,0,[,22,0,],23,79
 
 [view-settings,view=0,item:Sections/5_RedHat_yum/RedHat_yum.tex]
-CursorColumn=8
-CursorLine=30
+CursorColumn=80
+CursorLine=22
 JumpList=
-ViMarks=.,30,7,[,30,0,],30,7
+ViMarks=.,22,0,[,21,0,],22,79
 
 [view-settings,view=0,item:Sections/6_Supercomputers/Supercomputers.tex]
-CursorColumn=8
-CursorLine=30
+CursorColumn=0
+CursorLine=47
 JumpList=
-ViMarks=.,30,7,[,30,0,],30,7
+ViMarks=.,47,0,[,47,0,],47,0
 
 [view-settings,view=0,item:Sections/7_Additional_Configuration/Additional_Configuration.tex]
-CursorColumn=29
-CursorLine=63
+CursorColumn=85
+CursorLine=32
 JumpList=
-ViMarks=.,65,12,[,65,12,],65,12
+ViMarks=.,62,54,[,62,54,],62,54
 
 [view-settings,view=0,item:Sections/8_Removal/Removal.tex]
 CursorColumn=11

@@ -1,25 +1,29 @@
 \section{Java}
 \label{sec:Java}
 
-In this section the steps to develop a java COMPSs application will be illustrated. The sequential \textit{Simple application}
+In this section the steps to develop a Java COMPSs application will be illustrated. The sequential \textit{Simple application}
 will be used to explain an application porting to COMPSs. The user is required to select a set of
 methods, invoked in a sequential application, to be run as remote tasks on the available resources.
 
+\subsection{Programming Model}
 A COMPSs application is composed of three parts:
 \begin{itemize}
- \item {\bf Main application code:} the code that is executed sequentially and contains the calls to the user-selected methods that will be executed on the Cloud.
- \item {\bf Remote methods code:} the implementation of the remote tasks.
- \item {\bf Java annotated interface:} It declares the selected methods to be run as remote tasks and metadata used to schedule the tasks.
+ \item \textbf{Main application code:} the code that is executed sequentially and contains the calls to the user-selected methods 
+ that will be executed on the Cloud.
+ \item \textbf{Remote methods code:} the implementation of the remote tasks.
+ \item \textbf{Java annotated interface:} It declares the selected methods to be run as remote tasks and metadata used to 
+ schedule the tasks.
 \end{itemize}
 
 The main application code (sequential) will have the name of the application, always starting with capital
-letter, in this case will be {\bf Simple.java}. The Java annotated interface will be named as {\it application name+Itf.java} 
-in this case will be {\bf SimpleItf.java}. And the code that implements the remote tasks will be called as
-{\it application name + Impl.java}, in this case will be {\bf SimpleImpl.java}.
+letter, in this case will be \textbf{Simple.java}. The Java annotated interface will be named as \textit{application name+Itf.java} 
+in this case will be \textbf{SimpleItf.java}. And the code that implements the remote tasks will be called as
+\textit{application name + Impl.java}, in this case will be \textbf{SimpleImpl.java}.
 
-All code examples are in the {\bf /home/user/workspace/} folder of the development environment.
+All code examples are in the $/home/compss/workspace\_java/$ folder of the development environment.
 
-\subsection{Main application code}
+
+\subsubsection{Main application code}
 
 In COMPSs the application is kept completely unchanged, i.e. no API calls need to be included in the main
 application code in order to run the selected tasks on the nodes.
@@ -81,7 +85,7 @@ public class Simple {
 \end{lstlisting}
 
 
-\subsection{Remote methods code}
+\subsubsection{Remote methods code}
 
 The following code is the implementation of the remote method of the {\it Simple} application ({\bf SimpleImpl.java})
 that will be executed remotely by COMPSs.
@@ -114,8 +118,7 @@ public class SimpleImpl {
 \end{lstlisting}
 
 
-\subsection{Java annotated interface}
-
+\subsubsection{Java annotated interface}
 The Java interface is used to declare the methods to be executed remotely along with Java annotations that
 specify the necessary metadata about the tasks. The metadata can be of three different types:
 
@@ -131,6 +134,11 @@ Here follows a complete and detailed explanation of the usage of the metadata:
  \item {\bf Method-level Metadata:} for each selected method, the following metadata has to be defined:
        \begin{itemize}
          \item {\bf @Method:} Mandatory. It specifies the class that implements the method.
+		\begin{itemize}
+			\item \textbf{isModifier} True if the method modifies the implicit object, false otherwise.
+			\item \textbf{priority} True if the task is prioritary and false otherwise. This parameter is applyed on the
+			schedule policies. 
+		\end{itemize}
          \item {\bf @Constraints:} Mandatory. The user can specify the capabilities that a resource must have in order
                to run a method. The COMPSs runtime will create a VM (in a cloud environment), that fits the
                specified requirements in order to perform the execution.
@@ -195,6 +203,18 @@ Here follows a complete and detailed explanation of the usage of the metadata:
         \item {\bf Return type:} Any object, a basic type or a generic class object.
         \item {\bf Method modifiers:} the method has to be {\bf STATIC}.
        \end{itemize}
+
+ \item \textbf{Service-level Metadata:} for each selected service, the following metadata has to be defined:
+       \begin{itemize}
+         \item \textbf{@Service:} Mandatory. It specifies the service properties. 
+		\begin{itemize}
+			\item \textbf{namespace} Mandatory. Service namespace
+			\item \textbf{name} Mandatory. Service name.
+			\item \textbf{port} Mandatory. Service port.
+			\item \textbf{operation} Operation type. 
+			\item \textbf{priority} True if the service is prioritary and false otherwise. This parameter is applyed 
+			on the schedule policies. 
+		\end{itemize}
 \end{itemize}
 
     
@@ -226,7 +246,7 @@ public interface SimpleItf {
 \end{lstlisting}
 
 
-\subsection{Equivalent remote methods}
+\subsubsection{Equivalent remote methods}
 Since version 1.2, the COMPSs programming model allows developers to define sets of equivalent remote
 methods. Thus, an invocation to any of the methods in the set might produce the execution of another
 method of the set in the remote resource.
