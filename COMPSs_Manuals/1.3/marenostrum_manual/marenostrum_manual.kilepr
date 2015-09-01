@@ -113,7 +113,7 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=23
+line=17
 mode=LaTeX
 open=false
 order=2
@@ -166,6 +166,6 @@ ViMarks=.,121,70,[,121,70,],121,77,a,174,70
 
 [view-settings,view=0,item:configuration.tex]
 CursorColumn=0
-CursorLine=23
+CursorLine=17
 JumpList=
 ViMarks=.,17,0,[,17,0,],17,45
