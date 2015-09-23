@@ -75,7 +75,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=0
 mode=LaTeX
-open=true
+open=false
 order=0
 
 [item:Sections/2_Modules/Modules.tex]
@@ -85,7 +85,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=64
 mode=LaTeX
-open=true
+open=false
 order=3
 
 [item:Sections/3_Jobs/Jobs.tex]
@@ -95,7 +95,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=180
 mode=LaTeX
-open=true
+open=false
 order=2
 
 [item:Sections/4_Monitor/Monitor.tex]
@@ -115,7 +115,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=17
 mode=LaTeX
-open=true
+open=false
 order=1
 
 [item:marenostrum_manual.kilepr]

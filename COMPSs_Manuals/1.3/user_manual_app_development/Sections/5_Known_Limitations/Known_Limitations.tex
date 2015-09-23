@@ -11,12 +11,21 @@ limitations:
 \begin{itemize}
  \item \textbf{Exceptions:} \newline The current COMPSs version is not able to catch exceptions raised from a task.
  
+ \item \textbf{Java tasks:} \newline Java tasks \textbf{must} be declared as \textbf{public}. Despite the fact that tasks can be
+ defined in the main class or in other ones, we recommend to define the tasks in a separated class from the main method to force
+ its public declaration.
+ 
+ \item \textbf{Java objects:} \newline Objects used by tasks must follow the \textit{java beans} model (implementing an empty 
+ constructor and getters and setters for each attribute) or implement the \textit{serializable} interface. This is due to the 
+ fact that objects will be transfered to remote machines to execute the tasks.
+ 
  \item \textbf{Services types:} \newline The current COMPSs version only supports SOAP based services that implement the WS interoperability
  standard. Supporting Big Services is a feature we are \textbf{not} planning to implment in the near future.
  
- \item \textbf{NIO workspaces:} \newline The persistent workers implementation (NIO) has a unique \textit{Working Directory} per worker. That
- means that tasks should not use hardcoded file names to avoid file colisions and tasks malfunction. We recommend to use files 
- declared as task parameters, to manually create a sandbox inside each task execution and/or to generate temporary random file names. 
+ \item \textbf{NIO workspaces:} \newline The persistent workers implementation (NIO) has a unique \textit{Working Directory} per 
+ worker. That means that tasks should not use hardcoded file names to avoid file colisions and tasks malfunction. We recommend to
+ use files declared as task parameters, to manually create a sandbox inside each task execution and/or to generate temporary 
+ random file names. 
 \end{itemize}
 
 If you are willing to know the COMPSs development state you can check out our webpage \url{http://compss.bsc.es} or 

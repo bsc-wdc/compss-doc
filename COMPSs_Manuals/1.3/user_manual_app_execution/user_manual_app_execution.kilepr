@@ -31,7 +31,7 @@ Indentation Mode=normal
 Mode=LaTeX
 
 [document-settings,item:Sections/2_Execution/Execution.tex]
-Bookmarks=475,594
+Bookmarks=481,600
 Encoding=UTF-8
 Highlighting=LaTeX
 Indentation Mode=normal
@@ -87,10 +87,10 @@ order=1
 
 [item:Sections/2_Execution/Execution.tex]
 archive=true
-column=7
+column=58
 encoding=UTF-8
 highlight=LaTeX
-line=725
+line=88
 mode=LaTeX
 open=false
 order=1
@@ -117,10 +117,10 @@ order=3
 
 [item:Sections/5_Common_Issues/Common_Issues.tex]
 archive=true
-column=50
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=114
+line=138
 mode=LaTeX
 open=false
 order=1
@@ -158,10 +158,10 @@ JumpList=
 ViMarks=.,5,23,[,5,23,],5,23
 
 [view-settings,view=0,item:Sections/2_Execution/Execution.tex]
-CursorColumn=7
-CursorLine=725
+CursorColumn=58
+CursorLine=88
 JumpList=
-ViMarks=.,727,0,[,727,0,],727,0,a,475,0,b,594,20
+ViMarks=.,88,57,[,88,53,],88,57,a,481,0,b,600,20
 
 [view-settings,view=0,item:Sections/3_Results_and_Logs/Results_and_Logs.tex]
 CursorColumn=48
@@ -182,10 +182,10 @@ JumpList=
 ViMarks=.,50,56,[,50,52,],50,56
 
 [view-settings,view=0,item:Sections/5_Common_Issues/Common_Issues.tex]
-CursorColumn=50
-CursorLine=114
+CursorColumn=0
+CursorLine=138
 JumpList=
-ViMarks=.,114,49,[,114,47,],114,49
+ViMarks=.,137,28,[,138,0,],-1,-1
 
 [view-settings,view=0,item:configuration.tex]
 CursorColumn=0

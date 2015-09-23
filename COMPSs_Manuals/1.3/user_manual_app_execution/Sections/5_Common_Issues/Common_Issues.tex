@@ -113,3 +113,62 @@ $ echo "export CLASSPATH=$CLASSPATH:/opt/COMPSs/Runtime/compss-engine.jar" >> ~/
 
 \colorComment{Attention: The \textit{compss-engine.jar} is installed inside the COMPSs installation directory. If you have performed
 a custom installation, the path of the package may be different.}
+
+\subsection{Jobs failed on method reflection}
+When executing an application the main code gets stuck executing a task. Taking a look at the \textit{runtime.log} users can check
+that the job associated to the task has failed (and all its resubmissions too). Then, opening the \textit{$jobX_NEW.out$} or the
+\textit{$jobX_NEW.err$} files users find the following error:
+
+\begin{lstlisting}[language=bash]
+[ERROR|integratedtoolkit.Worker|Executor] Can not get method by reflection
+integratedtoolkit.nio.worker.executors.Executor$JobExecutionException: Can not get method by reflection
+        at integratedtoolkit.nio.worker.executors.JavaExecutor.executeTask(JavaExecutor.java:142)
+        at integratedtoolkit.nio.worker.executors.Executor.execute(Executor.java:42)
+        at integratedtoolkit.nio.worker.JobLauncher.executeTask(JobLauncher.java:46)
+        at integratedtoolkit.nio.worker.JobLauncher.processRequests(JobLauncher.java:34)
+        at integratedtoolkit.util.RequestDispatcher.run(RequestDispatcher.java:46)
+        at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.NoSuchMethodException: simple.Simple.increment(java.lang.String)
+        at java.lang.Class.getMethod(Class.java:1678)
+        at integratedtoolkit.nio.worker.executors.JavaExecutor.executeTask(JavaExecutor.java:140)
+        ... 5 more
+\end{lstlisting}
+
+This error is caused because COMPSs cannot find one of the tasks declared in the Java Interface. Commonly this is triggered by
+one of the following errors:
+
+\begin{itemize}
+ \item The \textit{declaringClass} of the tasks in the Java Iterface has not been correctly defined
+ \item The parameters of the tasks in the Java Iterface do not match the task
+ \item The tasks have not been defined as \textit{public}
+\end{itemize}
+
+\subsection{Jobs failed on reflect target invocation null pointer}
+When executing an application the main code gets stuck executing a task. Taking a look at the \textit{runtime.log} users can check
+that the job associated to the task has failed (and all its resubmissions too). Then, opening the \textit{$jobX_NEW.out$} or the
+\textit{$jobX_NEW.err$} files users find the following error:
+
+\begin{lstlisting}[language=bash]
+[ERROR|integratedtoolkit.Worker|Executor]
+java.lang.reflect.InvocationTargetException
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:606)
+        at integratedtoolkit.nio.worker.executors.JavaExecutor.executeTask(JavaExecutor.java:154)
+        at integratedtoolkit.nio.worker.executors.Executor.execute(Executor.java:42)
+        at integratedtoolkit.nio.worker.JobLauncher.executeTask(JobLauncher.java:46)
+        at integratedtoolkit.nio.worker.JobLauncher.processRequests(JobLauncher.java:34)
+        at integratedtoolkit.util.RequestDispatcher.run(RequestDispatcher.java:46)
+        at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.NullPointerException
+        at simple.Ll.printY(Ll.java:25)
+        at simple.Simple.task(Simple.java:72)
+        ... 10 more
+\end{lstlisting}
+
+This error is caused because the java object accessed by the task has not been correctly transfered and one or more of its fields
+is null. The transfer failure is normally caused because the transfered object is not serializable. 
+
+Users should check that all the object parameters in the task are either implementing the serializable interface or following 
+the \textit{java beans} model (by implementing an empty constructor and getters and setters for each attribute).
