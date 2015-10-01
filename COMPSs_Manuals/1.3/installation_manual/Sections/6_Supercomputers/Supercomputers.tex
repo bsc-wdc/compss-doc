@@ -1,11 +1,11 @@
 \section{Supercomputers}
 \label{sec:Supercomputers}
 
-The COMPSs Framework can be installed in any SuperComputer by installing its packages as a normal distribution. The packages are
+The COMPSs Framework can be installed in any SuperComputer by installing its packages as in a normal distribution. The packages are
 ready to be reallocated so the administrators can choose the right location for the COMPSs installation. \newline
 
 However, if the administrators are not willing to install COMPSs through the packaging system, we also provide a \textbf{COMPSs zipped file} containing
-a pre-build script to easily install COMPSs. For such a purpose please execute the following commands:
+a pre-build script to easily install COMPSs. For such purpose please execute the following commands:
 \begin{lstlisting}[language=bash]
  # Check out the last COMPSs release
  $ wget http://compss.bsc.es/repo/sc/stable/COMPSs_1.3.tar.gz
@@ -22,12 +22,12 @@ a pre-build script to easily install COMPSs. For such a purpose please execute t
  $ rm COMPSs_1.3.tar.gz
 \end{lstlisting}
 
-The installation script will create a COMPSs folder inside the given $<targetDir>$, providing the final COMPSs installation 
-under the $<targetDir>/COMPSs$ folder. Notice that, if such a folder already exists, it will be \textbf{automatically erased}.
+The installation script will create a COMPSs folder inside the given $<targetDir>$ so the final COMPSs installation will be placed 
+under the $<targetDir>/COMPSs$ folder. Please note that if the folder already exists it will be \textbf{automatically erased}.
 
 ~ \newline
 
-To successfully run the installation script some dependencies must be installed in the target machine. Administrators must provide the correct
+In order to successfully run the installation script some dependencies must be present on the target machine. Administrators must provide the correct
 installation and environment of the following software:
 \begin{itemize}
  \item Autotools
@@ -43,7 +43,7 @@ The following environment variables must be defined:
 
 ~ \newline
 
-To allow users easily work with COMPSs this installation provides a \textit{compssenv} file that loads the COMPSs environment. Thus, after the 
+This installation provides a \textit{compssenv} file that loads the required environment to allow users work more easily with COMPSs. Thus, after the 
 installation process we recomend to source the $<targetDir>/COMPSs/compssenv$ into the users \textit{.bashrc}.
 
 
