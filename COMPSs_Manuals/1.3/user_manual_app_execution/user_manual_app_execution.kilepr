@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1.3
-lastDocument=COMPSs_User_Manual_App_Exec.tex
+lastDocument=Sections/4_Tools/Tools.tex
 masterDocument=COMPSs_User_Manual_App_Exec.tex
 name=COMPSs User Manual - Application Execution
 pkg_extIsRegExp=false
@@ -72,7 +72,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=99
 mode=LaTeX
-open=true
+open=false
 order=0
 
 [item:Sections/1_Introduction/Introduction.tex]
@@ -87,10 +87,10 @@ order=1
 
 [item:Sections/2_Execution/Execution.tex]
 archive=true
-column=58
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=88
+line=558
 mode=LaTeX
 open=false
 order=1
@@ -107,13 +107,13 @@ order=2
 
 [item:Sections/4_Tools/Tools.tex]
 archive=true
-column=0
+column=44
 encoding=UTF-8
 highlight=LaTeX
-line=459
+line=221
 mode=LaTeX
-open=false
-order=3
+open=true
+order=0
 
 [item:Sections/5_Common_Issues/Common_Issues.tex]
 archive=true
@@ -158,8 +158,8 @@ JumpList=
 ViMarks=.,5,23,[,5,23,],5,23
 
 [view-settings,view=0,item:Sections/2_Execution/Execution.tex]
-CursorColumn=58
-CursorLine=88
+CursorColumn=0
+CursorLine=558
 JumpList=
 ViMarks=.,88,57,[,88,53,],88,57,a,481,0,b,600,20
 
@@ -170,10 +170,10 @@ JumpList=
 ViMarks=.,124,48,[,124,48,],124,48
 
 [view-settings,view=0,item:Sections/4_Tools/Tools.tex]
-CursorColumn=0
-CursorLine=459
+CursorColumn=44
+CursorLine=221
 JumpList=
-ViMarks=.,482,0,[,482,0,],482,0
+ViMarks=.,167,49,[,167,49,],167,49
 
 [view-settings,view=0,item:Sections/5_Commmon_Issues/Common_Issues.tex]
 CursorColumn=0

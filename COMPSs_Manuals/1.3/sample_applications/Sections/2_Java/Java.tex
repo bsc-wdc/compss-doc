@@ -18,27 +18,132 @@ $/home/compss/workspace\_java/$ folder.
 %% HELLO WORLD 
 %%%%%%%%%%%%%%%
 \subsection{Hello World}
+The Hello Wolrd is a Java application that creates a task and prints a Hello World! message. Its purpose is to clarify that the COMPSs tasks output is
+redirected to the job files and it is \textbf{not} available at the standard output. 
 
+Next we provide the important parts of the application's code.
+
+\begin{lstlisting}[language=java]
+	// hello.Hello
+	
+	public static void main(String[] args) throws Exception {
+		// Check and get parameters
+		if (args.length != 0) {
+			usage();
+			throw new Exception("[ERROR] Incorrect number of parameters");
+		}
+		
+		// Hello World from main application
+		System.out.println("Hello World! (from main application)");
+
+		// Hello World from a task
+		HelloImpl.sayHello();
+	}
+\end{lstlisting}
+
+As shown in the main code, this application has no input arguments. 
+
+\begin{lstlisting}[language=java]
+	// hello.HelloImpl
+	
+	public static void sayHello() {
+		System.out.println("Hello World! (from a task)");
+	}
+\end{lstlisting}
+
+Remember that, to run with COMPSs, java applications must provide an interface. For simplicity, in this example, the content of the interface only
+declares the task which has no parameters:
+\begin{lstlisting}[language=java]
+	// hello.HelloItf
+	
+	@Method(declaringClass = "hello.HelloImpl")
+	void sayHello(
+	);
+\end{lstlisting}
+
+Notice that there is a first Hello World message printed from the main code and, a second one, printed inside a task. When executing sequentially
+this application users will be able to see both messages at the standard output. However, when executing this application with COMPSs, users will only
+see the message from the main code at the standard output. The message printed from the task will be stored inside the job log files. 
+
+Let's try it. First we proceed to compile the code by running the following instructions:
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ cd ~/workspace_java/hello/src/
+compss@bsc:~$ javac *.java
+
+\end{lstlisting}
+
+Once done, we can sequentially execute the application by directly invoking the \textit{jar} file.
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ java -jar hello.jar
+\end{lstlisting}
+
+And we can also execute the application with COMPSs:
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ cd ~/workspace_java/hello/jar/
+compss@bsc:~/workspace_java/hello/jar$ runcompss -d hello.Hello 
+\end{lstlisting}
+
+Notice that the COMPSs execution is using the \textit{-d} option to allow the job logging. Thus, we can check out the application jobs folder to look for
+the task output.
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ cd ~/.COMPSs/hello.Hello_01/jobs/
+compss@bsc:~/.COMPSs/hello.Hello_01/jobs$ ls -1
+
+compss@bsc:~/.COMPSs/hello.Hello_01/jobs$ cat job1_NEW.out
+
+\end{lstlisting}
 
 %%%%%%%%%%%%%%%
 %% SIMPLE
 %%%%%%%%%%%%%%%
 \subsection{Simple}
+The Simple application is a Java application that increases a counter by means of a task. The counter is stored inside a file.
 
 
 %%%%%%%%%%%%%%%
 %% Increment
 %%%%%%%%%%%%%%%
 \subsection{Increment}
+The Increment application is a Java application that increases N time three different counters. Each increase step is developed by a separated task. The
+purpose of this application is to show parallelism between the three counters.
 
+Next we provide the main code of this application. The code inside the \textit{increment} task is the same than the previous example. 
+
+\begin{lstlisting}[language=java]
+	// increment.Increment
+	
+\end{lstlisting}
+
+As shown in the main code, this application has 4 parameters that stand for:
+
+\begin{enumerate}
+ \item \textbf{N:} Number of times to increase a counter
+ \item \textbf{InitialValue1:} Initial value for counter 1
+ \item \textbf{InitialValue2:} Initial value for counter 2
+ \item \textbf{InitialValue3:} Initial value for counter 3
+\end{enumerate}
+
+Next we will compile and run the Increment application with the \textit{-g} option to be able to generate the final graph at the end of the execution.
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ cd ~/workspace_java/increment/jar/
+compss@bsc:~/workspace_java/increment/jar$ runcompss -g increment.Increment 10 1 2 3 
+
+compss@bsc:~/workspace_java/increment/jar$ cd ~/.COMPSs/increment.Increment_01/monitor/
+compss@bsc:~/.COMPSs/increment.Increment_01/monitor$ gengraph complete_graph.dot
+compss@bsc:~/.COMPSs/increment.Increment_01/monitor$ evince complete_graph.dot.pdf
+\end{lstlisting}
 
 %%%%%%%%%%%%%%%
 %% MATMUL
 %%%%%%%%%%%%%%%
 \subsection{Matrix multiplication}
-Matrix Multiplication (Matmul) is a pure Java application that multiplies two matrices in a direct way. 
-The application creates 2 matrices of N x N size initialized with values, and multiply the matrices by 
-blocks of 40 floats (by default).
+The Matrix Multiplication (Matmul) is a pure Java application that multiplies two matrices in a direct way. 
+The application creates 2 matrices of N x N size initialized with values, and multiply the matrices by blocks.
 
 \begin{figure}[ht!]
   \centering
@@ -48,8 +153,8 @@ blocks of 40 floats (by default).
 \end{figure}
 
 In this application the multiplication is implemented in the multiplyAccumulative that is thus selected 
-as the task that will be executed remotely. In order to run the application the matrix dimension has to 
-be supplied.
+as the task that will be executed remotely. In order to run the application the matrix dimension (number of blocks) and the dimension of each block
+have to be supplied.
 
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cp ~/workspace_java/matmul/package/Matmul.tar.gz /home/compss/
@@ -59,7 +164,7 @@ compss@bsc:~$ tar xzf Matmul.tar.gz
 The command line to execute the application:
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ runcompss matmul.Matmul <matrix_dim>
+compss@bsc:~$ runcompss matmul.Matmul <matrix_dim> <block_dim>
 \end{lstlisting}
 
 %%%%%%%%%%%%%%%
