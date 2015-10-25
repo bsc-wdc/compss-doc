@@ -68,9 +68,17 @@ see the message from the main code at the standard output. The message printed f
 Let's try it. First we proceed to compile the code by running the following instructions:
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd ~/workspace_java/hello/src/
-compss@bsc:~$ javac *.java
+compss@bsc:~$ cd ~/workspace_java/hello/src/hello/
+compss@bsc:~/workspace_java/hello/src/hello$ javac *.java
+compss@bsc:~/workspace_java/hello/src/hello$ jar cf hello.jar hello
+compss@bsc:~/workspace_java/hello/src/hello$ mv hello.jar ~/workspace_java/hello/jar/
+\end{lstlisting}
 
+Alternatively, this example application is prepared to be compiled with \textit{maven}:
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ cd ~/workspace_java/hello/
+compss@bsc:~/workspace_java/hello$ mvn clean package
 \end{lstlisting}
 
 Once done, we can sequentially execute the application by directly invoking the \textit{jar} file.

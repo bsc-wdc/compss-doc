@@ -319,9 +319,11 @@ A java application needs to be packaged in a \textit{jar} file containing the so
 Next we provide a set of commands to compile the java Simple application detailed at the \textit{COMPSs Sample Applications} 
 available at our website \url{http://compss.bsc.es} .
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd workspace_java/simple/src/simple/
-compss@bsc:~/workspace_java/simple/src/simple$ javac *.java
-compss@bsc:~/workspace_java/simple/src/simple$ jar cf simple.jar simple 
+compss@bsc:~$ cd workspace_java/simple/src/main/java/simple/
+compss@bsc:~/workspace_java/simple/src/main/java/simple$ javac *.java
+compss@bsc:~/workspace_java/simple/src/main/java/simple$ cd ..
+compss@bsc:~/workspace_java/simple/src/main/java$ jar cf simple.jar simple/
+compss@bsc:~/workspace_java/simple/src/main/java$ mv ./simple.jar ../../../jar/
 \end{lstlisting}
 
 For a successfull compilation the \textit{compss-engine.jar} package must be provided by the CLASSPATH variable. The default COMPSs

@@ -60,12 +60,12 @@ Mode=LaTeX
 
 [item:Sample_Applications.tex]
 archive=true
-column=0
+column=15
 encoding=UTF-8
 highlight=LaTeX
-line=15
+line=22
 mode=LaTeX
-open=true
+open=false
 order=0
 
 [item:Sections/1_Introduction/Introduction.tex]
@@ -80,13 +80,13 @@ order=1
 
 [item:Sections/2_Java/Java.tex]
 archive=true
-column=16
+column=42
 encoding=UTF-8
 highlight=LaTeX
-line=97
+line=76
 mode=LaTeX
 open=true
-order=1
+order=0
 
 [item:Sections/3_Python/Python.tex]
 archive=true
@@ -129,8 +129,8 @@ open=false
 order=-1
 
 [view-settings,view=0,item:Sample_Applications.tex]
-CursorColumn=0
-CursorLine=15
+CursorColumn=15
+CursorLine=22
 JumpList=
 ViMarks=.,94,25,[,94,25,],94,25
 
@@ -141,10 +141,10 @@ JumpList=
 ViMarks=.,5,23,[,5,23,],5,23
 
 [view-settings,view=0,item:Sections/2_Java/Java.tex]
-CursorColumn=16
-CursorLine=97
+CursorColumn=42
+CursorLine=76
 JumpList=
-ViMarks=.,166,61,[,166,50,],166,61
+ViMarks=.,76,42,[,76,42,],76,42
 
 [view-settings,view=0,item:Sections/3_Python/Python.tex]
 CursorColumn=0
