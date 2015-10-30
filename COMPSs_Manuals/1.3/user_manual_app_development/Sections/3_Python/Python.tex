@@ -8,7 +8,7 @@ application for COMPSs and how to configure the binding library.
 
 \subsubsection{Task Selection}
 
-Like in the case of the Java language, a COMPSs Python application is a sequential program that contains calls 
+As in the case of Java, a COMPSs Python application is a sequential program that contains calls 
 to tasks. In particular, the user can select as a task:
 
 \begin{itemize}
@@ -17,12 +17,11 @@ to tasks. In particular, the user can select as a task:
  \item Class methods: static methods belonging to a class.
 \end{itemize}
 
-Regarding task selection, in Python it is not done by means of an annotated interface but with the use of 
-Python decorators. In particular, the user needs to add, before the definition of the function/method, 
+The task definition in Python is done by means of Python decorators instead of an annotated interface. In particular, the user needs to add, before the definition of the function/method, 
 a $@$task decorator that describes the task.
 
-As an example, let us assume that the application calls a function func, which receives a string parameter 
-containing a file name and an integer parameter. The code of func updates the file.
+As an example, let us assume that the application calls a function \textit{func}, which receives a string parameter 
+containing a file name and an integer parameter. The code of \textit{func} updates the file.
 
 \begin{lstlisting}[language=python]
 my_file = 'sample_file.txt'
@@ -64,7 +63,7 @@ the {\it $@$task} decorator for a given task parameter:
 \end{itemize}
  
 Continuing with the example, in the following code snippet the decorator specifies that {\it func} 
-has a parameter called {\it fi}, of type {\it FILE} and {\it INOUT} direction. Note how the second 
+has a parameter called {\it f}, of type {\it FILE} and {\it INOUT} direction. Note how the second 
 parameter, {\it i}, does not need to be specified, since its type (integer) and direction ({\it IN}) 
 are automatically inferred by COMPSs.
 
@@ -99,7 +98,7 @@ class MyClass(object):
 \end{lstlisting}
 
 The programmer can also mark a task as a high-priority task with the {\it priority} argument of the 
-{\it $@$task} decorator. This way, when the task is free of dependencies, it will be scheduled before 
+{\it $@$task} decorator. In this way, when the task is free of dependencies, it will be scheduled before 
 any of the available low-priority (regular) tasks. This functionality is useful for tasks that are in 
 the critical path of the application’s task dependency graph.
 
@@ -142,11 +141,11 @@ there exist two API functions that need to be invoked:
 \begin{itemize}
  \item {\it compss\_open(file\_name, mode = 'r')}: similar to the Python {\it open()} call. It synchronizes
        for the last version of file {\it file\_name} and returns the file descriptor for that synchronized
-       file. It can receive an optional parameter {\it mode}, which defaults to '{\it r}', containing the
+       file. It can have an optional parameter {\it mode}, which defaults to '{\it r}', containing the
        mode in which the file will be opened (the open modes are analogous to those of
        Python {\it open()}).
  \item {\it compss\_wait\_on(obj, to\_write = True)}: synchronizes for the last version of object {\it obj}
-       and returns the synchronized object. It can receive an optional boolean parameter
+       and returns the synchronized object. It can have an optional boolean parameter
        {\it to\_write}, which defaults to {\it True}, that indicates whether the main program will modify the
        returned object.
 \end{itemize}
@@ -202,12 +201,10 @@ Table \ref{tab:python_api_functions} summarizes the API functions to be used in 
   \end{longtable}
 \egroup
 
+\subsubsection{Important Notes}
 
-\paragraph{Future Objects}
 If the programmer selects as a task a function or method that returns a value, that value is not 
-generated until the task executes. However, in order to keep the asynchrony of the task invocation, 
-COMPSs manages future objects: a representant object is immediately returned to the main program when 
-a task is invoked.
+generated until the task executes. 
 
 \begin{lstlisting}[language=python]
 @task(%*{\bf returns }*) = MyClass)
@@ -220,8 +217,8 @@ def ret_func():
 o = ret_func()
 \end{lstlisting}
 
-The future object returned can be involved in a subsequent task call, and the COMPSs runtime will automatically 
-find the corresponding data dependency. In the following example, the future object o is passed as a parameter 
+The object returned can be involved in a subsequent task call, and the COMPSs runtime will automatically 
+find the corresponding data dependency. In the following example, the object \textit{o} is passed as a parameter 
 and callee of two subsequent (asynchronous) tasks, respectively:
 
 \begin{lstlisting}[language=python]
@@ -237,8 +234,8 @@ another_task(o)
 o.yet_another_task()
 \end{lstlisting}
 
-In order to synchronize the future object from the main program, the programmer proceeds in the same way 
-as with any object updated by a task:
+In order to synchronize the object from the main program, the programmer has to synchronize (using the \textit{compss\_wait\_on} function) in the same way 
+as with any object updated by a task, :
 
 \begin{lstlisting}[language=python]
 # %*{\bf o }*) is a future object
@@ -249,10 +246,8 @@ o = ret_func()
 o = compss_wait_on(o)
 \end{lstlisting}
                          
-The future object mechanism is applied to primitive types, strings and objects (including the Python 
-built-in types list, dictionary and tuple).
 
-It is important to note that, for instances of user-defined classes, the classes of these objects 
+For instances of user-defined classes, the classes of these objects 
 should have an empty constructor, otherwise the programmer will not be able to invoke task instance 
 methods on those objects:
                                    
@@ -271,9 +266,8 @@ o = ret_func()
 o.yet_another_task()
 \end{lstlisting}
 
-\subsubsection{Important Notes}
-For the COMPSs Python binding to function correctly, the programmer should not use relative imports 
-in her code. Relative imports can lead to ambiguous code and they are discouraged in Python, as explained in:
+In order to make the COMPSs Python binding function correctly, the programmer should not use relative imports 
+in the code. Relative imports can lead to ambiguous code and they are discouraged in Python, as explained in:
 
 \begin{lstlisting}[language=html]
 http://docs.python.org/2/faq/programming.html#what-are-the-best-practices-for-using-import-in-a-module
@@ -289,7 +283,7 @@ The following environment variables must be defined before executing a COMPSs Py
 JAVA\_HOME: Java JDK installation directory (e.g. \textit{/usr/lib/jvm/java-7-openjdk/})
 
 \subsubsection{Command}
-In order to run a Python application with COMPSs, the script runcompss can be used, like for 
+In order to run a Python application with COMPSs, the runcompss script can be used, like for 
 Java and C/C++ applications. An example of an invocation of the script is:
 
 \begin{lstlisting}[language=bash]
@@ -301,4 +295,4 @@ compss@bsc:~$ runcompss \
 \end{lstlisting}
 
 For full description about the options available for the runcompss command please check the \textit{COMPSs User Manual: Application
-Execution} available at our webpage \url{http://compss.bsc.es} . 
+Execution} available at \url{http://compss.bsc.es} . 

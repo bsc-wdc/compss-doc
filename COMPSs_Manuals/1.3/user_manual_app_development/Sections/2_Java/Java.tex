@@ -1,41 +1,35 @@
 \section{Java}
 \label{sec:Java}
 
-In this section the steps to develop a Java COMPSs application will be illustrated. The sequential \textit{Simple application}
-will be used to explain an application porting to COMPSs. The user is required to select a set of
-methods, invoked in a sequential application, to be run as remote tasks on the available resources.
+This section illustrated the steps to develop a Java COMPSs application, to compile and to execute it. The \textit{Simple} application will be used as reference code. 
+The user is required to select a set of methods, invoked in the sequential application, that will be run as remote tasks on the available resources.
 
 \subsection{Programming Model}
 A COMPSs application is composed of three parts:
 \begin{itemize}
  \item \textbf{Main application code:} the code that is executed sequentially and contains the calls to the user-selected methods 
- that will be executed on the Cloud.
- \item \textbf{Remote methods code:} the implementation of the remote tasks.
- \item \textbf{Java annotated interface:} It declares the selected methods to be run as remote tasks and metadata used to 
- schedule the tasks.
+ that will be executed by the COMPSs runtime as asynchronous parallel tasks.
+ \item \textbf{Remote methods code:} the implementation of the tasks.
+ \item \textbf{Java annotated interface:} It declares the methods to be run as remote tasks along with metadata information needed by the runtime to properly schedule the tasks.
 \end{itemize}
 
-The main application code (sequential) will have the name of the application, always starting with capital
-letter, in this case will be \textbf{Simple.java}. The Java annotated interface will be named as \textit{application name+Itf.java} 
-in this case will be \textbf{SimpleItf.java}. And the code that implements the remote tasks will be called as
-\textit{application name + Impl.java}, in this case will be \textbf{SimpleImpl.java}.
+The main application file name has to be the same of the main class and starts with capital
+letter, in this case it is \textbf{Simple.java}. The Java annotated interface filename is \textit{application name+Itf.java}, in this case it is \textbf{SimpleItf.java}. And the code that implements the remote tasks is defined in the \textit{application name + Impl.java} file, in this case it is \textbf{SimpleImpl.java}.
 
 All code examples are in the $/home/compss/workspace\_java/$ folder of the development environment.
 
 
 \subsubsection{Main application code}
 
-In COMPSs the application is kept completely unchanged, i.e. no API calls need to be included in the main
+In COMPSs the user's application code is kept unchanged, no API calls need to be included in the main
 application code in order to run the selected tasks on the nodes.
 
 The COMPSs runtime is in charge of replacing the invocations to the user-selected methods with the
-creation of remote tasks also taking care of the access to files from the main application code.
+creation of remote tasks also taking care of the access to files where required. 
+Let's consider the Simple application example that takes an integer as input parameter and increases it by one unit.
 
-Let’s consider the Simple application example that takes an integer as input parameter and increases it by one unit.
-
-The main application code of Simple app ({\bf Simple.java}) will be executed in a sequential way except the
-{\bf increment()} method. COMPSs, as mentioned above, will replace at execution time the call to this method
-generating a remote task on the remote node.
+The main application code of Simple app ({\bf Simple.java}) is executed sequentially until the call to the
+{\bf increment()} method. COMPSs, as mentioned above, replaces the call to this method with the generation of a remote task that will be executed on an available node.
 
 \begin{lstlisting}[language=java]
 package simple;
@@ -87,7 +81,7 @@ public class Simple {
 
 \subsubsection{Remote methods code}
 
-The following code is the implementation of the remote method of the {\it Simple} application ({\bf SimpleImpl.java})
+The following code contains the implementation of the remote method of the {\it Simple} application ({\bf SimpleImpl.java})
 that will be executed remotely by COMPSs.
 
 \begin{lstlisting}[language=java]
@@ -125,10 +119,10 @@ specify the necessary metadata about the tasks. The metadata can be of three dif
 \begin{enumerate}
  \item For each parameter of a method, the data type (currently {\it File} type, primitive types and the {\it String} type are supported) and its directions (IN, OUT or INOUT).
  \item The Java class that contains the code of the method.
- \item The constraints that a given resource must fulfil to execute the method, such as the number of processors or main memory size.
+ \item The constraints that a given resource must fulfill to execute the method, such as the number of processors or main memory size.
 \end{enumerate}
 
-Here follows a complete and detailed explanation of the usage of the metadata:
+A complete and detailed explanation of the usage of the metadata includes:
 
 \begin{itemize}
  \item {\bf Method-level Metadata:} for each selected method, the following metadata has to be defined:
@@ -136,11 +130,10 @@ Here follows a complete and detailed explanation of the usage of the metadata:
          \item {\bf @Method:} Mandatory. It specifies the class that implements the method.
 		\begin{itemize}
 			\item \textbf{isModifier} True if the method modifies the implicit object, false otherwise.
-			\item \textbf{priority} True if the task is prioritary and false otherwise. This parameter is applyed on the
-			schedule policies. 
+			\item \textbf{priority} True if the task takes priority and false otherwise. This parameter is used by the COMPSs scheduler. 
 		\end{itemize}
-         \item {\bf @Constraints:} Mandatory. The user can specify the capabilities that a resource must have in order
-               to run a method. The COMPSs runtime will create a VM (in a cloud environment), that fits the
+         \item {\bf @Constraints:} The user can specify the capabilities that a resource must have in order
+               to run a method. For example, in a cloud execution the COMPSs runtime creates a VM that fulfils the
                specified requirements in order to perform the execution.
                \begin{itemize}
                  \item Processor:
@@ -192,7 +185,7 @@ Here follows a complete and detailed explanation of the usage of the metadata:
         \item {\bf Type:} COMPSs supports the following types for task parameters:
               \begin{itemize}
                \item {\bf Basic types:} {\it Type.BOOLEAN, Type.CHAR, Type.BYTE, Type.SHORT, Type.INT, Type.LONG,
-                     Type.FLOAT, Type. DOUBLE}. They can only have {\bf IN} direction, since primitive types in Java are
+                     Type.FLOAT, Type.DOUBLE}. They can only have {\bf IN} direction, since primitive types in Java are
                      always passed by value.
                \item {\bf String:} {\it Type.STRING}. It can only have {\bf IN} direction, since Java Strings are immutable.
                \item {\bf File:} {\it Type.FILE}. It can have any direction (IN, OUT or INOUT). The real Java type associated
@@ -212,16 +205,14 @@ Here follows a complete and detailed explanation of the usage of the metadata:
 			\item \textbf{name} Mandatory. Service name.
 			\item \textbf{port} Mandatory. Service port.
 			\item \textbf{operation} Operation type. 
-			\item \textbf{priority} True if the service is prioritary and false otherwise. This parameter is applyed 
-			on the schedule policies. 
+			\item \textbf{priority} True if the service takes priority, false otherwise. This parameter is used by the COMPSs scheduler. 
 		\end{itemize}
 	\end{itemize}
 \end{itemize}
 
     
-The Java annotated interface of the Simple app example (SimpleItf.java) declares the {\it Increment()} method
-that will be executed remotely. The method implementation can be found in simple.SimpleImpl class and
-needs a single input parameter, a string containing a path to the file counterFile. Besides, in this example
+The Java annotated interface of the Simple app example (SimpleItf.java) includes the description of the {\it Increment()} method metadata.
+The method interface contains a single input parameter, a string containing a path to the file counterFile. In this example
 there are constraints on the minimum number of processors and minimum memory size needed to run the
 method.
 
@@ -247,22 +238,9 @@ public interface SimpleItf {
 \end{lstlisting}
 
 
-\subsubsection{Equivalent remote methods}
-Since version 1.2, the COMPSs programming model allows developers to define sets of equivalent remote
-methods. Thus, an invocation to any of the methods in the set might produce the execution of another
-method of the set in the remote resource.
-
-The coding of the application does not change, the remote methods are implemented as regular Java
-methods and the main code of the application is a sequential code that contains calls to these methods. The
-only component of the application that changes for defining a set of equivalent methods is the Java
-annotated interface.
-
-The programming model considers all the equivalent methods of a set as different implementations of the
-same method. Therefore, the name and parameters of all the implementations must coincide; the only
-difference is the class where the method is implemented. This is reflected in the attribute declaringClass of
-the @Method annotation. Instead of stating that the method is implemented in a single class, the
-programmer can define an array of declaring classes for the method.
-
+\subsubsection{Alternative method implementations}
+Since version 1.2, the COMPSs programming model allows developers to define sets of alternative implementations of the same method in the Java
+annotated interface. 
 The following code depicts an example where the developer sorts an integer array using two different
 methods: merge sort and quick sort that are respectively hosted in the {\it packagepath.Mergesort} and
 {\it packagepath.Quicksort} classes.
@@ -277,11 +255,15 @@ void sort(
 );
 \end{lstlisting}
 
+As depicted in the example, the name and parameters of all the implementations must coincide; the only
+difference is the class where the method is implemented. This is reflected in the attribute declaringClass of
+the @Method annotation. Instead of stating that the method is implemented in a single class, the
+programmer can define an array of declaring classes for the method.
+
 As independent remote methods, the sets of equivalent methods might have common restrictions to be
-fulfilled by the resource hosting the execution. Or even, each implementation might have specific constraints.
+fulfilled by the resource hosting the execution. Or even, each implementation can have specific constraints.
 Through the @Constraints annotation, developers can specify the common constraints for a whole set of
-methods. The following example states that for both sorting algorithms only one core is required to run the
-method.
+methods. In the following example only one core is required to run the method of both sorting algorithms.
 
 \begin{lstlisting}[language=java]
 %*{\bf @Constraints(processorCoreCount = 1) }*)
@@ -315,8 +297,8 @@ void sort(
 \end{lstlisting}
 
 \subsection{Application Compilation}
-A java application needs to be packaged in a \textit{jar} file containing the source files and the \textit{Itf} annotation.
-Next we provide a set of commands to compile the java Simple application detailed at the \textit{COMPSs Sample Applications} 
+A COMPSs Java application needs to be packaged in a \textit{jar} file containing the class files of the main code, of the methods implementations and of the \textit{Itf} annotation.
+Next we provide a set of commands to compile the Java Simple application detailed at the \textit{COMPSs Sample Applications} 
 available at our website \url{http://compss.bsc.es} .
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd workspace_java/simple/src/main/java/simple/
@@ -326,52 +308,43 @@ compss@bsc:~/workspace_java/simple/src/main/java$ jar cf simple.jar simple/
 compss@bsc:~/workspace_java/simple/src/main/java$ mv ./simple.jar ../../../jar/
 \end{lstlisting}
 
-For a successfull compilation the \textit{compss-engine.jar} package must be provided by the CLASSPATH variable. The default COMPSs
-installation automatically inserts this package into the CLASSPATH but some users may have overwriten or deleted it. Please check
-that your environment variable CLASSPATH containts the \textit{compss-engine.jar} location by running the following command:
+In order to properly compile the code, the CLASSPATH variable has to contain the path of the \textit{compss-engine.jar} package. The default COMPSs
+installation automatically add this package to the CLASSPATH; please check that your environment variable CLASSPATH contains the \textit{compss-engine.jar} location by running the following command:
 \begin{lstlisting}[language=bash]
 $ echo $CLASSPATH | grep compss-engine
 \end{lstlisting}
 If the result of the previous command is empty it means that you are missing the \textit{compss-engine.jar} package in your classpath. 
-
-The easiest solution comes up by manually exporting the CLASSPATH variable into the user session:
-\begin{lstlisting}[language=bash]
-$ export CLASSPATH=$CLASSPATH:/opt/COMPSs/Runtime/compss-engine.jar
-\end{lstlisting}
-However, you will need to remember to export this variable every time you log out and back in again. Consequently, we recomend to 
-add this export to the \textit{.bashrc} file:
+We recommend to automatically load the variable by editing the \textit{.bashrc} file:
 \begin{lstlisting}[language=bash]
 $ echo "# COMPSs variables for Java compilation" >> ~/.bashrc
 $ echo "export CLASSPATH=$CLASSPATH:/opt/COMPSs/Runtime/compss-engine.jar" >> ~/.bashrc
 \end{lstlisting}
 
-If users are using an IDE (such as Eclipse or NetBeans) we recomend to add the \textit{compss-engine.jar} file as an external file 
-to the project to load the possible compilation errors. The \textit{compss-engine.jar} file is available at your current 
-COMPSs installation under the path \textit{/opt/COMPSs/Runtime/compss-engine.jar}.
+If you are using an IDE (such as Eclipse or NetBeans) we recommend you to add the \textit{compss-engine.jar} file as an external file 
+to the project. The \textit{compss-engine.jar} file is available at your current COMPSs installation under the path \textit{/opt/COMPSs/Runtime/compss-engine.jar}.
 
-\colorComment{Attention: The \textit{compss-engine.jar} is installed inside the COMPSs installation directory. If you have performed
-a custom installation, the path of the package can be different.}
+\colorComment{Please not that if you have performed a custom installation, the location of the package can be different.}
 
-To make things even easier, we have developed a COMPSs IDE which is an Integrated Development Environment to develop, compile,
-deploy and execute COMPSs applications. For further information about the \textit{COMPSs IDE} please check the \textit{COMPSs IDE
-User Guide} available at our webpage: \url{http://compss.bsc.es} .
+An Integrated Development Environment for Eclipse is also available to simplify the development, compilation,
+deployment and execution COMPSs applications. For further information about the \textit{COMPSs IDE} please refer to the \textit{COMPSs IDE
+User Guide} available at \url{http://compss.bsc.es} .
 
 
 \subsection{Application Execution}
-In order to run a Java application with COMPSs, the script runcompss can be used. An example of an invocation of the script is:
+A Java COMPSs application is executed through the \textit{runcompss} script. An example of an invocation of the script is:
 
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ runcompss --classpath=/home/compss/workspace_java/simple/jar/simple.jar 
                         simple.Simple 1
 \end{lstlisting}
 
-For full description about the options available for the runcompss command please check the \textit{COMPSs User Manual: Application
-Execution} available at our webpage \url{http://compss.bsc.es} . 
+A comprehensive description of the \textit{runcompss} command is available in the \textit{COMPSs User Manual: Application
+Execution} document available at \url{http://compss.bsc.es} . 
 \newline
 ~ \newline
 
 In addition to Java, COMPSs supports the execution of applications written in other languages by 
-means of bindings. A binding manages the interaction of the not-Java application with the COMPSs 
+means of bindings. A binding manages the interaction of the no-Java application with the COMPSs 
 Java runtime, providing the necessary language translation.
 
-The next sections describe the Python and C/C++ language bindings provided by COMPSs.
+The next sections describe the Python and C/C++ language bindings offered by COMPSs.
