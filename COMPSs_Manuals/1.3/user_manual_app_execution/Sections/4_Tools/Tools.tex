@@ -6,8 +6,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Application graph}
 At the end of the application execution a dependency graph can be generated representing the order of execution of each type of 
-task and their dependencies. To allow the final graph generation the runcompss command must be run with the \textit{-g} flag 
-and the final graph will appear at the \textit{$base\_log\_folder$}$/monitor/complete\_graph$.dot at the end of the execution.
+task and their dependencies. To allow the final graph generation the \textit{-g} flag has to be passed to the \textit{runcompss} command; the graph file is written in the \textit{$base\_log\_folder$}$/monitor/complete\_graph$.dot at the end of the execution.
 
 Figure \ref{fig:complete_graph} shows a dependency graph example of a \textit{SparseLU} java application. The graph can be
 visualized by running the following command:
@@ -29,8 +28,7 @@ compss@bsc:~$ gengraph ~/.COMPSs/sparseLU.arrays.SparseLU_01/monitor/complete_gr
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{COMPSs Monitor}
 \label{subsec:monitor}
-The COMPSs Framework exposes a Web Service with a graphical interface that can be used to monitor either finished 
-and running applications. COMPSs Monitor is installed as a service and can be easily managed by running any of the following
+The COMPSs Framework includes a Web graphical interface that can be used to monitor the execution of COMPSs applications. COMPSs Monitor is installed as a service and can be easily managed by running any of the following
 commands:
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ sudo service compss-monitor usage
@@ -43,13 +41,10 @@ The COMPSs Monitor service can be configured by editing the \textit{/opt/COMPSs/
 \textit{monitor/apache-tomcat/conf/compss-monitor.conf}
 file which contains one line per property:
 \begin{itemize}
- \item \textbf{$IT\_MONITOR$} Default directory to retrieve monitored applications.
- \item \textbf{$COMPSs\_MONITOR\_PORT$} Port where to run the compss-monitor web service.
- \item \textbf{$COMPSs\_MONITOR\_TIMEOUT$} Web page timeout between browser and server.
+ \item \textbf{$IT\_MONITOR$} Default directory to retrieve monitored applications (defaults to the \textit{.COMPSs} folder inside the \textit{root} user).
+ \item \textbf{$COMPSs\_MONITOR\_PORT$} Port where to run the compss-monitor web service (defaults to 8080).
+ \item \textbf{$COMPSs\_MONITOR\_TIMEOUT$} Web page timeout between browser and server (defaults to 20s).
 \end{itemize}
-
-By default, the $IT\_MONITOR$ points to the \textit{.COMPSs} folder inside the \textit{root} user, opens the web service in the 
-port 8080 and has a 20s timeout. 
 
 \subsubsection{Usage}
 In order to use the COMPSs Monitor users need to start the service as shown in Figure \ref{fig:monitor_start}.
@@ -65,9 +60,7 @@ And use a web browser to open the specific URL:
 compss@bsc:~$ firefox http://localhost:8080/compss-monitor &
 \end{lstlisting}
 
-The COMPSs Monitor allows to monitor applications from different users and thus, users need to login first to grant access 
-to their applications. Once done, as shown in Figure \ref{fig:monitoring_interface}, the users can select any of their executed
-or on-going COMPSs applications and display it.
+The COMPSs Monitor allows to monitor applications from different users and thus, users need to first login to access their applications. As shown in Figure \ref{fig:monitoring_interface}, the users can select any of their executed or running COMPSs applications and display it.
 \begin{figure}[thb!]
   \centering
     \includegraphics[width=0.95\textwidth]{./Sections/4_Tools/Figures/compss_monitor.jpeg}
@@ -82,7 +75,7 @@ has not been executed with this flag, some of the COMPSs Monitor features will b
 \begin{figure}[ht!]
   \centering
     \includegraphics[width=0.95\textwidth]{./Sections/4_Tools/Figures/simple_monitor.jpeg}
-    \caption{Execution of the Simple java application with the monitoring flag enabled}
+    \caption{Execution of the Simple Java application with the monitoring flag enabled}
     \label{fig:simple_exec_monitor}
 \end{figure}
 
@@ -95,7 +88,7 @@ has not been executed with this flag, some of the COMPSs Monitor features will b
 
 \newpage
 \subsubsection{Graphical Interface features}
-Next we provide a summary of the COMPSs Monitor supported features available through the graphical interface:
+In this section we provide a summary of the COMPSs Monitor supported features available through the graphical interface:
 \begin{itemize}
  \item \textbf{Resources information} \newline
 	Provides information about the resources used by the application
@@ -128,18 +121,18 @@ For specific COMPSs Monitor feature configuration please check our \textit{FAQ} 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Application tracing}
 \label{sec:Tracing}
-COMPSs Runtime can generate a post-execution trace of the distributed execution of the application. This trace is useful for
+COMPSs Runtime can generate a post-execution trace of the execution of the application. This trace is useful for
 performance analysis and diagnosis.
 
 A trace file may contain different events to determine the COMPSs master state, the task execution state or the file-transfers.
-Despite the fact that in the current release we do not support file-transfers, we intend to support them in a near future release.
+The current release does not support file-transfers informations.
 
-During the execution of the application, an XML file is created at worker nodes to keep track of 
+During the execution of the application, an XML file is created in the worker nodes to keep track of 
 these events. At the end of the execution, all the XML files are merged to get a final trace file.
 
-In this manual we only provide information about how to obtain a trace and about the available paraver configurations. For further
+In this manual we only provide information about how to obtain a trace and about the available Paraver (the tool used to analyze the traces) configurations. For further
 information about the application instrumentation or the trace visualization please check the \textit{COMPSs Tracing Manual} 
-available at our website \url{http://compss.bsc.es} .
+available at \url{http://compss.bsc.es} .
 
 \subsubsection{Trace Command}
 In order to obtain a post-execution trace file the option \textbf{-t}  must be added to the runcompss command. Next we provide an
@@ -205,7 +198,7 @@ hmmerobj.HMMPfam_compss_trace_1444922077.row
 
 \subsubsection{Trace Configurations}
 The traces generated by an application execution are ready to be visualized with \textit{Paraver}. \textit{Paraver} is a powerful 
-tool developed at the \textit{BSC} that allows users to show many views of the trace data by means of different configuration files.
+tool developed by \textit{BSC} that allows users to show many views of the trace data by means of different configuration files.
 Users can manually load, edit or create configuration files to obtain different trace data views.
 
 In Table \ref{tab:paraver_configs} we provide information about the different pre-build configurations that we distribute
@@ -240,8 +233,7 @@ For further information about \textit{Paraver} please visit the following site:
 
 
 \subsubsection{Trace examples}
-To end this section, let’s present some examples of COMPSs traces. COMPSs traces can be 
-much complex as the number of workers or tasks grows. Just to illustrate this, the following 
+COMPSs traces can be very complex as the number of workers or tasks grows. Just to illustrate this, the following 
 pictures show traces with a greater number of workers and tasks.
 
 \begin{figure}[ht!]
@@ -260,4 +252,4 @@ pictures show traces with a greater number of workers and tasks.
 COMPSs IDE is an Integrated Development Environment to develop, compile, deploy and execute COMPSs applications. It is available
 through the \textit{Eclipse Market} as a plugin and provides an even easier way to work with COMPSs.
 
-For further information please check the \textit{COMPSs IDE User Guide} available at our webpage: \url{http://compss.bsc.es} .
+For further information please check the \textit{COMPSs IDE User Guide} available at: \url{http://compss.bsc.es} .

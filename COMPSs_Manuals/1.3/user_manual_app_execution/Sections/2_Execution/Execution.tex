@@ -8,82 +8,81 @@ Prerequisites vary depending on the application's code language: for Java applic
 a \textbf{jar archive} containing all the application classes, for Python applications there are no requirements and for
 C/C++ applications the code must have been previously compiled by using the \textit{buildapp} command.
 
-For further information about how to develop applications for COMPSs please refer to the \textit{COMPSs User 
+For further information about how to develop COMPSs applications please refer to the \textit{COMPSs User 
 Manual: Application development guide} available at the \url{http://compss.bsc.es/} webpage.
 
 
 \subsection{Runcompss command}
 \label{subsec:runcompss}
-All COMPSs applications are executed using the \textbf{runcompss} command which is invoked as follows:
+COMPSs applications are executed using the \textbf{runcompss} command:
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ runcompss [options] application_name [application_arguments]
 \end{lstlisting}
 
-The application name stands for the fully qualified name of the application in Java, for the path to the \textit{.py} file
-containing the main program in Python and for the path to the master binary in C/C++. 
+The application name must be the fully qualified name of the application in Java, the path to the \textit{.py} file
+containing the main program in Python and the path to the master binary in C/C++. 
 
-The application arguments are the arguments that the users' main application recieves. If needed, they can be empty. 
+The application arguments are the ones passed as command line to main application. This parameter can be empty. 
 
-The runcompss command allows the users to customize each COMPSs execution by specifying different options.
+The \textit{runcompss} command allows the users to customize a COMPSs execution by specifying different options.
 For clarity purposes, parameters are grouped in \textit{Runtime configuration}, \textit{Tools enablers}
-and \textit{Advanced options}. Users can add any of them to the runcompss call by following the next 
-usage description.
+and \textit{Advanced options}.
 
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ runcompss -h
   Runtime configuration options:
-    - -project=<path>                       Path to the project XML file
+    --project=<path>                       Path to the project XML file
                                             Default: /opt/COMPSs/Runtime/configuration/
                                             xml/projects/project.xml
                                             
-    - -resources=<path>                     Path to the resources XML file
+    --resources=<path>                     Path to the resources XML file
                                             Default: /opt/COMPSs/Runtime/configuration/
                                             xml/resources/resources.xml
                                             
-    - -lang=<name>                          Language of the application (java/c/python)
+    --lang=<name>                          Language of the application (java/c/python)
                                             Default: java
                                             
-    - -log_level=<level>, - -debug, -d      Set the debug level: off | info | debug
+    --log_level=<level>, --debug, -d      Set the debug level: off | info | debug
                                             Default: off
 
   Tools enablers:
-    - -graph=<bool>, - -graph, -g           Generation of the complete graph (true/false)
+    --graph=<bool>, --graph, -g           Generation of the complete graph (true/false)
                                             When no value is provided it is set to true
                                             Default: false
                                             
-    - -tracing=<bool>, - -tracing, -t       Generation of traces (true/false)
+    --tracing=<bool>, --tracing, -t       Generation of traces (true/false)
                                             When no value is provided it is set to true
                                             Default: false
                                             
-    - -monitoring=<int>, - -monitoring, -m  Period between monitoring samples 
+    --monitoring=<int>, --monitoring, -m  Period between monitoring samples 
                                             (milliseconds)
                                             When no value is provided it is set to 2000
                                             Default: 0
 
   Advanced options:
-    - -comm=<path>                          Class that implements the adaptor for 
+    --comm=<path>                          Class that implements the adaptor for 
                                             communications
                                             Default: integratedtoolkit.nio.master.
                                             NIOAdaptor
                                             
-    - -library_path=<path>                  Non-standard directories to search for 
+    --library_path=<path>                  Non-standard directories to search for 
                                             libraries (e.g. Java JVM library, Python 
                                             library, C binding library) 
                                             Default: .
                                             
-    - -classpath=<path>                     Path for the application classes / modules
-                                            Default: .
+    --classpath=<path>                     Path for the application classes / modules
+                                            Default: current working directory.
                                             
-    - -task_count=<int>                     Only for C/Python Bindings. 
+    --task_count=<int>                     Only for C/Python Bindings. 
                                             Maximum number of different functions/methods
                                             invoked from the application that have been 
                                             selected as tasks
                                             Default: 50
                                             
-    - -uuid=<int>                           Preset an application UUID
+    --uuid=<int>                           Preset an application UUID
                                             Default: Automatic random generation
                                             
-    - -PyObject_serialize=<bool>            Only for Python Binding. 
+    --PyObject_serialize=<bool>            Only for Python Binding. 
                                             Enable the object serialization to string 
                                             when possible (true/false).
                                             Default: false
@@ -92,12 +91,12 @@ compss@bsc:~$ runcompss -h
 
 \subsection{Running a COMPSs application}
 \label{subsec:running_compss}
-Before running COMPSs applications it is important to notice that the application files \textbf{must} be in the \textbf{CLASSPATH}.
+Before running COMPSs applications the application files \textbf{must} be in the \textbf{CLASSPATH}.
 Thus, when launching a COMPSs application, users can manually pre-set the \textbf{CLASSPATH} environment variable
-or can add the \textit{- - classpath} option to the runcompss command.
+or can add the \textit{--classpath} option to the \textit{runcompss} command.
 
-The next three sections provide specific information for launching COMPSs applications in different code languages (Java, Python and 
-C/C++). For clarity purposes we will use the \textit{Simple} application (developed in Java, Python and C++) available at our
+The next three sections provide specific information for launching COMPSs applications developed in different code languages (Java, Python and 
+C/C++). For clarity purposes we will use the \textit{Simple} application (developed in Java, Python and C++) available in the COMPSs
 Virtual Machine or at \url{https://compss.bsc.es/projects/bar} webpage. This application takes an integer as input
 parameter and increases it by one unit using a task. For further details about the codes please refer to the \textit{Sample 
 Applications} document available at \url{http://compss.bsc.es} .
@@ -117,10 +116,10 @@ compss@bsc:~/workspace_java/simple/jar$ runcompss simple.Simple <initial_number>
 \end{figure}
 \vspace{-0.4cm}
 
-In this first execution we are taking advantage of the default value of the - -classpath option to automatically add the jar
-file to the classpath (by moving to the directory which contains the jar file before launching the COMPSs application). However,
+In this first execution we use the default value of the \textit{--classpath} option to automatically add the jar
+file to the classpath (by executing runcompss in the directory which contains the jar file). However,
 we can explicitly do this by exporting the \textbf{CLASSPATH} variable or by providing the 
-- -classpath value. Next, we provide another two ways to perform the same execution:
+--classpath value. Next, we provide two more ways to perform the same execution:
 
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ export CLASSPATH=$CLASSPATH:
@@ -135,8 +134,7 @@ compss@bsc:~$ runcompss --classpath=/home/compss/workspace_java/simple/jar/simpl
 
 
 \subsubsection{Running Python applications}
-To lauch a Python application with COMPSs users only need to provide the \textit{- -lang=python} option to the runcompss command. 
-Next, we provide an example of a simple python application.
+To launch a COMPSs Python application users have to provide the \textit{--lang=python} option to the runcompss command. 
 
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd workspace_python/simple/
@@ -153,10 +151,9 @@ compss@bsc:~/workspace_python/simple$ runcompss --lang=python simple.py <initial
 
 
 \subsubsection{Running C/C++ applications}
-To lauch a C/C++ application with COMPSs users need to compile the C/C++ application by using the \textit{buildapp} command. For 
-further information please refer to the \textit{COMPSs User Manual: Application development guide} document available at our
-webpage \url{http://compss.bsc.es} . Once done, to run the C/C++ application with COMPSs, the users only need to provide 
-the \textit{--lang=c} option to the runcompss command. Next, we provide an example of a simple C++ application:
+To launch a COMPSs C/C++ application users have to compile the C/C++ application by means of the \textit{buildapp} command. For 
+further information please refer to the \textit{COMPSs User Manual: Application development guide} document available at \url{http://compss.bsc.es} . Once complied, 
+the \textit{--lang=c} option must be provided to the runcompss command.
 
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd workspace_c/simple/
@@ -174,30 +171,29 @@ compss@bsc:~/workspace_c/simple$ runcompss --lang=c simple <initial_number>
 
 \subsection{Additional configurations}
 
-COMPSs has \textbf{two} configuration files: \textit{resources.xml} and \textit{project.xml} . 
-These files are meant to provide information about the execution environment 
-and are completely independent from the application.
+The COMPSs runtime has two configuration files: \textit{resources.xml} and \textit{project.xml} . 
+These files contain information about the execution environment and are completely independent from the application.
 
 For each execution users can load the default configuration files or specify their custom configurations 
 by using, respectively, the \textit{$--resources=<absolute\_path\_to\_resources.xml>$} and the
-\textit{$--project=<absolute\_path\_to\_project.xml>$} inside the \textit{runcompss} command. The default files are located 
-under the \emph{/opt/COMPSs/Runtime/configuration/xml/} path. 
-Users can edit these two files manually or can take advantage of the \textit{Eclipse IDE} tool developed for COMPSs. For further 
+\textit{$--project=<absolute\_path\_to\_project.xml>$} in the \textit{runcompss} command. The default files are located 
+in the \emph{/opt/COMPSs/Runtime/configuration/xml/} path. 
+Users can manually edit these files or can use the \textit{Eclipse IDE} tool developed for COMPSs. For further 
 information about the \textit{Eclipse IDE} please refer to Section \ref{subsec:IDE}. 
 
 
-Next sections provide more in-depth information about the \textit{resources.xml} and the \textit{project.xml} files, listing and 
-explaining the available tags.
+Next sections describe in detail the \textit{resources.xml} and the \textit{project.xml} files, 
+explaining the available options.
 
 \subsubsection{Resources file}
-The resources file provides information about \textbf{all} the available resources. This file should normally be 
-managed by the system administrators. Its full definition schema can be found at 
+The \textit{resources} file provides information about all the available resources that can be used for an execution. This file should normally be 
+managed by the system administrators. Its full definition schema can be found at \\
 \emph{/opt/COMPSs/Runtime/configuration/xml/resources/$resource\_schema$.xsd}.
 
-The typical strcuture of this file is one entry per available resource defining its name, its capabilities and its requirements.
-Administrators can define several resource capabilities (see example in next listing) but we would like 
+It contains one entry per available resource defining its name, its capabilities and its requirements.
+Administrators can define several resource capabilities (see example in the next listing) but we would like 
 to underline the importance of \textbf{Processor CoreCount}. This capability represents the number of available cores 
-in the resource and it is used to schedule the correct number of tasks into a resource. Thus, it becomes essential to define 
+in the described resource and it is used to schedule the correct number of tasks. Thus, it becomes essential to define 
 it accordingly to the number of cores in the physical resource. 
 
 \begin{lstlisting}[language=xml]
@@ -251,15 +247,11 @@ compss@bsc:~$ cat /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
 
 
 \subsubsection{Project file}
-The project file provides specific execution information. Particullarly, it selects and configures in which resources
-is the application going to be executed. Consequently, the resources that appear in this file are a \textbf{subset} of the 
-resources described in the \textit{resources.xml} file. This file should normally be managed by the application users and will
-usally change from execution to execution. Its full definition schema can be found at 
+The project file provides information about the resources used in a specific execution. Consequently, the resources that appear in this file are a subset of the 
+resources described in the \textit{resources.xml} file. This file, that contains one entry per worker, is usually edited by the users and changes from execution to execution. Its full definition schema can be found at\\ 
 \emph{/opt/COMPSs/Runtime/configuration/xml/projects/$project\_schema$.xsd}.
 
-The typical strcuture of this file is one entry per worker, indicating the the resource name that it uses and some configuration
-properties (see example in next listing). We emphasize the importance of correctly defining the following 
-entries:
+We emphasize the importance of correctly defining the following entries:
 \begin{description}
  \item [installDir] Indicates the path of the COMPSs installation \textbf{inside the resource} (not necessarily the same 
  than in the local machine).
@@ -268,7 +260,7 @@ entries:
  If left empty COMPSs will automatically try to access the resource with the \textbf{same username than the one that lauches 
  the COMPSs main application}.
  \item [LimitOfTasks] The maximum number of tasks that can be simultaneously scheduled to a resource. Considering that a task 
- can use more than one core but not least, this value must be lower or equal to the number of available cores in the resource. 
+ can use more than one core of a node, this value must be lower or equal to the number of available cores in the resource. 
 \end{description}
 
 
@@ -289,14 +281,13 @@ compss@bsc:~$ cat /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
 
 
 \subsection{Configuration examples}
-In the next subsections we provide specific information about the services, shared disks, cluster and cloud configurations. 
-Moreover there are \textit{project.xml} and \textit{resources.xml} examples for each case that can be used as templates. 
+In the next subsections we provide specific information about the services, shared disks, cluster and cloud configurations and several \textit{project.xml} and \textit{resources.xml} examples. 
 
 
-\subsubsection{Services configuration example}
-To allow COMPSs applications use WebServices the \textit{resources.xml} can include a special type of resource called 
+\subsubsection{Services configuration}
+To allow COMPSs applications to use WebServices as tasks, the \textit{resources.xml} can include a special type of resource called 
 \textit{Service}. For each WebService it is necessary to specify its wsdl, its name, its namespace and
-its port as shown in the following example. 
+its port. 
 \begin{lstlisting}[language=xml]
 <?xml version="1.0" encoding="UTF-8"?>
 <ResourceList>
@@ -328,7 +319,7 @@ special entry indicating only the name and the limit of tasks as shown in the fo
 </Project>
 \end{lstlisting}
 
-\subsubsection{Cluster configuration (static resources) example}
+\subsubsection{Cluster and grid configuration (static resources)}
 In order to use external resources to execute the applications, the following steps have to be followed:
 
 \begin{enumerate}
@@ -337,12 +328,11 @@ In order to use external resources to execute the applications, the following st
  \item Set SSH passwordless access to the rest of the remote resources.
  \item Create the \textit{WorkingDir} directory in the resource (remember this path because it is needed 
  for the \textit{project.xml} configuration).
- \item Deploy the application manually on each resource.
+ \item Manually deploy the application on each node.
 \end{enumerate}
 
-Once these steps are done, users need to configure the \textit{resources.xml} and the \textit{project.xml} files accordingly.
-On the following lines, we provide examples about configuration files for Grid and Cluster environments, 
-which can serve as a reference
+The \textit{resources.xml} and the \textit{project.xml} files must be configured accordingly.
+Here we provide examples about configuration files for Grid and Cluster environments.
 
 \begin{lstlisting}[language=xml]
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -420,7 +410,7 @@ the disk and the mount point. The following example states that in the master no
 
 On the other side, to declare that a worker has a shared disk mounted the \textit{resources.xml} file must include a \textit{Disk}
 tag inside the specific worker indicating its name (defined in the master \textit{Disk} tag) and its mount point inside the worker.
-The following example states that the \textit{sharedDisk0} is mounted on resource \textit{hostname1.domain.es} under the path
+In the following example the \textit{sharedDisk0} is mounted on the resource \textit{hostname1.domain.es} under the path
 \textit{/home/user/mySharedDisk/} .
 \begin{lstlisting}[language=xml]
 <Resource Name="hostname1.domain.es">
@@ -439,11 +429,10 @@ The following example states that the \textit{sharedDisk0} is mounted on resourc
 </Resource>
 \end{lstlisting}
 
-Although, the example only contains the definition of a single shared disk, the \textit{Disks} tag can have multiple 
-disk child nodes.
+The \textit{Disks} tag can have multiple disk children nodes.
 
 
-\subsubsection{Cloud configuration (dynamic resources) example}
+\subsubsection{Cloud configuration (dynamic resources)}
 In order to use cloud resources to execute the applications, the following steps have to be followed:
 \begin{enumerate}
  \item Prepare cloud images with the \textit{COMPSs Worker} package or the full \textit{COMPSs Framework} package installed.
@@ -451,14 +440,14 @@ In order to use cloud resources to execute the applications, the following steps
  specify the application files that must be deployed. 
 \end{enumerate}
 
-The COMPSs runtime communicates with the Cloud by means of Cloud connectors. Each connector implements 
-the interaction of the runtime with a given Cloud provider, more precisely by supporting four basic 
+The COMPSs runtime communicates with a cloud manager by means of connectors. Each connector implements 
+the interaction of the runtime with a given provider's API, supporting four basic 
 operations: ask for the price of a certain VM in the provider, get the time needed to create a VM, 
 create a new VM and terminate a VM. This design allows connectors to abstract the runtime from the particular API
 of each provider and facilitates the addition of new connectors for other providers.
 
-In order to add cloud resources the \textit{resources.xml} file can contain one or more \textbf{$<CloudProvider>$} tags
-that encompass the information about a particular Cloud provider, associated to a given connector. The tag \textbf{must} have an
+The \textit{resources.xml} file must contain one or more \textbf{$<CloudProvider>$} tags
+that include the information about a particular provider, associated to a given connector. The tag \textbf{must} have an
 attribute \textbf{name} to uniquely identify the provider. Table \ref{tab:conf_resources_xml} summarizes the information to be 
 specified by the user inside this tag.
 
@@ -548,7 +537,7 @@ Multiple entries of resource templates
 \label{tab:conf_resources_xml}
 \end{longtable}
 
-The \textit{project.xml} complements the information about Cloud providers specified in the \textit{resources.xml} file. 
+The \textit{project.xml} complements the information about a provider listed in the \textit{resources.xml} file. 
 This file can contain a \textbf{$<Cloud>$} tag where to specify a list of providers, each with a \textbf{$<Provider>$} tag,
 whose \textbf{name} attribute must match one of the providers in the \textit{resources.xml} file. Thus, the \textit{project.xml}
 file \textbf{must} contain a subset of the providers specified in the \textit{resources.xml} file. Table 
@@ -648,7 +637,7 @@ tag of the \textit{project.xml} file.
   \label{tab:conf_project_xml_provider}
 \end{longtable}
 
-The next sections provide a description of each of the currently available connector.
+The next sections provide a description of each of the currently available connectors.
 
 \newpage
 
@@ -695,15 +684,14 @@ defined in the project.xml file for the Amazon EC2 connector.
 \egroup
 
 \paragraph{Cloud connectors: rOCCI}
-In order to execute a COMPSs application in the cloud, the rOCCI connector has to be configured properly. 
 The connector uses the rOCCI binary client\footnote{\url{https://appdb.egi.eu/store/software/rocci.cli}} 
 (version newer or equal than 4.2.5) which has to be installed in the node where the COMPSs main 
 application is executed.
 
 This connector needs additional files providing details about the resource templates available on 
 each provider. This file is located under $<COMPSs\_INSTALL\_DIR>/configuration/xml/templates$ path.
-Additionally, the user must define the virtual images flavour and instance types offered by each provider; 
-thus, when the runtime asks for the creation of a VM, the connector selects the appropriate image and 
+Additionally, the user must define the virtual images flavors and instance types offered by each provider; 
+thus, when the runtime decides the creation of a VM, the connector selects the appropriate image and 
 resource template according to the requirements (in terms of CPU, memory, disk, etc) by invoking the 
 rOCCI client through Mixins (heritable classes that override and extend the base templates).
 
