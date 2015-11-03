@@ -3,7 +3,8 @@
 
 The current COMPSs version (1.3) has the following limitations: 
 \begin{itemize}
- \item \textbf{Exceptions:} \newline The current COMPSs version is not able to catch exceptions raised from a task.
+ \item \textbf{Exceptions:} \newline The current COMPSs version is not able to propagate exceptions raised from a task to the master. However, the runtime
+ catches any exception and sets the task as failed.
  
  \item \textbf{Java tasks:} \newline Java tasks \textbf{must} be declared as \textbf{public}. Despite the fact that tasks can be
  defined in the main class or in other ones, we recommend to define the tasks in a separated class from the main method to force
@@ -17,7 +18,7 @@ The current COMPSs version (1.3) has the following limitations:
  interoperability standard. REST services are not supported.
  
  \item \textbf{Use of file paths:} \newline The persistent workers implementation has a unique \textit{Working Directory} per 
- worker. That means that tasks should not use hardcoded file names to avoid file collisions and tasks misbehaviors. We recommend to
+ worker. That means that tasks should not use hardcoded file names to avoid file collisions and tasks misbehaviours. We recommend to
  use files declared as task parameters, or to manually create a sandbox inside each task execution and/or to generate temporary 
  random file names. 
  

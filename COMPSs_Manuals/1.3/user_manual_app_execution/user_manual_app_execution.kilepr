@@ -67,10 +67,10 @@ Mode=LaTeX
 
 [item:COMPSs_User_Manual_App_Exec.tex]
 archive=true
-column=38
+column=16
 encoding=UTF-8
 highlight=LaTeX
-line=101
+line=84
 mode=LaTeX
 open=false
 order=0
@@ -87,7 +87,7 @@ order=1
 
 [item:Sections/2_Execution/Execution.tex]
 archive=true
-column=75
+column=71
 encoding=UTF-8
 highlight=LaTeX
 line=86
@@ -97,10 +97,10 @@ order=1
 
 [item:Sections/3_Results_and_Logs/Results_and_Logs.tex]
 archive=true
-column=48
+column=145
 encoding=UTF-8
 highlight=LaTeX
-line=124
+line=30
 mode=LaTeX
 open=false
 order=2
@@ -117,10 +117,10 @@ order=0
 
 [item:Sections/5_Common_Issues/Common_Issues.tex]
 archive=true
-column=0
+column=112
 encoding=UTF-8
 highlight=LaTeX
-line=138
+line=115
 mode=LaTeX
 open=false
 order=1
@@ -146,10 +146,10 @@ open=false
 order=-1
 
 [view-settings,view=0,item:COMPSs_User_Manual_App_Exec.tex]
-CursorColumn=38
-CursorLine=101
+CursorColumn=16
+CursorLine=84
 JumpList=
-ViMarks=.,103,2,[,103,2,],103,2
+ViMarks=.,77,22,[,77,18,],77,22
 
 [view-settings,view=0,item:Sections/1_Introduction/Introduction.tex]
 CursorColumn=0
@@ -158,16 +158,16 @@ JumpList=
 ViMarks=.,5,23,[,5,23,],5,23
 
 [view-settings,view=0,item:Sections/2_Execution/Execution.tex]
-CursorColumn=75
+CursorColumn=71
 CursorLine=86
 JumpList=
 ViMarks=.,86,74,[,86,62,],86,74,a,481,0,b,600,20
 
 [view-settings,view=0,item:Sections/3_Results_and_Logs/Results_and_Logs.tex]
-CursorColumn=48
-CursorLine=124
+CursorColumn=145
+CursorLine=30
 JumpList=
-ViMarks=.,124,48,[,124,48,],124,48
+ViMarks=.,30,144,[,30,144,],30,144
 
 [view-settings,view=0,item:Sections/4_Tools/Tools.tex]
 CursorColumn=0
@@ -182,10 +182,10 @@ JumpList=
 ViMarks=.,50,56,[,50,52,],50,56
 
 [view-settings,view=0,item:Sections/5_Common_Issues/Common_Issues.tex]
-CursorColumn=0
-CursorLine=138
+CursorColumn=112
+CursorLine=115
 JumpList=
-ViMarks=.,137,28,[,138,0,],-1,-1
+ViMarks=.,115,111,[,115,111,],115,111
 
 [view-settings,view=0,item:configuration.tex]
 CursorColumn=0

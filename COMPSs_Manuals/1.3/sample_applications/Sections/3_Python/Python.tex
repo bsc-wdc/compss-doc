@@ -14,11 +14,67 @@ The Virtual Machine available at our webpage (\url{http://compss.bsc.es/}) provi
 all the applications listed in the following sections. The codes of all the applications can be found under the 
 $/home/compss/workspace\_python/$ folder. 
 
-
-\subsection{Hello World}
-
+%%%%%%%%%%%%%%%
+%% SIMPLE
+%%%%%%%%%%%%%%%
 \subsection{Simple}
+The Simple application is a Python application that increases a counter by means of a task. The counter is stored inside a file that 
+is transfered to the worker when the task is executed. Next, we provide the main code and the task declaration:
+
+\begin{lstlisting}[language=python]
+def main_program():
+    # Check and get parameters
+    if len(sys.argv) != 5:
+        usage()
+        exit(-1)
+    N = int(sys.argv[1])
+    counter1 = int(sys.argv[2])
+    counter2 = int(sys.argv[3])
+    counter3 = int(sys.argv[4])
+
+    # Initialize counter files
+    initializeCounters(counter1, counter2, counter3)
+    print "Initial counter values:"
+    printCounterValues()
+
+    # Execute increment
+    for i in range(N):
+        increment(FILENAME1)
+        increment(FILENAME2)
+        increment(FILENAME3)
+
+    # Write final counters state (sync)
+    print "Final counter values:"
+    printCounterValues()
+\end{lstlisting}
+
+\begin{lstlisting}[language=python]
+@task(filePath = FILE_INOUT)
+def increment(filePath):
+    # Read value
+    fis = open(filePath, 'r')
+    value = fis.read()
+    fis.close()
+
+    # Write value
+    fos = open(filePath, 'w')
+    fos.write(str(int(value) + 1))
+    fos.close()
+\end{lstlisting}
+
+The simple application can be executed by invoking the runcompss command with the \textit{--lang=python} flag. The following lines provide
+an example of its execution.
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ cd ~/workspace_python/simple/
+compss@bsc:~/workspace_python/simple$ runcompss --lang=python simple.py 1
+\end{lstlisting}
+
+
+\subsection{Increment}
 
 \subsection{WordCount}
 
-\subsection{KMeans}
+\subsection{Matmul}
+
+\subsection{Neurons}

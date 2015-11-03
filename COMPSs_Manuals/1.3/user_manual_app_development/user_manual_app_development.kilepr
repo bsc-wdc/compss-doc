@@ -67,10 +67,10 @@ Mode=LaTeX
 
 [item:COMPSs_User_Manual_App_Development.tex]
 archive=true
-column=2
+column=4
 encoding=UTF-8
 highlight=LaTeX
-line=95
+line=70
 mode=LaTeX
 open=false
 order=0
@@ -87,10 +87,10 @@ order=1
 
 [item:Sections/2_Java/Java.tex]
 archive=true
-column=0
+column=31
 encoding=UTF-8
 highlight=LaTeX
-line=326
+line=335
 mode=LaTeX
 open=false
 order=0
@@ -117,10 +117,10 @@ order=1
 
 [item:Sections/5_Known_Limitations/Known_Limitations.tex]
 archive=true
-column=58
+column=115
 encoding=UTF-8
 highlight=LaTeX
-line=24
+line=20
 mode=LaTeX
 open=false
 order=0
@@ -146,10 +146,10 @@ open=false
 order=-1
 
 [view-settings,view=0,item:COMPSs_User_Manual_App_Development.tex]
-CursorColumn=2
-CursorLine=95
+CursorColumn=4
+CursorLine=70
 JumpList=
-ViMarks=.,102,2,[,102,2,],102,2
+ViMarks=.,70,0,[,68,4,],70,3
 
 [view-settings,view=0,item:Sections/1_Introduction/Introduction.tex]
 CursorColumn=0
@@ -158,10 +158,10 @@ JumpList=
 ViMarks=.,5,23,[,5,23,],5,23
 
 [view-settings,view=0,item:Sections/2_Java/Java.tex]
-CursorColumn=0
-CursorLine=326
+CursorColumn=31
+CursorLine=335
 JumpList=
-ViMarks=.,326,0,[,326,0,],326,0
+ViMarks=.,325,26,[,325,26,],325,26
 
 [view-settings,view=0,item:Sections/3_Python/Python.tex]
 CursorColumn=12
@@ -176,10 +176,10 @@ JumpList=
 ViMarks=.,346,41,[,346,30,],346,41
 
 [view-settings,view=0,item:Sections/5_Known_Limitations/Known_Limitations.tex]
-CursorColumn=58
-CursorLine=24
+CursorColumn=115
+CursorLine=20
 JumpList=
-ViMarks=.,41,39,[,41,39,],41,39
+ViMarks=.,20,112,[,20,112,],20,112
 
 [view-settings,view=0,item:configuration.tex]
 CursorColumn=92

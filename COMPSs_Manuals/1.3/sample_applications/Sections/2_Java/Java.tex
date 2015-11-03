@@ -53,6 +53,7 @@ As shown in the main code, this application has no input arguments.
 
 Remember that, to run with COMPSs, java applications must provide an interface. For simplicity, in this example, the content of the interface only
 declares the task which has no parameters:
+
 \begin{lstlisting}[language=java]
 	// hello.HelloItf
 	
@@ -70,8 +71,9 @@ Let's try it. First we proceed to compile the code by running the following inst
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd ~/workspace_java/hello/src/hello/
 compss@bsc:~/workspace_java/hello/src/hello$ javac *.java
-compss@bsc:~/workspace_java/hello/src/hello$ jar cf hello.jar hello
-compss@bsc:~/workspace_java/hello/src/hello$ mv hello.jar ~/workspace_java/hello/jar/
+compss@bsc:~/workspace_java/hello/src/hello$ cd ..
+compss@bsc:~/workspace_java/hello/src$ jar cf hello.jar hello
+compss@bsc:~/workspace_java/hello/src$ mv hello.jar ~/workspace_java/hello/jar/
 \end{lstlisting}
 
 Alternatively, this example application is prepared to be compiled with \textit{maven}:
@@ -84,14 +86,39 @@ compss@bsc:~/workspace_java/hello$ mvn clean package
 Once done, we can sequentially execute the application by directly invoking the \textit{jar} file.
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ java -jar hello.jar
+compss@bsc:~$ cd ~/workspace_java/hello/jar/
+compss@bsc:~/workspace_java/hello/jar$ java -cp hello.jar hello.Hello 
+Hello World! (from main application)
+Hello World! (from a task)
 \end{lstlisting}
 
 And we can also execute the application with COMPSs:
 
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd ~/workspace_java/hello/jar/
-compss@bsc:~/workspace_java/hello/jar$ runcompss -d hello.Hello 
+compss@bsc:~/workspace_java/hello/jar$ runcompss -d hello.Hello
+Using default location for project file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/projects/project.xml
+Using default location for resources file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/resources/resources.xml
+
+----------------- Executing hello.Hello --------------------------
+
+WARNING: IT Properties file is null. Setting default values
+[   API]  -  Deploying COMPSs Runtime v1.3
+[   API]  -  Starting COMPSs Runtime v1.3
+[   API]  -  Initializing components
+[   API]  -  Ready to process tasks
+Hello World! (from main application)
+[   API]  -  Creating task from method sayHello in hello.HelloImpl
+[   API]  -  There is 0 parameter
+[   API]  -  No more tasks for app 1
+[   API]  -  Getting Result Files 1
+[   API]  -  Stop IT reached
+[   API]  -  Stopping AP...
+[   API]  -  Stopping TD...
+[   API]  -  Stopping Comm...
+[   API]  -  Execution Finished
+
+------------------------------------------------------------
 \end{lstlisting}
 
 Notice that the COMPSs execution is using the \textit{-d} option to allow the job logging. Thus, we can check out the application jobs folder to look for
@@ -100,30 +127,151 @@ the task output.
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd ~/.COMPSs/hello.Hello_01/jobs/
 compss@bsc:~/.COMPSs/hello.Hello_01/jobs$ ls -1
-
+job1_NEW.err
+job1_NEW.out
 compss@bsc:~/.COMPSs/hello.Hello_01/jobs$ cat job1_NEW.out
-
+compss@bsc:~/.COMPSs/hello.Hello_02/jobs$ cat job1_NEW.out 
+[DEBUG|integratedtoolkit.Worker|Executor] Creating sandbox for job 1
+WORKER - Parameters of execution:
+  * Method class: hello.HelloImpl
+  * Method name: sayHello
+  * Parameter types:
+  * Parameter values:
+Hello World! (from a task)
+[DEBUG|integratedtoolkit.Worker|Executor] Removing sandbox for job 1
 \end{lstlisting}
 
 %%%%%%%%%%%%%%%
 %% SIMPLE
 %%%%%%%%%%%%%%%
 \subsection{Simple}
-The Simple application is a Java application that increases a counter by means of a task. The counter is stored inside a file.
+The Simple application is a Java application that increases a counter by means of a task. The counter is stored inside a file that 
+is transfered to the worker when the task is executed. Thus, the tasks inferface is defined as follows:
+
+\begin{lstlisting}[language=java]
+	// simple.SimpleItf
+	
+	@Method(declaringClass = "simple.SimpleImpl")
+	void increment(
+		@Parameter(type = Type.FILE, direction = Direction.INOUT) String file
+	);
+\end{lstlisting}
+
+Next we also provide the invocation of the task from the main code and the increment's method code.
+
+\begin{lstlisting}[language=java]
+	// simple.Simple
+	
+	public static void main(String[] args) throws Exception {
+		// Check and get parameters
+		if (args.length != 1) {
+			usage();
+			throw new Exception("[ERROR] Incorrect number of parameters");
+		}
+		int initialValue = Integer.parseInt(args[0]);
+
+		// Write value
+		FileOutputStream fos = new FileOutputStream(fileName);
+		fos.write(initialValue);
+		fos.close();
+		System.out.println("Initial counter value is " + initialValue);
+
+		//Execute increment
+		SimpleImpl.increment(fileName);
+
+		// Write new value
+		FileInputStream fis = new FileInputStream(fileName);
+		int finalValue = fis.read();
+		fis.close();
+		System.out.println("Final counter value is " + finalValue);
+	}
+\end{lstlisting}
+
+\begin{lstlisting}[language=java]
+	// simple.SimpleImpl
+	
+	public static void increment(String counterFile) throws FileNotFoundException, IOException {
+		// Read value
+		FileInputStream fis = new FileInputStream(counterFile);
+		int count = fis.read();
+		fis.close();
+		
+		// Write new value
+		FileOutputStream fos = new FileOutputStream(counterFile);
+		fos.write(++count);
+		fos.close();
+	}
+\end{lstlisting}
+
+Finally, to compile and execute this application users must run the following commands:
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ cd ~/workspace_java/simple/src/simple/
+compss@bsc:~/workspace_java/simple/src/simple$ javac *.java
+compss@bsc:~/workspace_java/simple/src/simple$ cd ..
+compss@bsc:~/workspace_java/simple/src$ jar cf simple.jar simple
+compss@bsc:~/workspace_java/simple/src$ mv simple.jar ~/workspace_java/simple/jar/
+
+compss@bsc:~$ cd ~/workspace_java/simple/jar
+compss@bsc:~/workspace_java/simple/jar$ runcompss simple.Simple 1
+compss@bsc:~/workspace_java/simple/jar$ runcompss simple.Simple 1
+Using default location for project file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/projects/project.xml
+Using default location for resources file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/resources/resources.xml
+
+----------------- Executing simple.Simple --------------------------
+
+WARNING: IT Properties file is null. Setting default values
+[   API]  -  Starting COMPSs Runtime v1.3
+Initial counter value is 1
+Final counter value is 2
+[   API]  -  No more tasks for app 1
+[   API]  -  Getting Result Files 1
+[   API]  -  Execution Finished
+
+------------------------------------------------------------
+\end{lstlisting}
 
 
 %%%%%%%%%%%%%%%
 %% Increment
 %%%%%%%%%%%%%%%
 \subsection{Increment}
-The Increment application is a Java application that increases N time three different counters. Each increase step is developed by a separated task. The
+The Increment application is a Java application that increases N times three different counters. Each increase step is developed by a separated task. The
 purpose of this application is to show parallelism between the three counters.
 
 Next we provide the main code of this application. The code inside the \textit{increment} task is the same than the previous example. 
 
 \begin{lstlisting}[language=java]
 	// increment.Increment
-	
+	public static void main(String[] args) throws Exception {
+		// Check and get parameters
+		if (args.length != 4) {
+			usage();
+			throw new Exception("[ERROR] Incorrect number of parameters");
+		}
+		int N = Integer.parseInt(args[0]);
+		int counter1 = Integer.parseInt(args[1]);
+		int counter2 = Integer.parseInt(args[2]);
+		int counter3 = Integer.parseInt(args[3]);
+		
+		// Initialize counter files
+		System.out.println("Initial counter values:");
+		initializeCounters(counter1, counter2, counter3);
+		
+		// Print initial counters state
+		printCounterValues();
+
+		// Execute increment tasks
+		for (int i = 0; i < N; ++i) {
+			IncrementImpl.increment(fileName1);
+			IncrementImpl.increment(fileName2);
+			IncrementImpl.increment(fileName3);
+		}
+
+		// Print final counters state (sync)
+		System.out.println("Final counter values:");
+		printCounterValues();
+	}
 \end{lstlisting}
 
 As shown in the main code, this application has 4 parameters that stand for:
@@ -138,13 +286,51 @@ As shown in the main code, this application has 4 parameters that stand for:
 Next we will compile and run the Increment application with the \textit{-g} option to be able to generate the final graph at the end of the execution.
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd ~/workspace_java/increment/jar/
-compss@bsc:~/workspace_java/increment/jar$ runcompss -g increment.Increment 10 1 2 3 
+compss@bsc:~$ cd ~/workspace_java/increment/src/increment/
+compss@bsc:~/workspace_java/increment/src/increment$ javac *.java
+compss@bsc:~/workspace_java/increment/src/increment$ cd ..
+compss@bsc:~/workspace_java/increment/src$ jar cf increment.jar increment
+compss@bsc:~/workspace_java/increment/src$ mv increment.jar ~/workspace_java/increment/jar/
 
-compss@bsc:~/workspace_java/increment/jar$ cd ~/.COMPSs/increment.Increment_01/monitor/
+compss@bsc:~$ cd ~/workspace_java/increment/jar
+compss@bsc:~/workspace_java/increment/jar$ runcompss -g increment.Increment 10 1 2 3
+Using default location for project file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/projects/project.xml
+Using default location for resources file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/resources/resources.xml
+
+----------------- Executing increment.Increment --------------------------
+
+WARNING: IT Properties file is null. Setting default values
+[   API]  -  Starting COMPSs Runtime v1.3
+Initial counter values:
+- Counter1 value is 1
+- Counter2 value is 2
+- Counter3 value is 3
+Final counter values:
+- Counter1 value is 11
+- Counter2 value is 12
+- Counter3 value is 13
+[   API]  -  No more tasks for app 1
+[   API]  -  Getting Result Files 1
+[   API]  -  Execution Finished
+
+------------------------------------------------------------
+\end{lstlisting}
+
+By running the \textit{gengraph} command users can obtain the task graph of the above execution. Next we provide the set of commands to obtain the
+graph show in Figure \ref{fig:increment}.
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ cd ~/.COMPSs/increment.Increment_01/monitor/
 compss@bsc:~/.COMPSs/increment.Increment_01/monitor$ gengraph complete_graph.dot
 compss@bsc:~/.COMPSs/increment.Increment_01/monitor$ evince complete_graph.dot.pdf
 \end{lstlisting}
+
+\begin{figure}[ht!]
+  \centering
+    \includegraphics[width=0.3\textwidth]{./Sections/2_Java/Figures/increment_graph.jpeg}
+    \caption{Increment tasks graph} 
+    \label{fig:increment}
+\end{figure}
 
 %%%%%%%%%%%%%%%
 %% MATMUL
@@ -160,20 +346,104 @@ The application creates 2 matrices of N x N size initialized with values, and mu
     \label{fig:matrix}
 \end{figure}
 
-In this application the multiplication is implemented in the multiplyAccumulative that is thus selected 
-as the task that will be executed remotely. In order to run the application the matrix dimension (number of blocks) and the dimension of each block
-have to be supplied.
+This application provides three different implementations that only differ on the way of storing the matrix:
+\begin{enumerate}
+ \item \textbf{matmul.objects.Matmul} Matrix stored by means of objects
+ \item \textbf{matmul.files.Matmul} Matrix stored in files
+ \item \textbf{matmul.arrays.Matmul} Matrix represented by an array
+\end{enumerate}
 
-\begin{lstlisting}[language=bash]
-compss@bsc:~$ cp ~/workspace_java/matmul/package/Matmul.tar.gz /home/compss/
-compss@bsc:~$ tar xzf Matmul.tar.gz
+In all the implementations the multiplication is implemented in the multiplyAccumulative method that is thus selected as the task to be executed remotely.
+As example, we we provide next the task implementation and the tasks interface for the objects implementation.
+
+\begin{lstlisting}[language=java]
+	// matmul.objects.Block
+	public void multiplyAccumulative(Block a, Block b) {
+		for (int i = 0; i < M; i++) {
+			for (int j = 0; j < M; j++) {
+				for (int k = 0; k < M; k++) {
+					data[i][j] += a.data[i][k]*b.data[k][j];
+				}
+			}
+		}
+	}
 \end{lstlisting}
 
-The command line to execute the application:
+\begin{lstlisting}[language=java]
+	// matmul.objects.MatmulItf
+	@Method(declaringClass = "matmul.objects.Block")
+	void multiplyAccumulative(
+		@Parameter Block a,
+		@Parameter Block b
+	);
+\end{lstlisting}
+
+In order to run the application the matrix dimension (number of blocks) and the dimension of each block have to be supplied. Consequently, any of the 
+implementations must be executed by running the following command.
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ runcompss matmul.<IMPLEMENTATION_TYPE>.Matmul <matrix_dim> <block_dim>
+\end{lstlisting}
+
+Finally, we provide an example of execution for each implementation.
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ runcompss matmul.Matmul <matrix_dim> <block_dim>
+compss@bsc:~$ cd ~/workspace_java/matmul/jar/
+compss@bsc:~/workspace_java/matmul/jar$ runcompss matmul.objects.Matmul 8 4
+Using default location for project file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/projects/project.xml
+Using default location for resources file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/resources/resources.xml
+
+----------------- Executing matmul.objects.Matmul --------------------------
+
+WARNING: IT Properties file is null. Setting default values
+[   API]  -  Starting COMPSs Runtime v1.3
+Running with the following parameters:
+- N: 8
+- M: 4
+[   API]  -  No more tasks for app 1
+[   API]  -  Getting Result Files 1
+[   API]  -  Execution Finished
+
+------------------------------------------------------------
 \end{lstlisting}
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ cd ~/workspace_java/matmul/jar/
+compss@bsc:~/workspace_java/matmul/jar$ runcompss matmul.files.Matmul 8 4
+Using default location for project file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/projects/project.xml
+Using default location for resources file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/resources/resources.xml
+
+----------------- Executing matmul.files.Matmul --------------------------
+
+WARNING: IT Properties file is null. Setting default values
+[   API]  -  Starting COMPSs Runtime v1.3
+[   API]  -  No more tasks for app 1
+[   API]  -  Getting Result Files 1
+[   API]  -  Execution Finished
+
+------------------------------------------------------------
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ cd ~/workspace_java/matmul/jar/
+compss@bsc:~/workspace_java/matmul/jar$ runcompss matmul.arrays.Matmul 8 4
+Using default location for project file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/projects/project.xml
+Using default location for resources file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/resources/resources.xml
+
+----------------- Executing matmul.arrays.Matmul --------------------------
+
+WARNING: IT Properties file is null. Setting default values
+[   API]  -  Starting COMPSs Runtime v1.3
+Running with the following parameters:
+- N: 8
+- M: 4
+[   API]  -  No more tasks for app 1
+[   API]  -  Getting Result Files 1
+[   API]  -  Execution Finished
+
+------------------------------------------------------------
+\end{lstlisting}
+
 
 %%%%%%%%%%%%%%%
 %% SPARSELU 
@@ -194,15 +464,83 @@ The matrix is divided into N x N blocks on where 4 types of operations will be a
 are selecetd as the tasks that will be executed remotely. In order to run the application the matrix dimension 
 has to be provided.
 
+As the previous application, the sparseLU is provided in three different implementations that only differ on the way of storing
+the matrix:
+\begin{enumerate}
+ \item \textbf{sparseLU.objects.SparseLU} Matrix stored by means of objects
+ \item \textbf{sparseLU.files.SparseLU} Matrix stored in files
+ \item \textbf{sparseLU.arrays.SparseLU} Matrix represented by an array
+\end{enumerate}
+
+Thus, the commands needed to execute the application is with each implementation are:
+
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cp ~/workspace/sparselu/package/SparseLU.tar.gz /home/compss/
-compss@bsc:~$ tar xzf SparseLU.tar.gz
+compss@bsc:~$ cd workspace_java/sparseLU/jar/
+compss@bsc:~/workspace_java/sparseLU/jar$ runcompss sparseLU.objects.SparseLU 16 8
+Using default location for project file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/projects/project.xml
+Using default location for resources file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/resources/resources.xml
+
+----------------- Executing sparseLU.objects.SparseLU --------------------------
+
+WARNING: IT Properties file is null. Setting default values
+[   API]  -  Starting COMPSs Runtime v1.3 (build 20151030-0946.rnull)
+[LOG] Running with the following parameters:
+[LOG]  - Matrix Size: 16
+[LOG]  - Block Size:  8
+[LOG] Initializing Matrix
+[LOG] Computing SparseLU algorithm on A
+[LOG] Main program finished.
+[   API]  -  No more tasks for app 1
+[   API]  -  Getting Result Files 1
+[   API]  -  Execution Finished
+
+------------------------------------------------------------
 \end{lstlisting}
 
-The command line to execute the application:
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ cd workspace_java/sparseLU/jar/
+compss@bsc:~/workspace_java/sparseLU/jar$ runcompss sparseLU.files.SparseLU 4 8
+Using default location for project file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/projects/project.xml
+Using default location for resources file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/resources/resources.xml
+
+----------------- Executing sparseLU.files.SparseLU --------------------------
+
+WARNING: IT Properties file is null. Setting default values
+[   API]  -  Starting COMPSs Runtime v1.3 (build 20151030-0946.rnull)
+[LOG] Running with the following parameters:
+[LOG]  - Matrix Size: 4
+[LOG]  - Block Size:  8
+[LOG] Initializing Matrix
+[LOG] Computing SparseLU algorithm on A
+[LOG] Main program finished.
+[   API]  -  No more tasks for app 1
+[   API]  -  Getting Result Files 1
+[   API]  -  Execution Finished
+
+------------------------------------------------------------
+\end{lstlisting}
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ runcompss sparselu.SparseLU <matrix_dim>
+compss@bsc:~$ cd workspace_java/sparseLU/jar/
+compss@bsc:~/workspace_java/sparseLU/jar$ runcompss sparseLU.arrays.SparseLU 8 8
+Using default location for project file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/projects/project.xml
+Using default location for resources file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/resources/resources.xml
+
+----------------- Executing sparseLU.arrays.SparseLU --------------------------
+
+WARNING: IT Properties file is null. Setting default values
+[   API]  -  Starting COMPSs Runtime v1.3 (build 20151030-0946.rnull)
+[LOG] Running with the following parameters:
+[LOG]  - Matrix Size: 8
+[LOG]  - Block Size:  8
+[LOG] Initializing Matrix
+[LOG] Computing SparseLU algorithm on A
+[LOG] Main program finished.
+[   API]  -  No more tasks for app 1
+[   API]  -  Getting Result Files 1
+[   API]  -  Execution Finished
+
+------------------------------------------------------------
 \end{lstlisting}
 
 
