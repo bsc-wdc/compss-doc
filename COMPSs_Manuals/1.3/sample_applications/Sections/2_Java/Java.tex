@@ -97,8 +97,8 @@ And we can also execute the application with COMPSs:
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd ~/workspace_java/hello/jar/
 compss@bsc:~/workspace_java/hello/jar$ runcompss -d hello.Hello
-Using default location for project file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/resources/resources.xml
+Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
+Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
 
 ----------------- Executing hello.Hello --------------------------
 
@@ -215,8 +215,8 @@ compss@bsc:~/workspace_java/simple/src$ mv simple.jar ~/workspace_java/simple/ja
 compss@bsc:~$ cd ~/workspace_java/simple/jar
 compss@bsc:~/workspace_java/simple/jar$ runcompss simple.Simple 1
 compss@bsc:~/workspace_java/simple/jar$ runcompss simple.Simple 1
-Using default location for project file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/resources/resources.xml
+Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
+Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
 
 ----------------- Executing simple.Simple --------------------------
 
@@ -294,8 +294,8 @@ compss@bsc:~/workspace_java/increment/src$ mv increment.jar ~/workspace_java/inc
 
 compss@bsc:~$ cd ~/workspace_java/increment/jar
 compss@bsc:~/workspace_java/increment/jar$ runcompss -g increment.Increment 10 1 2 3
-Using default location for project file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/resources/resources.xml
+Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
+Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
 
 ----------------- Executing increment.Increment --------------------------
 
@@ -317,34 +317,28 @@ Final counter values:
 \end{lstlisting}
 
 By running the \textit{gengraph} command users can obtain the task graph of the above execution. Next we provide the set of commands to obtain the
-graph show in Figure \ref{fig:increment}.
+graph show in Figure \ref{fig:increment_java}.
 
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd ~/.COMPSs/increment.Increment_01/monitor/
 compss@bsc:~/.COMPSs/increment.Increment_01/monitor$ gengraph complete_graph.dot
-compss@bsc:~/.COMPSs/increment.Increment_01/monitor$ evince complete_graph.dot.pdf
+compss@bsc:~/.COMPSs/increment.Increment_01/monitor$ evince complete_graph.pdf
 \end{lstlisting}
 
 \begin{figure}[ht!]
   \centering
     \includegraphics[width=0.3\textwidth]{./Sections/2_Java/Figures/increment_graph.jpeg}
-    \caption{Increment tasks graph} 
-    \label{fig:increment}
+    \caption{Java increment tasks graph} 
+    \label{fig:increment_java}
 \end{figure}
 
 %%%%%%%%%%%%%%%
 %% MATMUL
 %%%%%%%%%%%%%%%
+\newpage
 \subsection{Matrix multiplication}
 The Matrix Multiplication (Matmul) is a pure Java application that multiplies two matrices in a direct way. 
 The application creates 2 matrices of N x N size initialized with values, and multiply the matrices by blocks.
-
-\begin{figure}[ht!]
-  \centering
-    \includegraphics[width=0.8\textwidth]{./Sections/2_Java/Figures/matrix.jpeg}
-    \caption{Matrix multiplication} 
-    \label{fig:matrix}
-\end{figure}
 
 This application provides three different implementations that only differ on the way of storing the matrix:
 \begin{enumerate}
@@ -353,6 +347,14 @@ This application provides three different implementations that only differ on th
  \item \textbf{matmul.arrays.Matmul} Matrix represented by an array
 \end{enumerate}
 
+\begin{figure}[ht!]
+  \centering
+    \includegraphics[width=0.8\textwidth]{./Sections/2_Java/Figures/matrix.jpeg}
+    \caption{Matrix multiplication} 
+    \label{fig:matrix}
+\end{figure}
+
+\newpage 
 In all the implementations the multiplication is implemented in the multiplyAccumulative method that is thus selected as the task to be executed remotely.
 As example, we we provide next the task implementation and the tasks interface for the objects implementation.
 
@@ -389,8 +391,8 @@ Finally, we provide an example of execution for each implementation.
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd ~/workspace_java/matmul/jar/
 compss@bsc:~/workspace_java/matmul/jar$ runcompss matmul.objects.Matmul 8 4
-Using default location for project file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/resources/resources.xml
+Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
+Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
 
 ----------------- Executing matmul.objects.Matmul --------------------------
 
@@ -409,8 +411,8 @@ Running with the following parameters:
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd ~/workspace_java/matmul/jar/
 compss@bsc:~/workspace_java/matmul/jar$ runcompss matmul.files.Matmul 8 4
-Using default location for project file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/resources/resources.xml
+Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
+Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
 
 ----------------- Executing matmul.files.Matmul --------------------------
 
@@ -427,8 +429,8 @@ WARNING: IT Properties file is null. Setting default values
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd ~/workspace_java/matmul/jar/
 compss@bsc:~/workspace_java/matmul/jar$ runcompss matmul.arrays.Matmul 8 4
-Using default location for project file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/resources/resources.xml
+Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
+Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
 
 ----------------- Executing matmul.arrays.Matmul --------------------------
 
@@ -477,8 +479,8 @@ Thus, the commands needed to execute the application is with each implementation
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd workspace_java/sparseLU/jar/
 compss@bsc:~/workspace_java/sparseLU/jar$ runcompss sparseLU.objects.SparseLU 16 8
-Using default location for project file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/resources/resources.xml
+Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
+Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
 
 ----------------- Executing sparseLU.objects.SparseLU --------------------------
 
@@ -500,8 +502,8 @@ WARNING: IT Properties file is null. Setting default values
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd workspace_java/sparseLU/jar/
 compss@bsc:~/workspace_java/sparseLU/jar$ runcompss sparseLU.files.SparseLU 4 8
-Using default location for project file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/resources/resources.xml
+Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
+Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
 
 ----------------- Executing sparseLU.files.SparseLU --------------------------
 
@@ -523,8 +525,8 @@ WARNING: IT Properties file is null. Setting default values
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd workspace_java/sparseLU/jar/
 compss@bsc:~/workspace_java/sparseLU/jar$ runcompss sparseLU.arrays.SparseLU 8 8
-Using default location for project file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/scripts/user/../../configuration/xml/resources/resources.xml
+Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
+Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
 
 ----------------- Executing sparseLU.arrays.SparseLU --------------------------
 
@@ -547,7 +549,7 @@ WARNING: IT Properties file is null. Setting default values
 %%%%%%%%%%%%%%%
 %% KMEANS
 %%%%%%%%%%%%%%%
-\subsection{KMeans}
+%\subsection{KMeans}
 
 
 %%%%%%%%%%%%%%%
