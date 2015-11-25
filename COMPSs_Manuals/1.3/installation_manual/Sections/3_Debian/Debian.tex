@@ -10,11 +10,17 @@ Once the installation process is finished, please log out and back in again to c
 \subsection{Package Repository}
 To add the package repository you can easily download our predefined lists by executing the following command:
 \begin{lstlisting}[language=bash]
-x86_64 :
-   wget http://compss.bsc.es/releases/repofiles/repo_deb_x86-64.list -O /etc/apt/sources.list.d/compss-framework_x86-64.list
+ubuntu x86_64 :
+   wget http://compss.bsc.es/releases/repofiles/repo_deb_ubuntu_x86-64.list -O /etc/apt/sources.list.d/compss-framework_x86-64.list
    
-noarch :
-   wget http://compss.bsc.es/releases/repofiles/repo_deb_noarch.list -O /etc/apt/sources.list.d/compss-framework_noarch.list
+ubuntu noarch :
+   wget http://compss.bsc.es/releases/repofiles/repo_deb_ubuntu_noarch.list -O /etc/apt/sources.list.d/compss-framework_noarch.list
+   
+debian x86_64 :
+   wget http://compss.bsc.es/releases/repofiles/repo_deb_debian_x86-64.list -O /etc/apt/sources.list.d/compss-framework_x86-64.list
+   
+debian noarch :
+   wget http://compss.bsc.es/releases/repofiles/repo_deb_debian_noarch.list -O /etc/apt/sources.list.d/compss-framework_noarch.list
 \end{lstlisting}
 
 Next you need to add the repository key by executing:

@@ -2,7 +2,7 @@
 \label{sec:JavaSampleApps}
 
 The first two examples in this section are simple applications developed in COMPSs to easily illustrate how to code,
-compile and run COMPSs applications. These applications are executed locally and show different ways to take advantge
+compile and run COMPSs applications. These applications are executed locally and show different ways to take advantage
 of all the COMPSs features. 
 
 The rest of the examples are more elaborated and consider the execution in a cloud platform where the VMs mount a common 
@@ -69,11 +69,11 @@ see the message from the main code at the standard output. The message printed f
 Let's try it. First we proceed to compile the code by running the following instructions:
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd ~/workspace_java/hello/src/hello/
-compss@bsc:~/workspace_java/hello/src/hello$ javac *.java
-compss@bsc:~/workspace_java/hello/src/hello$ cd ..
-compss@bsc:~/workspace_java/hello/src$ jar cf hello.jar hello
-compss@bsc:~/workspace_java/hello/src$ mv hello.jar ~/workspace_java/hello/jar/
+compss@bsc:~$ cd ~/workspace_java/hello/src/main/java/hello/
+compss@bsc:~/workspace_java/hello/src/main/java/hello$ javac *.java
+compss@bsc:~/workspace_java/hello/src/main/java/hello$ cd ..
+compss@bsc:~/workspace_java/hello/src/main/java$ jar cf hello.jar hello
+compss@bsc:~/workspace_java/hello/src/main/java$ mv hello.jar ~/workspace_java/hello/jar/
 \end{lstlisting}
 
 Alternatively, this example application is prepared to be compiled with \textit{maven}:
@@ -146,7 +146,7 @@ Hello World! (from a task)
 %%%%%%%%%%%%%%%
 \subsection{Simple}
 The Simple application is a Java application that increases a counter by means of a task. The counter is stored inside a file that 
-is transfered to the worker when the task is executed. Thus, the tasks inferface is defined as follows:
+is transferred to the worker when the task is executed. Thus, the tasks inferface is defined as follows:
 
 \begin{lstlisting}[language=java]
 	// simple.SimpleItf
@@ -206,11 +206,11 @@ Next we also provide the invocation of the task from the main code and the incre
 Finally, to compile and execute this application users must run the following commands:
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd ~/workspace_java/simple/src/simple/
-compss@bsc:~/workspace_java/simple/src/simple$ javac *.java
-compss@bsc:~/workspace_java/simple/src/simple$ cd ..
-compss@bsc:~/workspace_java/simple/src$ jar cf simple.jar simple
-compss@bsc:~/workspace_java/simple/src$ mv simple.jar ~/workspace_java/simple/jar/
+compss@bsc:~$ cd ~/workspace_java/simple/src/main/java/simple/
+compss@bsc:~/workspace_java/simple/src/main/java/simple$ javac *.java
+compss@bsc:~/workspace_java/simple/src/main/java/simple$ cd ..
+compss@bsc:~/workspace_java/simple/src/main/java$ jar cf simple.jar simple
+compss@bsc:~/workspace_java/simple/src/main/java$ mv simple.jar ~/workspace_java/simple/jar/
 
 compss@bsc:~$ cd ~/workspace_java/simple/jar
 compss@bsc:~/workspace_java/simple/jar$ runcompss simple.Simple 1
@@ -286,11 +286,11 @@ As shown in the main code, this application has 4 parameters that stand for:
 Next we will compile and run the Increment application with the \textit{-g} option to be able to generate the final graph at the end of the execution.
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd ~/workspace_java/increment/src/increment/
-compss@bsc:~/workspace_java/increment/src/increment$ javac *.java
-compss@bsc:~/workspace_java/increment/src/increment$ cd ..
-compss@bsc:~/workspace_java/increment/src$ jar cf increment.jar increment
-compss@bsc:~/workspace_java/increment/src$ mv increment.jar ~/workspace_java/increment/jar/
+compss@bsc:~$ cd ~/workspace_java/increment/src/main/java/increment/
+compss@bsc:~/workspace_java/increment/src/main/java/increment$ javac *.java
+compss@bsc:~/workspace_java/increment/src/main/java/increment$ cd ..
+compss@bsc:~/workspace_java/increment/src/main/java$ jar cf increment.jar increment
+compss@bsc:~/workspace_java/increment/src/main/java$ mv increment.jar ~/workspace_java/increment/jar/
 
 compss@bsc:~$ cd ~/workspace_java/increment/jar
 compss@bsc:~/workspace_java/increment/jar$ runcompss -g increment.Increment 10 1 2 3

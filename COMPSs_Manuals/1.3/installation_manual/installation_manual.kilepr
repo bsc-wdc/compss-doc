@@ -118,10 +118,10 @@ order=1
 
 [item:Sections/3_Debian/Debian.tex]
 archive=true
-column=15
+column=63
 encoding=UTF-8
 highlight=LaTeX
-line=33
+line=22
 mode=LaTeX
 open=false
 order=1
@@ -215,10 +215,10 @@ JumpList=
 ViMarks=.,37,18,[,37,17,],37,18
 
 [view-settings,view=0,item:Sections/3_Debian/Debian.tex]
-CursorColumn=15
-CursorLine=33
+CursorColumn=63
+CursorLine=22
 JumpList=
-ViMarks=.,31,79,[,31,79,],31,79
+ViMarks=.,22,62,[,22,57,],22,62
 
 [view-settings,view=0,item:Sections/4_RedHat_zypper/RedHat_zypper.tex]
 CursorColumn=22
