@@ -90,10 +90,10 @@ order=3
 
 [item:Sections/3_Jobs/Jobs.tex]
 archive=true
-column=10
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=64
+line=9
 mode=LaTeX
 open=false
 order=2
@@ -147,8 +147,8 @@ JumpList=
 ViMarks=.,44,122,[,44,85,],44,122
 
 [view-settings,view=0,item:Sections/3_Jobs/Jobs.tex]
-CursorColumn=10
-CursorLine=64
+CursorColumn=0
+CursorLine=9
 JumpList=
 ViMarks=.,64,0,[,64,10,],64,9,a,177,70
 
