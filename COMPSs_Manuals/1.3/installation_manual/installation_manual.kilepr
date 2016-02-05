@@ -118,10 +118,10 @@ order=1
 
 [item:Sections/3_Debian/Debian.tex]
 archive=true
-column=63
+column=50
 encoding=UTF-8
 highlight=LaTeX
-line=22
+line=5
 mode=LaTeX
 open=false
 order=1
@@ -215,8 +215,8 @@ JumpList=
 ViMarks=.,37,18,[,37,17,],37,18
 
 [view-settings,view=0,item:Sections/3_Debian/Debian.tex]
-CursorColumn=63
-CursorLine=22
+CursorColumn=50
+CursorLine=5
 JumpList=
 ViMarks=.,22,62,[,22,57,],22,62
 
