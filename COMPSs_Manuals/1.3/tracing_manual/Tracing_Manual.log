@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/TeX Live for SUSE Linux) (format=pdflatex 2015.5.22)  3 NOV 2015 08:49
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/TeX Live for SUSE Linux) (format=pdflatex 2015.5.22)  19 FEB 2016 15:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -703,8 +703,12 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 21.
  [2
 
-])
-(./Sections/3_Visualization/Visualization.tex [3]
+]
+Overfull \hbox (11.42398pt too wide) in paragraph at lines 86--87
+[][][][] 
+ []
+
+) (./Sections/3_Visualization/Visualization.tex [3]
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 23.
 
@@ -750,8 +754,9 @@ File: ./Sections/3_Visualization/Figures/5.jpeg Graphic file (type jpg)
 Package pdftex.def Info: ./Sections/3_Visualization/Figures/5.jpeg used on inpu
 t line 90.
 (pdftex.def)             Requested size: 455.24411pt x 259.49884pt.
-
-<./Sections/3_Visualization/Figures/6.jpeg, id=216, 601.24625pt x 139.52126pt>
+ [6 <./Sections/3_Visualization/Figures/3.jpeg> <./Sections/3_Visualization/Fig
+ures/4.jpeg> <./Sections/3_Visualization/Figures/5.jpeg>]
+<./Sections/3_Visualization/Figures/6.jpeg, id=220, 601.24625pt x 139.52126pt>
 File: ./Sections/3_Visualization/Figures/6.jpeg Graphic file (type jpg)
 
 <use ./Sections/3_Visualization/Figures/6.jpeg>
@@ -759,7 +764,7 @@ Package pdftex.def Info: ./Sections/3_Visualization/Figures/6.jpeg used on inpu
 t line 105.
 (pdftex.def)             Requested size: 455.24411pt x 105.64339pt.
 
-<./Sections/3_Visualization/Figures/6_2.jpeg, id=217, 603.25375pt x 139.52126pt
+<./Sections/3_Visualization/Figures/6_2.jpeg, id=221, 603.25375pt x 139.52126pt
 >
 File: ./Sections/3_Visualization/Figures/6_2.jpeg Graphic file (type jpg)
  <use ./Sections/3_Visualization/Figures/6_2.jpeg>
@@ -767,10 +772,8 @@ Package pdftex.def Info: ./Sections/3_Visualization/Figures/6_2.jpeg used on in
 put line 111.
 (pdftex.def)             Requested size: 455.24411pt x 105.28786pt.
 )
-(./Sections/4_Interpretation/Interpretation.tex [6 <./Sections/3_Visualization/
-Figures/3.jpeg> <./Sections/3_Visualization/Figures/4.jpeg>] [7 <./Sections/3_V
-isualization/Figures/5.jpeg> <./Sections/3_Visualization/Figures/6.jpeg> <./Sec
-tions/3_Visualization/Figures/6_2.jpeg>]
+(./Sections/4_Interpretation/Interpretation.tex [7 <./Sections/3_Visualization/
+Figures/6.jpeg> <./Sections/3_Visualization/Figures/6_2.jpeg>]
 <./Sections/4_Interpretation/Figures/7.jpeg, id=226, 602.25pt x 343.2825pt>
 File: ./Sections/4_Interpretation/Figures/7.jpeg Graphic file (type jpg)
 
@@ -890,7 +893,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 111.
 Here is how much of TeX's memory you used:
  9325 strings out of 493315
  129948 string characters out of 6145893
- 418280 words of memory out of 5000000
+ 407324 words of memory out of 5000000
  12514 multiletter control sequences out of 15000+600000
  12232 words of font info for 43 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
@@ -901,7 +904,7 @@ c/amsfonts/cm/cmr10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr12.
 pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/tex
 mf/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf/fonts/type1/publ
 ic/amsfonts/cm/cmtt12.pfb>
-Output written on Tracing_Manual.pdf (21 pages, 1880441 bytes).
+Output written on Tracing_Manual.pdf (21 pages, 1878899 bytes).
 PDF statistics:
  324 PDF objects out of 1000 (max. 8388607)
  271 compressed objects within 3 object streams

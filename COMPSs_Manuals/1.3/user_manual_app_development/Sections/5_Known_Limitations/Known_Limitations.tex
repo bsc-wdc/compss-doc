@@ -14,6 +14,55 @@ The current COMPSs version (1.3) has the following limitations:
  constructor and getters and setters for each attribute) or implement the \textit{serializable} interface. This is due to the 
  fact that objects will be transferred to remote machines to execute the tasks.
  
+ \item \textbf{Java object aliasing:} \newline If a task has an object parameter and returns an object, the returned value
+ must be a new object (or a cloned one) to prevent any aliasing with the task parameters. 
+ \begin{lstlisting}[language=java]
+// @Method(declaringClass = "...")
+// DummyObject incorrectTask (
+//    @Parameter(type = Type.OBJECT, direction = Direction.IN) DummyObject a,
+//    @Parameter(type = Type.OBJECT, direction = Direction.IN) DummyObject b
+// );
+public DummyObject incorrectTask (DummyObject a, DummyObject b) {
+    if (a.getValue() > b.getValue()) {
+        return a;
+    }
+    return b;
+}
+
+// @Method(declaringClass = "...")
+// DummyObject correctTask (
+//    @Parameter(type = Type.OBJECT, direction = Direction.IN) DummyObject a,
+//    @Parameter(type = Type.OBJECT, direction = Direction.IN) DummyObject b
+// );
+public DummyObject correctTask (DummyObject a, DummyObject b) {
+    if (a.getValue() > b.getValue()) {
+        return a.clone();
+    }
+    return b.clone();
+}
+
+public static void main() {
+    DummyObject a1 = new DummyObject();
+    DummyObject b1 = new DummyObject();
+    DummyObject c1 = new DummyObject();
+    c1 = incorrectTask(a1, b1);
+    System.out.println("Initial value: " + c1.getValue());
+    a1.modify();
+    b1.modify();
+    System.out.println("Aliased value: " + c1.getValue());
+    
+    
+    DummyObject a2 = new DummyObject();
+    DummyObject b2 = new DummyObject();
+    DummyObject c2 = new DummyObject();
+    c2 = incorrectTask(a2, b2);
+    System.out.println("Initial value: " + c2.getValue());
+    a2.modify();
+    b2.modify();
+    System.out.println("Non-aliased value: " + c2.getValue());
+}
+\end{lstlisting}
+ 
  \item \textbf{Services types:} \newline The current COMPSs version only supports SOAP based services that implement the WS 
  interoperability standard. REST services are not supported.
  

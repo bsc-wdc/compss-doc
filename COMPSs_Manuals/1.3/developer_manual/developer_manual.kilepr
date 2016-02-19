@@ -59,10 +59,10 @@ order=1
 
 [item:configuration.tex]
 archive=true
-column=1
+column=2
 encoding=UTF-8
 highlight=LaTeX
-line=72
+line=49
 mode=LaTeX
 open=false
 order=0
@@ -90,7 +90,7 @@ JumpList=
 ViMarks=.,35,0,[,35,0,],35,0
 
 [view-settings,view=0,item:configuration.tex]
-CursorColumn=1
-CursorLine=72
+CursorColumn=2
+CursorLine=49
 JumpList=
-ViMarks=.,72,0,[,0,0,],72,0
+ViMarks=.,48,16,[,48,16,],48,16

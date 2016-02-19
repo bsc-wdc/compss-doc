@@ -178,10 +178,10 @@ order=1
 
 [item:configuration.tex]
 archive=true
-column=0
+column=74
 encoding=UTF-8
 highlight=LaTeX
-line=17
+line=50
 mode=LaTeX
 open=false
 order=1
@@ -251,7 +251,7 @@ JumpList=
 ViMarks=.,12,10,[,12,10,],12,10
 
 [view-settings,view=0,item:configuration.tex]
-CursorColumn=0
-CursorLine=17
+CursorColumn=74
+CursorLine=50
 JumpList=
-ViMarks=.,24,13,[,24,13,],24,32
+ViMarks=.,50,2,[,50,0,],50,73
