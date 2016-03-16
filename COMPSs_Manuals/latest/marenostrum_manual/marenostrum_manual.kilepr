@@ -60,10 +60,10 @@ Mode=LaTeX
 
 [item:COMPSs_MareNostrum_Manual.tex]
 archive=true
-column=11
+column=17
 encoding=UTF-8
 highlight=LaTeX
-line=95
+line=33
 mode=LaTeX
 open=false
 order=0
@@ -129,10 +129,10 @@ open=false
 order=-1
 
 [view-settings,view=0,item:COMPSs_MareNostrum_Manual.tex]
-CursorColumn=11
-CursorLine=95
+CursorColumn=17
+CursorLine=33
 JumpList=
-ViMarks=.,100,37,[,100,37,],100,37
+ViMarks=.,33,16,[,33,16,],33,16
 
 [view-settings,view=0,item:Sections/1_Introduction/Introduction.tex]
 CursorColumn=0

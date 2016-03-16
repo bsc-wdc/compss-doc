@@ -39,10 +39,10 @@ Mode=LaTeX
 
 [item:COMPSs_Developer_Manual.tex]
 archive=true
-column=20
+column=17
 encoding=UTF-8
 highlight=LaTeX
-line=5
+line=33
 mode=LaTeX
 open=false
 order=0
@@ -78,10 +78,10 @@ open=false
 order=-1
 
 [view-settings,view=0,item:COMPSs_Developer_Manual.tex]
-CursorColumn=20
-CursorLine=5
+CursorColumn=17
+CursorLine=33
 JumpList=
-ViMarks=.,4,11,[,4,11,],4,11
+ViMarks=.,33,16,[,33,16,],33,16
 
 [view-settings,view=0,item:Sections/1_Introduction/Introduction.tex]
 CursorColumn=1
