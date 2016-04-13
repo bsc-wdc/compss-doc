@@ -193,7 +193,8 @@ A complete and detailed explanation of the usage of the metadata includes:
                      a parameter as a FILE, COMPSs will treat it as such.
                \item {\bf Object:} {\it Type.Object}. It can have any direction (IN, OUT or INOUT).
               \end{itemize}
-        \item {\bf Return type:} Any object, a basic type or a generic class object.
+        \item {\bf Return type:} Any object or a generic class object. In this case the direction is always OUT.
+\colorComment{Basic types are also supported as return types. However, we do not recommend to use them because they cause an implicit synchronization}
         \item {\bf Method modifiers:} the method has to be {\bf STATIC}.
        \end{itemize}
 
