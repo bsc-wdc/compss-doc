@@ -1,18 +1,19 @@
 \select@language {english}
-\contentsline {figure}{\numberline {1}{\ignorespaces Paraver menu}}{5}{figure.1}
-\contentsline {figure}{\numberline {2}{\ignorespaces Trace file}}{5}{figure.2}
-\contentsline {figure}{\numberline {3}{\ignorespaces Paraver view adjustment: Fit window}}{6}{figure.3}
-\contentsline {figure}{\numberline {4}{\ignorespaces Paraver view adjustment: View Event Flags}}{6}{figure.4}
-\contentsline {figure}{\numberline {5}{\ignorespaces Paraver view adjustment: Show info panel}}{6}{figure.5}
-\contentsline {figure}{\numberline {6}{\ignorespaces Paraver view adjustment: Zoom configuration}}{7}{figure.6}
-\contentsline {figure}{\numberline {7}{\ignorespaces Paraver view adjustment: Zoom configuration}}{7}{figure.7}
-\contentsline {figure}{\numberline {8}{\ignorespaces Trace interpretation}}{8}{figure.8}
-\contentsline {figure}{\numberline {9}{\ignorespaces Caption.}}{9}{figure.9}
-\contentsline {figure}{\numberline {10}{\ignorespaces Caption.}}{10}{figure.10}
-\contentsline {figure}{\numberline {11}{\ignorespaces Caption.}}{10}{figure.11}
-\contentsline {figure}{\numberline {12}{\ignorespaces Caption.}}{11}{figure.12}
-\contentsline {figure}{\numberline {13}{\ignorespaces Paraver Menu - New Histogram}}{11}{figure.13}
-\contentsline {figure}{\numberline {14}{\ignorespaces Hmmpfam histogram}}{11}{figure.14}
-\contentsline {figure}{\numberline {15}{\ignorespaces Paraver histogram options menu}}{12}{figure.15}
-\contentsline {figure}{\numberline {16}{\ignorespaces Hmmpfam histogram with the number of bursts}}{13}{figure.16}
-\contentsline {figure}{\numberline {17}{\ignorespaces Examples of complex traces}}{15}{figure.17}
+\contentsline {figure}{\numberline {1}{\ignorespaces Basic mode tracefile for a k-means algorithm visualized with compss\_runtime.cfg}}{7}{figure.1}
+\contentsline {figure}{\numberline {2}{\ignorespaces Advanced mode tracefile for a testing program showing the total completed instructions}}{10}{figure.2}
+\contentsline {figure}{\numberline {3}{\ignorespaces Paraver menu}}{13}{figure.3}
+\contentsline {figure}{\numberline {4}{\ignorespaces Trace file}}{13}{figure.4}
+\contentsline {figure}{\numberline {5}{\ignorespaces Paraver view adjustment: Fit window}}{14}{figure.5}
+\contentsline {figure}{\numberline {6}{\ignorespaces Paraver view adjustment: View Event Flags}}{14}{figure.6}
+\contentsline {figure}{\numberline {7}{\ignorespaces Paraver view adjustment: Show info panel}}{15}{figure.7}
+\contentsline {figure}{\numberline {8}{\ignorespaces Paraver view adjustment: Zoom configuration}}{15}{figure.8}
+\contentsline {figure}{\numberline {9}{\ignorespaces Paraver view adjustment: Zoom configuration}}{15}{figure.9}
+\contentsline {figure}{\numberline {10}{\ignorespaces Trace interpretation}}{16}{figure.10}
+\contentsline {figure}{\numberline {11}{\ignorespaces Caption.}}{17}{figure.11}
+\contentsline {figure}{\numberline {12}{\ignorespaces Caption.}}{18}{figure.12}
+\contentsline {figure}{\numberline {13}{\ignorespaces Caption.}}{18}{figure.13}
+\contentsline {figure}{\numberline {14}{\ignorespaces Caption.}}{19}{figure.14}
+\contentsline {figure}{\numberline {15}{\ignorespaces Paraver Menu - New Histogram}}{19}{figure.15}
+\contentsline {figure}{\numberline {16}{\ignorespaces Hmmpfam histogram}}{19}{figure.16}
+\contentsline {figure}{\numberline {17}{\ignorespaces Paraver histogram options menu}}{20}{figure.17}
+\contentsline {figure}{\numberline {18}{\ignorespaces Hmmpfam histogram with the number of bursts}}{21}{figure.18}

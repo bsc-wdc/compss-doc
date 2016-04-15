@@ -1,13 +1,14 @@
 \BOOKMARK [1][-]{section.1}{COMP Superscalar \(COMPSs\)}{}% 1
-\BOOKMARK [1][-]{section.2}{Trace Execution}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{Trace Command}{section.2}% 3
-\BOOKMARK [2][-]{subsection.2.2}{Application Instrumentation}{section.2}% 4
+\BOOKMARK [1][-]{section.2}{Tracing}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Basic Mode}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Advanced Mode}{section.2}% 4
 \BOOKMARK [1][-]{section.3}{Visualization}{}% 5
 \BOOKMARK [2][-]{subsection.3.1}{Trace Loading}{section.3}% 6
-\BOOKMARK [2][-]{subsection.3.2}{Configuration File}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.2}{Configurations}{section.3}% 7
 \BOOKMARK [2][-]{subsection.3.3}{View Adjustment}{section.3}% 8
 \BOOKMARK [1][-]{section.4}{Interpretation}{}% 9
 \BOOKMARK [1][-]{section.5}{Analysis}{}% 10
 \BOOKMARK [2][-]{subsection.5.1}{Graphical Analysis}{section.5}% 11
 \BOOKMARK [2][-]{subsection.5.2}{Numerical Analysis}{section.5}% 12
-\BOOKMARK [1][-]{section.6}{Other trace examples}{}% 13
+\BOOKMARK [1][-]{section*.1}{Appendices}{}% 13
+\BOOKMARK [1][-]{Appendix.1.A}{PAPI: Hardware Counters}{}% 14
