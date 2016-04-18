@@ -133,6 +133,83 @@ Table \ref{tab:task_decorator_arguments} summarizes the arguments that can be fo
 \egroup
 
 
+\subsubsection{Constraints}
+
+As in Java COMPSs applications, it is possible to define constraints for each task.
+To this end, the decorator {\it $@$Constraint} followed by the desired constraints needs to be placed over the $@$Task decorator.
+
+\begin{lstlisting}[language=python]
+from pycompss.api.task import task
+from pycompss.api.constraint import constraint
+from pycompss.api.parameter import INOUT
+
+%*{\bf @constraint }*)(ProcessorCoreCount=4)
+%*{\bf @task }*)(c = INOUT)
+def func(a, b, c):
+     c += a*b
+     ...
+\end{lstlisting}
+
+This decorator enables the user to set the particular constraints for each task, such as the amount of Cores required.
+
+Table \ref{tab:python_constraints} summarizes the constraints that can be used in the $@$constraint decorator.
+\bgroup
+  \def\arraystretch{1.5}%
+  \begin{longtable}{| p{0.3\textwidth} | p{0.1\textwidth} | p{0.55\textwidth} |}
+    \hline
+    \multicolumn{1}{|c|}{{\bf Argument }}   &  \multicolumn{1}{c|}{{\bf Value }} & \multicolumn{1}{c|}{{\bf Description }} \\
+    \hline
+    ProcessorArch & $<$string$>$ & Processor architecture (e.g. x86\_64) \\
+    \hline
+    ProcessorCPUCount & $<$int$>$ & Number of CPUs \\
+    \hline
+    ProcessorCoreCount  & $<$int$>$ & Number of Cores \\
+    \hline
+    ProcessorSpeed  & $<$float$>$ & Minimum processor frequency in MHz \\
+    \hline
+    MemoryPhysicalSize  & $<$float$>$ & Main memory in Mbs \\
+    \hline
+    MemoryVirtualSize  & $<$float$>$ & Virtual memory in Mbs \\
+    \hline
+    MemoryAccessTime  & $<$float$>$ & Main memory access time in ms \\
+    \hline
+    MemorySTR  & $<$float$>$ &  \\
+    \hline
+    StorageElemSize  & $<$float$>$ & Main storage in Mbs \\
+    \hline
+    StorageElemAccessTime  & $<$float$>$ & Main storage access time in ms \\
+    \hline
+    StorageElemSTR  & $<$float$>$ &  \\
+    \hline
+    OperatingSystemType  & $<$string$>$ & Operating system type (e.g. linux) \\
+    \hline
+    \cellcolor{blue!25} HostQueue  & $<$string$>$ &  \\
+    \hline
+    \cellcolor{blue!25} AppSoftware  & $<$string$>$ & Software applications that must be available within the remote node for the task \\
+    \hline
+    \caption{Arguments of the {\it $@$constraint} decorator.}
+    \label{tab:python_constraints}
+  \end{longtable}
+\egroup
+
+All constraints are defined with a simple value except the {\it HostQueue} and {\it AppSoftware} constraints, which allow multiple values.
+For example:
+
+\begin{lstlisting}[language=python]
+from pycompss.api.task import task
+from pycompss.api.constraint import constraint
+from pycompss.api.parameter import INOUT
+
+%*{\bf @constraint }*)(ProcessorCoreCount=4, AppSoftware="numpy,scipy,gnuplot")
+%*{\bf @task }*)(c = INOUT)
+def func(a, b, c):
+     c += a*b
+     ...
+\end{lstlisting}
+
+Please, take into account that in order to respect the constraints, the peculiarities of the infrastructure must be defined in the {\it resources.xml} file.
+
+
 \subsubsection{Main Program}
 The main program of the application is a sequential code that contains calls to the selected tasks. 
 In addition, when synchronizing for task data from the main program, 
