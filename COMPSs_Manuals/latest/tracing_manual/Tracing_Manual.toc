@@ -21,3 +21,4 @@
 \contentsline {subsection}{\numberline {5.2}Numerical Analysis}{18}{subsection.5.2}
 \contentsline {section}{Appendices}{22}{section*.1}
 \contentsline {section}{\numberline {A}PAPI: Hardware Counters}{22}{Appendix.1.A}
+\contentsline {section}{\numberline {B}Paraver: configurations}{24}{Appendix.1.B}
