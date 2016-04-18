@@ -1,0 +1,69 @@
+\section{Special Execution Platforms}
+\label{sec:Execution_Platfors}
+
+This section provides information about how to run COMPSs Applications in specific platforms such as \textit{Dockers},
+\textit{Chameleon} or \textit{MareNostrum}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DOCKERS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Dockers}
+BLABLABLA
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% CHAMEMELON
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Chameleon}
+
+\subsubsection{Introduction}
+
+The Chameleon project is a configurable experimental environment for large-scale cloud research based on a \textit{OpenStack} 
+KVM Cloud. With funding from the \textit{National Science Foundation (NSF)}, it provides a large-scale platform to the open research
+community allowing them explore transformative concepts in deeply programmable cloud services, design, and core technologies. The 
+Chameleon testbed, is deployed at the \textit{University of Chicago} and the \textit{Texas Advanced Computing Center} and consists of
+650 multi-core cloud nodes, 5PB of total disk space, and leverage 100 Gbps connection between the sites. 
+
+The project is led by the \textit{Computation Institute} at the \textit{University of Chicago} and partners from the \textit{Texas 
+Advanced Computing Center} at the \textit{University of Texas} at Austin, the \textit{International Center for Advanced Internet 
+Research} at \textit{Northwestern University}, the \textit{Ohio State University}, and \textit{University of Texas} at \textit{San
+Antoni}, comprising a highly qualified and experienced team. The team includes members from the \textit{NSF} supported 
+\textit{FutureGrid} project and from the \textit{GENI} community, both forerunners of the \textit{NSFCloud} solicitation under 
+which this project is funded. Chameleon will also sets of partnerships with commercial and academic clouds, such as \textit{Rackspace},
+\textit{CERN} and \textit{Open Science Data Cloud (OSDC)}.
+
+For more information please check \url{https://www.chameleoncloud.org/} .
+
+\subsubsection{Execution}
+Currently, COMPSs can only handle the Chameleon infrastructure as a cluster (deployed inside a lease). Thus, users must firstly make
+a lease reservation and instantiate the master image (based on the published CC_COMPSs_1.4 Chameleon Image)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SuperComputers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{SuperComputers}
+
+To maintain the portability between different environments, COMPSs has a pre-build structure (see Figure 
+\ref{fig:queue_scripts_structure}) to execute applications in SuperComputers. For this purpose, users must use 
+the \textit{enqueue\_compss} script provided in the COMPSs installation. This script has several parameters (see 
+\textit{enqueue\_compss -h}) that allow users to customize their executions for any SuperComputer.
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.2\textwidth]{./Sections/5_Execution_Platforms/Figures/queue_scripts_structure.jpeg}
+    \caption{Structure of COMPSs queue scripts. In Blue general scripts, in Green system dependant scripts}
+    \label{fig:queue_scripts_structure}
+\end{figure}
+
+\newpage
+
+To make this structure work, the administrators must define a submit and a launch script that are system dependant. To develop this
+scripts the current COMPSs installation provides scripts for the \textit{MareNostrum III} SuperComputer that can be used as an 
+example (based on LSF) or you can contact us at \url{support-compss@bsc.es} .
+
+\subsubsection{MareNostrum III}
+
+For information about how to submit COMPSs applications at MareNostrum III (BSC) please refer to the \textit{COMPSs at BSC} manual 
+available at \url{http://compss.bsc.es/releases/compss/latest/docs/COMPSs_MareNostrum_Manual.pdf} .
