@@ -45,6 +45,8 @@ needed to execute COMPSs applications at Chameleon:
  \item Instantiate the master image (based on the published image \textit{COMPSs\_1.3\_CC-CentOS7})
  \item Attach a public IP and login to the master instance (the instance is correctly contextualized for COMPSs executions if you
  see a COMPSs login banner)
+ \item Set the instance as COMPSs master by running \textit{/etc/init.d/chameleon\_init start}
+ \item Copy your CH file (API credentials) to the Master and source it
  \item Run the \textit{chameleon\_cluster\_setup} script and fill the information when prompted (you will be asked for the name of the
  master instance, the reservation id and number of workers). This scripts may take several minutes since it sets up the all cluster.
  \item Execute your COMPSs applications normally using the \textit{runcompss} script
