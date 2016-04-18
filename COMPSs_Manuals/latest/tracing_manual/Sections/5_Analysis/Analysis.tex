@@ -1,6 +1,6 @@
 \section{Analysis}
 \label{sec:Analysis}
-This section gives some tips to analyse a COMPSs trace from two different points of view:
+This section gives some tips to analyze a COMPSs trace from two different points of view:
 graphically and numerically.
 
 \subsection{Graphical Analysis}
@@ -17,14 +17,14 @@ should be also balanced, this means, the duration of computational bursts.
 In the previous trace view, all the tasks of type ``hmmpfam'' in dark blue appear to be well 
 distributed among the four workers, each worker executes four ``hmmpfam'' tasks.
 
-But some workers finish earlier than the others, worker 1.2.3 finish the first and worker 1.2.1 
+However, some workers finish earlier than the others, worker 1.2.3 finish the first and worker 1.2.1 
 the last. So there is an imbalance in the duration of ``hmmpfam'' tasks. The programmer should 
-analyse then whether all the tasks process the same amount of input data and do the same thing 
-in order to find out the reason of such imbalance.
+analyze then whether all the tasks process the same amount of input data and do the same thing 
+in order to find out the reason for such imbalance.
 
-Another thing to highlight is that tasks of type ``scoreRatingSameDB'' are not equal distributed 
-among all the workers. There are workers that execute more tasks of this type than the others. 
-To understand better what happens here, let’s take a look to the execution graph and also zoom 
+Another thing to highlight is that tasks of type ``scoreRatingSameDB'' are not equally distributed 
+among all the workers. Some workers execute more tasks of this type than the others. 
+To understand better what happens here, one needs to take a look to the execution graph and also zoom 
 in the last part of the trace.
 
 \begin{figure}[ht!]
@@ -43,9 +43,9 @@ There is only one task of type ``scoreRatingSameSeq''. This task appears in red 
 (and in light-green in the graph). With the help of the graph we see that the ``scoreRatingSameSeq'' 
 task has dependences on tasks of type ``scoreRatingSameDB'', in white (or yellow).
 
-When the last task of type ``hmmpfam'' (in dark blue) ends, the last dependences are solved, 
-and if we look at the graph, this means going across a path of three dependences of type 
-``scoreRatingSameDB'' (in yellow). And because of these are sequential dependences (one depends 
+When the last task of type ``hmmpfam'' (in dark blue) ends, the previous dependencies are solved, 
+and if we look at the graph, this means going across a path of three dependencies of type 
+``scoreRatingSameDB'' (in yellow). Moreover, because these are sequential dependencies (one depends 
 on the previous) no more than a worker can be used at the same time to execute the tasks. 
 This is the reason of why the last three task of type ``scoreRatingSameDB'' (in white) are 
 executed in worker 1.2.1 sequentially.
@@ -60,7 +60,7 @@ Here we show another trace from a different parallel execution of the Hmmer prog
 \end{figure} 
  
 Paraver offers the possibility of having different histograms of the trace events. 
-For it just click the ``New Histogram'' button in the main window and accept the 
+Click the ``New Histogram'' button in the main window and accept the 
 default options in the ``New Histogram'' window that will appear.
 
 \begin{figure}[ht!]
@@ -71,8 +71,8 @@ default options in the ``New Histogram'' window that will appear.
 
 After that, the following table is shown. In this case for each worker, the time spent 
 executing each type of task is shown. Task names appear in the same color than in the 
-trace view. The color of a cell in a row corresponding to a worker goes in a scale from 
-a light-green for lower values to a dark-blue for higher ones. This conforms a color based histogram.
+trace view. The color of a cell in a row corresponding to a worker ranges from 
+light-green for lower values to dark-blue for higher ones. This conforms a color based histogram.
 
 \begin{figure}[ht!]
   \centering
@@ -84,7 +84,7 @@ The previous table also gives, at the end of each column, some extra statistical
 information for each type of tasks (as the total, average, maximum or minimum values, etc.).
 
 \newpage
-In the window properties of the main window we can change the semantic of the statistics 
+In the window properties of the main window, we can change the semantic of the statistics 
 to see other factors rather than the time, for example, the number of bursts.
 
 \begin{figure}[ht!]
