@@ -38,7 +38,7 @@ Indentation Mode=normal
 Mode=LaTeX
 
 [document-settings,item:Sections/3_Python/Python.tex]
-Bookmarks=191
+Bookmarks=194
 Encoding=UTF-8
 Highlighting=LaTeX
 Indentation Mode=normal
@@ -87,20 +87,20 @@ order=1
 
 [item:Sections/2_Java/Java.tex]
 archive=true
-column=32
+column=35
 encoding=UTF-8
 highlight=LaTeX
-line=175
+line=169
 mode=LaTeX
 open=true
 order=2
 
 [item:Sections/3_Python/Python.tex]
 archive=true
-column=78
+column=15
 encoding=UTF-8
 highlight=LaTeX
-line=200
+line=187
 mode=LaTeX
 open=true
 order=1
@@ -158,16 +158,16 @@ JumpList=
 ViMarks=.,5,23,[,5,23,],5,23
 
 [view-settings,view=0,item:Sections/2_Java/Java.tex]
-CursorColumn=32
-CursorLine=175
+CursorColumn=35
+CursorLine=169
 JumpList=
 ViMarks=.,196,109,[,196,108,],196,109
 
 [view-settings,view=0,item:Sections/3_Python/Python.tex]
-CursorColumn=78
-CursorLine=200
+CursorColumn=15
+CursorLine=187
 JumpList=
-ViMarks=.,200,77,[,200,77,],200,77,a,191,0
+ViMarks=.,187,14,[,187,14,],187,14,a,194,3
 
 [view-settings,view=0,item:Sections/4_C/C.tex]
 CursorColumn=42
