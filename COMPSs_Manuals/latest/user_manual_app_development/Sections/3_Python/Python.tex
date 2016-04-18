@@ -159,33 +159,47 @@ Table \ref{tab:python_constraints} summarizes the constraints that can be used i
     \hline
     \multicolumn{1}{|c|}{{\bf Argument }}   &  \multicolumn{1}{c|}{{\bf Value }} & \multicolumn{1}{c|}{{\bf Description }} \\
     \hline
-    ProcessorArch & $<$string$>$ & Processor architecture (e.g. x86\_64) \\
+    ProcessorArch & $<$string$>$ & Required processor architecture (e.g. ``x86\_64'') \newline
+                                 Default: ``unassigned'' \\
     \hline
-    ProcessorCPUCount & $<$int$>$ & Number of CPUs \\
+    ProcessorCPUCount & $<$int$>$ & Required number of CPUs for the host \newline
+                                    Default: 0 \\
     \hline
-    ProcessorCoreCount  & $<$int$>$ & Number of Cores \\
+    ProcessorCoreCount  & $<$int$>$ & Required number of Cores \newline
+				      Default: 1 \\
     \hline
-    ProcessorSpeed  & $<$float$>$ & Minimum processor frequency in MHz \\
+    ProcessorSpeed  & $<$float$>$ & Required processor frequency \newline
+				    Default: 0.0f \\
     \hline
-    MemoryPhysicalSize  & $<$float$>$ & Main memory in Mbs \\
+    MemoryPhysicalSize  & $<$float$>$ & Required physical memory size in GBs \newline
+                                        Default: 0.0f \\
     \hline
-    MemoryVirtualSize  & $<$float$>$ & Virtual memory in Mbs \\
+    MemoryVirtualSize  & $<$float$>$ & Required virtual memory size in GBs \newline
+				       Default: 0.0f \\
     \hline
-    MemoryAccessTime  & $<$float$>$ & Main memory access time in ms \\
+    MemoryAccessTime  & $<$float$>$ & Top memory access time in nanoseconds \newline
+				      Default: 0.0f \\
     \hline
-    MemorySTR  & $<$float$>$ &  \\
+    MemorySTR  & $<$float$>$ &  Memory bandwith in GB/s \newline
+			        Default: 0.0f \\
     \hline
-    StorageElemSize  & $<$float$>$ & Main storage in Mbs \\
+    StorageElemSize  & $<$float$>$ & Amount of required storage space in GB \newline
+				     Default: 0.0f \\
     \hline
-    StorageElemAccessTime  & $<$float$>$ & Main storage access time in ms \\
+    StorageElemAccessTime  & $<$float$>$ & Top access time to the storage system in milliseconds \newline
+				           Default: 0.0f \\
     \hline
-    StorageElemSTR  & $<$float$>$ &  \\
+    StorageElemSTR  & $<$float$>$ & Storage bandwith in MB/s \newline
+				    Default: 0.0f \\
     \hline
-    OperatingSystemType  & $<$string$>$ & Operating system type (e.g. linux) \\
+    OperatingSystemType  & $<$string$>$ & Required operative system \newline
+                                          Default: ``unassigned'' \\
     \hline
-    \cellcolor{blue!25} HostQueue  & $<$string$>$ &  \\
+    \cellcolor{blue!25} HostQueue  & $<$string$>$ &  Required queues \newline
+						   Default: ``unassigned'' \\
     \hline
-    \cellcolor{blue!25} AppSoftware  & $<$string$>$ & Software applications that must be available within the remote node for the task \\
+    \cellcolor{blue!25} AppSoftware  & $<$string$>$ & Required applications. Applications that must be available within the remote node for the task. \newline
+						     Default: ``unassigned'' \\
     \hline
     \caption{Arguments of the {\it $@$constraint} decorator.}
     \label{tab:python_constraints}
