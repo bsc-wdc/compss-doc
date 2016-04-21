@@ -1,16 +1,175 @@
 \section{Special Execution Platforms}
 \label{sec:Execution_Platfors}
 
-This section provides information about how to run COMPSs Applications in specific platforms such as \textit{Dockers},
+This section provides information about how to run COMPSs Applications in specific platforms such as \textit{Docker},
 \textit{Chameleon} or \textit{MareNostrum}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% DOCKERS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Dockers}
-To do
+\subsection{Docker}
 
+\subsubsection{Introduction}
+Docker is an open-source project that automates the deployment of applications inside software containers, 
+by providing an additional layer of abstraction and automation of operating-system-level virtualization on Linux.
+As actions are done to a Docker base image, union filesystem layers are created and documented, such that each layer fully 
+describes how to recreate an action. This strategy enables Docker's lightweight images, as only layer updates need to be 
+propagated (compared to full VMs, for example).
+COMPSs supports running a distributed application in a Docker swarm cluster.
+\\
+We have a COMPSs 1.3 Docker image. In case you need it, you can pull it from Docker using:
+\begin{itemize}  
+\item docker pull compss/compss
+\end{itemize}
+
+\subsubsection{Requirements}
+In order to use COMPSs with Docker, some requirements must be fulfilled:
+\begin{itemize}  
+\item Have \textbf{Docker} and \textbf{Docker-Compose} installed in your local machine.
+\item Have an available \textbf{Docker swarm cluster} and its swarm manager ip and port to access it remotely.
+\item A \textbf{Dockerhub account}. Dockerhub is an online repository for Docker images. We don't currently support
+      another sharing method besides uploading to Dockerhub, so you will need to provide a username.
+      This has the advantage that it takes very little to upload the image, since Dockerhub 
+      will just need the delta layers from the base image of COMPSs.
+\end{itemize}
+
+\subsubsection{Execution}
+To execute COMPSs in a Docker swarm cluster, you must use the \textbf{runcompss-docker} command, instead of runcompss.
+\\ \\
+The command \textbf{runcompss-docker} has some \textbf{additional arguments} that will be needed by COMPSs to run your application 
+in a distributed Docker swarm cluster environment.
+The rest of typical arguments (classpath, project, etc.) will be delegated to runcompss command.
+\\ \\
+These \textbf{mandatory} additional arguments must go \textbf{before} the typical runcompss arguments. 
+The \textbf{runcompss-docker additional arguments} are:
+\begin{itemize}
+ \item { 
+ \textbf{-{}-w, -{}-worker-containers:} \\  
+ Specifies the number of \textbf{worker containers} the app will execute on. One more container will be created to host the \textbf{master}. 
+ If you have enough nodes in the swarm cluster, each container will be executed by one node.\\
+ Example:  \textbf{-{}-worker-containers=3}
+ }
+ 
+ \item { 
+ \textbf{-{}-c, -{}-context-dir:} \\
+ Specifies the \textbf{context directory} of the app. 
+ The context directory is a local directory that \textbf{must contain the needed binaries and input files of the app}.
+ In its simplest case, it will contain the executable file (a .jar for example).
+ Take into account that you should not put unnecessary files in the context-directory, 
+ since \textbf{it will be copied to all the nodes} that need it.
+ 
+ Example: \textbf{-{}-context-dir='/home/compss-user/my-app-dir'}, where my-app-dir contains 'app.jar', 'data1.dat' and 'data2.csv', for example.
+ }
+
+ \item { 
+ \textbf{-{}-s, -{}-swarm-manager:} \\
+ Specifies the swarm manager ip and port (format: <ip>:<port>). 
+ You can test if the swarm manager really works and is reachable from your machine
+ running from your machine the Docker hello-world container.\\
+ Example: \textbf{-{}-swarm-manager='129.114.108.8:4000'}
+ }
+ 
+ \item { 
+ \textbf{-{}-u, -{}-username:} \\
+ Specifies a \textbf{Dockerhub username}, to upload the app image, so the workers can pull it in runtime. 
+ As stated in the requirements sections, this is needed to share your container application image with the nodes that need it.
+ }
+\end{itemize}
+
+As an \textbf{optional} argument:
+\begin{itemize}
+ \item { 
+ \textbf{-{}-n, -{}-no-refresh-app-image:} \\
+ If this flag is on, the \textbf{app image won't be uploaded }to Dockerhub.
+ Workers won't pull the image either.
+ Use this flag if the application has not changed since the last running.
+ This way the execution will be \textbf{faster}, and you won't need to specify the Dockerhub username nor write its password.
+ But remember! If you make any change to the application, run an execution without this flag at least once, 
+ to update the online application image.
+ }
+\end{itemize}
+
+Here is the \textbf{format} you must use with \textbf{runcompss-docker} command:
+\begin{lstlisting}[language=bash]
+runcompss-docker --worker-containers=N 
+                 --context-dir='CTX_DIR'
+                 --swarm-manager='<ip>:<port>'
+                 --username='dockerhub_username'
+                 [rest of classic runcompss args]
+\end{lstlisting}           
+
+Or alternatively, in its shortest form:
+\begin{lstlisting}[language=bash]
+runcompss-docker --w=N  --c='CTX_DIR' --s='<ip>:<port>' --u='dockerhub_username' 
+                 [rest of classic runcompss args]
+\end{lstlisting}        
+
+\subsubsection{Execution results}
+The execution results will be retrieved from the master container of your application.
+\\ \\ 
+If your context-directory name is \textbf{'matmul'}, then your results will be saved in the \textbf{'matmul-results'} directory, 
+which \textbf{is located in the SAME directory as your context-directory is in}. 
+\\ \\ 
+Inside the \textbf{'matmul-results'} directory you will have:
+\begin{itemize}
+ \item  A folder named \textbf{'matmul'} with all the result files that were
+	in the same directory as the executable when the application execution ended.  
+	More precisely, this will contain the context-directory state right after finishing your application execution.
+	\\
+	\\
+	Additionally, and for more advanced debug purposes,
+	you will have some intermidiate files created by runcompss-docker(Dockerfile, project.xml, resources.xml),
+	in case you want to check for more complex errors or details. 
+	
+	
+  \item A folder named \textbf{'debug'}, which (in case you used the runcompss debug option (\textbf{-d})), 
+        will contain the \textbf{'.COMPSs'} directory, which contains another directory in which there are the typical debug files runtime.log, jobs, etc.
+	\\
+        Remember \textbf{.COMPSs} is a \textbf{hidden} directory, take this into account if you do \textbf{ls} inside the debug directory (add the \textbf{-a} option).
+  
+\end{itemize}
+
+To make it simpler, we provide a \textbf{tree visualization} of an example of what your directories should look like after the execution.
+In this case we executed the \textbf{Matmul example application} that we provide you:
+\\*
+\\*
+\\*
+\includegraphics[width=0.3\textwidth]{./Sections/5_Execution_Platforms/Figures/docker-matmul-results-tree.png} 
+
+\subsubsection{Execution examples}
+And here is one example to run the Matmul example application. 
+In this case, we are specifying:
+
+\begin{itemize}  
+\item Use \textbf{5 worker docker containers}. They will be distributed amongst the swarm cluster nodes as balanced as possible.
+\item The \textbf{context directory} will be '/home/compss-user/my-app-dir'.
+\item The \textbf{swarm-manager ip} will be 129.114.108.8, with the swarm manager located in the \textbf{port} 4000.
+\item The \textbf{Dockerhub username} will be john123 (the \textbf{password} will be asked when executing runcompss-docker).
+\item The \textbf{classpath} will be '/home/compss-user-john/matmul/matmul.jar', and we will use \textbf{debug (-d)}.
+\item Finally, as we would do with the typical runcompss, we specify the \textbf{main class} name and its \textbf{parameters} (16 and 4 in this case).
+\end{itemize}
+And this is how you would run \textbf{runcompss-docker}:
+\begin{lstlisting}[language=bash]
+runcompss-docker --worker-containers=5 \
+                 --context-dir='/home/compss-user/my-app-dir' \
+                 --swarm-manager='129.114.108.8:4000' \
+                 --username='john123' \
+                 --classpath=/home/compss-user/my-app-dir/my-app.jar \
+                 -d \
+                 matmul.objects.Matmul 16 4
+\end{lstlisting}           
+
+Here we show another example using the short arguments form, with the KMeans example application, that we provide to you:
+\begin{lstlisting}[language=bash]
+runcompss-docker --w=30 --c='./kmeans-app' --s='110.3.14.159:26535' --u='test1947' \
+                 --classpath=./kmeans/kmeans.jar \
+                 kmeans.KMeans
+\end{lstlisting}           
+
+
+
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CHAMEMELON
