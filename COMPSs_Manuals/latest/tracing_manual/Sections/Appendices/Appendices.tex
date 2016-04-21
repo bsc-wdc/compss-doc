@@ -55,21 +55,32 @@ To further customize the tracked counters, modify the XML to suit your needs. To
 \section{Paraver: configurations}
 \label{sec:configs}
 
-A number of \textit{paraver} configurations prepared to view the COMPSs tracing information can be found under \textit{/opt/COMPSs/Dependencies/paraver/cfgs/} folder.
+Table \ref{tab:paraver_configs} provides information about the different pre-build configurations that we distribute
+with COMPSs and that can be found under the \textit{/opt/COMPSs/Dependencies/paraver/cfgs/} folder.
 
 
-\begin{description}
-\item [compss\_runtime.cfg] \hfill \\ runtime events (master, access processor, task dispatcher) and tasks' time running events.
-\item [compss\_tasks.cfg] \hfill \\ tasks' running time with function names.
-\item [compss\_tasks\_and\_runtime.cfg] \hfill \\ loads both \textit{compss\_tasks.cfg} and \textit{compss\_runtime.cfg}
-\item [2dp\_runtime\_state.cfg] \hfill \\ runtime, access processor, task dispatcher and tasks' time running histogram.
-\item [compss\_tasks\_numbers.cfg] \hfill \\ tasks IDs and execution time events.
-\item [2dp\_tasks.cfg] \hfill \\ tasks' time running and type histogram.
-\item [compss\_tasks\_transfers.cfg] \hfill \\ task transfers request (on threads 1.X.1) + \textit{compss\_tasks\_numbers.cfg} events (IDs link request with task).
-\item [3dh\_duration\_runtime.cfg] \hfill \\ runtime duration 3D histogram.
-\item [Interval\_between\_runtime.cfg] \hfill \\ interval between runtime events.
-\item [3dh\_duration\_tasks.cfg] \hfill \\ task's duration 3D histogram.
-\item [compss\_data\_transfers.cfg] \hfill \\ data transfers (for each parameter not task) events and communication lines.
-\item [thread\_cpu.cfg] \hfill \\ initial executing CPU information.
-% \item [time\_btw\_tasks.cfg] \hfill \\ time between tasks information.
-\end{description}
+\bgroup
+  \def\arraystretch{1.5}
+  \begin{table}[h]
+    \begin{center}
+      \begin{tabular}{| p{0.45\textwidth} | p{0.45\textwidth} |}
+	\hline
+	$2dp\_runtime\_state.cfg$		& 2D plot of runtime state \\ \hline
+	$2dp\_tasks.cfg$			& 2D plot of tasks duration \\ \hline
+	$3dh\_duration\_runtime.cfg$		& 3D Histogram of runtime execution \\ \hline
+	$3dh\_duration\_tasks.cfg$		& 3D Histogram of tasks duration \\ \hline
+	$compss\_runtime.cfg$ 			& Shows COMPSs Runtime events (master and workers) \\ \hline
+	$compss\_tasks\_and\_runtime.cfg$ 	& Shows COMPSs Runtime events (master and workers) and tasks execution \\ \hline
+	$compss\_tasks.cfg$ 			& Shows tasks execution \\ \hline
+	$compss\_tasks\_numbers.cfg$ 		& Shows tasks execution by task id \\ \hline
+	$compss\_tasks\_transfers.cfg$ 		& Shows transfer requests and tasks by id \\ \hline
+	$compss\_data\_transfers.cfg$ 		& Shows data transfers for each task's parameter \\ \hline
+	$Interval\_between\_runtime.cfg$ 	& Interval between runtime events \\ \hline
+	$thread\_cpu.cfg$			& Shows the initial executing CPU. \\ \hline
+      \end{tabular}
+      \caption{Available paraver configurations for COMPSs Applications}
+      \label{tab:paraver_configs}
+    \end{center}
+  \end{table}
+\egroup
+
