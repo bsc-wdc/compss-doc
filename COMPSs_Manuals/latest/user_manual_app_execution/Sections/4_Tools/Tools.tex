@@ -131,117 +131,104 @@ During the execution of the application, an XML file is created in the worker no
 these events. At the end of the execution, all the XML files are merged to get a final trace file.
 
 In this manual we only provide information about how to obtain a trace and about the available Paraver (the tool used to analyze the traces) configurations. For further
-information about the application instrumentation or the trace visualization please check the \textit{COMPSs Tracing Manual} 
+information about the application instrumentation or the trace visualization and configurations please check the \textit{COMPSs Tracing Manual} 
 available at \url{http://compss.bsc.es} .
 
 \subsubsection{Trace Command}
-In order to obtain a post-execution trace file the option \textbf{-t}  must be added to the runcompss command. Next we provide an
-example of the command execution with the tracing option enabled for the Hmmer java application.
+
+
+In order to obtain a post-execution trace file one of the following options \textbf{-t, --tracing, --tracing=true, --tracing=basic} must be added to the runcompss command. All this options activate the basic tracing mode; the advanced mode is activated with the option \textbf{--tracing=advanced}. For further information 
+about advanced mode check the \textit{COMPSs Tracing Manual}. Next, we provide an
+example of the command execution with the basic tracing option enabled for a java k-means application.
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ runcompss -t --classpath=/home/compss/workspace_java/hmmerobj/jar/hmmerobj.jar 
-                        hmmerobj.HMMPfam 
-                        /sharedDisk/Hmmer/smart.HMMs.bin /sharedDisk/Hmmer/256seq 
-                        /home/compss/out.txt 2 8 -A 222
+*** RUNNING JAVA APPLICATION KMEANS
+Resolved: /path/to/jar/kmeans.jar:
+----------------- Executing kmeans.Kmeans --------------------------
 
------------------ Executing hmmerobj.HMMPfam --------------------------
-
-WARNING: IT Properties file is null. Setting default values
-Welcome to Extrae 3.1.1rc (revision 3360 based on extrae/trunk)
-Extrae: Warning! EXTRAE_HOME has not been defined!.
+Extrae: WARNING!
+Extrae: WARNING! XML parser version and property 'xml-parser-id' do not match. Check the XML file. Trying to proceed...
+Extrae: WARNING!
+Extrae: xml-parser-id found 'Id: xml-parse.c 3682 2015-11-26 14:32:27Z harald $' when expecting 'Id: xml-parse.c 3918 2016-03-11 14:59:01Z harald $'.
+Welcome to Extrae 3.3.0 (revision 3966 based on extrae/trunk)
+Extrae: Parsing the configuration file (/opt/COMPSs/Runtime/scripts/user/../../configuration/xml/tracing/extrae_basic.xml) begins
+Extrae: Tracing package is located on /opt/COMPSs/Dependencies/extrae/
 Extrae: Generating intermediate files for Paraver traces.
-Extrae: Intermediate files will be stored in /home/compss/workspace_java/hmmerobj/jar
-Extrae: Tracing buffer can hold 500000 events
-Extrae: Tracing mode is set to: Detail.
-Extrae: Successfully initiated with 1 tasks
-
-Extrae: Warning! API tries to initialize more than once
-Extrae:          Previous initialization was done by API
-
-[   API]  -  Starting COMPSs Runtime v1.3 (build 20151016-1931.rnull)
-
+Extrae: Warning! change-at-time time units not specified. Using seconds
+Extrae: PAPI domain set to ALL for HWC set 1
+Extrae: HWC set 1 contains following counters < PAPI_TOT_INS (0x80000032) PAPI_TOT_CYC (0x8000003b) PAPI_L2_DCM (0x80000002) PAPI_L3_TCM (0x80000008) > - never changes
+Extrae: Warning! change-at-time time units not specified. Using seconds
+WARNING: IT Properties file is null. Setting default values
+[   API]  -  Deploying COMPSs Runtime v1.4 (build 20160412-1147.r2040)
+[   API]  -  Tracing is activated
+[   API]  -  Starting COMPSs Runtime v1.4 (build 20160412-1147.r2040)
 ...
 ...
 ...
-
-[   API]  -  No more tasks for app 1
-[   API]  -  Getting Result Files 1
-[   API]  -  Execution Finished
-
-Extrae: Intermediate raw trace file created : /home/compss/workspace_java/hmmerobj/jar/set-0/TRACE@bsc.0000031637000000000000.mpit
-Extrae: Intermediate raw sym file created : /home/compss/workspace_java/hmmerobj/jar/set-0/TRACE@bsc.0000031637000000000000.sym
-Extrae: Deallocating memory.
-Extrae: Application has ended. Tracing has been terminated.
-
 merger: Output trace format is: Paraver
-merger: Extrae 3.1.1rc (revision 3360 based on extrae/trunk)
-
+merger: Extrae 3.3.0 (revision 3966 based on extrae/trunk)
+mpi2prv: Assigned nodes < Marginis >
+mpi2prv: Assigned size per processor < <1 Mbyte >
+mpi2prv: File set-0/TRACE@Marginis.0000001904000000000000.mpit is object 1.1.1 on node Marginis assigned to processor 0
+mpi2prv: File set-0/TRACE@Marginis.0000001904000000000001.mpit is object 1.1.2 on node Marginis assigned to processor 0
+mpi2prv: File set-0/TRACE@Marginis.0000001904000000000002.mpit is object 1.1.3 on node Marginis assigned to processor 0
+mpi2prv: File set-0/TRACE@Marginis.0000001980000001000000.mpit is object 1.2.1 on node Marginis assigned to processor 0
+mpi2prv: File set-0/TRACE@Marginis.0000001980000001000001.mpit is object 1.2.2 on node Marginis assigned to processor 0
+mpi2prv: File set-0/TRACE@Marginis.0000001980000001000002.mpit is object 1.2.3 on node Marginis assigned to processor 0
+mpi2prv: File set-0/TRACE@Marginis.0000001980000001000003.mpit is object 1.2.4 on node Marginis assigned to processor 0
+mpi2prv: File set-0/TRACE@Marginis.0000001980000001000004.mpit is object 1.2.5 on node Marginis assigned to processor 0
+mpi2prv: Time synchronization has been turned off
+mpi2prv: A total of 9 symbols were imported from TRACE.sym file
+mpi2prv: 0 function symbols imported
+mpi2prv: 9 HWC counter descriptions imported
 mpi2prv: Checking for target directory existance... exists, ok!
 mpi2prv: Selected output trace format is Paraver
 mpi2prv: Stored trace format is Paraver
+mpi2prv: Searching synchronization points... done
+mpi2prv: Time Synchronization disabled.
+mpi2prv: Circular buffer enabled at tracing time? NO
 mpi2prv: Parsing intermediate files
+mpi2prv: Progress 1 of 2 ... 5% 10% 15% 20% 25% 30% 35% 40% 45% 50% 55% 60% 65% 70% 75% 80% 85% 90% 95% done
+mpi2prv: Processor 0 succeeded to translate its assigned files
+mpi2prv: Elapsed time translating files: 0 hours 0 minutes 0 seconds
+mpi2prv: Elapsed time sorting addresses: 0 hours 0 minutes 0 seconds
+mpi2prv: Generating tracefile (intermediate buffers of 838848 events)
+         This process can take a while. Please, be patient.
+mpi2prv: Progress 2 of 2 ... 5% 10% 15% 20% 25% 30% 35% 40% 45% 50% 55% 60% 65% 70% 75% 80% 85% 90% 95% done
+mpi2prv: Warning! Clock accuracy seems to be in microseconds instead of nanoseconds.
+mpi2prv: Elapsed time merge step: 0 hours 0 minutes 0 seconds
+mpi2prv: Resulting tracefile occupies 991743 bytes
 mpi2prv: Removing temporal files... done
-mpi2prv: Congratulations! ./trace/hmmerobj.HMMPfam_compss_trace_1440151114.prv has been generated.
-
-------------------------------------------------------------
+mpi2prv: Elapsed time removing temporal files: 0 hours 0 minutes 0 seconds
+mpi2prv: Congratulations! ./trace/kmeans.Kmeans_compss_trace_1460456106.prv has been generated.
+[   API]  -  Execution Finished
 \end{lstlisting}
 
 At the end of the execution the trace will be stored inside the \textit{trace} folder under the application log directory.
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd .COMPSs/hmmerobj.HMMPfam/trace/
+compss@bsc:~$ cd .COMPSs/kmeans.Kmeans/trace/
 compss@bsc:~$ ls -1
-hmmerobj.HMMPfam_compss_trace_1444922077.pcf
-hmmerobj.HMMPfam_compss_trace_1444922077.prv
-hmmerobj.HMMPfam_compss_trace_1444922077.row
+hmmerobj.kmeans.Kmeans_compss_trace_1460456106.pcf
+hmmerobj.kmeans.Kmeans_compss_trace_1460456106.prv
+hmmerobj.kmeans.Kmeans_compss_trace_1460456106.row
 \end{lstlisting}
 
 
-\subsubsection{Trace Configurations}
+\subsubsection{Trace visualization}
 The traces generated by an application execution are ready to be visualized with \textit{Paraver}. \textit{Paraver} is a powerful 
 tool developed by \textit{BSC} that allows users to show many views of the trace data by means of different configuration files.
 Users can manually load, edit or create configuration files to obtain different trace data views.
 
-In Table \ref{tab:paraver_configs} we provide information about the different pre-build configurations that we distribute
-with COMPSs and that can be found under the \textit{/opt/COMPSs/Dependencies/paraver/cfgs/} folder.
+If \textit{Paraver} is installed, issue the following command to visualize a given tracefile:
 
-\bgroup
-  \def\arraystretch{1.5}
-  \begin{table}[h]
-    \begin{center}
-      \begin{tabular}{| p{0.45\textwidth} | p{0.45\textwidth} |}
-	\hline
-	$2dp\_runtime\_state.cfg$		& 2D plot of runtime state \\ \hline
-	$2dp\_tasks.cfg$			& 2D plot of tasks duration \\ \hline
-	$3dh\_duration\_runtime.cfg$		& 3D Histogram of runtime execution \\ \hline
-	$3dh\_duration\_tasks.cfg$		& 3D Histogram of tasks duration \\ \hline
-	$compss\_runtime.cfg$ 			& Shows COMPSs Runtime events (at master and workers) \\ \hline
-	$compss\_tasks\_and\_runtime.cfg$ 	& Shows COMPSs Runtime events (at master and workers) and tasks execution \\ \hline
-	$compss\_tasks.cfg$ 			& Shows tasks execution \\ \hline
-	$compss\_tasks\_numbers.cfg$ 		& Shows tasks execution by task id \\ \hline
-	$compss\_transfers.cfg$ 		& Shows transfer time spent by each worker \\ \hline
-      \end{tabular}
-      \caption{Available paraver configurations for COMPSs Applications}
-      \label{tab:paraver_configs}
-    \end{center}
-  \end{table}
-\egroup
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ wxparaver path/to/trace/trace_name.prv
+\end{lstlisting}
 
 For further information about \textit{Paraver} please visit the following site:
 \begin{center}
 \url{http://www.bsc.es/computer-sciences/performance-tools/paraver}
 \end{center}
-
-
-\subsubsection{Trace examples}
-COMPSs traces can be very complex as the number of workers or tasks grows. Just to illustrate this, the following 
-pictures show traces with a greater number of workers and tasks.
-
-\begin{figure}[ht!]
-  \centering
-    \includegraphics[width=0.91\textwidth]{./Sections/4_Tools/Figures/trace_example1.jpeg}
-    \includegraphics[width=0.91\textwidth]{./Sections/4_Tools/Figures/trace_example2.jpeg}
-    \caption{Examples of complex traces}
-\end{figure}
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

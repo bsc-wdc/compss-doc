@@ -50,9 +50,11 @@ compss@bsc:~$ runcompss -h
                                             When no value is provided it is set to true
                                             Default: false
                                             
-    --tracing=<bool>, --tracing, -t       Generation of traces (true/false)
+    --tracing=<level>, --tracing, -t      Set generation of traces and/or tracing level ( [ true | basic ] | advanced | false)
+                                            True and basic levels will produce the same traces.
                                             When no value is provided it is set to true
                                             Default: false
+
                                             
     --monitoring=<int>, --monitoring, -m  Period between monitoring samples 
                                             (milliseconds)
