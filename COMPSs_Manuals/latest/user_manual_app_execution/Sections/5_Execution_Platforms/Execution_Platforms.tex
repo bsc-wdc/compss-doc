@@ -13,15 +13,11 @@ This section provides information about how to run COMPSs Applications in specif
 \subsubsection{Introduction}
 Docker is an open-source project that automates the deployment of applications inside software containers, 
 by providing an additional layer of abstraction and automation of operating-system-level virtualization on Linux.
-As actions are done to a Docker base image, union filesystem layers are created and documented, such that each layer fully 
-describes how to recreate an action. This strategy enables Docker's lightweight images, as only layer updates need to be 
-propagated (compared to full VMs, for example).
+In addition to the Docker container engine, there are other Docker tools that allow users to create complex applications (Docker-Compose) 
+or to manage a cluster of Docker containers (Docker Swarm).
+\\ \\ 
 COMPSs supports running a distributed application in a Docker swarm cluster.
 \\
-We have a COMPSs 1.3 Docker image. In case you need it, you can pull it from Docker using:
-\begin{itemize}  
-\item docker pull compss/compss
-\end{itemize}
 
 \subsubsection{Requirements}
 In order to use COMPSs with Docker, some requirements must be fulfilled:
@@ -34,9 +30,11 @@ In order to use COMPSs with Docker, some requirements must be fulfilled:
       will just need the delta layers from the base image of COMPSs.
 \end{itemize}
 
+For more information about Docker and how to install different components, visit Docker site: \url{https://www.docker.com/}
+
 \subsubsection{Execution}
 To execute COMPSs in a Docker swarm cluster, you must use the \textbf{runcompss-docker} command, instead of runcompss.
-\\ \\
+\\
 The command \textbf{runcompss-docker} has some \textbf{additional arguments} that will be needed by COMPSs to run your application 
 in a distributed Docker swarm cluster environment.
 The rest of typical arguments (classpath, project, etc.) will be delegated to runcompss command.
@@ -105,6 +103,14 @@ runcompss-docker --w=N  --c='CTX_DIR' --s='<ip>:<port>' --u='dockerhub_username'
                  [rest of classic runcompss args]
 \end{lstlisting}        
 
+The runcompss-docker command creates a Docker image from a common COMPSs docker image by adding your context directory to it. 
+Then it uploads this image to Dockerhub and Docker Compose is in charge of spawning the different application containers to the docker swarm manager.
+Then the Docker Swarm starts the containers and the application.
+\\
+The COMPSs Docker base image is available in the Dockerhub. In case you need it, you can pull it using the following command:
+\begin{lstlisting}[language=bash]
+docker pull compss/compss
+\end{lstlisting}
 \subsubsection{Execution results}
 The execution results will be retrieved from the master container of your application.
 \\ \\ 
