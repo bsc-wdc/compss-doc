@@ -124,12 +124,12 @@ order=0
 
 [item:Sections/5_Execution_Platforms/Execution_Platforms.tex]
 archive=true
-column=112
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=128
+line=0
 mode=LaTeX
-open=true
+open=false
 order=0
 
 [item:Sections/6_Common_Issues/Common_Issues.tex]

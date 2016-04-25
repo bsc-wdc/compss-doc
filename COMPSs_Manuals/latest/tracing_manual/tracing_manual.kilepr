@@ -134,12 +134,12 @@ order=1
 
 [item:Tracing_Manual.tex]
 archive=true
-column=17
+column=18
 encoding=UTF-8
 highlight=LaTeX
-line=33
+line=18
 mode=LaTeX
-open=false
+open=true
 order=0
 
 [item:configuration.tex]
@@ -199,10 +199,10 @@ JumpList=
 ViMarks=.,10,54,[,10,54,],10,69
 
 [view-settings,view=0,item:Tracing_Manual.tex]
-CursorColumn=17
-CursorLine=33
+CursorColumn=18
+CursorLine=18
 JumpList=
-ViMarks=.,33,16,[,33,16,],33,16
+ViMarks=.,20,0,[,20,0,],20,0
 
 [view-settings,view=0,item:configuration.tex]
 CursorColumn=74
