@@ -169,3 +169,66 @@ is null. The transfer failure is normally caused because the transferred object 
 
 Users should check that all the object parameters in the task are either implementing the serializable interface or following 
 the \textit{java beans} model (by implementing an empty constructor and getters and setters for each attribute).
+
+\subsection{Tracing merge failed: too many open files}
+
+When too many nodes and threads are instrumented, the tracing merge can fail due to an OS limitation, namely: the maximum open files. This problem usually happens when using advanced mode due to the larger number of threads instrumented. To overcome this issue users have two choices. \textbf{First option}, use \textit{Extrae} parallel MPI merger. This merger is automatically used if COMPSs was installed with MPI support. In Ubuntu you can install the following packets to get MPI support:
+
+\begin{lstlisting}[language=bash]
+sudo apt-get install libcr-dev mpich2 mpich2-doc
+\end{lstlisting}
+
+To check if COMPSs was deployed with MPI support, you can check the installation log and look for the following \textit{Extrae} configuration output:
+
+\begin{lstlisting}[language=bash]
+Package configuration for Extrae 3.3.0 based on extrae/trunk rev. 3966:
+-----------------------
+Installation prefix: /gpfs/apps/MN3/COMPSs/Trunk/Dependencies/extrae
+Cross compilation: no
+CC: gcc
+CXX: g++
+Binary type: 64 bits
+
+MPI instrumentation: yes
+	MPI home: /apps/OPENMPI/1.8.1-mellanox
+	MPI launcher: /apps/OPENMPI/1.8.1-mellanox/bin/mpirun
+\end{lstlisting}
+
+On the other hand, if you already installed COMPSs, you can check \textit{Extrae} configuration executing the script \textit{/opt/COMPSs/Dependencies/extrae/etc/configured.sh}. Users should check that flags \textit{--with-mpi=/usr} and \textit{--enable-parallel-merge} are present and that MPI path is correct and exists. Sample output:
+
+\begin{lstlisting}[language=bash]
+EXTRAE_HOME is not set. Guessing from the script invoked that Extrae was installed in /opt/COMPSs/Dependencies/extrae
+The directory exists .. OK
+Loaded specs for Extrae from /opt/COMPSs/Dependencies/extrae/etc/extrae-vars.sh
+
+Extrae SVN branch extrae/trunk at revision 3966
+
+Extrae was configured with:
+$ ./configure --enable-gettimeofday-clock --without-mpi --without-unwind --without-dyninst --without-binutils --with-mpi=/usr --enable-parallel-merge --with-papi=/usr --with-java-jdk=/usr/lib/jvm/java-7-openjdk-amd64/ --disable-openmp --disable-nanos --disable-smpss --prefix=/opt/COMPSs/Dependencies/extrae --with-mpi=/usr --enable-parallel-merge --libdir=/opt/COMPSs/Dependencies/extrae/lib
+
+CC was gcc
+CFLAGS was -g -O2 -fno-optimize-sibling-calls -Wall -W
+CXX was g++
+CXXFLAGS was -g -O2 -fno-optimize-sibling-calls -Wall -W
+
+MPI_HOME points to /usr and the directory exists .. OK
+LIBXML2_HOME points to /usr and the directory exists .. OK
+PAPI_HOME points to /usr and the directory exists .. OK
+DYNINST support seems to be disabled
+UNWINDing support seems to be disabled (or not needed)
+Translating addresses into source code references seems to be disabled (or not needed)
+
+Please, report bugs to tools@bsc.es
+\end{lstlisting}
+
+
+The \textbf{second option} is to increase the OS maximum number of open files. For instance, in Ubuntu:
+\begin{lstlisting}[language=bash]
+nano /etc/init.d/neo4j-service
+\end{lstlisting}
+Add « ulimit –n 40000 » just before the start-stop-daemon line in the do\_start section.
+
+
+
+
+
