@@ -32,6 +32,7 @@ In order to use COMPSs with Docker, some requirements must be fulfilled:
 
 For more information about Docker and how to install different components, visit Docker site: \url{https://www.docker.com/}
 
+\clearpage
 \subsubsection{Execution}
 To execute COMPSs in a Docker swarm cluster, you must use the \textbf{runcompss-docker} command, instead of runcompss.
 \\
@@ -111,6 +112,29 @@ The COMPSs Docker base image is available in the Dockerhub. In case you need it,
 \begin{lstlisting}[language=bash]
 docker pull compss/compss
 \end{lstlisting}
+
+\clearpage
+\subsubsection{Execution with TLS}
+If your cluster uses \textbf{TLS} or has been created using \textbf{Docker-Machine}, you will have to 
+\textbf{export two environment variables} before using runcompss-docker:\\ \\
+On one hand, \textbf{DOCKER\_TLS\_VERIFY} environment variable will tell Docker that you are using TLS:
+\begin{lstlisting}[language=bash]
+export DOCKER_TLS_VERIFY="1"
+\end{lstlisting}
+On the other hand, \textbf{DOCKER\_CERT\_PATH} variable will tell Docker where to find your TLS certificates. As an example:
+\begin{lstlisting}[language=bash]
+export DOCKER_CERT_PATH="/home/compss-user/.docker/machine/machines/my-manager-node"
+\end{lstlisting}
+
+In case you have created your cluster using docker-machine, in order to know what
+your \textit{DOCKER\_CERT\_PATH} is, you can use this command:
+\begin{lstlisting}[language=bash]
+docker-machine env my-swarm-manager-node-name | grep DOCKER_CERT_PATH
+\end{lstlisting}
+In which \textit{swarm-manager-node-name} must be changed by the name docker-machine has assigned to your swarm manager node.\\ \\
+With these environment variables set, you are ready to use \textbf{runcompss-docker} in a cluster using TLS.
+
+\clearpage
 \subsubsection{Execution results}
 The execution results will be retrieved from the master container of your application.
 \\ \\ 
@@ -143,6 +167,7 @@ In this case we executed the \textbf{Matmul example application} that we provide
 \\*
 \includegraphics[width=0.3\textwidth]{./Sections/5_Execution_Platforms/Figures/docker-matmul-results-tree.png} 
 
+\clearpage
 \subsubsection{Execution examples}
 And here is one example to run the Matmul example application. 
 In this case, we are specifying:
