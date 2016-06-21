@@ -51,7 +51,7 @@ Highlighting=LaTeX
 Indentation Mode=normal
 Mode=LaTeX
 
-[document-settings,item:Sections/6_Other_Examples/Other_Examples.tex]
+[document-settings,item:Sections/Appendices/Appendices.tex]
 Bookmarks=
 Encoding=UTF-8
 Highlighting=LaTeX
@@ -79,18 +79,18 @@ encoding=UTF-8
 highlight=LaTeX
 line=0
 mode=LaTeX
-open=false
-order=1
+open=true
+order=2
 
 [item:Sections/2_Execution/Execution.tex]
 archive=true
-column=30
+column=15
 encoding=UTF-8
 highlight=LaTeX
-line=27
+line=283
 mode=LaTeX
-open=false
-order=1
+open=true
+order=4
 
 [item:Sections/3_Visualization/Visualization.tex]
 archive=true
@@ -99,7 +99,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=80
 mode=LaTeX
-open=false
+open=true
 order=1
 
 [item:Sections/4_Interpretation/Interpretation.tex]
@@ -109,35 +109,35 @@ encoding=UTF-8
 highlight=LaTeX
 line=4
 mode=LaTeX
-open=false
-order=1
+open=true
+order=3
 
 [item:Sections/5_Analysis/Analysis.tex]
 archive=true
-column=0
+column=7
 encoding=UTF-8
 highlight=LaTeX
-line=75
+line=100
 mode=LaTeX
-open=false
-order=1
+open=true
+order=6
 
-[item:Sections/6_Other_Examples/Other_Examples.tex]
+[item:Sections/Appendices/Appendices.tex]
 archive=true
-column=33
+column=2
 encoding=UTF-8
 highlight=LaTeX
-line=5
+line=93
 mode=LaTeX
-open=false
-order=1
+open=true
+order=7
 
 [item:Tracing_Manual.tex]
 archive=true
-column=18
+column=30
 encoding=UTF-8
 highlight=LaTeX
-line=18
+line=108
 mode=LaTeX
 open=true
 order=0
@@ -149,8 +149,8 @@ encoding=UTF-8
 highlight=LaTeX
 line=49
 mode=LaTeX
-open=false
-order=0
+open=true
+order=5
 
 [item:tracing_manual.kilepr]
 archive=true
@@ -169,10 +169,10 @@ JumpList=
 ViMarks=.,5,23,[,5,23,],5,23
 
 [view-settings,view=0,item:Sections/2_Execution/Execution.tex]
-CursorColumn=30
-CursorLine=27
+CursorColumn=15
+CursorLine=283
 JumpList=
-ViMarks=.,39,17,[,39,17,],39,17
+ViMarks=.,295,2,[,295,2,],295,2
 
 [view-settings,view=0,item:Sections/3_Visualization/Visualization.tex]
 CursorColumn=16
@@ -187,20 +187,20 @@ JumpList=
 ViMarks=.,17,66,[,17,66,],17,66
 
 [view-settings,view=0,item:Sections/5_Analysis/Analysis.tex]
-CursorColumn=0
-CursorLine=75
+CursorColumn=7
+CursorLine=100
 JumpList=
 ViMarks=.,12,53,[,12,53,],12,62
 
-[view-settings,view=0,item:Sections/6_Other_Examples/Other_Examples.tex]
-CursorColumn=33
-CursorLine=5
+[view-settings,view=0,item:Sections/Appendices/Appendices.tex]
+CursorColumn=2
+CursorLine=93
 JumpList=
-ViMarks=.,10,54,[,10,54,],10,69
+ViMarks=.,93,0,[,93,0,],93,1
 
 [view-settings,view=0,item:Tracing_Manual.tex]
-CursorColumn=18
-CursorLine=18
+CursorColumn=30
+CursorLine=108
 JumpList=
 ViMarks=.,20,0,[,20,0,],20,0
 

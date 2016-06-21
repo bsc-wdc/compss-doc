@@ -84,3 +84,12 @@ with COMPSs and that can be found under the \textit{/opt/COMPSs/Dependencies/par
   \end{table}
 \egroup
 
+\section{Custom Events in Python}
+
+Users can emit custom events inside their python \textbf{tasks}. Thanks to the fact that python isn't a compiled language, users can emit events inside their own tasks using the available extrae instrumentation object because it is already imported.
+\\
+\\
+To emit an event just use the call \textit{pyextrae.event(type, id)} or \textit{pyextrae.eventandcounters(type, id)} if you also want to emit PAPI hardware counters. It is recommended to use a type number higher than 8000050 in order to avoid type's conflicts. This events will appear automatically on the generated trace. In order to visualize them, take, for example, \textit{compss\_runtime.cfg} and go to Window Properties -> Filter -> Events -> Event Type and change the value labeled \textit{Types} for your custom events type.
+\\
+\\
+More information and examples of common python usage can be found under the default directory \textit{/opt/COMPSs/Dependencies/extrae/share/examples/PYTHON}.
