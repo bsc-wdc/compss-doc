@@ -67,10 +67,10 @@ Mode=LaTeX
 
 [item:COMPSs_User_Manual_App_Development.tex]
 archive=true
-column=0
+column=4
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=88
 mode=LaTeX
 open=false
 order=0
@@ -146,7 +146,7 @@ open=false
 order=-1
 
 [view-settings,view=0,item:COMPSs_User_Manual_App_Development.tex]
-CursorColumn=10
+CursorColumn=4
 CursorLine=88
 JumpList=
 ViMarks=.,33,16,[,33,16,],33,16

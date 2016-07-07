@@ -113,7 +113,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=35
 mode=LaTeX
-open=true
+open=false
 order=0
 
 [item:Sections/3_Debian/Debian.tex]
@@ -153,7 +153,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=24
 mode=LaTeX
-open=true
+open=false
 order=1
 
 [item:Sections/7_Additional_Configuration/Additional_Configuration.tex]
