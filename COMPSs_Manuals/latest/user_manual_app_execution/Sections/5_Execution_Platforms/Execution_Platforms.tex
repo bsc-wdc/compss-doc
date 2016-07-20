@@ -232,7 +232,7 @@ needed to execute COMPSs applications at Chameleon:
 \begin{itemize}
  \item Make a lease reservation with 1 minimum node (for the COMPSs master instance) and a maximum number of nodes equal to the
  number of COMPSs workers needed plus one
- \item Instantiate the master image (based on the published image \textit{COMPSs\_1.3\_CC-CentOS7})
+ \item Instantiate the master image (based on the published image \textit{COMPSs\_\compssversion\_CC-CentOS7})
  \item Attach a public IP and login to the master instance (the instance is correctly contextualized for COMPSs executions if you
  see a COMPSs login banner)
  \item Set the instance as COMPSs master by running \textit{/etc/init.d/chameleon\_init start}
@@ -258,14 +258,16 @@ the \textit{enqueue\_compss} script provided in the COMPSs installation. This sc
 
 \begin{figure}[h!]
   \centering
-    \includegraphics[width=0.2\textwidth]{./Sections/5_Execution_Platforms/Figures/queue_scripts_structure.jpeg}
-    \caption{Structure of COMPSs queue scripts. In Blue general scripts, in Green system dependant scripts}
+    \includegraphics[width=0.6\textwidth]{./Sections/5_Execution_Platforms/Figures/queue_scripts_structure.png}
+    \caption{Structure of COMPSs queue scripts. In Blue user scripts, in Green queue scripts and in Orange system dependant scripts}
     \label{fig:queue_scripts_structure}
 \end{figure}
 
-To make this structure work, the administrators must define a submit and a launch script that are system dependant. To develop this
-scripts the current COMPSs installation provides scripts for the \textit{MareNostrum III} SuperComputer that can be used as an 
-example (based on LSF) or you can contact us at \url{support-compss@bsc.es} .
+To make this structure works, the administrators must define a configuration file for the queue system and a configuration file
+for the specific SuperComputer parameters. The COMPSs installation already provides queue configurations for \textit{LSF} and 
+\textit{SLURM} and several examples for SuperComputer configurations. 
+To create a new configuration we recommend to use one of the configurations provided by COMPSs (such as the configuration for the
+\textit{MareNostrum III} SuperComputer) or to contact us at \url{support-compss@bsc.es} .
 
 \subsubsection{MareNostrum III}
 

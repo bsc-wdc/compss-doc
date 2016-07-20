@@ -30,64 +30,124 @@ and \textit{Advanced options}.
 
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ runcompss -h
-  Runtime configuration options:
-    --project=<path>                       Path to the project XML file
-                                            Default: /opt/COMPSs/Runtime/configuration/
-                                            xml/projects/project.xml
-                                            
-    --resources=<path>                     Path to the resources XML file
-                                            Default: /opt/COMPSs/Runtime/configuration/
-                                            xml/resources/resources.xml
-                                            
-    --lang=<name>                          Language of the application (java/c/python)
-                                            Default: java
-                                            
-    --log_level=<level>, --debug, -d      Set the debug level: off | info | debug
-                                            Default: off
 
+* Options:
+  General:
+    --help, -h                              Print this help message
+
+    --opts                                  Show available options
+
+    --version, -v                           Print COMPSs version
+    
   Tools enablers:
-    --graph=<bool>, --graph, -g           Generation of the complete graph (true/false)
+    --graph=<bool>, --graph, -g             Generation of the complete graph (true/false)
                                             When no value is provided it is set to true
                                             Default: false
                                             
-    --tracing=<level>, --tracing, -t      Set generation of traces and/or tracing level ( [ true | basic ] | advanced | false)
+    --tracing=<level>, --tracing, -t        Set generation of traces and/or tracing level
+                                            ( [ true | basic ] | advanced | false)
                                             True and basic levels will produce the same traces.
                                             When no value is provided it is set to true
                                             Default: false
-
                                             
-    --monitoring=<int>, --monitoring, -m  Period between monitoring samples 
-                                            (milliseconds)
+    --monitoring=<int>, --monitoring, -m    Period between monitoring samples (milliseconds)
                                             When no value is provided it is set to 2000
                                             Default: 0
+                                            
+    --external_debugger=<int>,
+    --external_debugger                     Enables external debugger connection on the 
+                                            specified port (or 9999 if empty)
+                                            Default: false
+
+  Runtime configuration options:
+    --task_execution=<compss|storage>       Task execution under COMPSs or Storage.
+                                            Default: compss
+                                            
+    --storage_conf=<path>                   Path to the storage configuration file
+                                            Default: None
+                                            
+    --project=<path>                        Path to the project XML file
+                                            Default: /opt/COMPSs/Runtime/configuration/
+                                            xml/projects/default_project.xml
+                                            
+    --resources=<path>                      Path to the resources XML file
+                                            Default: /opt/COMPSs/Runtime/configuration/
+                                            xml/resources/default_resources.xml  
+                                            
+    --lang=<name>                           Language of the application (java/c/python)
+                                            Default: java
+                                            
+    --log_level=<level>, --debug, -d        Set the debug level: off | info | debug
+                                            Default: off
 
   Advanced options:
-    --comm=<path>                          Class that implements the adaptor for 
-                                            communications
-                                            Default: integratedtoolkit.nio.master.
-                                            NIOAdaptor
+    --comm=<path>                           Class that implements the adaptor for communications
+                                            Supported adaptors: 
+                                             integratedtoolkit.nio.master.NIOAdaptor
+                                             | integratedtoolkit.gat.master.GATAdaptor
+                                            Default: integratedtoolkit.nio.master.NIOAdaptor
                                             
-    --library_path=<path>                  Non-standard directories to search for 
-                                            libraries (e.g. Java JVM library, Python 
-                                            library, C binding library) 
-                                            Default: .
+    --scheduler=<path>                      Class that implements the Scheduler for COMPSs
+                                            Supported schedulers: 
+                                             integratedtoolkit.components.impl.TaskScheduler 
+                                             | integratedtoolkit.scheduler.readyscheduler.ReadyScheduler
+                                            Default: integratedtoolkit.scheduler.readyscheduler.ReadyScheduler
                                             
-    --classpath=<path>                     Path for the application classes / modules
-                                            Default: current working directory.
+    --library_path=<path>                   Non-standard directories to search for libraries 
+                                            (e.g. Java JVM library, Python library, 
+                                            C binding library)
+                                            Default: Working Directory
                                             
-    --task_count=<int>                     Only for C/Python Bindings. 
-                                            Maximum number of different functions/methods
-                                            invoked from the application that have been 
-                                            selected as tasks
-                                            Default: 50
+    --classpath=<path>                      Path for the application classes / modules
+                                            Default: Working Directory
                                             
-    --uuid=<int>                           Preset an application UUID
+    --base_log_dir=<path>                   Base directory to store COMPSs log files 
+                                            (a .COMPSs/ folder will be created inside this location)
+                                            Default: User home
+                                            
+    --specific_log_dir=<path>               Use a specific directory to store COMPSs log files 
+                                            (the folder MUST exist and no sandbox is created)
+                                            Warning: Overwrites --base_log_dir option
+                                            Default: Disabled
+                                            
+    --uuid=<int>                            Preset an application UUID
                                             Default: Automatic random generation
                                             
-    --PyObject_serialize=<bool>            Only for Python Binding. 
-                                            Enable the object serialization to string 
-                                            when possible (true/false).
+    --master_port=<int>                     Port to run the COMPSs master communications.
+                                            Only for NIO adaptor
+                                            Default: 43000
+                                            
+    --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. 
+                                            Each option separed by "," and without 
+                                            blank spaces (Notice the quotes)
+                                            Default: 
+                                            
+    --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs.
+                                            Each option separed by "," and without 
+                                            blank spaces (Notice the quotes)
+                                            Default: -Xms1024m,-Xmx1024m,-Xmn400m
+                                            
+    --task_count=<int>                      Only for C/Python Bindings. Maximum number 
+                                            of different functions/methods, invoked from 
+                                            the application, that have been selected as tasks
+                                            Default: 50
+                                            
+    --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
+                                            Default: /home/cramonco/svn/compss/framework/trunk/compss
+                                            
+    --PyObject_serialize=<bool>             Only for Python Binding. Enable the object 
+                                            serialization to string when possible 
+                                            (true/false).
                                             Default: false
+
+
+* Application name:
+    For Java applications:   Fully qualified name of the application
+    For C applications:      Path to the master binary
+    For Python applications: Path to the .py file containing the main program
+
+* Application arguments:
+    Command line arguments to pass to the application. Can be empty.
 
 \end{lstlisting}
 
@@ -188,69 +248,70 @@ Next sections describe in detail the \textit{resources.xml} and the \textit{proj
 explaining the available options.
 
 \subsubsection{Resources file}
-The \textit{resources} file provides information about all the available resources that can be used for an execution. This file should normally be 
-managed by the system administrators. Its full definition schema can be found at \\
-\emph{/opt/COMPSs/Runtime/configuration/xml/resources/$resource\_schema$.xsd}.
+The \textit{resources} file provides information about all the available resources that can be used for an execution. 
+This file should normally be managed by the system administrators. Its full definition schema can be found at \\
+\emph{/opt/COMPSs/Runtime/configuration/xml/resources/$resource\_schema$.xsd}. 
 
-It contains one entry per available resource defining its name, its capabilities and its requirements.
-Administrators can define several resource capabilities (see example in the next listing) but we would like 
-to underline the importance of \textbf{Processor CoreCount}. This capability represents the number of available cores 
-in the described resource and it is used to schedule the correct number of tasks. Thus, it becomes essential to define 
-it accordingly to the number of cores in the physical resource. 
+For the sake of clarity, users can also check the SVG schema located at \\
+\emph{/opt/COMPSs/Runtime/configuration/xml/resources/$resource\_schema$.svg}.
+
+This file contains one entry per available resource defining its name and its capabilities. Administrators can define several
+resource capabilities (see example in the next listing) but we would like to underline the importance of 
+\textbf{ComputingUnits}. This capability represents the number of available cores in the described resource and it is
+used to schedule the correct number of tasks. Thus, it becomes essential to define it accordingly to the number of cores 
+in the physical resource. 
 
 \begin{lstlisting}[language=xml]
-compss@bsc:~$ cat /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
-<?xml version="1.0" encoding="UTF-8"?>
-<ResourceList>
-        <Resource Name="localhost">
-                <Capabilities>
-                        <Host>
-                                <TaskCount>0</TaskCount>
-                                <Queue>short</Queue>
-                                <Queue/>
-                        </Host>
-                        <Processor>
-                                <Architecture>IA32</Architecture>
-                                <Speed>3.0</Speed>
-                                %*{\bf $<CoreCount>4</CoreCount>$ }*)
-                        </Processor>
-                        <OS>
-                                <OSType>Linux</OSType>
-                                <MaxProcessesPerUser>32</MaxProcessesPerUser>
-                        </OS>
-                        <StorageElement>
-                                <Size>8</Size>
-                        </StorageElement>
-                        <Memory>
-                                <PhysicalSize>4</PhysicalSize>
-                                <VirtualSize>8</VirtualSize>
-                        </Memory>
-                        <ApplicationSoftware>
-                                <Software>Java</Software>
-                        </ApplicationSoftware>
-                        <Service/>
-                        <VO/>
-                        <Cluster/>
-                        <FileSystem/>
-                        <NetworkAdaptor/>
-                        <JobPolicy/>
-                        <AccessControlPolicy/>
-                </Capabilities>
-                <Requirements/>
-                <Adaptors>
-                        <Adaptor name="integratedtoolkit.nio.master.NIOAdaptor">
-                                <MinPort>43001</MinPort>
-                                <MaxPort>43002</MaxPort>
-                        </Adaptor>
-                </Adaptors>
-        </Resource>
-</ResourceList>
+compss@bsc:~$ cat /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ResourcesList>
+    <ComputeNode Name="localhost">
+        <Processor Name="P1">
+            %*{\bf $<ComputingUnits>4</ComputingUnits>$ }*)
+            <Architecture>amd64</Architecture>
+            <Speed>3.0</Speed>
+        </Processor>
+        <Processor Name="P2">
+             %*{\bf $<ComputingUnits>2</ComputingUnits>$ }*)
+        </Processor>
+        <Adaptors>
+            <Adaptor Name="integratedtoolkit.nio.master.NIOAdaptor">
+                <SubmissionSystem>
+                    <Interactive/>
+                </SubmissionSystem>
+                <Ports>
+                    <MinPort>43001</MinPort>
+                    <MaxPort>43002</MaxPort>
+                </Ports>
+            </Adaptor>
+        </Adaptors>
+        <Memory>
+            <Size>16</Size>
+        </Memory>
+        <Storage>
+            <Size>200.0</Size>
+        </Storage>
+        <OperatingSystem>
+            <Type>Linux</Type>
+            <Distribution>OpenSUSE</Distribution>
+        </OperatingSystem>
+        <Software>
+            <Application>Java</Application>
+            <Application>Python</Application>
+        </Software>
+    </ComputeNode>
+</ResourcesList>
 \end{lstlisting}
 
 
 \subsubsection{Project file}
-The project file provides information about the resources used in a specific execution. Consequently, the resources that appear in this file are a subset of the 
-resources described in the \textit{resources.xml} file. This file, that contains one entry per worker, is usually edited by the users and changes from execution to execution. Its full definition schema can be found at\\ 
+The project file provides information about the resources used in a specific execution. Consequently, the resources that 
+appear in this file are a subset of the resources described in the \textit{resources.xml} file. This file, that contains
+one entry per worker, is usually edited by the users and changes from execution to execution. Its full definition 
+schema can be found at\\ 
+\emph{/opt/COMPSs/Runtime/configuration/xml/projects/$project\_schema$.xsd}.
+
+For the sake of clarity, users can also check the SVG schema located at \\
 \emph{/opt/COMPSs/Runtime/configuration/xml/projects/$project\_schema$.xsd}.
 
 We emphasize the importance of correctly defining the following entries:
@@ -267,16 +328,36 @@ We emphasize the importance of correctly defining the following entries:
 
 
 \begin{lstlisting}[language=xml]
-compss@bsc:~$ cat /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
-<?xml version="1.0" encoding="UTF-8"?>
+compss@bsc:~$ cat /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Project>
-	<!--Description for any physical node-->
-	<Worker Name="localhost">
-		%*{\bf $<InstallDir>/opt/COMPSs/Runtime/scripts/system/</InstallDir>$ }*)
-		<WorkingDir>/tmp/</WorkingDir>
-		%*{\bf $<!-- <User>user</User> -->$ }*)
-		%*{\bf $<LimitOfTasks>4</LimitOfTasks>$ }*)
-	</Worker>
+    <!-- Description for Master Node --> 
+    <MasterNode\>
+
+    <!--Description for a physical node-->
+    <ComputeNode Name="localhost">
+        %*{\bf $<InstallDir>/opt/COMPSs/</InstallDir>$ }*)
+        <WorkingDir>/tmp/Worker/</WorkingDir>
+        <Application>
+            <AppDir>/home/user/apps/</AppDir>
+            <LibraryPath>/usr/lib/</LibraryPath>
+            <Classpath>/home/user/apps/jar/example.jar</Classpath>
+            <Pythonpath>/home/user/apps/</Pythonpath>
+        </Application>
+        %*{\bf $<LimitOfTasks>4</LimitOfTasks>$ }*)
+        <Adaptors>
+            <Adaptor Name="integratedtoolkit.nio.master.NIOAdaptor">
+                <SubmissionSystem>
+                    <Interactive/>
+                </SubmissionSystem>
+                <Ports>
+                    <MinPort>43001</MinPort>
+                    <MaxPort>43002</MaxPort>
+                </Ports>
+                %*{\bf $<User>user</User>$ }*)
+            </Adaptor>
+        </Adaptors>
+    </ComputeNode>
 </Project>
 \end{lstlisting}
 \label{lstlisting:project.xml}
@@ -291,34 +372,34 @@ To allow COMPSs applications to use WebServices as tasks, the \textit{resources.
 \textit{Service}. For each WebService it is necessary to specify its wsdl, its name, its namespace and
 its port. 
 \begin{lstlisting}[language=xml]
-<?xml version="1.0" encoding="UTF-8"?>
-<ResourceList>
-        <Resource Name="localhost">
-                ...
-        </Resource>
-                
-        <Service wsdl="http://bscgrid05.bsc.es:20390/hmmerobj/hmmerobj?wsdl">
-                <Name>HmmerObjects</Name>
-                <Namespace>http://hmmerobj.worker</Namespace>
-                <Port>HmmerObjectsPort</Port>
-        </Service>
-</ResourceList>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ResourcesList>
+    <ComputeNode Name="localhost">
+      ...                                                                                                                                                                                                
+    </ComputeNode>  
+    
+    <Service wsdl="http://bscgrid05.bsc.es:20390/hmmerobj/hmmerobj?wsdl">                                                                                                                                          
+        <Name>HmmerObjects</Name>                                                                                                                                                                                  
+        <Namespace>http://hmmerobj.worker</Namespace>                                                                                                                                                              
+        <Port>HmmerObjectsPort</Port>                                                                                                                                                                              
+    </Service>                                                                                                                                                                                                     
+</ResourcesList>  
 \end{lstlisting}
 
 When configuring the \textit{project.xml} file it is necessary to include the service as a worker by adding an
 special entry indicating only the name and the limit of tasks as shown in the following example:
 \begin{lstlisting}[language=xml]
-<?xml version="1.0" encoding="UTF-8"?>
-<Project>
-        <!--Description for any physical node-->
-        <Worker Name="localhost">
-               ...
-        </Worker>
-
-        <Worker Name="http://bscgrid05.bsc.es:20390/hmmerobj/hmmerobj?wsdl">
-               <LimitOfTasks>3</LimitOfTasks>
-        </Worker>
-</Project>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>                                                                                                                                                            
+<Project>                                                                                                                                                                                                          
+    <MasterNode/>                                                                                                                                                                                                  
+    <ComputeNode Name="localhost">                                                                                                                                                                                 
+      ...                                                                                                                                                                           
+    </ComputeNode>   
+    
+    <Service wsdl="http://bscgrid05.bsc.es:20390/hmmerobj/hmmerobj?wsdl">                                                                                                                                          
+        <LimitOfTasks>2</LimitOfTasks>                                                                                                                                                                             
+    </Service>                                                                                                                                                                                                     
+</Project> 
 \end{lstlisting}
 
 \subsubsection{Cluster and grid configuration (static resources)}
@@ -337,102 +418,111 @@ The \textit{resources.xml} and the \textit{project.xml} files must be configured
 Here we provide examples about configuration files for Grid and Cluster environments.
 
 \begin{lstlisting}[language=xml]
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ResourceList>
-    <Resource Name="hostname1.domain.es">
-        <Capabilities>
-            <Host>
-                <TaskCount>0</TaskCount>
-                <Queue>Short</Queue>
-            </Host>
-            <Processor>
-                <Architecture>x86_64</Architecture>
-                <Speed>2.5</Speed>
-                <CoreCount>4</CoreCount>
-            </Processor>
-            <OS>
-                <OSType>Linux</OSType>
-            </OS>
-            <StorageElement>
-                <Size>250.0</Size>
-            </StorageElement>
-            <Memory>
-                <PhysicalSize>4.0</PhysicalSize>
-            </Memory>
-            <ApplicationSoftware>
-                <Software>BLAST</Software>
-            </ApplicationSoftware>
-        </Capabilities>
-        <Requirements/>
-        <Adaptors>
-            <Adaptor name="integratedtoolkit.nio.master.NIOAdaptor">
-                <MinPort>43001</MinPort>
-                <MaxPort>43002</MaxPort>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>                                                                                                                                                            
+<ResourcesList>                                                                                                                                                                                                    
+    <ComputeNode Name="hostname1.domain.es"">                                                                                                                                                                       
+        <Processor Name="MainProcessor">                                                                                                                                                                           
+            <ComputingUnits>4</ComputingUnits>                                                                                                                                                                     
+        </Processor>                                                                                                                                                                                               
+        <Adaptors>                                                                                                                                                                                                 
+            <Adaptor Name="integratedtoolkit.nio.master.NIOAdaptor">                                                                                                                                               
+                <SubmissionSystem>
+                    <Interactive/>
+                </SubmissionSystem>
+                <Ports>
+                    <MinPort>43001</MinPort>
+                    <MaxPort>43002</MaxPort>
+                </Ports>
+            </Adaptor>
+            <Adaptor Name="integratedtoolkit.gat.master.GATAdaptor">
+                <SubmissionSystem>
+                    <Batch>
+                        <Queue>sequential</Queue>
+                    </Batch>
+                    <Interactive/>
+                </SubmissionSystem>
+                <BrokerAdaptor>sshtrilead</BrokerAdaptor>
             </Adaptor>
         </Adaptors>
-    </Resource>
-    <Resource Name="hostname2.domain.es">
-	...
-    </Resource>
-</ResourceList>
+    </ComputeNode>
+    
+    <ComputeNode Name="hostname2.domain.es">
+      ...
+    </ComputeNode>
+</ResourcesList>
 \end{lstlisting}
 
 \begin{lstlisting}[language=xml]
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>                                                                                                                                                            
 <Project>
-    <Worker Name="hostname1.domain.es">
-        <InstallDir>/opt/COMPSs/Runtime/scripts/system/</InstallDir>
-        <WorkingDir>/home/user/</WorkingDir>
+    <MasterNode/>
+    <ComputeNode Name="hostname1.domain.es">
+        <InstallDir>/opt/COMPSs/</InstallDir>
+        <WorkingDir>/tmp/COMPSsWorker1/</WorkingDir>
         <User>user</User>
         <LimitOfTasks>2</LimitOfTasks>
-    </Worker>
-    <Worker Name="hostname2.domain.es">
-        ...
-    </Worker>
+    </ComputeNode>
+    <ComputeNode Name="hostname2.domain.es">
+      ...
+    </ComputeNode>
 </Project>
 \end{lstlisting}
 
 
 \subsubsection{Shared Disks configuration example}
 Configuring shared disks might reduce the amount of data transfers improving the application performance. To configure a 
-shared disk the users must edit the \textit{resources.xml} indicating how the shared disk is hosted in the master node 
-and how the shared disk is mounted in each worker. 
+shared disk the users must:
+\begin{enumerate}
+ \item Define the shared disk and its capabilities
+ \item Add the shared disk and its mountpoint to each worker
+ \item Add the shared disk and its mountpoint to the master node
+\end{enumerate}
 
-To indicate a shared disk hosted in the master node the \textit{resources.xml} file must include a \textit{Disk} tag describing
-the disk and the mount point. The following example states that in the master node there is a shared disk labelled 
-\textit{sharedDisk0} mounted on the \textit{/sharedDisk} directory.
+Next example illustrates steps 1 and 2. The $<SharedDisk>$ tag adds a new shared disk named \textit{sharedDisk0} and the
+$<AttachedDisk>$ tag adds the mountpoint of a named shared disk to a specific worker.
 \begin{lstlisting}[language=xml]
-<?xml version="1.0" encoding="UTF-8"?>
-<ResourceList>
-    <Disk Name="sharedDisk0">
-        <MountPoint>/sharedDisk</MountPoint>
-    </Disk>
-<ResourceList>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ResourcesList>
+    <SharedDisk Name="sharedDisk0">
+        <Storage>
+            <Size>100.0</Size>
+            <Type>Persistent</Type>
+        </Storage>
+    </SharedDisk>
+    
+    <ComputeNode Name="localhost">
+      ...
+      <SharedDisks>
+        <AttachedDisk Name="sharedDisk0">
+          <MountPoint>/tmp/SharedDisk/</MountPoint>
+        </AttachedDisk>
+      </SharedDisks>
+    </ComputeNode>
+</ResourcesList>
+\end{lstlisting} 
+
+On the other side, to add the shared disk to the \textbf{master node}, the users must edit the \textit{project.xml} file
+(\textbf{NOT}. Next example shows how to attach the previous \textit{sharedDisk0} to the master node:
+\begin{lstlisting}[language=xml]
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Project>
+    <MasterNode>
+        <SharedDisks>
+            <AttachedDisk Name="sharedDisk0>
+                <MountPoint>/home/sharedDisk/</MountPoint>
+            </AttachedDisk>
+        </SharedDisks>
+    </MasterNode>
+    
+    <ComputeNode Name="localhost">
+      ...
+    </ComputeNode>
+</Project>
 \end{lstlisting}
 
-On the other side, to declare that a worker has a shared disk mounted the \textit{resources.xml} file must include a \textit{Disk}
-tag inside the specific worker indicating its name (defined in the master \textit{Disk} tag) and its mount point inside the worker.
-In the following example the \textit{sharedDisk0} is mounted on the resource \textit{hostname1.domain.es} under the path
-\textit{/home/user/mySharedDisk/} .
-\begin{lstlisting}[language=xml]
-<Resource Name="hostname1.domain.es">
-    <Capabilities>
-    ...
-    </Capabilities>
-    <Requirements/>
-    <Adaptors>
-    ...
-    </Adaptors>
-    <Disks>
-        <Disk Name="sharedDisk0">
-            <MountPoint>/home/user/mySharedDisk</MountPoint>
-        </Disk>
-    </Disks>
-</Resource>
-\end{lstlisting}
-
-The \textit{Disks} tag can have multiple disk children nodes.
-
+Notice that the \textit{resources.xml} file can have multiple \textit{SharedDisk} definitions and that the \textit{SharedDisks}
+tag (either in the \textit{resources.xml} or in the \textit{project.xml} files) can have multiple \textit{AttachedDisk} childrens
+to mount several shared disks on the same worker or master. 
 
 \subsubsection{Cloud configuration (dynamic resources)}
 In order to use cloud resources to execute the applications, the following steps have to be followed:
@@ -450,198 +540,163 @@ of each provider and facilitates the addition of new connectors for other provid
 
 The \textit{resources.xml} file must contain one or more \textbf{$<CloudProvider>$} tags
 that include the information about a particular provider, associated to a given connector. The tag \textbf{must} have an
-attribute \textbf{name} to uniquely identify the provider. Table \ref{tab:conf_resources_xml} summarizes the information to be 
-specified by the user inside this tag.
+attribute \textbf{Name} to uniquely identify the provider. Next example summarizes the information to be specified by the 
+user inside this tag.
 
-\begin{longtable}{| p{0.45\textwidth} | p{0.45\textwidth} |}
-\hline
-Server			&		Endpoint of the provider’s server	\\
-\hline
-Connector		&		Class that implements the connector	\\
-\hline
-\textbf{
-ImageList
-\begin{itemize}
-  \item Image
-  \begin{itemize}
-      \item Architecture
-      \item OSType \newline
-      \item ApplicationSoftware \newline
-	  \begin{itemize}
-	  \item Software \newline
-	  \end{itemize}
-      \item SharedDisks \newline ~\newline
-	  \begin{itemize}
-	  \item Disk
-	  \end{itemize}
-      \item Adaptors \newline
-	  \begin{itemize}
-	  \item Adaptor
-	  \end{itemize}
-  \end{itemize}
-\end{itemize}
-}
-&
-Multiple entries of VM templates
-\begin{itemize}
-  \item VM image
-  \begin{itemize}
-    \item Architeture of the VM image
-    \item Operative System installed in the VM image
-    \item Multiple entries of software installed in the VM image
-      \begin{itemize}
-      \item Software installed in the VM image
-      \end{itemize}
-    \item Multiple entries of shared disks mounted in the VM image
-      \begin{itemize}
-      \item Disk description
-      \end{itemize}
-    \item Multiple entries of adaptors available at the VM image
-      \begin{itemize}
-      \item Adaptor name and specific properties
-      \end{itemize}
-  \end{itemize}
-\end{itemize}
-\\
-\hline
+\begin{lstlisting}[language=xml]
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ResourcesList>
+    <CloudProvider Name="PROVIDER_NAME">
+        <Endpoint>
+            <Server>https://PROVIDER_URL</Server>
+            <Connector>CONNECTOR_CLASS</Connector>
+            <Port>PROVIDER_PORT</Port>
+        </Endpoint>
+        <Images>
+            <Image Name="Image1">
+                <Adaptors>
+                    <Adaptor Name="integratedtoolkit.nio.master.NIOAdaptor">
+                        <SubmissionSystem>
+                            <Interactive/>
+                        </SubmissionSystem>
+                        <Ports>
+                            <MinPort>43001</MinPort>
+                            <MaxPort>43010</MaxPort>
+                        </Ports>
+                    </Adaptor>
+                </Adaptors>
+                <OperatingSystem>
+                    <Type>Linux</Type>
+                </OperatingSystem>
+                <Software>
+                    <Application>Java</Application>
+                </Software>
+                <Price>
+                    <TimeUnit>100</TimeUnit>
+                    <PricePerUnit>36.0</PricePerUnit>
+                </Price>
+            </Image>
+            <Image Name="Image2">
+                <Adaptors>
+                    <Adaptor Name="integratedtoolkit.nio.master.NIOAdaptor">
+                        <SubmissionSystem>
+                            <Interactive/>
+                        </SubmissionSystem>
+                        <Ports>
+                            <MinPort>43001</MinPort>
+                            <MaxPort>43010</MaxPort>
+                        </Ports>
+                    </Adaptor>
+                </Adaptors>
+            </Image>
+        </Images>
+    
+        <InstanceTypes>
+            <InstanceType Name="Instance1">
+                <Processor Name="P1">
+                    <ComputingUnits>4</ComputingUnits>
+                    <Architecture>amd64</Architecture>
+                    <Speed>3.0</Speed>
+                </Processor>
+                <Processor Name="P2">
+                    <ComputingUnits>4</ComputingUnits>
+                </Processor>
+                <Memory>
+                    <Size>1000.0</Size>
+                </Memory>
+                <Storage>
+                    <Size>2000.0</Size>
+                </Storage>
+            </InstanceType>
+            <InstanceType Name="Instance2">
+                <Processor Name="P1">
+                    <ComputingUnits>4</ComputingUnits>
+                </Processor>
+            </InstanceType>
+         </InstanceTypes>
 
-\textbf{
-InstanceTypes
-\begin{itemize}
- \item Resource \newline
- \begin{itemize}
-  \item Capabilities \newline
-  \begin{itemize}
-   \item Processor \newline
-   \item StorageElement \newline
-   \item Memory
-  \end{itemize}
- \end{itemize}
-\end{itemize}
-}
-& 
-Multiple entries of resource templates
-\begin{itemize}
- \item Instance type offered by the provider
- \begin{itemize}
-  \item Hardware details of instance type
-  \begin{itemize}
-   \item Architecture and number of available cores
-   \item Size in GB of the storage
-   \item PhysicalSize, in GB of the available RAM
-  \end{itemize}
- \end{itemize}
-\end{itemize}
-\\
-\hline
-
-\caption{Configuration of resources.xml file, tag $<CloudProvider>$}
-\label{tab:conf_resources_xml}
-\end{longtable}
+  </CloudProvider>
+</ResourcesList>
+\end{lstlisting}
 
 The \textit{project.xml} complements the information about a provider listed in the \textit{resources.xml} file. 
 This file can contain a \textbf{$<Cloud>$} tag where to specify a list of providers, each with a \textbf{$<Provider>$} tag,
 whose \textbf{name} attribute must match one of the providers in the \textit{resources.xml} file. Thus, the \textit{project.xml}
-file \textbf{must} contain a subset of the providers specified in the \textit{resources.xml} file. Table 
-\ref{tab:conf_project_xml_provider} summarizes the information that users need to specify inside the \textbf{$<Cloud>$} tag and
-Table \ref{tab:conf_project_xml_cloud} summarizes the information that users need to specify inside the \textbf{$<Provider>$} 
-tag of the \textit{project.xml} file.
-
-\bgroup
-  \def\arraystretch{1.5}
-  \begin{table}[h]
-    \begin{center}
-      \begin{tabular}{| p{0.45\textwidth} | p{0.45\textwidth} |}
-	\hline
-	InitialVMs	&	Number of VM to be created at the beginning of the application	\\
-	\hline
-	minVMCount	&	Minimum number of VMs available in the computation	\\
-	\hline
-	maxVMCount	&	Maximum number of VMs available in the computation	\\
-	\hline
-	Provider 	&	Multiple entries of Cloud providers	\\
-	\hline
-      \end{tabular}
-      \caption{Configuration of project.xml file, tag $<Cloud>$}
-      \label{tab:conf_project_xml_cloud}
-    \end{center}
-  \end{table}
-\egroup
-
-\newpage
-
-\begin{longtable}{| p{0.43\textwidth} | p{0.57\textwidth} |}
-  \hline
-  LimitOfVMs	&	Maximum number of VMs allowed by the provider	\\
-  
-  \hline
-  Property
-  \begin{itemize}
-    \item Name
-    \item Value
-  \end{itemize}
-  &
-  Multiple entries of provider-specific properties
-  \begin{itemize}
-    \item Name of the property
-    \item Value of the property
-  \end{itemize}
-  \\
-  \hline
-  
-  ImageList \newline
-  \begin{itemize}
-  \item Image
-  \begin{itemize}
-    \item InstallDir \newline
-    \item WorkingDir \newline
-    \item User
-    \item Package \newline
-    \begin{itemize}
-    \item Source
-    \item Target \newline
-    \item InstalledSoftware
-    \end{itemize}
-  \end{itemize}
-  \end{itemize}
-  & 
-  Multiple entries of VM images available at the provider
-  \begin{itemize}
-    \item VM image
-    \begin{itemize}
-      \item Path of the COMPSs worker scripts in the image
-      \item COMPSs working directory in the deployed instances
-      \item Account username
-      \item Multiple entries of local packages that have to be deployed in new instances
-      \begin{itemize}
-	\item Local path of the package
-	\item Path where to deploy the package in the new instance
-	\item List of software included in the package
-      \end{itemize}
-    \end{itemize}
-  \end{itemize}
-  \\
-  \hline
-  
-  InstanceTypes \newline
-  \begin{itemize}
-  \item Resource
-  \end{itemize}
-  & 
-  List of resource types that are available in the provider
-  \begin{itemize}
-  \item Resource description
-  \end{itemize}
-  \\
-  \hline
-  
-  \caption{Configuration of project.xml file, tag $<Provider>$}
-  \label{tab:conf_project_xml_provider}
-\end{longtable}
+file \textbf{must} contain a subset of the providers specified in the \textit{resources.xml} file. Next example summarizes 
+the information to be specified by the user inside this $<Cloud>$ tag.
+\begin{lstlisting}[language=xml]
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Project>
+    <Cloud>
+        <InitialVMs>1</InitialVMs>
+        <MinimumVMs>1</MinimumVMs>
+        <MaximumVMs>4</MaximumVMs>
+        <CloudProvider Name="PROVIDER_NAME">
+            <LimitOfVMs>4</LimitOfVMs>
+            <Properties>
+                <Property Context="C1">
+                    <Name>P1</Name>
+                    <Value>V1</Value>
+                </Property>
+                <Property>
+                    <Name>P2</Name>
+                    <Value>V2</Value>
+                </Property>
+            </Properties>
+            
+            <Images>
+                <Image Name="Image1">
+                    <InstallDir>/opt/COMPSs/</InstallDir>
+                    <WorkingDir>/tmp/Worker/</WorkingDir>
+                    <User>user</User>
+                    <Application>
+                        <Pythonpath>/home/user/apps/</Pythonpath>
+                    </Application>
+                    <LimitOfTasks>2</LimitOfTasks>
+                    <Package>
+                        <Source>/home/user/apps/</Source>
+                        <Target>/tmp/Worker/</Target>
+                        <IncludedSoftware>
+                            <Application>Java</Application>
+                            <Application>Python</Application>
+                        </IncludedSoftware>
+                    </Package>
+                    <Package>
+                        <Source>/home/user/apps/</Source>
+                        <Target>/tmp/Worker/</Target>
+                    </Package>
+                    <Adaptors>
+                        <Adaptor Name="integratedtoolkit.nio.master.NIOAdaptor">
+                            <SubmissionSystem>
+                                <Interactive/>
+                            </SubmissionSystem>
+                            <Ports>
+                                <MinPort>43001</MinPort>
+                                <MaxPort>43010</MaxPort>
+                            </Ports>
+                        </Adaptor>
+                    </Adaptors>
+                </Image>
+                <Image Name="Image2">
+                    <InstallDir>/opt/COMPSs/</InstallDir>
+                    <WorkingDir>/tmp/Worker/</WorkingDir>
+                </Image>
+            </Images>
+            
+            <InstanceTypes>
+                <InstanceType Name="Instance1"/>
+                <InstanceType Name="Instance2"/>
+            </InstanceTypes>
+        </CloudProvider>
+        
+        <CloudProvider Name="PROVIDER_NAME2">
+            ...
+        </CloudProvider>
+    </Cloud>
+</Project>
+\end{lstlisting}
 
 The next sections provide a description of each of the currently available connectors.
-
-\newpage
 
 \paragraph{Cloud connectors: Amazon EC2}
 The COMPSs runtime features a connector to interact with the Amazon Elastic Compute Cloud (EC2).
@@ -666,6 +721,8 @@ a VM, first the set of saved VMs is examined in order to find a VM that is compa
 characteristics. If one is found, the VM is reused and becomes eligible again for the execution of tasks; 
 hence, the cost and time to create a new VM are not paid. A VM is only destroyed when the end of its hour 
 slot is approaching and it is still in saved state.
+
+\newpage
 
 Table \ref{tab:ec2_connector_properties} summarizes the provider-specific properties that must be 
 defined in the project.xml file for the Amazon EC2 connector.
@@ -717,7 +774,7 @@ under the \textit{Instance} tag.
   \end{longtable}
 \egroup
 
-\vspace{-0.75cm}
+\newpage
 
 \bgroup
   \def\arraystretch{1.5}

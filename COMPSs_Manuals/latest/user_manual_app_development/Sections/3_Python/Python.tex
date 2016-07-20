@@ -150,67 +150,11 @@ def func(a, b, c):
      ...
 \end{lstlisting}
 
-This decorator enables the user to set the particular constraints for each task, such as the amount of Cores required.
+This decorator enables the user to set the particular constraints for each task, such as the amount of Cores required. A full 
+description of the supported constraints can be found in Table \ref{tab:constraints} in Section \ref{sec:Constraints}.
 
-Table \ref{tab:python_constraints} summarizes the constraints that can be used in the $@$constraint decorator.
-\bgroup
-  \def\arraystretch{1.5}%
-  \begin{longtable}{| p{0.045\textwidth}| p{0.27\textwidth} | p{0.1\textwidth} | p{0.5\textwidth} |}
-    \hline
-    \multicolumn{1}{|c|}{{\bf Type }}  & \multicolumn{1}{|c|}{{\bf Argument }}   &  \multicolumn{1}{c|}{{\bf Value }} & \multicolumn{1}{c|}{{\bf Description }} \\
-    \hline
-    \multirow{4}{*}{\rotatebox[origin=c]{90}{Processor}} &
-	  ProcessorArch & $<$string$>$ & Required processor architecture (e.g. ``x86\_64'') \newline
-				      Default: ``unassigned'' \\
-	  \cline{2-4}
-	  & ProcessorCPUCount & $<$int$>$ & Required number of CPUs for the host \newline
-					  Default: 0 \\
-	  \cline{2-4}
-	  & ProcessorCoreCount  & $<$int$>$ & Required number of Cores \newline
-					    Default: 1 \\
-	  \cline{2-4}
-	  & ProcessorSpeed  & $<$float$>$ & Required processor frequency \newline
-					  Default: 0.0f \\
-    \hline
-    \multirow{4}{*}{\rotatebox[origin=c]{90}{Memory}} &
-          MemoryPhysicalSize  & $<$float$>$ & Required physical memory size in GBs \newline
-                                        Default: 0.0f \\
-	  \cline{2-4}
-	  & MemoryVirtualSize  & $<$float$>$ & Required virtual memory size in GBs \newline
-					    Default: 0.0f \\
-	  \cline{2-4}
-	  & MemoryAccessTime  & $<$float$>$ & Top memory access time in nanoseconds \newline
-					    Default: 0.0f \\
-	  \cline{2-4}
-	  & MemorySTR  & $<$float$>$ &  Memory bandwith in GB/s \newline
-				      Default: 0.0f \\
-    \hline
-    \multirow{3}{*}{\rotatebox[origin=c]{90}{Storage}} &
-	  StorageElemSize  & $<$float$>$ & Amount of required storage space in GB \newline
-					  Default: 0.0f \\
-	  \cline{2-4}
-	  & StorageElemAccessTime  & $<$float$>$ & Top access time to the storage system in milliseconds \newline
-						Default: 0.0f \\
-	  \cline{2-4}
-	  & StorageElemSTR  & $<$float$>$ & Storage bandwith in MB/s \newline
-					  Default: 0.0f \\
-    \hline
-    \multirow{3}{*}{\rotatebox[origin=c]{90}{Miscellaneous}} &
-	  OperatingSystemType  & $<$string$>$ & Required operative system \newline
-						Default: ``unassigned'' \\
-	  \cline{2-4}
-	  & \cellcolor{blue!25} HostQueue  & $<$string$>$ &  Required queues \newline
-							Default: ``unassigned'' \\
-	  \cline{2-4}
-	  & \cellcolor{blue!25} AppSoftware  & $<$string$>$ & Required applications. Applications that must be available within the remote node for the task. \newline
-							  Default: ``unassigned'' \\
-    \hline
-    \caption{Arguments of the {\it $@$constraint} decorator.}
-    \label{tab:python_constraints}
-  \end{longtable}
-\egroup
+\newpage
 
-All constraints are defined with a simple value except the {\it HostQueue} and {\it AppSoftware} constraints, which allow multiple values.
 For example:
 
 \begin{lstlisting}[language=python]

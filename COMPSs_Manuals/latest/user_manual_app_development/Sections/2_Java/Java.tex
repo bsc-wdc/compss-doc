@@ -134,49 +134,8 @@ A complete and detailed explanation of the usage of the metadata includes:
 		\end{itemize}
          \item {\bf @Constraints:} The user can specify the capabilities that a resource must have in order
                to run a method. For example, in a cloud execution the COMPSs runtime creates a VM that fulfils the
-               specified requirements in order to perform the execution.
-               \begin{itemize}
-                 \item Processor:
-                       \begin{itemize}
-			  \item \textbf{processorArchitecture} Required processor architecture \newline
-                                                               Default: "[unassigned]"
-			  \item \textbf{processorCPUCount} Required number of CPUs for the host \newline
-							   Default: 0
-			  \item \textbf{processorCoreCount} Required number of Cores \newline
-							    Default: 1
-			  \item \textbf{processorSpeed} Required processor frequency \newline
-							Default: 0.0f
-                       \end{itemize}
-                \item Memory:
-                       \begin{itemize}
-			  \item \textbf{memoryPhysicalSize} Required physical memory size in GBs \newline
-                                                            Default: 0.0f
-			  \item \textbf{memoryVirtualSize} Required virtual memory size in GBs \newline
-							   Default: 0.0f
-			  \item \textbf{memoryAccessTime} Top memory access time in nanoseconds \newline
-							  Default: 0.0f
-			  \item \textbf{memorySTR Minimal} Memory bandwith in GB/s \newline
-							   Default: 0.0f
-                       \end{itemize}
-                \item Storage:
-                       \begin{itemize}
-			  \item \textbf{storageElemSize} Amount of required storage space in GB \newline
-							 Default: 0.0f
-			  \item \textbf{storageElemAccessTime} Top access time to the storage system in milliseconds \newline
-							       Default: 0.0f
-			  \item \textbf{storageElemSTR Minimal} Storage bandwith in MB/s \newline
-								Default: 0.0f
-                       \end{itemize}
-                \item Miscellaneous:
-		       \begin{itemize}
-			  \item \textbf{operatingSystemType} Required operative system \newline
-							     Default: "[unassigned]"
-			  \item \textbf{hostQueue} Required queues \newline
-						   Default: "[unassigned]"
-			  \item \textbf{appSoftware} Required applications \newline
-						     Default: "[unassigned]"
-                       \end{itemize}
-               \end{itemize}
+               specified requirements in order to perform the execution. A full description of the supported constraints
+               can be found in Table \ref{tab:constraints} in Section \ref{sec:Constraints}.
        \end{itemize}
 
  \item {\bf Parameter-level Metadata (@Parameter):} for each parameter and method, the user must define:
