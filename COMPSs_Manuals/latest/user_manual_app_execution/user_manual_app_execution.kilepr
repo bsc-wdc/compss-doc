@@ -77,7 +77,7 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=33
+line=30
 mode=LaTeX
 open=false
 order=1
@@ -164,7 +164,7 @@ order=-1
 
 [view-settings,view=0,item:COMPSs_User_Manual_App_Exec.tex]
 CursorColumn=0
-CursorLine=33
+CursorLine=30
 JumpList=
 ViMarks=.,45,0,[,45,0,],45,0
 
