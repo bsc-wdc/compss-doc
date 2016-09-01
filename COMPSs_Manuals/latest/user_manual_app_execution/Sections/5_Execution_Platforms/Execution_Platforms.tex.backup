@@ -30,7 +30,8 @@ In order to use COMPSs with Docker, some requirements must be fulfilled:
       will reuse the existing layers of previous images (for example the COMPSs base image).
 \end{itemize}
 
-\clearpage
+For more information about Docker and how to install its different components, visit Docker site: \url{https://www.docker.com/}
+
 \subsubsection{Execution}
 
 The runcompss-docker execution workflow uses Docker-Compose, which is in charge of spawning the different application containers into the Docker Swarm manager.
@@ -142,7 +143,7 @@ As \textbf{optional} arguments:
 
 Here is the \textbf{format} you must use with \textbf{runcompss-docker} command:
 \begin{lstlisting}[language=bash]
-runcompss-docker --worker-containers=N
+runcompss-docker --worker-containers=N 
                  --swarm-manager='<ip>:<port>'
                  --image-name='DOCKERHUB_USERNAME/image_name'
                  --context-dir='CTX_DIR'
@@ -155,29 +156,6 @@ runcompss-docker --w=N --s='<ip>:<port>' --i='DOCKERHUB_USERNAME/image_name' --c
                  [rest of classic runcompss args]
 \end{lstlisting}        
 
-
-\clearpage
-\subsubsection{Execution with TLS}
-If your cluster uses \textbf{TLS} or has been created using \textbf{Docker-Machine}, you will have to 
-\textbf{export two environment variables} before using runcompss-docker:\\ \\
-On one hand, \textbf{DOCKER\_TLS\_VERIFY} environment variable will tell Docker that you are using TLS:
-\begin{lstlisting}[language=bash]
-export DOCKER_TLS_VERIFY="1"
-\end{lstlisting}
-On the other hand, \textbf{DOCKER\_CERT\_PATH} variable will tell Docker where to find your TLS certificates. As an example:
-\begin{lstlisting}[language=bash]
-export DOCKER_CERT_PATH="/home/compss-user/.docker/machine/machines/my-manager-node"
-\end{lstlisting}
-
-In case you have created your cluster using docker-machine, in order to know what
-your \textit{DOCKER\_CERT\_PATH} is, you can use this command:
-\begin{lstlisting}[language=bash]
-docker-machine env my-swarm-manager-node-name | grep DOCKER_CERT_PATH
-\end{lstlisting}
-In which \textit{swarm-manager-node-name} must be changed by the name docker-machine has assigned to your swarm manager node.\\ \\
-With these environment variables set, you are ready to use \textbf{runcompss-docker} in a cluster using TLS.
-
-\clearpage
 \subsubsection{Execution results}
 The execution results will be retrieved from the master container of your application.
 \\ \\ 
@@ -211,7 +189,6 @@ In this case we executed the \textbf{Matmul example application} that we provide
 \\*
 \includegraphics[width=0.3\textwidth]{./Sections/5_Execution_Platforms/Figures/docker-matmul-results-tree.png} 
 
-\clearpage
 \subsubsection{Execution examples}
 And here is one example to run the Matmul example application. 
 Imagine we have our Matmul application in '/home/john/matmul' and inside the 'matmul' dir we only have the file 'matmul.jar'. \\
@@ -219,7 +196,7 @@ We have created a Dockerhub account with username 'john123'.
 \\
 The first step will be creating the image:
 \begin{lstlisting}[language=bash]
-runcompss-docker-gen-image --context-dir='/home/john/matmul'
+runcompss-docker-gen-image --context-dir='/home/john/matmul' \
 			   --image-name='john123/matmul-example'
 \end{lstlisting}
 Now, we write down the context-dir ('/home/john/matmul') and the classpath ('/home/john/matmul/matmul.jar'). We do this because they will be needed for future executions. \\
@@ -238,12 +215,12 @@ In addition, we know from the former step that the image name is 'john123/matmul
 the \textbf{context directory} is '/home/john/matmul', and the classpath is '/home/john/matmul/matmul.jar'.
 And this is how you would run \textbf{runcompss-docker}:
 \begin{lstlisting}[language=bash]
-runcompss-docker --worker-containers=5
-                 --swarm-manager='129.114.108.8:4000'
-                 --context-dir='/home/john/matmul'
-                 --image-name='john123/matmul-example'
-                 --classpath=/home/john/matmul/matmul.jar
-                 -d
+runcompss-docker --worker-containers=5 \
+                 --swarm-manager='129.114.108.8:4000' \
+                 --context-dir='/home/john/matmul' \
+                 --image-name='john123/matmul-example' \
+                 --classpath=/home/john/matmul/matmul.jar \
+                 -d \
                  matmul.objects.Matmul 16 4
 \end{lstlisting}           
 Here we show another example using the short arguments form, with the KMeans example application, 
@@ -251,15 +228,14 @@ that is also provided as an example COMPSs application to you:
 \\
 First step, create the image once:
 \begin{lstlisting}[language=bash]
-runcompss-docker-gen-image --context-dir='/home/laura/apps/kmeans'
+runcompss-docker-gen-image --context-dir='/home/laura/apps/kmeans' \
 			   --image-name='laura-67/my-kmeans'
 \end{lstlisting}
 
 And now execute with 30 worker containers, and Swarm located in '110.3.14.159:26535'.
 \begin{lstlisting}[language=bash]
-runcompss-docker --w=30 --s='110.3.14.159:26535' --c='/home/laura/apps/kmeans' 
-                 --image-name='laura-67/my-kmeans'
-                 --classpath=/home/laura/apps/kmeans/kmeans.jar
+runcompss-docker --w=30 --s='110.3.14.159:26535' --c='/home/laura/apps/kmeans' --image-name='laura-67/my-kmeans' \
+                 --classpath=/home/laura/apps/kmeans/kmeans.jar \
                  kmeans.KMeans
 \end{lstlisting}           
 
@@ -295,7 +271,7 @@ needed to execute COMPSs applications at Chameleon:
 \begin{itemize}
  \item Make a lease reservation with 1 minimum node (for the COMPSs master instance) and a maximum number of nodes equal to the
  number of COMPSs workers needed plus one
- \item Instantiate the master image (based on the published image \textit{COMPSs\_\compssversion\_CC-CentOS7})
+ \item Instantiate the master image (based on the published image \textit{COMPSs\_1.3\_CC-CentOS7})
  \item Attach a public IP and login to the master instance (the instance is correctly contextualized for COMPSs executions if you
  see a COMPSs login banner)
  \item Set the instance as COMPSs master by running \textit{/etc/init.d/chameleon\_init start}
@@ -321,16 +297,14 @@ the \textit{enqueue\_compss} script provided in the COMPSs installation. This sc
 
 \begin{figure}[h!]
   \centering
-    \includegraphics[width=0.6\textwidth]{./Sections/5_Execution_Platforms/Figures/queue_scripts_structure.png}
-    \caption{Structure of COMPSs queue scripts. In Blue user scripts, in Green queue scripts and in Orange system dependant scripts}
+    \includegraphics[width=0.2\textwidth]{./Sections/5_Execution_Platforms/Figures/queue_scripts_structure.jpeg}
+    \caption{Structure of COMPSs queue scripts. In Blue general scripts, in Green system dependant scripts}
     \label{fig:queue_scripts_structure}
 \end{figure}
 
-To make this structure works, the administrators must define a configuration file for the queue system and a configuration file
-for the specific SuperComputer parameters. The COMPSs installation already provides queue configurations for \textit{LSF} and 
-\textit{SLURM} and several examples for SuperComputer configurations. 
-To create a new configuration we recommend to use one of the configurations provided by COMPSs (such as the configuration for the
-\textit{MareNostrum III} SuperComputer) or to contact us at \url{support-compss@bsc.es} .
+To make this structure work, the administrators must define a submit and a launch script that are system dependant. To develop this
+scripts the current COMPSs installation provides scripts for the \textit{MareNostrum III} SuperComputer that can be used as an 
+example (based on LSF) or you can contact us at \url{support-compss@bsc.es} .
 
 \subsubsection{MareNostrum III}
 
