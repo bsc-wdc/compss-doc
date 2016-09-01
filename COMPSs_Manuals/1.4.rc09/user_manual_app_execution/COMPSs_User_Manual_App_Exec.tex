@@ -1,0 +1,115 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{fontenc}
+\usepackage{graphicx}
+\usepackage{makeidx}
+\usepackage{color}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{url}
+\usepackage{titlesec}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{geometry}
+
+\geometry{
+    a4paper,
+    left=25mm,
+    right=25mm,
+    top=30mm,
+    bottom=30mm,
+ }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%% CONFIGURATION %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{configuration.tex}
+\title{COMP Superscalar}
+\author{User Guide: Application execution guide}
+\def \compssversion {1.4.rc09}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% DOCUMENT %%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+  %%%%%%%%%%%% TITLE PAGE %%%%%%%%%%%%%
+  \hypersetup{pageanchor=false}
+  \begin{titlepage} 
+    \begin{center} 
+      \includegraphics[width=0.3\textwidth]{./Figures/Logos/degradado-naranja-compss.jpg}~\\[1cm] 
+      \textsc{\LARGE COMP Superscalar}\\[1.5cm] 
+      
+      \HRule \\[0.4cm] 
+      { \huge \bfseries User Manual \\[0.4cm] }
+      { \large \bfseries Application execution guide \\[0.4cm] } 
+      \HRule \\[1.5cm] 
+
+      { \large \textsc{Version: \compssversion}} \\[0.3cm]
+      { \large \today } 
+      
+      \vfill 
+      % Bottom of the page
+      \includegraphics[width=0.5\textwidth]{./Figures/bsc_280.jpg}~\\[1cm]
+    \end{center} 
+  \end{titlepage}
+  \hypersetup{pageanchor=true}
+  
+  %%%%%%%% REFERENCE NOTES %%%%%%%%%%
+  {
+    This manual provides information about how to execute COMPSs applications, how to retrieve the results and the logs of an execution and it provides an overview of the COMPSs tools usage. It is highly recommended to test the examples described in this manual with a working COMPSs installation. For this purpose we provide a \textit{COMPSs Virtual Machine} available at \url{http://compss.bsc.es/} .
+    \newline
+    
+    For information about the installation process please refer to the \textit{COMPSs Installation Guide} available at
+    \url{http://compss.bsc.es/} .
+    \newline
+    
+    For further information about the application development please refer to the \textit{COMPSs User Manual: Application development
+    guide} available at \url{http://compss.bsc.es/} .
+    \newline
+    
+    For an extensive list of COMPSs application examples (codes, execution commands, results, logs, etc.) please refer to the \textit{COMPSs Sample 
+    Applications} guide at \url{http://compss.bsc.es/} .
+  }
+  
+  %%%%%%%% TABLE OF CONTENTS %%%%%%%%%%
+  \pagenumbering{roman}
+  \setcounter{tocdepth}{6}
+  \tableofcontents
+  \listoffigures
+  \listoftables
+    
+  \newpage
+
+  %%%%%%%%%%%%% CONTENTS %%%%%%%%%%%%%%
+  \pagenumbering{arabic}
+    
+  \input{./Sections/1_Introduction/Introduction.tex}
+           
+  \input{./Sections/2_Execution/Execution.tex}
+          
+  \input{./Sections/3_Results_and_Logs/Results_and_Logs.tex}
+           
+  \input{./Sections/4_Tools/Tools.tex}
+  
+  \input{./Sections/5_Execution_Platforms/Execution_Platforms.tex}
+  
+  \input{./Sections/6_Common_Issues/Common_Issues.tex}
+
+  %%%%%%%%%%%%% END PAGE %%%%%%%%%%%%%%
+  \newpage
+
+  \vspace*{\fill} 
+  \begin{center}
+    \large { Please find more details on the COMPSs framework at }
+    \huge{\url{http://compss.bsc.es}}
+  \end{center}    
+  \vspace*{\fill} 
+           
+\end{document}
