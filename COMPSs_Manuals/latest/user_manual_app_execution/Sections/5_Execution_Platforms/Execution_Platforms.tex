@@ -88,7 +88,7 @@ You will need it to run the application using \textbf{runcompss-docker}. In addi
 you can use the Dockerhub image's information tab to write them, so the application users can retrieve them.
 
  
-\subsubsection{Execution step 1: Run the application}
+\subsubsection{Execution step 2: Run the application}
 To execute COMPSs in a Docker Swarm cluster, you must use the \textbf{runcompss-docker} command, instead of runcompss.
 \\
 The command \textbf{runcompss-docker} has some \textbf{additional arguments} that will be needed by COMPSs to run your application 
@@ -128,9 +128,9 @@ The runcompss-docker additional arguments are:
 As \textbf{optional} arguments:
 \begin{itemize}
  \item { 
- \textbf{-{}-c-cpu-core-count:} \\
- Specifies the number of cpu cores used by each container (default value is 4). \\
- For example: \textbf{-{}-c-cpu-core-count=16}
+ \textbf{-{}-c-cpu-units:} \\
+ Specifies the number of cpu units used by each container (default value is 4). \\
+ For example: \textbf{-{}-c-cpu-units:=16}
  }
  
  \item { 
