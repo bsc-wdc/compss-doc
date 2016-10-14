@@ -1,0 +1,261 @@
+\section{COMPSs Jobs}
+\label{sec:Jobs}
+
+\subsection{Submiting COMPSs jobs}
+COMPSs jobs can be easily submited by running the \textbf{enqueue\_compss} command. This command allows to configure any 
+\textbf{runcompss} option and some particular queue options such as the queue system, the number of nodes, the wallclock time,
+the master working directory, the workers working directory and number of tasks per node.
+
+Next, we provide detailed information about the \textit{enqueue\_compss} command:
+\begin{lstlisting}[language=bash]
+enqueue_compss -h
+Usage: enqueue_compss [queue_system_options] [COMPSs_options] 
+          application_name [application_arguments]
+
+* Options:
+  General:
+    --help, -h                              Print this help message
+  
+  Queue system configuration:
+    --exec_time=<minutes>                   Expected execution time of the application (in minutes)
+                                            Default: 10
+                                            
+    --num_nodes=<int>                       Number of nodes to use
+                                            Default: 2
+                                            
+    --num_switches=<int>                    Maximum number of different switches. 
+                                            Select 0 for no restrictions.
+                                            Maximum nodes per switch: 18
+                                            Only available for at least 4 nodes. 
+                                            Default: 0 
+
+    --tasks_per_node=<int>                  Maximum number of simultaneous tasks running on a node
+                                            Default: 16
+                                            
+    --node_memory=<MB>                      Maximum node memory: disabled | <int> (MB)
+                                            Default: 28
+                                            
+    --network=<name>                        Communication network for transfers: 
+                                              default | ethernet | infiniband | data.
+                                            Default: ethernet
+
+    --sc_cfg=<name>                         SuperComputer configuration file to use. 
+                                            Must exist inside queues/cfgs/
+                                            Default: default
+                                            
+    --queue=<name>                          Queue name to submit the job. Depends on the queue system.
+                                            For example (MN3): bsc_cs | bsc_debug | debug | interactive
+                                            Default: default
+                                            
+    --reservation=<name>                    Reservation to use when submitting the job. 
+                                            Default: disabled
+                                            
+    --job_dependency=<jobID>                Postpone job execution until the job dependency has ended.
+                                            Default: None
+
+    --master_working_dir=<path>             Working directory of the application
+                                            Default: .
+                                            
+    --worker_working_dir=<name | path>      Worker directory. Use: scratch | gpfs | <path>
+                                            Default: scratch
+                                            
+    --worker_in_master_tasks=<int>          Maximum number of tasks that the master node 
+                                            can run as worker. Cannot exceed tasks_per_node.
+                                            Default: 0
+                                            
+    --worker_in_master_memory=<int> MB      Maximum memory in master node assigned to the worker.
+                                            Cannot exceed the node_memory.
+                                            Mandatory if worker_in_master_tasks is specified.
+                                            Default: disabled
+                                            
+    --jvm_worker_in_master_opts="<string>"  Extra options for the JVM of the COMPSs Worker 
+                                            in the Master Node. Each option separed by "," and without 
+                                            blank spaces (Notice the quotes)
+                                            Default: 
+                                            
+    --task_execution=<compss|storage>       Task execution under COMPSs or Storage.
+                                            Default: compss
+                                            
+    --storage_conf=<path>                   Path to the storage configuration file
+    
+    --storage_name=<dataclay|hecuba>        Name of the storage platform dataClay or Hecuba.
+    
+
+  Runcompss delegated parameters:
+
+  Tools enablers:
+    --graph=<bool>, --graph, -g             Generation of the complete graph (true/false)
+                                            When no value is provided it is set to true
+                                            Default: false
+                                            
+    --tracing=<level>, --tracing, -t        Set generation of traces and/or tracing level
+                                            ( [ true | basic ] | advanced | false)
+                                            True and basic levels will produce the same traces.
+                                            When no value is provided it is set to true
+                                            Default: false
+                                            
+    --monitoring=<int>, --monitoring, -m    Period between monitoring samples (milliseconds)
+                                            When no value is provided it is set to 2000
+                                            Default: 0
+                                            
+    --external_debugger=<int>,
+    --external_debugger                     Enables external debugger connection on the 
+                                            specified port (or 9999 if empty)
+                                            Default: false
+
+  Runtime configuration options:
+    --task_execution=<compss|storage>       Task execution under COMPSs or Storage.
+                                            Default: compss
+                                            
+    --storage_conf=<path>                   Path to the storage configuration file
+                                            Default: None
+                                            
+    --project=<path>                        Path to the project XML file
+                                            Default: /opt/COMPSs/Runtime/configuration/
+                                            xml/projects/default_project.xml
+                                            
+    --resources=<path>                      Path to the resources XML file
+                                            Default: /opt/COMPSs/Runtime/configuration/
+                                            xml/resources/default_resources.xml  
+                                            
+    --lang=<name>                           Language of the application (java/c/python)
+                                            Default: java
+                                            
+    --log_level=<level>, --debug, -d        Set the debug level: off | info | debug
+                                            Default: off
+
+  Advanced options:
+    --comm=<path>                           Class that implements the adaptor for communications
+                                            Supported adaptors: 
+                                             integratedtoolkit.nio.master.NIOAdaptor
+                                             | integratedtoolkit.gat.master.GATAdaptor
+                                            Default: integratedtoolkit.nio.master.NIOAdaptor
+                                            
+    --scheduler=<path>                      Class that implements the Scheduler for COMPSs
+                                            Supported schedulers: 
+                                             integratedtoolkit.components.impl.TaskScheduler 
+                                             | integratedtoolkit.scheduler.readyscheduler.ReadyScheduler
+                                            Default: integratedtoolkit.scheduler.readyscheduler.ReadyScheduler
+                                            
+    --library_path=<path>                   Non-standard directories to search for libraries 
+                                            (e.g. Java JVM library, Python library, 
+                                            C binding library)
+                                            Default: Working Directory
+                                            
+    --classpath=<path>                      Path for the application classes / modules
+                                            Default: Working Directory
+                                            
+    --base_log_dir=<path>                   Base directory to store COMPSs log files 
+                                            (a .COMPSs/ folder will be created inside this location)
+                                            Default: User home
+                                            
+    --specific_log_dir=<path>               Use a specific directory to store COMPSs log files 
+                                            (the folder MUST exist and no sandbox is created)
+                                            Warning: Overwrites --base_log_dir option
+                                            Default: Disabled
+                                            
+    --uuid=<int>                            Preset an application UUID
+                                            Default: Automatic random generation
+                                            
+    --master_port=<int>                     Port to run the COMPSs master communications.
+                                            Only for NIO adaptor
+                                            Default: 43000
+                                            
+    --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. 
+                                            Each option separed by "," and without 
+                                            blank spaces (Notice the quotes)
+                                            Default: 
+                                            
+    --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs.
+                                            Each option separed by "," and without 
+                                            blank spaces (Notice the quotes)
+                                            Default: -Xms1024m,-Xmx1024m,-Xmn400m
+                                            
+    --task_count=<int>                      Only for C/Python Bindings. Maximum number 
+                                            of different functions/methods, invoked from 
+                                            the application, that have been selected as tasks
+                                            Default: 50
+                                            
+    --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
+                                            Default: /home/cramonco/svn/compss/framework/trunk/compss
+                                            
+    --PyObject_serialize=<bool>             Only for Python Binding. Enable the object 
+                                            serialization to string when possible 
+                                            (true/false).
+                                            Default: false
+
+
+* Application name:
+    For Java applications:   Fully qualified name of the application
+    For C applications:      Path to the master binary
+    For Python applications: Path to the .py file containing the main program
+
+* Application arguments:
+    Command line arguments to pass to the application. Can be empty.
+\end{lstlisting}
+
+\subsection{Tracking COMPSs jobs}
+When submitting a COMPSs job a temporal file will be created storing the job information. For example:
+\begin{lstlisting}[language=bash]
+$ enqueue_compss \
+  --exec_time=15 \
+  --num_nodes=3 \
+  --tasks_per_node=16 \
+  --master_working_dir=. \
+  --worker_working_dir=gpfs \
+  --lang=python \
+  --log_level=debug \
+  <APP> <APP_PARAMETERS>
+  
+SC Configuration:          default.cfg
+Queue:                     default
+Reservation:               disabled
+Num Nodes:                 3
+Num Switches:              0
+Job dependency:            None
+Exec-Time:                 00:15
+Network:                   infiniband
+Node memory:               disabled
+Tasks per Node:            16
+Worker in Master Tasks:    0
+Worker in Master Memory:   disabled
+Master Port:               43789
+Master WD:                 .
+Worker WD:                 gpfs
+Master JVM Opts:           
+Workers JVM Opts:          -Xms24800m,-Xmx24800m,-Xmn1600m
+Worker in Master JVM Opts: 
+Library Path:              .
+Classpath:                 .
+Pythonpath:                .
+Lang:                      python
+COMM:                      integratedtoolkit.nio.master.NIOAdaptor
+Storage name:              null
+Storage conf:              null
+Task execution:            compss
+To COMPSs:                 --lang=python --log_level=debug <APP> <APP_PARAMETERS>
+Temp submit script is: /scratch/tmp/tmp.pBG5yfFxEo
+Running in COMPSs mode.
+
+$ cat /scratch/tmp/tmp.pBG5yfFxEo
+#!/bin/bash
+#
+#BSUB -J COMPSs
+#BSUB -cwd . 
+#BSUB -oo compss-%J.out
+#BSUB -eo compss-%J.err
+#BSUB -n 3
+#BSUB -R "span[ptile=1]"
+#BSUB -W 00:15 
+...
+\end{lstlisting}
+
+In order to trac the jobs state users can run the following command:
+\begin{lstlisting}[language=bash]
+$ bjobs
+JOBID  USER   STAT  QUEUE  FROM_HOST  EXEC_HOST  JOB_NAME  SUBMIT_TIME
+XXXX   bscXX  PEND  XX     login1     XX         COMPSs    Month Day Hour
+\end{lstlisting}
+
+The specific COMPSs logs are stored under the \textit{~/.COMPSs/} folder; saved as a local \textit{runcompss} execution. For further 
+details please check \textit{COMPSs User Manual: Application Execution} available at our webpage \url{http://compss.bsc.es} .

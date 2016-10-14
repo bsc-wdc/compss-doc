@@ -1,0 +1,43 @@
+\section{Known Limitations}
+\label{sec:Known_Limitations}
+
+The current COMPSs version (1.3) has the following limitations: 
+\begin{itemize}
+ \item \textbf{Exceptions:} \newline The current COMPSs version is not able to propagate exceptions raised from a task to the master. However, the runtime
+ catches any exception and sets the task as failed.
+ 
+ \item \textbf{Java tasks:} \newline Java tasks \textbf{must} be declared as \textbf{public}. Despite the fact that tasks can be
+ defined in the main class or in other ones, we recommend to define the tasks in a separated class from the main method to force
+ its public declaration.
+ 
+ \item \textbf{Java objects:} \newline Objects used by tasks must follow the \textit{java beans} model (implementing an empty 
+ constructor and getters and setters for each attribute) or implement the \textit{serializable} interface. This is due to the 
+ fact that objects will be transferred to remote machines to execute the tasks.
+ 
+ \item \textbf{Java object aliasing:} \newline If a task has an object parameter and returns an object, the returned value
+ must be a new object (or a cloned one) to prevent any aliasing with the task parameters.
+ 
+ \item \textbf{Services types:} \newline The current COMPSs version only supports SOAP based services that implement the WS 
+ interoperability standard. REST services are not supported.
+ 
+ \item \textbf{Use of file paths:} \newline The persistent workers implementation has a unique \textit{Working Directory} per 
+ worker. That means that tasks should not use hardcoded file names to avoid file collisions and tasks misbehaviours. We recommend to
+ use files declared as task parameters, or to manually create a sandbox inside each task execution and/or to generate temporary 
+ random file names. 
+ 
+ \item \textbf{Tracing:} \newline The current version of the COMPSs tracing system slows down the application execution. Users
+ running huge applications may experience a non-negligible overhead when using this feature. 
+ 
+ \item \textbf{Intermediate files}: \newline Some applications may generate intermediate files that are only used among tasks
+ and are never needed inside the master's code. However, COMPSs will transfer back these files to the master node at the end of the 
+ execution. Currently, the only way to avoid transferring these intermediate files is to manually erase them at the end of the
+ master's code. Users must take into account that this only applies for files declared as task parameters and \textbf{not} for files
+ created and/or erased inside a task. 
+ 
+ \item \textbf{Workers cache}: \newline Persistent workers maintain a cache to avoid transferring files and objects repeatedly. 
+ However, this cache is \textbf{not} working for INOUT parameters (only works for IN and OUT parameters). For most applications, 
+ if users are willing to exploit this cache, we recommend to convert INOUT parameters in \textbf{two} separated parameters: one 
+ declared as IN parameter and the other declared as OUT parameter.
+ 
+\end{itemize}
+

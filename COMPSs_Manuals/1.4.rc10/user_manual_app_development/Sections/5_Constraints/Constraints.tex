@@ -1,0 +1,76 @@
+\section{Constraints}
+\label{sec:Constraints}
+
+This section provides a detailed information about all the supported constraints by the COMPSs runtime for 
+\textbf{java} and \textbf{python} languages.
+
+\bgroup
+  \def\arraystretch{1.5}%
+  \begin{longtable}{| p{0.045\textwidth}| p{0.27\textwidth} | p{0.1\textwidth} | p{0.5\textwidth} |}
+    \hline
+    \multicolumn{1}{|c|}{{\bf Type }}  & \multicolumn{1}{|c|}{{\bf Argument }}   &  \multicolumn{1}{c|}{{\bf Value }} & \multicolumn{1}{c|}{{\bf Description }} \\
+    \hline
+    \multirow{6}{*}{\rotatebox[origin=c]{90}{Processor}} 
+          & computingUnits & $<$int$>$ & Required number of Computing Units \newline
+					    Default: 1 \\
+	  \cline{2-4}
+	  & processorName & $<$string$>$ & Required processor name \newline
+					  Default: ``unassigned'' \\
+	  \cline{2-4}
+	  & processorSpeed  & $<$float$>$ & Required processor frequency \newline
+					  Default: -1.0f \\
+	  \cline{2-4}
+	  & processorArchitecture  & $<$string$>$ & Required processor architecture (e.g. ``x86\_64'') \newline
+				      Default: ``unassigned'' \\
+	  \cline{2-4}
+	  & processorPropertyName  & $<$string$>$ & Required processor property \newline
+					  Default: ``unassigned'' \\
+	  \cline{2-4}
+	  & processorPropertyValue  & $<$string$>$ & Required processor property value \newline
+					  Default: ``unassigned'' \\
+    \hline
+    \multirow{2}{*}{\rotatebox[origin=c]{90}{Memory}} &
+          memorySize  & $<$float$>$ & Required memory size in GBs \newline
+                                        Default: -1.0f \\
+	  \cline{2-4}
+	  & memoryType  & $<$string$>$ & Required memory type \newline
+					    Default: ``unassigned'' \\
+
+    \hline
+    \multirow{2}{*}{\rotatebox[origin=c]{90}{Storage}} &
+          storageSize  & $<$float$>$ & Required memory size in GBs \newline
+                                        Default: -1.0f \\
+	  \cline{2-4}
+	  & storageType  & $<$string$>$ & Required memory type \newline
+					    Default: ``unassigned'' \\
+					    
+    \hline    
+    
+    \multirow{3}{*}{\rotatebox[origin=c]{90}{Operating System}} &
+	  operatingSystemType  & $<$string$>$ & Required operative system type \newline
+						Default: ``unassigned'' \\
+	  \cline{2-4}
+	  & operatingSystemDistribution  & $<$string$>$ &  Required operative system distribution \newline
+						Default: ``unassigned'' \\
+	  \cline{2-4}
+	  & operatingSystemVersion  & $<$string$>$ & Required operative system version \newline
+						Default: ``unassigned'' \\
+							  
+    \multirow{3}{*}{\rotatebox[origin=c]{90}{Miscellaneous}} &
+	  wallClockLimit  & $<$int$>$ & Required operative system \newline
+						Default: -1 \\
+	  \cline{2-4}
+	  & \cellcolor{blue!25} hostQueues  & $<$string$>$ &  Required queues \newline
+							Default: ``unassigned'' \\
+	  \cline{2-4}
+	  & \cellcolor{blue!25} appSoftware  & $<$string$>$ & Required applications. Applications that must be available within the remote node for the task. \newline
+							  Default: ``unassigned'' \\
+    \hline
+    \caption{Arguments of the {\it $@$constraint} decorator.}
+    \label{tab:constraints}
+  \end{longtable}
+\egroup
+
+All constraints are defined with a simple value except the {\it HostQueue} and {\it AppSoftware} constraints, which allow 
+multiple values.
+
