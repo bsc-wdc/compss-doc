@@ -31,6 +31,8 @@ and \textit{Advanced options}.
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ runcompss -h
 
+Usage: runcompss [options] application_name application_arguments
+
 * Options:
   General:
     --help, -h                              Print this help message
@@ -43,103 +45,93 @@ compss@bsc:~$ runcompss -h
     --graph=<bool>, --graph, -g             Generation of the complete graph (true/false)
                                             When no value is provided it is set to true
                                             Default: false
-                                            
-    --tracing=<level>, --tracing, -t        Set generation of traces and/or tracing level
+    --tracing=<level>, --tracing, -t        Set generation of traces and/or tracing level 
                                             ( [ true | basic ] | advanced | false)
                                             True and basic levels will produce the same traces.
                                             When no value is provided it is set to true
                                             Default: false
-                                            
     --monitoring=<int>, --monitoring, -m    Period between monitoring samples (milliseconds)
                                             When no value is provided it is set to 2000
                                             Default: 0
-                                            
     --external_debugger=<int>,
-    --external_debugger                     Enables external debugger connection on the 
-                                            specified port (or 9999 if empty)
+    --external_debugger                     Enables external debugger connection on the specified 
+                                            port (or 9999 if empty)
                                             Default: false
 
   Runtime configuration options:
     --task_execution=<compss|storage>       Task execution under COMPSs or Storage.
                                             Default: compss
-                                            
     --storage_conf=<path>                   Path to the storage configuration file
                                             Default: None
-                                            
     --project=<path>                        Path to the project XML file
-                                            Default: /opt/COMPSs/Runtime/configuration/
-                                            xml/projects/default_project.xml
-                                            
+                                            Default: /opt/COMPSs/Runtime/configuration/xml/
+                                            projects/default_project.xml
     --resources=<path>                      Path to the resources XML file
-                                            Default: /opt/COMPSs/Runtime/configuration/
-                                            xml/resources/default_resources.xml  
-                                            
+                                            Default: /opt/COMPSs/Runtime/configuration/xml/
+                                            resources/default_resources.xml                                                 
     --lang=<name>                           Language of the application (java/c/python)
                                             Default: java
-                                            
+    --summary                               Displays a task execution summary at the end of 
+                                            the application execution
+                                            Default: false
     --log_level=<level>, --debug, -d        Set the debug level: off | info | debug
                                             Default: off
-
-  Advanced options:
-    --comm=<path>                           Class that implements the adaptor for communications
-                                            Supported adaptors: 
-                                             integratedtoolkit.nio.master.NIOAdaptor
-                                             | integratedtoolkit.gat.master.GATAdaptor
-                                            Default: integratedtoolkit.nio.master.NIOAdaptor
-                                            
-    --scheduler=<path>                      Class that implements the Scheduler for COMPSs
+                                                                                                                                                                                        
+  Advanced options:                                                                                                                                                                     
+    --extrae_config_file=<path>             Sets a custom extrae config file. Must be in a shared disk
+                                            between all COMPSs workers.                                                      
+                                            Default: null                                                                                                                               
+    --comm=<path>                           Class that implements the adaptor for communications                                                                                        
+                                            Supported adaptors: integratedtoolkit.nio.master.NIOAdaptor 
+                                                                | integratedtoolkit.gat.master.GATAdaptor                                       
+                                            Default: integratedtoolkit.nio.master.NIOAdaptor                                                                                            
+    --conn=<path>                           Path of the connector jar/s that should be loaded. 
+                                            You can use multiple by splitting with ':'                                               
+                                            Supported connectors: compss-{CONN}-connector.jar                                                                                           
+                                               (where {CONN} can be: "jclouds", "amazon", "docker", 
+                                               "one", "rocci", "vmm", etc.)                                                        
+    --scheduler=<path>                      Class that implements the Scheduler for COMPSs                                                                                              
                                             Supported schedulers: 
-                                             integratedtoolkit.components.impl.TaskScheduler 
-                                             | integratedtoolkit.scheduler.readyscheduler.ReadyScheduler
-                                            Default: integratedtoolkit.scheduler.readyscheduler.ReadyScheduler
-                                            
-    --library_path=<path>                   Non-standard directories to search for libraries 
-                                            (e.g. Java JVM library, Python library, 
-                                            C binding library)
-                                            Default: Working Directory
-                                            
-    --classpath=<path>                      Path for the application classes / modules
-                                            Default: Working Directory
-                                            
-    --base_log_dir=<path>                   Base directory to store COMPSs log files 
-                                            (a .COMPSs/ folder will be created inside this location)
+                                               integratedtoolkit.components.impl.TaskScheduler 
+                                               | integratedtoolkit.scheduler.readyscheduler.ReadyScheduler           
+                                            Default: 
+                                               integratedtoolkit.scheduler.readyscheduler.ReadyScheduler                                                                          
+    --library_path=<path>                   Non-standard directories to search for libraries (e.g. Java 
+                                            JVM library, Python library, C binding library)                                 
+                                            Default: Working Directory                                                                                                                  
+    --classpath=<path>                      Path for the application classes / modules                                                                                                  
+                                            Default: Working Directory                                                                                                                  
+    --appdir=<path>                         Path for the application class folder.                                                                                                      
+                                            Default: /home/cramonco
+    --base_log_dir=<path>                   Base directory to store COMPSs log files (a .COMPSs/ folder
+                                            will be created inside this location)
                                             Default: User home
-                                            
-    --specific_log_dir=<path>               Use a specific directory to store COMPSs log files 
-                                            (the folder MUST exist and no sandbox is created)
+    --specific_log_dir=<path>               Use a specific directory to store COMPSs log files (the 
+                                            folder MUST exist and no sandbox is created)
                                             Warning: Overwrites --base_log_dir option
                                             Default: Disabled
-                                            
     --uuid=<int>                            Preset an application UUID
                                             Default: Automatic random generation
-                                            
+    --master_name=<string>                  Hostname of the node to run the COMPSs master
+                                            Default: 
     --master_port=<int>                     Port to run the COMPSs master communications.
                                             Only for NIO adaptor
-                                            Default: 43000
-                                            
-    --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. 
-                                            Each option separed by "," and without 
-                                            blank spaces (Notice the quotes)
+                                            Default: [43000,44000]
+    --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed 
+                                            by "," and without blank spaces (Notice the quotes)
                                             Default: 
-                                            
-    --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs.
-                                            Each option separed by "," and without 
-                                            blank spaces (Notice the quotes)
+    --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed 
+                                            by "," and without blank spaces (Notice the quotes)
                                             Default: -Xms1024m,-Xmx1024m,-Xmn400m
-                                            
-    --task_count=<int>                      Only for C/Python Bindings. Maximum number 
-                                            of different functions/methods, invoked from 
-                                            the application, that have been selected as tasks
+    --task_count=<int>                      Only for C/Python Bindings. Maximum number of different
+                                            functions/methods, invoked from the application, that 
+                                            have been selected as tasks
                                             Default: 50
-                                            
     --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
-                                            Default: /home/cramonco/svn/compss/framework/trunk/compss
-                                            
-    --PyObject_serialize=<bool>             Only for Python Binding. Enable the object 
-                                            serialization to string when possible 
-                                            (true/false).
+                                            Default: /home/cramonco
+    --PyObject_serialize=<bool>             Only for Python Binding. Enable the object serialization
+                                            to string when possible (true/false).
                                             Default: false
-
 
 * Application name:
     For Java applications:   Fully qualified name of the application
@@ -155,10 +147,10 @@ compss@bsc:~$ runcompss -h
 \label{subsec:running_compss}
 Before running COMPSs applications the application files \textbf{must} be in the \textbf{CLASSPATH}.
 Thus, when launching a COMPSs application, users can manually pre-set the \textbf{CLASSPATH} environment variable
-or can add the \textit{--classpath} option to the \textit{runcompss} command.
+or can add the \textit{-{}-classpath} option to the \textit{runcompss} command.
 
 The next three sections provide specific information for launching COMPSs applications developed in different code languages (Java, Python and 
-C/C++). For clarity purposes we will use the \textit{Simple} application (developed in Java, Python and C++) available in the COMPSs
+C/C++). For clarity purposes, we will use the \textit{Simple} application (developed in Java, Python and C++) available in the COMPSs
 Virtual Machine or at \url{https://compss.bsc.es/projects/bar} webpage. This application takes an integer as input
 parameter and increases it by one unit using a task. For further details about the codes please refer to the \textit{Sample 
 Applications} document available at \url{http://compss.bsc.es} .
@@ -178,14 +170,13 @@ compss@bsc:~/workspace_java/simple/jar$ runcompss simple.Simple <initial_number>
 \end{figure}
 \vspace{-0.4cm}
 
-In this first execution we use the default value of the \textit{--classpath} option to automatically add the jar
+In this first execution we use the default value of the \textit{-{}-classpath} option to automatically add the jar
 file to the classpath (by executing runcompss in the directory which contains the jar file). However,
 we can explicitly do this by exporting the \textbf{CLASSPATH} variable or by providing the 
 --classpath value. Next, we provide two more ways to perform the same execution:
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ export CLASSPATH=$CLASSPATH:
-                               /home/compss/workspace_java/simple/jar/simple.jar
+compss@bsc:~$ export CLASSPATH=$CLASSPATH:/home/compss/workspace_java/simple/jar/simple.jar
 compss@bsc:~$ runcompss simple.Simple <initial_number>
 \end{lstlisting}
 
@@ -196,7 +187,7 @@ compss@bsc:~$ runcompss --classpath=/home/compss/workspace_java/simple/jar/simpl
 
 
 \subsubsection{Running Python applications}
-To launch a COMPSs Python application users have to provide the \textit{--lang=python} option to the runcompss command. 
+To launch a COMPSs Python application users have to provide the \textit{-{}-lang=python} option to the runcompss command. 
 
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd workspace_python/simple/
@@ -214,8 +205,8 @@ compss@bsc:~/workspace_python/simple$ runcompss --lang=python simple.py <initial
 
 \subsubsection{Running C/C++ applications}
 To launch a COMPSs C/C++ application users have to compile the C/C++ application by means of the \textit{buildapp} command. For 
-further information please refer to the \textit{COMPSs User Manual: Application development guide} document available at \url{http://compss.bsc.es} . Once complied, 
-the \textit{--lang=c} option must be provided to the runcompss command.
+further information please refer to the \textit{COMPSs User Manual: Application development guide} document available at
+\url{http://compss.bsc.es} . Once complied, the \textit{-{}-lang=c} option must be provided to the runcompss command.
 
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd workspace_c/simple/
@@ -237,8 +228,8 @@ The COMPSs runtime has two configuration files: \textit{resources.xml} and \text
 These files contain information about the execution environment and are completely independent from the application.
 
 For each execution users can load the default configuration files or specify their custom configurations 
-by using, respectively, the \textit{$--resources=<absolute\_path\_to\_resources.xml>$} and the
-\textit{$--project=<absolute\_path\_to\_project.xml>$} in the \textit{runcompss} command. The default files are located 
+by using, respectively, the \textit{-{}-resources=$<absolute\_path\_to\_resources.xml>$} and the
+\textit{-{}-project=$<absolute\_path\_to\_project.xml>$} in the \textit{runcompss} command. The default files are located 
 in the \emph{/opt/COMPSs/Runtime/configuration/xml/} path. 
 Users can manually edit these files or can use the \textit{Eclipse IDE} tool developed for COMPSs. For further 
 information about the \textit{Eclipse IDE} please refer to Section \ref{subsec:IDE}. 
@@ -420,7 +411,7 @@ Here we provide examples about configuration files for Grid and Cluster environm
 \begin{lstlisting}[language=xml]
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>                                                                                                                                                            
 <ResourcesList>                                                                                                                                                                                                    
-    <ComputeNode Name="hostname1.domain.es"">                                                                                                                                                                       
+    <ComputeNode Name="hostname1.domain.es">                                                                                                                                                                       
         <Processor Name="MainProcessor">                                                                                                                                                                           
             <ComputingUnits>4</ComputingUnits>                                                                                                                                                                     
         </Processor>                                                                                                                                                                                               
@@ -508,7 +499,7 @@ On the other side, to add the shared disk to the \textbf{master node}, the users
 <Project>
     <MasterNode>
         <SharedDisks>
-            <AttachedDisk Name="sharedDisk0>
+            <AttachedDisk Name="sharedDisk0">
                 <MountPoint>/home/sharedDisk/</MountPoint>
             </AttachedDisk>
         </SharedDisks>

@@ -88,10 +88,10 @@ Mode=LaTeX
 
 [item:COMPSs_Installation_Manual.tex]
 archive=true
-column=29
+column=24
 encoding=UTF-8
 highlight=LaTeX
-line=36
+line=31
 mode=LaTeX
 open=false
 order=0
@@ -197,8 +197,8 @@ open=false
 order=-1
 
 [view-settings,view=0,item:COMPSs_Installation_Manual.tex]
-CursorColumn=29
-CursorLine=36
+CursorColumn=24
+CursorLine=31
 JumpList=
 ViMarks=.,79,66,[,79,66,],79,66
 

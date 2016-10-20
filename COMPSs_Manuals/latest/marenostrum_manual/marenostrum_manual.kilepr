@@ -38,7 +38,7 @@ Indentation Mode=normal
 Mode=LaTeX
 
 [document-settings,item:Sections/3_Jobs/Jobs.tex]
-Bookmarks=255
+Bookmarks=251
 Encoding=UTF-8
 Highlighting=LaTeX
 Indentation Mode=normal
@@ -90,10 +90,10 @@ order=3
 
 [item:Sections/3_Jobs/Jobs.tex]
 archive=true
-column=18
+column=2
 encoding=UTF-8
 highlight=LaTeX
-line=200
+line=189
 mode=LaTeX
 open=false
 order=0
@@ -147,10 +147,10 @@ JumpList=
 ViMarks=.,34,23,[,34,19,],34,23
 
 [view-settings,view=0,item:Sections/3_Jobs/Jobs.tex]
-CursorColumn=18
-CursorLine=200
+CursorColumn=2
+CursorLine=189
 JumpList=
-ViMarks=.,249,3,[,249,3,],249,3,a,255,70
+ViMarks=.,189,2,[,189,2,],189,2,a,251,70
 
 [view-settings,view=0,item:Sections/4_Monitor/Monitor.tex]
 CursorColumn=0

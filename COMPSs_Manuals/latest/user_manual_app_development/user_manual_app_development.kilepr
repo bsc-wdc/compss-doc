@@ -38,7 +38,7 @@ Indentation Mode=normal
 Mode=LaTeX
 
 [document-settings,item:Sections/3_Python/Python.tex]
-Bookmarks=
+Bookmarks=156
 Encoding=UTF-8
 Highlighting=LaTeX
 Indentation Mode=normal
@@ -74,10 +74,10 @@ Mode=LaTeX
 
 [item:COMPSs_User_Manual_App_Development.tex]
 archive=true
-column=45
+column=22
 encoding=UTF-8
 highlight=LaTeX
-line=102
+line=18
 mode=LaTeX
 open=false
 order=0
@@ -94,20 +94,20 @@ order=1
 
 [item:Sections/2_Java/Java.tex]
 archive=true
-column=71
+column=119
 encoding=UTF-8
 highlight=LaTeX
-line=136
+line=239
 mode=LaTeX
 open=false
 order=2
 
 [item:Sections/3_Python/Python.tex]
 archive=true
-column=0
+column=50
 encoding=UTF-8
 highlight=LaTeX
-line=156
+line=325
 mode=LaTeX
 open=false
 order=1
@@ -124,10 +124,10 @@ order=1
 
 [item:Sections/5_Constraints/Constraints.tex]
 archive=true
-column=26
+column=8
 encoding=UTF-8
 highlight=LaTeX
-line=69
+line=58
 mode=LaTeX
 open=false
 order=3
@@ -163,10 +163,10 @@ open=false
 order=-1
 
 [view-settings,view=0,item:COMPSs_User_Manual_App_Development.tex]
-CursorColumn=45
-CursorLine=102
+CursorColumn=22
+CursorLine=18
 JumpList=
-ViMarks=.,0,0,[,0,0,],-1,-1
+ViMarks=.,18,0,[,18,0,],18,21
 
 [view-settings,view=0,item:Sections/1_Introduction/Introduction.tex]
 CursorColumn=0
@@ -175,16 +175,16 @@ JumpList=
 ViMarks=.,5,23,[,5,23,],5,23
 
 [view-settings,view=0,item:Sections/2_Java/Java.tex]
-CursorColumn=71
-CursorLine=136
+CursorColumn=119
+CursorLine=239
 JumpList=
-ViMarks=.,137,92,[,137,92,],137,92
+ViMarks=.,239,118,[,239,115,],239,118
 
 [view-settings,view=0,item:Sections/3_Python/Python.tex]
-CursorColumn=0
-CursorLine=156
+CursorColumn=50
+CursorLine=325
 JumpList=
-ViMarks=.,155,8,[,155,0,],-1,-1,a,156,0
+ViMarks=.,330,27,[,330,18,],330,27,a,156,0
 
 [view-settings,view=0,item:Sections/4_C/C.tex]
 CursorColumn=42
@@ -193,10 +193,10 @@ JumpList=
 ViMarks=.,346,41,[,346,30,],346,41
 
 [view-settings,view=0,item:Sections/5_Constraints/Constraints.tex]
-CursorColumn=26
-CursorLine=69
+CursorColumn=8
+CursorLine=58
 JumpList=
-ViMarks=.,4,42,[,4,32,],4,42
+ViMarks=.,57,38,[,57,38,],57,38
 
 [view-settings,view=0,item:Sections/6_Known_Limitations/Known_Limitations.tex]
 CursorColumn=42

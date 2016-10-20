@@ -82,10 +82,10 @@ The \textbf{runcompss-docker-gen-image} script receives 2 parameters:
  } 
 \end{itemize}
 
-\textbf{IMPORTANT NOTE:} \\ 
+\colorComment{\textbf{IMPORTANT NOTE:} \\ 
 After creating the image, be sure to write down the absolute context-directory and the absolute classpath (the absolute path to the executable jar).
 You will need it to run the application using \textbf{runcompss-docker}. In addition, if you plan on distributing the application,
-you can use the Dockerhub image's information tab to write them, so the application users can retrieve them.
+you can use the Dockerhub image's information tab to write them, so the application users can retrieve them.}
 
  
 \subsubsection{Execution step 2: Run the application}
@@ -206,27 +206,40 @@ Inside the \textbf{'matmul-results'} directory you will have:
 
 To make it simpler, we provide a \textbf{tree visualization} of an example of what your directories should look like after the execution.
 In this case we executed the \textbf{Matmul example application} that we provide you:
-\\*
-\\*
-\\*
-\includegraphics[width=0.3\textwidth]{./Sections/5_Execution_Platforms/Figures/docker-matmul-results-tree.png} 
+
+~ \newline
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.3\textwidth]{./Sections/5_Execution_Platforms/Figures/docker-matmul-results-tree.png}
+    \caption{Result and log folders of a \textit{Matmul} execution with COMPSs and Docker}
+    \label{fig:compss_out}
+\end{figure}
+
 
 \clearpage
 \subsubsection{Execution examples}
-And here is one example to run the Matmul example application. 
-Imagine we have our Matmul application in '/home/john/matmul' and inside the 'matmul' dir we only have the file 'matmul.jar'. \\
+
+  Next we will use the \textit{Matmul} application as an example of a Java application running with COMPSs and Docker.
+
+Imagine we have our Matmul application in '/home/john/matmul' and inside the 'matmul' dir we only have the file 'matmul.jar'.
+
 We have created a Dockerhub account with username 'john123'.
-\\
+
 The first step will be creating the image:
 \begin{lstlisting}[language=bash]
 runcompss-docker-gen-image --context-dir='/home/john/matmul'
 			   --image-name='john123/matmul-example'
 \end{lstlisting}
+
 Now, we write down the context-dir ('/home/john/matmul') and the classpath ('/home/john/matmul/matmul.jar'). We do this because they will be needed for future executions. \\
+
 Since the image is created and uploaded, we won't need to do this step anymore.
-\\
-\\
+
+~ \newline
+
 Now we are going to execute our Matmul application in a Docker cluster.
+
 Take as assumptions:
 \begin{itemize}  
 \item We will use \textbf{5 worker docker containers}.
@@ -234,9 +247,11 @@ Take as assumptions:
 \item We will use \textbf{debug (-d)}.
 \item Finally, as we would do with the typical runcompss, we specify the \textbf{main class} name and its \textbf{parameters} (16 and 4 in this case).
 \end{itemize}
+
 In addition, we know from the former step that the image name is 'john123/matmul-example', 
 the \textbf{context directory} is '/home/john/matmul', and the classpath is '/home/john/matmul/matmul.jar'.
 And this is how you would run \textbf{runcompss-docker}:
+
 \begin{lstlisting}[language=bash]
 runcompss-docker --worker-containers=5
                  --swarm-manager='129.114.108.8:4000'
@@ -245,10 +260,11 @@ runcompss-docker --worker-containers=5
                  --classpath=/home/john/matmul/matmul.jar
                  -d
                  matmul.objects.Matmul 16 4
-\end{lstlisting}           
+\end{lstlisting}
+
 Here we show another example using the short arguments form, with the KMeans example application, 
 that is also provided as an example COMPSs application to you:
-\\
+
 First step, create the image once:
 \begin{lstlisting}[language=bash]
 runcompss-docker-gen-image --context-dir='/home/laura/apps/kmeans'
@@ -289,6 +305,7 @@ which this project is funded. Chameleon will also sets of partnerships with comm
 For more information please check \url{https://www.chameleoncloud.org/} .
 
 \subsubsection{Execution}
+
 Currently, COMPSs can only handle the Chameleon infrastructure as a cluster (deployed inside a lease). Next, we provide the steps
 needed to execute COMPSs applications at Chameleon:
 

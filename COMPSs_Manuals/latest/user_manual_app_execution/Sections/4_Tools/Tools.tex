@@ -31,9 +31,8 @@ compss@bsc:~$ gengraph ~/.COMPSs/sparseLU.arrays.SparseLU_01/monitor/complete_gr
 The COMPSs Framework includes a Web graphical interface that can be used to monitor the execution of COMPSs applications. COMPSs Monitor is installed as a service and can be easily managed by running any of the following
 commands:
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ sudo service compss-monitor usage
-Usage: /usr/sbin/service compss-monitor 
-           {start | stop | reload | restart | try-restart | force-reload | status}
+compss@bsc:~$ /etc/init.d/compss-monitor usage
+Usage: compss-monitor {start | stop | reload | restart | try-restart | force-reload | status}
 \end{lstlisting}
 
 \subsubsection{Service configuration}
@@ -137,13 +136,13 @@ available at \url{http://compss.bsc.es} .
 \subsubsection{Trace Command}
 
 
-In order to obtain a post-execution trace file one of the following options \textbf{-t, --tracing, --tracing=true, --tracing=basic} must be added to the runcompss command. All this options activate the basic tracing mode; the advanced mode is activated with the option \textbf{--tracing=advanced}. For further information 
-about advanced mode check the \textit{COMPSs Tracing Manual}. Next, we provide an
-example of the command execution with the basic tracing option enabled for a java k-means application.
+In order to obtain a post-execution trace file one of the following options \textbf{-t, -{}-tracing, -{}-tracing=true, -{}-tracing=basic} 
+must be added to the runcompss command. All this options activate the basic tracing mode; the advanced mode is activated with the 
+option \textbf{-{}-tracing=advanced}. For further information about advanced mode check the \textit{COMPSs Tracing Manual}. Next, we
+provide an example of the command execution with the basic tracing option enabled for a java K-Means application.
 
 \begin{lstlisting}[language=bash]
-*** RUNNING JAVA APPLICATION KMEANS
-Resolved: /path/to/jar/kmeans.jar:
+compss@bsc:~$ runcompss -t kmeans.Kmeans
 ----------------- Executing kmeans.Kmeans --------------------------
 
 Extrae: WARNING!
@@ -206,11 +205,11 @@ mpi2prv: Congratulations! ./trace/kmeans.Kmeans_compss_trace_1460456106.prv has 
 
 At the end of the execution the trace will be stored inside the \textit{trace} folder under the application log directory.
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd .COMPSs/kmeans.Kmeans/trace/
+compss@bsc:~$ cd .COMPSs/kmeans.Kmeans_01/trace/
 compss@bsc:~$ ls -1
-hmmerobj.kmeans.Kmeans_compss_trace_1460456106.pcf
-hmmerobj.kmeans.Kmeans_compss_trace_1460456106.prv
-hmmerobj.kmeans.Kmeans_compss_trace_1460456106.row
+kmeans.Kmeans_compss_trace_1460456106.pcf
+kmeans.Kmeans_compss_trace_1460456106.prv
+kmeans.Kmeans_compss_trace_1460456106.row
 \end{lstlisting}
 
 
@@ -231,6 +230,7 @@ For further information about \textit{Paraver} please visit the following site:
 \end{center}
 
 \newpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%% IDE %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
