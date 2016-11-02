@@ -85,6 +85,16 @@ def ret_func():
      return 1
 \end{lstlisting}
 
+Moreover, if the function or method returns more than one value, the programmer must specify how many 
+and their type in the {\it returns} argument. The next next code snippet shows how to specify that two 
+values (an integer and a list) are returned:
+
+\begin{lstlisting}[language=python]
+@task(%*{\bf returns }*) = (int, list))
+def ret_func():
+     return 1, [2, 3]
+\end{lstlisting}
+
 For tasks corresponding to instance methods, by default the task is assumed to modify the callee object 
 (the object on which the method is invoked). The programmer can tell otherwise by setting the 
 {\it isModifier} argument of the {\it $@$task} decorator to {\it False}.
@@ -150,10 +160,9 @@ def func(a, b, c):
      ...
 \end{lstlisting}
 
-This decorator enables the user to set the particular constraints for each task, such as the amount of Cores required. A full 
-description of the supported constraints can be found in Table \ref{tab:constraints} in Section \ref{sec:Constraints}.
-
-\newpage
+This decorator enables the user to set the particular constraints for each task, such as the amount of Cores required explicitly.
+Alternatively, it is also possible to indicate that the value of a constraint is specified in a environment variable.
+A full description of the supported constraints can be found in Table \ref{tab:constraints} in Section \ref{sec:Constraints}.
 
 For example:
 
@@ -162,7 +171,7 @@ from pycompss.api.task import task
 from pycompss.api.constraint import constraint
 from pycompss.api.parameter import INOUT
 
-%*{\bf @constraint }*)(ComputingUnits="4", AppSoftware="numpy,scipy,gnuplot")
+%*{\bf @constraint }*)(ComputingUnits="4", AppSoftware="numpy,scipy,gnuplot", memorySize="$MIN_MEM_REQ")
 %*{\bf @task }*)(c = INOUT)
 def func(a, b, c):
      c += a*b
