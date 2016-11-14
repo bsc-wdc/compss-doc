@@ -181,14 +181,14 @@ method.
 package simple;
 
 import  integratedtoolkit.types.annotations.Constraints;
-import  integratedtoolkit.types.annotations.Method;
+import  integratedtoolkit.types.annotations.task.Method;
 import  integratedtoolkit.types.annotations.Parameter;
 import  integratedtoolkit.types.annotations.Parameter.Direction;
 import  integratedtoolkit.types.annotations.Parameter.Type;
 
 public interface SimpleItf {
 
-  %*{\bf @Constraints(processorCPUCount = 1, memoryPhysicalSize = 0.3f) }*)
+  %*{\bf @Constraints(computingUnits = "1", memorySize = "0.3") }*)
   %*{\bf @Method(declaringClass = "simple.SimpleImpl") }*)
   void increment(
       %*{\bf @Parameter(type = Type.FILE, direction = Direction.INOUT) }*)

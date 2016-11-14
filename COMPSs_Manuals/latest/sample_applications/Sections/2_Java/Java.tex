@@ -12,14 +12,14 @@ the application to access the data directly during the rest of the execution.
 
 The Virtual Machine available at our webpage (\url{http://compss.bsc.es/}) provides a development environment with
 all the applications listed in the following sections. The codes of all the applications can be found under the 
-$/home/compss/workspace\_java/$ folder. 
+$/home/compss/tutorial\_apps/java/$ folder. 
 
 %%%%%%%%%%%%%%%
 %% HELLO WORLD 
 %%%%%%%%%%%%%%%
 \subsection{Hello World}
-The Hello Wolrd is a Java application that creates a task and prints a Hello World! message. Its purpose is to clarify that the COMPSs tasks output is
-redirected to the job files and it is \textbf{not} available at the standard output. 
+The Hello Wolrd is a Java application that creates a task and prints a Hello World! message. Its purpose is to clarify that the 
+COMPSs tasks output is redirected to the job files and it is \textbf{not} available at the standard output. 
 
 Next we provide the important parts of the application's code.
 
@@ -69,25 +69,25 @@ see the message from the main code at the standard output. The message printed f
 Let's try it. First we proceed to compile the code by running the following instructions:
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd ~/workspace_java/hello/src/main/java/hello/
-compss@bsc:~/workspace_java/hello/src/main/java/hello$ javac *.java
-compss@bsc:~/workspace_java/hello/src/main/java/hello$ cd ..
-compss@bsc:~/workspace_java/hello/src/main/java$ jar cf hello.jar hello
-compss@bsc:~/workspace_java/hello/src/main/java$ mv hello.jar ~/workspace_java/hello/jar/
+compss@bsc:~$ cd ~/tutorial_apps/java/hello/src/main/java/hello/
+compss@bsc:~/tutorial_apps/java/hello/src/main/java/hello$ javac *.java
+compss@bsc:~/tutorial_apps/java/hello/src/main/java/hello$ cd ..
+compss@bsc:~/tutorial_apps/java/hello/src/main/java$ jar cf hello.jar hello
+compss@bsc:~/tutorial_apps/java/hello/src/main/java$ mv hello.jar ~/tutorial_apps/java/hello/jar/
 \end{lstlisting}
 
 Alternatively, this example application is prepared to be compiled with \textit{maven}:
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd ~/workspace_java/hello/
-compss@bsc:~/workspace_java/hello$ mvn clean package
+compss@bsc:~$ cd ~/tutorial_apps/java/hello/
+compss@bsc:~/tutorial_apps/java/hello$ mvn clean package
 \end{lstlisting}
 
 Once done, we can sequentially execute the application by directly invoking the \textit{jar} file.
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd ~/workspace_java/hello/jar/
-compss@bsc:~/workspace_java/hello/jar$ java -cp hello.jar hello.Hello 
+compss@bsc:~$ cd ~/tutorial_apps/java/hello/jar/
+compss@bsc:~/tutorial_apps/java/hello/jar$ java -cp hello.jar hello.Hello 
 Hello World! (from main application)
 Hello World! (from a task)
 \end{lstlisting}
@@ -95,28 +95,30 @@ Hello World! (from a task)
 And we can also execute the application with COMPSs:
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd ~/workspace_java/hello/jar/
-compss@bsc:~/workspace_java/hello/jar$ runcompss -d hello.Hello
-Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
+compss@bsc:~$ cd ~/tutorial_apps/java/hello/jar/
+compss@bsc:~/tutorial_apps/java/hello/jar$ runcompss -d hello.Hello
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
 
 ----------------- Executing hello.Hello --------------------------
 
 WARNING: IT Properties file is null. Setting default values
-[   API]  -  Deploying COMPSs Runtime v<version>
-[   API]  -  Starting COMPSs Runtime v<version>
-[   API]  -  Initializing components
-[   API]  -  Ready to process tasks
+[(928)    API]  -  Deploying COMPSs Runtime v<version>
+[(931)    API]  -  Starting COMPSs Runtime v<version>
+[(931)    API]  -  Initializing components
+[(1472)    API]  -  Ready to process tasks
 Hello World! (from main application)
-[   API]  -  Creating task from method sayHello in hello.HelloImpl
-[   API]  -  There is 0 parameter
-[   API]  -  No more tasks for app 1
-[   API]  -  Getting Result Files 1
-[   API]  -  Stop IT reached
-[   API]  -  Stopping AP...
-[   API]  -  Stopping TD...
-[   API]  -  Stopping Comm...
-[   API]  -  Execution Finished
+[(1474)    API]  -  Creating task from method sayHello in hello.HelloImpl
+[(1474)    API]  -  There is 0 parameter
+[(1477)    API]  -  No more tasks for app 1
+[(4029)    API]  -  Getting Result Files 1
+[(4030)    API]  -  Stop IT reached
+[(4030)    API]  -  Stopping AP...
+[(4031)    API]  -  Stopping TD...
+[(4161)    API]  -  Stopping Comm...
+[(4163)    API]  -  Runtime stopped
+[(4166)    API]  -  Execution Finished
 
 ------------------------------------------------------------
 \end{lstlisting}
@@ -130,15 +132,14 @@ compss@bsc:~/.COMPSs/hello.Hello_01/jobs$ ls -1
 job1_NEW.err
 job1_NEW.out
 compss@bsc:~/.COMPSs/hello.Hello_01/jobs$ cat job1_NEW.out
-compss@bsc:~/.COMPSs/hello.Hello_02/jobs$ cat job1_NEW.out 
-[DEBUG|integratedtoolkit.Worker|Executor] Creating sandbox for job 1
+[JAVA EXECUTOR] executeTask - Begin task execution
 WORKER - Parameters of execution:
-  * Method class: hello.HelloImpl
-  * Method name: sayHello
+  * Method type: METHOD
+  * Method definition: [DECLARING CLASS=hello.HelloImpl, METHOD NAME=sayHello]
   * Parameter types:
   * Parameter values:
 Hello World! (from a task)
-[DEBUG|integratedtoolkit.Worker|Executor] Removing sandbox for job 1
+[JAVA EXECUTOR] executeTask - End task execution
 \end{lstlisting}
 
 %%%%%%%%%%%%%%%
@@ -206,27 +207,26 @@ Next we also provide the invocation of the task from the main code and the incre
 Finally, to compile and execute this application users must run the following commands:
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd ~/workspace_java/simple/src/main/java/simple/
-compss@bsc:~/workspace_java/simple/src/main/java/simple$ javac *.java
-compss@bsc:~/workspace_java/simple/src/main/java/simple$ cd ..
-compss@bsc:~/workspace_java/simple/src/main/java$ jar cf simple.jar simple
-compss@bsc:~/workspace_java/simple/src/main/java$ mv simple.jar ~/workspace_java/simple/jar/
+compss@bsc:~$ cd ~/tutorial_apps/java/simple/src/main/java/simple/
+compss@bsc:~/tutorial_apps/java/simple/src/main/java/simple$ javac *.java
+compss@bsc:~/tutorial_apps/java/simple/src/main/java/simple$ cd ..
+compss@bsc:~/tutorial_apps/java/simple/src/main/java$ jar cf simple.jar simple
+compss@bsc:~/tutorial_apps/java/simple/src/main/java$ mv simple.jar ~/tutorial_apps/java/simple/jar/
 
-compss@bsc:~$ cd ~/workspace_java/simple/jar
-compss@bsc:~/workspace_java/simple/jar$ runcompss simple.Simple 1
-compss@bsc:~/workspace_java/simple/jar$ runcompss simple.Simple 1
-Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
+compss@bsc:~$ cd ~/tutorial_apps/java/simple/jar
+compss@bsc:~/tutorial_apps/java/simple/jar$ runcompss simple.Simple 1
+compss@bsc:~/tutorial_apps/java/simple/jar$ runcompss simple.Simple 1
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
 
 ----------------- Executing simple.Simple --------------------------
 
 WARNING: IT Properties file is null. Setting default values
-[   API]  -  Starting COMPSs Runtime v<version>
+[(772)    API]  -  Starting COMPSs Runtime v<version>
 Initial counter value is 1
 Final counter value is 2
-[   API]  -  No more tasks for app 1
-[   API]  -  Getting Result Files 1
-[   API]  -  Execution Finished
+[(3813)    API]  -  Execution Finished
 
 ------------------------------------------------------------
 \end{lstlisting}
@@ -286,21 +286,22 @@ As shown in the main code, this application has 4 parameters that stand for:
 Next we will compile and run the Increment application with the \textit{-g} option to be able to generate the final graph at the end of the execution.
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd ~/workspace_java/increment/src/main/java/increment/
-compss@bsc:~/workspace_java/increment/src/main/java/increment$ javac *.java
-compss@bsc:~/workspace_java/increment/src/main/java/increment$ cd ..
-compss@bsc:~/workspace_java/increment/src/main/java$ jar cf increment.jar increment
-compss@bsc:~/workspace_java/increment/src/main/java$ mv increment.jar ~/workspace_java/increment/jar/
+compss@bsc:~$ cd ~/tutorial_apps/java/increment/src/main/java/increment/
+compss@bsc:~/tutorial_apps/java/increment/src/main/java/increment$ javac *.java
+compss@bsc:~/tutorial_apps/java/increment/src/main/java/increment$ cd ..
+compss@bsc:~/tutorial_apps/java/increment/src/main/java$ jar cf increment.jar increment
+compss@bsc:~/tutorial_apps/java/increment/src/main/java$ mv increment.jar ~/tutorial_apps/java/increment/jar/
 
-compss@bsc:~$ cd ~/workspace_java/increment/jar
-compss@bsc:~/workspace_java/increment/jar$ runcompss -g increment.Increment 10 1 2 3
-Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
+compss@bsc:~$ cd ~/tutorial_apps/java/increment/jar
+compss@bsc:~/tutorial_apps/java/increment/jar$ runcompss -g increment.Increment 10 1 2 3
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
 
 ----------------- Executing increment.Increment --------------------------
 
 WARNING: IT Properties file is null. Setting default values
-[   API]  -  Starting COMPSs Runtime v<version>
+[(1028)    API]  -  Starting COMPSs Runtime v<version>
 Initial counter values:
 - Counter1 value is 1
 - Counter2 value is 2
@@ -309,9 +310,7 @@ Final counter values:
 - Counter1 value is 11
 - Counter2 value is 12
 - Counter3 value is 13
-[   API]  -  No more tasks for app 1
-[   API]  -  Getting Result Files 1
-[   API]  -  Execution Finished
+[(4403)    API]  -  Execution Finished
 
 ------------------------------------------------------------
 \end{lstlisting}
@@ -389,59 +388,64 @@ compss@bsc:~$ runcompss matmul.<IMPLEMENTATION_TYPE>.Matmul <matrix_dim> <block_
 Finally, we provide an example of execution for each implementation.
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd ~/workspace_java/matmul/jar/
-compss@bsc:~/workspace_java/matmul/jar$ runcompss matmul.objects.Matmul 8 4
-Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
+compss@bsc:~$ cd ~/tutorial_apps/java/matmul/jar/
+compss@bsc:~/tutorial_apps/java/matmul/jar$ runcompss matmul.objects.Matmul 8 4
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
 
 ----------------- Executing matmul.objects.Matmul --------------------------
 
 WARNING: IT Properties file is null. Setting default values
-[   API]  -  Starting COMPSs Runtime v<version>
-Running with the following parameters:
-- N: 8
-- M: 4
-[   API]  -  No more tasks for app 1
-[   API]  -  Getting Result Files 1
-[   API]  -  Execution Finished
+[(887)    API]  -  Starting COMPSs Runtime v<version>
+[LOG] MSIZE parameter value = 8
+[LOG] BSIZE parameter value = 4
+[LOG] Allocating A/B/C matrix space
+[LOG] Computing Result
+[LOG] Main program finished.
+[(7415)    API]  -  Execution Finished
 
 ------------------------------------------------------------
 \end{lstlisting}
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd ~/workspace_java/matmul/jar/
-compss@bsc:~/workspace_java/matmul/jar$ runcompss matmul.files.Matmul 8 4
-Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
+compss@bsc:~$ cd ~/tutorial_apps/java/matmul/jar/
+compss@bsc:~/tutorial_apps/java/matmul/jar$ runcompss matmul.files.Matmul 8 4
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
 
 ----------------- Executing matmul.files.Matmul --------------------------
 
 WARNING: IT Properties file is null. Setting default values
-[   API]  -  Starting COMPSs Runtime v<version>
-[   API]  -  No more tasks for app 1
-[   API]  -  Getting Result Files 1
-[   API]  -  Execution Finished
+[(907)    API]  -  Starting COMPSs Runtime v<version>
+[LOG] MSIZE parameter value = 8
+[LOG] BSIZE parameter value = 4
+[LOG] Computing result
+[LOG] Main program finished.
+[(9925)    API]  -  Execution Finished
 
 ------------------------------------------------------------
 \end{lstlisting}
 
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd ~/workspace_java/matmul/jar/
-compss@bsc:~/workspace_java/matmul/jar$ runcompss matmul.arrays.Matmul 8 4
-Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
+compss@bsc:~$ cd ~/tutorial_apps/java/matmul/jar/
+compss@bsc:~/tutorial_apps/java/matmul/jar$ runcompss matmul.arrays.Matmul 8 4
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
 
 ----------------- Executing matmul.arrays.Matmul --------------------------
 
 WARNING: IT Properties file is null. Setting default values
-[   API]  -  Starting COMPSs Runtime v<version>
-Running with the following parameters:
-- N: 8
-- M: 4
-[   API]  -  No more tasks for app 1
-[   API]  -  Getting Result Files 1
-[   API]  -  Execution Finished
+[(1062)    API]  -  Starting COMPSs Runtime v<version>
+[LOG] MSIZE parameter value = 8
+[LOG] BSIZE parameter value = 4
+[LOG] Allocating C matrix space
+[LOG] Computing Result
+[LOG] Main program finished.
+[(7811)    API]  -  Execution Finished
 
 ------------------------------------------------------------
 \end{lstlisting}
@@ -477,72 +481,71 @@ the matrix:
 Thus, the commands needed to execute the application is with each implementation are:
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd workspace_java/sparseLU/jar/
-compss@bsc:~/workspace_java/sparseLU/jar$ runcompss sparseLU.objects.SparseLU 16 8
-Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
+compss@bsc:~$ cd tutorial_apps/java/sparseLU/jar/
+compss@bsc:~/tutorial_apps/java/sparseLU/jar$ runcompss sparseLU.objects.SparseLU 16 8
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
 
 ----------------- Executing sparseLU.objects.SparseLU --------------------------
 
 WARNING: IT Properties file is null. Setting default values
-[   API]  -  Starting COMPSs Runtime v<version> (build yyyyMMdd-XXXX.XXXX)
+[(1221)    API]  -  Starting COMPSs Runtime v<version>
 [LOG] Running with the following parameters:
 [LOG]  - Matrix Size: 16
 [LOG]  - Block Size:  8
 [LOG] Initializing Matrix
 [LOG] Computing SparseLU algorithm on A
 [LOG] Main program finished.
-[   API]  -  No more tasks for app 1
-[   API]  -  Getting Result Files 1
-[   API]  -  Execution Finished
+[(13642)    API]  -  Execution Finished
 
 ------------------------------------------------------------
 \end{lstlisting}
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd workspace_java/sparseLU/jar/
-compss@bsc:~/workspace_java/sparseLU/jar$ runcompss sparseLU.files.SparseLU 4 8
-Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
+compss@bsc:~$ cd tutorial_apps/java/sparseLU/jar/
+compss@bsc:~/tutorial_apps/java/sparseLU/jar$ runcompss sparseLU.files.SparseLU 4 8
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
 
 ----------------- Executing sparseLU.files.SparseLU --------------------------
 
 WARNING: IT Properties file is null. Setting default values
-[   API]  -  Starting COMPSs Runtime v<version> (build yyyyMMdd-XXXX.XXXX)
+[(1082)    API]  -  Starting COMPSs Runtime v<version>
 [LOG] Running with the following parameters:
-[LOG]  - Matrix Size: 4
+[LOG]  - Matrix Size: 16
 [LOG]  - Block Size:  8
 [LOG] Initializing Matrix
 [LOG] Computing SparseLU algorithm on A
 [LOG] Main program finished.
-[   API]  -  No more tasks for app 1
-[   API]  -  Getting Result Files 1
-[   API]  -  Execution Finished
+[(13605)    API]  -  Execution Finished
 
 ------------------------------------------------------------
+
 \end{lstlisting}
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd workspace_java/sparseLU/jar/
-compss@bsc:~/workspace_java/sparseLU/jar$ runcompss sparseLU.arrays.SparseLU 8 8
-Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
+compss@bsc:~$ cd tutorial_apps/java/sparseLU/jar/
+compss@bsc:~/tutorial_apps/java/sparseLU/jar$ runcompss sparseLU.arrays.SparseLU 8 8
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
 
 ----------------- Executing sparseLU.arrays.SparseLU --------------------------
 
 WARNING: IT Properties file is null. Setting default values
-[   API]  -  Starting COMPSs Runtime v<version> (build yyyyMMdd-XXXX.XXXX)
+[(1082)    API]  -  Starting COMPSs Runtime v<version>
 [LOG] Running with the following parameters:
-[LOG]  - Matrix Size: 8
+[LOG]  - Matrix Size: 16
 [LOG]  - Block Size:  8
 [LOG] Initializing Matrix
 [LOG] Computing SparseLU algorithm on A
 [LOG] Main program finished.
-[   API]  -  No more tasks for app 1
-[   API]  -  Getting Result Files 1
-[   API]  -  Execution Finished
+[(13605)    API]  -  Execution Finished
 
 ------------------------------------------------------------
+
 \end{lstlisting}
 
 
@@ -608,7 +611,7 @@ Where:
 Example:
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ runcompss blast.Blast true
-                        /home/compss/workspace_java/blast/binary/blastall
+                        /home/compss/tutorial_apps/java/blast/binary/blastall
                         /sharedDisk/Blast/databases/swissprot/swissprot
                         /sharedDisk/Blast/sequences/sargasso_test.fasta 
                         4 

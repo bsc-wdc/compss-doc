@@ -12,7 +12,7 @@ the application to access the data directly during the rest of the execution.
 
 The Virtual Machine available at our webpage (\url{http://compss.bsc.es/}) provides a development environment with
 all the applications listed in the following sections. The codes of all the applications can be found under the 
-$/home/compss/workspace\_python/$ folder. 
+$/home/compss/tutorial\_apps/python/$ folder. 
 
 %%%%%%%%%%%%%%%
 %% SIMPLE
@@ -66,21 +66,19 @@ The simple application can be executed by invoking the runcompss command with th
 an example of its execution.
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd ~/workspace_python/simple/
-compss@bsc:~/workspace_python/simple$ runcompss --lang=python ~/workspace_python/simple/simple.py 1
-Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/resources.xml
+compss@bsc:~$ cd ~/tutorial_apps/python/simple/
+compss@bsc:~/tutorial_apps/python/simple$ runcompss --lang=python ~/tutorial_apps/python/simple/simple.py 1
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
 
 ----------------- Executing simple.py --------------------------
 
 WARNING: IT Properties file is null. Setting default values
-[   API]  -  Deploying COMPSs Runtime v<version>
-[   API]  -  Starting COMPSs Runtime v<version>
+[(639)    API]  -  Starting COMPSs Runtime v<version>
 Initial counter value is 1
 Final counter value is 2
-[   API]  -  No more tasks for app 0
-[   API]  -  Getting Result Files 0
-[   API]  -  Execution Finished
+[(6230)    API]  -  Execution Finished
 
 ------------------------------------------------------------
 \end{lstlisting}
@@ -133,26 +131,24 @@ As shown in the main code, this application has 4 parameters that stand for:
 Next we run the Increment application with the \textit{-g} option to be able to generate the final graph at the end of the execution.
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~/workspace_python/increment$ runcompss --lang=python -g ~/workspace_python/increment/increment.py 10 1 2 3
-Using default location for project file: /opt/COMPSs/Runtime/scripts/configuration/xml/projects/project.xml
-Using default location for resources file: /opt/COMPSs/Runtime/scripts/configuration/xml/resources/resources.xml
+compss@bsc:~/tutorial_apps/python/increment$ runcompss --lang=python -g ~/tutorial_apps/python/increment/increment.py 10 1 2 3
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
 
 ----------------- Executing increment.py --------------------------
 
 WARNING: IT Properties file is null. Setting default values
-[   API]  -  Deploying COMPSs Runtime v<version>
-[   API]  -  Starting COMPSs Runtime v<version>
+[(670)    API]  -  Starting COMPSs Runtime v<version>
 Initial counter values:
 - Counter1 value is 1
-- Counter1 value is 2
-- Counter1 value is 3
+- Counter2 value is 2
+- Counter3 value is 3
 Final counter values:
 - Counter1 value is 11
-- Counter1 value is 12
-- Counter1 value is 13
-[   API]  -  No more tasks for app 0
-[   API]  -  Getting Result Files 0
-[   API]  -  Execution Finished
+- Counter2 value is 12
+- Counter3 value is 13
+[(7390)    API]  -  Execution Finished
 
 ------------------------------------------------------------
 \end{lstlisting}

@@ -158,8 +158,8 @@ Applications} document available at \url{http://compss.bsc.es} .
 \subsubsection{Running Java applications}
 A Java COMPSs application can be launched through the following command:
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd workspace_java/simple/jar/
-compss@bsc:~/workspace_java/simple/jar$ runcompss simple.Simple <initial_number>
+compss@bsc:~$ cd tutorial_apps/java/simple/jar/
+compss@bsc:~/tutorial_apps/java/simple/jar$ runcompss simple.Simple <initial_number>
 \end{lstlisting}
 
 \begin{figure}[h!]
@@ -176,12 +176,12 @@ we can explicitly do this by exporting the \textbf{CLASSPATH} variable or by pro
 --classpath value. Next, we provide two more ways to perform the same execution:
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ export CLASSPATH=$CLASSPATH:/home/compss/workspace_java/simple/jar/simple.jar
+compss@bsc:~$ export CLASSPATH=$CLASSPATH:/home/compss/tutorial_apps/java/simple/jar/simple.jar
 compss@bsc:~$ runcompss simple.Simple <initial_number>
 \end{lstlisting}
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ runcompss --classpath=/home/compss/workspace_java/simple/jar/simple.jar 
+compss@bsc:~$ runcompss --classpath=/home/compss/tutorial_apps/java/simple/jar/simple.jar 
                         simple.Simple <initial_number>
 \end{lstlisting}
 
@@ -190,8 +190,8 @@ compss@bsc:~$ runcompss --classpath=/home/compss/workspace_java/simple/jar/simpl
 To launch a COMPSs Python application users have to provide the \textit{-{}-lang=python} option to the runcompss command. 
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd workspace_python/simple/
-compss@bsc:~/workspace_python/simple$ runcompss --lang=python simple.py <initial_number>
+compss@bsc:~$ cd tutorial_apps/python/simple/
+compss@bsc:~/tutorial_apps/python/simple$ runcompss --lang=python ./simple.py <initial_number>
 \end{lstlisting}
 
 \begin{figure}[h!]
@@ -209,8 +209,8 @@ further information please refer to the \textit{COMPSs User Manual: Application 
 \url{http://compss.bsc.es} . Once complied, the \textit{-{}-lang=c} option must be provided to the runcompss command.
 
 \begin{lstlisting}[language=bash]
-compss@bsc:~$ cd workspace_c/simple/
-compss@bsc:~/workspace_c/simple$ runcompss --lang=c simple <initial_number>
+compss@bsc:~$ cd tutorial_apps/c/simple/
+compss@bsc:~/tutorial_apps/c/simple$ runcompss --lang=c simple <initial_number>
 \end{lstlisting}
 
 \begin{figure}[h!]
@@ -221,6 +221,7 @@ compss@bsc:~/workspace_c/simple$ runcompss --lang=c simple <initial_number>
 \end{figure}
 \vspace{-0.4cm}
 
+\newpage
 
 \subsection{Additional configurations}
 
@@ -689,50 +690,6 @@ the information to be specified by the user inside this $<Cloud>$ tag.
 
 The next sections provide a description of each of the currently available connectors.
 
-\paragraph{Cloud connectors: Amazon EC2}
-The COMPSs runtime features a connector to interact with the Amazon Elastic Compute Cloud (EC2).
-
-Amazon EC2 offers a well-defined pricing system for VM rental. A total of 8 pricing zones are 
-established, corresponding to 8 different locations of Amazon datacenters around the globe. 
-Besides, inside each zone, several per-hour prices exist for VM instances with different capabilities. 
-The EC2 connector stores the prices of standard on-demand VM instance types (t1.micro, m1.small, 
-m1.medium, m1.large and m1.xlarge) for each zone. Spot instances are not currently supported by the connector.
-
-When the COMPSs runtime chooses to create a VM in the Amazon public Cloud, the EC2 connector receives 
-the information about the requested characteristics of the new VM, namely the number of cores, memory, 
-disk and architecture (32/64 bits). According to that information, the connector tries to find the VM 
-instance type in Amazon that better matches those characteristics and then requests the creation of a 
-new VM instance of that type.
-
-Once an EC2 VM is created, a whole hour slot is paid in advance; for that reason, the connector keeps 
-the VM alive at least during such period, saving it for later use if necessary. When the task load 
-decreases and a VM is no longer used, the connector puts it aside if the hour slot has not expired yet, 
-instead of terminating it. After that, if the task load increases again and the EC2 connector requests 
-a VM, first the set of saved VMs is examined in order to find a VM that is compatible with the requested 
-characteristics. If one is found, the VM is reused and becomes eligible again for the execution of tasks; 
-hence, the cost and time to create a new VM are not paid. A VM is only destroyed when the end of its hour 
-slot is approaching and it is still in saved state.
-
-\newpage
-
-Table \ref{tab:ec2_connector_properties} summarizes the provider-specific properties that must be 
-defined in the project.xml file for the Amazon EC2 connector.
-\bgroup
-  \def\arraystretch{1.5}
-  \begin{longtable}{| p{0.3\textwidth} | p{0.6\textwidth} |}
-  \hline
-  \textbf{Placement}  &   Location of the amazon datacentre to use \\ \hline
-  Access Key Id       &   Identifier of the access key of the Amazon EC2 account \\ \hline
-  Secret Key Id       &   Identifier of the secret key of the Amazon EC2 account \\ \hline
-  Key host location   &   Path to the SSH key in the local host, used to connect to the VMs \\ \hline
-  KeyPair name        &   Name of the key pair to use \\ \hline
-  SecurityGroup name  &   Name of the security group to use \\ \hline
-  
-  \caption{Properties of the Amazon EC2 connector.}
-  \label{tab:ec2_connector_properties}
-  \end{longtable}
-\egroup
-
 \paragraph{Cloud connectors: rOCCI}
 The connector uses the rOCCI binary client\footnote{\url{https://appdb.egi.eu/store/software/rocci.cli}} 
 (version newer or equal than 4.2.5) which has to be installed in the node where the COMPSs main 
@@ -781,3 +738,7 @@ under the \textit{Instance} tag.
       \label{tab:rOCCI_configuration}
   \end{longtable}
 \egroup
+
+% TODO
+%\paragraph{Cloud connectors: jClouds}
+%The connector uses the jClouds client ...

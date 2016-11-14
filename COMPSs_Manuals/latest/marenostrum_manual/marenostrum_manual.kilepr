@@ -38,7 +38,7 @@ Indentation Mode=normal
 Mode=LaTeX
 
 [document-settings,item:Sections/3_Jobs/Jobs.tex]
-Bookmarks=251
+Bookmarks=247
 Encoding=UTF-8
 Highlighting=LaTeX
 Indentation Mode=normal
@@ -80,30 +80,30 @@ order=0
 
 [item:Sections/2_Modules/Modules.tex]
 archive=true
-column=24
+column=45
 encoding=UTF-8
 highlight=LaTeX
-line=34
+line=54
 mode=LaTeX
 open=false
 order=3
 
 [item:Sections/3_Jobs/Jobs.tex]
 archive=true
-column=2
+column=21
 encoding=UTF-8
 highlight=LaTeX
-line=189
+line=222
 mode=LaTeX
 open=false
 order=0
 
 [item:Sections/4_Monitor/Monitor.tex]
 archive=true
-column=0
+column=27
 encoding=UTF-8
 highlight=LaTeX
-line=69
+line=65
 mode=LaTeX
 open=false
 order=5
@@ -141,22 +141,22 @@ JumpList=
 ViMarks=.,5,23,[,5,23,],5,23
 
 [view-settings,view=0,item:Sections/2_Modules/Modules.tex]
-CursorColumn=24
-CursorLine=34
+CursorColumn=45
+CursorLine=54
 JumpList=
-ViMarks=.,34,23,[,34,19,],34,23
+ViMarks=.,57,0,[,53,0,],57,43
 
 [view-settings,view=0,item:Sections/3_Jobs/Jobs.tex]
-CursorColumn=2
-CursorLine=189
+CursorColumn=21
+CursorLine=222
 JumpList=
-ViMarks=.,189,2,[,189,2,],189,2,a,251,70
+ViMarks=.,222,8,[,222,8,],222,8,a,247,70
 
 [view-settings,view=0,item:Sections/4_Monitor/Monitor.tex]
-CursorColumn=0
-CursorLine=69
+CursorColumn=27
+CursorLine=65
 JumpList=
-ViMarks=.,69,0,[,69,0,],69,0
+ViMarks=.,65,27,[,65,27,],65,27
 
 [view-settings,view=0,item:Sections/4_Monitor/Monitor.text]
 CursorColumn=80

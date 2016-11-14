@@ -202,36 +202,32 @@ $ enqueue_compss \
   --lang=python \
   --log_level=debug \
   <APP> <APP_PARAMETERS>
+
   
 SC Configuration:          default.cfg
 Queue:                     default
 Reservation:               disabled
 Num Nodes:                 3
 Num Switches:              0
+GPUs per node:             0
 Job dependency:            None
 Exec-Time:                 00:15
-Network:                   infiniband
-Node memory:               disabled
-Tasks per Node:            16
-Worker in Master Tasks:    0
-Worker in Master Memory:   disabled
-Master Port:               43789
-Master WD:                 .
-Worker WD:                 gpfs
-Master JVM Opts:           
-Workers JVM Opts:          -Xms24800m,-Xmx24800m,-Xmn1600m
-Worker in Master JVM Opts: 
-Library Path:              .
-Classpath:                 .
-Pythonpath:                .
-Lang:                      python
-COMM:                      integratedtoolkit.nio.master.NIOAdaptor
-Storage name:              null
-Storage conf:              null
-Task execution:            compss
-To COMPSs:                 --lang=python --log_level=debug <APP> <APP_PARAMETERS>
+Storage Home:              null
+Storage Properties:        null
+Other:                     
+        --sc_cfg=default.cfg
+        --tasks_per_node=16
+        --master_working_dir=.
+        --worker_working_dir=gpfs
+        --lang=python
+        --classpath=.
+        --library_path=.
+        --comm=integratedtoolkit.nio.master.NIOAdaptor
+        --tracing=false
+        --graph=false
+        --pythonpath=.
+        <APP> <APP_PARAMETERS>
 Temp submit script is: /scratch/tmp/tmp.pBG5yfFxEo
-Running in COMPSs mode.
 
 $ cat /scratch/tmp/tmp.pBG5yfFxEo
 #!/bin/bash

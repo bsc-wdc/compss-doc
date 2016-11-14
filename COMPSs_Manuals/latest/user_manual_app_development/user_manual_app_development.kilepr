@@ -94,10 +94,10 @@ order=1
 
 [item:Sections/2_Java/Java.tex]
 archive=true
-column=119
+column=62
 encoding=UTF-8
 highlight=LaTeX
-line=239
+line=190
 mode=LaTeX
 open=false
 order=2
@@ -175,10 +175,10 @@ JumpList=
 ViMarks=.,5,23,[,5,23,],5,23
 
 [view-settings,view=0,item:Sections/2_Java/Java.tex]
-CursorColumn=119
-CursorLine=239
+CursorColumn=62
+CursorLine=190
 JumpList=
-ViMarks=.,239,118,[,239,115,],239,118
+ViMarks=.,190,62,[,190,62,],190,62
 
 [view-settings,view=0,item:Sections/3_Python/Python.tex]
 CursorColumn=50
