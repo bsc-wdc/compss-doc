@@ -271,6 +271,49 @@ void Block::print() {
 }
 \end{lstlisting}
 
+\subsubsection{Task Constraints}
+The C/C++ binding also supports the definition of task constraints. The task definition specified in the IDL file must be decorated/annotated with the \textit{@Constraints}. 
+Below, you can find and example of how to define a task with a constraint of using 4 cores. The list of constraints which can be defined for a task can be found in Section~\ref{sec:Constraints}
+
+\begin{lstlisting}[language=C++]
+interface Matmul
+{
+      @Constraints(ComputingUnits = 4
+      void multiplyBlocks(inout Block block1,
+                          in Block block2,
+                          in Block block3);
+                          
+};
+\end{lstlisting}
+
+
+\subsubsection{Task Versions}
+Another COMPSs functionality supported in the C/C++ binding is the definition of different versions for a tasks. 
+The following code show an IDL file where a function has two implementations, with their corresponding constraints. 
+It show an example where the \textit{multiplyBlocks\_GPU} is defined as a implementation of \textit{multiplyBlocks} using the annotation/decoration \textit{@Implements}. 
+It also shows how to set a processor constraint which requires a GPU processor and a CPU core for managing the ofloading of the computation to the GPU. 
+\begin{lstlisting}[language=C++]
+interface Matmul
+{
+        @Constraints(ComputingUnits=4);
+        void multiplyBlocks(inout Block block1, 
+                            in Block block2,
+                            in Block block3);
+
+        // GPU implementation 
+        @Constraints(processors={
+               @Processor(ProcessorType=CPU, ComputingUnits=1)});
+               @Processor(ProcessorType=GPU, ComputingUnits=1)});
+        @Implements(multiplyBlocks);
+        void multiplyBlocks_GPU(inout Block block1,
+                                in Block block2, 
+                                in Block block3); 
+                          
+};
+\end{lstlisting}
+
+
+
 \subsection{Application Compilation}
 To compile the user application with the C/C++ binding  the ``{\bf buildapp}'' command the user has to be executed in the directory of the main application code; 
 the name of the application has to be passed as argument to this script, in this case \textit{Matmul}.
@@ -304,7 +347,7 @@ Command succesful.
 
 The following environment variables must be defined before executing a COMPSs C/C++ application:
             
-JAVA\_HOME: Java JDK installation directory (e.g. /usr/lib/jvm/java-7-openjdk/)
+JAVA\_HOME: Java JDK installation directory (e.g. /usr/lib/jvm/java-8-openjdk/)
 
 After compiling the application, two directories, master and worker, are generated. 
 The master directory contains a binary called as the main file, which is the master application, in our 
