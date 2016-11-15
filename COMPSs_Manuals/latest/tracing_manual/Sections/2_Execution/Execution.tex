@@ -297,9 +297,23 @@ For further information about Extrae, please visit the following site:
 \end{center}
 
 
-\subsection{Custom Extrae}
+\subsection{Custom Installation and Configuration}
+
+
+\subsubsection{Custom Extrae}
 
 COMPSs uses the environment variable EXTRAE\_HOME to get the reference to its installation directory (by default: \textit{/opt/COMPSs/Dependencies/extrae} ). However, if the variable is already defined once the runtime is started, COMPSs will not override it. User can take advantage of this fact in order to use custom extrae installations. Just set the EXTRAE\_HOME to the directory where your custom package is and make sure that it is also set for the worker's environment. 
 \\
 \\
 Be aware that using different extrae packages can break the runtime and executions so change it at your own risk.
+
+\subsubsection{Custom Configuration file}
+
+COMPSs offers the possibility to specify an extrae custom configuration file in order to harness all the tracing capabilities further tailoring which information about the execution is displayed. To do so just pass the file as an execution parameter as follows:
+    
+\begin{itemize}
+ \item -{}-extrae\_config\_file=/path/to/config/file.xml
+\end{itemize}
+
+The configuration file must be in a shared disk between all COMPSs workers because a file's copy is not distributed among them, just the path to that file.
+
