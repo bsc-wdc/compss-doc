@@ -178,6 +178,8 @@ When too many nodes and threads are instrumented, the tracing merge can fail due
 sudo apt-get install libcr-dev mpich2 mpich2-doc
 \end{lstlisting}
 
+Please note that extrae is never compiled with MPI support when building it locally (with buildlocal command).
+
 To check if COMPSs was deployed with MPI support, you can check the installation log and look for the following \textit{Extrae} configuration output:
 
 \begin{lstlisting}[language=bash]
@@ -224,7 +226,6 @@ Please, report bugs to tools@bsc.es
 \textbf{Disclaimer:} the parallel merge with MPI will not bypass the system's maximum number of open files, just distribute the files among the resources. If all resources belong to the same machine, the merge will fail anyways.
 
 \hfill
-
 
 The \textbf{second option} is to increase the OS maximum number of open files. For instance, in Ubuntu:
 \begin{lstlisting}[language=bash]

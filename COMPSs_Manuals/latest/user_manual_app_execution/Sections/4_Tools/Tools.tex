@@ -143,24 +143,24 @@ provide an example of the command execution with the basic tracing option enable
 
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ runcompss -t kmeans.Kmeans
+*** RUNNING JAVA APPLICATION KMEANS
+Resolved: /path/to/jar/kmeans.jar:
+
 ----------------- Executing kmeans.Kmeans --------------------------
 
-Extrae: WARNING!
-Extrae: WARNING! XML parser version and property 'xml-parser-id' do not match. Check the XML file. Trying to proceed...
-Extrae: WARNING!
-Extrae: xml-parser-id found 'Id: xml-parse.c 3682 2015-11-26 14:32:27Z harald $' when expecting 'Id: xml-parse.c 3918 2016-03-11 14:59:01Z harald $'.
 Welcome to Extrae 3.3.0 (revision 3966 based on extrae/trunk)
-Extrae: Parsing the configuration file (/opt/COMPSs/Runtime/scripts/user/../../configuration/xml/tracing/extrae_basic.xml) begins
+Extrae: Parsing the configuration file (/opt/COMPSs/Runtime/configuration/xml/tracing/extrae_basic.xml) begins
 Extrae: Tracing package is located on /opt/COMPSs/Dependencies/extrae/
 Extrae: Generating intermediate files for Paraver traces.
-Extrae: Warning! change-at-time time units not specified. Using seconds
-Extrae: PAPI domain set to ALL for HWC set 1
-Extrae: HWC set 1 contains following counters < PAPI_TOT_INS (0x80000032) PAPI_TOT_CYC (0x8000003b) PAPI_L2_DCM (0x80000002) PAPI_L3_TCM (0x80000008) > - never changes
-Extrae: Warning! change-at-time time units not specified. Using seconds
+Extrae: PAPI domain set to USER for HWC set 1
+Extrae: HWC set 1 contains following counters < PAPI_TOT_INS (0x80000032) PAPI_TOT_CYC (0x8000003b) PAPI_LD_INS (0x80000035) PAPI_SR_INS (0x80000036) > - changing every 500000000 nanoseconds
+Extrae: PAPI domain set to USER for HWC set 2
+Extrae: HWC set 2 contains following counters < PAPI_TOT_INS (0x80000032) PAPI_TOT_CYC (0x8000003b) PAPI_LD_INS (0x80000035) PAPI_SR_INS (0x80000036) PAPI_L2_DCM (0x80000002) > - changing every 500000000 nanoseconds
 WARNING: IT Properties file is null. Setting default values
-[   API]  -  Deploying COMPSs Runtime v1.4 (build 20160412-1147.r2040)
-[   API]  -  Tracing is activated
-[   API]  -  Starting COMPSs Runtime v1.4 (build 20160412-1147.r2040)
+[(751)    API]  -  Deploying COMPSs Runtime v2.0 (build 20161114-1231)
+[(753)    API]  -  Starting COMPSs Runtime v2.0 (build 20161114-1231)
+[(753)    API]  -  Initializing components
+[(1142)   API]  -  Ready to process tasks
 ...
 ...
 ...
