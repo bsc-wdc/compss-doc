@@ -314,6 +314,27 @@ o = ret_func()
 o.yet_another_task()
 \end{lstlisting}
 
+With regard to the objects used as parameters and return of the tasks, they must be serializable.
+In order to check if an object is serializable, the Python built-in cPickle library can be used:
+
+\begin{lstlisting}[language=python]
+from cPickle import loads, dumps
+
+# Instance one object that you want to check if serializable
+o = MyObject()
+
+d = dumps(o)
+l = loads(d)
+
+# The object o has been serialized into d and deserialized into l.
+\end{lstlisting}
+
+A list of the common use serializable objects can be found in:
+\begin{lstlisting}[language=html]
+https://docs.python.org/2/library/pickle.html#what-can-be-pickled-and-unpickled
+\end{lstlisting}
+However, PyCOMPSs serialization has been extended to provide support for lambdas, generators and module objects.
+
 In order to make the COMPSs Python binding function correctly, the programmer should not use relative imports 
 in the code. Relative imports can lead to ambiguous code and they are discouraged in Python, as explained in:
 
