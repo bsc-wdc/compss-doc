@@ -8,17 +8,17 @@ For specific issues not covered in this section, please do not hesitate to conta
 \end{center}
 
 \subsection{How to debug}
-When the application does not behave as expected the first thing users must do is to run it in \textbf{debug} mode executing the \textit{runcompss} command withthe \textit{-d} flag to enable the debug log level.
+When the application does not behave as expected the first thing users must do is to run it in \textbf{debug} mode executing the \texttt{runcompss} command withthe \texttt{-d} flag to enable the debug log level.
 
 In this case the application execution will produce the following files:
 \begin{itemize}
- \item runtime.log
- \item resources.log
- \item jobs folder
+ \item \texttt{runtime.log}
+ \item \texttt{resources.log}
+ \item \texttt{jobs} folder
 \end{itemize}
 
 First, users should check the last lines of the runtime.log. If the file-transfers or the tasks are failing an error message 
-will appear in this file. If the file-transfers are successfully and the jobs are submitted, users should check the \textit{jobs} folder and look 
+will appear in this file. If the file-transfers are successfully and the jobs are submitted, users should check the \texttt{jobs} folder and look 
 at the error messages produced inside each job. Users should notice that if there are $\_RESUBMITTED$ files something 
 inside the job is failing.
 
@@ -26,20 +26,20 @@ inside the job is failing.
 If the tasks remain in \textbf{Blocked} state probably there are no existing resources matching the specific task constraints. 
 This error can be potentially caused by two facts: the resources are not correctly loaded into the runtime, or the task constraints do not match with any resource. 
 
-In the first case, users should take a look at the \textit{resouces.log} and check that all the resources
-defined in the \textit{project.xml} file are available to the runtime. In the second case users should re-define the task 
-constraints taking into account the resources capabilities defined into the \textit{resources.xml} and \textit{project.xml} files.
+In the first case, users should take a look at the \texttt{resouces.log} and check that all the resources
+defined in the \texttt{project.xml} file are available to the runtime. In the second case users should re-define the task 
+constraints taking into account the resources capabilities defined into the \texttt{resources.xml} and \texttt{project.xml} files.
 
 \subsection{Jobs fail}
 If all the application's tasks fail because all the submitted jobs fail, it is probably due to the fact that there is a resource 
 miss-configuration. In most of the cases, the resource that the application is trying to access has no passwordless access through
 the configured user. This can be checked by:
 \begin{itemize}
- \item Open the project.xml. (The default file is stored under \textit{/opt/COMPSs/
- Runtime/configuration/xml/projects/project.xml}
- \item For each resource annotate its name and the value inside the \textit{User} tag. Remember that if there is no \textit{User}
+ \item Open the \texttt{project.xml}. (The default file is stored under \\ \texttt{/opt/COMPSs/
+ Runtime/configuration/xml/projects/project.xml})
+ \item For each resource annotate its name and the value inside the \texttt{User} tag. Remember that if there is no \texttt{User}
  tag COMPSs will try to connect this resource with the same username than the one that launches the main application.
- \item For each annotated resourceName - user please try \textit{ssh user@resourceName}. If the connection asks for a password then
+ \item For each annotated resourceName - user please try \texttt{ssh user@resourceName}. If the connection asks for a password then
  there is an error in the configuration of the ssh access in the resource.
 \end{itemize}
 
@@ -89,32 +89,32 @@ error: cannot find symbol
   location: interface APPLICATION_Itf
 \end{lstlisting}
 
-All these errors are raised because the \textit{compss-engine.jar} is not listed in the CLASSPATH. The default COMPSs installation
+All these errors are raised because the \texttt{compss-engine.jar} is not listed in the CLASSPATH. The default COMPSs installation
 automatically inserts this package into the CLASSPATH but it may have been overwritten or deleted. Please check that your 
-environment variable CLASSPATH containts the \textit{compss-engine.jar} location by running the following command:
+environment variable CLASSPATH containts the \texttt{compss-engine.jar} location by running the following command:
 \begin{lstlisting}[language=bash]
 $ echo $CLASSPATH | grep compss-engine
 \end{lstlisting}
-If the result of the previous command is empty it means that you are missing the \textit{compss-engine.jar} package in your classpath. 
+If the result of the previous command is empty it means that you are missing the \texttt{compss-engine.jar} package in your classpath. 
 
 The easiest solution is to manually export the CLASSPATH variable into the user session:
 \begin{lstlisting}[language=bash]
 $ export CLASSPATH=$CLASSPATH:/opt/COMPSs/Runtime/compss-engine.jar
 \end{lstlisting}
 However, you will need to remember to export this variable every time you log out and back in again. Consequently, we recommend to 
-add this export to the \textit{.bashrc} file:
+add this export to the \texttt{.bashrc} file:
 \begin{lstlisting}[language=bash]
 $ echo "# COMPSs variables for Java compilation" >> ~/.bashrc
 $ echo "export CLASSPATH=$CLASSPATH:/opt/COMPSs/Runtime/compss-engine.jar" >> ~/.bashrc
 \end{lstlisting}
 
-\colorComment{Attention: The \textit{compss-engine.jar} is installed inside the COMPSs installation directory. If you have performed
+\colorComment{Attention: The \texttt{compss-engine.jar} is installed inside the COMPSs installation directory. If you have performed
 a custom installation, the path of the package may be different.}
 
 \subsection{Jobs failed on method reflection}
-When executing an application the main code gets stuck executing a task. Taking a look at the \textit{runtime.log} users can check
-that the job associated to the task has failed (and all its resubmissions too). Then, opening the \textit{$jobX\_NEW.out$} or the
-\textit{$jobX\_NEW.err$} files users find the following error:
+When executing an application the main code gets stuck executing a task. Taking a look at the \texttt{runtime.log} users can check
+that the job associated to the task has failed (and all its resubmissions too). Then, opening the \texttt{jobX\_NEW.out} or the
+\texttt{jobX\_NEW.err} files users find the following error:
 
 \begin{lstlisting}[language=bash]
 [ERROR|integratedtoolkit.Worker|Executor] Can not get method by reflection
@@ -141,9 +141,9 @@ one of the following errors:
 \end{itemize}
 
 \subsection{Jobs failed on reflect target invocation null pointer}
-When executing an application the main code gets stuck executing a task. Taking a look at the \textit{runtime.log} users can check
-that the job associated to the task has failed (and all its resubmissions too). Then, opening the \textit{$jobX\_NEW.out$} or the
-\textit{$jobX\_NEW.err$} files users find the following error:
+When executing an application the main code gets stuck executing a task. Taking a look at the \texttt{runtime.log} users can check
+that the job associated to the task has failed (and all its resubmissions too). Then, opening the \texttt{jobX\_NEW.out} or the
+\texttt{jobX\_NEW.err} files users find the following error:
 
 \begin{lstlisting}[language=bash]
 [ERROR|integratedtoolkit.Worker|Executor]
@@ -196,7 +196,7 @@ MPI instrumentation: yes
 	MPI launcher: /apps/OPENMPI/1.8.1-mellanox/bin/mpirun
 \end{lstlisting}
 
-On the other hand, if you already installed COMPSs, you can check \textit{Extrae} configuration executing the script \textit{/opt/COMPSs/Dependencies/extrae/etc/configured.sh}. Users should check that flags \textit{--with-mpi=/usr} and \textit{--enable-parallel-merge} are present and that MPI path is correct and exists. Sample output:
+On the other hand, if you already installed COMPSs, you can check \textit{Extrae} configuration executing the script \texttt{/opt/COMPSs/Dependencies/extrae/etc/configured.sh}. Users should check that flags \texttt{--with-mpi=/usr} and \texttt{--enable-parallel-merge} are present and that MPI path is correct and exists. Sample output:
 
 \begin{lstlisting}[language=bash]
 EXTRAE_HOME is not set. Guessing from the script invoked that Extrae was installed in /opt/COMPSs/Dependencies/extrae
@@ -227,11 +227,7 @@ Please, report bugs to tools@bsc.es
 
 \hfill
 
-The \textbf{second option} is to increase the OS maximum number of open files. For instance, in Ubuntu:
-\begin{lstlisting}[language=bash]
-nano /etc/init.d/neo4j-service
-\end{lstlisting}
-Add « ulimit –n 40000 » just before the start-stop-daemon line in the do\_start section.
+The \textbf{second option} is to increase the OS maximum number of open files. For instance, in Ubuntu add \texttt{ ulimit -n 40000 } just before the start-stop-daemon line in the do\_start section.
 
 
 

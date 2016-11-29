@@ -222,7 +222,7 @@ In this case we executed the \textbf{Matmul example application} that we provide
 
   Next we will use the \textit{Matmul} application as an example of a Java application running with COMPSs and Docker.
 
-Imagine we have our Matmul application in '/home/john/matmul' and inside the 'matmul' dir we only have the file 'matmul.jar'.
+Imagine we have our Matmul application in \texttt{/home/john/matmul} and inside the \texttt{matmul} directory we only have the file \texttt{matmul.jar}.
 
 We have created a Dockerhub account with username 'john123'.
 
@@ -232,7 +232,7 @@ runcompss-docker-gen-image --context-dir='/home/john/matmul'
 			   --image-name='john123/matmul-example'
 \end{lstlisting}
 
-Now, we write down the context-dir ('/home/john/matmul') and the classpath ('/home/john/matmul/matmul.jar'). We do this because they will be needed for future executions. \\
+Now, we write down the context-dir (\texttt{/home/john/matmul}) and the classpath \\ (\texttt{/home/john/matmul/matmul.jar}). We do this because they will be needed for future executions. \\
 
 Since the image is created and uploaded, we won't need to do this step anymore.
 
@@ -248,8 +248,8 @@ Take as assumptions:
 \item Finally, as we would do with the typical runcompss, we specify the \textbf{main class} name and its \textbf{parameters} (16 and 4 in this case).
 \end{itemize}
 
-In addition, we know from the former step that the image name is 'john123/matmul-example', 
-the \textbf{context directory} is '/home/john/matmul', and the classpath is '/home/john/matmul/matmul.jar'.
+In addition, we know from the former step that the image name is \texttt{john123/matmul-example}, 
+the \textbf{context directory} is \texttt{/home/john/matmul}, and the classpath is \texttt{/home/john/matmul/matmul.jar}.
 And this is how you would run \textbf{runcompss-docker}:
 
 \begin{lstlisting}[language=bash]
@@ -315,11 +315,11 @@ needed to execute COMPSs applications at Chameleon:
  \item Instantiate the master image (based on the published image \textit{COMPSs\_\compssversion\_CC-CentOS7})
  \item Attach a public IP and login to the master instance (the instance is correctly contextualized for COMPSs executions if you
  see a COMPSs login banner)
- \item Set the instance as COMPSs master by running \textit{/etc/init.d/chameleon\_init start}
+ \item Set the instance as COMPSs master by running \texttt{/etc/init.d/chameleon\_init start}
  \item Copy your CH file (API credentials) to the Master and source it
- \item Run the \textit{chameleon\_cluster\_setup} script and fill the information when prompted (you will be asked for the name of the
+ \item Run the \texttt{chameleon\_cluster\_setup} script and fill the information when prompted (you will be asked for the name of the
  master instance, the reservation id and number of workers). This scripts may take several minutes since it sets up the all cluster.
- \item Execute your COMPSs applications normally using the \textit{runcompss} script
+ \item Execute your COMPSs applications normally using the \texttt{runcompss} script
 \end{itemize}
 
 As an example you can check this video \url{https://www.youtube.com/watch?v=BrQ6anPHjAU} performing a full setup and 
@@ -333,8 +333,8 @@ execution of a COMPSs application at Chameleon.
 
 To maintain the portability between different environments, COMPSs has a pre-build structure (see Figure 
 \ref{fig:queue_scripts_structure}) to execute applications in SuperComputers. For this purpose, users must use 
-the \textit{enqueue\_compss} script provided in the COMPSs installation. This script has several parameters (see 
-\textit{enqueue\_compss -h}) that allow users to customize their executions for any SuperComputer.
+the \texttt{enqueue\_compss} script provided in the COMPSs installation. This script has several parameters (see 
+\texttt{enqueue\_compss -h}) that allow users to customize their executions for any SuperComputer.
 
 \begin{figure}[h!]
   \centering
