@@ -534,6 +534,8 @@ that include the information about a particular provider, associated to a given 
 attribute \textbf{Name} to uniquely identify the provider. Next example summarizes the information to be specified by the 
 user inside this tag.
 
+\newpage
+
 \begin{lstlisting}[language=xml]
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ResourcesList>
@@ -611,10 +613,12 @@ user inside this tag.
 \end{lstlisting}
 
 The \texttt{project.xml} complements the information about a provider listed in the \texttt{resources.xml} file. 
-This file can contain a \textbf{\texttt{<Cloud>}} tag where to specify a list of providers, each with a \textbf{\texttt{<Provider>}} tag,
-whose \textbf{name} attribute must match one of the providers in the \texttt{resources.xml} file. Thus, the \texttt{project.xml}
-file \textbf{must} contain a subset of the providers specified in the \texttt{resources.xml} file. Next example summarizes 
-the information to be specified by the user inside this \texttt{<Cloud>} tag.
+This file can contain a \textbf{\texttt{<Cloud>}} tag where to specify a list of providers, each with a 
+\textbf{\texttt{<CloudProvider>}} tag, whose \textbf{name} attribute must match one of the providers in the 
+\texttt{resources.xml} file. Thus, the \texttt{project.xml} file \textbf{must} contain a subset of the providers
+specified in the \texttt{resources.xml} file. Next example summarizes the information to be specified by the user
+inside this \texttt{<Cloud>} tag.
+
 \begin{lstlisting}[language=xml]
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Project>
@@ -686,8 +690,44 @@ the information to be specified by the user inside this \texttt{<Cloud>} tag.
 </Project>
 \end{lstlisting}
 
-The next sections provide a description of each of the currently available connectors.
+For any connector the Runtime is capable to handle the next list of properties:
 
+\begin{table}[h]
+\def\arraystretch{1.2}
+\centering
+\begin{tabularx}{\linewidth}{|l|X|} \hline
+	\textbf{Name} &\textbf{Description} \\ \hline
+	provider-user & Username to login in the provider\\ \hline
+	provider-user-credential & Credential to login in the provider\\ \hline
+	time-slot & Time slot\\ \hline
+	estimated-creation-time & Estimated VM creation time\\ \hline                    
+	max-vm-creation-time & Maximum VM creation time\\ \hline
+\end{tabularx}
+\caption{Connector supported properties in the \texttt{project.xml} file.}
+\label{tab:abstract_connector_properties}
+\end{table}
+
+Additionally, for any connector based on SSH, the Runtime automatically handles the next list of properties:
+
+\begin{table}[h]
+\def\arraystretch{1.2}
+\centering
+\begin{tabularx}{\linewidth}{|l|X|} \hline
+	\textbf{Name} &\textbf{Description} \\ \hline
+	vm-user & User to login in the VM\\ \hline
+	vm-password & Password to login in the VM\\ \hline
+	vm-keypair-name & Name of the Keypair to login in the VM\\ \hline
+	vm-keypair-location & Location (in the master) of the Keypair to login in the VM \\ \hline
+\end{tabularx}
+\caption{Properties supported by any SSH based connector in the \texttt{project.xml} file.}
+\label{tab:ssh_connector_properties}
+\end{table}
+
+Finally, the next sections provide a more accurate description of each of the currently available connector and its specific properties.
+
+%%%%%%%%%%%%
+% ROCCI
+%%%%%%%%%%%%
 \paragraph{Cloud connectors: rOCCI}
 The connector uses the rOCCI binary client\footnote{\url{https://appdb.egi.eu/store/software/rocci.cli}} 
 (version newer or equal than 4.2.5) which has to be installed in the node where the COMPSs main 
@@ -703,21 +743,39 @@ Table \ref{tab:rOCCI_extensions} contains the rOCCI specific properties that mus
 the \texttt{project.xml} file and Table \ref{tab:rOCCI_extensions} contains the specific properties that must be defined
 under the \texttt{Instance} tag.
 
-\bgroup
-  \def\arraystretch{1.5}
-  \begin{longtable}{| p{0.25\textwidth} | p{0.7\textwidth} |}
-      \hline
-      \textbf{Provider}    & \\ \hline
-      ca-path              & Path to CA certificates directory \\ \hline
-      user-cred            & Path of the VOMS proxy \\ \hline
-      auth                 & Authentication method, x509 only supported \\ \hline
-      owner                & \multirow{2}{*}{Optional. Used by the VENUS-C Job Manager (PMES)} \\
-                             \cline{1-1}
-      jobname              & \\ \hline
-      \caption{rOCCI extensions in the \texttt{project.xml} file.}
-      \label{tab:rOCCI_extensions}
-  \end{longtable}
-\egroup
+\begin{table}[h]
+\def\arraystretch{1.2}
+\centering
+\begin{tabularx}{\linewidth}{|l|X|} \hline
+	\textbf{Name} &\textbf{Description} \\ \hline
+	auth		& Authentication method, x509 only supported \\ \hline
+	user-cred	& Path of the VOMS proxy \\ \hline
+	ca-path		& Path to CA certificates directory \\ \hline
+	ca-file		& Specific CA filename \\ \hline
+	owner		& Optional. Used by the PMES Job-Manager \\ \hline
+	jobname		& Optional. Used by the PMES Job-Manager \\ \hline
+	timeout		& Maximum command time \\ \hline
+	username	& Username to connect to the back-end cloud provider \\ \hline
+	password	& Password to connect to the back-end cloud provider \\ \hline
+	voms		& Enable VOMS authentication \\ \hline
+	media-type	& Media type \\ \hline
+	resource	& Resource type \\ \hline
+	attributes	& Extra resource attributes for the back-end cloud provider \\ \hline
+	context		& Extra context for the back-end cloud provider \\ \hline
+	action		& Extra actions for the back-end cloud provider \\ \hline
+	mixin		& Mixin definition \\ \hline
+	link		& Link \\ \hline
+	trigger-action	& Adds a trigger \\ \hline
+	log-to		& Redirect command logs \\ \hline
+	skip-ca-check	& Skips CA checks \\ \hline
+	filter		& Filters command output \\ \hline
+	dump-model	& Dumps the internal model \\ \hline
+	debug		& Enables the debug mode on the connector commands \\ \hline
+	verbose		& Enables the verbose mode on the connector commands \\ \hline
+\end{tabularx}
+\caption{rOCCI extensions in the \texttt{project.xml} file.}
+\label{tab:rOCCI_extensions}
+\end{table}
 
 \newpage
 
@@ -736,19 +794,47 @@ under the \texttt{Instance} tag.
   \end{longtable}
 \egroup
 
-% TODO
-%\paragraph{Cloud connectors: jClouds}
-%The connector uses the jClouds client ...
 
+%%%%%%%%%%%%
+% JCLOUDS
+%%%%%%%%%%%%
+\paragraph{Cloud connectors: JClouds}
+
+The JClouds connector is based on the JClouds API version \textit{1.9.1}. Table \ref{tab:jclouds_extensions} shows the extra available 
+options under the \textit{Properties} tag that are used by this connector.
+
+\begin{table}[h]
+\def\arraystretch{1.2}
+\centering
+\begin{tabularx}{\linewidth}{|l|X|} \hline
+	\textbf{Name} &\textbf{Description} \\ \hline
+	provider & Back-end provider to use with JClouds (i.e. aws-ec2) \\ \hline
+\end{tabularx}
+\caption{JClouds extensions in the \texttt{project.xml} file.}
+\label{tab:jclouds_extensions}
+\end{table}
+
+
+%%%%%%%%%%%%
+% DOCKER
+%%%%%%%%%%%%
 \paragraph{Cloud connectors: Docker}
 
-This connector uses a Java API client from \url{https://github.com/docker-java/docker-java}, version 3.0.3. It has not additional options. Make sure that the image/s you want to load are pulled before running COMPSs with \texttt{docker pull IMAGE}. Otherwise, the connector will throw an exception.
+This connector uses a Java API client from \url{https://github.com/docker-java/docker-java}, version \textit{3.0.3}. It has not additional
+options. Make sure that the image/s you want to load are pulled before running COMPSs with \texttt{docker pull IMAGE}. Otherwise,
+the connectorn will throw an exception.
 
+
+%%%%%%%%%%%%
+% MESOS
+%%%%%%%%%%%%
 \paragraph{Cloud connectors: Mesos}
 
-The connector uses Mesos version 0.28.2 which has to be installed in the node where the COMPSs main application is executed. This connector creates a Mesos framework and it uses Docker images to deploy workers, each one with an own IP address. 
+The connector uses Mesos version \textit{0.28.2} which has to be installed in the node where the COMPSs main application is executed. 
+This connector creates a Mesos framework and it uses Docker images to deploy workers, each one with an own IP address. 
 
-By default it does not use authentication and timeout times are 3 minutes (180.000 milliseconds). Optional properties available from connector:
+By default it does not use authentication and the timeout timers are set to 3 minutes (180.000 milliseconds). The list of optional
+properties available from connector is shown in Table \ref{tab:mesos_extensions}.
 
 \begin{table}[h]
 \def\arraystretch{1.2}
@@ -766,6 +852,12 @@ By default it does not use authentication and timeout times are 3 minutes (180.0
 	mesos-worker-kill-timeout  & Number of units to wait for killing a worker. \\ \hline
 	mesos-worker-kill-timeout-units  & Time units to wait for killing.\\ \hline
 \end{tabularx}
+\caption{Mesos extensions in the \texttt{project.xml} file.}
+\label{tab:mesos_extensions}
 \end{table}
+
+\newpage
+
 \noindent
-* TimeUnit avialable values: \texttt{DAYS}, \texttt{HOURS}, \texttt{MICROSECONDS}, \texttt{MILLISECONDS}, \texttt{MINUTES}, \texttt{NANOSECONDS}, \texttt{SECONDS}.
+* TimeUnit avialable values: \texttt{DAYS}, \texttt{HOURS}, \texttt{MICROSECONDS}, \texttt{MILLISECONDS}, \texttt{MINUTES}, 
+\texttt{NANOSECONDS}, \texttt{SECONDS}.
