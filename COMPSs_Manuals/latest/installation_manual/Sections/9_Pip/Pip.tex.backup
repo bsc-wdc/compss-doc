@@ -1,0 +1,33 @@
+\section{Pip}
+\label{sec:Pip}
+
+\subsection{Prerequisites}
+\label{subsec:pip_prerequisites}
+In order to be able to install COMPSs and PyCOMPSs with Pip the following requirements must be met:
+\begin{enumerate}
+ \item Have all the dependencies (excluding the COMPSs packages) mentioned in the section \ref{subsec:packages_dependencies} satisfied. For example, the dependency \verb|graphviz|
+ must be satisfied, while the dependency \verb|compss-runtime| can be ignored
+ \item Have a proper JAVA\_HOME environment variable defined. As a reminder, this variable must contain a valid path to a JDK (not JRE)
+ \item Have PIP installed. PIP can be installed via the \verb|python-pip| package.
+\end{enumerate}
+
+
+\subsection{Installation}
+\label{subsec:pip_installation}
+
+
+...the following command:\\
+\verb|sudo -E python -m pip install pycompss -v|\\
+\\
+It is recommended to restart the user session once the installation process has finished. An alternative is to type the following command:\\
+\verb|source /etc/profile.d/compss.sh|\\
+However, this command must be executed in every different terminal.
+
+\subsection{Configuration}
+\label{subsec:pip_configuration}
+The steps mentioned at the section \ref{sec:Additional_Configuration} must be done in order to have a functional COMPSs and pyCOMPSs installation.
+
+
+\subsection{Post installation}
+\label{subsec:pip_postinstallation}
+\verb|source /etc/profile.d/compss.sh|
