@@ -7,27 +7,28 @@ In order to be able to install COMPSs and PyCOMPSs with Pip the following requir
 \begin{enumerate}
  \item Have all the dependencies (excluding the COMPSs packages) mentioned in the section \ref{subsec:packages_dependencies} satisfied. For example, the dependency \verb|graphviz|
  must be satisfied, while the dependency \verb|compss-runtime| can be ignored
- \item Have a proper JAVA\_HOME environment variable defined. As a reminder, this variable must contain a valid path to a JDK (not JRE)
- \item Have PIP installed. PIP can be installed via the \verb|python-pip| package.
+ \item Have all the requisites for the supercomputers package satisfied (see section \ref{subsec:supercomputers_prerequisites})
+ \item Have PIP installed. PIP can be found in the \verb|python-pip| package
+ \item Have the \verb|wget| python package installed. \verb|wget| can be installed with PIP.
+ \item Have an internet connection
 \end{enumerate}
-
-
 \subsection{Installation}
 \label{subsec:pip_installation}
-
-
-...the following command:\\
-\verb|sudo -E python -m pip install pycompss -v|\\
-\\
-It is recommended to restart the user session once the installation process has finished. An alternative is to type the following command:\\
-\verb|source /etc/profile.d/compss.sh|\\
-However, this command must be executed in every different terminal.
-
+Depending on the machine, the installation command may vary. It must be assured that the Python2.7 pip is being executed. Some of the possible scenarios and their proper installation command are:
+\begin{enumerate}
+ \item There is more than one Python version installed:
+ \begin{lstlisting}[language=bash]
+ sudo -E python2.7 -m pip install pycompss -v\end{lstlisting}
+ \item There is only Python2.7 installed:
+ \begin{lstlisting}[language=bash]
+ sudo -E pip install pycompss -v \end{lstlisting}
+\end{enumerate}
+It is recommended to restart the user session once the installation process has finished. An alternative is to type the following command:
+\begin{lstlisting}[language=bash]
+source /etc/profile.d/compss.sh\end{lstlisting}
+However, this command should be executed in every different terminal during the current user session.
 \subsection{Configuration}
 \label{subsec:pip_configuration}
-The steps mentioned at the section \ref{sec:Additional_Configuration} must be done in order to have a functional COMPSs and pyCOMPSs installation.
-
-
+The steps mentioned at section \ref{sec:Additional_Configuration} must be done in order to have a functional COMPSs and pyCOMPSs installation.
 \subsection{Post installation}
-\label{subsec:pip_postinstallation}
-\verb|source /etc/profile.d/compss.sh|
+As mentioned in section \ref{subsec:pip_installation}, it is recommended to restart the user session once the installation process has finished.

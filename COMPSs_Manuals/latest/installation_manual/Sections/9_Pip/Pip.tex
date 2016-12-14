@@ -7,8 +7,12 @@ In order to be able to install COMPSs and PyCOMPSs with Pip the following requir
 \begin{enumerate}
  \item Have all the dependencies (excluding the COMPSs packages) mentioned in the section \ref{subsec:packages_dependencies} satisfied. For example, the dependency \verb|graphviz|
  must be satisfied, while the dependency \verb|compss-runtime| can be ignored
- \item Have all the requisites for the supercomputers package satisfied (see section \ref{subsec:supercomputers_prerequisites})
- \item Have PIP installed. PIP can be installed via the \verb|python-pip| package
+ \item Have all the requisites for the supercomputers package satisfied (see section \ref{subsec:supercomputers_prerequisites}).
+ \item Have PIP installed. PIP can be found in the \verb|python-pip| package
+ \item Have the \verb|wget| python package installed. \verb|wget| can be installed via PIP with the following command:
+ \begin{lstlisting}[language=bash]
+ sudo -E python2.7 -m pip install wget\end{lstlisting}
+ This package is NOT  the same as the \verb|wget| Linux command, and needs to be installed independently.
  \item Have an internet connection
 \end{enumerate}
 \subsection{Installation}
