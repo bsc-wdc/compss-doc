@@ -31,7 +31,7 @@ Indentation Mode=normal
 Mode=LaTeX
 
 [document-settings,item:Sections/2_Execution/Execution.tex]
-Bookmarks=613,689
+Bookmarks=615
 Encoding=UTF-8
 Highlighting=LaTeX
 Indentation Mode=normal
@@ -94,10 +94,10 @@ order=0
 
 [item:Sections/2_Execution/Execution.tex]
 archive=true
-column=33
+column=8
 encoding=UTF-8
 highlight=LaTeX
-line=210
+line=536
 mode=LaTeX
 open=false
 order=1
@@ -107,7 +107,7 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=14
+line=20
 mode=LaTeX
 open=false
 order=4
@@ -175,14 +175,14 @@ JumpList=
 ViMarks=.,5,23,[,5,23,],5,23
 
 [view-settings,view=0,item:Sections/2_Execution/Execution.tex]
-CursorColumn=33
-CursorLine=210
+CursorColumn=8
+CursorLine=536
 JumpList=
-ViMarks=.,223,7,[,223,0,],223,7,a,613,0,b,689,4
+ViMarks=.,536,7,[,535,0,],536,7,a,615,0,b,729,12
 
 [view-settings,view=0,item:Sections/3_Results_and_Logs/Results_and_Logs.tex]
 CursorColumn=0
-CursorLine=14
+CursorLine=20
 JumpList=
 ViMarks=.,50,20,[,50,20,],50,20
 
