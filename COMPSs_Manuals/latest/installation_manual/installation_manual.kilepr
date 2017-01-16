@@ -175,10 +175,10 @@ order=0
 
 [item:Sections/8_Removal/Removal.tex]
 archive=true
-column=16
+column=33
 encoding=UTF-8
 highlight=LaTeX
-line=9
+line=21
 mode=LaTeX
 open=true
 order=5
@@ -262,8 +262,8 @@ JumpList=
 ViMarks=.,62,54,[,62,54,],62,54
 
 [view-settings,view=0,item:Sections/8_Removal/Removal.tex]
-CursorColumn=16
-CursorLine=9
+CursorColumn=33
+CursorLine=21
 JumpList=
 ViMarks=.,12,10,[,12,10,],12,10
 

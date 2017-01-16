@@ -7,12 +7,13 @@ In order to be able to install COMPSs and PyCOMPSs with Pip the following requir
 \begin{enumerate}
  \item Have all the dependencies (excluding the COMPSs packages) mentioned in the section \ref{subsec:packages_dependencies} satisfied. For example, the dependency \verb|graphviz|
  must be satisfied, while the dependency \verb|compss-runtime| can be ignored
+ \item Have a proper \verb|JAVA_HOME| environment variable definition. This variable must contain a valid path to a Java JDK (as a remark, it must point to a JDK, not JRE). A possible value is the following:
+ \begin{lstlisting}[language=bash]
+  user@machine:~> echo $JAVA_HOME
+  /usr/lib64/jvm/java-openjdk/\end{lstlisting}
+
  \item Have all the requisites for the supercomputers package satisfied (see section \ref{subsec:supercomputers_prerequisites}).
  \item Have PIP installed. PIP can be found in the \verb|python-pip| package
- \item Have the \verb|wget| python package installed. \verb|wget| can be installed via PIP with the following command:
- \begin{lstlisting}[language=bash]
- sudo -E python2.7 -m pip install wget\end{lstlisting}
- This package is NOT  the same as the \verb|wget| Linux command, and needs to be installed independently.
  \item Have an internet connection
 \end{enumerate}
 \subsection{Installation}
@@ -32,6 +33,6 @@ source /etc/profile.d/compss.sh\end{lstlisting}
 However, this command should be executed in every different terminal during the current user session.
 \subsection{Configuration}
 \label{subsec:pip_configuration}
-The steps mentioned at section \ref{sec:Additional_Configuration} must be done in order to have a functional COMPSs and pyCOMPSs installation.
+The steps mentioned at section \ref{subsec:Passwordless_ssh} must be done in order to have a functional COMPSs and pyCOMPSs installation.
 \subsection{Post installation}
 As mentioned in section \ref{subsec:pip_installation}, it is recommended to restart the user session once the installation process has finished.
