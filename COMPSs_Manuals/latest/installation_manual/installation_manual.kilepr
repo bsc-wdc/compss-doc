@@ -185,10 +185,10 @@ order=5
 
 [item:Sections/9_Pip/Pip.tex]
 archive=true
-column=101
+column=47
 encoding=UTF-8
 highlight=LaTeX
-line=67
+line=59
 mode=LaTeX
 open=true
 order=2
@@ -268,8 +268,8 @@ JumpList=
 ViMarks=.,12,10,[,12,10,],12,10
 
 [view-settings,view=0,item:Sections/9_Pip/Pip.tex]
-CursorColumn=101
-CursorLine=67
+CursorColumn=47
+CursorLine=59
 JumpList=
 ViMarks=.,67,101,[,67,101,],67,101
 
