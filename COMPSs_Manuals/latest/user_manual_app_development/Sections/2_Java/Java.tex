@@ -252,6 +252,31 @@ void sort(
 );
 \end{lstlisting}
 
+
+\subsubsection{Java API calls}
+
+COMPSs also provides a explicit synchronization call, namely \textit{barrier}, which can be used through the COMPSs Java API.
+The use of \textit{barrier} forces to wait for all tasks that have been submitted before the barrier is called.
+When all tasks submitted before the \textit{barrier} have finished, the execution continues.
+
+\begin{lstlisting}[language=java]
+%*{\bf import integratedtoolkit.api.COMPSs;}*)
+
+public class Main {
+    public static void main(String[] args) {
+        // Setup counterName1 and counterName2 files
+        // Execute task increment 1
+        SimpleImpl.increment(counterName1);
+        // API Call to wait for all tasks
+        %*{COMPSs.barrier(); }*)
+        // Execute task increment 2
+        SimpleImpl.increment(counterName2);
+    }
+}
+\end{lstlisting}
+
+
+
 \subsection{Application Compilation}
 A COMPSs Java application needs to be packaged in a \textit{jar} file containing the class files of the main code, of the methods implementations and of the \textit{Itf} annotation.
 Next we provide a set of commands to compile the Java Simple application detailed at the \textit{COMPSs Sample Applications} 

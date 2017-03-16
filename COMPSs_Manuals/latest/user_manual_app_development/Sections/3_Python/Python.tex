@@ -184,7 +184,7 @@ Please, take into account that in order to respect the constraints, the peculiar
 \subsubsection{Main Program}
 The main program of the application is a sequential code that contains calls to the selected tasks. 
 In addition, when synchronizing for task data from the main program, 
-there exist two API functions that need to be invoked:
+there exist four API functions that can to be invoked:
 
 \begin{itemize}
  \item {\it compss\_open(file\_name, mode = 'r')}: similar to the Python {\it open()} call. It synchronizes
@@ -192,10 +192,17 @@ there exist two API functions that need to be invoked:
        file. It can have an optional parameter {\it mode}, which defaults to '{\it r}', containing the
        mode in which the file will be opened (the open modes are analogous to those of
        Python {\it open()}).
+ % \item {\it compss\_delete(file\_name)}: notifies the runtime to delete a file. 
+       % # TODO: add delete functionality
  \item {\it compss\_wait\_on(obj, to\_write = True)}: synchronizes for the last version of object {\it obj}
        and returns the synchronized object. It can have an optional boolean parameter
        {\it to\_write}, which defaults to {\it True}, that indicates whether the main program will modify the
-       returned object.
+       returned object.       
+       It is possible to wait on a list of objects. In this particular case, it will synchronize all future objects 
+       contained in the list.
+ \item {\it barrier()}: performs a explicit synchronization, but does not return any object. The use of {\it barrier()}
+       forces to wait for all tasks that have been submitted before the {\it barrier()} is called.
+       When all tasks submitted before the {\it barrier()} have finished, the execution continues.
 \end{itemize}
 
 To illustrate the use of the aforementioned API functions, the following example first invokes a task 
@@ -204,8 +211,13 @@ Later in the program, an object of class {\it MyClass} is created and a task met
 that modifies the object is invoked on it; the object is then synchronized with {\it compss\_wait\_on()}, 
 so that it can be used in the main program from that point on.
 
+Then, a loop calls again ten times to {\it func} task.
+Afterwards, the barrier performs a synchronization, and the execution of the main user code will
+not continue until the ten {\it func} tasks have finished.
+
 \begin{lstlisting}[language=python]
 from pycompss.api.api import compss_open, compss_wait_on
+from pycompss.api.api import barrier
 
 my_file = 'file.txt'
 func(my_file)
@@ -216,6 +228,11 @@ my_obj = MyClass()
 my_obj.method()
 my_obj = %*{\bf compss\_wait\_on}*)(my_obj)
 ...
+
+for i in range(10):
+    func(str(i) + my_file)
+barrier()
+...
 \end{lstlisting}
 
 The corresponding task selection for the example above would be:
@@ -225,12 +242,12 @@ The corresponding task selection for the example above would be:
 def func(f):
     ...
     
-    class MyClass(object):
-        ...
-        
-        @task()
-        def method(self):
-            ... # self is modified here
+class MyClass(object):
+    ...
+    
+    @task()
+    def method(self):
+        ... # self is modified here
 \end{lstlisting}
 
 Table \ref{tab:python_api_functions} summarizes the API functions to be used in the main program of a COMPSs Python application.
@@ -241,8 +258,12 @@ Table \ref{tab:python_api_functions} summarizes the API functions to be used in 
     \multicolumn{1}{|c|}{{\bf Function }}    &  \multicolumn{1}{c|}{{\bf Use }}\\
     \hline
     compss\_open(file\_name, mode = 'r') & Synchronizes for the last version of a file and returns its file descriptor. \\
+    % \hline
+    % compss\_delete(file\_name) & Notifies the runtime to remove a file. \\ # TODO: add delete file
     \hline
-    compss\_wait\_on(obj, to\_write = True) & Synchronizes for the last version of an object and returns it. \\
+    compss\_wait\_on(obj, to\_write = True) & Synchronizes for the last version of an object (or a list of objects) and returns it. \\
+    \hline
+    barrier() & Wait for all tasks submitted before the barrier. \\
     \hline
     \caption{COMPSs Python API functions.}
     \label{tab:python_api_functions}
@@ -283,7 +304,7 @@ o.yet_another_task()
 \end{lstlisting}
 
 In order to synchronize the object from the main program, the programmer has to synchronize (using the \textit{compss\_wait\_on} function) in the same way 
-as with any object updated by a task, :
+as with any object updated by a task:
 
 \begin{lstlisting}[language=python]
 # %*{\bf o }*) is a future object
@@ -294,7 +315,21 @@ o = ret_func()
 o = compss_wait_on(o)
 \end{lstlisting}
                          
+Moreover, it is possible to synchronize a list of objects. This is particularly useful when the programmer expect to synchronize more 
+than one elements (using the \textit{compss\_wait\_on} function):
 
+\begin{lstlisting}[language=python]
+# %*{\bf l }*) is a list of objects where some/all of them may be future objects
+l = []
+for i in range(10):
+    l.append(ret_func())
+
+...
+
+l = compss_wait_on(l)
+\end{lstlisting}
+                         
+                         
 For instances of user-defined classes, the classes of these objects 
 should have an empty constructor, otherwise the programmer will not be able to invoke task instance 
 methods on those objects:
