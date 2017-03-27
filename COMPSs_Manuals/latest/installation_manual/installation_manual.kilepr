@@ -128,10 +128,10 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=2
 mode=LaTeX
-open=false
-order=4
+open=true
+order=1
 
 [item:Sections/4_RedHat_zypper/RedHat_zypper.tex]
 archive=true
@@ -185,13 +185,13 @@ order=5
 
 [item:Sections/9_Pip/Pip.tex]
 archive=true
-column=47
+column=42
 encoding=UTF-8
 highlight=LaTeX
-line=59
+line=41
 mode=LaTeX
-open=false
-order=2
+open=true
+order=0
 
 [item:configuration.tex]
 archive=true
@@ -232,8 +232,8 @@ JumpList=
 ViMarks=.,43,0,[,43,0,],43,0
 
 [view-settings,view=0,item:Sections/3_Debian/Debian.tex]
-CursorColumn=26
-CursorLine=4
+CursorColumn=0
+CursorLine=2
 JumpList=
 ViMarks=.,22,62,[,22,57,],22,62
 
@@ -268,8 +268,8 @@ JumpList=
 ViMarks=.,12,10,[,12,10,],12,10
 
 [view-settings,view=0,item:Sections/9_Pip/Pip.tex]
-CursorColumn=47
-CursorLine=59
+CursorColumn=42
+CursorLine=41
 JumpList=
 ViMarks=.,67,101,[,67,101,],67,101
 
