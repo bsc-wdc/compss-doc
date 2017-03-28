@@ -81,7 +81,7 @@ public static void main() {
  master's code. Users must take into account that this only applies for files declared as task parameters and \textbf{not} for files
  created and/or erased inside a task. 
 
-\item \textbf{Python object hierarchy dependency detection}: \newline Dependencies are detected only over the objects that are task 
+\item \textbf{Python object hierarchy dependency detection}: \newline Dependencies are detected only on the objects that are task 
 parameters or outputs. Consider the following code:
 \begin{lstlisting}[language=python]
 # a.py
@@ -135,9 +135,9 @@ resolve all functions, classes and variables as \verb|my_folder.object_name| ins
 tree:
 \begin{lstlisting}[]
 my_apps/
-└── kmeans
-    ├── __init__.py
-    └── kmeans.py
+|- kmeans/
+    |- __init__.py
+    |- kmeans.py
 \end{lstlisting}
 Then the correct command to call this app is \verb|runcompss kmeans/kmeans.py| from the \verb|my_apps| directory.
 
