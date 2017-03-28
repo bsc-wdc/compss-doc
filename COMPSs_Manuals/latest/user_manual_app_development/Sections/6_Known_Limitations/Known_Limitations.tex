@@ -80,6 +80,67 @@ public static void main() {
  execution. Currently, the only way to avoid transferring these intermediate files is to manually erase them at the end of the
  master's code. Users must take into account that this only applies for files declared as task parameters and \textbf{not} for files
  created and/or erased inside a task. 
- 
+
+\item \textbf{Python object hierarchy dependency detection}: \newline Dependencies are detected only over the objects that are task 
+parameters or outputs. Consider the following code:
+\begin{lstlisting}[language=python]
+# a.py
+class A:
+  def __init__(self, b):
+    self.b  = b
+# main.py
+from a import A
+from pycompss.api.task import task
+from pycompss.api.parameter import *
+
+@task(obj = IN, returns = int)
+def get_b(obj):
+  return obj.b
+
+@task(obj = INOUT)
+def inc(obj):
+  obj += [1]
+
+def main():
+  from pycompss.api.api import compss_wait_on
+  my_a = A([5])
+  inc(my_a.b)
+  obj = get_b(my_a)
+  obj = compss_wait_on(obj)
+  print obj
+
+if __name__ == '__main__':
+  main()            
+\end{lstlisting}
+Note that there should exist a dependency between \verb|A| and \verb|A.b|. However, PyCOMPSs is not capable
+to detect dependencies of that kind because it doesn't do any kind of introspection. This kind of dependencies
+must be handled (and avoided) manually.
+
+\item \textbf{Python static methods}:\newline PyCOMPSs is not capable to resolve static methods (i.e: those that have the decorator
+\verb|@staticmethod|). It is recommended to use module functions
+instead.
+
+\item \textbf{Python modules with global states}:\newline Some modules (for example \verb|logging|) have internal variables apart from functions. 
+These modules are not guaranteed to work in PyCOMPSs due to the fact that master and worker code are executed in different interpreters. For instance, if a \verb|logging| configuration is set on some
+worker, it will not be visible from the master interpreter instance.
+
+\item \textbf{Python global variables}:\newline
+This issue is very similar to the previous one. PyCOMPSs does not guarantee that applications that create or modify global variables while
+worker code is executed will work.
+
+\item \textbf{Python application directory as a module}:\newline
+If the Python application root folder is a python module (i.e: it contains an \verb|__init__.py| file) then \verb|runcompss| must be called from
+the parent folder. For example, if the Python application is in a folder with an \verb|__init__.py| file named \verb|my_folder| then PyCOMPSs will
+resolve all functions, classes and variables as \verb|my_folder.object_name| instead of \verb|object_name|. For example, consider the following file
+tree:
+\begin{lstlisting}[]
+my_apps/
+└── kmeans
+    ├── __init__.py
+    └── kmeans.py
+\end{lstlisting}
+Then the correct command to call this app is \verb|runcompss kmeans/kmeans.py| from the \verb|my_apps| directory.
+
+
 \end{itemize}
 
