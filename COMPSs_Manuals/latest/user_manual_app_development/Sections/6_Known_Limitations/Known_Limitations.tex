@@ -126,7 +126,7 @@ worker, it will not be visible from the master interpreter instance.
 
 \item \textbf{Python global variables}:\newline
 This issue is very similar to the previous one. PyCOMPSs does not guarantee that applications that create or modify global variables while
-worker code is executed will work.
+worker code is executed will work. In particular, this issue (and the previous one) is due to Python's Global Interpreter Lock (GIL).
 
 \item \textbf{Python application directory as a module}:\newline
 If the Python application root folder is a python module (i.e: it contains an \verb|__init__.py| file) then \verb|runcompss| must be called from
@@ -140,6 +140,10 @@ my_apps/
     |- kmeans.py
 \end{lstlisting}
 Then the correct command to call this app is \verb|runcompss kmeans/kmeans.py| from the \verb|my_apps| directory.
+
+\item \textbf{Python early program exit}:\newline
+All intentional, premature exit operations must be done with \verb|sys.exit|. PyCOMPSs needs to perform some cleanup tasks before exiting and, if an early exit is performed with \verb|sys.exit|, the event will be captured,
+allowing PyCOMPSs to perform these tasks. If the exit operation is done in a different way then there is no guarantee that the application will end properly.
 
 
 \end{itemize}
