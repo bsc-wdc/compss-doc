@@ -129,9 +129,9 @@ A complete and detailed explanation of the usage of the metadata includes:
        \begin{itemize}
          \item {\bf @Method:} Mandatory. It specifies the class that implements the method.
 		\begin{itemize}
-			\item \textbf{isModifier} True if the method modifies the implicit object, false otherwise.
-			\item \textbf{isReplicated} True if the method must be executed in all the worker nodes when invoked from the main application
-			\item \textbf{priority} True if the task takes priority and false otherwise. This parameter is used by the COMPSs scheduler. 
+			\item \textbf{isModifier} "true" if the method modifies the implicit object, "false" otherwise (it is a string not a java boolean).
+			\item \textbf{isReplicated} "true" if the method must be executed in all the worker nodes when invoked from the main application. (it is a string not a java boolean)
+			\item \textbf{priority} "true" if the task takes priority and "false" otherwise. This parameter is used by the COMPSs scheduler. (it is a string not a java boolean)
 		\end{itemize}
          \item {\bf @Constraints:} The user can specify the capabilities that a resource must have in order
                to run a method. For example, in a cloud execution the COMPSs runtime creates a VM that fulfils the
@@ -183,8 +183,8 @@ package simple;
 import  integratedtoolkit.types.annotations.Constraints;
 import  integratedtoolkit.types.annotations.task.Method;
 import  integratedtoolkit.types.annotations.Parameter;
-import  integratedtoolkit.types.annotations.Parameter.Direction;
-import  integratedtoolkit.types.annotations.Parameter.Type;
+import  integratedtoolkit.types.annotations.parameter.Direction;
+import  integratedtoolkit.types.annotations.parameter.Type;
 
 public interface SimpleItf {
 
