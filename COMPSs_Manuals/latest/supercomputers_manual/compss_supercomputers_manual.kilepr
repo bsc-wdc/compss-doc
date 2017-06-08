@@ -4,9 +4,9 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1.3
-lastDocument=Sections/3_Jobs/Jobs.tex
-masterDocument=COMPSs_MareNostrum_Manual.tex
-name=COMPSs MareNostrum Manual
+lastDocument=Sections/1_Introduction/Introduction.tex
+masterDocument=COMPSs_Supercomputers_Manual.tex
+name=COMPSs Supercomputers Manual
 pkg_extIsRegExp=false
 pkg_extensions=.cls .sty .bbx .cbx .lbx
 src_extIsRegExp=false
@@ -16,7 +16,7 @@ src_extensions=.tex .ltx .latex .dtx .ins
 MakeIndex=
 QuickBuild=
 
-[document-settings,item:COMPSs_MareNostrum_Manual.tex]
+[document-settings,item:COMPSs_Supercomputers_Manual.tex]
 Bookmarks=
 Encoding=UTF-8
 Highlighting=LaTeX
@@ -30,21 +30,7 @@ Highlighting=LaTeX
 Indentation Mode=normal
 Mode=LaTeX
 
-[document-settings,item:Sections/2_Modules/Modules.tex]
-Bookmarks=
-Encoding=UTF-8
-Highlighting=LaTeX
-Indentation Mode=normal
-Mode=LaTeX
-
-[document-settings,item:Sections/3_Jobs/Jobs.tex]
-Bookmarks=247
-Encoding=UTF-8
-Highlighting=LaTeX
-Indentation Mode=normal
-Mode=LaTeX
-
-[document-settings,item:Sections/4_Monitor/Monitor.tex]
+[document-settings,item:Sections/5_Monitor/Monitor.tex]
 Bookmarks=
 Encoding=UTF-8
 Highlighting=LaTeX
@@ -58,7 +44,7 @@ Highlighting=LaTeX
 Indentation Mode=normal
 Mode=LaTeX
 
-[item:COMPSs_MareNostrum_Manual.tex]
+[item:COMPSs_Supercomputers_Manual.tex]
 archive=true
 column=17
 encoding=UTF-8
@@ -78,27 +64,7 @@ mode=LaTeX
 open=false
 order=0
 
-[item:Sections/2_Modules/Modules.tex]
-archive=true
-column=45
-encoding=UTF-8
-highlight=LaTeX
-line=54
-mode=LaTeX
-open=false
-order=3
-
-[item:Sections/3_Jobs/Jobs.tex]
-archive=true
-column=21
-encoding=UTF-8
-highlight=LaTeX
-line=222
-mode=LaTeX
-open=false
-order=0
-
-[item:Sections/4_Monitor/Monitor.tex]
+[item:Sections/5_Monitor/Monitor.tex]
 archive=true
 column=27
 encoding=UTF-8
@@ -118,7 +84,7 @@ mode=LaTeX
 open=false
 order=1
 
-[item:marenostrum_manual.kilepr]
+[item:compss_supercomputers_manual.kilepr]
 archive=true
 column=1
 encoding=
@@ -128,7 +94,7 @@ mode=
 open=false
 order=-1
 
-[view-settings,view=0,item:COMPSs_MareNostrum_Manual.tex]
+[view-settings,view=0,item:COMPSs_Supercomputers_Manual.tex]
 CursorColumn=17
 CursorLine=33
 JumpList=
@@ -140,29 +106,11 @@ CursorLine=0
 JumpList=
 ViMarks=.,5,23,[,5,23,],5,23
 
-[view-settings,view=0,item:Sections/2_Modules/Modules.tex]
-CursorColumn=45
-CursorLine=54
-JumpList=
-ViMarks=.,57,0,[,53,0,],57,43
-
-[view-settings,view=0,item:Sections/3_Jobs/Jobs.tex]
-CursorColumn=21
-CursorLine=222
-JumpList=
-ViMarks=.,222,8,[,222,8,],222,8,a,247,70
-
-[view-settings,view=0,item:Sections/4_Monitor/Monitor.tex]
+[view-settings,view=0,item:Sections/5_Monitor/Monitor.tex]
 CursorColumn=27
 CursorLine=65
 JumpList=
 ViMarks=.,65,27,[,65,27,],65,27
-
-[view-settings,view=0,item:Sections/4_Monitor/Monitor.text]
-CursorColumn=80
-CursorLine=199
-JumpList=
-ViMarks=.,121,70,[,121,70,],121,77,a,174,70
 
 [view-settings,view=0,item:configuration.tex]
 CursorColumn=74
