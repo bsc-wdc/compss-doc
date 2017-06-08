@@ -115,10 +115,10 @@ order=2
 
 [item:Sections/2_Packages_Description/Packages_Description.tex]
 archive=true
-column=0
+column=107
 encoding=UTF-8
 highlight=LaTeX
-line=43
+line=45
 mode=LaTeX
 open=false
 order=3
@@ -155,10 +155,10 @@ order=1
 
 [item:Sections/6_Supercomputers/Supercomputers.tex]
 archive=true
-column=0
+column=16
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=352
 mode=LaTeX
 open=false
 order=6
@@ -226,10 +226,10 @@ JumpList=
 ViMarks=.,5,23,[,5,23,],5,23
 
 [view-settings,view=0,item:Sections/2_Packages_Description/Packages_Description.tex]
-CursorColumn=0
-CursorLine=43
+CursorColumn=107
+CursorLine=45
 JumpList=
-ViMarks=.,43,0,[,43,0,],43,0
+ViMarks=.,45,106,[,45,99,],45,106
 
 [view-settings,view=0,item:Sections/3_Debian/Debian.tex]
 CursorColumn=0
@@ -250,10 +250,10 @@ JumpList=
 ViMarks=.,13,124,[,13,124,],13,124
 
 [view-settings,view=0,item:Sections/6_Supercomputers/Supercomputers.tex]
-CursorColumn=43
-CursorLine=11
+CursorColumn=16
+CursorLine=352
 JumpList=
-ViMarks=.,11,42,[,11,33,],11,42
+ViMarks=.,81,21,[,81,21,],81,21
 
 [view-settings,view=0,item:Sections/7_Additional_Configuration/Additional_Configuration.tex]
 CursorColumn=54
