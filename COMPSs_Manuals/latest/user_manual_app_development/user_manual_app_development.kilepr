@@ -134,12 +134,12 @@ order=3
 
 [item:Sections/6_Known_Limitations/Known_Limitations.tex]
 archive=true
-column=10
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=137
+line=0
 mode=LaTeX
-open=true
+open=false
 order=0
 
 [item:configuration.tex]
