@@ -2,7 +2,7 @@
 \label{sec:Constraints}
 
 This section provides a detailed information about all the supported constraints by the COMPSs runtime for 
-\textbf{java}, \textbf{python} and \textbf{C/C++} languages. The constraints are defined as key-value pairs,
+\textbf{Java}, \textbf{Python} and \textbf{C/C++} languages. The constraints are defined as key-value pairs,
 where the key is the name of the constraint. Table \ref{tab:constraints} details the available constraints names 
 for \textit{Java}, \textit{Python} and \textit{C/C++}, its value type, its default value and a brief description.
 
@@ -11,7 +11,7 @@ for \textit{Java}, \textit{Python} and \textit{C/C++}, its value type, its defau
 \begin{landscape}
 \bgroup
   \def\arraystretch{1.3}%
-  \begin{table}[]
+  \begin{table}[ht]
   \centering
   \begin{tabular}{ | c | c | c | c | p{0.28\linewidth} | }
   \hline
@@ -24,7 +24,7 @@ for \textit{Java}, \textit{Python} and \textit{C/C++}, its value type, its defau
   processorPropertyName		& ProcessorPropertyName 	& $<$string$>$ 		& \"{}[unassigned]\" 	& Required processor property \\ \hline
   processorPropertyValue	& ProcessorPropertyValue 	& $<$string$>$ 		& \"{}[unassigned]\" 	& Required processor property value \\ \hline
   processorInternalMemorySize 	& ProcessorInternalMemorySize 	& $<$string$>$ 		& \"{}[unassigned]\" 	& Required internal device memory \\ \hline
-  processors 			& - 				& List$<$@Processor$>$  & \"{}\{\}\" 		& Required processors (check table \ref{tab:processor_constraint} for Processor details) \\ \hline
+  processors 			& - 				& List$<$@Processor$>$  & \"{}\{\}\" 		& Required processors (check Table \ref{tab:processor_constraint} for Processor details) \\ \hline
   memorySize	 		& MemorySize 			& $<$string$>$ 		& \"{}[unassigned]\" 	& Required memory size in GBs \\ \hline
   memoryType	 		& MemoryType 			& $<$string$>$ 		& \"{}[unassigned]\" 	& Required memory type (SRAM, DRAM, etc.) \\ \hline
   storageSize	 		& StorageSize 			& $<$string$>$ 		& \"{}[unassigned]\" 	& Required storage size in GBs \\ \hline
