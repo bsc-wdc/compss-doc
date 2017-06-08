@@ -20,8 +20,8 @@ provide the correct installation and environment of the following software:
 
 The following environment variables must be defined:
 \begin{itemize}
- \item $JAVA\_HOME$
- \item $BOOST\_CPPFLAGS$
+ \item JAVA\_HOME
+ \item BOOST\_CPPFLAGS
 \end{itemize}
 
 The tracing system can be enhanced with:
@@ -49,16 +49,16 @@ To perform the COMPSs Framework installation please execute the following comman
  $ rm COMPSs_<version>.tar.gz
 \end{lstlisting}
 
-The installation script will create a COMPSs folder inside the given $<targetDir>$ so the final COMPSs installation will be placed 
-under the $<targetDir>/COMPSs$ folder. Please note that if the folder already exists it will be \textbf{automatically erased}.
+The installation script will create a COMPSs folder inside the given \verb|<targetDir>| so the final COMPSs installation will be placed 
+under the \verb|<targetDir>/COMPSs| folder. Please note that if the folder already exists it will be \textbf{automatically erased}.
 
 ~ \newline
 After completing the previous steps, administrators must ensure that the nodes have passwordless ssh access. If it is not the case,
-please contact the COMPSs team at $support-compss@bsc.es$.
+please contact the COMPSs team at \verb|support-compss@bsc.es|.
 
 ~ \newline
 The COMPSs package also provides a \textit{compssenv} file that loads the required environment to allow users work more easily
-with COMPSs. Thus, after the installation process we recomend to source the $<targetDir>/COMPSs/compssenv$ into the 
+with COMPSs. Thus, after the installation process we recomend to source the \verb|<targetDir>/COMPSs/compssenv| into the 
 users \textit{.bashrc}.
 
 ~ \newline
@@ -77,9 +77,9 @@ This script has several parameters (see \textit{enqueue\_compss -h}) that allow 
 \end{figure}
 
 To make this structure works, the administrators must define a configuration file for the queue system 
-(under $<targetDir>/COMPSs/scripts/queues/cfgs/QUEUE/QUEUE.cfg$) and a configuration file for the specific SuperComputer parameters
-(under $<targetDir>/COMPSs/scripts/queues/cfgs/SC_NAME.cfg$). The COMPSs installation already provides queue configurations for \textit{LSF} and 
-\textit{SLURM} and several examples for SuperComputer configurations. 
+(under \verb|<targetDir>/COMPSs/scripts/queues/cfgs/QUEUE/QUEUE.cfg|) and a configuration file for the specific SuperComputer parameters
+(under \verb|<targetDir>| \verb|/COMPSs/scripts/queues/cfgs/SC_NAME.cfg|). The COMPSs installation already provides queue configurations 
+for \textit{LSF} and \textit{SLURM} and several examples for SuperComputer configurations. 
 
 To create a new configuration we recommend to use one of the configurations provided by COMPSs (such as the configuration for the
 \textit{MareNostrum III} SuperComputer) or to contact us at \url{support-compss@bsc.es} .
@@ -353,7 +353,7 @@ Usage: enqueue_compss [queue_system_options] [COMPSs_options]
 \end{lstlisting}
 
 If none of the pre-build queue configurations adapts to your infrastructure (lsf, pbs, slurm, etc.) please contact 
-the COMPSs team at $support-compss@bsc.es$ to find out a solution.
+the COMPSs team at \verb|support-compss@bsc.es| to find out a solution.
 
 ~ \newline
 If you are willing to test the COMPSs Framework installation you can run any of the applications available at our application 
