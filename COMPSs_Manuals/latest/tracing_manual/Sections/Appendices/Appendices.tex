@@ -7,7 +7,7 @@ COMPSs.
 During COMPSs installation it is possible to check if PAPI has been detected in the Extrae config report:
 
 \begin{lstlisting}[language=bash]
-Package configuration for Extrae 3.3.0 based on extrae/trunk rev. 3966:
+Package configuration for Extrae VERSION based on extrae/trunk rev. XXXX:
 -----------------------
 Installation prefix: /opt/COMPSs/Dependencies/extrae
 Cross compilation: no
@@ -61,7 +61,7 @@ To further customize the tracked counters, modify the XML to suit your needs. To
 \label{sec:configs}
 
 Table \ref{tab:paraver_configs} provides information about the different pre-build configurations that we distribute
-with COMPSs and that can be found under the \textit{/opt/COMPSs/Dependencies/paraver/cfgs/} folder.
+with COMPSs and that can be found under the \textit{/opt/COMPSs/Dependencies/paraver/cfgs/} folder. The cfgs folder contains all the basic views, the python folder contains the configs for Python events, and finally the comm contains the ones related to communications.
 
 
 \bgroup
@@ -78,16 +78,52 @@ with COMPSs and that can be found under the \textit{/opt/COMPSs/Dependencies/par
 	$compss\_tasks\_and\_runtime.cfg$ 	& Shows COMPSs Runtime events (master and workers) and tasks execution \\ \hline
 	$compss\_tasks.cfg$ 			& Shows tasks execution \\ \hline
 	$compss\_tasks\_numbers.cfg$ 		& Shows tasks execution by task id \\ \hline
-	$compss\_tasks\_transfers.cfg$ 		& Shows transfer requests and tasks by id \\ \hline
-	$compss\_data\_transfers.cfg$ 		& Shows data transfers for each task's parameter \\ \hline
 	$Interval\_between\_runtime.cfg$ 	& Interval between runtime events \\ \hline
 	$thread\_cpu.cfg$			& Shows the initial executing CPU. \\ \hline
+      \end{tabular}
+      \caption{General paraver configurations for COMPSs Applications}
+      \label{tab:paraver_configs}
+    \end{center}
+  \end{table}
+\egroup
+
+\bgroup
+  \def\arraystretch{1.5}
+  \begin{table}[h]
+    \begin{center}
+      \begin{tabular}{| p{0.45\textwidth} | p{0.45\textwidth} |}
+	\hline
+	$3dh\_events\_inside\_task.cfg$		& 3D Histogram of python events \\ \hline
+	$3dh\_events\_inside\_tasks.cfg$	& Events showing python information such as user function execution time, modules imports, or serializations. \\ \hline
+      \end{tabular}
+      \caption{Available paraver configurations for Python events of COMPSs Applications}
+      \label{tab:paraver_configs}
+    \end{center}
+  \end{table}
+\egroup
+
+
+\bgroup
+  \def\arraystretch{1.5}
+  \begin{table}[h]
+    \begin{center}
+      \begin{tabular}{| p{0.45\textwidth} | p{0.45\textwidth} |}
+	\hline
+	$sr\_bandwith.cfg$ 			& Send/Receive bandwith view for each node \\ \hline
+	$send\_bandwith.cfg$ 			& Send bandwith view for each node \\ \hline
+	$receive\_bandwith.cfg$ 		& Receive bandwith view for each node \\ \hline
+	$process\_bandwith.cfg$ 		& Send/Receive bandwith table for each node \\ \hline
+	$compss\_tasks\_scheduling\_transfers.cfg$ 		& Task's transfers requests for scheduling (gradient of tasks ID) \\ \hline
+	$compss\_tasksID\_transfers.cfg$ 	& Task's transfers request for each task (task with its IDs are also shown) \\ \hline
+	$compss\_data\_transfers.cfg$ 		& Shows data transfers for each task's parameter \\ \hline
+	$communication\_matrix.cfg$ 		& Table view of communications between each node \\ \hline
       \end{tabular}
       \caption{Available paraver configurations for COMPSs Applications}
       \label{tab:paraver_configs}
     \end{center}
   \end{table}
 \egroup
+
 
 \section{User Events in Python}
 

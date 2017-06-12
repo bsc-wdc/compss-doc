@@ -69,7 +69,7 @@ Resolved: /path/to/jar/kmeans.jar:
 
 ----------------- Executing kmeans.Kmeans --------------------------
 
-Welcome to Extrae 3.3.0 (revision 3966 based on extrae/trunk)
+Welcome to Extrae VERSION 
 Extrae: Parsing the configuration file (/opt/COMPSs/Runtime/configuration/xml/tracing/extrae_basic.xml) begins
 Extrae: Tracing package is located on /opt/COMPSs/Dependencies/extrae/
 Extrae: Generating intermediate files for Paraver traces.
@@ -87,7 +87,7 @@ WARNING: IT Properties file is null. Setting default values
 ...
 ...
 merger: Output trace format is: Paraver
-merger: Extrae 3.3.0 (revision 3966 based on extrae/trunk)
+merger: Extrae VERSION
 mpi2prv: Assigned nodes < Marginis >
 mpi2prv: Assigned size per processor < <1 Mbyte >
 mpi2prv: File set-0/TRACE@Marginis.0000001904000000000000.mpit is object 1.1.1 on node Marginis assigned to processor 0
@@ -135,7 +135,7 @@ Extrae: Tracing mode is set to: Detail.
 Extrae: Successfully initiated with 1 tasks and 1 threads
 \end{lstlisting}
 
-It contains diverse information about the tracing, for example, Extrae version used (3.3.0), the XML configuration file used (extrae\_basic.xml), the amount of 
+It contains diverse information about the tracing, for example, Extrae version used (VERSION will be replaced by the actual number during executions), the XML configuration file used (extrae\_basic.xml), the amount of 
 threads instrumented (objects through 1.1.1 to 1.2.5), available hardware counters ( PAPI\_TOT\_INS (0x80000032) ... PAPI\_L3\_TCM (0x80000008) ) or the name 
 of the generated tracefile (./trace/kmeans.Kmeans\_compss\_trace\_1460456106.prv). When using NIO communications adaptor with debug activated, the log of each worker
 also contains the Extrae initialization information.
@@ -248,7 +248,7 @@ When advanced tracing is activated, the configuration file reported on the outpu
 ...
 ...
 ...
-Welcome to Extrae 3.3.0 (revision 3966 based on extrae/trunk)
+Welcome to Extrae VERSION
 Extrae: Parsing the configuration file (/opt/COMPSs/Runtime/scripts/user/../../configuration/xml/tracing/extrae_advanced.xml) begins
 \end{lstlisting}
 
