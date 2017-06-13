@@ -23,16 +23,18 @@ interface Matmul
       void multiplyBlocks(inout Block block1,
                           inout Block block2,
                           inout Block block3);
-                          
-      // C++ class methods
-      void Block::multiply(in Block block1,
-                           in Block block2);
-                           
-      static Matrix Matrix::init(in int mSize,
-                                 in int bSize,
-                                 in double val);
 };
 \end{lstlisting}
+%OLD                          
+%      // C++ class methods
+%      void Block::multiply(in Block block1,
+%                           in Block block2);
+%                           
+%      static Matrix Matrix::init(in int mSize,
+%                                 in int bSize,
+%                                 in double val);
+%};
+%\end{lstlisting}
 
 The syntax of the interface file is shown in the previous code. Tasks can be declared as classic 
 C function prototypes, this allow to keep the compatibility with standard C applications. 
@@ -40,9 +42,9 @@ In the example, initMatrix and multiplyBlocks are functions declared using its p
 like in a C header file, but this code is C++ as they have objects as parameters (objects of 
 type Matrix, or Block).
 
-A class method can be also a task, and it is declared using its signature. In the example, 
-Block::multiply and Matrix::init are class methods. In this example, C functions encapsulates 
-object method calls, as we will see later.
+%A class method can be also a task, and it is declared using its signature. In the example, 
+%Block::multiply and Matrix::init are class methods. In this example, C functions encapsulates 
+%object method calls, as we will see later.
 
 The grammar for the interface file is:
 
@@ -83,7 +85,7 @@ The next listing includes an example of matrix multiplication written in C++.
 #define %*{\bf DEBUG\_BINDING }*)
 #include %*{\bf "Matmul.h" }*)
 #include "Matrix.h"
-#include ""Block.h"
+#include "Block.h"
 int N; //MSIZE
 int M; //BSIZE
 double val;
