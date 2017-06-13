@@ -1,0 +1,73 @@
+\section{Constraints}
+\label{sec:Constraints}
+
+This section provides a detailed information about all the supported constraints by the COMPSs runtime for 
+\textbf{Java}, \textbf{Python} and \textbf{C/C++} languages. The constraints are defined as key-value pairs,
+where the key is the name of the constraint. Table \ref{tab:constraints} details the available constraints names 
+for \textit{Java}, \textit{Python} and \textit{C/C++}, its value type, its default value and a brief description.
+
+\newpage
+
+\begin{landscape}
+\bgroup
+  \def\arraystretch{1.3}%
+  \begin{table}[ht]
+  \centering
+  \begin{tabular}{ | c | c | c | c | p{0.28\linewidth} | }
+  \hline
+  \textbf{Java} 		& \textbf{Python / C / C++}	& \textbf{Value type}	& \textbf{Default value}& \textbf{Description} \\ \hline
+  computingUnits 		& ComputingUnits 		& $<$string$>$ 		& \"{}1\" 		& Required number of computing units \\ \hline
+  processorName 		& ProcessorName 		& $<$string$>$ 		& \"{}[unassigned]\" 	& Required processor name \\ \hline
+  processorSpeed 		& ProcessorSpeed 		& $<$string$>$ 		& \"{}[unassigned]\" 	& Required processor speed \\ \hline
+  processorArchitecture 	& ProcessorArchitecture 	& $<$string$>$ 		& \"{}[unassigned]\" 	& Required processor architecture \\ \hline
+  processorType			& ProcessorType		 	& $<$string$>$ 		& \"{}[unassigned]\" 	& Required processor type \\ \hline
+  processorPropertyName		& ProcessorPropertyName 	& $<$string$>$ 		& \"{}[unassigned]\" 	& Required processor property \\ \hline
+  processorPropertyValue	& ProcessorPropertyValue 	& $<$string$>$ 		& \"{}[unassigned]\" 	& Required processor property value \\ \hline
+  processorInternalMemorySize 	& ProcessorInternalMemorySize 	& $<$string$>$ 		& \"{}[unassigned]\" 	& Required internal device memory \\ \hline
+  processors 			& - 				& List$<$@Processor$>$  & \"{}\{\}\" 		& Required processors (check Table \ref{tab:processor_constraint} for Processor details) \\ \hline
+  memorySize	 		& MemorySize 			& $<$string$>$ 		& \"{}[unassigned]\" 	& Required memory size in GBs \\ \hline
+  memoryType	 		& MemoryType 			& $<$string$>$ 		& \"{}[unassigned]\" 	& Required memory type (SRAM, DRAM, etc.) \\ \hline
+  storageSize	 		& StorageSize 			& $<$string$>$ 		& \"{}[unassigned]\" 	& Required storage size in GBs \\ \hline
+  storageType	 		& StorageType 			& $<$string$>$ 		& \"{}[unassigned]\" 	& Required storage type (HDD, SSD, etc.)\\ \hline
+  operatingSystemType 		& OperatingSystemType 		& $<$string$>$ 		& \"{}[unassigned]\" 	& Required operating system type (Windows, MacOS, Linux, etc.)\\ \hline
+  operatingSystemDistribution 	& OperatingSystemDistribution 	& $<$string$>$ 		& \"{}[unassigned]\" 	& Required operating system distribution (XP, Sierra, openSUSE, etc.)\\ \hline
+  operatingSystemVersion 	& OperatingSystemVersion 	& $<$string$>$ 		& \"{}[unassigned]\" 	& Required operating system version \\ \hline
+  wallClockLimit 		& WallClockLimit 		& $<$string$>$ 		& \"{}[unassigned]\" 	& Maximum wall clock time \\ \hline
+  \cellcolor{blue!25} hostQueues  & HostQueues 			& $<$string$>$ 		& \"{}[unassigned]\" 	& Required queues \\ \hline
+  \cellcolor{blue!25} appSoftware & AppSoftware 		& $<$string$>$ 		& \"{}[unassigned]\" 	& Required applications that must be available within the remote node for the task \\ \hline
+  \end{tabular}
+  \caption{Arguments of the \textit{@constraint} decorator}
+  \label{tab:constraints}
+  \end{table}
+\egroup
+\end{landscape}
+
+
+All constraints are defined with a simple value except the {\it HostQueue} and {\it AppSoftware} constraints, which allow 
+multiple values.
+
+The \textit{processors} constraint allows the users to define multiple processors for a task execution. This constraint is specified
+as a list of @Processor annotations that must be defined as shown in table \ref{tab:processor_constraint}
+
+~ \newline
+
+\bgroup
+  \def\arraystretch{1.4}%
+  \begin{table}[!ht]
+  \centering
+  \begin{tabular}{ | c | c | c | p{0.35\linewidth} | }
+  \hline
+  \textbf{Annotation} 	& \textbf{Value type}	& \textbf{Default value}& \textbf{Description} \\ \hline
+  computingUnits 	& $<$string$>$ 		& \"{}1\" 		& Required number of computing units \\ \hline
+  name 			& $<$string$>$ 		& \"{}[unassigned]\" 	& Required processor name \\ \hline
+  speed 		& $<$string$>$ 		& \"{}[unassigned]\" 	& Required processor speed \\ \hline
+  architecture 		& $<$string$>$ 		& \"{}[unassigned]\" 	& Required processor architecture \\ \hline
+  type			& $<$string$>$ 		& \"{}[unassigned]\" 	& Required processor type \\ \hline
+  propertyName		& $<$string$>$ 		& \"{}[unassigned]\" 	& Required processor property \\ \hline
+  propertyValue		& $<$string$>$ 		& \"{}[unassigned]\" 	& Required processor property value \\ \hline
+  internalMemorySize 	& $<$string$>$ 		& \"{}[unassigned]\" 	& Required internal device memory \\ \hline
+  \end{tabular}
+  \caption{Arguments of the \textit{@Processor} decorator}
+  \label{tab:processor_constraint}
+  \end{table}
+\egroup
