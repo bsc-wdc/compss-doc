@@ -24,7 +24,7 @@ When submitting a COMPSs job a temporal file will be created storing the job inf
 $ enqueue_compss \
   --exec_time=15 \
   --num_nodes=3 \
-  --tasks_per_node=16 \
+  --cpus_per_node=16 \
   --master_working_dir=. \
   --worker_working_dir=gpfs \
   --lang=python \
@@ -44,7 +44,7 @@ Storage Home:              null
 Storage Properties:        null
 Other:                     
         --sc_cfg=default.cfg
-        --tasks_per_node=16
+        --cpus_per_node=16
         --master_working_dir=.
         --worker_working_dir=gpfs
         --lang=python
@@ -65,6 +65,7 @@ $ cat /scratch/tmp/tmp.pBG5yfFxEo
 #SBATCH -o compss-%J.out
 #SBATCH -e compss-%J.err
 #SBATCH -N 3
+#SBATCH -n 48
 #SBATCH --exclusive
 #SBATCH -t00:15:00 
 ...
