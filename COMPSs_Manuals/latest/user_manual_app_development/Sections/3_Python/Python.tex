@@ -192,8 +192,7 @@ there exist four API functions that can to be invoked:
        file. It can have an optional parameter {\it mode}, which defaults to '{\it r}', containing the
        mode in which the file will be opened (the open modes are analogous to those of
        Python {\it open()}).
- % \item {\it compss\_delete(file\_name)}: notifies the runtime to delete a file. 
-       % # TODO: add delete functionality
+ \item {\it compss\_delete(file\_name)}: notifies the runtime to delete a file. 
  \item {\it compss\_wait\_on(obj, to\_write = True)}: synchronizes for the last version of object {\it obj}
        and returns the synchronized object. It can have an optional boolean parameter
        {\it to\_write}, which defaults to {\it True}, that indicates whether the main program will modify the
@@ -258,8 +257,8 @@ Table \ref{tab:python_api_functions} summarizes the API functions to be used in 
     \multicolumn{1}{|c|}{{\bf Function }}    &  \multicolumn{1}{c|}{{\bf Use }}\\
     \hline
     compss\_open(file\_name, mode = 'r') & Synchronizes for the last version of a file and returns its file descriptor. \\
-    % \hline
-    % compss\_delete(file\_name) & Notifies the runtime to remove a file. \\ # TODO: add delete file
+    \hline
+    compss\_delete(file\_name) & Notifies the runtime to remove a file. \\
     \hline
     compss\_wait\_on(obj, to\_write = True) & Synchronizes for the last version of an object (or a list of objects) and returns it. \\
     \hline
