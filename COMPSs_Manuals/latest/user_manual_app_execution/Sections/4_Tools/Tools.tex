@@ -67,16 +67,53 @@ The COMPSs Monitor allows to monitor applications from different users and thus,
     \label{fig:monitoring_interface}
 \end{figure}
 
+~ \newline
+
 To enable \textbf{all} the COMPSs Monitor features, applications must run the \texttt{runcompss} command with the \texttt{-m} flag. This flag 
 allows the  COMPSs Runtime to store special information inside inside the \texttt{log\_base\_folder} under the \texttt{monitor} 
 folder (see Figures \ref{fig:simple_exec_monitor} and \ref{fig:simple_logs_monitor}). Only advanced users should modify or delete any of these files. If the application that a user is trying to monitor 
 has not been executed with this flag, some of the COMPSs Monitor features will be disabled. 
+
 \begin{figure}[ht!]
   \centering
-    \includegraphics[width=0.95\textwidth]{./Sections/4_Tools/Figures/simple_monitor.jpeg}
-    \caption{Execution of the Simple Java application with the monitoring flag enabled}
-    \label{fig:simple_exec_monitor}
+  \begin{lstlisting}[language=bash]
+compss@bsc:~/tutorial_apps/java/simple/jar$ runcompss -dm simple.Simple 1
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
+[  INFO] Using default language: java
+
+----------------- Executing simple.Simple --------------------------
+
+WARNING: IT Properties file is null. Setting default values
+[(799)    API]  -  Deploying COMPSs Runtime v<version>
+[(801)    API]  -  Starting COMPSs Runtime v<version>
+[(801)    API]  -  Initializing components
+[(1290)    API]  -  Ready to process tasks
+[(1293)    API]  -  Opening /home/compss/tutorial_apps/java/simple/jar/counter in mode OUT
+[(1338)    API]  -  File target Location: /home/compss/tutorial_apps/java/simple/jar/counter
+Initial counter value is 1
+[(1340)    API]  -  Creating task from method increment in simple.SimpleImpl
+[(1340)    API]  -  There is 1 parameter
+[(1341)    API]  -    Parameter 1 has type FILE_T
+Final counter value is 2
+[(4307)    API]  -  No more tasks for app 1
+[(4311)    API]  -  Getting Result Files 1
+[(4340)    API]  -  Stop IT reached
+[(4344)    API]  -  Stopping Graph generation...
+[(4344)    API]  -  Stopping Monitor...
+[(6347)    API]  -  Stopping AP...
+[(6348)    API]  -  Stopping TD...
+[(6509)    API]  -  Stopping Comm...
+[(6510)    API]  -  Runtime stopped
+[(6510)    API]  -  Execution Finished
+
+------------------------------------------------------------
+  \end{lstlisting}
+  \caption{Execution of the Simple Java application with the monitoring flag enabled}
+  \label{fig:simple_exec_monitor}
 \end{figure}
+
 
 \begin{figure}[ht!]
   \centering
@@ -164,8 +201,8 @@ Extrae: Tracing mode is set to: Detail.
 Extrae: Successfully initiated with 1 tasks and 1 threads
 
 WARNING: IT Properties file is null. Setting default values
-[(751)    API]  -  Deploying COMPSs Runtime v2.0 (build 20161114-1231)
-[(753)    API]  -  Starting COMPSs Runtime v2.0 (build 20161114-1231)
+[(751)    API]  -  Deploying COMPSs Runtime v<version>
+[(753)    API]  -  Starting COMPSs Runtime v<version>
 [(753)    API]  -  Initializing components
 [(1142)   API]  -  Ready to process tasks
 ...
@@ -208,6 +245,8 @@ mpi2prv: Removing temporal files... done
 mpi2prv: Elapsed time removing temporal files: 0 hours 0 minutes 0 seconds
 mpi2prv: Congratulations! ./trace/kmeans.Kmeans_compss_trace_1460456106.prv has been generated.
 [   API]  -  Execution Finished
+
+------------------------------------------------------------
 \end{lstlisting}
 
 At the end of the execution the trace will be stored inside the \texttt{trace} folder under the application log directory.

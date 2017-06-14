@@ -33,6 +33,7 @@
 \author{Installation Manual}
 \def \compssversion {2.0.rc1706}
 
+\makeindex 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%% DOCUMENT %%%%%%%%%%%
@@ -47,7 +48,7 @@
       \textsc{\LARGE COMP Superscalar}\\[1.5cm] 
       
       \HRule \\[0.4cm] 
-      { \huge \bfseries Installation Manual \\[0.4cm] }
+      { \huge \bfseries Installation and Administration Manual \\[0.4cm] }
       \HRule \\[1.5cm] 
 
       { \large \textsc{Version: \compssversion}} \\[0.3cm]
@@ -84,31 +85,33 @@
   \pagenumbering{roman}
   \setcounter{tocdepth}{6}
   \tableofcontents
-  %\listoffigures
-  %\listoftables
+  \listoffigures
+  \listoftables
     
   \newpage
 
   %%%%%%%%%%%%% CONTENTS %%%%%%%%%%%%%%
   \pagenumbering{arabic}
     
-  \input{./Sections/1_Introduction/Introduction.tex}
+  \input{./Sections/01_Introduction/Introduction.tex}
 
-  \input{./Sections/2_Packages_Description/Packages_Description.tex}
+  \input{./Sections/02_Packages_Description/Packages_Description.tex}
   
-  \input{./Sections/3_Debian/Debian.tex}
+  \input{./Sections/03_Debian/Debian.tex}
           
-  \input{./Sections/4_RedHat_zypper/RedHat_zypper.tex}
+  \input{./Sections/04_RedHat_zypper/RedHat_zypper.tex}
   
-  \input{./Sections/5_RedHat_yum/RedHat_yum.tex}
+  \input{./Sections/05_RedHat_yum/RedHat_yum.tex}
   
-  \input{./Sections/6_Supercomputers/Supercomputers.tex}
+  \input{./Sections/06_Pip/Pip.tex}
+
+  \input{./Sections/07_Supercomputers/Supercomputers.tex}
            
-  \input{./Sections/9_Pip/Pip.tex}
-           
-  \input{./Sections/7_Additional_Configuration/Additional_Configuration.tex}
+  \input{./Sections/08_Additional_Configuration/Additional_Configuration.tex}
+
+  \input{./Sections/09_Configuration_Files/Configuration_Files.tex}
   
-  \input{./Sections/8_Removal/Removal.tex}
+  \input{./Sections/10_Removal/Removal.tex}
   
   %%%%%%%%%%%%% END PAGE %%%%%%%%%%%%%%
   \newpage

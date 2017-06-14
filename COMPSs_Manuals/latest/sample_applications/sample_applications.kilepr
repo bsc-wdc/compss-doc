@@ -60,10 +60,10 @@ Mode=LaTeX
 
 [item:Sample_Applications.tex]
 archive=true
-column=17
+column=3
 encoding=UTF-8
 highlight=LaTeX
-line=33
+line=82
 mode=LaTeX
 open=false
 order=0
@@ -129,10 +129,10 @@ open=false
 order=-1
 
 [view-settings,view=0,item:Sample_Applications.tex]
-CursorColumn=17
-CursorLine=33
+CursorColumn=3
+CursorLine=82
 JumpList=
-ViMarks=.,33,16,[,33,16,],33,16
+ViMarks=.,82,2,[,82,2,],82,2
 
 [view-settings,view=0,item:Sections/1_Introduction/Introduction.tex]
 CursorColumn=0

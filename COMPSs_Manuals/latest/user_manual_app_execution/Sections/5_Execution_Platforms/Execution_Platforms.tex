@@ -30,7 +30,7 @@ In order to use COMPSs with Docker, some requirements must be fulfilled:
       will reuse the existing layers of previous images (for example the COMPSs base image).
 \end{itemize}
 
-\clearpage
+
 \subsubsection{Execution}
 
 The runcompss-docker execution workflow uses Docker-Compose, which is in charge of spawning the different application containers into the Docker Swarm manager.
@@ -156,11 +156,13 @@ runcompss-docker --w=N --s='<ip>:<port>' --i='DOCKERHUB_USERNAME/image_name' --c
 \end{lstlisting}        
 
 
-\clearpage
 \subsubsection{Execution with TLS}
+
 If your cluster uses \textbf{TLS} or has been created using \textbf{Docker-Machine}, you will have to 
 \textbf{export two environment variables} before using runcompss-docker:\\ \\
+
 On one hand, \textbf{DOCKER\_TLS\_VERIFY} environment variable will tell Docker that you are using TLS:
+
 \begin{lstlisting}[language=bash]
 export DOCKER_TLS_VERIFY="1"
 \end{lstlisting}
@@ -209,11 +211,11 @@ In this case we executed the \textbf{Matmul example application} that we provide
 
 ~ \newline
 
-\begin{figure}[h!]
+\begin{figure}[!ht]
   \centering
     \includegraphics[width=0.3\textwidth]{./Sections/5_Execution_Platforms/Figures/docker-matmul-results-tree.png}
     \caption{Result and log folders of a \textit{Matmul} execution with COMPSs and Docker}
-    \label{fig:compss_out}
+    \label{fig:compss_docker_results}
 \end{figure}
 
 
@@ -336,7 +338,7 @@ To maintain the portability between different environments, COMPSs has a pre-bui
 the \texttt{enqueue\_compss} script provided in the COMPSs installation. This script has several parameters (see 
 \texttt{enqueue\_compss -h}) that allow users to customize their executions for any SuperComputer.
 
-\begin{figure}[h!]
+\begin{figure}[!ht]
   \centering
     \includegraphics[width=0.6\textwidth]{./Sections/5_Execution_Platforms/Figures/queue_scripts_structure.png}
     \caption{Structure of COMPSs queue scripts. In Blue user scripts, in Green queue scripts and in Orange system dependant scripts}
@@ -349,7 +351,7 @@ for the specific SuperComputer parameters. The COMPSs installation already provi
 To create a new configuration we recommend to use one of the configurations provided by COMPSs (such as the configuration for the
 \textit{MareNostrum III} SuperComputer) or to contact us at \url{support-compss@bsc.es} .
 
-\subsubsection{MareNostrum III}
+~\newline
 
-For information about how to submit COMPSs applications at MareNostrum III (BSC) please refer to the \textit{COMPSs at BSC} manual 
-available at \url{http://compss.bsc.es/releases/compss/latest/docs/COMPSs_MareNostrum_Manual.pdf} .
+For information about how to submit COMPSs applications at any Supercomputer please refer to the \textit{COMPSs Supercomputers} manual 
+available at \url{http://compss.bsc.es/releases/compss/latest/docs/COMPSs_Supercomputers_Manual.pdf} .

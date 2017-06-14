@@ -74,10 +74,10 @@ Mode=LaTeX
 
 [item:COMPSs_Tracing_Manual.tex]
 archive=true
-column=0
+column=79
 encoding=UTF-8
 highlight=LaTeX
-line=18
+line=73
 mode=LaTeX
 open=false
 order=0
@@ -94,20 +94,20 @@ order=2
 
 [item:Sections/2_Execution/Execution.tex]
 archive=true
-column=17
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=276
+line=318
 mode=LaTeX
 open=false
 order=4
 
 [item:Sections/3_Visualization/Visualization.tex]
 archive=true
-column=16
+column=68
 encoding=UTF-8
 highlight=LaTeX
-line=80
+line=29
 mode=LaTeX
 open=false
 order=1
@@ -134,10 +134,10 @@ order=6
 
 [item:Sections/Appendices/Appendices.tex]
 archive=true
-column=0
+column=30
 encoding=UTF-8
 highlight=LaTeX
-line=96
+line=134
 mode=LaTeX
 open=false
 order=7
@@ -163,10 +163,10 @@ open=false
 order=-1
 
 [view-settings,view=0,item:COMPSs_Tracing_Manual.tex]
-CursorColumn=0
-CursorLine=18
+CursorColumn=79
+CursorLine=73
 JumpList=
-ViMarks=.,116,0,[,115,0,],116,36
+ViMarks=.,75,4,[,75,0,],75,11
 
 [view-settings,view=0,item:Sections/1_Introduction/Introduction.tex]
 CursorColumn=0
@@ -175,16 +175,16 @@ JumpList=
 ViMarks=.,5,23,[,5,23,],5,23
 
 [view-settings,view=0,item:Sections/2_Execution/Execution.tex]
-CursorColumn=17
-CursorLine=276
+CursorColumn=0
+CursorLine=318
 JumpList=
-ViMarks=.,214,9,[,214,8,],214,9
+ViMarks=.,315,0,[,316,0,],-1,-1
 
 [view-settings,view=0,item:Sections/3_Visualization/Visualization.tex]
-CursorColumn=16
-CursorLine=80
+CursorColumn=68
+CursorLine=29
 JumpList=
-ViMarks=.,34,54,[,34,54,],34,68
+ViMarks=.,29,9,[,29,9,],29,9
 
 [view-settings,view=0,item:Sections/4_Interpretation/Interpretation.tex]
 CursorColumn=34
@@ -199,10 +199,10 @@ JumpList=
 ViMarks=.,12,53,[,12,53,],12,62
 
 [view-settings,view=0,item:Sections/Appendices/Appendices.tex]
-CursorColumn=0
-CursorLine=96
+CursorColumn=30
+CursorLine=134
 JumpList=
-ViMarks=.,95,119,[,96,0,],-1,-1
+ViMarks=.,146,59,[,146,59,],146,59
 
 [view-settings,view=0,item:Tracing_Manual.tex]
 CursorColumn=0

@@ -67,10 +67,10 @@ Mode=LaTeX
 
 [item:COMPSs_Supercomputers_Manual.tex]
 archive=true
-column=31
+column=3
 encoding=UTF-8
 highlight=LaTeX
-line=42
+line=88
 mode=LaTeX
 open=false
 order=0
@@ -117,10 +117,10 @@ order=-1
 
 [item:Sections/5_Monitor/Monitor.tex]
 archive=true
-column=10
+column=19
 encoding=UTF-8
 highlight=LaTeX
-line=50
+line=57
 mode=LaTeX
 open=false
 order=5
@@ -146,10 +146,10 @@ open=false
 order=1
 
 [view-settings,view=0,item:COMPSs_Supercomputers_Manual.tex]
-CursorColumn=31
-CursorLine=42
+CursorColumn=3
+CursorLine=88
 JumpList=
-ViMarks=.,50,39,[,50,39,],50,39
+ViMarks=.,88,2,[,88,2,],88,2
 
 [view-settings,view=0,item:Sections/1_Introduction/Introduction.tex]
 CursorColumn=0
@@ -176,10 +176,10 @@ JumpList=
 ViMarks=.,11,38,[,11,38,],11,38
 
 [view-settings,view=0,item:Sections/5_Monitor/Monitor.tex]
-CursorColumn=10
-CursorLine=50
+CursorColumn=19
+CursorLine=57
 JumpList=
-ViMarks=.,66,18,[,66,18,],66,18
+ViMarks=.,57,0,[,57,0,],57,0
 
 [view-settings,view=0,item:configuration.tex]
 CursorColumn=74

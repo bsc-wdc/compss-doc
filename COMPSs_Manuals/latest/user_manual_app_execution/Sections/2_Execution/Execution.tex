@@ -162,13 +162,23 @@ compss@bsc:~$ cd tutorial_apps/java/simple/jar/
 compss@bsc:~/tutorial_apps/java/simple/jar$ runcompss simple.Simple <initial_number>
 \end{lstlisting}
 
-\begin{figure}[h!]
-  \centering
-    \includegraphics[width=\textwidth]{./Sections/2_Execution/Figures/java_execution.jpeg}
-    \caption{Execution of a Java COMPSs application.}
-    \label{fig:java_execution}
-\end{figure}
-\vspace{-0.4cm}
+\begin{lstlisting}[language=bash]
+compss@bsc:~/tutorial_apps/java/simple/jar$ runcompss simple.Simple 1
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
+[  INFO] Using default language: java
+
+----------------- Executing simple.Simple --------------------------
+
+WARNING: IT Properties file is null. Setting default values
+[(1066)    API]  -  Starting COMPSs Runtime v<version>
+Initial counter value is 1
+Final counter value is 2
+[(4740)    API]  -  Execution Finished
+
+------------------------------------------------------------
+\end{lstlisting}
 
 In this first execution we use the default value of the \texttt{--classpath} option to automatically add the jar
 file to the classpath (by executing runcompss in the directory which contains the jar file). However,
@@ -187,41 +197,69 @@ compss@bsc:~$ runcompss --classpath=/home/compss/tutorial_apps/java/simple/jar/s
 
 
 \subsubsection{Running Python applications}
-To launch a COMPSs Python application users have to provide the \texttt{--lang=python} option to the runcompss command. 
+To launch a COMPSs Python application users have to provide the \texttt{--lang=python} option to the runcompss command. If the extension
+of the main file is a regular Python extension (\verb|.py| or \verb|.pyc|) the \textit{runcompss} command can also infer the 
+application language without specifying the \textit{lang} flag. 
 
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd tutorial_apps/python/simple/
 compss@bsc:~/tutorial_apps/python/simple$ runcompss --lang=python ./simple.py <initial_number>
 \end{lstlisting}
 
-\begin{figure}[h!]
-  \centering
-    \includegraphics[width=\textwidth]{./Sections/2_Execution/Figures/python_execution.jpeg}
-    \caption{Execution of a Python COMPSs application.}
-    \label{fig:python_execution}
-\end{figure}
-\vspace{-0.4cm}
+\begin{lstlisting}[language=bash]
+compss@bsc:~/tutorial_apps/python/simple$ runcompss simple.py 1
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
+[  INFO] Inferred PYTHON language
+
+----------------- Executing simple.py --------------------------
+
+WARNING: IT Properties file is null. Setting default values
+[(616)    API]  -  Starting COMPSs Runtime v<version>
+Initial counter value is 1
+Final counter value is 2
+[(4297)    API]  -  Execution Finished
+
+------------------------------------------------------------
+\end{lstlisting}
 
 
 \subsubsection{Running C/C\texttt{++} applications}
-To launch a COMPSs C/C\texttt{++} application users have to compile the C/C\texttt{++} application by means of the \texttt{buildapp} command. For 
-further information please refer to the \textit{COMPSs User Manual: Application development guide} document available at
-\url{http://compss.bsc.es} . Once complied, the \texttt{--lang=c} option must be provided to the runcompss command.
+To launch a COMPSs C/C\texttt{++} application users have to compile the C/C\texttt{++} application by means of the \texttt{buildapp} command.
+For further information please refer to the \textit{COMPSs User Manual: Application development guide} document available at
+\url{http://compss.bsc.es} . Once complied, the \texttt{--lang=c} option must be provided to the runcompss command. If the main file is 
+a C / C++ binary the \textit{runcompss} command can also infer the application language without specifying the \textit{lang} flag. 
 
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd tutorial_apps/c/simple/
 compss@bsc:~/tutorial_apps/c/simple$ runcompss --lang=c simple <initial_number>
 \end{lstlisting}
 
-\begin{figure}[h!]
-  \centering
-    \includegraphics[width=0.95\textwidth]{./Sections/2_Execution/Figures/c_execution.jpeg}
-    \caption{Execution of a C\texttt{++} COMPSs application.}
-    \label{fig:c_execution}
-\end{figure}
-\vspace{-0.4cm}
+\begin{lstlisting}[language=bash]
+compss@bsc:~/tutorial_apps/c/simple$ runcompss ~/tutorial_apps/c/simple/master/simple 1
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
+[  INFO] Inferred C/C++ language
 
-\newpage
+----------------- Executing simple --------------------------
+
+JVM_OPTIONS_FILE: /tmp/tmp.ItT1tQfKgP
+IT_HOME: /opt/COMPSs
+Args: 1
+ 
+WARNING: IT Properties file is null. Setting default values
+[(650)    API]  -  Starting COMPSs Runtime v<version>
+Initial counter value is 1
+[   BINDING]  -  @compss_wait_on  -  Entry.filename: counter
+[   BINDING]  -  @compss_wait_on  -  Runtime filename: d1v2_1497432831496.IT
+Final counter value is 2
+[(4222)    API]  -  Execution Finished
+
+------------------------------------------------------------
+\end{lstlisting}
+
 
 \subsection{Additional configurations}
 
@@ -235,629 +273,8 @@ in the \texttt{/opt/COMPSs/Runtime/configuration/xml/} path.
 Users can manually edit these files or can use the \textit{Eclipse IDE} tool developed for COMPSs. For further 
 information about the \textit{Eclipse IDE} please refer to Section \ref{subsec:IDE}. 
 
+~\newline
 
-Next sections describe in detail the \texttt{resources.xml} and the \texttt{project.xml} files, 
-explaining the available options.
+For further details please check the \textit{Configuration Files} Section inside the \textit{COMPSs Installation and Administration Manual}
+available at \url{http://compss.bsc.es/releases/compss/latest/docs/COMPSs_Installation_Manual.pdf} .
 
-\subsubsection{Resources file}
-The \texttt{resources} file provides information about all the available resources that can be used for an execution. 
-This file should normally be managed by the system administrators. Its full definition schema can be found at \\
-\texttt{/opt/COMPSs/Runtime/configuration/xml/resources/resource\_schema.xsd}. 
-
-For the sake of clarity, users can also check the SVG schema located at \\
-\texttt{/opt/COMPSs/Runtime/configuration/xml/resources/resource\_schema.svg}.
-
-This file contains one entry per available resource defining its name and its capabilities. Administrators can define several
-resource capabilities (see example in the next listing) but we would like to underline the importance of 
-\textbf{ComputingUnits}. This capability represents the number of available cores in the described resource and it is
-used to schedule the correct number of tasks. Thus, it becomes essential to define it accordingly to the number of cores 
-in the physical resource. 
-
-\begin{lstlisting}[language=xml,moredelim={[is][\textcolor{red}]{@@}{@@}}]
-compss@bsc:~$ cat /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ResourcesList>
-    <ComputeNode Name="localhost">
-        <Processor Name="P1">
-            @@<ComputingUnits>4</ComputingUnits>@@
-            <Architecture>amd64</Architecture>
-            <Speed>3.0</Speed>
-        </Processor>
-        <Processor Name="P2">
-            @@<ComputingUnits>2</ComputingUnits>@@
-        </Processor>
-        <Adaptors>
-            <Adaptor Name="integratedtoolkit.nio.master.NIOAdaptor">
-                <SubmissionSystem>
-                    <Interactive/>
-                </SubmissionSystem>
-                <Ports>
-                    <MinPort>43001</MinPort>
-                    <MaxPort>43002</MaxPort>
-                </Ports>
-            </Adaptor>
-        </Adaptors>
-        <Memory>
-            <Size>16</Size>
-        </Memory>
-        <Storage>
-            <Size>200.0</Size>
-        </Storage>
-        <OperatingSystem>
-            <Type>Linux</Type>
-            <Distribution>OpenSUSE</Distribution>
-        </OperatingSystem>
-        <Software>
-            <Application>Java</Application>
-            <Application>Python</Application>
-        </Software>
-    </ComputeNode>
-</ResourcesList>
-\end{lstlisting}
-
-
-\subsubsection{Project file}
-The project file provides information about the resources used in a specific execution. Consequently, the resources that 
-appear in this file are a subset of the resources described in the \texttt{resources.xml} file. This file, that contains
-one entry per worker, is usually edited by the users and changes from execution to execution. Its full definition 
-schema can be found at 
-\texttt{/opt/COMPSs/Runtime/configuration/xml/projects/project\_schema.xsd}.
-
-For the sake of clarity, users can also check the SVG schema located at \\
-\texttt{/opt/COMPSs/Runtime/configuration/xml/projects/project\_schema.xsd}.
-
-We emphasize the importance of correctly defining the following entries:
-\begin{description}
- \item [installDir] Indicates the path of the COMPSs installation \textbf{inside the resource} (not necessarily the same 
- than in the local machine).
- \item [User] Indicates the username used to connect via ssh to the resource. This user \textbf{must} have passwordless access to the
- resource (for more information check the \textit{COMPSs Installation Manual} available at our website \url{http://compss.bsc.es}).
- If left empty COMPSs will automatically try to access the resource with the \textbf{same username than the one that lauches 
- the COMPSs main application}.
- \item [LimitOfTasks] The maximum number of tasks that can be simultaneously scheduled to a resource. Considering that a task 
- can use more than one core of a node, this value must be lower or equal to the number of available cores in the resource. 
-\end{description}
-
-
-\begin{lstlisting}[language=xml,moredelim={[is][\textcolor{red}]{@@}{@@}}]
-compss@bsc:~$ cat /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Project>
-    <!-- Description for Master Node --> 
-    <MasterNode\>
-
-    <!--Description for a physical node-->
-    <ComputeNode Name="localhost">
-        @@<InstallDir>/opt/COMPSs/</InstallDir>@@
-        <WorkingDir>/tmp/Worker/</WorkingDir>
-        <Application>
-            <AppDir>/home/user/apps/</AppDir>
-            <LibraryPath>/usr/lib/</LibraryPath>
-            <Classpath>/home/user/apps/jar/example.jar</Classpath>
-            <Pythonpath>/home/user/apps/</Pythonpath>
-        </Application>
-        @@<LimitOfTasks>4</LimitOfTasks>@@
-        <Adaptors>
-            <Adaptor Name="integratedtoolkit.nio.master.NIOAdaptor">
-                <SubmissionSystem>
-                    <Interactive/>
-                </SubmissionSystem>
-                <Ports>
-                    <MinPort>43001</MinPort>
-                    <MaxPort>43002</MaxPort>
-                </Ports>
-                @@<User>user</User>@@
-            </Adaptor>
-        </Adaptors>
-    </ComputeNode>
-</Project>
-\end{lstlisting}
-\label{lstlisting:project.xml}
-
-
-\subsection{Configuration examples}
-In the next subsections we provide specific information about the services, shared disks, cluster and cloud configurations and several \texttt{project.xml} and \texttt{resources.xml} examples. 
-
-
-\subsubsection{Services configuration}
-To allow COMPSs applications to use WebServices as tasks, the \texttt{resources.xml} can include a special type of resource called 
-\textit{Service}. For each WebService it is necessary to specify its wsdl, its name, its namespace and
-its port. 
-\begin{lstlisting}[language=xml]
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ResourcesList>
-    <ComputeNode Name="localhost">
-      ...                                                                                                                                                                                                
-    </ComputeNode>  
-    
-    <Service wsdl="http://bscgrid05.bsc.es:20390/hmmerobj/hmmerobj?wsdl">                                                                                                                                          
-        <Name>HmmerObjects</Name>                                                                                                                                                                                  
-        <Namespace>http://hmmerobj.worker</Namespace>                                                                                                                                                              
-        <Port>HmmerObjectsPort</Port>                                                                                                                                                                              
-    </Service>                                                                                                                                                                                                     
-</ResourcesList>  
-\end{lstlisting}
-
-When configuring the \texttt{project.xml} file it is necessary to include the service as a worker by adding an
-special entry indicating only the name and the limit of tasks as shown in the following example:
-\begin{lstlisting}[language=xml]
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>                                                                                                                                                            
-<Project>                                                                                                                                                                                                          
-    <MasterNode/>                                                                                                                                                                                                  
-    <ComputeNode Name="localhost">                                                                                                                                                                                 
-      ...                                                                                                                                                                           
-    </ComputeNode>   
-    
-    <Service wsdl="http://bscgrid05.bsc.es:20390/hmmerobj/hmmerobj?wsdl">                                                                                                                                          
-        <LimitOfTasks>2</LimitOfTasks>                                                                                                                                                                             
-    </Service>                                                                                                                                                                                                     
-</Project> 
-\end{lstlisting}
-
-\subsubsection{Cluster and grid configuration (static resources)}
-In order to use external resources to execute the applications, the following steps have to be followed:
-
-\begin{enumerate}
- \item Install the \textit{COMPSs Worker} package (or the full \textit{COMPSs Framework} package) on all the new 
- resources following the \textit{Installation manual} available at \url{http://compss.bsc.es} .
- \item Set SSH passwordless access to the rest of the remote resources.
- \item Create the \textit{WorkingDir} directory in the resource (remember this path because it is needed 
- for the \texttt{project.xml} configuration).
- \item Manually deploy the application on each node.
-\end{enumerate}
-
-The \texttt{resources.xml} and the \texttt{project.xml} files must be configured accordingly.
-Here we provide examples about configuration files for Grid and Cluster environments.
-
-\begin{lstlisting}[language=xml]
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>                                                                                                                                                            
-<ResourcesList>                                                                                                                                                                                                    
-    <ComputeNode Name="hostname1.domain.es">                                                                                                                                                                       
-        <Processor Name="MainProcessor">                                                                                                                                                                           
-            <ComputingUnits>4</ComputingUnits>                                                                                                                                                                     
-        </Processor>                                                                                                                                                                                               
-        <Adaptors>                                                                                                                                                                                                 
-            <Adaptor Name="integratedtoolkit.nio.master.NIOAdaptor">                                                                                                                                               
-                <SubmissionSystem>
-                    <Interactive/>
-                </SubmissionSystem>
-                <Ports>
-                    <MinPort>43001</MinPort>
-                    <MaxPort>43002</MaxPort>
-                </Ports>
-            </Adaptor>
-            <Adaptor Name="integratedtoolkit.gat.master.GATAdaptor">
-                <SubmissionSystem>
-                    <Batch>
-                        <Queue>sequential</Queue>
-                    </Batch>
-                    <Interactive/>
-                </SubmissionSystem>
-                <BrokerAdaptor>sshtrilead</BrokerAdaptor>
-            </Adaptor>
-        </Adaptors>
-    </ComputeNode>
-    
-    <ComputeNode Name="hostname2.domain.es">
-      ...
-    </ComputeNode>
-</ResourcesList>
-\end{lstlisting}
-
-\begin{lstlisting}[language=xml]
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>                                                                                                                                                            
-<Project>
-    <MasterNode/>
-    <ComputeNode Name="hostname1.domain.es">
-        <InstallDir>/opt/COMPSs/</InstallDir>
-        <WorkingDir>/tmp/COMPSsWorker1/</WorkingDir>
-        <User>user</User>
-        <LimitOfTasks>2</LimitOfTasks>
-    </ComputeNode>
-    <ComputeNode Name="hostname2.domain.es">
-      ...
-    </ComputeNode>
-</Project>
-\end{lstlisting}
-
-
-\subsubsection{Shared Disks configuration example}
-Configuring shared disks might reduce the amount of data transfers improving the application performance. To configure a 
-shared disk the users must:
-\begin{enumerate}
- \item Define the shared disk and its capabilities
- \item Add the shared disk and its mountpoint to each worker
- \item Add the shared disk and its mountpoint to the master node
-\end{enumerate}
-
-Next example illustrates steps 1 and 2. The \texttt{<SharedDisk>} tag adds a new shared disk named \texttt{sharedDisk0} and the
-\texttt{<AttachedDisk>} tag adds the mountpoint of a named shared disk to a specific worker.
-\begin{lstlisting}[language=xml]
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ResourcesList>
-    <SharedDisk Name="sharedDisk0">
-        <Storage>
-            <Size>100.0</Size>
-            <Type>Persistent</Type>
-        </Storage>
-    </SharedDisk>
-    
-    <ComputeNode Name="localhost">
-      ...
-      <SharedDisks>
-        <AttachedDisk Name="sharedDisk0">
-          <MountPoint>/tmp/SharedDisk/</MountPoint>
-        </AttachedDisk>
-      </SharedDisks>
-    </ComputeNode>
-</ResourcesList>
-\end{lstlisting} 
-
-On the other side, to add the shared disk to the \textbf{master node}, the users must edit the \texttt{project.xml} file. Next example shows how to attach the previous \texttt{sharedDisk0} to the master node:
-\begin{lstlisting}[language=xml]
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Project>
-    <MasterNode>
-        <SharedDisks>
-            <AttachedDisk Name="sharedDisk0">
-                <MountPoint>/home/sharedDisk/</MountPoint>
-            </AttachedDisk>
-        </SharedDisks>
-    </MasterNode>
-    
-    <ComputeNode Name="localhost">
-      ...
-    </ComputeNode>
-</Project>
-\end{lstlisting}
-
-Notice that the \texttt{resources.xml} file can have multiple \texttt{SharedDisk} definitions and that the \texttt{SharedDisks}
-tag (either in the \texttt{resources.xml} or in the \texttt{project.xml} files) can have multiple \texttt{AttachedDisk} childrens
-to mount several shared disks on the same worker or master. 
-
-\subsubsection{Cloud configuration (dynamic resources)}
-In order to use cloud resources to execute the applications, the following steps have to be followed:
-\begin{enumerate}
- \item Prepare cloud images with the \textit{COMPSs Worker} package or the full \textit{COMPSs Framework} package installed.
- \item The application will be deployed automatically during execution but the users need to set up the configuration files to
- specify the application files that must be deployed. 
-\end{enumerate}
-
-The COMPSs runtime communicates with a cloud manager by means of connectors. Each connector implements 
-the interaction of the runtime with a given provider's API, supporting four basic 
-operations: ask for the price of a certain VM in the provider, get the time needed to create a VM, 
-create a new VM and terminate a VM. This design allows connectors to abstract the runtime from the particular API
-of each provider and facilitates the addition of new connectors for other providers.
-
-The \texttt{resources.xml} file must contain one or more \textbf{\texttt{<CloudProvider>}} tags
-that include the information about a particular provider, associated to a given connector. The tag \textbf{must} have an
-attribute \textbf{Name} to uniquely identify the provider. Next example summarizes the information to be specified by the 
-user inside this tag.
-
-\newpage
-
-\begin{lstlisting}[language=xml]
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ResourcesList>
-    <CloudProvider Name="PROVIDER_NAME">
-        <Endpoint>
-            <Server>https://PROVIDER_URL</Server>
-            <ConnectorJar>CONNECTOR_JAR</ConnectorJar>
-            <ConnectorClass>CONNECTOR_CLASS</ConnectorClass>
-        </Endpoint>
-        <Images>
-            <Image Name="Image1">
-                <Adaptors>
-                    <Adaptor Name="integratedtoolkit.nio.master.NIOAdaptor">
-                        <SubmissionSystem>
-                            <Interactive/>
-                        </SubmissionSystem>
-                        <Ports>
-                            <MinPort>43001</MinPort>
-                            <MaxPort>43010</MaxPort>
-                        </Ports>
-                    </Adaptor>
-                </Adaptors>
-                <OperatingSystem>
-                    <Type>Linux</Type>
-                </OperatingSystem>
-                <Software>
-                    <Application>Java</Application>
-                </Software>
-                <Price>
-                    <TimeUnit>100</TimeUnit>
-                    <PricePerUnit>36.0</PricePerUnit>
-                </Price>
-            </Image>
-            <Image Name="Image2">
-                <Adaptors>
-                    <Adaptor Name="integratedtoolkit.nio.master.NIOAdaptor">
-                        <SubmissionSystem>
-                            <Interactive/>
-                        </SubmissionSystem>
-                        <Ports>
-                            <MinPort>43001</MinPort>
-                            <MaxPort>43010</MaxPort>
-                        </Ports>
-                    </Adaptor>
-                </Adaptors>
-            </Image>
-        </Images>
-    
-        <InstanceTypes>
-            <InstanceType Name="Instance1">
-                <Processor Name="P1">
-                    <ComputingUnits>4</ComputingUnits>
-                    <Architecture>amd64</Architecture>
-                    <Speed>3.0</Speed>
-                </Processor>
-                <Processor Name="P2">
-                    <ComputingUnits>4</ComputingUnits>
-                </Processor>
-                <Memory>
-                    <Size>1000.0</Size>
-                </Memory>
-                <Storage>
-                    <Size>2000.0</Size>
-                </Storage>
-            </InstanceType>
-            <InstanceType Name="Instance2">
-                <Processor Name="P1">
-                    <ComputingUnits>4</ComputingUnits>
-                </Processor>
-            </InstanceType>
-         </InstanceTypes>
-
-  </CloudProvider>
-</ResourcesList>
-\end{lstlisting}
-
-The \texttt{project.xml} complements the information about a provider listed in the \texttt{resources.xml} file. 
-This file can contain a \textbf{\texttt{<Cloud>}} tag where to specify a list of providers, each with a 
-\textbf{\texttt{<CloudProvider>}} tag, whose \textbf{name} attribute must match one of the providers in the 
-\texttt{resources.xml} file. Thus, the \texttt{project.xml} file \textbf{must} contain a subset of the providers
-specified in the \texttt{resources.xml} file. Next example summarizes the information to be specified by the user
-inside this \texttt{<Cloud>} tag.
-
-\begin{lstlisting}[language=xml]
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Project>
-    <Cloud>
-        <InitialVMs>1</InitialVMs>
-        <MinimumVMs>1</MinimumVMs>
-        <MaximumVMs>4</MaximumVMs>
-        <CloudProvider Name="PROVIDER_NAME">
-            <LimitOfVMs>4</LimitOfVMs>
-            <Properties>
-                <Property Context="C1">
-                    <Name>P1</Name>
-                    <Value>V1</Value>
-                </Property>
-                <Property>
-                    <Name>P2</Name>
-                    <Value>V2</Value>
-                </Property>
-            </Properties>
-            
-            <Images>
-                <Image Name="Image1">
-                    <InstallDir>/opt/COMPSs/</InstallDir>
-                    <WorkingDir>/tmp/Worker/</WorkingDir>
-                    <User>user</User>
-                    <Application>
-                        <Pythonpath>/home/user/apps/</Pythonpath>
-                    </Application>
-                    <LimitOfTasks>2</LimitOfTasks>
-                    <Package>
-                        <Source>/home/user/apps/</Source>
-                        <Target>/tmp/Worker/</Target>
-                        <IncludedSoftware>
-                            <Application>Java</Application>
-                            <Application>Python</Application>
-                        </IncludedSoftware>
-                    </Package>
-                    <Package>
-                        <Source>/home/user/apps/</Source>
-                        <Target>/tmp/Worker/</Target>
-                    </Package>
-                    <Adaptors>
-                        <Adaptor Name="integratedtoolkit.nio.master.NIOAdaptor">
-                            <SubmissionSystem>
-                                <Interactive/>
-                            </SubmissionSystem>
-                            <Ports>
-                                <MinPort>43001</MinPort>
-                                <MaxPort>43010</MaxPort>
-                            </Ports>
-                        </Adaptor>
-                    </Adaptors>
-                </Image>
-                <Image Name="Image2">
-                    <InstallDir>/opt/COMPSs/</InstallDir>
-                    <WorkingDir>/tmp/Worker/</WorkingDir>
-                </Image>
-            </Images>
-            <InstanceTypes>
-                <InstanceType Name="Instance1"/>
-                <InstanceType Name="Instance2"/>
-            </InstanceTypes>
-        </CloudProvider>
-        
-        <CloudProvider Name="PROVIDER_NAME2">
-            ...
-        </CloudProvider>
-    </Cloud>
-</Project>
-\end{lstlisting}
-
-For any connector the Runtime is capable to handle the next list of properties:
-
-\begin{table}[h]
-\def\arraystretch{1.2}
-\centering
-\begin{tabularx}{\linewidth}{|l|X|} \hline
-	\textbf{Name} &\textbf{Description} \\ \hline
-	provider-user & Username to login in the provider\\ \hline
-	provider-user-credential & Credential to login in the provider\\ \hline
-	time-slot & Time slot\\ \hline
-	estimated-creation-time & Estimated VM creation time\\ \hline                    
-	max-vm-creation-time & Maximum VM creation time\\ \hline
-\end{tabularx}
-\caption{Connector supported properties in the \texttt{project.xml} file.}
-\label{tab:abstract_connector_properties}
-\end{table}
-
-Additionally, for any connector based on SSH, the Runtime automatically handles the next list of properties:
-
-\begin{table}[h]
-\def\arraystretch{1.2}
-\centering
-\begin{tabularx}{\linewidth}{|l|X|} \hline
-	\textbf{Name} &\textbf{Description} \\ \hline
-	vm-user & User to login in the VM\\ \hline
-	vm-password & Password to login in the VM\\ \hline
-	vm-keypair-name & Name of the Keypair to login in the VM\\ \hline
-	vm-keypair-location & Location (in the master) of the Keypair to login in the VM \\ \hline
-\end{tabularx}
-\caption{Properties supported by any SSH based connector in the \texttt{project.xml} file.}
-\label{tab:ssh_connector_properties}
-\end{table}
-
-Finally, the next sections provide a more accurate description of each of the currently available connector and its specific properties.
-
-%%%%%%%%%%%%
-% ROCCI
-%%%%%%%%%%%%
-\paragraph{Cloud connectors: rOCCI}
-The connector uses the rOCCI binary client\footnote{\url{https://appdb.egi.eu/store/software/rocci.cli}} 
-(version newer or equal than 4.2.5) which has to be installed in the node where the COMPSs main 
-application is executed.
-
-This connector needs additional files providing details about the resource templates available on 
-each provider. This file is located under \\ \texttt{<COMPSs\_INSTALL\_DIR>/configuration/xml/templates} path. Additionally, the user must define the virtual images flavors and instance types offered by each provider; 
-thus, when the runtime decides the creation of a VM, the connector selects the appropriate image and 
-resource template according to the requirements (in terms of CPU, memory, disk, etc) by invoking the 
-rOCCI client through Mixins (heritable classes that override and extend the base templates).
-
-Table \ref{tab:rOCCI_extensions} contains the rOCCI specific properties that must be defined under the \texttt{Provider} tag in
-the \texttt{project.xml} file and Table \ref{tab:rOCCI_extensions} contains the specific properties that must be defined
-under the \texttt{Instance} tag.
-
-\begin{table}[h]
-\def\arraystretch{1.2}
-\centering
-\begin{tabularx}{\linewidth}{|l|X|} \hline
-	\textbf{Name} &\textbf{Description} \\ \hline
-	auth		& Authentication method, x509 only supported \\ \hline
-	user-cred	& Path of the VOMS proxy \\ \hline
-	ca-path		& Path to CA certificates directory \\ \hline
-	ca-file		& Specific CA filename \\ \hline
-	owner		& Optional. Used by the PMES Job-Manager \\ \hline
-	jobname		& Optional. Used by the PMES Job-Manager \\ \hline
-	timeout		& Maximum command time \\ \hline
-	username	& Username to connect to the back-end cloud provider \\ \hline
-	password	& Password to connect to the back-end cloud provider \\ \hline
-	voms		& Enable VOMS authentication \\ \hline
-	media-type	& Media type \\ \hline
-	resource	& Resource type \\ \hline
-	attributes	& Extra resource attributes for the back-end cloud provider \\ \hline
-	context		& Extra context for the back-end cloud provider \\ \hline
-	action		& Extra actions for the back-end cloud provider \\ \hline
-	mixin		& Mixin definition \\ \hline
-	link		& Link \\ \hline
-	trigger-action	& Adds a trigger \\ \hline
-	log-to		& Redirect command logs \\ \hline
-	skip-ca-check	& Skips CA checks \\ \hline
-	filter		& Filters command output \\ \hline
-	dump-model	& Dumps the internal model \\ \hline
-	debug		& Enables the debug mode on the connector commands \\ \hline
-	verbose		& Enables the verbose mode on the connector commands \\ \hline
-\end{tabularx}
-\caption{rOCCI extensions in the \texttt{project.xml} file.}
-\label{tab:rOCCI_extensions}
-\end{table}
-
-\newpage
-
-\bgroup
-  \def\arraystretch{1.5}
-  \begin{longtable}{| p{0.25\textwidth} | p{0.7\textwidth} |}
-      \hline
-      \textbf{Instance} 	& Multiple entries of resource templates. \\ \hline
-      Type   			& Name of the resource template. It has to be the same name than in the previous files \\ \hline
-      CPU    			& Number of cores \\ \hline
-      Memory 			& Size in GB of the available RAM \\ \hline
-      Disk   			& Size in GB of the storage \\ \hline
-      Price  			& Cost per hour of the instance \\ \hline
-      \caption{Configuration of the \texttt{<provider>.xml} templates file.}
-      \label{tab:rOCCI_configuration}
-  \end{longtable}
-\egroup
-
-
-%%%%%%%%%%%%
-% JCLOUDS
-%%%%%%%%%%%%
-\paragraph{Cloud connectors: JClouds}
-
-The JClouds connector is based on the JClouds API version \textit{1.9.1}. Table \ref{tab:jclouds_extensions} shows the extra available 
-options under the \textit{Properties} tag that are used by this connector.
-
-\begin{table}[h]
-\def\arraystretch{1.2}
-\centering
-\begin{tabularx}{\linewidth}{|l|X|} \hline
-	\textbf{Name} &\textbf{Description} \\ \hline
-	provider & Back-end provider to use with JClouds (i.e. aws-ec2) \\ \hline
-\end{tabularx}
-\caption{JClouds extensions in the \texttt{project.xml} file.}
-\label{tab:jclouds_extensions}
-\end{table}
-
-
-%%%%%%%%%%%%
-% DOCKER
-%%%%%%%%%%%%
-\paragraph{Cloud connectors: Docker}
-
-This connector uses a Java API client from \url{https://github.com/docker-java/docker-java}, version \textit{3.0.3}. It has not additional
-options. Make sure that the image/s you want to load are pulled before running COMPSs with \texttt{docker pull IMAGE}. Otherwise,
-the connectorn will throw an exception.
-
-
-%%%%%%%%%%%%
-% MESOS
-%%%%%%%%%%%%
-\paragraph{Cloud connectors: Mesos}
-
-The connector uses Mesos version \textit{0.28.2} which has to be installed in the node where the COMPSs main application is executed. 
-This connector creates a Mesos framework and it uses Docker images to deploy workers, each one with an own IP address. 
-
-By default it does not use authentication and the timeout timers are set to 3 minutes (180.000 milliseconds). The list of optional
-properties available from connector is shown in Table \ref{tab:mesos_extensions}.
-
-\begin{table}[h]
-\def\arraystretch{1.2}
-\centering
-\begin{tabularx}{\linewidth}{|l|X|} \hline
-	\textbf{Name} &\textbf{Description} \\ \hline
-	mesos-checkpoint  & Checkpoint for the framework.\\ \hline
-	mesos-authenticate & Uses authentication? (\texttt{true}/\texttt{false}) \\ \hline
-	mesos-default-principal & Principal for authentication.\\ \hline
-	mesos-default-secret  & Secret for authentication.\\ \hline
-	mesos-framework-register-timeout & Timeout to wait for Framework to register.\\ \hline
-	mesos-framework-register-timeout-units&  Time units to wait for register.\\ \hline
-	mesos-worker-wait-timeout & Timeout to wait for worker to be created.\\ \hline
-	mesos-worker-wait-timeout-units  & Time units for waiting creation. \\ \hline
-	mesos-worker-kill-timeout  & Number of units to wait for killing a worker. \\ \hline
-	mesos-worker-kill-timeout-units  & Time units to wait for killing.\\ \hline
-\end{tabularx}
-\caption{Mesos extensions in the \texttt{project.xml} file.}
-\label{tab:mesos_extensions}
-\end{table}
-
-\newpage
-
-\noindent
-* TimeUnit avialable values: \texttt{DAYS}, \texttt{HOURS}, \texttt{MICROSECONDS}, \texttt{MILLISECONDS}, \texttt{MINUTES}, 
-\texttt{NANOSECONDS}, \texttt{SECONDS}.

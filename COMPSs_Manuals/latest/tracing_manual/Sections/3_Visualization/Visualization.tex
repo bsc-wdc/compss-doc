@@ -1,9 +1,12 @@
 \section{Visualization}
 \label{sec:Visualization}
 
-Paraver is the BSC tool for trace visualization. Trace events are encoded in Paraver format (.prv) by the Extrae tool. Paraver is a powerful tool and allows users to show many views of the trace data using different configuration files. Users can manually load, edit or create configuration files to obtain different tracing views. 
+Paraver is the BSC tool for trace visualization. Trace events are encoded in Paraver format (.prv) by the Extrae tool. Paraver is a powerful
+tool and allows users to show many views of the trace data using different configuration files. Users can manually load, edit or create
+configuration files to obtain different tracing views. 
 
-The following subsections explain how to load a trace file into Paraver, open the task events view using an already predefined configuration file, and how to adjust the view to display the data properly.
+The following subsections explain how to load a trace file into Paraver, open the task events view using an already predefined 
+configuration file, and how to adjust the view to display the data properly.
 
 For further information about Paraver, please visit the following site:
 
@@ -12,7 +15,8 @@ For further information about Paraver, please visit the following site:
 \end{center}
 
 \subsection{Trace Loading}
-The final trace file in Paraver format (.prv) is at the base log folder of the application execution inside the trace folder. The fastest way to open it is calling the Paraver binary directly using the tracefile name as the argument.
+The final trace file in Paraver format (.prv) is at the base log folder of the application execution inside the trace folder. The fastest
+way to open it is calling the Paraver binary directly using the tracefile name as the argument.
 
 \begin{lstlisting}[language=bash]
 wxparaver /path/to/trace/trace.prv
@@ -20,10 +24,10 @@ wxparaver /path/to/trace/trace.prv
  
 \subsection{Configurations}
 
-To see the different events, counters and communications that the runtime generates, diverse configurations are available with the COMPSs installation.
-To open one of them, go to the ``Load Configuration'' option in the main window and select ``File''. The configuration files are under the following path
-for the default installation \textit{/opt/COMPSs/Dependencies/paraver/cfgs/}. A detailed list of all the available configurations can be found in Appendix 
-\ref{sec:configs}.
+To see the different events, counters and communications that the runtime generates, diverse configurations are available with the COMPSs
+installation. To open one of them, go to the ``Load Configuration'' option in the main window and select ``File''. The configuration files
+are under the following path for the default installation \verb|/opt/COMPSs/Dependencies/| \verb|paraver/cfgs/|. A detailed list of all the
+available configurations can be found in Appendix \ref{sec:configs}.
 
 The following guide uses the \textit{compss\_tasks.cfg} as an example to illustrate the basic usage of Paraver.
 After accepting the load of the configuration file, another window appears showing the view. Figures \ref{fig:trace_1} and
@@ -45,7 +49,8 @@ After accepting the load of the configuration file, another window appears showi
 
 \subsection{View Adjustment}
 
-In a Paraver view, a red exclamation sign may appear in the bottom-left corner (see Figure \ref{fig:trace_2} in the previous section). This means that some event values are not being shown (because they are out of the current view scope), so little adjustments must be made to
+In a Paraver view, a red exclamation sign may appear in the bottom-left corner (see Figure \ref{fig:trace_2} in the previous section). This
+means that some event values are not being shown (because they are out of the current view scope), so little adjustments must be made to
 view the trace correctly:
 
 \begin{itemize}

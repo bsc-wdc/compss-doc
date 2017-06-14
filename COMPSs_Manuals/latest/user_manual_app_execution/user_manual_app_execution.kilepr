@@ -31,7 +31,7 @@ Indentation Mode=normal
 Mode=LaTeX
 
 [document-settings,item:Sections/2_Execution/Execution.tex]
-Bookmarks=615,729
+Bookmarks=279
 Encoding=UTF-8
 Highlighting=LaTeX
 Indentation Mode=normal
@@ -74,10 +74,10 @@ Mode=LaTeX
 
 [item:COMPSs_User_Manual_App_Exec.tex]
 archive=true
-column=0
+column=2
 encoding=UTF-8
 highlight=LaTeX
-line=109
+line=83
 mode=LaTeX
 open=false
 order=1
@@ -94,30 +94,30 @@ order=0
 
 [item:Sections/2_Execution/Execution.tex]
 archive=true
-column=21
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=14
+line=261
 mode=LaTeX
 open=false
 order=1
 
 [item:Sections/3_Results_and_Logs/Results_and_Logs.tex]
 archive=true
-column=0
+column=19
 encoding=UTF-8
 highlight=LaTeX
-line=20
+line=39
 mode=LaTeX
 open=false
 order=4
 
 [item:Sections/4_Tools/Tools.tex]
 archive=true
-column=127
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=109
+line=247
 mode=LaTeX
 open=false
 order=2
@@ -127,7 +127,7 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=307
+line=0
 mode=LaTeX
 open=false
 order=0
@@ -163,10 +163,10 @@ open=false
 order=-1
 
 [view-settings,view=0,item:COMPSs_User_Manual_App_Exec.tex]
-CursorColumn=0
-CursorLine=109
+CursorColumn=2
+CursorLine=83
 JumpList=
-ViMarks=.,45,0,[,45,0,],45,0
+ViMarks=.,89,2,[,89,2,],89,2
 
 [view-settings,view=0,item:Sections/1_Introduction/Introduction.tex]
 CursorColumn=0
@@ -175,28 +175,28 @@ JumpList=
 ViMarks=.,5,23,[,5,23,],5,23
 
 [view-settings,view=0,item:Sections/2_Execution/Execution.tex]
-CursorColumn=21
-CursorLine=14
+CursorColumn=0
+CursorLine=261
 JumpList=
-ViMarks=.,536,7,[,535,0,],536,7,a,615,0,b,729,12
+ViMarks=.,260,16,[,261,0,],-1,-1,a,279,0,b,279,0
 
 [view-settings,view=0,item:Sections/3_Results_and_Logs/Results_and_Logs.tex]
-CursorColumn=0
-CursorLine=20
+CursorColumn=19
+CursorLine=39
 JumpList=
-ViMarks=.,50,20,[,50,20,],50,20
+ViMarks=.,49,75,[,49,75,],49,75
 
 [view-settings,view=0,item:Sections/4_Tools/Tools.tex]
-CursorColumn=127
-CursorLine=109
+CursorColumn=0
+CursorLine=247
 JumpList=
-ViMarks=.,140,15,[,140,15,],140,18
+ViMarks=.,248,0,[,247,0,],248,59
 
 [view-settings,view=0,item:Sections/5_Execution_Platforms/Execution_Platforms.tex]
 CursorColumn=0
-CursorLine=307
+CursorLine=0
 JumpList=
-ViMarks=.,306,25,[,307,0,],-1,-1
+ViMarks=.,340,15,[,340,15,],340,17
 
 [view-settings,view=0,item:Sections/6_Commmon_Issues/Common_Issues.tex]
 CursorColumn=0

@@ -1,12 +1,12 @@
 \section{Pip}
 \label{sec:Pip}
 
-\subsection{Prerequisites}
+\subsection{Pre-requisites}
 \label{subsec:pip_prerequisites}
 In order to be able to install COMPSs and PyCOMPSs with Pip the following requirements must be met:
 \begin{enumerate}
- \item Have all the dependencies (excluding the COMPSs packages) mentioned in the section \ref{subsec:packages_dependencies} satisfied and Python pip. As an example on some distributions:
-  %For example, the dependency \verb|graphviz| must be satisfied, while the dependency \verb|compss-runtime| can be ignored. 
+ \item Have all the dependencies (excluding the COMPSs packages) mentioned in the section \ref{subsec:packages_dependencies} satisfied and Python pip.
+ As an example for some distributions:
    \subitem {\bf Fedora 25} dependencies installation command:
      \begin{lstlisting}[language=bash]
        sudo dnf install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel graphviz xdg-utils libtool automake python python-libs python-pip python-devel python2-decorator boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools redhat-rpm-config papi
@@ -26,19 +26,28 @@ In order to be able to install COMPSs and PyCOMPSs with Pip the following requir
      \end{lstlisting}
    \subitem {\bf Debian 8} dependencies installation command:
      \begin{lstlisting}
-        apt-get
+        su -
+        echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | tee /etc/apt/sources.list.d/webupd8team-java.list
+        echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list
+        apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
+        apt-get update
+        apt-get install oracle-java8-installer
+        apt-get install graphviz xdg-utils libtool automake build-essential python python-decorator python-pip python-dev libboost-serialization1.55.0 libboost-iostreams1.55.0 libxml2 libxml2-dev libboost-dev csh gfortran papi-tools
      \end{lstlisting}
    \subitem {\bf CentOS 7} dependencies installation command:
      \begin{lstlisting}
-        dnf 
+        sudo rpm -iUvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+        sudo yum -y update
+        sudo yum install java-1.8.0-openjdk java-1.8.0-openjdk-devel graphviz xdg-utils libtool automake python python-libs python-pip python-devel python2-decorator boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools redhat-rpm-config papi
+        sudo pip install decorator        
      \end{lstlisting}
  \item Have a proper \verb|JAVA_HOME| environment variable definition. This variable must contain a valid path to a Java JDK (as a remark, it must point to a JDK, not JRE). A possible value is the following:
  \begin{lstlisting}[language=bash]
   user@machine:~> echo $JAVA_HOME
   /usr/lib64/jvm/java-openjdk/\end{lstlisting}
- \item Have PIP installed. PIP can be found in the \verb|python-pip| package
- \item Have an internet connection
 \end{enumerate}
+
+
 \subsection{Installation}
 \label{subsec:pip_installation}
 Depending on the machine, the installation command may vary. It must be assured that the Python2.7 pip is being executed. Some of the possible scenarios and their proper installation command are:
@@ -50,12 +59,19 @@ Depending on the machine, the installation command may vary. It must be assured 
  \begin{lstlisting}[language=bash]
  sudo -E pip install compss -v \end{lstlisting}
 \end{enumerate}
-It is recommended to restart the user session once the installation process has finished. An alternative is to type the following command:
+It is recommended to restart the user session once the installation process has finished. 
+
+Alternatively, the following command sets all the COMPSs environment.
 \begin{lstlisting}[language=bash]
-source /etc/profile.d/compss.sh\end{lstlisting}
+source /etc/profile.d/compss.sh
+\end{lstlisting}
 However, this command should be executed in every different terminal during the current user session.
+
+
 \subsection{Configuration}
 \label{subsec:pip_configuration}
-The steps mentioned at section \ref{subsec:Passwordless_ssh} must be done in order to have a functional COMPSs and pyCOMPSs installation.
+The steps mentioned in Section \ref{subsec:Passwordless_ssh} must be done in order to have a functional COMPSs and pyCOMPSs installation.
+
+
 \subsection{Post installation}
-As mentioned in section \ref{subsec:pip_installation}, it is recommended to restart the user session once the installation process has finished.
+As mentioned in Section \ref{subsec:pip_installation}, it is recommended to restart the user session once the installation process has finished.

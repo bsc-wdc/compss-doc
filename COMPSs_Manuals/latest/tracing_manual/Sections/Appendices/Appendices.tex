@@ -52,21 +52,25 @@ The XML config file contains a secondary set of counters. In order to activate i
  \item [PAPI\_FP\_INS] Floating point instructions
 \end{description}
 
-
-To further customize the tracked counters, modify the XML to suit your needs. To find the available PAPI counters on a given computer issue the command \textit{papi\_avail -a}. For more information about Extrae's XML configuration refer to \url{https://www.bsc.es/computer-sciences/performance-tools/trace-generation/extrae/extrae-user-guide}.
-
+To further customize the tracked counters, modify the XML to suit your needs. To find the available PAPI counters on a given computer
+issue the command \textit{papi\_avail -a}. For more information about Extrae's XML configuration refer to
+\url{https://www.bsc.es/computer-sciences/performance-tools/trace-generation/extrae/extrae-user-guide}.
 
 
 \section{Paraver: configurations}
 \label{sec:configs}
 
-Table \ref{tab:paraver_configs} provides information about the different pre-build configurations that we distribute
-with COMPSs and that can be found under the \textit{/opt/COMPSs/Dependencies/paraver/cfgs/} folder. The cfgs folder contains all the basic views, the python folder contains the configs for Python events, and finally the comm contains the ones related to communications.
+Tables \ref{tab:paraver_configs_general}, \ref{tab:paraver_configs_python} and \ref{tab:paraver_configs_comm} provide information 
+about the different pre-build configurations that are distributed with COMPSs and that can be found under 
+the \verb|/opt/COMPSs/Dependencies/| \verb|paraver/cfgs/| folder. The \textit{cfgs} folder contains all the basic views, the \textit{python}
+folder contains the configurations for Python events, and finally the \textit{comm} folder contains the configurations related 
+to communications.
 
+~ \newline
 
 \bgroup
   \def\arraystretch{1.5}
-  \begin{table}[h]
+  \begin{table}[!ht]
     \begin{center}
       \begin{tabular}{| p{0.45\textwidth} | p{0.45\textwidth} |}
 	\hline
@@ -82,14 +86,14 @@ with COMPSs and that can be found under the \textit{/opt/COMPSs/Dependencies/par
 	$thread\_cpu.cfg$			& Shows the initial executing CPU. \\ \hline
       \end{tabular}
       \caption{General paraver configurations for COMPSs Applications}
-      \label{tab:paraver_configs}
+      \label{tab:paraver_configs_general}
     \end{center}
   \end{table}
 \egroup
 
 \bgroup
   \def\arraystretch{1.5}
-  \begin{table}[h]
+  \begin{table}[!ht]
     \begin{center}
       \begin{tabular}{| p{0.45\textwidth} | p{0.45\textwidth} |}
 	\hline
@@ -97,15 +101,16 @@ with COMPSs and that can be found under the \textit{/opt/COMPSs/Dependencies/par
 	$3dh\_events\_inside\_tasks.cfg$	& Events showing python information such as user function execution time, modules imports, or serializations. \\ \hline
       \end{tabular}
       \caption{Available paraver configurations for Python events of COMPSs Applications}
-      \label{tab:paraver_configs}
+      \label{tab:paraver_configs_python}
     \end{center}
   \end{table}
 \egroup
 
+\newpage
 
 \bgroup
   \def\arraystretch{1.5}
-  \begin{table}[h]
+  \begin{table}[!ht]
     \begin{center}
       \begin{tabular}{| p{0.45\textwidth} | p{0.45\textwidth} |}
 	\hline
@@ -119,7 +124,7 @@ with COMPSs and that can be found under the \textit{/opt/COMPSs/Dependencies/par
 	$communication\_matrix.cfg$ 		& Table view of communications between each node \\ \hline
       \end{tabular}
       \caption{Available paraver configurations for COMPSs Applications}
-      \label{tab:paraver_configs}
+      \label{tab:paraver_configs_comm}
     \end{center}
   \end{table}
 \egroup
@@ -131,13 +136,12 @@ Users can emit custom events inside their python \textbf{tasks}. Thanks to the f
 users can emit events inside their own tasks using the available extrae instrumentation object because it is already imported.
 ~ \newline
 
-To emit an event just use the call \textit{pyextrae.event(type, id)} or \textit{pyextrae.eventandcounters
-(type, id)} if you also want to emit PAPI hardware counters. It is recommended to use a type number higher than 8000050 in order 
+To emit an event just use the call \verb|pyextrae.event(type, id)| or \verb|pyextrae.eventand| \verb|counters (type, id)|
+if you also want to emit PAPI hardware counters. It is recommended to use a type number higher than 8000050 in order 
 to avoid type's conflicts. This events will appear automatically on the generated trace. In order to visualize them, take, 
-for example, \textit{compss\_runtime.cfg} and go to Window Properties -> Filter -> Events -> Event Type and change the 
+for example, \verb|compss_runtime.cfg| and go to \verb|Window Properties -> Filter -> Events| \verb|-> Event Type| and change the 
 value labeled \textit{Types} for your custom events type.
 ~ \newline
 
 More information and examples of common python usage can be found under the default directory 
-\textit{/opt/COMPSs/Dependencies/extrae/share/examples/PYTHON}.
-
+\verb|/opt/COMPSs/Dependencies/extrae/share/examples/PYTHON|.
