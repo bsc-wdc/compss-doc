@@ -145,6 +145,10 @@ Then the correct command to call this app is \verb|runcompss kmeans/kmeans.py| f
 All intentional, premature exit operations must be done with \verb|sys.exit|. PyCOMPSs needs to perform some cleanup tasks before exiting and, if an early exit is performed with \verb|sys.exit|, the event will be captured,
 allowing PyCOMPSs to perform these tasks. If the exit operation is done in a different way then there is no guarantee that the application will end properly.
 
+\item \textbf{Python with numpy and MKL}:\newline
+Tasks that invoke numpy and MKL may experience issues if tasks use a different number of MKL threads. This is due to the fact that MKL reuses 
+threads in the different calls and it does not change the number of threads from one call to another.
+
 
 \end{itemize}
 

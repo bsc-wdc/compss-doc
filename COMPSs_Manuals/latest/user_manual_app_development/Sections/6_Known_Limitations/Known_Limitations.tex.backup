@@ -81,7 +81,7 @@ public static void main() {
  master's code. Users must take into account that this only applies for files declared as task parameters and \textbf{not} for files
  created and/or erased inside a task. 
 
-\item \textbf{Python object hierarchy dependency detection}: \newline Dependencies are detected only over the objects that are task 
+\item \textbf{Python object hierarchy dependency detection}: \newline Dependencies are detected only on the objects that are task 
 parameters or outputs. Consider the following code:
 \begin{lstlisting}[language=python]
 # a.py
@@ -93,21 +93,24 @@ from a import A
 from pycompss.api.task import task
 from pycompss.api.parameter import *
 
-@task(obj = IN)
+@task(obj = IN, returns = int)
 def get_b(obj):
   return obj.b
-  
+
 @task(obj = INOUT)
 def inc(obj):
-  obj += 1
-  
+  obj += [1]
+
 def main():
   from pycompss.api.api import compss_wait_on
-  my_a = A(5)
-  inc(A.b)
-  obj = get_b(A)
+  my_a = A([5])
+  inc(my_a.b)
+  obj = get_b(my_a)
   obj = compss_wait_on(obj)
-  print result
+  print obj
+
+if __name__ == '__main__':
+  main()            
 \end{lstlisting}
 Note that there should exist a dependency between \verb|A| and \verb|A.b|. However, PyCOMPSs is not capable
 to detect dependencies of that kind because it doesn't do any kind of introspection. This kind of dependencies
@@ -123,10 +126,25 @@ worker, it will not be visible from the master interpreter instance.
 
 \item \textbf{Python global variables}:\newline
 This issue is very similar to the previous one. PyCOMPSs does not guarantee that applications that create or modify global variables while
-worker code is executed will work.
+worker code is executed will work. In particular, this issue (and the previous one) is due to Python's Global Interpreter Lock (GIL).
 
-\item \textbf{Python root directory as module}
-If the directory from which \verb|runcompss| is called is a Python module (i.e: contains an \verb|__init__.py| file), 
+\item \textbf{Python application directory as a module}:\newline
+If the Python application root folder is a python module (i.e: it contains an \verb|__init__.py| file) then \verb|runcompss| must be called from
+the parent folder. For example, if the Python application is in a folder with an \verb|__init__.py| file named \verb|my_folder| then PyCOMPSs will
+resolve all functions, classes and variables as \verb|my_folder.object_name| instead of \verb|object_name|. For example, consider the following file
+tree:
+\begin{lstlisting}[]
+my_apps/
+|- kmeans/
+    |- __init__.py
+    |- kmeans.py
+\end{lstlisting}
+Then the correct command to call this app is \verb|runcompss kmeans/kmeans.py| from the \verb|my_apps| directory.
+
+\item \textbf{Python early program exit}:\newline
+All intentional, premature exit operations must be done with \verb|sys.exit|. PyCOMPSs needs to perform some cleanup tasks before exiting and, if an early exit is performed with \verb|sys.exit|, the event will be captured,
+allowing PyCOMPSs to perform these tasks. If the exit operation is done in a different way then there is no guarantee that the application will end properly.
+
 
 \end{itemize}
 
