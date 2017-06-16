@@ -1,0 +1,288 @@
+\section{COMPSs Tools}
+\label{sec:Tools}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%% APPLICATION GRAPH %%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Application graph}
+At the end of the application execution a dependency graph can be generated representing the order of execution of each type of 
+task and their dependencies. To allow the final graph generation the \texttt{-g} flag has to be passed to the \texttt{runcompss} command; the graph file is written in the \texttt{base\_log\_folder/monitor/complete\_graph.dot} at the end of the execution.
+
+Figure \ref{fig:complete_graph} shows a dependency graph example of a \textit{SparseLU} java application. The graph can be
+visualized by running the following command:
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ gengraph ~/.COMPSs/sparseLU.arrays.SparseLU_01/monitor/complete_graph.dot
+\end{lstlisting}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.3\textwidth]{./Sections/4_Tools/Figures/dependency_graph.jpeg}
+    \caption{The dependency graph of the SparseLU application}
+    \label{fig:complete_graph}
+\end{figure}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%% MONITOR %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{COMPSs Monitor}
+\label{subsec:monitor}
+The COMPSs Framework includes a Web graphical interface that can be used to monitor the execution of COMPSs applications. COMPSs Monitor is installed as a service and can be easily managed by running any of the following
+commands:
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ /etc/init.d/compss-monitor usage
+Usage: compss-monitor {start | stop | reload | restart | try-restart | force-reload | status}
+\end{lstlisting}
+
+\subsubsection{Service configuration}
+The COMPSs Monitor service can be configured by editing the \texttt{/opt/COMPSs/Tools/}
+\texttt{monitor/apache-tomcat/conf/compss-monitor.conf}
+file which contains one line per property:
+\begin{itemize}
+ \item \texttt{\textbf{IT\_MONITOR}} Default directory to retrieve monitored applications (defaults to the \texttt{.COMPSs} folder inside the \texttt{root} user).
+ \item \texttt{\textbf{COMPSs\_MONITOR\_PORT}} Port where to run the compss-monitor web service (defaults to 8080).
+ \item \texttt{\textbf{COMPSs\_MONITOR\_TIMEOUT}} Web page timeout between browser and server (defaults to 20s).
+\end{itemize}
+
+\subsubsection{Usage}
+In order to use the COMPSs Monitor users need to start the service as shown in Figure \ref{fig:monitor_start}.
+\begin{figure}[thb!]
+  \centering
+    \includegraphics[width=\textwidth]{./Sections/4_Tools/Figures/monitor_start.jpeg}
+    \caption{COMPSs Monitor start command}
+    \label{fig:monitor_start}
+\end{figure}
+
+And use a web browser to open the specific URL:
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ firefox http://localhost:8080/compss-monitor &
+\end{lstlisting}
+
+The COMPSs Monitor allows to monitor applications from different users and thus, users need to first login to access their applications. As shown in Figure \ref{fig:monitoring_interface}, the users can select any of their executed or running COMPSs applications and display it.
+\begin{figure}[thb!]
+  \centering
+    \includegraphics[width=0.95\textwidth]{./Sections/4_Tools/Figures/compss_monitor.jpeg}
+    \caption{COMPSs monitoring interface}
+    \label{fig:monitoring_interface}
+\end{figure}
+
+~ \newline
+
+To enable \textbf{all} the COMPSs Monitor features, applications must run the \texttt{runcompss} command with the \texttt{-m} flag. This flag 
+allows the  COMPSs Runtime to store special information inside inside the \texttt{log\_base\_folder} under the \texttt{monitor} 
+folder (see Figures \ref{fig:simple_exec_monitor} and \ref{fig:simple_logs_monitor}). Only advanced users should modify or delete any of these files. If the application that a user is trying to monitor 
+has not been executed with this flag, some of the COMPSs Monitor features will be disabled. 
+
+\begin{figure}[ht!]
+  \centering
+  \begin{lstlisting}[language=bash]
+compss@bsc:~/tutorial_apps/java/simple/jar$ runcompss -dm simple.Simple 1
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
+[  INFO] Using default language: java
+
+----------------- Executing simple.Simple --------------------------
+
+WARNING: IT Properties file is null. Setting default values
+[(799)    API]  -  Deploying COMPSs Runtime v<version>
+[(801)    API]  -  Starting COMPSs Runtime v<version>
+[(801)    API]  -  Initializing components
+[(1290)    API]  -  Ready to process tasks
+[(1293)    API]  -  Opening /home/compss/tutorial_apps/java/simple/jar/counter in mode OUT
+[(1338)    API]  -  File target Location: /home/compss/tutorial_apps/java/simple/jar/counter
+Initial counter value is 1
+[(1340)    API]  -  Creating task from method increment in simple.SimpleImpl
+[(1340)    API]  -  There is 1 parameter
+[(1341)    API]  -    Parameter 1 has type FILE_T
+Final counter value is 2
+[(4307)    API]  -  No more tasks for app 1
+[(4311)    API]  -  Getting Result Files 1
+[(4340)    API]  -  Stop IT reached
+[(4344)    API]  -  Stopping Graph generation...
+[(4344)    API]  -  Stopping Monitor...
+[(6347)    API]  -  Stopping AP...
+[(6348)    API]  -  Stopping TD...
+[(6509)    API]  -  Stopping Comm...
+[(6510)    API]  -  Runtime stopped
+[(6510)    API]  -  Execution Finished
+
+------------------------------------------------------------
+  \end{lstlisting}
+  \caption{Execution of the Simple Java application with the monitoring flag enabled}
+  \label{fig:simple_exec_monitor}
+\end{figure}
+
+
+\begin{figure}[ht!]
+  \centering
+    \includegraphics[width=0.4\textwidth]{./Sections/4_Tools/Figures/logs_with_monitor.jpeg}
+    \caption{Logs generated by the Simple java application with the monitoring flag enabled}
+    \label{fig:simple_logs_monitor}
+\end{figure}
+
+\newpage
+\subsubsection{Graphical Interface features}
+In this section we provide a summary of the COMPSs Monitor supported features available through the graphical interface:
+\begin{itemize}
+ \item \textbf{Resources information} \newline
+	Provides information about the resources used by the application
+ \item \textbf{Tasks information} \newline
+	Provides information about the tasks definition used by the application
+ \item \textbf{Current tasks graph} \newline
+	Shows the tasks dependency graph currently stored into the COMPSs Runtime
+ \item \textbf{Complete tasks graph} \newline
+	Shows the complete tasks dependecy graph of the application
+ \item \textbf{Load chart} \newline
+	Shows different dynamic charts representing the evolution over time of the resources load and the tasks load
+ \item \textbf{Runtime log} \newline
+	Shows the runtime log
+ \item \textbf{Execution Information} \newline
+	Shows specific job information allowing users to easily select failed or uncompleted jobs
+ \item \textbf{Statistics} \newline
+	Shows application statistics such as the accumulated cloud cost. 
+\end{itemize}
+
+\colorComment{\textbf{Attention}: To enable all the COMPSs Monitor features applications must run with the \texttt{-m} flag.}
+
+The webpage also allows users to configure some performance parameters of the monitoring service by accessing the 
+\textit{Configuration} button at the top-right corner of the web page. 
+
+For specific COMPSs Monitor feature configuration please check our \textit{FAQ} section at the top-right corner of the web page. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% APPLICATION TRACING %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Application tracing}
+\label{sec:Tracing}
+COMPSs Runtime can generate a post-execution trace of the execution of the application. This trace is useful for
+performance analysis and diagnosis.
+
+A trace file may contain different events to determine the COMPSs master state, the task execution state or the file-transfers.
+The current release does not support file-transfers informations.
+
+During the execution of the application, an XML file is created in the worker nodes to keep track of 
+these events. At the end of the execution, all the XML files are merged to get a final trace file.
+
+In this manual we only provide information about how to obtain a trace and about the available Paraver (the tool used to analyze the traces) configurations. For further
+information about the application instrumentation or the trace visualization and configurations please check the \textit{COMPSs Tracing Manual} 
+available at \url{http://compss.bsc.es} .
+
+\subsubsection{Trace Command}
+
+
+In order to obtain a post-execution trace file one of the following options \texttt{\textbf{-t}}, \texttt{\textbf{--tracing}}, \texttt{\textbf{--tracing=true}}, \texttt{\textbf{--tracing=basic}} 
+must be added to the \texttt{runcompss} command. All this options activate the basic tracing mode; the advanced mode is activated with the 
+option \texttt{\textbf{--tracing=advanced}}. For further information about advanced mode check the \textit{COMPSs Tracing Manual}. Next, we
+provide an example of the command execution with the basic tracing option enabled for a java K-Means application.
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ runcompss -t kmeans.Kmeans
+*** RUNNING JAVA APPLICATION KMEANS
+Resolved: /path/to/jar/kmeans.jar:
+
+----------------- Executing kmeans.Kmeans --------------------------
+
+Welcome to Extrae VERSION
+Extrae: Parsing the configuration file (/opt/COMPSs/Runtime/configuration/xml/tracing/extrae_basic.xml) begins
+Extrae: Warning! <trace> tag has no <home> property defined.
+Extrae: Generating intermediate files for Paraver traces.
+Extrae: <cpu> tag at <counters> level will be ignored. This library does not support CPU HW.
+Extrae: Tracing buffer can hold 100000 events
+Extrae: Circular buffer disabled.
+Extrae: Dynamic memory instrumentation is disabled.
+Extrae: Basic I/O memory instrumentation is disabled.
+Extrae: System calls instrumentation is disabled.
+Extrae: Parsing the configuration file (/opt/COMPSs/Runtime/configuration/xml/tracing/extrae_basic.xml) has ended
+Extrae: Intermediate traces will be stored in /user/folder
+Extrae: Tracing mode is set to: Detail.
+Extrae: Successfully initiated with 1 tasks and 1 threads
+
+WARNING: IT Properties file is null. Setting default values
+[(751)    API]  -  Deploying COMPSs Runtime v<version>
+[(753)    API]  -  Starting COMPSs Runtime v<version>
+[(753)    API]  -  Initializing components
+[(1142)   API]  -  Ready to process tasks
+...
+...
+...
+merger: Output trace format is: Paraver
+merger: Extrae 3.3.0 (revision 3966 based on extrae/trunk)
+mpi2prv: Assigned nodes < Marginis >
+mpi2prv: Assigned size per processor < <1 Mbyte >
+mpi2prv: File set-0/TRACE@Marginis.0000001904000000000000.mpit is object 1.1.1 on node Marginis assigned to processor 0
+mpi2prv: File set-0/TRACE@Marginis.0000001904000000000001.mpit is object 1.1.2 on node Marginis assigned to processor 0
+mpi2prv: File set-0/TRACE@Marginis.0000001904000000000002.mpit is object 1.1.3 on node Marginis assigned to processor 0
+mpi2prv: File set-0/TRACE@Marginis.0000001980000001000000.mpit is object 1.2.1 on node Marginis assigned to processor 0
+mpi2prv: File set-0/TRACE@Marginis.0000001980000001000001.mpit is object 1.2.2 on node Marginis assigned to processor 0
+mpi2prv: File set-0/TRACE@Marginis.0000001980000001000002.mpit is object 1.2.3 on node Marginis assigned to processor 0
+mpi2prv: File set-0/TRACE@Marginis.0000001980000001000003.mpit is object 1.2.4 on node Marginis assigned to processor 0
+mpi2prv: File set-0/TRACE@Marginis.0000001980000001000004.mpit is object 1.2.5 on node Marginis assigned to processor 0
+mpi2prv: Time synchronization has been turned off
+mpi2prv: A total of 9 symbols were imported from TRACE.sym file
+mpi2prv: 0 function symbols imported
+mpi2prv: 9 HWC counter descriptions imported
+mpi2prv: Checking for target directory existance... exists, ok!
+mpi2prv: Selected output trace format is Paraver
+mpi2prv: Stored trace format is Paraver
+mpi2prv: Searching synchronization points... done
+mpi2prv: Time Synchronization disabled.
+mpi2prv: Circular buffer enabled at tracing time? NO
+mpi2prv: Parsing intermediate files
+mpi2prv: Progress 1 of 2 ... 5% 10% 15% 20% 25% 30% 35% 40% 45% 50% 55% 60% 65% 70% 75% 80% 85% 90% 95% done
+mpi2prv: Processor 0 succeeded to translate its assigned files
+mpi2prv: Elapsed time translating files: 0 hours 0 minutes 0 seconds
+mpi2prv: Elapsed time sorting addresses: 0 hours 0 minutes 0 seconds
+mpi2prv: Generating tracefile (intermediate buffers of 838848 events)
+         This process can take a while. Please, be patient.
+mpi2prv: Progress 2 of 2 ... 5% 10% 15% 20% 25% 30% 35% 40% 45% 50% 55% 60% 65% 70% 75% 80% 85% 90% 95% done
+mpi2prv: Warning! Clock accuracy seems to be in microseconds instead of nanoseconds.
+mpi2prv: Elapsed time merge step: 0 hours 0 minutes 0 seconds
+mpi2prv: Resulting tracefile occupies 991743 bytes
+mpi2prv: Removing temporal files... done
+mpi2prv: Elapsed time removing temporal files: 0 hours 0 minutes 0 seconds
+mpi2prv: Congratulations! ./trace/kmeans.Kmeans_compss_trace_1460456106.prv has been generated.
+[   API]  -  Execution Finished
+
+------------------------------------------------------------
+\end{lstlisting}
+
+At the end of the execution the trace will be stored inside the \texttt{trace} folder under the application log directory.
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ cd .COMPSs/kmeans.Kmeans_01/trace/
+compss@bsc:~$ ls -1
+kmeans.Kmeans_compss_trace_1460456106.pcf
+kmeans.Kmeans_compss_trace_1460456106.prv
+kmeans.Kmeans_compss_trace_1460456106.row
+\end{lstlisting}
+
+
+\subsubsection{Trace visualization}
+The traces generated by an application execution are ready to be visualized with \textit{Paraver}. \textit{Paraver} is a powerful 
+tool developed by \textit{BSC} that allows users to show many views of the trace data by means of different configuration files.
+Users can manually load, edit or create configuration files to obtain different trace data views.
+
+If \textit{Paraver} is installed, issue the following command to visualize a given tracefile:
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ wxparaver path/to/trace/trace_name.prv
+\end{lstlisting}
+
+For further information about \textit{Paraver} please visit the following site:
+\begin{center}
+\url{http://www.bsc.es/computer-sciences/performance-tools/paraver}
+\end{center}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%% IDE %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{COMPSs IDE}
+\label{subsec:IDE}
+COMPSs IDE is an Integrated Development Environment to develop, compile, deploy and execute COMPSs applications. It is available
+through the \textit{Eclipse Market} as a plugin and provides an even easier way to work with COMPSs.
+
+For further information please check the \textit{COMPSs IDE User Guide} available at: \url{http://compss.bsc.es} .
