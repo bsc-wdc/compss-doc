@@ -113,7 +113,7 @@ if __name__ == '__main__':
   main()            
 \end{lstlisting}
 Note that there should exist a dependency between \verb|A| and \verb|A.b|. However, PyCOMPSs is not capable
-to detect dependencies of that kind because it doesn't do any kind of introspection. This kind of dependencies
+to detect dependencies of that kind. These dependencies
 must be handled (and avoided) manually.
 
 \item \textbf{Python static methods}:\newline PyCOMPSs is not capable to resolve static methods (i.e: those that have the decorator
@@ -147,7 +147,7 @@ allowing PyCOMPSs to perform these tasks. If the exit operation is done in a dif
 
 \item \textbf{Python with numpy and MKL}:\newline
 Tasks that invoke numpy and MKL may experience issues if tasks use a different number of MKL threads. This is due to the fact that MKL reuses 
-threads in the different calls and it does not change the number of threads from one call to another.
+threads along different calls and it does not change the number of threads from one call to another.
 
 
 \end{itemize}
