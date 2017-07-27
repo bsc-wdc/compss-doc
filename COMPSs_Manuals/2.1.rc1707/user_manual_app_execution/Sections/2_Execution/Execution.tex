@@ -1,0 +1,280 @@
+\section{Executing COMPSs applications}
+\label{sec:Executing}
+
+
+\subsection{Prerequisites}
+\label{subsec:prerequisites}
+Prerequisites vary depending on the application's code language: for Java applications the users need to have
+a \textbf{jar archive} containing all the application classes, for Python applications there are no requirements and for
+C/C\texttt{++} applications the code must have been previously compiled by using the \textit{buildapp} command.
+
+For further information about how to develop COMPSs applications please refer to the \textit{COMPSs User 
+Manual: Application development guide} available at the \url{http://compss.bsc.es/} webpage.
+
+
+\subsection{Runcompss command}
+\label{subsec:runcompss}
+COMPSs applications are executed using the \textbf{runcompss} command:
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ runcompss [options] application_name [application_arguments]
+\end{lstlisting}
+
+The application name must be the fully qualified name of the application in Java, the path to the \textit{.py} file
+containing the main program in Python and the path to the master binary in C/C\texttt{++}. 
+
+The application arguments are the ones passed as command line to main application. This parameter can be empty. 
+
+The \texttt{runcompss} command allows the users to customize a COMPSs execution by specifying different options.
+For clarity purposes, parameters are grouped in \textit{Runtime configuration}, \textit{Tools enablers}
+and \textit{Advanced options}.
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ runcompss -h
+
+Usage: runcompss [options] application_name application_arguments
+
+* Options:
+  General:
+    --help, -h                              Print this help message
+
+    --opts                                  Show available options
+
+    --version, -v                           Print COMPSs version
+    
+  Tools enablers:
+    --graph=<bool>, --graph, -g             Generation of the complete graph (true/false)
+                                            When no value is provided it is set to true
+                                            Default: false
+    --tracing=<level>, --tracing, -t        Set generation of traces and/or tracing level 
+                                            ( [ true | basic ] | advanced | false)
+                                            True and basic levels will produce the same traces.
+                                            When no value is provided it is set to true
+                                            Default: false
+    --monitoring=<int>, --monitoring, -m    Period between monitoring samples (milliseconds)
+                                            When no value is provided it is set to 2000
+                                            Default: 0
+    --external_debugger=<int>,
+    --external_debugger                     Enables external debugger connection on the specified 
+                                            port (or 9999 if empty)
+                                            Default: false
+
+  Runtime configuration options:
+    --task_execution=<compss|storage>       Task execution under COMPSs or Storage.
+                                            Default: compss
+    --storage_conf=<path>                   Path to the storage configuration file
+                                            Default: None
+    --project=<path>                        Path to the project XML file
+                                            Default: /opt/COMPSs/Runtime/configuration/xml/
+                                            projects/default_project.xml
+    --resources=<path>                      Path to the resources XML file
+                                            Default: /opt/COMPSs/Runtime/configuration/xml/
+                                            resources/default_resources.xml                                                 
+    --lang=<name>                           Language of the application (java/c/python)
+                                            Default: java
+    --summary                               Displays a task execution summary at the end of 
+                                            the application execution
+                                            Default: false
+    --log_level=<level>, --debug, -d        Set the debug level: off | info | debug
+                                            Default: off
+                                                                                                                                                                                        
+  Advanced options:                                                                                                                                                                     
+    --extrae_config_file=<path>             Sets a custom extrae config file. Must be in a shared disk
+                                            between all COMPSs workers.                                                      
+                                            Default: null                                                                                                                               
+    --comm=<path>                           Class that implements the adaptor for communications                                                                                        
+                                            Supported adaptors: integratedtoolkit.nio.master.NIOAdaptor 
+                                                                | integratedtoolkit.gat.master.GATAdaptor                                       
+                                            Default: integratedtoolkit.nio.master.NIOAdaptor                                                                                            
+    --conn=<path>                           Path of the connector jar/s that should be loaded. 
+                                            You can use multiple by splitting with ':'                                               
+                                            Supported connectors: compss-{CONN}-connector.jar                                                                                           
+                                               (where {CONN} can be: "jclouds", "amazon", "docker", 
+                                               "one", "rocci", "vmm", etc.)                                                        
+    --scheduler=<path>                      Class that implements the Scheduler for COMPSs                                                                                              
+                                            Supported schedulers: 
+                                               integratedtoolkit.components.impl.TaskScheduler 
+                                               | integratedtoolkit.scheduler.readyscheduler.ReadyScheduler           
+                                            Default: 
+                                               integratedtoolkit.scheduler.readyscheduler.ReadyScheduler                                                                          
+    --library_path=<path>                   Non-standard directories to search for libraries (e.g. Java 
+                                            JVM library, Python library, C binding library)                                 
+                                            Default: Working Directory                                                                                                                  
+    --classpath=<path>                      Path for the application classes / modules                                                                                                  
+                                            Default: Working Directory                                                                                                                  
+    --appdir=<path>                         Path for the application class folder.                                                                                                      
+                                            Default: /home/cramonco
+    --base_log_dir=<path>                   Base directory to store COMPSs log files (a .COMPSs/ folder
+                                            will be created inside this location)
+                                            Default: User home
+    --specific_log_dir=<path>               Use a specific directory to store COMPSs log files (the 
+                                            folder MUST exist and no sandbox is created)
+                                            Warning: Overwrites --base_log_dir option
+                                            Default: Disabled
+    --uuid=<int>                            Preset an application UUID
+                                            Default: Automatic random generation
+    --master_name=<string>                  Hostname of the node to run the COMPSs master
+                                            Default: 
+    --master_port=<int>                     Port to run the COMPSs master communications.
+                                            Only for NIO adaptor
+                                            Default: [43000,44000]
+    --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed 
+                                            by "," and without blank spaces (Notice the quotes)
+                                            Default: 
+    --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed 
+                                            by "," and without blank spaces (Notice the quotes)
+                                            Default: -Xms1024m,-Xmx1024m,-Xmn400m
+    --task_count=<int>                      Only for C/Python Bindings. Maximum number of different
+                                            functions/methods, invoked from the application, that 
+                                            have been selected as tasks
+                                            Default: 50
+    --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
+                                            Default: /home/cramonco
+    --PyObject_serialize=<bool>             Only for Python Binding. Enable the object serialization
+                                            to string when possible (true/false).
+                                            Default: false
+
+* Application name:
+    For Java applications:   Fully qualified name of the application
+    For C applications:      Path to the master binary
+    For Python applications: Path to the .py file containing the main program
+
+* Application arguments:
+    Command line arguments to pass to the application. Can be empty.
+
+\end{lstlisting}
+
+\subsection{Running a COMPSs application}
+\label{subsec:running_compss}
+Before running COMPSs applications the application files \textbf{must} be in the \textbf{CLASSPATH}.
+Thus, when launching a COMPSs application, users can manually pre-set the \textbf{CLASSPATH} environment variable
+or can add the \texttt{--classpath} option to the \texttt{runcompss} command.
+
+The next three sections provide specific information for launching COMPSs applications developed in different code languages (Java, Python and 
+C/C\texttt{++}). For clarity purposes, we will use the \textit{Simple} application (developed in Java, Python and C\texttt{++}) available in the COMPSs
+Virtual Machine or at \url{https://compss.bsc.es/projects/bar} webpage. This application takes an integer as input
+parameter and increases it by one unit using a task. For further details about the codes please refer to the \textit{Sample 
+Applications} document available at \url{http://compss.bsc.es} .
+
+\subsubsection{Running Java applications}
+A Java COMPSs application can be launched through the following command:
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ cd tutorial_apps/java/simple/jar/
+compss@bsc:~/tutorial_apps/java/simple/jar$ runcompss simple.Simple <initial_number>
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~/tutorial_apps/java/simple/jar$ runcompss simple.Simple 1
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
+[  INFO] Using default language: java
+
+----------------- Executing simple.Simple --------------------------
+
+WARNING: IT Properties file is null. Setting default values
+[(1066)    API]  -  Starting COMPSs Runtime v<version>
+Initial counter value is 1
+Final counter value is 2
+[(4740)    API]  -  Execution Finished
+
+------------------------------------------------------------
+\end{lstlisting}
+
+In this first execution we use the default value of the \texttt{--classpath} option to automatically add the jar
+file to the classpath (by executing runcompss in the directory which contains the jar file). However,
+we can explicitly do this by exporting the \textbf{CLASSPATH} variable or by providing the 
+\texttt{--classpath} value. Next, we provide two more ways to perform the same execution:
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ export CLASSPATH=$CLASSPATH:/home/compss/tutorial_apps/java/simple/jar/simple.jar
+compss@bsc:~$ runcompss simple.Simple <initial_number>
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ runcompss --classpath=/home/compss/tutorial_apps/java/simple/jar/simple.jar 
+                        simple.Simple <initial_number>
+\end{lstlisting}
+
+
+\subsubsection{Running Python applications}
+To launch a COMPSs Python application users have to provide the \texttt{--lang=python} option to the runcompss command. If the extension
+of the main file is a regular Python extension (\verb|.py| or \verb|.pyc|) the \textit{runcompss} command can also infer the 
+application language without specifying the \textit{lang} flag. 
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ cd tutorial_apps/python/simple/
+compss@bsc:~/tutorial_apps/python/simple$ runcompss --lang=python ./simple.py <initial_number>
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~/tutorial_apps/python/simple$ runcompss simple.py 1
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
+[  INFO] Inferred PYTHON language
+
+----------------- Executing simple.py --------------------------
+
+WARNING: IT Properties file is null. Setting default values
+[(616)    API]  -  Starting COMPSs Runtime v<version>
+Initial counter value is 1
+Final counter value is 2
+[(4297)    API]  -  Execution Finished
+
+------------------------------------------------------------
+\end{lstlisting}
+
+
+\subsubsection{Running C/C\texttt{++} applications}
+To launch a COMPSs C/C\texttt{++} application users have to compile the C/C\texttt{++} application by means of the \texttt{buildapp} command.
+For further information please refer to the \textit{COMPSs User Manual: Application development guide} document available at
+\url{http://compss.bsc.es} . Once complied, the \texttt{--lang=c} option must be provided to the runcompss command. If the main file is 
+a C / C++ binary the \textit{runcompss} command can also infer the application language without specifying the \textit{lang} flag. 
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ cd tutorial_apps/c/simple/
+compss@bsc:~/tutorial_apps/c/simple$ runcompss --lang=c simple <initial_number>
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~/tutorial_apps/c/simple$ runcompss ~/tutorial_apps/c/simple/master/simple 1
+[  INFO] Using default execution type: compss
+[  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+[  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
+[  INFO] Inferred C/C++ language
+
+----------------- Executing simple --------------------------
+
+JVM_OPTIONS_FILE: /tmp/tmp.ItT1tQfKgP
+IT_HOME: /opt/COMPSs
+Args: 1
+ 
+WARNING: IT Properties file is null. Setting default values
+[(650)    API]  -  Starting COMPSs Runtime v<version>
+Initial counter value is 1
+[   BINDING]  -  @compss_wait_on  -  Entry.filename: counter
+[   BINDING]  -  @compss_wait_on  -  Runtime filename: d1v2_1497432831496.IT
+Final counter value is 2
+[(4222)    API]  -  Execution Finished
+
+------------------------------------------------------------
+\end{lstlisting}
+
+
+\subsection{Additional configurations}
+
+The COMPSs runtime has two configuration files: \texttt{resources.xml} and \texttt{project.xml} . 
+These files contain information about the execution environment and are completely independent from the application.
+
+For each execution users can load the default configuration files or specify their custom configurations 
+by using, respectively, the \texttt{--resources=<absolute\_path\_to\_resources.xml>} and the
+\texttt{--project=<absolute\_path\_to\_project.xml>} in the \texttt{runcompss} command. The default files are located 
+in the \texttt{/opt/COMPSs/Runtime/configuration/xml/} path. 
+Users can manually edit these files or can use the \textit{Eclipse IDE} tool developed for COMPSs. For further 
+information about the \textit{Eclipse IDE} please refer to Section \ref{subsec:IDE}. 
+
+~\newline
+
+For further details please check the \textit{Configuration Files} Section inside the \textit{COMPSs Installation and Administration Manual}
+available at \url{http://compss.bsc.es/releases/compss/latest/docs/COMPSs_Installation_Manual.pdf} .
+
