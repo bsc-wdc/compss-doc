@@ -1,0 +1,154 @@
+\section{Known Limitations}
+\label{sec:Known_Limitations}
+
+The current COMPSs version (\compssversion) has the following limitations: 
+\begin{itemize}
+ \item \textbf{Exceptions:} \newline The current COMPSs version is not able to propagate exceptions raised from a task to the master. However, the runtime
+ catches any exception and sets the task as failed.
+ 
+ \item \textbf{Java tasks:} \newline Java tasks \textbf{must} be declared as \textbf{public}. Despite the fact that tasks can be
+ defined in the main class or in other ones, we recommend to define the tasks in a separated class from the main method to force
+ its public declaration.
+ 
+ \item \textbf{Java objects:} \newline Objects used by tasks must follow the \textit{java beans} model (implementing an empty 
+ constructor and getters and setters for each attribute) or implement the \textit{serializable} interface. This is due to the 
+ fact that objects will be transferred to remote machines to execute the tasks.
+ 
+ \item \textbf{Java object aliasing:} \newline If a task has an object parameter and returns an object, the returned value
+ must be a new object (or a cloned one) to prevent any aliasing with the task parameters. 
+ \begin{lstlisting}[language=java]
+// @Method(declaringClass = "...")
+// DummyObject incorrectTask (
+//    @Parameter(type = Type.OBJECT, direction = Direction.IN) DummyObject a,
+//    @Parameter(type = Type.OBJECT, direction = Direction.IN) DummyObject b
+// );
+public DummyObject incorrectTask (DummyObject a, DummyObject b) {
+    if (a.getValue() > b.getValue()) {
+        return a;
+    }
+    return b;
+}
+
+// @Method(declaringClass = "...")
+// DummyObject correctTask (
+//    @Parameter(type = Type.OBJECT, direction = Direction.IN) DummyObject a,
+//    @Parameter(type = Type.OBJECT, direction = Direction.IN) DummyObject b
+// );
+public DummyObject correctTask (DummyObject a, DummyObject b) {
+    if (a.getValue() > b.getValue()) {
+        return a.clone();
+    }
+    return b.clone();
+}
+
+public static void main() {
+    DummyObject a1 = new DummyObject();
+    DummyObject b1 = new DummyObject();
+    DummyObject c1 = new DummyObject();
+    c1 = incorrectTask(a1, b1);
+    System.out.println("Initial value: " + c1.getValue());
+    a1.modify();
+    b1.modify();
+    System.out.println("Aliased value: " + c1.getValue());
+    
+    
+    DummyObject a2 = new DummyObject();
+    DummyObject b2 = new DummyObject();
+    DummyObject c2 = new DummyObject();
+    c2 = incorrectTask(a2, b2);
+    System.out.println("Initial value: " + c2.getValue());
+    a2.modify();
+    b2.modify();
+    System.out.println("Non-aliased value: " + c2.getValue());
+}
+\end{lstlisting}
+ 
+ \item \textbf{Services types:} \newline The current COMPSs version only supports SOAP based services that implement the WS 
+ interoperability standard. REST services are not supported.
+ 
+ \item \textbf{Use of file paths:} \newline The persistent workers implementation has a unique \textit{Working Directory} per 
+ worker. That means that tasks should not use hardcoded file names to avoid file collisions and tasks misbehaviours. We recommend to
+ use files declared as task parameters, or to manually create a sandbox inside each task execution and/or to generate temporary 
+ random file names. 
+ 
+ \item \textbf{Python constraints in the cloud:} \newline When using python applications with constraints in the cloud the minimum
+ number of VMs must be set to 0 because the initial VM creation doesn't respect the tasks contraints. Notice that if no contraints are
+ defined the initial VMs are still usable. 
+ 
+ \item \textbf{Intermediate files}: \newline Some applications may generate intermediate files that are only used among tasks
+ and are never needed inside the master's code. However, COMPSs will transfer back these files to the master node at the end of the 
+ execution. Currently, the only way to avoid transferring these intermediate files is to manually erase them at the end of the
+ master's code. Users must take into account that this only applies for files declared as task parameters and \textbf{not} for files
+ created and/or erased inside a task. 
+
+\item \textbf{Python object hierarchy dependency detection}: \newline Dependencies are detected only on the objects that are task 
+parameters or outputs. Consider the following code:
+\begin{lstlisting}[language=python]
+# a.py
+class A:
+  def __init__(self, b):
+    self.b  = b
+# main.py
+from a import A
+from pycompss.api.task import task
+from pycompss.api.parameter import *
+
+@task(obj = IN, returns = int)
+def get_b(obj):
+  return obj.b
+
+@task(obj = INOUT)
+def inc(obj):
+  obj += [1]
+
+def main():
+  from pycompss.api.api import compss_wait_on
+  my_a = A([5])
+  inc(my_a.b)
+  obj = get_b(my_a)
+  obj = compss_wait_on(obj)
+  print obj
+
+if __name__ == '__main__':
+  main()            
+\end{lstlisting}
+Note that there should exist a dependency between \verb|A| and \verb|A.b|. However, PyCOMPSs is not capable
+to detect dependencies of that kind. These dependencies
+must be handled (and avoided) manually.
+
+\item \textbf{Python static methods}:\newline PyCOMPSs is not capable to resolve static methods (i.e: those that have the decorator
+\verb|@staticmethod|). It is recommended to use module functions
+instead.
+
+\item \textbf{Python modules with global states}:\newline Some modules (for example \verb|logging|) have internal variables apart from functions. 
+These modules are not guaranteed to work in PyCOMPSs due to the fact that master and worker code are executed in different interpreters. For instance, if a \verb|logging| configuration is set on some
+worker, it will not be visible from the master interpreter instance.
+
+\item \textbf{Python global variables}:\newline
+This issue is very similar to the previous one. PyCOMPSs does not guarantee that applications that create or modify global variables while
+worker code is executed will work. In particular, this issue (and the previous one) is due to Python's Global Interpreter Lock (GIL).
+
+\item \textbf{Python application directory as a module}:\newline
+If the Python application root folder is a python module (i.e: it contains an \verb|__init__.py| file) then \verb|runcompss| must be called from
+the parent folder. For example, if the Python application is in a folder with an \verb|__init__.py| file named \verb|my_folder| then PyCOMPSs will
+resolve all functions, classes and variables as \verb|my_folder.object_name| instead of \verb|object_name|. For example, consider the following file
+tree:
+\begin{lstlisting}[]
+my_apps/
+|- kmeans/
+    |- __init__.py
+    |- kmeans.py
+\end{lstlisting}
+Then the correct command to call this app is \verb|runcompss kmeans/kmeans.py| from the \verb|my_apps| directory.
+
+\item \textbf{Python early program exit}:\newline
+All intentional, premature exit operations must be done with \verb|sys.exit|. PyCOMPSs needs to perform some cleanup tasks before exiting and, if an early exit is performed with \verb|sys.exit|, the event will be captured,
+allowing PyCOMPSs to perform these tasks. If the exit operation is done in a different way then there is no guarantee that the application will end properly.
+
+\item \textbf{Python with numpy and MKL}:\newline
+Tasks that invoke numpy and MKL may experience issues if tasks use a different number of MKL threads. This is due to the fact that MKL reuses 
+threads along different calls and it does not change the number of threads from one call to another.
+
+
+\end{itemize}
+

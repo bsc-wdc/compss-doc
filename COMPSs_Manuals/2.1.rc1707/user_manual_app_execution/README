@@ -1,0 +1,19 @@
+---------------------------------------------
+- COMPSs User Manual: Appliaction Execution -
+---------------------------------------------
+
+Version: 2.1.rc1707
+Revision: 1.0
+Project created with Kile.
+
+
+Compile with Kile:
+------------------
+Default pdflatex configuration.
+For line adjustment press F10.
+Suggestion: use "evince" pdf viewer (does not require to close and open the pdf between compilations)
+
+
+Compile from command line:
+-------------------------
+pdflatex -interaction=nonstopmode COMPSs_Manual_App_Execution.tex 
