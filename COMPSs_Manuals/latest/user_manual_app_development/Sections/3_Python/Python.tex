@@ -1,15 +1,15 @@
 \section{Python Binding}
 \label{sec:Python}
 
-COMPSs features a binding for Python 2.x applications. The next subsections explain how to program a Python 
-application for COMPSs and how to configure the binding library.
+COMPSs features a binding for Python 2.X applications. The next subsections explain how to program a Python 
+application for COMPSs and a brief overview on how to execute it.
 
 \subsection{Programming Model}
 
 \subsubsection{Task Selection}
 
-As in the case of Java, a COMPSs Python application is a sequential program that contains calls 
-to tasks. In particular, the user can select as a task:
+As in the case of Java, a COMPSs Python application is a Python sequential program that contains calls to tasks. 
+In particular, the user can select as a task:
 
 \begin{itemize}
  \item Functions
@@ -17,21 +17,30 @@ to tasks. In particular, the user can select as a task:
  \item Class methods: static methods belonging to a class.
 \end{itemize}
 
-The task definition in Python is done by means of Python decorators instead of an annotated interface. In particular, the user needs to add, before the definition of the function/method, 
-a $@$task decorator that describes the task.
+The task definition in Python is done by means of Python decorators instead of an annotated interface. 
+In particular, the user needs to add a $@$task decorator that describes the task before the definition of the function/method.
 
-As an example, let us assume that the application calls a function \textit{func}, which receives a string parameter 
-containing a file name and an integer parameter. The code of \textit{func} updates the file.
+As an example, let us assume that the application calls a function \textit{func}, which receives a file path (string parameter) 
+and an integer parameter. The code of \textit{func} updates the file.
 
 \begin{lstlisting}[language=python]
-my_file = 'sample_file.txt'
+def func(file_path, value):
+    # update the file 'file_path'
+
+my_file = '/tmp/sample_file.txt'
 func(my_file, 1)
 \end{lstlisting}
 
 In order to select {\it func} as a task, the corresponding {\it $@$task} decorator needs to be placed right 
 before the definition of the function, providing some metadata about the parameters of that function. 
+The {\it $@$task} decorator has to be imported from the {\it pycompss} library:
+
+\begin{lstlisting}[language=python]
+from pycompss.api.task import task
+\end{lstlisting}
+
 The metadata corresponding to a parameter is specified as an argument of the decorator, whose name is 
-the formal parameter’s name and whose value defines the type and direction of the parameter. 
+the formal parameter's name and whose value defines the type and direction of the parameter. 
 The parameter types and directions can be:
 
 \begin{itemize}
@@ -45,13 +54,14 @@ while the user needs to specify it for files. On the other hand, the direction i
 decorator, the user has the following options:
 
 \begin{itemize}
+ \item {\it IN}: the parameter is read-only. The type will be inferred.
  \item {\it INOUT}: the parameter is read-write. The type will be inferred.
  \item {\it OUT}: the parameter is write-only. The type will be inferred.
- \item {\it FILE}: the parameter is a file. The direction is assumed to be {\it IN}.
+ \item {\it FILE/FILE\_IN}: the parameter is a file. The direction is assumed to be {\it IN}.
  \item {\it FILE\_INOUT}: the parameter is a read-write file.
  \item {\it FILE\_OUT}: the parameter is a write-only file.
 \end{itemize}
-     
+
 Consequently, please note that in the following cases there is no need to include an argument in 
 the {\it $@$task} decorator for a given task parameter:
 
@@ -61,6 +71,12 @@ the {\it $@$task} decorator for a given task parameter:
  \item Read-only object parameters: the type of the parameter is automatically inferred, and the 
        direction defaults to {\it IN}.
 \end{itemize}
+
+The parameter metadata is available from the {\it pycompss} library:
+
+\begin{lstlisting}[language=python]
+from pycompss.api.parameter import *
+\end{lstlisting}
  
 Continuing with the example, in the following code snippet the decorator specifies that {\it func} 
 has a parameter called {\it f}, of type {\it FILE} and {\it INOUT} direction. Note how the second 
@@ -68,8 +84,9 @@ parameter, {\it i}, does not need to be specified, since its type (integer) and 
 are automatically inferred by COMPSs.
 
 \begin{lstlisting}[language=python]
-from pycompss.api.task import task
-from pycompss.api.parameter import *
+from pycompss.api.task import task     # Import @task decorator
+from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
+
 %*{\bf @task }*)(f = FILE_INOUT)
 def func(f, i):
      fd = open(f, 'r+')
@@ -166,7 +183,7 @@ Table \ref{tab:task_decorator_arguments} summarizes the arguments that can be fo
     \hline
     \multirow{5}{*}{Formal parameter name}  &  - INOUT: read-write parameter, all types except file (primitives, strings, objects). \\
     & - OUT: read-write parameter, all types except file (primitives, strings, objects). \\
-    & - FILE: read-only file parameter. \\
+    & - FILE/FILE\_IN: read-only file parameter. \\
     & - FILE\_INOUT: read-write file parameter. \\
     & - FILE\_OUT: write-only file parameter. \\
     \hline
@@ -185,40 +202,51 @@ Table \ref{tab:task_decorator_arguments} summarizes the arguments that can be fo
   \end{longtable}
 \egroup
 
+
 \paragraph{Other decorators}
 \label{par:other_decorators}
 
 In addition to this API functions, the programmer can use a set of decorators for other purposes.
 
 For instance, there is a set of decorators that can be placed over the $@$task decorator in order to 
-define the task methos as a binary invocation (with the {\it @binary} decorator), as a OmpSs invocation 
-(with the {\it @ompss} decorator), or as a MPI invocation (with the {\it @mpi} decorator).
+define the task methos as a binary invocation (with the {\it $@$binary} decorator), as a OmpSs invocation 
+(with the {\it $@$ompss} decorator), or as a MPI invocation (with the {\it $@$mpi} decorator).
 These decorators must be placed over the $@$task decorator, and under the $@$constraint decorator if 
 defined.
 The following snippets show their usage:
 
+The {\it $@$binary} decorator shall be used to 
+
 \begin{lstlisting}[language=python]
-@binary(binary="mybinary", workingDir="/tmp")
+from pycompss.api.binary import binary
+
+@binary(binary="mybinary.bin")
 @task()
 def binary_func():
      pass
      
 @constraint(computingUnits="2")
-@binary(binary="otherbinary", workingDir="/tmp")
+@binary(binary="otherbinary.bin")
 @task()
 def binary_func2():
      pass
 \end{lstlisting}
 
+
 \begin{lstlisting}[language=python]
-@ompss(binary="ompssApp", workingDir="/tmp")
+from pycompss.api.ompss import ompss
+
+@ompss(binary="ompssApp.bin")
 @task()
 def ompss_func():
      pass
 \end{lstlisting}
 
+
 \begin{lstlisting}[language=python]
-@mpi(binary="mpiApp", workingDir="/tmp", runner="mpirun", computingNodes=2)
+from pycompss.api.mpi import mpi
+
+@mpi(binary="mpiApp.bin", runner="mpirun", computingNodes=2)
 @task()
 def mpi_func():
      pass
@@ -309,6 +337,8 @@ keeping this management invisible to the user.
 %library is available, and the other one in the ones.
 
 \begin{lstlisting}[language=python]
+from pycompss.api.implement import implement
+
 @implement(source_class="sourcemodule", method="main_func")
 @constraint(AppSoftware="numpy")
 @task(returns=list)
@@ -547,7 +577,7 @@ The next subsections describe how to execute applications with the COMPSs Python
 \subsubsection{Environment}
 The following environment variables must be defined before executing a COMPSs Python application:
 
-JAVA\_HOME: Java JDK installation directory (e.g. \textit{/usr/lib/jvm/java-7-openjdk/})
+JAVA\_HOME: Java JDK installation directory (e.g. \textit{/usr/lib/jvm/java-8-openjdk/})
 
 \subsubsection{Command}
 In order to run a Python application with COMPSs, the runcompss script can be used, like for 
