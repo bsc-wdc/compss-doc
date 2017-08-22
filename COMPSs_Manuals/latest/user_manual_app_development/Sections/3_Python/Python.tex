@@ -174,7 +174,8 @@ def func2():
     ...
 \end{lstlisting}
 
-Table \ref{tab:task_decorator_arguments} summarizes the arguments that can be found in the $@$task decorator.
+Table \ref{tab:task_decorator_arguments} summarizes the arguments that can be found in the {\it $@$task} decorator.
+
 \bgroup
   \def\arraystretch{1.5}%
   \begin{longtable}{| p{0.31\textwidth} | p{0.69\textwidth} |}
@@ -203,21 +204,35 @@ Table \ref{tab:task_decorator_arguments} summarizes the arguments that can be fo
 \egroup
 
 
-\paragraph{Other decorators}
+\paragraph{Other task types}
 \label{par:other_decorators}
 
 In addition to this API functions, the programmer can use a set of decorators for other purposes.
 
-For instance, there is a set of decorators that can be placed over the $@$task decorator in order to 
-define the task methos as a binary invocation (with the {\it $@$binary} decorator), as a OmpSs invocation 
+For instance, there is a set of decorators that can be placed over the {\it $@$task} decorator in order to 
+define the task methods as a binary invocation (with the {\it $@$binary} decorator), as a OmpSs invocation 
 (with the {\it $@$ompss} decorator), or as a MPI invocation (with the {\it $@$mpi} decorator).
-These decorators must be placed over the $@$task decorator, and under the $@$constraint decorator if 
+These decorators must be placed over the {\it $@$task} decorator, and under the {\it $@$constraint} decorator if 
 defined.
-The following snippets show their usage:
 
-The {\it $@$binary} decorator shall be used to 
+Consequently, the task body will be empty and the function parameters will be used as invocation parameters
+with some extra information that can be provided within the {\it $@$task} decorator.
+
+The following subparagraphs describe their usage.
+
+\subparagraph{Binary decorator}
+\label{subpar:binary_decorator}
+
+The {\it $@$binary} decorator shall be used to define that a task is going to invoke a binary executable.
+
+In this context, the {\it $@$task} decorator parameters will be used as the binary invocation parameters
+(following their order in the function definition). Since the invocation parameters can be of different nature, 
+information on their type can be provided through the {\it $@$task} decorator.
+
+The following snippet shows the most simple binary task definition without/with constraints (without parameters):
 
 \begin{lstlisting}[language=python]
+from pycompss.api.task import task
 from pycompss.api.binary import binary
 
 @binary(binary="mybinary.bin")
@@ -232,6 +247,86 @@ def binary_func2():
      pass
 \end{lstlisting}
 
+The invocation of these tasks would be equivalent to:
+
+\begin{lstlisting}[language=bash]
+./mybinary.bin 
+
+./otherbinary.bin   # in resources that respect the constraint.
+\end{lstlisting}
+
+The following snippet shows a more complex binary invocation, with files as parameters:
+
+\begin{lstlisting}[language=python]
+from pycompss.api.task import task
+from pycompss.api.binary import binary
+from pycompss.api.parameter import *
+
+@binary(binary="grep", workingDir=".")
+@task(infile={Type:FILE_IN_STDIN}, result={Type:FILE_OUT_STDOUT})
+def grepper():
+     pass
+     
+# This task definition is equivalent to the folloowing, which is more verbose:
+
+@binary(binary="grep", workingDir=".")
+@task(infile={Type:FILE_IN, Stream:STDIN}, result={Type:FILE_OUT, Stream:STDOUT})
+def grepper(keyword, infile, result):
+     pass
+     
+infile = "infile.txt"
+outfile = "outfile.txt"
+grepper("Hi", infile, outfile)
+\end{lstlisting}
+
+The invocation of the {\it grepper} task would be equivalent to:
+
+\begin{lstlisting}[language=bash]
+# grep keyword < infile > result
+
+grep Hi < infile.txt > outfile.txt
+\end{lstlisting}
+
+Please note that the {\it keyword} parameter is a string, and it is respected as is in the invocation call.
+
+Thus, PyCOMPSs can also deal with prefixes for the given parameters. 
+The following snippet performs a system call (ls) with specific prefixes:
+
+\begin{lstlisting}[language=python]
+from pycompss.api.task import task
+from pycompss.api.binary import binary
+from pycompss.api.parameter import *
+
+@binary(binary="ls")
+@task(hide={Type:FILE_IN, Prefix:"--hide="}, sort={Prefix:"--sort="})
+def myLs(flag, hide, sort):
+    pass
+    
+flag = '-l'
+hideFile = "fileToHide.txt"
+sort = "time"
+myLs(flag, hideFile, sort)
+\end{lstlisting}
+
+The invocation of the {\it myLs} task would be equivalent to:
+
+\begin{lstlisting}[language=bash]
+# ls -l --hide=hide --sort=sort
+
+ls -l --hide=fileToHide.txt --sort=time
+\end{lstlisting}
+
+This particular case is intended to show all the power of the {\it $@$binary} decorator in conjuntion with the
+{\it $@$task} decorator. Please note that although the {\it hide} parameter is used as a prefix for the binary invocation,
+the {\it fileToHide.txt} would also be transfered to the worker (if necessary) since its type is defined as FILE\_IN. 
+This feature enables to build more complex binary invocations.
+
+
+
+\subparagraph{OmpSs decorator}
+\label{subpar:ompss_decorator}
+
+The {\it $@$ompss} decorator shall be used to define that a task is going to invoke a OmpSs executable.
 
 \begin{lstlisting}[language=python]
 from pycompss.api.ompss import ompss
@@ -242,6 +337,14 @@ def ompss_func():
      pass
 \end{lstlisting}
 
+The OmpSs executable invocation can also be enriched with parameters, files and prefixes as with the 
+{\it $@$binary} decorator through the function parameters and {\it $@$task} decorator information.
+Please, check subparagraph \ref{subpar:binary_decorator} for more details.
+
+\subparagraph{MPI decorator}
+\label{subpar:mpi_decorator}
+
+The {\it $@$mpi} decorator shall be used to define that a task is going to invoke a MPI executable.
 
 \begin{lstlisting}[language=python]
 from pycompss.api.mpi import mpi
@@ -251,6 +354,12 @@ from pycompss.api.mpi import mpi
 def mpi_func():
      pass
 \end{lstlisting}
+
+The MPI executable invocation can also be enriched with parameters, files and prefixes as with the 
+{\it $@$binary} decorator through the function parameters and {\it $@$task} decorator information.
+Please, check subparagraph \ref{subpar:binary_decorator} for more details.
+
+\subparagraph{Parameters summary}
 
 Table \ref{tab:other_decorators} summarizes the parameters of these decorators.
 
@@ -276,6 +385,59 @@ Table \ref{tab:other_decorators} summarizes the parameters of these decorators.
     \label{tab:other_decorators}
   \end{longtable}
 \egroup
+
+Table \ref{tab:other_parameters} summarizes the parameters that can be used within the {\it $@$task} decorator for the 
+function parameters when using these decorators.
+
+\bgroup
+  \def\arraystretch{1.5}%
+  \begin{longtable}{| p{0.25\textwidth} | p{0.75\textwidth} |}
+    \hline
+    \multicolumn{1}{|c|}{{\bf Parameter }} &  \multicolumn{1}{c|}{{\bf Values }}\\
+    \hline
+        \multirow{3}{*}{{\bf Type}} & {\bf (default: empty)}: The parameter is an object or a simple tipe that will be inferred. \\
+                                    & {\bf FILE}: The parameter is a file. \\
+                                    & {\bf Table \ref{tab:other_parameters_shortcuts} shortcut}: See table below.\\
+    \hline
+        \multirow{4}{*}{{\bf Direction}} & {\bf (default: empty)}: In direction. \\
+                                         & {\bf IN}: In direction. \\
+                                         & {\bf OUT}: Out direction. \\
+                                         & {\bf INOUT}: In and out direction. \\
+    \hline
+        \multirow{4}{*}{{\bf Stream}} & {\bf (default: empty)}: Not a stream. \\
+                                      & {\bf STDIN}: Standard input. \\
+                                      & {\bf STDOUT}: Standard output. \\
+                                      & {\bf STDERR}: Standard error. \\
+    \hline
+     \caption{Parameters definition for the $@$binary, $@$ompss and $@$mpi decorators}
+    \label{tab:other_parameters}
+  \end{longtable}
+\egroup
+
+Moreover, there are some shorcuts that can be used for files type definition as parameters within the {\it $@$task} decorator (Table \ref{tab:other_parameters_shortcuts}).
+It is not necessary to indicate the {\it Direction} nor the {\it Stream} since it may be already be indicated with the shorcut.
+
+\bgroup
+  \def\arraystretch{1.5}%
+  \begin{longtable}{| p{0.35\textwidth} | p{0.65\textwidth} |}
+    \hline
+    \multicolumn{1}{|c|}{{\bf Alias }} &  \multicolumn{1}{c|}{{\bf Description }}\\
+    \hline
+        \multirow{1}{*}{{\bf FILE(\_IN)\_STDIN}}  & Type: File, Direction: IN, Stream: STDIN \\
+        \multirow{1}{*}{{\bf FILE(\_IN)\_STDERR}} & Type: File, Direction: IN, Stream: STDOUT \\
+        \multirow{1}{*}{{\bf FILE(\_IN)\_STDOUT}} & Type: File, Direction: IN, Stream: STDERR \\
+        \multirow{1}{*}{{\bf FILE\_OUT\_STDIN}}  & Type: File, Direction: OUT, Stream: STDIN \\
+        \multirow{1}{*}{{\bf FILE\_OUT\_STDERR}} & Type: File, Direction: OUT, Stream: STDOUT \\
+        \multirow{1}{*}{{\bf FILE\_OUT\_STDOUT}} & Type: File, Direction: OUT, Stream: STDERR \\
+        \multirow{1}{*}{{\bf FILE\_INOUT\_STDIN}}  & Type: File, Direction: INOUT, Stream: STDIN \\
+        \multirow{1}{*}{{\bf FILE\_INOUT\_STDERR}} & Type: File, Direction: INOUT, Stream: STDOUT \\
+        \multirow{1}{*}{{\bf FILE\_INOUT\_STDOUT}} & Type: File, Direction: INOUT, Stream: STDERR \\
+    \hline
+     \caption{File parameters definition shortcuts}
+    \label{tab:other_parameters_shortcuts}
+  \end{longtable}
+\egroup
+
 
 
 \subsubsection{Constraints}
