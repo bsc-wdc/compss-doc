@@ -104,10 +104,10 @@ order=1
 
 [item:Sections/3_Python/Python.tex]
 archive=true
-column=62
+column=81
 encoding=UTF-8
 highlight=LaTeX
-line=321
+line=440
 mode=LaTeX
 open=false
 order=1
@@ -181,10 +181,10 @@ JumpList=
 ViMarks=.,349,44,[,349,44,],349,44
 
 [view-settings,view=0,item:Sections/3_Python/Python.tex]
-CursorColumn=62
-CursorLine=321
+CursorColumn=81
+CursorLine=440
 JumpList=
-ViMarks=.,321,12,[,321,12,],321,12,a,173,0
+ViMarks=.,440,80,[,440,73,],440,80,a,173,0
 
 [view-settings,view=0,item:Sections/4_C/C.tex]
 CursorColumn=86

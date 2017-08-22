@@ -386,14 +386,14 @@ Table \ref{tab:other_decorators} summarizes the parameters of these decorators.
   \end{longtable}
 \egroup
 
-Table \ref{tab:other_parameters} summarizes the parameters that can be used within the {\it $@$task} decorator for the 
+Table \ref{tab:other_parameters} summarizes the parameter key that can be used within the {\it $@$task} decorator for the 
 function parameters when using these decorators.
 
 \bgroup
   \def\arraystretch{1.5}%
   \begin{longtable}{| p{0.25\textwidth} | p{0.75\textwidth} |}
     \hline
-    \multicolumn{1}{|c|}{{\bf Parameter }} &  \multicolumn{1}{c|}{{\bf Values }}\\
+    \multicolumn{1}{|c|}{{\bf Parameter key}} &  \multicolumn{1}{c|}{{\bf Values }}\\
     \hline
         \multirow{3}{*}{{\bf Type}} & {\bf (default: empty)}: The parameter is an object or a simple tipe that will be inferred. \\
                                     & {\bf FILE}: The parameter is a file. \\
@@ -438,7 +438,11 @@ It is not necessary to indicate the {\it Direction} nor the {\it Stream} since i
   \end{longtable}
 \egroup
 
+These parameter keys, as well as the shortcuts, can be imported from the PyCOMPSs library:
 
+\begin{lstlisting}[language=python]
+from pycompss.api.parameter import *
+\end{lstlisting}
 
 \subsubsection{Constraints}
 \label{subsubsec:constraints}
