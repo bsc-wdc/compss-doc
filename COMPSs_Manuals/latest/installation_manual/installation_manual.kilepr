@@ -44,7 +44,7 @@ Highlighting=LaTeX
 Indentation Mode=normal
 Mode=LaTeX
 
-[document-settings,item:Sections/04_RedHat_zypper/RedHat_zypper.tex]
+[document-settings,item:Sections/04_Suse_zypper/Suse_zypper.tex]
 Bookmarks=
 Encoding=UTF-8
 Highlighting=LaTeX
@@ -147,7 +147,7 @@ mode=LaTeX
 open=false
 order=1
 
-[item:Sections/04_RedHat_zypper/RedHat_zypper.tex]
+[item:Sections/04_Suse_zypper/Suse_zypper.tex]
 archive=true
 column=81
 encoding=UTF-8
