@@ -129,10 +129,10 @@ order=2
 
 [item:Sections/02_Packages_Description/Packages_Description.tex]
 archive=true
-column=55
+column=40
 encoding=UTF-8
 highlight=LaTeX
-line=10
+line=34
 mode=LaTeX
 open=false
 order=3
@@ -189,20 +189,20 @@ order=6
 
 [item:Sections/08_Additional_Configuration/Additional_Configuration.tex]
 archive=true
-column=56
+column=23
 encoding=UTF-8
 highlight=LaTeX
-line=63
+line=65
 mode=LaTeX
 open=false
 order=0
 
 [item:Sections/09_Configuration_Files/Configuration_Files.tex]
 archive=true
-column=0
+column=52
 encoding=UTF-8
 highlight=LaTeX
-line=646
+line=446
 mode=LaTeX
 open=false
 order=0
@@ -250,10 +250,10 @@ JumpList=
 ViMarks=.,5,23,[,5,23,],5,23
 
 [view-settings,view=0,item:Sections/02_Packages_Description/Packages_Description.tex]
-CursorColumn=55
-CursorLine=10
+CursorColumn=40
+CursorLine=34
 JumpList=
-ViMarks=.,10,54,[,10,54,],10,54
+ViMarks=.,42,0,[,43,0,],-1,-1
 
 [view-settings,view=0,item:Sections/03_Debian/Debian.tex]
 CursorColumn=0
@@ -286,16 +286,16 @@ JumpList=
 ViMarks=.,73,54,[,73,55,],73,54
 
 [view-settings,view=0,item:Sections/08_Additional_Configuration/Additional_Configuration.tex]
-CursorColumn=56
-CursorLine=63
+CursorColumn=23
+CursorLine=65
 JumpList=
-ViMarks=.,63,55,[,63,56,],63,55
+ViMarks=.,67,0,[,68,0,],-1,-1
 
 [view-settings,view=0,item:Sections/09_Configuration_Files/Configuration_Files.tex]
-CursorColumn=0
-CursorLine=646
+CursorColumn=52
+CursorLine=446
 JumpList=
-ViMarks=.,645,39,[,645,39,],645,39
+ViMarks=.,446,39,[,446,39,],446,51
 
 [view-settings,view=0,item:Sections/10_Removal/Removal.tex]
 CursorColumn=16

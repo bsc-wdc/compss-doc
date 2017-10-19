@@ -40,7 +40,7 @@ compss@bsc:~$ cat /opt/COMPSs/Runtime/configuration/xml/resources/default_resour
             @@<ComputingUnits>2</ComputingUnits>@@
         </Processor>
         <Adaptors>
-            <Adaptor Name="integratedtoolkit.nio.master.NIOAdaptor">
+            <Adaptor Name="es.bsc.compss.nio.master.NIOAdaptor">
                 <SubmissionSystem>
                     <Interactive/>
                 </SubmissionSystem>
@@ -111,7 +111,7 @@ compss@bsc:~$ cat /opt/COMPSs/Runtime/configuration/xml/projects/default_project
         </Application>
         @@<LimitOfTasks>4</LimitOfTasks>@@
         <Adaptors>
-            <Adaptor Name="integratedtoolkit.nio.master.NIOAdaptor">
+            <Adaptor Name="es.bsc.compss.nio.master.NIOAdaptor">
                 <SubmissionSystem>
                     <Interactive/>
                 </SubmissionSystem>
@@ -193,7 +193,7 @@ Here we provide examples about configuration files for Grid and Cluster environm
             <ComputingUnits>4</ComputingUnits>                                                                                                                                                                     
         </Processor>                                                                                                                                                                                               
         <Adaptors>                                                                                                                                                                                                 
-            <Adaptor Name="integratedtoolkit.nio.master.NIOAdaptor">                                                                                                                                               
+            <Adaptor Name="es.bsc.compss.nio.master.NIOAdaptor">                                                                                                                                               
                 <SubmissionSystem>
                     <Interactive/>
                 </SubmissionSystem>
@@ -202,7 +202,7 @@ Here we provide examples about configuration files for Grid and Cluster environm
                     <MaxPort>43002</MaxPort>
                 </Ports>
             </Adaptor>
-            <Adaptor Name="integratedtoolkit.gat.master.GATAdaptor">
+            <Adaptor Name="es.bsc.compss.gat.master.GATAdaptor">
                 <SubmissionSystem>
                     <Batch>
                         <Queue>sequential</Queue>
@@ -332,7 +332,7 @@ user inside this tag.
         <Images>
             <Image Name="Image1">
                 <Adaptors>
-                    <Adaptor Name="integratedtoolkit.nio.master.NIOAdaptor">
+                    <Adaptor Name="es.bsc.compss.nio.master.NIOAdaptor">
                         <SubmissionSystem>
                             <Interactive/>
                         </SubmissionSystem>
@@ -355,7 +355,7 @@ user inside this tag.
             </Image>
             <Image Name="Image2">
                 <Adaptors>
-                    <Adaptor Name="integratedtoolkit.nio.master.NIOAdaptor">
+                    <Adaptor Name="es.bsc.compss.nio.master.NIOAdaptor">
                         <SubmissionSystem>
                             <Interactive/>
                         </SubmissionSystem>
@@ -444,7 +444,7 @@ inside this \texttt{<Cloud>} tag.
                         <Target>/tmp/Worker/</Target>
                     </Package>
                     <Adaptors>
-                        <Adaptor Name="integratedtoolkit.nio.master.NIOAdaptor">
+                        <Adaptor Name="es.bsc.compss.nio.master.NIOAdaptor">
                             <SubmissionSystem>
                                 <Interactive/>
                             </SubmissionSystem>

@@ -55,20 +55,20 @@ inside the \textit{COMPSs Installation Manual} available at our website \url{htt
 \subsection{Compilation error: @Method not found}
 When trying to compile Java applications users can get some of the following compilation errors:
 \begin{lstlisting}[language=bash]
-error: package integratedtoolkit.types.annotations does not exist
-import integratedtoolkit.types.annotations.Constraints;
+error: package es.bsc.compss.types.annotations does not exist
+import es.bsc.compss.types.annotations.Constraints;
                                           ^
-error: package integratedtoolkit.types.annotations.task does not exist
-import integratedtoolkit.types.annotations.task.Method;
+error: package es.bsc.compss.types.annotations.task does not exist
+import es.bsc.compss.types.annotations.task.Method;
                                           ^
-error: package integratedtoolkit.types.annotations does not exist
-import integratedtoolkit.types.annotations.Parameter;
+error: package es.bsc.compss.types.annotations does not exist
+import es.bsc.compss.types.annotations.Parameter;
                                           ^
-error: package integratedtoolkit.types.annotations.Parameter does not exist
-import integratedtoolkit.types.annotations.parameter.Direction;
+error: package es.bsc.compss.types.annotations.Parameter does not exist
+import es.bsc.compss.types.annotations.parameter.Direction;
                                                     ^
-error: package integratedtoolkit.types.annotations.Parameter does not exist
-import integratedtoolkit.types.annotations.parameter.Type;
+error: package es.bsc.compss.types.annotations.Parameter does not exist
+import es.bsc.compss.types.annotations.parameter.Type;
                                                     ^
 error: cannot find symbol
 @Parameter(type = Type.FILE, direction = Direction.INOUT)
@@ -117,17 +117,17 @@ that the job associated to the task has failed (and all its resubmissions too). 
 \texttt{jobX\_NEW.err} files users find the following error:
 
 \begin{lstlisting}[language=bash]
-[ERROR|integratedtoolkit.Worker|Executor] Can not get method by reflection
-integratedtoolkit.nio.worker.executors.Executor$JobExecutionException: Can not get method by reflection
-        at integratedtoolkit.nio.worker.executors.JavaExecutor.executeTask(JavaExecutor.java:142)
-        at integratedtoolkit.nio.worker.executors.Executor.execute(Executor.java:42)
-        at integratedtoolkit.nio.worker.JobLauncher.executeTask(JobLauncher.java:46)
-        at integratedtoolkit.nio.worker.JobLauncher.processRequests(JobLauncher.java:34)
-        at integratedtoolkit.util.RequestDispatcher.run(RequestDispatcher.java:46)
+[ERROR|es.bsc.compss.Worker|Executor] Can not get method by reflection
+es.bsc.compss.nio.worker.executors.Executor$JobExecutionException: Can not get method by reflection
+        at es.bsc.compss.nio.worker.executors.JavaExecutor.executeTask(JavaExecutor.java:142)
+        at es.bsc.compss.nio.worker.executors.Executor.execute(Executor.java:42)
+        at es.bsc.compss.nio.worker.JobLauncher.executeTask(JobLauncher.java:46)
+        at es.bsc.compss.nio.worker.JobLauncher.processRequests(JobLauncher.java:34)
+        at es.bsc.compss.util.RequestDispatcher.run(RequestDispatcher.java:46)
         at java.lang.Thread.run(Thread.java:745)
 Caused by: java.lang.NoSuchMethodException: simple.Simple.increment(java.lang.String)
         at java.lang.Class.getMethod(Class.java:1678)
-        at integratedtoolkit.nio.worker.executors.JavaExecutor.executeTask(JavaExecutor.java:140)
+        at es.bsc.compss.nio.worker.executors.JavaExecutor.executeTask(JavaExecutor.java:140)
         ... 5 more
 \end{lstlisting}
 
@@ -146,17 +146,17 @@ that the job associated to the task has failed (and all its resubmissions too). 
 \texttt{jobX\_NEW.err} files users find the following error:
 
 \begin{lstlisting}[language=bash]
-[ERROR|integratedtoolkit.Worker|Executor]
+[ERROR|es.bsc.compss.Worker|Executor]
 java.lang.reflect.InvocationTargetException
         at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
         at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
         at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
         at java.lang.reflect.Method.invoke(Method.java:606)
-        at integratedtoolkit.nio.worker.executors.JavaExecutor.executeTask(JavaExecutor.java:154)
-        at integratedtoolkit.nio.worker.executors.Executor.execute(Executor.java:42)
-        at integratedtoolkit.nio.worker.JobLauncher.executeTask(JobLauncher.java:46)
-        at integratedtoolkit.nio.worker.JobLauncher.processRequests(JobLauncher.java:34)
-        at integratedtoolkit.util.RequestDispatcher.run(RequestDispatcher.java:46)
+        at es.bsc.compss.nio.worker.executors.JavaExecutor.executeTask(JavaExecutor.java:154)
+        at es.bsc.compss.nio.worker.executors.Executor.execute(Executor.java:42)
+        at es.bsc.compss.nio.worker.JobLauncher.executeTask(JobLauncher.java:46)
+        at es.bsc.compss.nio.worker.JobLauncher.processRequests(JobLauncher.java:34)
+        at es.bsc.compss.util.RequestDispatcher.run(RequestDispatcher.java:46)
         at java.lang.Thread.run(Thread.java:745)
 Caused by: java.lang.NullPointerException
         at simple.Ll.printY(Ll.java:25)

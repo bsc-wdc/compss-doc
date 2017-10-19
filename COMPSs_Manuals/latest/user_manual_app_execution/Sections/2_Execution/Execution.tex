@@ -82,9 +82,9 @@ Usage: runcompss [options] application_name application_arguments
                                             between all COMPSs workers.                                                      
                                             Default: null                                                                                                                               
     --comm=<path>                           Class that implements the adaptor for communications                                                                                        
-                                            Supported adaptors: integratedtoolkit.nio.master.NIOAdaptor 
-                                                                | integratedtoolkit.gat.master.GATAdaptor                                       
-                                            Default: integratedtoolkit.nio.master.NIOAdaptor                                                                                            
+                                            Supported adaptors: es.bsc.compss.nio.master.NIOAdaptor 
+                                                                | es.bsc.compss.gat.master.GATAdaptor                                       
+                                            Default: es.bsc.compss.nio.master.NIOAdaptor                                                                                            
     --conn=<path>                           Path of the connector jar/s that should be loaded. 
                                             You can use multiple by splitting with ':'                                               
                                             Supported connectors: compss-{CONN}-connector.jar                                                                                           
@@ -92,10 +92,10 @@ Usage: runcompss [options] application_name application_arguments
                                                "one", "rocci", "vmm", etc.)                                                        
     --scheduler=<path>                      Class that implements the Scheduler for COMPSs                                                                                              
                                             Supported schedulers: 
-                                               integratedtoolkit.components.impl.TaskScheduler 
-                                               | integratedtoolkit.scheduler.readyscheduler.ReadyScheduler           
+                                               es.bsc.compss.components.impl.TaskScheduler 
+                                               | es.bsc.compss.scheduler.readyscheduler.ReadyScheduler           
                                             Default: 
-                                               integratedtoolkit.scheduler.readyscheduler.ReadyScheduler                                                                          
+                                               es.bsc.compss.scheduler.readyscheduler.ReadyScheduler                                                                          
     --library_path=<path>                   Non-standard directories to search for libraries (e.g. Java 
                                             JVM library, Python library, C binding library)                                 
                                             Default: Working Directory                                                                                                                  
@@ -171,7 +171,7 @@ compss@bsc:~/tutorial_apps/java/simple/jar$ runcompss simple.Simple 1
 
 ----------------- Executing simple.Simple --------------------------
 
-WARNING: IT Properties file is null. Setting default values
+WARNING: COMPSs Properties file is null. Setting default values
 [(1066)    API]  -  Starting COMPSs Runtime v<version>
 Initial counter value is 1
 Final counter value is 2
@@ -215,7 +215,7 @@ compss@bsc:~/tutorial_apps/python/simple$ runcompss simple.py 1
 
 ----------------- Executing simple.py --------------------------
 
-WARNING: IT Properties file is null. Setting default values
+WARNING: COMPSs Properties file is null. Setting default values
 [(616)    API]  -  Starting COMPSs Runtime v<version>
 Initial counter value is 1
 Final counter value is 2
@@ -246,10 +246,10 @@ compss@bsc:~/tutorial_apps/c/simple$ runcompss ~/tutorial_apps/c/simple/master/s
 ----------------- Executing simple --------------------------
 
 JVM_OPTIONS_FILE: /tmp/tmp.ItT1tQfKgP
-IT_HOME: /opt/COMPSs
+COMPSS_HOME: /opt/COMPSs
 Args: 1
  
-WARNING: IT Properties file is null. Setting default values
+WARNING: COMPSs Properties file is null. Setting default values
 [(650)    API]  -  Starting COMPSs Runtime v<version>
 Initial counter value is 1
 [   BINDING]  -  @compss_wait_on  -  Entry.filename: counter

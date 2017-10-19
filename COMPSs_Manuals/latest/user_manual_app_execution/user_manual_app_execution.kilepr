@@ -74,10 +74,10 @@ Mode=LaTeX
 
 [item:COMPSs_User_Manual_App_Exec.tex]
 archive=true
-column=2
+column=69
 encoding=UTF-8
 highlight=LaTeX
-line=83
+line=80
 mode=LaTeX
 open=false
 order=1
@@ -114,10 +114,10 @@ order=4
 
 [item:Sections/4_Tools/Tools.tex]
 archive=true
-column=0
+column=37
 encoding=UTF-8
 highlight=LaTeX
-line=247
+line=275
 mode=LaTeX
 open=false
 order=2
@@ -163,8 +163,8 @@ open=false
 order=-1
 
 [view-settings,view=0,item:COMPSs_User_Manual_App_Exec.tex]
-CursorColumn=2
-CursorLine=83
+CursorColumn=69
+CursorLine=80
 JumpList=
 ViMarks=.,89,2,[,89,2,],89,2
 
@@ -187,10 +187,10 @@ JumpList=
 ViMarks=.,49,75,[,49,75,],49,75
 
 [view-settings,view=0,item:Sections/4_Tools/Tools.tex]
-CursorColumn=0
-CursorLine=247
+CursorColumn=37
+CursorLine=275
 JumpList=
-ViMarks=.,248,0,[,247,0,],248,59
+ViMarks=.,184,61,[,184,61,],184,61
 
 [view-settings,view=0,item:Sections/5_Execution_Platforms/Execution_Platforms.tex]
 CursorColumn=0

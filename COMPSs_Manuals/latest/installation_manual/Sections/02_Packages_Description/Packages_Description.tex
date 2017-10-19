@@ -32,7 +32,7 @@ your distribution please check the \textit{Depends} section at your package mana
     COMPSs Bindings 		& compss-bindings-common, compss-c-binding, compss-python-binding \\ \hline 
     COMPSs Bindings Common 	& compss-engine, libtool, automake, build-essential \\ \hline 
     COMPSs Python Binding 	& compss-bindings-common, python ($>= 2.7$), libpython2.7 \\ \hline 
-    COMPSs C/C++ Binding 	& compss-binding-common, libboost-serialization-dev, libboost-iostreams-dev, libxml2-dev, csh \\ \hline 
+    COMPSs C/C++ Binding 	& compss-binding-common, libboost-all-dev, libxml2-dev \\ \hline 
     COMPSs Tools 		& compss-extrae, compss-monitor \\ \hline 
     COMPSs Extrae 		& compss-engine, libxml2 ($>= 2.5$), libxml2-dev ($>= 2.5$), gfortran, papi \\ \hline 
     COMPSs Monitor 		& compss-engine \\ \hline 
@@ -41,7 +41,9 @@ your distribution please check the \textit{Depends} section at your package mana
   \end{center}
 \egroup
 
+
 \subsection{Optional Dependencies}
+
 For the Python binding it is also recommended to have \verb|dill| and \verb|guppy| installed. The \verb|dill| package increases
 the variety of serializable objects by Python (for example: lambda functions), and the \verb|guppy| package is needed to use the \verb|@local|
 decorator. Both packages can be found in pyPI and can be installed via \verb|pip|.

@@ -11,11 +11,11 @@ specific COMPSs module.
 \begin{lstlisting}[language=bash]
 $ module available COMPSs
 ---------- /apps/modules/modulefiles/tools ----------
-COMPSs/1.2
 COMPSs/1.3
 COMPSs/1.4
 COMPSs/2.0
 COMPSs/2.1
+COMPSs/2.2
 
 COMPSs/release(default)
 COMPSs/trunk
@@ -26,7 +26,7 @@ load java/1.8.0u66 (PATH, MANPATH, JAVA_HOME, JAVA_ROOT, JAVA_BINDIR,
                     SDK_HOME, JDK_HOME, JRE_HOME)
 load MKL/11.0.1 (LD_LIBRARY_PATH)
 load PYTHON/2.7.3 (PATH, MANPATH, LD_LIBRARY_PATH, C_INCLUDE_PATH)
-load COMPSs/release (PATH, MANPATH, IT_HOME)
+load COMPSs/release (PATH, MANPATH, COMPSS_HOME)
 \end{lstlisting}
 
 The following command can be run to check if the correct COMPSs version has been loaded:
@@ -37,7 +37,9 @@ COMPSs version <version>
 
 \end{lstlisting}
 
+
 \subsection{Configuration}
+
 The COMPSs module contains \textbf{all} the COMPSs dependencies, including Java, Python and MKL. Modifying any of these dependencies
 can cause execution failures and thus, we \textbf{do not} recomend to change them. Before running any COMPSs job please check your 
 environment and, if needed, comment out any line inside the \verb|.bashrc| file that loads custom COMPSs, Java, Python and/or MKL
@@ -60,7 +62,7 @@ load java/1.8.0u66 (PATH, MANPATH, JAVA_HOME, JAVA_ROOT, JAVA_BINDIR,
                     SDK_HOME, JDK_HOME, JRE_HOME)
 load MKL/11.0.1 (LD_LIBRARY_PATH)
 load PYTHON/2.7.3 (PATH, MANPATH, LD_LIBRARY_PATH, C_INCLUDE_PATH)
-load COMPSs/release (PATH, MANPATH, IT_HOME)
+load COMPSs/release (PATH, MANPATH, COMPSS_HOME)
 
 $ enqueue_compss --version
 COMPSs version <version>
@@ -242,24 +244,24 @@ Usage: enqueue_compss [queue_system_options] [COMPSs_options]
                                             
     --comm=<ClassName>                      Class that implements the adaptor for communications
                                             Supported adaptors: 
-                                            integratedtoolkit.nio.master.NIOAdaptor 
-                                            | integratedtoolkit.gat.master.GATAdaptor
-                                            Default: integratedtoolkit.nio.master.NIOAdaptor
+                                            es.bsc.compss.nio.master.NIOAdaptor 
+                                            | es.bsc.compss.gat.master.GATAdaptor
+                                            Default: es.bsc.compss.nio.master.NIOAdaptor
                                             
     --conn=<className>                      Class that implements the runtime connector for 
                                             the cloud
                                             Supported connectors: 
-                                            integratedtoolkit.connectors.DefaultSSHConnector
-                                            Default: integratedtoolkit.connectors.DefaultSSHConnector
+                                            es.bsc.compss.connectors.DefaultSSHConnector
+                                            Default: es.bsc.compss.connectors.DefaultSSHConnector
                                             
     --scheduler=<className>                 Class that implements the Scheduler for COMPSs
                                             Supported schedulers: 
-                                            integratedtoolkit.scheduler.fullGraphScheduler
+                                            es.bsc.compss.scheduler.fullGraphScheduler
                                             .FullGraphScheduler
-                                            | integratedtoolkit.scheduler.fifoScheduler.FIFOScheduler
-                                            | integratedtoolkit.scheduler.resourceEmptyScheduler
+                                            | es.bsc.compss.scheduler.fifoScheduler.FIFOScheduler
+                                            | es.bsc.compss.scheduler.resourceEmptyScheduler
                                             .ResourceEmptyScheduler
-                                            Default: integratedtoolkit.scheduler.loadBalancingScheduler
+                                            Default: es.bsc.compss.scheduler.loadBalancingScheduler
                                             .LoadBalancingScheduler
                                             
     --library_path=<path>                   Non-standard directories to search for libraries

@@ -1,18 +1,25 @@
 \section{Tracing}
 \label{sec:tracing}
 
-COMPSs Runtime has a built-in instrumentation system to generate post-execution tracefiles of the applications' execution. The tracefiles contain different events representing the COMPSs master state, the tasks' execution state, and the data transfers (transfers' information is only available when using NIO adaptor), and are useful for both visual and numerical performance analysis and diagnosis. The instrumentation process essentially intercepts and logs different events, so it adds overhead to the execution time of the application.
+COMPSs Runtime has a built-in instrumentation system to generate post-execution tracefiles of the applications' execution. The tracefiles
+contain different events representing the COMPSs master state, the tasks' execution state, and the data transfers (transfers' information
+is only available when using NIO adaptor), and are useful for both visual and numerical performance analysis and diagnosis. The 
+instrumentation process essentially intercepts and logs different events, so it adds overhead to the execution time of the application.
 
 
-The tracing system uses Extrae to generate tracefiles of the execution that, in turn, can be visualized with Paraver. Both tools are developed and maintained by the Performance Tools team of the BSC and are available on its web page 
+The tracing system uses Extrae to generate tracefiles of the execution that, in turn, can be visualized with Paraver. Both tools are
+developed and maintained by the Performance Tools team of the BSC and are available on its web page 
 \url{http://www.bsc.es/computer-sciences/performance-tools}. 
 
 
-For each worker node and the master, Extrae keeps track of the events in an intermediate format file (with \textit{.mpit} extension). At the end of the execution, all intermediate files are gathered and merged with Extrae's \textit{mpi2prv} command in order to create the final tracefile, a Paraver format file (.prv). See the visualization section \ref{sec:Visualization} of this manual for further information about the Paraver tool.
+For each worker node and the master, Extrae keeps track of the events in an intermediate format file (with \textit{.mpit} extension). At the
+end of the execution, all intermediate files are gathered and merged with Extrae's \textit{mpi2prv} command in order to create the final
+tracefile, a Paraver format file (.prv). See the visualization Section \ref{sec:Visualization} of this manual for further information about
+the Paraver tool.
 
 
-When instrumentation is activated, Extrae outputs several messages corresponding to the tracing initialization, intermediate files' creation, and
-the merging process. 
+When instrumentation is activated, Extrae outputs several messages corresponding to the tracing initialization, intermediate files' creation,
+and the merging process. 
 
 
 At present time, COMPSs tracing features two execution modes:
@@ -29,8 +36,9 @@ Next sections describe the information provided by each mode and how to use them
 
 \subsection{Basic Mode}
 
-This mode is aimed at COMPSs' apps users and developers. It instruments computing threads and some management resources providing information about tasks' executions, 
-data transfers, and hardware counters if PAPI is available (see PAPI counters appendix \ref{sec:papi} for more info). 
+This mode is aimed at COMPSs' apps users and developers. It instruments computing threads and some management resources providing 
+information about tasks' executions, data transfers, and hardware counters if PAPI is available (see PAPI counters Appendix~\ref{sec:papi} 
+for more info). 
 
 \subsubsection{Usage}
 
@@ -61,7 +69,8 @@ runcompss \
      kmeans.KMeans
 \end{lstlisting}
 
-When tracing is activated, Extrae generates additional output to help the user ensure that instrumentation is turned on and working without issues. On basic mode this is the output users should see when tracing is working correctly:
+When tracing is activated, Extrae generates additional output to help the user ensure that instrumentation is turned on and working 
+without issues. On basic mode this is the output users should see when tracing is working correctly:
 
 \begin{lstlisting}[language=bash]
 *** RUNNING JAVA APPLICATION KMEANS
@@ -77,7 +86,7 @@ Extrae: PAPI domain set to USER for HWC set 1
 Extrae: HWC set 1 contains following counters < PAPI_TOT_INS (0x80000032) PAPI_TOT_CYC (0x8000003b) PAPI_LD_INS (0x80000035) PAPI_SR_INS (0x80000036) > - changing every 500000000 nanoseconds
 Extrae: PAPI domain set to USER for HWC set 2
 Extrae: HWC set 2 contains following counters < PAPI_TOT_INS (0x80000032) PAPI_TOT_CYC (0x8000003b) PAPI_LD_INS (0x80000035) PAPI_SR_INS (0x80000036) PAPI_L2_DCM (0x80000002) > - changing every 500000000 nanoseconds
-WARNING: IT Properties file is null. Setting default values
+WARNING: COMPSs Properties file is null. Setting default values
 [(751)    API]  -  Deploying COMPSs Runtime v<version>
 [(753)    API]  -  Starting COMPSs Runtime v<version>
 [(753)    API]  -  Initializing components

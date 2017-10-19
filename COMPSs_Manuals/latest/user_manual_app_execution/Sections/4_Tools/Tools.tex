@@ -40,7 +40,7 @@ The COMPSs Monitor service can be configured by editing the \texttt{/opt/COMPSs/
 \texttt{monitor/apache-tomcat/conf/compss-monitor.conf}
 file which contains one line per property:
 \begin{itemize}
- \item \texttt{\textbf{IT\_MONITOR}} Default directory to retrieve monitored applications (defaults to the \texttt{.COMPSs} folder inside the \texttt{root} user).
+ \item \texttt{\textbf{COMPSS\_MONITOR}} Default directory to retrieve monitored applications (defaults to the \texttt{.COMPSs} folder inside the \texttt{root} user).
  \item \texttt{\textbf{COMPSs\_MONITOR\_PORT}} Port where to run the compss-monitor web service (defaults to 8080).
  \item \texttt{\textbf{COMPSs\_MONITOR\_TIMEOUT}} Web page timeout between browser and server (defaults to 20s).
 \end{itemize}
@@ -85,7 +85,7 @@ compss@bsc:~/tutorial_apps/java/simple/jar$ runcompss -dm simple.Simple 1
 
 ----------------- Executing simple.Simple --------------------------
 
-WARNING: IT Properties file is null. Setting default values
+WARNING: COMPSs Properties file is null. Setting default values
 [(799)    API]  -  Deploying COMPSs Runtime v<version>
 [(801)    API]  -  Starting COMPSs Runtime v<version>
 [(801)    API]  -  Initializing components
@@ -157,6 +157,7 @@ For specific COMPSs Monitor feature configuration please check our \textit{FAQ} 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Application tracing}
 \label{sec:Tracing}
+
 COMPSs Runtime can generate a post-execution trace of the execution of the application. This trace is useful for
 performance analysis and diagnosis.
 
@@ -181,7 +182,7 @@ provide an example of the command execution with the basic tracing option enable
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ runcompss -t kmeans.Kmeans
 *** RUNNING JAVA APPLICATION KMEANS
-Resolved: /path/to/jar/kmeans.jar:
+[  INFO] Relative Classpath resolved: /path/to/jar/kmeans.jar
 
 ----------------- Executing kmeans.Kmeans --------------------------
 
@@ -200,7 +201,7 @@ Extrae: Intermediate traces will be stored in /user/folder
 Extrae: Tracing mode is set to: Detail.
 Extrae: Successfully initiated with 1 tasks and 1 threads
 
-WARNING: IT Properties file is null. Setting default values
+WARNING: COMPSs Properties file is null. Setting default values
 [(751)    API]  -  Deploying COMPSs Runtime v<version>
 [(753)    API]  -  Starting COMPSs Runtime v<version>
 [(753)    API]  -  Initializing components
