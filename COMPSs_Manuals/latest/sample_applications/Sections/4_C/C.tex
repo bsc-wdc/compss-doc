@@ -59,11 +59,11 @@ Next we also provide the invocation of the task from the main code and the incre
 
       // Execute increment
       increment(&fileName);
-      compss_wait_on(fileName);
-
+      
       // Read new value
       string finalValue;
-      ifstream fis (fileName);
+      ifstream fis;
+      compss_ifstream(fileName, fis);
       if (fis.is_open()) {
 	  if (getline(fis, finalValue)) {
 	      cout << "Final counter value is " << finalValue << endl;
@@ -126,7 +126,7 @@ Finally, to compile and execute this application users must run the following co
 
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd ~/tutorial_apps/c/simple/
-compss@bsc:~/tutorial_apps/c/simple$ buildapp simple
+compss@bsc:~/tutorial_apps/c/simple$ compss_build_app simple
 compss@bsc:~/tutorial_apps/c/simple$ runcompss --lang=c --project=./xml/project.xml --resources=./xml/resources.xml ~/tutorial_apps/c/simple/master/simple 1
 [  INFO] Using default execution type: compss
 
@@ -202,11 +202,6 @@ Next we provide the main code of this application. The code inside the \textit{i
 	  increment(&fileName3);
       }
 
-      // Sync master
-      compss_wait_on(fileName1);
-      compss_wait_on(fileName2);
-      compss_wait_on(fileName3);
-
       // Print final state
       cout << "Final counter values: " << endl;
       printCounterValues(fileName1, fileName2, fileName3);
@@ -232,7 +227,7 @@ of the execution.
 
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ cd ~/tutorial_apps/c/increment/
-compss@bsc:~/tutorial_apps/c/increment$ buildapp increment
+compss@bsc:~/tutorial_apps/c/increment$ compss_build_app increment
 compss@bsc:~/tutorial_apps/c/increment$ runcompss --lang=c -g --project=./xml/project.xml --resources=./xml/resources.xml ~/tutorial_apps/c/increment/master/increment 10 1 2 3
 [  INFO] Using default execution type: compss
 
