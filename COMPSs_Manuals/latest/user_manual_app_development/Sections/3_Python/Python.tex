@@ -543,9 +543,9 @@ there exist four API functions that can to be invoked:
        returned object.       
        It is possible to wait on a list of objects. In this particular case, it will synchronize all future objects 
        contained in the list.
- \item {\it barrier()}: performs a explicit synchronization, but does not return any object. The use of {\it barrier()}
-       forces to wait for all tasks that have been submitted before the {\it barrier()} is called.
-       When all tasks submitted before the {\it barrier()} have finished, the execution continues.
+ \item {\it compss\_barrier()}: performs a explicit synchronization, but does not return any object. The use of {\it compss\_barrier()}
+       forces to wait for all tasks that have been submitted before the {\it compss\_barrier()} is called.
+       When all tasks submitted before the {\it compss\_barrier()} have finished, the execution continues.
 \end{itemize}
 
 To illustrate the use of the aforementioned API functions, the following example first invokes a task 
@@ -562,7 +562,7 @@ not continue until the ten {\it func} tasks have finished.
 from pycompss.api.api import compss_open
 from pycompss.api.api import compss_delete_file
 from pycompss.api.api import compss_wait_on
-from pycompss.api.api import barrier
+from pycompss.api.api import compss_barrier
 
 my_file = 'file.txt'
 func(my_file)
@@ -581,7 +581,7 @@ my_obj = %*{\bf compss\_wait\_on}*)(my_obj)
 
 for i in range(10):
     func(str(i) + my_file)
-barrier()
+compss_barrier()
 ...
 \end{lstlisting}
 
@@ -615,7 +615,7 @@ Table \ref{tab:python_api_functions} summarizes the API functions to be used in 
     \hline
     compss\_wait\_on(obj, to\_write = True) & Synchronizes for the last version of an object (or a list of objects) and returns it. \\
     \hline
-    barrier() & Wait for all tasks submitted before the barrier. \\
+    compss\_barrier() & Wait for all tasks submitted before the barrier. \\
     \hline
     \caption{COMPSs Python API functions.}
     \label{tab:python_api_functions}
