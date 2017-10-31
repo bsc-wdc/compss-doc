@@ -5,6 +5,7 @@ COMPSs features a binding for Python 2.X applications. The next subsections expl
 application for COMPSs and a brief overview on how to execute it.
 
 \subsection{Programming Model}
+\label{subsec:Python_programming_model}
 
 \subsubsection{Task Selection}
 
@@ -543,9 +544,9 @@ there exist four API functions that can to be invoked:
        returned object.       
        It is possible to wait on a list of objects. In this particular case, it will synchronize all future objects 
        contained in the list.
- \item {\it barrier()}: performs a explicit synchronization, but does not return any object. The use of {\it barrier()}
-       forces to wait for all tasks that have been submitted before the {\it barrier()} is called.
-       When all tasks submitted before the {\it barrier()} have finished, the execution continues.
+ \item {\it compss\_barrier()}: performs a explicit synchronization, but does not return any object. The use of {\it compss\_barrier()}
+       forces to wait for all tasks that have been submitted before the {\it compss\_barrier()} is called.
+       When all tasks submitted before the {\it compss\_barrier()} have finished, the execution continues.
 \end{itemize}
 
 To illustrate the use of the aforementioned API functions, the following example first invokes a task 
@@ -562,7 +563,7 @@ not continue until the ten {\it func} tasks have finished.
 from pycompss.api.api import compss_open
 from pycompss.api.api import compss_delete_file
 from pycompss.api.api import compss_wait_on
-from pycompss.api.api import barrier
+from pycompss.api.api import compss_barrier
 
 my_file = 'file.txt'
 func(my_file)
@@ -581,7 +582,7 @@ my_obj = %*{\bf compss\_wait\_on}*)(my_obj)
 
 for i in range(10):
     func(str(i) + my_file)
-barrier()
+compss_barrier()
 ...
 \end{lstlisting}
 
@@ -615,7 +616,7 @@ Table \ref{tab:python_api_functions} summarizes the API functions to be used in 
     \hline
     compss\_wait\_on(obj, to\_write = True) & Synchronizes for the last version of an object (or a list of objects) and returns it. \\
     \hline
-    barrier() & Wait for all tasks submitted before the barrier. \\
+    compss\_barrier() & Wait for all tasks submitted before the barrier. \\
     \hline
     \caption{COMPSs Python API functions.}
     \label{tab:python_api_functions}
@@ -758,4 +759,150 @@ compss@bsc:~$ runcompss \
 \end{lstlisting}
 
 For full description about the options available for the runcompss command please check the \textit{COMPSs User Manual: Application
-Execution} available at \url{http://compss.bsc.es} . 
+Execution} available at \url{http://compss.bsc.es}. 
+
+\subsection{Development with Jupyter notebook}
+
+PyCOMPSs can also be used within Jupyter notebooks. 
+This feature allows users to develop and run their PyCOMPSs applications in a Jupyter notebook, where it is possible to modify the code during the execution and experience an interactive behaviour.
+
+\subsubsection{Environment}
+The following libraries must be present in the appropiate environment variables in order to enable PyCOMPSs within Jupyter notebook:
+
+PYTHONPATH: The path where PyCOMPSs is installed (e.g. \textit{/opt/COMPSs/Bindings/python/})
+
+LD\_LIBRARY\_PATH: The path where the {\it libbindings-commons.so} library is located (e.g. \textit{/opt/COMPSs/Bindings/bindings-common/lib/}) and the path where the {\it libjvm.so} library is located (e.g. \textit{/usr/lib/jvm/java-8-openjdk/jre/lib/amd64/server/}).
+
+\subsubsection{API calls}
+
+In this case, the user is responsible of starting and stopping the COMPSs runtime.
+To this end, PyCOMPSs provides a module that provides two API calls: one for starting the COMPSs runtime, and another for stopping it.
+
+This module can be imported from the {\it pycompss} library:
+
+\begin{lstlisting}[language=python]
+import pycompss.interactive import ipycompss
+\end{lstlisting}
+
+And contains two main functions: {\it start} and {\it stop}. These functions can then be invoked as follows for the COMPSs runtime deployment with default parameters:
+
+\begin{lstlisting}[language=python]
+# Previous user code
+
+ipycompss.start()
+
+# User code that can benefit from PyCOMPSs
+
+ipycompss.stop()
+
+# Subsequent code
+\end{lstlisting}
+
+Between the {\it start} and {\it stop} function calls, the user can write its own python code including PyCOMPSs imports, decorators and synchronization calls described in Section \ref{subsec:Python_programming_model}.
+The code can be splitted into multiple cells.
+
+The {\it start} and {\it stop} functions accept parameters in order to customize the COMPSs runtime (such as the flags that can be selected with the ``runcompss'' command).
+Table \ref{tab:python_api_jupyter_start} summarizes the accepted parameters of the {\it start} function.
+Table \ref{tab:python_api_jupyter_stop} summarizes the accepted parameters of the {\it stop} function.
+
+\bgroup
+  \def\arraystretch{1.5}%
+  \begin{longtable}{| p{0.15\textwidth} | p{0.15\textwidth} | p{0.65\textwidth} |}
+    \hline
+    \multicolumn{1}{|c|}{{\bf Parameter}} & \multicolumn{1}{c|}{{\bf Parameter}} & \multicolumn{1}{c|}{\multirow{2}{*}{{\bf Description}}}\\
+    \multicolumn{1}{|c|}{{\bf Name}}      & \multicolumn{1}{c|}{{\bf Type}} & \\
+    \hline
+    log\_level     & String  & \footnotesize{PyCOMPSs log level. Options: ``off'', ``info'' and ``debug''.\newline (Default: ``off'')} \\
+    \hline
+    o\_c           & Boolean & \footnotesize{Object conversion to string when possible (Default: False)} \\
+    \hline
+    debug          & Boolean & \footnotesize{COMPSs runtime debug (Default: False)} \\
+    \hline
+    graph          & Boolean & \footnotesize{Task dependency graph generation (Default: False)} \\
+    \hline
+    trace          & Boolean & \footnotesize{Paraver trace generation (Default: False)} \\
+    \hline
+    monitor        & Integer & \footnotesize{Monitor refresh rate (Default: None - Monitoring disabled)} \\ 
+    \hline
+    project\_xml   & String  & \footnotesize{Path to the project XML file (Default: \$COMPSS/Runtime/configuration/xml/projects/default\_project.xml)} \\ 
+    \hline
+    resources\_xml & String  & \footnotesize{Path to the resources XML file (Default: \$COMPSs/Runtime/configuration/xml/resources/default\_resources.xml)} \\ 
+    \hline
+    summary        & Boolean & \footnotesize{Show summary at the end of the execution (Default: False)} \\ 
+    \hline
+    storageConf    & String  & \footnotesize{Storage configuration file path (Default: None)} \\ 
+    \hline
+    taskCount      & Integer & \footnotesize{Number of task definitions (Default: 50)} \\ 
+    \hline
+    appName        & String  & \footnotesize{Application name (Default: ``Interactive'')} \\ 
+    \hline
+    uuid           & String  & \footnotesize{Application uuid (Default: None - Will be random)} \\ 
+    \hline
+    baseLogDir     & String  & \footnotesize{Base directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location) (Default: User homeBase log path)} \\ 
+    \hline
+    specificLogDir & String  & \footnotesize{Use a specific directory to store COMPSs log files (the folder MUST exist and no sandbox is created) (Default: Disabled)} \\
+    \hline
+    extraeCfg      & String  & \footnotesize{Sets a custom extrae config file. Must be in a shared disk between all COMPSs workers (Default: None)} \\ 
+    \hline
+    comm           & String  & \footnotesize{Class that implements the adaptor for communications. Supported adaptors: ``es.bsc.compss.nio.master.NIOAdaptor'' and ``es.bsc.compss.gat.master.GATAdaptor'' (Default: ``es.bsc.compss.nio.master.NIOAdaptor'')} \\ 
+    \hline
+    conn           & String  & \footnotesize{Class that implements the runtime connector for the cloud. Supported connectors: ``es.bsc.compss.connectors.DefaultSSHConnector'' and ``es.bsc.compss.connectors.DefaultNoSSHConnector'' (Default: es.bsc.compss.connectors.DefaultSSHConnector)} \\ 
+    \hline
+    MasterName     & String  & \footnotesize{Hostname of the node to run the COMPSs master (Default: ``'')}\\ 
+    \hline
+    MasterPort     & String  & \footnotesize{Port to run the COMPSs master communications. Only for NIO adaptor (Default: ``[43000,44000]'')} \\ 
+    \hline
+    scheduler      & String  & \footnotesize{Class that implements the Scheduler for COMPSs. Supported schedulers:\newline ``es.bsc.compss.scheduler.fullGraphScheduler.FullGraphScheduler'', ``es.bsc.compss.scheduler.fifoScheduler.FIFOScheduler'' and ``es.bsc.compss.scheduler.resourceEmptyScheduler.\newline ResourceEmptyScheduler''\newline (Default: ``es.bsc.compss.scheduler.loadBalancingScheduler.\newline LoadBalancingScheduler'')} \\ 
+    \hline
+    jvmWorkers     & String  & \footnotesize{Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Default: ``-Xms1024m,-Xmx1024m,-Xmn400m'')} \\ 
+    \hline
+    cpuAffinity    & String  & \footnotesize{Sets the CPU affinity for the workers. Supported options: ``disabled'', ``automatic'', user defined map of the form ``0-8/9,10,11/12-14,15,16'' (Default: ``automatic'')} \\ 
+    \hline
+    gpuAffinity    & String  & \footnotesize{Sets the GPU affinity for the workers. Supported options: ``disabled'', ``automatic'', user defined map of the form ``0-8/9,10,11/12-14,15,16'' (Default: ``automatic'')} \\ 
+    \hline
+    profileInput   & String  & \footnotesize{Path to the file which stores the input application profile (Default: ``'')} \\ 
+    \hline
+    profileOutput  & String  & \footnotesize{Path to the file to store the application profile at the end of the execution (Default: ``'')} \\ 
+    \hline
+    verbose        & Boolean & \footnotesize{Verbose mode (Default: False)} \\ 
+    \hline
+    \caption{PyCOMPSs start function for Jupyter notebook}
+    \label{tab:python_api_jupyter_start}
+  \end{longtable}
+\egroup
+
+\bgroup
+  \def\arraystretch{1.5}%
+  \begin{longtable}{| p{0.15\textwidth} | p{0.15\textwidth} | p{0.65\textwidth} |}
+    \hline
+    \multicolumn{1}{|c|}{{\bf Parameter}} & \multicolumn{1}{c|}{{\bf Parameter}} & \multicolumn{1}{c|}{\multirow{2}{*}{{\bf Description}}}\\
+    \multicolumn{1}{|c|}{{\bf Name}}      & \multicolumn{1}{c|}{{\bf Type}} & \\
+    \hline
+    sync           & Boolean & \footnotesize{Synchronize the objects left on the user scope. (Default: False)} \\
+    \hline
+    \caption{PyCOMPSs stop function for Jupyter notebook}
+    \label{tab:python_api_jupyter_stop}
+  \end{longtable}
+\egroup
+
+The following code snippet shows how to start a COMPSs runtime with tracing and graph generation enabled (with {\it trace} and {\it graph} parameters), as well as enabling the monitor with a refresh rate of 2 seconds (with the {\it monitor} parameter).
+It also synchronizes all remaining objects in the scope with the {\it sync} parameter when invoking the {\it stop} function.
+
+\begin{lstlisting}[language=python]
+# Previous user code
+
+ipycompss.start(graph=True, trace=True, monitor=2000)
+
+# User code that can benefit from PyCOMPSs
+
+ipycompss.stop(sync=True)
+
+# Subsequent code
+\end{lstlisting}
+
+\subsubsection{Application execution}
+
+The application can be executed as a common Jupyter notebook by steps or the whole application.
+
+Please, note that once the COMPSs runtime has been stopped it is necessary to restart the python kernel in Jupyter before starting another COMPSs runtime.
+To this end, click on ``Kernel'' and ``Restart'' (or ``Restart \& Clear Output'' or ``Restart \& Run All'', depending on the need).
