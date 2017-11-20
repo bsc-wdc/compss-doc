@@ -94,8 +94,8 @@ def func(f, i):
      ...
 \end{lstlisting}
 
-If the function or method returns a value, the programmer must specify the type of that value using 
-the {\it returns} argument of the {\it $@$task} decorator:
+If the function or method returns a value, the programmer must use the {\it returns}  argument within
+the {\it $@$task} decorator. In this argument, the programmer can specify the type of that value:
 
 \begin{lstlisting}[language=python]
 @task(%*{\bf returns }*) = int)
@@ -103,7 +103,7 @@ def ret_func():
      return 1
 \end{lstlisting}
 
-Moreover, if the function or method returns more than one value, the programmer must specify how many 
+Moreover, if the function or method returns more than one value, the programmer can specify how many 
 and their type in the {\it returns} argument. The next next code snippet shows how to specify that two 
 values (an integer and a list) are returned:
 
@@ -112,6 +112,24 @@ values (an integer and a list) are returned:
 def ret_func():
      return 1, [2, 3]
 \end{lstlisting}
+
+Alternatively, the user can specify the number of return statements as an integer value. This way of
+specifying the amount of return eases the {\it returns} definition since the user does not need to
+specify explicitly the type of the return arguments. However, it must be considered that the type 
+of the object returned when the task is invoked will be a future object.
+This consideration may lead to an error if the user expects to invoke a task defined within an object
+returned by a previous task. In this scenario, the solution is to specify explicitly the return type.
+
+\begin{lstlisting}[language=python]
+@task(%*{\bf returns }*) = 1)
+def ret_func():
+     return "mystring"
+
+@task(%*{\bf returns }*) = 2)
+def ret_func():
+     return 1, [2, 3]
+\end{lstlisting}
+
 
 The use of {\it *args} and {\it **kwargs} as function parameters is also supported:
 
