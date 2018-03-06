@@ -21,6 +21,7 @@ Redis needs an additional script to form a cluster from various Redis instances.
 \begin{enumerate}
 \item Move it to a convenient folder. By \textit{convenient folder} we mean a folder that is in your \verb|PATH| environment variable.
 \item Make sure that you have Ruby and \verb|gem| installed. Type \verb|gem install redis|.
+\item If you want to use COMPSs-Redis with Python you must also install the PyPI packages \verb|redis| and \verb|redis-py-cluster|. It is also advisable to have the PyPI package \verb|hiredis|, which is a library that makes the interactions with the storage to go faster.
 \end{enumerate}
 
 \section{COMPSs-Redis Bundle}
@@ -28,7 +29,7 @@ Redis needs an additional script to form a cluster from various Redis instances.
 \begin{enumerate}
 \item A java JAR file named \verb|compss-redisPSCO.jar|. This JAR contains the implementation of a Storage Object that interacts with a given Redis backend. We will discuss the details later.
 \item A folder named \verb|scripts|. This folder contains a bunch of scripts that allows a COMPSs-Redis app to create a custom, in-place cluster  for the application.
-%\item A folder named \verb|python| that contains the Python equivalent to \verb|compss-redisPSCO.jar|
+\item A folder named \verb|python| that contains the Python equivalent to \\ \verb|compss-redisPSCO.jar|
 \end{enumerate}
 This package can be obtained as follows:
 \begin{enumerate}
@@ -37,7 +38,8 @@ This package can be obtained as follows:
 \end{enumerate}
 
 \section{Writing COMPSs-Redis applications}
-This sections describes how to develop applications with the Redis-COMPSs storage. The application project should have the dependency induced by \\ \verb|compss-redisPSCO.jar| satisfied. That is, it should be included in you \verb|pom.xml| if you are using Maven, or it should be listed in the dependencies section of the used development tool.\\
+\subsection{Java}
+This section describes how to develop Java applications with the Redis-COMPSs storage. The application project should have the dependency induced by \\ \verb|compss-redisPSCO.jar| satisfied. That is, it should be included in you \verb|pom.xml| if you are using Maven, or it should be listed in the dependencies section of the used development tool.\\
 \\
 A COMPSs-Redis application is almost identical to a regular COMPSs application except for the presence of Storage Objects. A Storage Object is an object that it is capable to interact with the storage backend. If a custom object extends the Redis Storage Object and implements the Serializable interface then it will be ready to be stored and retrieved from a Redis database. An example signature could be the following:
 \newpage
@@ -98,12 +100,58 @@ import java.io.Serializable;
   }
   \end{lstlisting}
   If the last three statements were not present, the changes would never be reflected on the \verb|RedisPoint a| object.
+  \subsection{Python}
+  COMPSs-Redis is also available for Python. As happens with Java, we first need to define a custom Storage Object. Let's suppose that we want to write an application that multiplies two matrices $A$, and $B$ by blocks. We can define a \verb|Block| object that lets us store and write matrix blocks in our Redis backend:
+  \begin{lstlisting}[language=python]
+  from storage.storage_object import StorageObject
+  import storage.api
+
+  class Block(StorageObject):
+    def __init__(self, block):
+        super(Block, self).__init__()
+        self.block = block
+
+    def get_block(self):
+        return self.block
+
+    def set_block(self, new_block):
+        self.block = new_block
+  \end{lstlisting}
+  Let's suppose that we are multiplying our matrices in the usual blocked way:
+  \begin{lstlisting}[language=python]
+  for i in range(MSIZE):
+    for j in range(MSIZE):
+      for k in range(MSIZE):
+        multiply(A[i][k], B[k][j], C[i][j])
+  \end{lstlisting}
+  Where $A$ and $B$ are \verb|Block| objects and $C$ is a regular Python object (e.g: a Numpy matrix), then we can define \verb|multiply| as a task as follows:
+  \begin{lstlisting}[language=python]
+  @task(c = INOUT)
+  def multiply(a_object, b_object, c, MKLProc):
+      c += a_object.block * b_object.block
+  \end{lstlisting}
+  Let's also suppose that we are interested to store the final result in our storage. A possible solution is the following:
+  \begin{lstlisting}[language=python]
+  for i in range(MSIZE):
+      for j in range(MSIZE):
+          persist_result(C[i][j])
+  \end{lstlisting}
+  Where \verb|persist_result| can be defined as a task as follows:
+  \begin{lstlisting}[language=python]
+  @task()
+  def persist_result(obj):
+      to_persist = Block(obj)
+      to_persist.make_persistent()
+  \end{lstlisting}
+  This way is preferred for two big reasons: we avoid to bring the resulting matrix to the master node, and we can exploit the data locality by executing the task in the node where last version of \verb|obj| is located.
+  
   \section{Launching COMPSs-Redis and using an existing Redis Cluster}
   If there is already a running Redis Cluster on the node/s where the COMPSs application will run then only the following steps must be followed:
   \begin{enumerate}
   \item Create a \verb|storage_conf.cfg| file that lists, one per line, the nodes where the storage is present. Only hostnames or IPs are needed, ports are not necessary here.
   \item Add the flag \verb|--classpath=${path_to_COMPSs-redisPSCO.jar}| to the \verb|runcompss| command that launches the application.
   \item Add the flag \verb|--storage_conf=${path_to_your_storage_conf_dot_cfg_file}| to the \verb|runcompss| command that launches the application.
+  \item If you are running a python app, also add the \\ \verb|--pythonpath=${app_path}:${path_to_the_bundle_folder}/python| flag to the \verb|runcompss| command that launches the application.
   \end{enumerate}
   As usual, the \verb|project.xml| and \verb|resources.xml| files must be correctly set. It must be noted that there can be Redis nodes that are not COMPSs nodes (although this is a highly unrecommended practice).
   As a requirement, \textbf{there must be at least one Redis instance on each COMPSs node listening to the official Redis port 6379}\footnote{https://en.wikipedia.org/wiki/List\_of\_TCP\_and\_UDP\_port\_numbers}. This is required because nodes without running Redis instances would cause a great amount of transfers (they will \textbf{always} need data that must be transferred from another node). Also, any locality policy will likely cause this node to have a very low workload, rendering it almost useless.
@@ -125,6 +173,7 @@ import java.io.Serializable;
   \item \verb|--storage-home=${path_to_the_bundle_folder}| This must point to the root of the COMPSs-Redis bundle.
   \item \verb|--storage-props=${path_to_the_storage_props_file}| This must point to the \verb|storage_props.cfg| mentioned above.
   \item \verb|--classpath=${path_to_COMPSs-redisPSCO.jar}| As in the previous section, the JAR with the storage API must be specified.
+  \item If you are running a Python application, also add the \\ \verb|--pythonpath=${app_path}:${path_to_the_bundle_folder}| flag
   \end{enumerate}
   As a requirement, the supercomputer must not have any kind of zombie-killer mechanisms. That is, the system should not kill daemonized processes running on the given computing nodes.
   \end{document}
