@@ -136,11 +136,11 @@ Users can emit custom events inside their python \textbf{tasks}. Thanks to the f
 users can emit events inside their own tasks using the available extrae instrumentation object because it is already imported.
 ~ \newline
 
-To emit an event just use the call \verb|pyextrae.event(type, id)| or \verb|pyextrae.eventand| \verb|counters (type, id)|
+To emit an event first \verb|import pyextrae| just use the call \verb|pyextrae.event(type, id)| or \verb|pyextrae.eventand| \verb|counters (type, id)|
 if you also want to emit PAPI hardware counters. It is recommended to use a type number higher than 8000050 in order 
 to avoid type's conflicts. This events will appear automatically on the generated trace. In order to visualize them, take, 
 for example, \verb|compss_runtime.cfg| and go to \verb|Window Properties -> Filter -> Events| \verb|-> Event Type| and change the 
-value labeled \textit{Types} for your custom events type.
+value labeled \textit{Types} for your custom events type. If you want to name the events, you will need to manually add them to the .pcf file. Paraver uses by default the .pcf with the same name as the tracefile so if you add them to one, you can reuse it just by changing its name to the tracefile.
 ~ \newline
 
 More information and examples of common python usage can be found under the default directory 
