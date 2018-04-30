@@ -1,5 +1,5 @@
 # Ignore kile project files
-.kilepr
+*.kilepr
 
 # ========== Latex ignores =================
 *.aux
