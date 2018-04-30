@@ -1,0 +1,12 @@
+# Ignore kile project files
+.kilepr
+
+# ========== Latex ignores =================
+*.aux
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.toc
+*.out
