@@ -76,38 +76,44 @@ Usage: runcompss [options] application_name application_arguments
                                             Default: false
     --log_level=<level>, --debug, -d        Set the debug level: off | info | debug
                                             Default: off
-                                                                                                                                                                                        
-  Advanced options:                                                                                                                                                                     
+                                            
+  Advanced options:
     --extrae_config_file=<path>             Sets a custom extrae config file. Must be in a shared disk
-                                            between all COMPSs workers.                                                      
-                                            Default: null                                                                                                                               
-    --comm=<path>                           Class that implements the adaptor for communications                                                                                        
-                                            Supported adaptors: es.bsc.compss.nio.master.NIOAdaptor 
-                                                                | es.bsc.compss.gat.master.GATAdaptor                                       
-                                            Default: es.bsc.compss.nio.master.NIOAdaptor                                                                                            
-    --conn=<path>                           Path of the connector jar/s that should be loaded. 
-                                            You can use multiple by splitting with ':'                                               
-                                            Supported connectors: compss-{CONN}-connector.jar                                                                                           
-                                               (where {CONN} can be: "jclouds", "amazon", "docker", 
-                                               "one", "rocci", "vmm", etc.)                                                        
-    --scheduler=<path>                      Class that implements the Scheduler for COMPSs                                                                                              
+                                            between all COMPSs workers.
+                                            Default: null
+    --comm=<ClassName>                      Class that implements the adaptor for communications
+                                            Supported adaptors: es.bsc.compss.nio.master.NIOAdaptor
+                                                              | es.bsc.compss.gat.master.GATAdaptor
+                                            Default: es.bsc.compss.nio.master.NIOAdaptor
+    --conn=<className>                      Class that implements the runtime connector for the cloud
+                                            Supported connectors: 
+                                                        es.bsc.compss.connectors.DefaultSSHConnector
+                                                      | es.bsc.compss.connectors.DefaultNoSSHConnector
+                                            Default: es.bsc.compss.connectors.DefaultSSHConnector
+    --scheduler=<className>                 Class that implements the Scheduler for COMPSs
                                             Supported schedulers: 
-                                               es.bsc.compss.components.impl.TaskScheduler 
-                                               | es.bsc.compss.scheduler.readyscheduler.ReadyScheduler           
-                                            Default: 
-                                               es.bsc.compss.scheduler.readyscheduler.ReadyScheduler                                                                          
-    --library_path=<path>                   Non-standard directories to search for libraries (e.g. Java 
-                                            JVM library, Python library, C binding library)                                 
-                                            Default: Working Directory                                                                                                                  
-    --classpath=<path>                      Path for the application classes / modules                                                                                                  
-                                            Default: Working Directory                                                                                                                  
-    --appdir=<path>                         Path for the application class folder.                                                                                                      
-                                            Default: /home/cramonco
+                                              es.bsc.compss.scheduler.fullGraphScheduler.FullGraphScheduler
+                                            | es.bsc.compss.scheduler.fifoScheduler.FIFOScheduler
+                                            | es.bsc.compss.scheduler.resourceEmptyScheduler.
+                                              ResourceEmptyScheduler
+                                            Default: es.bsc.compss.scheduler.loadBalancingScheduler.
+                                                     LoadBalancingScheduler
+    --scheduler_config_file=<path>          Path to the file which contains the scheduler configuration.
+                                            Default: Empty
+    --library_path=<path>                   Non-standard directories to search for libraries (e.g. Java JVM
+                                            library, Python library, C binding library)
+                                            Default: Working Directory
+    --classpath=<path>                      Path for the application classes / modules
+                                            Default: Working Directory
+    --appdir=<path>                         Path for the application class folder.
+                                            Default: /home/user/
+    --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
+                                            Default: /home/user/
     --base_log_dir=<path>                   Base directory to store COMPSs log files (a .COMPSs/ folder
                                             will be created inside this location)
                                             Default: User home
-    --specific_log_dir=<path>               Use a specific directory to store COMPSs log files (the 
-                                            folder MUST exist and no sandbox is created)
+    --specific_log_dir=<path>               Use a specific directory to store COMPSs log files (the folder
+                                            MUST exist and no sandbox is created)
                                             Warning: Overwrites --base_log_dir option
                                             Default: Disabled
     --uuid=<int>                            Preset an application UUID
@@ -117,20 +123,37 @@ Usage: runcompss [options] application_name application_arguments
     --master_port=<int>                     Port to run the COMPSs master communications.
                                             Only for NIO adaptor
                                             Default: [43000,44000]
-    --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed 
+    --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed
                                             by "," and without blank spaces (Notice the quotes)
                                             Default: 
-    --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed 
+    --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed
                                             by "," and without blank spaces (Notice the quotes)
                                             Default: -Xms1024m,-Xmx1024m,-Xmn400m
+    --cpu_affinity="<string>"               Sets the CPU affinity for the workers
+                                            Supported options: disabled, automatic, user defined map of
+                                            the form "0-8/9,10,11/12-14,15,16"
+                                            Default: automatic
+    --gpu_affinity="<string>"               Sets the GPU affinity for the workers
+                                            Supported options: disabled, automatic, user defined map of
+                                            the form "0-8/9,10,11/12-14,15,16"
+                                            Default: automatic
     --task_count=<int>                      Only for C/Python Bindings. Maximum number of different
-                                            functions/methods, invoked from the application, that 
-                                            have been selected as tasks
+                                            functions/methods, invoked from the application, that have
+                                            been selected as tasks
                                             Default: 50
-    --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
-                                            Default: /home/cramonco
-    --PyObject_serialize=<bool>             Only for Python Binding. Enable the object serialization
-                                            to string when possible (true/false).
+    --input_profile=<path>                  Path to the file which stores the input application profile
+                                            Default: Empty
+    --output_profile=<path>                 Path to the file to store the application profile at the end of
+                                            the execution
+                                            Default: Empty 
+    --PyObject_serialize=<bool>             Only for Python Binding. Enable the object serialization to
+                                            string when possible (true/false).
+                                            Default: false
+    --persistent_worker_c=<bool>            Only for C Binding. Enable the persistent worker in c
+                                            (true/false).
+                                            Default: false
+    --enable_external_adaptation=<bool>     Enable external adaptation. This option will disable the
+                                            Resource Optimizer.
                                             Default: false
 
 * Application name:
@@ -223,6 +246,38 @@ Final counter value is 2
 
 ------------------------------------------------------------
 \end{lstlisting}
+
+Alternatively, it is possible to execute the a COMPSs Python application using \verb|pycompss| as module:
+
+\begin{lstlisting}[language=bash]
+$ python -m pycompss <runcompss_flags> <application> <application_parameters>
+\end{lstlisting}
+
+Consequently, the previous example could also be run as follows:
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ cd tutorial_apps/python/simple/
+compss@bsc:~/tutorial_apps/python/simple$ python -m pycompss simple.py <initial_number>
+\end{lstlisting}
+
+If the \verb|-m pycompss| is not set, the application will be run ignoring all PyCOMPSs imports, decorators and API calls, that is, sequentially.
+
+In order to run a COMPSs Python application with a different interpreter, the \textit{runcompss} command provides a specific flag:
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ cd tutorial_apps/python/simple/
+compss@bsc:~/tutorial_apps/python/simple$ runcompss --python_interpreter=python3 ./simple.py <initial_number>
+\end{lstlisting}
+
+However, when using the \textit{pycompss} module, it is inferred from the python used in the call:
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ cd tutorial_apps/python/simple/
+compss@bsc:~/tutorial_apps/python/simple$ python3 -m pycompss simple.py <initial_number>
+\end{lstlisting}
+
+Finally, both \textit{runcompss} and \textit{pycompss} module provide a particular flag for virtual environment propagation (\verb|--python_propagate_virtual_environment=<bool>|).
+This, flag is intended to activate the current virtual environment in the worker nodes when set to true.
 
 
 \subsubsection{Running C/C\texttt{++} applications}

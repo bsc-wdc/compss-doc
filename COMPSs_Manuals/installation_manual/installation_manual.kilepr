@@ -109,13 +109,13 @@ Mode=LaTeX
 
 [item:COMPSs_Installation_Manual.tex]
 archive=true
-column=0
+column=9
 encoding=UTF-8
 highlight=LaTeX
-line=36
+line=105
 mode=LaTeX
-open=false
-order=1
+open=true
+order=0
 
 [item:Sections/01_Introduction/Introduction.tex]
 archive=true
@@ -169,13 +169,13 @@ order=1
 
 [item:Sections/06_Pip/Pip.tex]
 archive=true
-column=16
+column=124
 encoding=UTF-8
 highlight=LaTeX
-line=3
+line=93
 mode=LaTeX
-open=false
-order=0
+open=true
+order=1
 
 [item:Sections/07_Supercomputers/Supercomputers.tex]
 archive=true
@@ -238,8 +238,8 @@ open=false
 order=-1
 
 [view-settings,view=0,item:COMPSs_Installation_Manual.tex]
-CursorColumn=0
-CursorLine=36
+CursorColumn=9
+CursorLine=105
 JumpList=
 ViMarks=.,36,0,[,36,0,],36,0
 
@@ -274,10 +274,10 @@ JumpList=
 ViMarks=.,13,124,[,13,124,],13,124
 
 [view-settings,view=0,item:Sections/06_Pip/Pip.tex]
-CursorColumn=16
-CursorLine=3
+CursorColumn=124
+CursorLine=93
 JumpList=
-ViMarks=.,3,15,[,3,15,],3,15
+ViMarks=.,93,123,[,93,101,],93,123
 
 [view-settings,view=0,item:Sections/07_Supercomputers/Supercomputers.tex]
 CursorColumn=55
