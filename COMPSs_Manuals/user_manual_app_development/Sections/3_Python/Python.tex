@@ -1,7 +1,7 @@
 \section{Python Binding}
 \label{sec:Python}
 
-COMPSs features a binding for Python 2.X applications. The next subsections explain how to program a Python 
+COMPSs features a binding for Python 2 and 3 applications. The next subsections explain how to program a Python 
 application for COMPSs and a brief overview on how to execute it.
 
 \subsection{Programming Model}
@@ -129,7 +129,6 @@ def ret_func():
 def ret_func():
      return 1, [2, 3]
 \end{lstlisting}
-
 
 The use of {\it *args} and {\it **kwargs} as function parameters is also supported:
 
@@ -339,8 +338,6 @@ This particular case is intended to show all the power of the {\it $@$binary} de
 {\it $@$task} decorator. Please note that although the {\it hide} parameter is used as a prefix for the binary invocation,
 the {\it fileToHide.txt} would also be transfered to the worker (if necessary) since its type is defined as FILE\_IN. 
 This feature enables to build more complex binary invocations.
-
-
 
 \subparagraph{OmpSs decorator}
 \label{subpar:ompss_decorator}
@@ -771,6 +768,15 @@ Java and C/C++ applications. An example of an invocation of the script is:
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ runcompss \
                 --lang=python \
+                --pythonpath=$TEST_DIR \
+                --library_path=/home/user/libdir \
+                $TEST_DIR/test.py arg1 arg2
+\end{lstlisting}
+
+Or alternatively, use the \verb|pycompss| module:
+
+\begin{lstlisting}[language=bash]
+compss@bsc:~$ python -m pycompss \
                 --pythonpath=$TEST_DIR \
                 --library_path=/home/user/libdir \
                 $TEST_DIR/test.py arg1 arg2
