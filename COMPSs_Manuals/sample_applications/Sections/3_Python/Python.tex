@@ -64,7 +64,6 @@ def main_program():
     
 if __name__=='__main__':
     main_program()
-
 \end{lstlisting}
 
 The simple application can be executed by invoking the runcompss command with the \textit{--lang=python} flag. The following lines provide
@@ -98,7 +97,22 @@ purpose of this application is to show parallelism between the three counters.
 Next we provide the main code of this application. The code inside the \textit{increment} task is the same than the previous example. 
 
 \begin{lstlisting}[language=python]
- def main_program():
+from pycompss.api.task import task
+from pycompss.api.parameter import FILE_INOUT
+
+@task(filePath = FILE_INOUT)
+def increment(filePath):
+    # Read value
+    fis = open(filePath, 'r')
+    value = fis.read()
+    fis.close()
+
+    # Write value
+    fos = open(filePath, 'w')
+    fos.write(str(int(value) + 1))
+    fos.close()
+
+def main_program():
     # Check and get parameters
     if len(sys.argv) != 5:
         exit(-1)
@@ -121,6 +135,9 @@ Next we provide the main code of this application. The code inside the \textit{i
     # Write final counters state (sync)
     print "Final counter values:"
     printCounterValues()
+
+if __name__=='__main__':
+    main_program()
 \end{lstlisting}
 
 As shown in the main code, this application has 4 parameters that stand for:
