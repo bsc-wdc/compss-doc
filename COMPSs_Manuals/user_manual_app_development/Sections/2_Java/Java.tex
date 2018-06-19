@@ -259,13 +259,13 @@ void sort(
 \end{lstlisting}
 
 As depicted in the example, the name and parameters of all the implementations must coincide; the only
-difference is the class where the method is implemented. This is reflected in the attribute declaringClass of
-the @Method annotation. Instead of stating that the method is implemented in a single class, the
-programmer can define several instances of the @Method annotation with different declaring classes.
+difference is the class where the method is implemented. This is reflected in the attribute \textit{declaringClass} of
+the \textit{@Method} annotation. Instead of stating that the method is implemented in a single class, the
+programmer can define several instances of the \textit{@Method} annotation with different declaring classes.
 
 As independent remote methods, the sets of equivalent methods might have common restrictions to be
 fulfilled by the resource hosting the execution. Or even, each implementation can have specific constraints.
-Through the @Constraints annotation, developers can specify the common constraints for a whole set of
+Through the \textit{@Constraints} annotation, developers can specify the common constraints for a whole set of
 methods. In the following example only one core is required to run the method of both sorting algorithms.
 
 \begin{lstlisting}[language=java]
@@ -280,7 +280,7 @@ void sort(
 
 However, these sorting algorithms have different memory consumption, thus each algorithm might require a
 specific amount of memory and that should be stated in the implementation constraints. For this purpose, the
-developer can add a @Constraints annotation inside each @Method annotation containing the specific constraints for that
+developer can add a \textit{@Constraints} annotation inside each \textit{@Method} annotation containing the specific constraints for that
 implementation. Since the Mergesort has a higher memory consumption than the quicksort, the following
 example sets a requirement of 1 core and 2GB of memory for the mergesort implementation and 1 core and
 500MB of memory for the quicksort.
@@ -318,7 +318,28 @@ public class Main {
 }
 \end{lstlisting}
 
+When an object if used in a task, COMPSs runtime store the references of these object in the runtime data structures and generate replicas and versions in remote workers. 
+COMPSs is automatically removing these replicas for obsolete versions. 
+However, the reference of the last version of these objects could be stored in the runtime data-structures preventing the garbage collector to remove it when there are no references in the main code. 
+To avoid this situation, developers can indicate the runtime that an object is not going to use any more by calling the \textit{deregisterObject} API call.
+The following code snippet shows a usage example of this API call. 
 
+\begin{lstlisting}[language=java]
+%*{\bf import es.bsc.compss.api.COMPSs;}*)
+
+public class Main {
+    public static void main(String[] args) {
+        final int ITERATIONS = 10;
+        for (int i = 0; i < ITERATIONS; ++i) {
+            Dummy d = new Dummy(d);
+            TaskImpl.task(d);
+            /*Allows garbage collector to delete the 
+              object from memory when the task is finished */     
+            %*{COMPSs.deregisterObject((Object) d);}*)
+        }
+    }
+}
+\end{lstlisting}
 
 \subsection{Application Compilation}
 A COMPSs Java application needs to be packaged in a \textit{jar} file containing the class files of the main code, of the methods implementations and of the \textit{Itf} annotation.
