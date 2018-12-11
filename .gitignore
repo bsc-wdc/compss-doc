@@ -12,3 +12,6 @@
 *.out
 *.lot
 *.backup
+
+# Ignore pdfs
+*.pdf
