@@ -209,13 +209,9 @@ using namespace serialization;
 class Block {
 public:
     Block(){};
-
-    Block(int bSize);
-       
+    Block(int bSize);   
     static Block *init(int bSize, double initVal);
-        
-    void multiply(Block block1, Block block2);
-        
+    void multiply(Block block1, Block block2);    
     void print();
 
 private:
@@ -229,7 +225,6 @@ private:
         %*{\bf ar \& data; }*)
     %*{\bf \} }*)
 };
-
 #endif
 \end{lstlisting}
 
@@ -336,33 +331,176 @@ interface Matmul
 
 
 \subsection{Application Compilation}
-To compile the user application with the C/C++ binding  the ``{\bf compss\_build\_app}'' command the user has to be executed in the directory of the main application code; 
-the name of the application has to be passed as argument to this script, in this case \textit{Matmul}.
+
+To compile user's applications with the C/C++ binding two commands are used: The ``{\bf compss\_build\_app}' command allows to compile applications for a single architecture, and the ``{\bf compss\_build\_app\_multi\_arch}'' command for multiple architectures. Both commands must be executed in the directory of the main application code. 
+
+\subsubsection{Single architecture}
+
+The user command ``{\bf compss\_build\_app}'' compiles both master and worker for a single architecture (e.g.\ x86-64, armhf, etc). Thus, whether you want to run your application in Intel based machine or ARM based machine, this command is the tool you need.
+
+Therefore, let's see two examples, first, the application is going to be build for the native architecture, in our case {\it x86-64}, and then for a target architecture, for instance {\it armhf}. Please note that to use cross compilation features and multiple architecture builds, you need to do the proper installation of COMPSs, find more information in the builders README.
+
+When the target is the native architecture, the command to execute is very simple;
 
 \begin{lstlisting}[language=bash]
 user@localhost:~/matmul_objects$ compss_build_app Matmul
+[ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-1.8.0-openjdk-amd64//jre/lib/amd64/server
+[ INFO ] Boost libraries are searched in the directory: /usr/lib/
 
-Building application...
+...
 
-g++ -DCOMPSS_MASTER -g -I. -I/opt/COMPSs/Runtime/bindings/c/include -I/opt/COMPSs/Runtime/bindings/bindings-common/include -c Block.cc Matrix.cc ar rvs libmaster.a Block.o Matrix.o
+[Info] The target host is: x86_64-linux-gnu
 
-g++ -DCOMPSS_WORKER -g -I. -I/opt/COMPSs/Runtime/bindings/c/include -I/opt/COMPSs/Runtime/bindings/bindings-common/include -c Block.cc Matrix.cc ar rvs libworker.a Block.o Matrix.o
+Building application for master...
+g++ -g -O3 -I. -I/Bindings/c/share/c_build/worker/files/ -c Block.cc Matrix.cc 
+ar rvs libmaster.a Block.o Matrix.o
+ranlib libmaster.a
 
-Building all:
+Building application for workers...
+g++ -DCOMPSS_WORKER -g -O3 -I. -I/Bindings/c/share/c_build/worker/files/ -c Block.cc -o Block.o
+g++ -DCOMPSS_WORKER -g -O3 -I. -I/Bindings/c/share/c_build/worker/files/ -c Matrix.cc -o Matrix.o
+ar rvs libworker.a Block.o Matrix.o 
+ranlib libworker.a
 
-Building Master...
+... 
 
-g++ -g -O2 -o Matmul Matmul-empty.o Matmul-stubs.o Matmul.o -L../../lib -lmaster -L/usr/lib/jvm/java-6-openjdk-amd64/jre/lib/amd64/server -ljvm -ldl -L/opt/COMPSs/Runtime/bindings/c/../bindings-common/lib -lbindings_common -L/opt/COMPSs/Runtime/bindings/c/lib -lcbindings -lboost_iostreams -lboost_serialization
+Command successful.
 
-Building Worker...
-
-g++ -g -O2 -o Matmul-worker Matmul-worker.o Matmul-functions.o -L../../lib -lworker -ldl -lboost_iostreams -lboost_serialization -L/opt/COMPSs/Runtime/bindings/c/lib
-
-Command succesful.
 \end{lstlisting}
 
-\emph{[The previous output has been cut for simplicity]}
+In order to build an application for a different architecture e.g. {\it armhf}, an environment must be provided, indicating the compiler used to cross-compile, and also the location of some COMPSs dependences such as java or boost which must be compliant with the target architecture. This environment is passed by flags and arguments;
 
+\begin{lstlisting}[language=bash]
+user@localhost:~/matmul_objects$ compss_build_app --cross-compile --cross-compile-prefix=arm-linux-gnueabihf- --java_home=/usr/lib/jvm/java-1.8.0-openjdk-armhf Matmul
+[ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-1.8.0-openjdk-armhf/jre/lib/arm/server
+[ INFO ] Boost libraries are searched in the directory: /usr/lib/
+[ INFO ] You enabled cross-compile and the prefix to be used is: arm-linux-gnueabihf-
+
+...
+
+[ INFO ] The target host is: arm-linux-gnueabihf
+
+Building application for master...
+g++ -g -O3 -I. -I/Bindings/c/share/c_build/worker/files/ -c Block.cc Matrix.cc 
+ar rvs libmaster.a Block.o Matrix.o
+ranlib libmaster.a
+
+Building application for workers...
+g++ -DCOMPSS_WORKER -g -O3 -I. -I/Bindings/c/share/c_build/worker/files/ -c Block.cc -o Block.o
+g++ -DCOMPSS_WORKER -g -O3 -I. -I/Bindings/c/share/c_build/worker/files/ -c Matrix.cc -o Matrix.o
+ar rvs libworker.a Block.o Matrix.o 
+ranlib libworker.a
+
+... 
+
+Command successful.
+
+\end{lstlisting}
+
+\emph{[The previous outputs has been cut for simplicity]}
+
+The {\textbf {\textit cross-compile}} flag is used to indicate the users desire to cross-compile the application. It enables the use of {\textbf{\textit cross-compile-prefix}} flag to define the prefix for the cross-compiler. Setting {\$CROSS\_COMPILE} environment variable will also work (in case you use the environment variable, the prefix passed by arguments is overrided with the variable value). This prefix is added to {\it \$CC} and {\it \$CXX} to be used by the user {\it Makefile} and lastly by the {\it GNU toolchain} . Regarding java and boost, {\textbf{\textit java\_home}} and {\textbf{\textit boostlib}} flags are used respectively. In this case, users can also use teh {\it \$JAVA\_HOME} and {\it \$BOOST\_LIB} variables to indicate the java and boost for the target architecture. Note that these last arguments are purely for linkage, where {\it \$LD\_LIBRARY\_PATH} is used by {\it Unix/Linux} systems to find libraries, so feel free to use it if you want to avoid passing some environment arguments.
+\newline 
+
+
+\subsubsection{Multiple architectures}
+
+The user command ``{\bf compss\_build\_app\_multi\_arch}'' allows a to compile an application for several architectures. Users are able to compile both master and worker for one or more architectures. Environments for the target architectures are defined in a file specified by {\textbf{\textit cfg}} flag. Imagine you wish to build your application to run the master in your Intel-based machine and the worker also in your native machine and in an ARM-based machine, without this command you would have to execute several times the command for a single architecture using its cross compile features. With the multiple architecture command is done in the following way.
+
+\begin{lstlisting}[language=bash]
+user@localhost:~/matmul_objects$ compss_build_app_multi_arch --master=x86_64-linux-gnu --worker=arm-linux-gnueabihf,x86_64-linux-gnu Matmul
+
+[ INFO ] Using default configuration file: /opt/COMPSs/Bindings/c/cfgs/compssrc.
+[ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/amd64/server
+[ INFO ] Boost libraries are searched in the directory: /usr/lib/
+
+...
+
+Building application for master...
+g++ -g -O3 -I. -I/Bindings/c/share/c_build/worker/files/ -c Block.cc Matrix.cc 
+ar rvs libmaster.a Block.o Matrix.o
+ranlib libmaster.a
+
+Building application for workers...
+g++ -DCOMPSS_WORKER -g -O3 -I. -I/Bindings/c/share/c_build/worker/files/ -c Block.cc -o Block.o
+g++ -DCOMPSS_WORKER -g -O3 -I. -I/Bindings/c/share/c_build/worker/files/ -c Matrix.cc -o Matrix.o
+ar rvs libworker.a Block.o Matrix.o 
+ranlib libworker.a
+
+... 
+
+Command successful. # The master for x86_64-linux-gnu compiled successfuly
+
+...
+
+[ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-1.8.0-openjdk-armhf/jre/lib/arm/server
+[ INFO ] Boost libraries are searched in the directory: /opt/install-arm/libboost
+
+...
+
+Building application for master...
+arm-linux-gnueabihf-g++ -g -O3 -I. -I/Bindings/c/share/c_build/worker/files/ -c Block.cc Matrix.cc 
+ar rvs libmaster.a Block.o Matrix.o
+ranlib libmaster.a
+
+Building application for workers...
+arm-linux-gnueabihf-g++ -DCOMPSS_WORKER -g -O3 -I. -I/Bindings/c/share/c_build/worker/files/ -c Block.cc -o Block.o
+arm-linux-gnueabihf-g++ -DCOMPSS_WORKER -g -O3 -I. -I/Bindings/c/share/c_build/worker/files/ -c Matrix.cc -o Matrix.o
+ar rvs libworker.a Block.o Matrix.o 
+ranlib libworker.a
+
+...
+
+Command successful. # The worker for arm-linux-gnueabihf compiled successfuly
+
+...
+
+[ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/amd64/server
+[ INFO ] Boost libraries are searched in the directory: /usr/lib/
+
+...
+
+Building application for master...
+g++ -g -O3 -I. -I/Bindings/c/share/c_build/worker/files/ -c Block.cc Matrix.cc 
+ar rvs libmaster.a Block.o Matrix.o
+ranlib libmaster.a
+
+Building application for workers...
+g++ -DCOMPSS_WORKER -g -O3 -I. -I/Bindings/c/share/c_build/worker/files/ -c Block.cc -o Block.o
+g++ -DCOMPSS_WORKER -g -O3 -I. -I/Bindings/c/share/c_build/worker/files/ -c Matrix.cc -o Matrix.o
+ar rvs libworker.a Block.o Matrix.o 
+ranlib libworker.a
+
+... 
+
+Command successful. # The worker for x86_64-linux-gnu compiled successfuly
+
+\end{lstlisting}
+
+\emph{[The previous outputs has been cut for simplicity]}
+\newline
+
+Building for single architectures would lead to a directory structure quite different than the one obtained using the script for multiple architectures. In the single architecture case, only one master and one worker directories are expected. In the multiple architectures case, one master and one worker is expected per architecture.
+
+\begin{lstlisting}[language=bash]
+.
+|-- arm-linux-gnueabihf
+|   `-- worker
+|       `-- gsbuild
+|           `-- autom4te.cache
+|-- src
+|-- x86_64-linux-gnu
+|   |-- master
+|   |   `-- gsbuild
+|   |       `-- autom4te.cache
+|   `-- worker
+|       `-- gsbuild
+|           `-- autom4te.cache
+`-- xml
+
+(Note than only directories are shown).
+
+\end{lstlisting}
 
 \subsection{Application Execution}
 
@@ -387,8 +525,8 @@ compss@bsc:~$ runcompss \
 The complete list of options of the runcompss command is available in the \textit{COMPSs User Manual: Application
 Execution} at \url{http://compss.bsc.es} . 
 
-\subsection{Execution Graph}
-Figure 1 depicts the execution graph for the Matmul application in its object version with 3x3 blocks matrices, each one containing a 4x4 matrix of doubles.
+\subsection{Task Dependency Graph}
+Figure~\ref{fig:matmul_exec_graph} depicts the task dependency graph for the Matmul application in its object version with 3x3 blocks matrices, each one containing a 4x4 matrix of doubles.
 Each block in the result matrix accumulates three block multiplications, i.e. three multiplications of 4x4 matrices of doubles.
 
 The light blue circle corresponds to the initialization of matrix ``A'' by means of a method-task and it has 
@@ -405,5 +543,5 @@ All green tasks are method-tasks and they are executed in parallel.
   \centering
     \includegraphics[width=1.0\textwidth]{./Sections/4_C/Figures/matmul.jpeg}
     \caption{Matmul Execution Graph.}
-    %\label{fig:BLAST_workflow}
+    \label{fig:matmul_exec_graph}
 \end{figure}
