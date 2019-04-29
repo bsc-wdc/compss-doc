@@ -129,43 +129,36 @@ compss@bsc:~$ cat /opt/COMPSs/Runtime/configuration/xml/projects/default_project
 
 
 \subsection{Configuration examples}
-In the next subsections we provide specific information about the services, shared disks, cluster and cloud configurations and
-several \texttt{project.xml} and \texttt{resources.xml} examples.
+In the next subsections we provide specific information about the services, shared disks, cluster and cloud configurations and several \texttt{project.xml} and \texttt{resources.xml} examples.
 
+\subsubsection{Parallel execution on one single process configuration}
+The most basic execution that COMPSs supports is using no remote workers and running all the tasks internally within the same process that hosts the application execution. To enable the parallel execution of the application, the user needs to set up the runtime and provide a description of the resources available on the node. For that purpose, the user describes within the \texttt{<MasterNode>} tag of the \texttt{project.xml} file the resources in the same way it describes other nodes' resources on the using the \texttt{resources.xml} file. Since there is no inter-process communication, adaptors description is not allowed. In the following example, the master will manage the execution of tasks on the MainProcessor CPU of the local node - a quad-core amd64 processor at 3.0GHz - and use up to 16 GB of RAM memory and 200 GB of storage.
 
-\subsubsection{Services configuration}
-To allow COMPSs applications to use WebServices as tasks, the \texttt{resources.xml} can include a special type of resource called
-\textit{Service}. For each WebService it is necessary to specify its wsdl, its name, its namespace and
-its port.
-\begin{lstlisting}[language=xml]
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ResourcesList>
-    <ComputeNode Name="localhost">
-      ...
-    </ComputeNode>
-
-    <Service wsdl="http://bscgrid05.bsc.es:20390/hmmerobj/hmmerobj?wsdl">
-        <Name>HmmerObjects</Name>
-        <Namespace>http://hmmerobj.worker</Namespace>
-        <Port>HmmerObjectsPort</Port>
-    </Service>
-</ResourcesList>
-\end{lstlisting}
-
-When configuring the \texttt{project.xml} file it is necessary to include the service as a worker by adding an
-special entry indicating only the name and the limit of tasks as shown in the following example:
 \begin{lstlisting}[language=xml]
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Project>
-    <MasterNode/>
-    <ComputeNode Name="localhost">
-      ...
-    </ComputeNode>
-
-    <Service wsdl="http://bscgrid05.bsc.es:20390/hmmerobj/hmmerobj?wsdl">
-        <LimitOfTasks>2</LimitOfTasks>
-    </Service>
+    <MasterNode>
+        <Processor Name="MainProcessor">
+            <ComputingUnits>4</ComputingUnits>
+            <Architecture>amd64</Architecture>
+            <Speed>3.0</Speed>
+        </Processor>
+        <Memory>
+            <Size>16</Size>
+        </Memory>
+        <Storage>
+            <Size>200.0</Size>
+        </Storage>
+    </MasterNode>
 </Project>
+\end{lstlisting}
+
+If no other nodes are available, the list of resources on the \texttt{resources.xml} file is empty as shown in the following file sample. Otherwise, the user can define other nodes besides the master node as described in the following section, and the runtime system will orchestrate the task execution on both the local process and on the configured remote nodes.
+~ \newline 
+\begin{lstlisting}[language=xml]
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ResourcesList>
+</ResourcesList>
 \end{lstlisting}
 
 \subsubsection{Cluster and grid configuration (static resources)}
@@ -657,3 +650,38 @@ properties available from connector is shown in Table \ref{tab:mesos_extensions}
 \noindent
 * TimeUnit avialable values: \texttt{DAYS}, \texttt{HOURS}, \texttt{MICROSECONDS}, \texttt{MILLISECONDS}, \texttt{MINUTES},
 \texttt{NANOSECONDS}, \texttt{SECONDS}.
+\subsubsection{Services configuration}
+To allow COMPSs applications to use WebServices as tasks, the \texttt{resources.xml} can include a special type of resource called
+\textit{Service}. For each WebService it is necessary to specify its wsdl, its name, its namespace and
+its port.
+\begin{lstlisting}[language=xml]
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ResourcesList>
+    <ComputeNode Name="localhost">
+      ...
+    </ComputeNode>
+
+    <Service wsdl="http://bscgrid05.bsc.es:20390/hmmerobj/hmmerobj?wsdl">
+        <Name>HmmerObjects</Name>
+        <Namespace>http://hmmerobj.worker</Namespace>
+        <Port>HmmerObjectsPort</Port>
+    </Service>
+</ResourcesList>
+\end{lstlisting}
+
+When configuring the \texttt{project.xml} file it is necessary to include the service as a worker by adding an
+special entry indicating only the name and the limit of tasks as shown in the following example:
+\begin{lstlisting}[language=xml]
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Project>
+    <MasterNode/>
+    <ComputeNode Name="localhost">
+      ...
+    </ComputeNode>
+
+    <Service wsdl="http://bscgrid05.bsc.es:20390/hmmerobj/hmmerobj?wsdl">
+        <LimitOfTasks>2</LimitOfTasks>
+    </Service>
+</Project>
+\end{lstlisting}
+

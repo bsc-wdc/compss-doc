@@ -16,4 +16,4 @@ Suggestion: use "evince" pdf viewer (does not require to close and open the pdf 
 
 Compile from command line:
 -------------------------
-pdflatex -interaction=nonstopmode COMPSs_Manual_App_Execution.tex 
+pdflatex -interaction=nonstopmode COMPSs_User_Manual_App_Exec.tex
