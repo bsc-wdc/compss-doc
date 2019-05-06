@@ -1030,3 +1030,86 @@ The application can be executed as a common Jupyter notebook by steps or the who
 
 Please, note that once the COMPSs runtime has been stopped it is necessary to restart the python kernel in Jupyter before starting another COMPSs runtime.
 To this end, click on ``Kernel'' and ``Restart'' (or ``Restart \& Clear Output'' or ``Restart \& Run All'', depending on the need).
+
+
+\subsection{Integration with Numba}
+
+PyCOMPSs can also be used with Numba.
+Numba (\url{http://numba.pydata.org/}) is an Open Source JIT compiler for Python which provides a set of decorators and functionalities to translate Python functios to optimized machine code.
+
+\subsubsection{Basic usage}
+
+PyCOMPSs' tasks can be decorated with Numba's $@$jit/$@$njit decorator (with the appropiate parameters) just below the $@$task decorator in order to apply Numba to that task.
+
+\begin{lstlisting}[language=python]
+from pycompss.api.task import task     # Import @task decorator
+from numba import jit
+
+%*{\bf @task }*)(returns=1)
+%*{\bf @jit }*)()
+def numba_func(a, b):
+     ...
+\end{lstlisting}
+
+\subsubsection{Advanced usage}
+
+PyCOMPSs can be also used in conjuntion with the Numba's {\it $@$vectorize}, {\it $@$guvectorize}, {\it $@$stencil} and {\it $@$cfunc}. But since these decorators do not preserve
+the original argument specification of the original function, their usage is done through the {\it numba} parameter withih the {\it $@$task} decorator.
+This parameter accepts:
+\begin{itemize}
+ \item Boolean: True: Applies {\it jit} to the function.
+ \item Dictionary{k, v}: Applies {\it jit} with the dictionary parameters to the function (allows to specify specific jit parameters (e.g. {\it nopython=True})).
+ \item String:
+   \subitem ``jit'': Applies {\it jit} to the function.
+   \subitem ``njit'': Applies {\it jit} with {\it nopython=True} to the function.
+   \subitem ``generated\_jit'': Applies {\it generated\_jit} to the function.
+   \subitem ``vectorize'': Applies {\it vectorize} to the function.
+     \subsubitem Needs some extra flags in the {\it $@$task} decorator:
+     \subsubitem {\it numba\_signature}: String with the {\it vectorize} signature.
+   \subitem ``guvectorize'': Applies {\it guvectorize} to the function.
+     \subsubitem Needs some extra flags in the {\it $@$task} decorator:
+     \subsubitem {\it numba\_signature}: String with the {\it guvectorize} signature.
+     \subsubitem {\it numba\_declaration}: String with the {\it guvectorize} declaration.
+   \subitem ``stencil'': Applies {\it stencil} to the function.
+   \subitem ``cfunc'': Applies {\it cfunc} to the function.
+     \subsubitem Needs some extra flags in the {\it $@$task} decorator:
+     \subsubitem {\it numba\_signature}: String with the {\it cfunc} signature.
+\end{itemize}
+Moreover, the {\it $@$task} decorator also allows to define specific flags for the {\it jit}, {\it njit}, {\it generated\_jit}, {\it vectorize}, {\it guvectorize} and {\it cfunc} functionalities with the {\it numba\_flags} hint. This hint is used to declare a dictionary with the flags expected to use with these numba functionalities.
+The default flag included by PyCOMPSs is the {\it cache=True} in order to exploit the function caching of Numba across tasks.
+
+For example, to apply {\it jit} to a function:
+
+\begin{lstlisting}[language=python]
+from pycompss.api.task import task
+
+%*{\bf @task }*)(numba='jit')  # Aternatively: @task(numba=True)
+def jit_func(a, b):
+     ...
+\end{lstlisting}
+
+And if the developer wants to use specific flags with jit (e.g. {\it parallel=True}):
+
+\begin{lstlisting}[language=python]
+from pycompss.api.task import task
+
+%*{\bf @task }*)(numba='jit', numba_flags={'parallel':True})
+def jit_func(a, b):
+     ...
+\end{lstlisting}
+
+Other Numba's functionalities require the specification of the function signature and declaration.
+In the next example a task that will use the {\it vectorize} with three parameters and a specific flag to target the cpu is shown:
+
+\begin{lstlisting}[language=python]
+from pycompss.api.task import task
+
+%*{\bf @task }*)(returns=1, 
+        numba='vectorize',
+        numba_signature=['float32(float32, float32, float32)'],
+        numba_flags={'target':'cpu'})
+def vectorize_task(a, b, c):
+    return a * b * c 
+\end{lstlisting}
+
+Details about numba and the specification of the signature, declaration and flags can be found in the Numba's webpage (\url{http://numba.pydata.org/}).
