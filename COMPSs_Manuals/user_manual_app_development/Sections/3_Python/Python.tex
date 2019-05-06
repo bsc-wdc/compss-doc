@@ -484,7 +484,7 @@ Table \ref{tab:other_decorators} summarizes the parameters of these decorators.
         \multirow{2}{*}{{\bf $@$multinode}} & {\bf computing\_nodes}: Integer defining the number of computing nodes reserved for the task execution
                                               (only a single node is reserved by default). \\
     \hline
-     \caption{$@$binary, $@$ompss, $@$mpi, $@$compss and $@$multinode decorators' supported parameters.}
+     \caption{$@$binary, $@$ompss, $@$mpi, $@$compss and $@$multinode decorators supported parameters.}
     \label{tab:other_decorators}
   \end{longtable}
 \egroup
@@ -499,6 +499,7 @@ function parameters when using these decorators.
     \multicolumn{1}{|c|}{{\bf Parameter key}} &  \multicolumn{1}{c|}{{\bf Values }}\\
     \hline
         \multirow{3}{*}{{\bf Type}} & {\bf (default: empty)}: The parameter is an object or a simple tipe that will be inferred. \\
+                                    & {\bf COLLECTION}: The parameter is a collection. \\
                                     & {\bf FILE}: The parameter is a file. \\
                                     & {\bf Table \ref{tab:other_parameters_shortcuts} shortcut}: See table below.\\
     \hline
@@ -506,6 +507,7 @@ function parameters when using these decorators.
                                          & {\bf IN}: In direction. \\
                                          & {\bf OUT}: Out direction. \\
                                          & {\bf INOUT}: In and out direction. \\
+                                         & {\bf CONCURRENT}: Concurrent direction. \\
     \hline
         \multirow{4}{*}{{\bf Stream}} & {\bf (default: empty)}: Not a stream. \\
                                       & {\bf STDIN}: Standard input. \\
@@ -522,10 +524,12 @@ It is not necessary to indicate the {\it Direction} nor the {\it Stream} since i
 
 \bgroup
   \def\arraystretch{1.5}%
-  \begin{longtable}{| p{0.35\textwidth} | p{0.65\textwidth} |}
+  \begin{longtable}{| p{0.45\textwidth} | p{0.55\textwidth} |}
     \hline
     \multicolumn{1}{|c|}{{\bf Alias }} &  \multicolumn{1}{c|}{{\bf Description }}\\
     \hline
+        \multirow{1}{*}{{\bf COLLECTION(\_IN)}}  & Type: COLLECTION, Direction: IN \\
+        \multirow{1}{*}{{\bf COLLECTION\_INOUT}}  & Type: COLLECTION, Direction: INOUT \\
         \multirow{1}{*}{{\bf FILE(\_IN)\_STDIN}}  & Type: File, Direction: IN, Stream: STDIN \\
         \multirow{1}{*}{{\bf FILE(\_IN)\_STDERR}} & Type: File, Direction: IN, Stream: STDOUT \\
         \multirow{1}{*}{{\bf FILE(\_IN)\_STDOUT}} & Type: File, Direction: IN, Stream: STDERR \\
@@ -535,6 +539,10 @@ It is not necessary to indicate the {\it Direction} nor the {\it Stream} since i
         \multirow{1}{*}{{\bf FILE\_INOUT\_STDIN}}  & Type: File, Direction: INOUT, Stream: STDIN \\
         \multirow{1}{*}{{\bf FILE\_INOUT\_STDERR}} & Type: File, Direction: INOUT, Stream: STDOUT \\
         \multirow{1}{*}{{\bf FILE\_INOUT\_STDOUT}} & Type: File, Direction: INOUT, Stream: STDERR \\
+        \multirow{1}{*}{{\bf FILE\_CONCURRENT}}  & Type: File, Direction: CONCURRENT \\
+        \multirow{1}{*}{{\bf FILE\_CONCURRENT\_STDIN}}  & Type: File, Direction: CONCURRENT, Stream: STDIN \\
+        \multirow{1}{*}{{\bf FILE\_CONCURRENT\_STDERR}} & Type: File, Direction: CONCURRENT, Stream: STDOUT \\
+        \multirow{1}{*}{{\bf FILE\_CONCURRENT\_STDOUT}} & Type: File, Direction: CONCURRENT, Stream: STDERR \\
     \hline
      \caption{File parameters definition shortcuts}
     \label{tab:other_parameters_shortcuts}
@@ -621,9 +629,9 @@ def main_func(list1, list2):
     return resultList
 \end{lstlisting}
 
-Please, note that if the implementation is used to define a binary, OmpSs or MPI invocation (see Section 
-\ref{par:other_decorators}), the $@$implement decorator must be always on top of the decorators stack,
-followed by the $@$constraint decorator, then the $@$binary/$@$ompss/$@$mpi decorator, and finally, 
+Please, note that if the implementation is used to define a binary, OmpSs, MPI, COMPSs or multinode task invocation
+(see Section \ref{par:other_decorators}), the $@$implement decorator must be always on top of the decorators stack,
+followed by the $@$constraint decorator, then the $@$binary/$@$ompss/$@$mpi/$@$compss/$@$multinode decorator, and finally, 
 the $@$task decorator in the lowest level.
 
 \subsubsection{Main Program}
