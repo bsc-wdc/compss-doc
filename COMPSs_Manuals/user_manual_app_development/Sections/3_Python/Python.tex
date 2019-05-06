@@ -640,23 +640,26 @@ In addition, when synchronizing for task data from the main program,
 there exist four API functions that can to be invoked:
 
 \begin{itemize}
- \item {\it compss\_open(file\_name, mode = 'r')}: similar to the Python {\it open()} call. It synchronizes
+ \item {\it compss\_open(file\_name, mode='r')}: similar to the Python {\it open()} call. It synchronizes
        for the last version of file {\it file\_name} and returns the file descriptor for that synchronized
        file. It can have an optional parameter {\it mode}, which defaults to '{\it r}', containing the
        mode in which the file will be opened (the open modes are analogous to those of
        Python {\it open()}).
  \item {\it compss\_delete\_file(file\_name)}: notifies the runtime to delete a file.
+ \item {\it compss\_wait\_on\_file(file\_name)}: synchronizes for the last version of the file {\it file\_name}.
+       and returns True if success (False otherwise).
  \item {\it compss\_delete\_object(object)}: notifies the runtime to delete all the associated files to
- a given object.
- \item {\it compss\_wait\_on(obj, to\_write = True)}: synchronizes for the last version of object {\it obj}
+       a given object.
+ \item {\it compss\_barrier(no\_more\_tasks=False)}: performs a explicit synchronization, but does not return any object.
+       The use of {\it compss\_barrier()} forces to wait for all tasks that have been submitted before the {\it compss\_barrier()} is called.
+       When all tasks submitted before the {\it compss\_barrier()} have finished, the execution continues.
+       The {\it no\_more\_tasks} is used to specify if no more tasks are going to be submitted after the {\it compss\_barrier()}.
+ \item {\it compss\_wait\_on(obj, to\_write=True)}: synchronizes for the last version of object {\it obj}
        and returns the synchronized object. It can have an optional boolean parameter
        {\it to\_write}, which defaults to {\it True}, that indicates whether the main program will modify the
        returned object.       
        It is possible to wait on a list of objects. In this particular case, it will synchronize all future objects 
        contained in the list.
- \item {\it compss\_barrier()}: performs a explicit synchronization, but does not return any object. The use of {\it compss\_barrier()}
-       forces to wait for all tasks that have been submitted before the {\it compss\_barrier()} is called.
-       When all tasks submitted before the {\it compss\_barrier()} have finished, the execution continues.
 \end{itemize}
 
 To illustrate the use of the aforementioned API functions, the following example first invokes a task 
@@ -722,11 +725,13 @@ Table \ref{tab:python_api_functions} summarizes the API functions to be used in 
     \hline
     compss\_delete\_file(file\_name) & Notifies the runtime to remove a file. \\
     \hline
+    compss\_wait\_on\_file(file\_name) & Synchronizes for the last version of a file. \\
+    \hline
     compss\_delete\_object(object) & Notifies the runtime to delete the associated file to this object. \\
     \hline
-    compss\_wait\_on(obj, to\_write=True) & Synchronizes for the last version of an object (or a list of objects) and returns it. \\
+    compss\_barrier(no\_more\_tasks=False) & Wait for all tasks submitted before the barrier. \\
     \hline
-    compss\_barrier() & Wait for all tasks submitted before the barrier. \\
+    compss\_wait\_on(obj, to\_write=True) & Synchronizes for the last version of an object (or a list of objects) and returns it. \\
     \hline
     \caption{COMPSs Python API functions.}
     \label{tab:python_api_functions}
