@@ -1,8 +1,8 @@
 \section{Python Binding}
 \label{sec:Python}
 
-COMPSs features a binding for Python 2 and 3 applications. The next subsections explain how to program a Python 
-application for COMPSs and a brief overview on how to execute it.
+COMPSs features a binding for Python 2 and 3 applications. 
+The next subsections explain how to program a Python application for COMPSs and a brief overview on how to execute it.
 
 \subsection{Programming Model}
 \label{subsec:Python_programming_model}
@@ -19,7 +19,7 @@ In particular, the user can select as a task:
 \end{itemize}
 
 The task definition in Python is done by means of Python decorators instead of an annotated interface. 
-In particular, the user needs to add a $@$task decorator that describes the task before the definition of the function/method.
+In particular, the user needs to add a {\it $@$task} decorator that describes the task before the definition of the function/method.
 
 As an example, let us assume that the application calls a function \textit{func}, which receives a file path (string parameter) 
 and an integer parameter. The code of \textit{func} updates the file.
@@ -46,7 +46,7 @@ The parameter types and directions can be:
 
 \begin{itemize}
  \item Types: {\it primitive types} (integer, long, float, boolean), {\it strings}, {\it objects} (instances of user-defined classes, dictionaries, lists, tuples, complex numbers) and {\it files} are supported.
- \item Direction: it can be read-only ({\it IN} - default), read-write ({\it INOUT}) or write-only ({\it OUT}).
+ \item Direction: it can be read-only ({\it IN} - default), read-write ({\it INOUT}), write-only ({\it OUT}) or in some cases concurrent ({\it CONCURRENT}).
 \end{itemize}
 
 COMPSs is able to automatically infer the parameter type for primitive types, strings and objects, 
@@ -58,9 +58,13 @@ decorator, the user has the following options:
  \item {\it IN}: the parameter is read-only. The type will be inferred.
  \item {\it INOUT}: the parameter is read-write. The type will be inferred.
  \item {\it OUT}: the parameter is write-only. The type will be inferred.
+ \item {\it CONCURRENT}: the parameter is read-write with concurrent acces. The type will be inferred.
  \item {\it FILE/FILE\_IN}: the parameter is a file. The direction is assumed to be {\it IN}.
  \item {\it FILE\_INOUT}: the parameter is a read-write file.
  \item {\it FILE\_OUT}: the parameter is a write-only file.
+ \item {\it FILE\_CONCURRENT}: the parameter is a concurrent read-write file.
+ \item {\it COLLECTION\_IN}: the parameter is read-only collection.
+ \item {\it COLLECTION\_INOUT}: the parameter is read-write collection.
 \end{itemize}
 
 Consequently, please note that in the following cases there is no need to include an argument in 
@@ -88,17 +92,50 @@ are automatically inferred by COMPSs.
 from pycompss.api.task import task     # Import @task decorator
 from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
 
-%*{\bf @task }*)(f = FILE_INOUT)
+%*{\bf @task }*)(f=FILE_INOUT)
 def func(f, i):
      fd = open(f, 'r+')
      ...
 \end{lstlisting}
 
+The user can also define that the access to a parameter is concurrent with {\it CONCURRENT} or to a file {\it FILE\_CONCURRENT}.
+This allows users to have access from multiple tasks to the same object/file during their executions.
+Please, note that COMPSs does not manage the interaction with the objects or files used/modified concurrently.
+Taking care of the access/modification of the concurrent objects is responsibility of the developer.
+
+\begin{lstlisting}[language=python]
+from pycompss.api.task import task     # Import @task decorator
+from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
+
+%*{\bf @task }*)(f=FILE_CONCURRENT)
+def func(f, i):
+     ...
+\end{lstlisting}
+
+Moreover, it is possible to specify that the parameter is a collection of elements (e.g. list) and its
+direction (COLLECTION\_IN or COLLECTION\_INOUT). 
+In this case, the list may contain sub-objects that will be handled automatically by the runtime.
+
+\begin{lstlisting}[language=python]
+from pycompss.api.task import task     # Import @task decorator
+from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
+
+%*{\bf @task }*)(my_collection=COLLECTION_IN)
+def func(my_collection):
+     for element in my_collection:
+     ...
+\end{lstlisting}
+
+In order to improve the performance, the depth of the sub-objects can be limited through the use of the
+{\it depth} parameter as:
+
+$@task(my\_collection=\{Type: COLLECTION\_IN, Depth: 2\})$ \\
+
 If the function or method returns a value, the programmer must use the {\it returns}  argument within
 the {\it $@$task} decorator. In this argument, the programmer can specify the type of that value:
 
 \begin{lstlisting}[language=python]
-@task(%*{\bf returns }*) = int)
+@task(%*{\bf returns }*)=int)
 def ret_func():
      return 1
 \end{lstlisting}
@@ -108,7 +145,7 @@ and their type in the {\it returns} argument. The next next code snippet shows h
 values (an integer and a list) are returned:
 
 \begin{lstlisting}[language=python]
-@task(%*{\bf returns }*) = (int, list))
+@task(%*{\bf returns }*)=(int, list))
 def ret_func():
      return 1, [2, 3]
 \end{lstlisting}
@@ -121,11 +158,11 @@ This consideration may lead to an error if the user expects to invoke a task def
 returned by a previous task. In this scenario, the solution is to specify explicitly the return type.
 
 \begin{lstlisting}[language=python]
-@task(%*{\bf returns }*) = 1)
+@task(%*{\bf returns }*)=1)
 def ret_func():
-     return "mystring"
+     return "my_string"
 
-@task(%*{\bf returns }*) = 2)
+@task(%*{\bf returns }*)=2)
 def ret_func():
      return 1, [2, 3]
 \end{lstlisting}
@@ -133,7 +170,7 @@ def ret_func():
 The use of {\it *args} and {\it **kwargs} as function parameters is also supported:
 
 \begin{lstlisting}[language=python]
-@task(%*{\bf returns }*) = int)
+@task(%*{\bf returns }*)=int)
 def argkwarg_func(*args, **kwargs):
     return sum(args) + len(kwargs)
 \end{lstlisting}
@@ -143,19 +180,19 @@ snippet shows an example of a task with two three parameters (whose one of them 
 value), {\it *args} and {\it **kwargs}.
 
 \begin{lstlisting}[language=python]
-@task(%*{\bf returns }*) = int)
+@task(%*{\bf returns }*)=int)
 def multiarguments_func(v, w, s = 2, *args, **kwargs):
     return (v * w) + sum(args) + len(kwargs) + s
 \end{lstlisting}
 
 For tasks corresponding to instance methods, by default the task is assumed to modify the callee object 
 (the object on which the method is invoked). The programmer can tell otherwise by setting the 
-{\it isModifier} argument of the {\it $@$task} decorator to {\it False}.
+{\it is\_modifier} argument of the {\it $@$task} decorator to {\it False}.
 
 \begin{lstlisting}[language=python]
 class MyClass(object):
     ...
-    @task(%*{\bf isModifier }*) = False)
+    @task(%*{\bf is\_modifier }*) = False)
     def instance_method(self):
         ... # self is NOT modified here
 \end{lstlisting}
@@ -170,24 +207,24 @@ any of the available low-priority (regular) tasks. This functionality is useful 
 the critical path of the application’s task dependency graph.
 
 \begin{lstlisting}[language=python]
-@task(%*{\bf priority }*) = True)
+@task(%*{\bf priority }*)=True)
 def func():
     ...
 \end{lstlisting}
 
-Moreover, the user can also mark a task as distributed with the {\it isDistributed} argument or as 
-replicated with the {\it isReplicated} argument. When a task is marked with {\it isDistributed=True}, 
+Moreover, the user can also mark a task as distributed with the {\it is\_distributed} argument or as 
+replicated with the {\it is\_replicated} argument. When a task is marked with {\it is\_distributed=True}, 
 the method must be scheduled in a forced round robin among the available resources.
-On the other hand, when a task is marked with {\it isReplicated=True}, the method must be executed in 
+On the other hand, when a task is marked with {\it is\_replicated=True}, the method must be executed in 
 all the worker nodes when invoked from the main application.
 The default value for these parameters is False.
 
 \begin{lstlisting}[language=python]
-@task(%*{\bf isDistributed }*) = True)
+@task(%*{\bf is\_distributed }*)=True)
 def func():
     ...
 
-@task(%*{\bf isReplicated }*) = True)
+@task(%*{\bf is\_replicated }*)=True)
 def func2():
     ...
 \end{lstlisting}
@@ -196,25 +233,28 @@ Table \ref{tab:task_decorator_arguments} summarizes the arguments that can be fo
 
 \bgroup
   \def\arraystretch{1.5}%
-  \begin{longtable}{| p{0.31\textwidth} | p{0.69\textwidth} |}
+  \begin{longtable}{| p{0.28\textwidth} | p{0.72\textwidth} |}
     \hline
     \multicolumn{1}{|c|}{{\bf Argument }}    &  \multicolumn{1}{c|}{{\bf Value }}\\
     \hline
-    \multirow{5}{*}{Formal parameter name}  &  - INOUT: read-write parameter, all types except file (primitives, strings, objects). \\
+    \multirow{5}{*}{Formal parameter name}  &  - IN: read-only parameter, all types. \\
+    & - INOUT: read-write parameter, all types except file (primitives, strings, objects). \\
     & - OUT: read-write parameter, all types except file (primitives, strings, objects). \\
     & - FILE/FILE\_IN: read-only file parameter. \\
     & - FILE\_INOUT: read-write file parameter. \\
     & - FILE\_OUT: write-only file parameter. \\
+    & - COLLECTION\_IN: read-only collection parameter (list). \\
+    & - COLLECTION\_INOUT: read-write collection parameter (list). \\
     \hline
     returns & int (for integer and boolean), long, float, str, dict, list, tuple, user-defined classes \\
     \hline
-    isModifier &  True (default) or False \\
+    is\_modifier &  True (default) or False \\
     \hline
     priority  & True or False (default) \\
     \hline
-    isDistributed & True or False (default) \\
+    is\_distributed & True or False (default) \\
     \hline
-    isReplicated  & True or False (default) \\
+    is\_replicated  & True or False (default) \\
     \hline
     \caption{Arguments of the {\it $@$task} decorator.}
     \label{tab:task_decorator_arguments}
@@ -229,7 +269,8 @@ In addition to this API functions, the programmer can use a set of decorators fo
 
 For instance, there is a set of decorators that can be placed over the {\it $@$task} decorator in order to 
 define the task methods as a binary invocation (with the {\it $@$binary} decorator), as a OmpSs invocation 
-(with the {\it $@$ompss} decorator), or as a MPI invocation (with the {\it $@$mpi} decorator).
+(with the {\it $@$ompss} decorator), as a MPI invocation (with the {\it $@$mpi} decorator), as a COMPSs application
+(with the {\it $@$compss} decorator), or as a task that requires multiple nodes (with the {\it $@$multinode} decorator).
 These decorators must be placed over the {\it $@$task} decorator, and under the {\it $@$constraint} decorator if 
 defined.
 
@@ -280,14 +321,14 @@ from pycompss.api.task import task
 from pycompss.api.binary import binary
 from pycompss.api.parameter import *
 
-@binary(binary="grep", workingDir=".")
+@binary(binary="grep", working_dir=".")
 @task(infile={Type:FILE_IN_STDIN}, result={Type:FILE_OUT_STDOUT})
 def grepper():
      pass
      
 # This task definition is equivalent to the folloowing, which is more verbose:
 
-@binary(binary="grep", workingDir=".")
+@binary(binary="grep", working_dir=".")
 @task(infile={Type:FILE_IN, Stream:STDIN}, result={Type:FILE_OUT, Stream:STDOUT})
 def grepper(keyword, infile, result):
      pass
@@ -365,7 +406,7 @@ The {\it $@$mpi} decorator shall be used to define that a task is going to invok
 \begin{lstlisting}[language=python]
 from pycompss.api.mpi import mpi
 
-@mpi(binary="mpiApp.bin", runner="mpirun", computingNodes=2)
+@mpi(binary="mpiApp.bin", runner="mpirun", computing_nodes=2)
 @task()
 def mpi_func():
      pass
@@ -374,6 +415,43 @@ def mpi_func():
 The MPI executable invocation can also be enriched with parameters, files and prefixes as with the 
 {\it $@$binary} decorator through the function parameters and {\it $@$task} decorator information.
 Please, check subparagraph \ref{subpar:binary_decorator} for more details.
+
+\subparagraph{COMPSs decorator}
+\label{subpar:compss_decorator}
+
+The {\it $@$compss} decorator shall be used to define that a task is going to be a COMPSs application.
+It enables to have nested PyCOMPSs\/COMPSs applications.
+
+\begin{lstlisting}[language=python]
+from pycompss.api.compss import compss
+
+@compss(runcompss="${RUNCOMPSS}", flags="-d", appname="/path/to/simple_compss_nested.py", computing_nodes="2")
+@task()
+def compss_func():
+     pass
+\end{lstlisting}
+
+The COMPSs application invocation can also be enriched with the flags accepted by the {\it runcompss} executable.
+Please, check execution manual for more details about the supported flags.
+
+\subparagraph{Multinode decorator}
+\label{subpar:multinode_decorator}
+
+The {\it $@$multinode} decorator shall be used to define that a task is going to use multiple nodes
+(e.g. using internal parallelism).
+
+\begin{lstlisting}[language=python]
+from pycompss.api.multinode import multinode
+
+@multinode(computing_nodes="2")
+@task()
+def multinode_func():
+     pass
+\end{lstlisting}
+
+The only supported parameter is {\it computing\_nodes}, used to define the number of nodes required by the task (the default value is 1).
+The mechanism to get the number of nodes, threads and their names to the task is through the {\it COMPSS\_NUM\_NODES}, {\it COMPSS\_NUM\_THREADS} and
+{\it COMPSS\_HOSTNAMES} environment variables respectively, which are exported within the task scope by the COMPSs runtime before the task execution.
 
 \subparagraph{Parameters summary}
 
@@ -386,18 +464,27 @@ Table \ref{tab:other_decorators} summarizes the parameters of these decorators.
     \multicolumn{1}{|c|}{{\bf Decorator }} &  \multicolumn{1}{c|}{{\bf Parameters }}\\
     \hline
         \multirow{2}{*}{{\bf $@$binary}} & {\bf binary}: (Mandatory) String defining the full path of the binary that must be executed. \\
-                                         & {\bf workingDir}: Full path of the binary working directory inside the COMPSs Worker. \\
+                                         & {\bf working\_dir}: Full path of the binary working directory inside the COMPSs Worker. \\
     \hline
         \multirow{2}{*}{{\bf $@$ompss}} & {\bf binary}: (Mandatory) String defining the full path of the binary that must be executed. \\
-                                        & {\bf workingDir}: Full path of the binary working directory inside the COMPSs Worker. \\
+                                        & {\bf working\_dir}: Full path of the binary working directory inside the COMPSs Worker. \\
     \hline
         \multirow{4}{*}{{\bf $@$mpi}} & {\bf binary}: (Mandatory) String defining the full path of the binary that must be executed. \\
-                                      & {\bf workingDir}: Full path of the binary working directory inside the COMPSs Worker. \\
-                                      & {\bf runner}: (Mandatory) String defining the mpi runner command. \\
-                                      & {\bf computingNodes}: Integer defining the number of computing nodes reserved for the MPI execution
-		                        (only a single node is reserved by default). \\
+                                      & {\bf working\_dir}: Full path of the binary working directory inside the COMPSs Worker. \\
+                                      & {\bf runner}: (Mandatory) String defining the MPI runner command. \\
+                                      & {\bf computing\_nodes}: Integer defining the number of computing nodes reserved for the MPI execution
+                                        (only a single node is reserved by default). \\
     \hline
-     \caption{$@$binary, $@$ompss and $@$mpi decorators params.}
+        \multirow{2}{*}{{\bf $@$compss}} & {\bf runcompss}: (Mandatory) String defining the full path of the runcompss binary that must be executed. \\
+                                         & {\bf flags}: String defining the flags needed for the runcompss execution. \\
+                                         & {\bf appname}: (Mandatory) String defining the application that must be executed. \\
+                                         & {\bf computing\_nodes}: Integer defining the number of computing nodes reserved for the COMPSs execution
+                                           (only a single node is reserved by default). \\
+    \hline
+        \multirow{2}{*}{{\bf $@$multinode}} & {\bf computing\_nodes}: Integer defining the number of computing nodes reserved for the task execution
+                                              (only a single node is reserved by default). \\
+    \hline
+     \caption{$@$binary, $@$ompss, $@$mpi, $@$compss and $@$multinode decorators supported parameters.}
     \label{tab:other_decorators}
   \end{longtable}
 \egroup
@@ -412,6 +499,7 @@ function parameters when using these decorators.
     \multicolumn{1}{|c|}{{\bf Parameter key}} &  \multicolumn{1}{c|}{{\bf Values }}\\
     \hline
         \multirow{3}{*}{{\bf Type}} & {\bf (default: empty)}: The parameter is an object or a simple tipe that will be inferred. \\
+                                    & {\bf COLLECTION}: The parameter is a collection. \\
                                     & {\bf FILE}: The parameter is a file. \\
                                     & {\bf Table \ref{tab:other_parameters_shortcuts} shortcut}: See table below.\\
     \hline
@@ -419,6 +507,7 @@ function parameters when using these decorators.
                                          & {\bf IN}: In direction. \\
                                          & {\bf OUT}: Out direction. \\
                                          & {\bf INOUT}: In and out direction. \\
+                                         & {\bf CONCURRENT}: Concurrent direction. \\
     \hline
         \multirow{4}{*}{{\bf Stream}} & {\bf (default: empty)}: Not a stream. \\
                                       & {\bf STDIN}: Standard input. \\
@@ -435,10 +524,12 @@ It is not necessary to indicate the {\it Direction} nor the {\it Stream} since i
 
 \bgroup
   \def\arraystretch{1.5}%
-  \begin{longtable}{| p{0.35\textwidth} | p{0.65\textwidth} |}
+  \begin{longtable}{| p{0.45\textwidth} | p{0.55\textwidth} |}
     \hline
     \multicolumn{1}{|c|}{{\bf Alias }} &  \multicolumn{1}{c|}{{\bf Description }}\\
     \hline
+        \multirow{1}{*}{{\bf COLLECTION(\_IN)}}  & Type: COLLECTION, Direction: IN \\
+        \multirow{1}{*}{{\bf COLLECTION\_INOUT}}  & Type: COLLECTION, Direction: INOUT \\
         \multirow{1}{*}{{\bf FILE(\_IN)\_STDIN}}  & Type: File, Direction: IN, Stream: STDIN \\
         \multirow{1}{*}{{\bf FILE(\_IN)\_STDERR}} & Type: File, Direction: IN, Stream: STDOUT \\
         \multirow{1}{*}{{\bf FILE(\_IN)\_STDOUT}} & Type: File, Direction: IN, Stream: STDERR \\
@@ -448,6 +539,10 @@ It is not necessary to indicate the {\it Direction} nor the {\it Stream} since i
         \multirow{1}{*}{{\bf FILE\_INOUT\_STDIN}}  & Type: File, Direction: INOUT, Stream: STDIN \\
         \multirow{1}{*}{{\bf FILE\_INOUT\_STDERR}} & Type: File, Direction: INOUT, Stream: STDOUT \\
         \multirow{1}{*}{{\bf FILE\_INOUT\_STDOUT}} & Type: File, Direction: INOUT, Stream: STDERR \\
+        \multirow{1}{*}{{\bf FILE\_CONCURRENT}}  & Type: File, Direction: CONCURRENT \\
+        \multirow{1}{*}{{\bf FILE\_CONCURRENT\_STDIN}}  & Type: File, Direction: CONCURRENT, Stream: STDIN \\
+        \multirow{1}{*}{{\bf FILE\_CONCURRENT\_STDERR}} & Type: File, Direction: CONCURRENT, Stream: STDOUT \\
+        \multirow{1}{*}{{\bf FILE\_CONCURRENT\_STDOUT}} & Type: File, Direction: CONCURRENT, Stream: STDERR \\
     \hline
      \caption{File parameters definition shortcuts}
     \label{tab:other_parameters_shortcuts}
@@ -471,8 +566,8 @@ from pycompss.api.task import task
 from pycompss.api.constraint import constraint
 from pycompss.api.parameter import INOUT
 
-%*{\bf @constraint }*)(ComputingUnits="4")
-%*{\bf @task }*)(c = INOUT)
+%*{\bf @constraint }*)(computing_units="4")
+%*{\bf @task }*)(c=INOUT)
 def func(a, b, c):
      c += a*b
      ...
@@ -489,8 +584,8 @@ from pycompss.api.task import task
 from pycompss.api.constraint import constraint
 from pycompss.api.parameter import INOUT
 
-%*{\bf @constraint }*)(ComputingUnits="4", AppSoftware="numpy,scipy,gnuplot", memorySize="$MIN_MEM_REQ")
-%*{\bf @task }*)(c = INOUT)
+%*{\bf @constraint }*)(computing_units="4", app_software="numpy,scipy,gnuplot", memory_size="$MIN_MEM_REQ")
+%*{\bf @task }*)(c=INOUT)
 def func(a, b, c):
      c += a*b
      ...
@@ -522,7 +617,7 @@ keeping this management invisible to the user.
 from pycompss.api.implement import implement
 
 @implement(source_class="sourcemodule", method="main_func")
-@constraint(AppSoftware="numpy")
+@constraint(app_software="numpy")
 @task(returns=list)
 def myfunctionWithNumpy(list1, list2):
     # Operate with the lists using numpy
@@ -534,9 +629,9 @@ def main_func(list1, list2):
     return resultList
 \end{lstlisting}
 
-Please, note that if the implementation is used to define a binary, OmpSs or MPI invocation (see Section 
-\ref{par:other_decorators}), the $@$implement decorator must be always on top of the decorators stack,
-followed by the $@$constraint decorator, then the $@$binary/$@$ompss/$@$mpi decorator, and finally, 
+Please, note that if the implementation is used to define a binary, OmpSs, MPI, COMPSs or multinode task invocation
+(see Section \ref{par:other_decorators}), the $@$implement decorator must be always on top of the decorators stack,
+followed by the $@$constraint decorator, then the $@$binary/$@$ompss/$@$mpi/$@$compss/$@$multinode decorator, and finally, 
 the $@$task decorator in the lowest level.
 
 \subsubsection{Main Program}
@@ -545,23 +640,26 @@ In addition, when synchronizing for task data from the main program,
 there exist four API functions that can to be invoked:
 
 \begin{itemize}
- \item {\it compss\_open(file\_name, mode = 'r')}: similar to the Python {\it open()} call. It synchronizes
+ \item {\it compss\_open(file\_name, mode='r')}: similar to the Python {\it open()} call. It synchronizes
        for the last version of file {\it file\_name} and returns the file descriptor for that synchronized
        file. It can have an optional parameter {\it mode}, which defaults to '{\it r}', containing the
        mode in which the file will be opened (the open modes are analogous to those of
        Python {\it open()}).
  \item {\it compss\_delete\_file(file\_name)}: notifies the runtime to delete a file.
+ \item {\it compss\_wait\_on\_file(file\_name)}: synchronizes for the last version of the file {\it file\_name}.
+       and returns True if success (False otherwise).
  \item {\it compss\_delete\_object(object)}: notifies the runtime to delete all the associated files to
- a given object.
- \item {\it compss\_wait\_on(obj, to\_write = True)}: synchronizes for the last version of object {\it obj}
+       a given object.
+ \item {\it compss\_barrier(no\_more\_tasks=False)}: performs a explicit synchronization, but does not return any object.
+       The use of {\it compss\_barrier()} forces to wait for all tasks that have been submitted before the {\it compss\_barrier()} is called.
+       When all tasks submitted before the {\it compss\_barrier()} have finished, the execution continues.
+       The {\it no\_more\_tasks} is used to specify if no more tasks are going to be submitted after the {\it compss\_barrier()}.
+ \item {\it compss\_wait\_on(obj, to\_write=True)}: synchronizes for the last version of object {\it obj}
        and returns the synchronized object. It can have an optional boolean parameter
        {\it to\_write}, which defaults to {\it True}, that indicates whether the main program will modify the
        returned object.       
        It is possible to wait on a list of objects. In this particular case, it will synchronize all future objects 
        contained in the list.
- \item {\it compss\_barrier()}: performs a explicit synchronization, but does not return any object. The use of {\it compss\_barrier()}
-       forces to wait for all tasks that have been submitted before the {\it compss\_barrier()} is called.
-       When all tasks submitted before the {\it compss\_barrier()} have finished, the execution continues.
 \end{itemize}
 
 To illustrate the use of the aforementioned API functions, the following example first invokes a task 
@@ -604,7 +702,7 @@ compss_barrier()
 The corresponding task selection for the example above would be:
 
 \begin{lstlisting}[language=python]
-@task(f = FILE_OUT)
+@task(f=FILE_OUT)
 def func(f):
     ...
     
@@ -623,15 +721,17 @@ Table \ref{tab:python_api_functions} summarizes the API functions to be used in 
     \hline
     \multicolumn{1}{|c|}{{\bf Function }}    &  \multicolumn{1}{c|}{{\bf Use }}\\
     \hline
-    compss\_open(file\_name, mode = 'r') & Synchronizes for the last version of a file and returns its file descriptor. \\
+    compss\_open(file\_name, mode='r') & Synchronizes for the last version of a file and returns its file descriptor. \\
     \hline
     compss\_delete\_file(file\_name) & Notifies the runtime to remove a file. \\
     \hline
+    compss\_wait\_on\_file(file\_name) & Synchronizes for the last version of a file. \\
+    \hline
     compss\_delete\_object(object) & Notifies the runtime to delete the associated file to this object. \\
     \hline
-    compss\_wait\_on(obj, to\_write = True) & Synchronizes for the last version of an object (or a list of objects) and returns it. \\
+    compss\_barrier(no\_more\_tasks=False) & Wait for all tasks submitted before the barrier. \\
     \hline
-    compss\_barrier() & Wait for all tasks submitted before the barrier. \\
+    compss\_wait\_on(obj, to\_write=True) & Synchronizes for the last version of an object (or a list of objects) and returns it. \\
     \hline
     \caption{COMPSs Python API functions.}
     \label{tab:python_api_functions}
@@ -672,7 +772,7 @@ If the programmer selects as a task a function or method that returns a value, t
 generated until the task executes. 
 
 \begin{lstlisting}[language=python]
-@task(%*{\bf returns }*) = MyClass)
+@task(%*{\bf returns }*)=MyClass)
 def ret_func():
     return MyClass(...)
 
@@ -745,8 +845,8 @@ o = ret_func()
 o.yet_another_task()
 \end{lstlisting}
 
-In order to make the COMPSs Python binding function correctly, the programmer should not use relative imports 
-in the code. Relative imports can lead to ambiguous code and they are discouraged in Python, as explained in:
+In order to make the COMPSs Python binding function correctly, the programmer should not use relative imports in the code.
+Relative imports can lead to ambiguous code and they are discouraged in Python, as explained in:
 
 \begin{lstlisting}[language=html]
 http://docs.python.org/2/faq/programming.html#what-are-the-best-practices-for-using-import-in-a-module
@@ -805,7 +905,7 @@ To this end, PyCOMPSs provides a module that provides two API calls: one for sta
 This module can be imported from the {\it pycompss} library:
 
 \begin{lstlisting}[language=python]
-import pycompss.interactive import ipycompss
+import pycompss.interactive as ipycompss
 \end{lstlisting}
 
 And contains two main functions: {\it start} and {\it stop}. These functions can then be invoked as follows for the COMPSs runtime deployment with default parameters:
@@ -838,9 +938,9 @@ Table \ref{tab:python_api_jupyter_stop} summarizes the accepted parameters of th
     \hline
     log\_level     & String  & \footnotesize{PyCOMPSs log level. Options: ``off'', ``info'' and ``debug''.\newline (Default: ``off'')} \\
     \hline
-    o\_c           & Boolean & \footnotesize{Object conversion to string when possible (Default: False)} \\
+    debug          & Boolean & \footnotesize{COMPSs runtime debug (Default: False) (overrides log\_level)} \\
     \hline
-    debug          & Boolean & \footnotesize{COMPSs runtime debug (Default: False)} \\
+    o\_c           & Boolean & \footnotesize{Object conversion to string when possible (Default: False)} \\
     \hline
     graph          & Boolean & \footnotesize{Task dependency graph generation (Default: False)} \\
     \hline
@@ -854,39 +954,47 @@ Table \ref{tab:python_api_jupyter_stop} summarizes the accepted parameters of th
     \hline
     summary        & Boolean & \footnotesize{Show summary at the end of the execution (Default: False)} \\ 
     \hline
-    storageConf    & String  & \footnotesize{Storage configuration file path (Default: None)} \\ 
+    storage\_impl  & String  & \footnotesize{Path to an storage implementation (Default: None)} \\ 
     \hline
-    taskCount      & Integer & \footnotesize{Number of task definitions (Default: 50)} \\ 
+    storage\_conf  & String  & \footnotesize{Storage configuration file path (Default: None)} \\ 
     \hline
-    appName        & String  & \footnotesize{Application name (Default: ``Interactive'')} \\ 
+    task\_count    & Integer & \footnotesize{Number of task definitions (Default: 50)} \\ 
+    \hline
+    app\_name      & String  & \footnotesize{Application name (Default: ``Interactive'')} \\ 
     \hline
     uuid           & String  & \footnotesize{Application uuid (Default: None - Will be random)} \\ 
     \hline
-    baseLogDir     & String  & \footnotesize{Base directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location) (Default: User homeBase log path)} \\ 
+    base\_log\_dir & String  & \footnotesize{Base directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location) (Default: User homeBase log path)} \\ 
     \hline
-    specificLogDir & String  & \footnotesize{Use a specific directory to store COMPSs log files (the folder MUST exist and no sandbox is created) (Default: Disabled)} \\
+    specific\_log\_dir & String  & \footnotesize{Use a specific directory to store COMPSs log files (the folder MUST exist and no sandbox is created) (Default: Disabled)} \\
     \hline
-    extraeCfg      & String  & \footnotesize{Sets a custom extrae config file. Must be in a shared disk between all COMPSs workers (Default: None)} \\ 
+    extrae\_cfg    & String  & \footnotesize{Sets a custom extrae config file. Must be in a shared disk between all COMPSs workers (Default: None)} \\ 
     \hline
     comm           & String  & \footnotesize{Class that implements the adaptor for communications. Supported adaptors: ``es.bsc.compss.nio.master.NIOAdaptor'' and ``es.bsc.compss.gat.master.GATAdaptor'' (Default: ``es.bsc.compss.nio.master.NIOAdaptor'')} \\ 
     \hline
     conn           & String  & \footnotesize{Class that implements the runtime connector for the cloud. Supported connectors: ``es.bsc.compss.connectors.DefaultSSHConnector'' and ``es.bsc.compss.connectors.DefaultNoSSHConnector'' (Default: es.bsc.compss.connectors.DefaultSSHConnector)} \\ 
     \hline
-    MasterName     & String  & \footnotesize{Hostname of the node to run the COMPSs master (Default: ``'')}\\ 
+    master\_name   & String  & \footnotesize{Hostname of the node to run the COMPSs master (Default: ``'')}\\ 
     \hline
-    MasterPort     & String  & \footnotesize{Port to run the COMPSs master communications. Only for NIO adaptor (Default: ``[43000,44000]'')} \\ 
+    master\_port   & String  & \footnotesize{Port to run the COMPSs master communications. Only for NIO adaptor (Default: ``[43000,44000]'')} \\ 
     \hline
     scheduler      & String  & \footnotesize{Class that implements the Scheduler for COMPSs. Supported schedulers:\newline ``es.bsc.compss.scheduler.fullGraphScheduler.FullGraphScheduler'', ``es.bsc.compss.scheduler.fifoScheduler.FIFOScheduler'' and ``es.bsc.compss.scheduler.resourceEmptyScheduler.\newline ResourceEmptyScheduler''\newline (Default: ``es.bsc.compss.scheduler.loadBalancingScheduler.\newline LoadBalancingScheduler'')} \\ 
     \hline
-    jvmWorkers     & String  & \footnotesize{Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Default: ``-Xms1024m,-Xmx1024m,-Xmn400m'')} \\ 
+    jvm\_workers   & String  & \footnotesize{Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Default: ``-Xms1024m,-Xmx1024m,-Xmn400m'')} \\ 
     \hline
-    cpuAffinity    & String  & \footnotesize{Sets the CPU affinity for the workers. Supported options: ``disabled'', ``automatic'', user defined map of the form ``0-8/9,10,11/12-14,15,16'' (Default: ``automatic'')} \\ 
+    cpu\_affinity  & String  & \footnotesize{Sets the CPU affinity for the workers. Supported options: ``disabled'', ``automatic'', user defined map of the form ``0-8/9,10,11/12-14,15,16'' (Default: ``automatic'')} \\ 
     \hline
-    gpuAffinity    & String  & \footnotesize{Sets the GPU affinity for the workers. Supported options: ``disabled'', ``automatic'', user defined map of the form ``0-8/9,10,11/12-14,15,16'' (Default: ``automatic'')} \\ 
+    gpu\_affinity  & String  & \footnotesize{Sets the GPU affinity for the workers. Supported options: ``disabled'', ``automatic'', user defined map of the form ``0-8/9,10,11/12-14,15,16'' (Default: ``automatic'')} \\ 
     \hline
-    profileInput   & String  & \footnotesize{Path to the file which stores the input application profile (Default: ``'')} \\ 
+    profile\_input & String  & \footnotesize{Path to the file which stores the input application profile (Default: ``'')} \\ 
     \hline
-    profileOutput  & String  & \footnotesize{Path to the file to store the application profile at the end of the execution (Default: ``'')} \\ 
+    profile\_output   & String  & \footnotesize{Path to the file to store the application profile at the end of the execution (Default: ``'')} \\ 
+    \hline
+    scheduler\_\newline config & String & \footnotesize{Path to the file which contains the scheduler configuration (Default: ``'')} \\ 
+    \hline
+    external\_\newline adaptation & Boolean & \footnotesize{Enable external adaptation. This option will disable the Resource Optimizer (Default: False)} \\ 
+    \hline
+    propatage\_\newline virtual\_\newline environment & Boolean & \footnotesize{Propagate the master virtual environment to the workers (Default: False)} \\ 
     \hline
     verbose        & Boolean & \footnotesize{Verbose mode (Default: False)} \\ 
     \hline
@@ -930,3 +1038,86 @@ The application can be executed as a common Jupyter notebook by steps or the who
 
 Please, note that once the COMPSs runtime has been stopped it is necessary to restart the python kernel in Jupyter before starting another COMPSs runtime.
 To this end, click on ``Kernel'' and ``Restart'' (or ``Restart \& Clear Output'' or ``Restart \& Run All'', depending on the need).
+
+
+\subsection{Integration with Numba}
+
+PyCOMPSs can also be used with Numba.
+Numba (\url{http://numba.pydata.org/}) is an Open Source JIT compiler for Python which provides a set of decorators and functionalities to translate Python functios to optimized machine code.
+
+\subsubsection{Basic usage}
+
+PyCOMPSs' tasks can be decorated with Numba's $@$jit/$@$njit decorator (with the appropiate parameters) just below the $@$task decorator in order to apply Numba to that task.
+
+\begin{lstlisting}[language=python]
+from pycompss.api.task import task     # Import @task decorator
+from numba import jit
+
+%*{\bf @task }*)(returns=1)
+%*{\bf @jit }*)()
+def numba_func(a, b):
+     ...
+\end{lstlisting}
+
+\subsubsection{Advanced usage}
+
+PyCOMPSs can be also used in conjuntion with the Numba's {\it $@$vectorize}, {\it $@$guvectorize}, {\it $@$stencil} and {\it $@$cfunc}. But since these decorators do not preserve
+the original argument specification of the original function, their usage is done through the {\it numba} parameter withih the {\it $@$task} decorator.
+This parameter accepts:
+\begin{itemize}
+ \item Boolean: True: Applies {\it jit} to the function.
+ \item Dictionary{k, v}: Applies {\it jit} with the dictionary parameters to the function (allows to specify specific jit parameters (e.g. {\it nopython=True})).
+ \item String:
+   \subitem ``jit'': Applies {\it jit} to the function.
+   \subitem ``njit'': Applies {\it jit} with {\it nopython=True} to the function.
+   \subitem ``generated\_jit'': Applies {\it generated\_jit} to the function.
+   \subitem ``vectorize'': Applies {\it vectorize} to the function.
+     \subsubitem Needs some extra flags in the {\it $@$task} decorator:
+     \subsubitem {\it numba\_signature}: String with the {\it vectorize} signature.
+   \subitem ``guvectorize'': Applies {\it guvectorize} to the function.
+     \subsubitem Needs some extra flags in the {\it $@$task} decorator:
+     \subsubitem {\it numba\_signature}: String with the {\it guvectorize} signature.
+     \subsubitem {\it numba\_declaration}: String with the {\it guvectorize} declaration.
+   \subitem ``stencil'': Applies {\it stencil} to the function.
+   \subitem ``cfunc'': Applies {\it cfunc} to the function.
+     \subsubitem Needs some extra flags in the {\it $@$task} decorator:
+     \subsubitem {\it numba\_signature}: String with the {\it cfunc} signature.
+\end{itemize}
+Moreover, the {\it $@$task} decorator also allows to define specific flags for the {\it jit}, {\it njit}, {\it generated\_jit}, {\it vectorize}, {\it guvectorize} and {\it cfunc} functionalities with the {\it numba\_flags} hint. This hint is used to declare a dictionary with the flags expected to use with these numba functionalities.
+The default flag included by PyCOMPSs is the {\it cache=True} in order to exploit the function caching of Numba across tasks.
+
+For example, to apply {\it jit} to a function:
+
+\begin{lstlisting}[language=python]
+from pycompss.api.task import task
+
+%*{\bf @task }*)(numba='jit')  # Aternatively: @task(numba=True)
+def jit_func(a, b):
+     ...
+\end{lstlisting}
+
+And if the developer wants to use specific flags with jit (e.g. {\it parallel=True}):
+
+\begin{lstlisting}[language=python]
+from pycompss.api.task import task
+
+%*{\bf @task }*)(numba='jit', numba_flags={'parallel':True})
+def jit_func(a, b):
+     ...
+\end{lstlisting}
+
+Other Numba's functionalities require the specification of the function signature and declaration.
+In the next example a task that will use the {\it vectorize} with three parameters and a specific flag to target the cpu is shown:
+
+\begin{lstlisting}[language=python]
+from pycompss.api.task import task
+
+%*{\bf @task }*)(returns=1, 
+        numba='vectorize',
+        numba_signature=['float32(float32, float32, float32)'],
+        numba_flags={'target':'cpu'})
+def vectorize_task(a, b, c):
+    return a * b * c 
+\end{lstlisting}
+
+Details about numba and the specification of the signature, declaration and flags can be found in the Numba's webpage (\url{http://numba.pydata.org/}).
