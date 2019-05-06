@@ -1,8 +1,8 @@
 \section{Python Binding}
 \label{sec:Python}
 
-COMPSs features a binding for Python 2 and 3 applications. The next subsections explain how to program a Python 
-application for COMPSs and a brief overview on how to execute it.
+COMPSs features a binding for Python 2 and 3 applications. 
+The next subsections explain how to program a Python application for COMPSs and a brief overview on how to execute it.
 
 \subsection{Programming Model}
 \label{subsec:Python_programming_model}
@@ -19,7 +19,7 @@ In particular, the user can select as a task:
 \end{itemize}
 
 The task definition in Python is done by means of Python decorators instead of an annotated interface. 
-In particular, the user needs to add a $@$task decorator that describes the task before the definition of the function/method.
+In particular, the user needs to add a {\it $@$task} decorator that describes the task before the definition of the function/method.
 
 As an example, let us assume that the application calls a function \textit{func}, which receives a file path (string parameter) 
 and an integer parameter. The code of \textit{func} updates the file.
@@ -61,6 +61,8 @@ decorator, the user has the following options:
  \item {\it FILE/FILE\_IN}: the parameter is a file. The direction is assumed to be {\it IN}.
  \item {\it FILE\_INOUT}: the parameter is a read-write file.
  \item {\it FILE\_OUT}: the parameter is a write-only file.
+ \item {\it COLLECTION\_IN}: the parameter is read-only collection.
+ \item {\it COLLECTION\_INOUT}: the parameter is read-write collection.
 \end{itemize}
 
 Consequently, please note that in the following cases there is no need to include an argument in 
@@ -88,17 +90,36 @@ are automatically inferred by COMPSs.
 from pycompss.api.task import task     # Import @task decorator
 from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
 
-%*{\bf @task }*)(f = FILE_INOUT)
+%*{\bf @task }*)(f=FILE_INOUT)
 def func(f, i):
      fd = open(f, 'r+')
      ...
 \end{lstlisting}
 
+Moreover, it is possible to specify that the parameter is a collection of elements (e.g. list) and its
+direction (COLLECTION\_IN or COLLECTION\_INOUT). 
+In this case, the list may contain sub-objects that will be handled automatically by the runtime.
+
+\begin{lstlisting}[language=python]
+from pycompss.api.task import task     # Import @task decorator
+from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
+
+%*{\bf @task }*)(my_collection=COLLECTION_IN)
+def func(my_collection):
+     for element in my_collection:
+     ...
+\end{lstlisting}
+\vspace{-0.5cm}
+In order to improve the performance, the depth of the sub-objects can be limited through the use of the
+{\it depth} parameter as:
+
+$@task(my\_collection=\{Type: COLLECTION\_IN, Depth: 2\})$ \\
+
 If the function or method returns a value, the programmer must use the {\it returns}  argument within
 the {\it $@$task} decorator. In this argument, the programmer can specify the type of that value:
 
 \begin{lstlisting}[language=python]
-@task(%*{\bf returns }*) = int)
+@task(%*{\bf returns }*)=int)
 def ret_func():
      return 1
 \end{lstlisting}
@@ -108,7 +129,7 @@ and their type in the {\it returns} argument. The next next code snippet shows h
 values (an integer and a list) are returned:
 
 \begin{lstlisting}[language=python]
-@task(%*{\bf returns }*) = (int, list))
+@task(%*{\bf returns }*)=(int, list))
 def ret_func():
      return 1, [2, 3]
 \end{lstlisting}
@@ -121,11 +142,11 @@ This consideration may lead to an error if the user expects to invoke a task def
 returned by a previous task. In this scenario, the solution is to specify explicitly the return type.
 
 \begin{lstlisting}[language=python]
-@task(%*{\bf returns }*) = 1)
+@task(%*{\bf returns }*)=1)
 def ret_func():
-     return "mystring"
+     return "my_string"
 
-@task(%*{\bf returns }*) = 2)
+@task(%*{\bf returns }*)=2)
 def ret_func():
      return 1, [2, 3]
 \end{lstlisting}
@@ -133,7 +154,7 @@ def ret_func():
 The use of {\it *args} and {\it **kwargs} as function parameters is also supported:
 
 \begin{lstlisting}[language=python]
-@task(%*{\bf returns }*) = int)
+@task(%*{\bf returns }*)=int)
 def argkwarg_func(*args, **kwargs):
     return sum(args) + len(kwargs)
 \end{lstlisting}
@@ -143,19 +164,19 @@ snippet shows an example of a task with two three parameters (whose one of them 
 value), {\it *args} and {\it **kwargs}.
 
 \begin{lstlisting}[language=python]
-@task(%*{\bf returns }*) = int)
+@task(%*{\bf returns }*)=int)
 def multiarguments_func(v, w, s = 2, *args, **kwargs):
     return (v * w) + sum(args) + len(kwargs) + s
 \end{lstlisting}
 
 For tasks corresponding to instance methods, by default the task is assumed to modify the callee object 
 (the object on which the method is invoked). The programmer can tell otherwise by setting the 
-{\it isModifier} argument of the {\it $@$task} decorator to {\it False}.
+{\it is\_modifier} argument of the {\it $@$task} decorator to {\it False}.
 
 \begin{lstlisting}[language=python]
 class MyClass(object):
     ...
-    @task(%*{\bf isModifier }*) = False)
+    @task(%*{\bf is\_modifier }*) = False)
     def instance_method(self):
         ... # self is NOT modified here
 \end{lstlisting}
@@ -170,24 +191,24 @@ any of the available low-priority (regular) tasks. This functionality is useful 
 the critical path of the application’s task dependency graph.
 
 \begin{lstlisting}[language=python]
-@task(%*{\bf priority }*) = True)
+@task(%*{\bf priority }*)=True)
 def func():
     ...
 \end{lstlisting}
 
-Moreover, the user can also mark a task as distributed with the {\it isDistributed} argument or as 
-replicated with the {\it isReplicated} argument. When a task is marked with {\it isDistributed=True}, 
+Moreover, the user can also mark a task as distributed with the {\it is\_distributed} argument or as 
+replicated with the {\it is\_replicated} argument. When a task is marked with {\it is\_distributed=True}, 
 the method must be scheduled in a forced round robin among the available resources.
-On the other hand, when a task is marked with {\it isReplicated=True}, the method must be executed in 
+On the other hand, when a task is marked with {\it is\_replicated=True}, the method must be executed in 
 all the worker nodes when invoked from the main application.
 The default value for these parameters is False.
 
 \begin{lstlisting}[language=python]
-@task(%*{\bf isDistributed }*) = True)
+@task(%*{\bf is\_distributed }*)=True)
 def func():
     ...
 
-@task(%*{\bf isReplicated }*) = True)
+@task(%*{\bf is\_replicated }*)=True)
 def func2():
     ...
 \end{lstlisting}
@@ -196,25 +217,28 @@ Table \ref{tab:task_decorator_arguments} summarizes the arguments that can be fo
 
 \bgroup
   \def\arraystretch{1.5}%
-  \begin{longtable}{| p{0.31\textwidth} | p{0.69\textwidth} |}
+  \begin{longtable}{| p{0.28\textwidth} | p{0.72\textwidth} |}
     \hline
     \multicolumn{1}{|c|}{{\bf Argument }}    &  \multicolumn{1}{c|}{{\bf Value }}\\
     \hline
-    \multirow{5}{*}{Formal parameter name}  &  - INOUT: read-write parameter, all types except file (primitives, strings, objects). \\
+    \multirow{5}{*}{Formal parameter name}  &  - IN: read-only parameter, all types. \\
+    & - INOUT: read-write parameter, all types except file (primitives, strings, objects). \\
     & - OUT: read-write parameter, all types except file (primitives, strings, objects). \\
     & - FILE/FILE\_IN: read-only file parameter. \\
     & - FILE\_INOUT: read-write file parameter. \\
     & - FILE\_OUT: write-only file parameter. \\
+    & - COLLECTION\_IN: read-only collection parameter (list). \\
+    & - COLLECTION\_INOUT: read-write collection parameter (list). \\
     \hline
     returns & int (for integer and boolean), long, float, str, dict, list, tuple, user-defined classes \\
     \hline
-    isModifier &  True (default) or False \\
+    is\_modifier &  True (default) or False \\
     \hline
     priority  & True or False (default) \\
     \hline
-    isDistributed & True or False (default) \\
+    is\_distributed & True or False (default) \\
     \hline
-    isReplicated  & True or False (default) \\
+    is\_replicated  & True or False (default) \\
     \hline
     \caption{Arguments of the {\it $@$task} decorator.}
     \label{tab:task_decorator_arguments}
@@ -471,8 +495,8 @@ from pycompss.api.task import task
 from pycompss.api.constraint import constraint
 from pycompss.api.parameter import INOUT
 
-%*{\bf @constraint }*)(ComputingUnits="4")
-%*{\bf @task }*)(c = INOUT)
+%*{\bf @constraint }*)(computing_units="4")
+%*{\bf @task }*)(c=INOUT)
 def func(a, b, c):
      c += a*b
      ...
@@ -489,8 +513,8 @@ from pycompss.api.task import task
 from pycompss.api.constraint import constraint
 from pycompss.api.parameter import INOUT
 
-%*{\bf @constraint }*)(ComputingUnits="4", AppSoftware="numpy,scipy,gnuplot", memorySize="$MIN_MEM_REQ")
-%*{\bf @task }*)(c = INOUT)
+%*{\bf @constraint }*)(computing_units="4", app_software="numpy,scipy,gnuplot", memory_size="$MIN_MEM_REQ")
+%*{\bf @task }*)(c=INOUT)
 def func(a, b, c):
      c += a*b
      ...
@@ -522,7 +546,7 @@ keeping this management invisible to the user.
 from pycompss.api.implement import implement
 
 @implement(source_class="sourcemodule", method="main_func")
-@constraint(AppSoftware="numpy")
+@constraint(app_software="numpy")
 @task(returns=list)
 def myfunctionWithNumpy(list1, list2):
     # Operate with the lists using numpy
@@ -604,7 +628,7 @@ compss_barrier()
 The corresponding task selection for the example above would be:
 
 \begin{lstlisting}[language=python]
-@task(f = FILE_OUT)
+@task(f=FILE_OUT)
 def func(f):
     ...
     
@@ -623,13 +647,13 @@ Table \ref{tab:python_api_functions} summarizes the API functions to be used in 
     \hline
     \multicolumn{1}{|c|}{{\bf Function }}    &  \multicolumn{1}{c|}{{\bf Use }}\\
     \hline
-    compss\_open(file\_name, mode = 'r') & Synchronizes for the last version of a file and returns its file descriptor. \\
+    compss\_open(file\_name, mode='r') & Synchronizes for the last version of a file and returns its file descriptor. \\
     \hline
     compss\_delete\_file(file\_name) & Notifies the runtime to remove a file. \\
     \hline
     compss\_delete\_object(object) & Notifies the runtime to delete the associated file to this object. \\
     \hline
-    compss\_wait\_on(obj, to\_write = True) & Synchronizes for the last version of an object (or a list of objects) and returns it. \\
+    compss\_wait\_on(obj, to\_write=True) & Synchronizes for the last version of an object (or a list of objects) and returns it. \\
     \hline
     compss\_barrier() & Wait for all tasks submitted before the barrier. \\
     \hline
@@ -672,7 +696,7 @@ If the programmer selects as a task a function or method that returns a value, t
 generated until the task executes. 
 
 \begin{lstlisting}[language=python]
-@task(%*{\bf returns }*) = MyClass)
+@task(%*{\bf returns }*)=MyClass)
 def ret_func():
     return MyClass(...)
 
@@ -745,8 +769,8 @@ o = ret_func()
 o.yet_another_task()
 \end{lstlisting}
 
-In order to make the COMPSs Python binding function correctly, the programmer should not use relative imports 
-in the code. Relative imports can lead to ambiguous code and they are discouraged in Python, as explained in:
+In order to make the COMPSs Python binding function correctly, the programmer should not use relative imports in the code.
+Relative imports can lead to ambiguous code and they are discouraged in Python, as explained in:
 
 \begin{lstlisting}[language=html]
 http://docs.python.org/2/faq/programming.html#what-are-the-best-practices-for-using-import-in-a-module
@@ -805,7 +829,7 @@ To this end, PyCOMPSs provides a module that provides two API calls: one for sta
 This module can be imported from the {\it pycompss} library:
 
 \begin{lstlisting}[language=python]
-import pycompss.interactive import ipycompss
+import pycompss.interactive as ipycompss
 \end{lstlisting}
 
 And contains two main functions: {\it start} and {\it stop}. These functions can then be invoked as follows for the COMPSs runtime deployment with default parameters:
