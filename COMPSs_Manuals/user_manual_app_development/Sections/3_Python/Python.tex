@@ -938,9 +938,9 @@ Table \ref{tab:python_api_jupyter_stop} summarizes the accepted parameters of th
     \hline
     log\_level     & String  & \footnotesize{PyCOMPSs log level. Options: ``off'', ``info'' and ``debug''.\newline (Default: ``off'')} \\
     \hline
-    o\_c           & Boolean & \footnotesize{Object conversion to string when possible (Default: False)} \\
+    debug          & Boolean & \footnotesize{COMPSs runtime debug (Default: False) (overrides log\_level)} \\
     \hline
-    debug          & Boolean & \footnotesize{COMPSs runtime debug (Default: False)} \\
+    o\_c           & Boolean & \footnotesize{Object conversion to string when possible (Default: False)} \\
     \hline
     graph          & Boolean & \footnotesize{Task dependency graph generation (Default: False)} \\
     \hline
@@ -954,39 +954,47 @@ Table \ref{tab:python_api_jupyter_stop} summarizes the accepted parameters of th
     \hline
     summary        & Boolean & \footnotesize{Show summary at the end of the execution (Default: False)} \\ 
     \hline
-    storageConf    & String  & \footnotesize{Storage configuration file path (Default: None)} \\ 
+    storage\_impl  & String  & \footnotesize{Path to an storage implementation (Default: None)} \\ 
     \hline
-    taskCount      & Integer & \footnotesize{Number of task definitions (Default: 50)} \\ 
+    storage\_conf  & String  & \footnotesize{Storage configuration file path (Default: None)} \\ 
     \hline
-    appName        & String  & \footnotesize{Application name (Default: ``Interactive'')} \\ 
+    task\_count    & Integer & \footnotesize{Number of task definitions (Default: 50)} \\ 
+    \hline
+    app\_name      & String  & \footnotesize{Application name (Default: ``Interactive'')} \\ 
     \hline
     uuid           & String  & \footnotesize{Application uuid (Default: None - Will be random)} \\ 
     \hline
-    baseLogDir     & String  & \footnotesize{Base directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location) (Default: User homeBase log path)} \\ 
+    base\_log\_dir & String  & \footnotesize{Base directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location) (Default: User homeBase log path)} \\ 
     \hline
-    specificLogDir & String  & \footnotesize{Use a specific directory to store COMPSs log files (the folder MUST exist and no sandbox is created) (Default: Disabled)} \\
+    specific\_log\_dir & String  & \footnotesize{Use a specific directory to store COMPSs log files (the folder MUST exist and no sandbox is created) (Default: Disabled)} \\
     \hline
-    extraeCfg      & String  & \footnotesize{Sets a custom extrae config file. Must be in a shared disk between all COMPSs workers (Default: None)} \\ 
+    extrae\_cfg    & String  & \footnotesize{Sets a custom extrae config file. Must be in a shared disk between all COMPSs workers (Default: None)} \\ 
     \hline
     comm           & String  & \footnotesize{Class that implements the adaptor for communications. Supported adaptors: ``es.bsc.compss.nio.master.NIOAdaptor'' and ``es.bsc.compss.gat.master.GATAdaptor'' (Default: ``es.bsc.compss.nio.master.NIOAdaptor'')} \\ 
     \hline
     conn           & String  & \footnotesize{Class that implements the runtime connector for the cloud. Supported connectors: ``es.bsc.compss.connectors.DefaultSSHConnector'' and ``es.bsc.compss.connectors.DefaultNoSSHConnector'' (Default: es.bsc.compss.connectors.DefaultSSHConnector)} \\ 
     \hline
-    MasterName     & String  & \footnotesize{Hostname of the node to run the COMPSs master (Default: ``'')}\\ 
+    master\_name   & String  & \footnotesize{Hostname of the node to run the COMPSs master (Default: ``'')}\\ 
     \hline
-    MasterPort     & String  & \footnotesize{Port to run the COMPSs master communications. Only for NIO adaptor (Default: ``[43000,44000]'')} \\ 
+    master\_port   & String  & \footnotesize{Port to run the COMPSs master communications. Only for NIO adaptor (Default: ``[43000,44000]'')} \\ 
     \hline
     scheduler      & String  & \footnotesize{Class that implements the Scheduler for COMPSs. Supported schedulers:\newline ``es.bsc.compss.scheduler.fullGraphScheduler.FullGraphScheduler'', ``es.bsc.compss.scheduler.fifoScheduler.FIFOScheduler'' and ``es.bsc.compss.scheduler.resourceEmptyScheduler.\newline ResourceEmptyScheduler''\newline (Default: ``es.bsc.compss.scheduler.loadBalancingScheduler.\newline LoadBalancingScheduler'')} \\ 
     \hline
-    jvmWorkers     & String  & \footnotesize{Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Default: ``-Xms1024m,-Xmx1024m,-Xmn400m'')} \\ 
+    jvm\_workers   & String  & \footnotesize{Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Default: ``-Xms1024m,-Xmx1024m,-Xmn400m'')} \\ 
     \hline
-    cpuAffinity    & String  & \footnotesize{Sets the CPU affinity for the workers. Supported options: ``disabled'', ``automatic'', user defined map of the form ``0-8/9,10,11/12-14,15,16'' (Default: ``automatic'')} \\ 
+    cpu\_affinity  & String  & \footnotesize{Sets the CPU affinity for the workers. Supported options: ``disabled'', ``automatic'', user defined map of the form ``0-8/9,10,11/12-14,15,16'' (Default: ``automatic'')} \\ 
     \hline
-    gpuAffinity    & String  & \footnotesize{Sets the GPU affinity for the workers. Supported options: ``disabled'', ``automatic'', user defined map of the form ``0-8/9,10,11/12-14,15,16'' (Default: ``automatic'')} \\ 
+    gpu\_affinity  & String  & \footnotesize{Sets the GPU affinity for the workers. Supported options: ``disabled'', ``automatic'', user defined map of the form ``0-8/9,10,11/12-14,15,16'' (Default: ``automatic'')} \\ 
     \hline
-    profileInput   & String  & \footnotesize{Path to the file which stores the input application profile (Default: ``'')} \\ 
+    profile\_input & String  & \footnotesize{Path to the file which stores the input application profile (Default: ``'')} \\ 
     \hline
-    profileOutput  & String  & \footnotesize{Path to the file to store the application profile at the end of the execution (Default: ``'')} \\ 
+    profile\_output   & String  & \footnotesize{Path to the file to store the application profile at the end of the execution (Default: ``'')} \\ 
+    \hline
+    scheduler\_\newline config & String & \footnotesize{Path to the file which contains the scheduler configuration (Default: ``'')} \\ 
+    \hline
+    external\_\newline adaptation & Boolean & \footnotesize{Enable external adaptation. This option will disable the Resource Optimizer (Default: False)} \\ 
+    \hline
+    propatage\_\newline virtual\_\newline environment & Boolean & \footnotesize{Propagate the master virtual environment to the workers (Default: False)} \\ 
     \hline
     verbose        & Boolean & \footnotesize{Verbose mode (Default: False)} \\ 
     \hline
