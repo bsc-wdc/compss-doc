@@ -46,7 +46,7 @@ The parameter types and directions can be:
 
 \begin{itemize}
  \item Types: {\it primitive types} (integer, long, float, boolean), {\it strings}, {\it objects} (instances of user-defined classes, dictionaries, lists, tuples, complex numbers) and {\it files} are supported.
- \item Direction: it can be read-only ({\it IN} - default), read-write ({\it INOUT}) or write-only ({\it OUT}).
+ \item Direction: it can be read-only ({\it IN} - default), read-write ({\it INOUT}), write-only ({\it OUT}) or in some cases concurrent ({\it CONCURRENT}).
 \end{itemize}
 
 COMPSs is able to automatically infer the parameter type for primitive types, strings and objects, 
@@ -58,9 +58,11 @@ decorator, the user has the following options:
  \item {\it IN}: the parameter is read-only. The type will be inferred.
  \item {\it INOUT}: the parameter is read-write. The type will be inferred.
  \item {\it OUT}: the parameter is write-only. The type will be inferred.
+ \item {\it CONCURRENT}: the parameter is read-write with concurrent acces. The type will be inferred.
  \item {\it FILE/FILE\_IN}: the parameter is a file. The direction is assumed to be {\it IN}.
  \item {\it FILE\_INOUT}: the parameter is a read-write file.
  \item {\it FILE\_OUT}: the parameter is a write-only file.
+ \item {\it FILE\_CONCURRENT}: the parameter is a concurrent read-write file.
  \item {\it COLLECTION\_IN}: the parameter is read-only collection.
  \item {\it COLLECTION\_INOUT}: the parameter is read-write collection.
 \end{itemize}
@@ -96,6 +98,20 @@ def func(f, i):
      ...
 \end{lstlisting}
 
+The user can also define that the access to a parameter is concurrent with {\it CONCURRENT} or to a file {\it FILE\_CONCURRENT}.
+This allows users to have access from multiple tasks to the same object/file during their executions.
+Please, note that COMPSs does not manage the interaction with the objects or files used/modified concurrently.
+Taking care of the access/modification of the concurrent objects is responsibility of the developer.
+
+\begin{lstlisting}[language=python]
+from pycompss.api.task import task     # Import @task decorator
+from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
+
+%*{\bf @task }*)(f=FILE_CONCURRENT)
+def func(f, i):
+     ...
+\end{lstlisting}
+
 Moreover, it is possible to specify that the parameter is a collection of elements (e.g. list) and its
 direction (COLLECTION\_IN or COLLECTION\_INOUT). 
 In this case, the list may contain sub-objects that will be handled automatically by the runtime.
@@ -109,7 +125,7 @@ def func(my_collection):
      for element in my_collection:
      ...
 \end{lstlisting}
-\vspace{-0.5cm}
+
 In order to improve the performance, the depth of the sub-objects can be limited through the use of the
 {\it depth} parameter as:
 
