@@ -269,7 +269,8 @@ In addition to this API functions, the programmer can use a set of decorators fo
 
 For instance, there is a set of decorators that can be placed over the {\it $@$task} decorator in order to 
 define the task methods as a binary invocation (with the {\it $@$binary} decorator), as a OmpSs invocation 
-(with the {\it $@$ompss} decorator), or as a MPI invocation (with the {\it $@$mpi} decorator).
+(with the {\it $@$ompss} decorator), as a MPI invocation (with the {\it $@$mpi} decorator), as a COMPSs application
+(with the {\it $@$compss} decorator), or as a task that requires multiple nodes (with the {\it $@$multinode} decorator).
 These decorators must be placed over the {\it $@$task} decorator, and under the {\it $@$constraint} decorator if 
 defined.
 
@@ -320,14 +321,14 @@ from pycompss.api.task import task
 from pycompss.api.binary import binary
 from pycompss.api.parameter import *
 
-@binary(binary="grep", workingDir=".")
+@binary(binary="grep", working_dir=".")
 @task(infile={Type:FILE_IN_STDIN}, result={Type:FILE_OUT_STDOUT})
 def grepper():
      pass
      
 # This task definition is equivalent to the folloowing, which is more verbose:
 
-@binary(binary="grep", workingDir=".")
+@binary(binary="grep", working_dir=".")
 @task(infile={Type:FILE_IN, Stream:STDIN}, result={Type:FILE_OUT, Stream:STDOUT})
 def grepper(keyword, infile, result):
      pass
@@ -405,7 +406,7 @@ The {\it $@$mpi} decorator shall be used to define that a task is going to invok
 \begin{lstlisting}[language=python]
 from pycompss.api.mpi import mpi
 
-@mpi(binary="mpiApp.bin", runner="mpirun", computingNodes=2)
+@mpi(binary="mpiApp.bin", runner="mpirun", computing_nodes=2)
 @task()
 def mpi_func():
      pass
@@ -414,6 +415,43 @@ def mpi_func():
 The MPI executable invocation can also be enriched with parameters, files and prefixes as with the 
 {\it $@$binary} decorator through the function parameters and {\it $@$task} decorator information.
 Please, check subparagraph \ref{subpar:binary_decorator} for more details.
+
+\subparagraph{COMPSs decorator}
+\label{subpar:compss_decorator}
+
+The {\it $@$compss} decorator shall be used to define that a task is going to be a COMPSs application.
+It enables to have nested PyCOMPSs\/COMPSs applications.
+
+\begin{lstlisting}[language=python]
+from pycompss.api.compss import compss
+
+@compss(runcompss="${RUNCOMPSS}", flags="-d", appname="/path/to/simple_compss_nested.py", computing_nodes="2")
+@task()
+def compss_func():
+     pass
+\end{lstlisting}
+
+The COMPSs application invocation can also be enriched with the flags accepted by the {\it runcompss} executable.
+Please, check execution manual for more details about the supported flags.
+
+\subparagraph{Multinode decorator}
+\label{subpar:multinode_decorator}
+
+The {\it $@$multinode} decorator shall be used to define that a task is going to use multiple nodes
+(e.g. using internal parallelism).
+
+\begin{lstlisting}[language=python]
+from pycompss.api.multinode import multinode
+
+@multinode(computing_nodes="2")
+@task()
+def multinode_func():
+     pass
+\end{lstlisting}
+
+The only supported parameter is {\it computing\_nodes}, used to define the number of nodes required by the task (the default value is 1).
+The mechanism to get the number of nodes, threads and their names to the task is through the {\it COMPSS\_NUM\_NODES}, {\it COMPSS\_NUM\_THREADS} and
+{\it COMPSS\_HOSTNAMES} environment variables respectively, which are exported within the task scope by the COMPSs runtime before the task execution.
 
 \subparagraph{Parameters summary}
 
@@ -426,18 +464,27 @@ Table \ref{tab:other_decorators} summarizes the parameters of these decorators.
     \multicolumn{1}{|c|}{{\bf Decorator }} &  \multicolumn{1}{c|}{{\bf Parameters }}\\
     \hline
         \multirow{2}{*}{{\bf $@$binary}} & {\bf binary}: (Mandatory) String defining the full path of the binary that must be executed. \\
-                                         & {\bf workingDir}: Full path of the binary working directory inside the COMPSs Worker. \\
+                                         & {\bf working\_dir}: Full path of the binary working directory inside the COMPSs Worker. \\
     \hline
         \multirow{2}{*}{{\bf $@$ompss}} & {\bf binary}: (Mandatory) String defining the full path of the binary that must be executed. \\
-                                        & {\bf workingDir}: Full path of the binary working directory inside the COMPSs Worker. \\
+                                        & {\bf working\_dir}: Full path of the binary working directory inside the COMPSs Worker. \\
     \hline
         \multirow{4}{*}{{\bf $@$mpi}} & {\bf binary}: (Mandatory) String defining the full path of the binary that must be executed. \\
-                                      & {\bf workingDir}: Full path of the binary working directory inside the COMPSs Worker. \\
-                                      & {\bf runner}: (Mandatory) String defining the mpi runner command. \\
-                                      & {\bf computingNodes}: Integer defining the number of computing nodes reserved for the MPI execution
-		                        (only a single node is reserved by default). \\
+                                      & {\bf working\_dir}: Full path of the binary working directory inside the COMPSs Worker. \\
+                                      & {\bf runner}: (Mandatory) String defining the MPI runner command. \\
+                                      & {\bf computing\_nodes}: Integer defining the number of computing nodes reserved for the MPI execution
+                                        (only a single node is reserved by default). \\
     \hline
-     \caption{$@$binary, $@$ompss and $@$mpi decorators params.}
+        \multirow{2}{*}{{\bf $@$compss}} & {\bf runcompss}: (Mandatory) String defining the full path of the runcompss binary that must be executed. \\
+                                         & {\bf flags}: String defining the flags needed for the runcompss execution. \\
+                                         & {\bf appname}: (Mandatory) String defining the application that must be executed. \\
+                                         & {\bf computing\_nodes}: Integer defining the number of computing nodes reserved for the COMPSs execution
+                                           (only a single node is reserved by default). \\
+    \hline
+        \multirow{2}{*}{{\bf $@$multinode}} & {\bf computing\_nodes}: Integer defining the number of computing nodes reserved for the task execution
+                                              (only a single node is reserved by default). \\
+    \hline
+     \caption{$@$binary, $@$ompss, $@$mpi, $@$compss and $@$multinode decorators' supported parameters.}
     \label{tab:other_decorators}
   \end{longtable}
 \egroup
