@@ -116,10 +116,6 @@ Note that there should exist a dependency between \verb|A| and \verb|A.b|. Howev
 to detect dependencies of that kind. These dependencies
 must be handled (and avoided) manually.
 
-\item \textbf{Python static methods}:\newline PyCOMPSs is not capable to resolve static methods (i.e: those that have the decorator
-\verb|@staticmethod|). It is recommended to use module functions
-instead.
-
 \item \textbf{Python modules with global states}:\newline Some modules (for example \verb|logging|) have internal variables apart from functions. 
 These modules are not guaranteed to work in PyCOMPSs due to the fact that master and worker code are executed in different interpreters. For instance, if a \verb|logging| configuration is set on some
 worker, it will not be visible from the master interpreter instance.
