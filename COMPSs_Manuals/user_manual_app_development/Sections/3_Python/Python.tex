@@ -591,6 +591,22 @@ def func(a, b, c):
      ...
 \end{lstlisting}
 
+Or another example requesting a CPU core and a GPU:
+
+\begin{lstlisting}[language=python]
+from pycompss.api.task import task
+from pycompss.api.constraint import constraint
+
+%*{\bf @constraint }*)(processors=[{'processorType':'CPU', 'computingUnits':'1'}, {'processorType':'GPU', 'computingUnits':'1'}])
+%*{\bf @task }*)(returns=1)
+def func(a, b, c):
+     ...
+     return result
+\end{lstlisting}
+
+When the task requests a GPU, COMPSs provides the information about the assigned GPU through the {\it COMPSS\_BINDED\_GPUS}, {\it CUDA\_VISIBLE\_DEVICES} and {\it GPU\_DEVICE\_ORDINAL} environment variables.
+This information can be gathered from the task code in order to use the GPU. \\
+
 Please, take into account that in order to respect the constraints, the peculiarities of the infrastructure must be defined in the {\it resources.xml} file.
 
 
