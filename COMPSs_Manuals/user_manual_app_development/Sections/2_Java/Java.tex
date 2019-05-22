@@ -134,6 +134,9 @@ A complete and detailed explanation of the usage of the metadata includes:
 			(it is a Direction parameter, defined as Direction.INOUT, Direction.IN or Direction.CONCURRENT).
 			\item \textbf{priority} "true" if the task takes priority and "false" otherwise. This parameter is used
 			by the COMPSs scheduler (it is a String not a Java boolean).
+			\item \textbf{onFailure} Expected behaviour if the task fails. \textit{OnFailure.RETRY} makes the task be executed again, 
+			\textit{OnFailure.CANCEL\_SUCCESSORS} cancels the following tasks, \textit{OnFailure.FAIL} stops the runtime once a task fails or 
+			\textit{OnFailure.IGNORE} ignores the failure and continues with normal runtime execution.
 		\end{itemize}
 		
 	 \item \textbf{@Binary:} Defines the Java method as a binary invokation
@@ -337,6 +340,23 @@ public class Main {
               object from memory when the task is finished */     
             %*{COMPSs.deregisterObject((Object) d);}*)
         }
+    }
+}
+\end{lstlisting}
+
+To synchronize files, the \textit{getFile} API call synchronizes a file, returning the last version of file with its original name. The code below contains an example of its usage.
+\begin{lstlisting}[language=java] 
+%*{\bf import es.bsc.compss.api.COMPSs;}*)
+
+public class Main {
+    public static void main(String[] args) {
+        for (int i=0; i<1; i++) {
+            TaskImpl.task(FILE_NAME, i);
+        }
+        /*Waits until all tasks have finished and 
+          synchronizes the file with its last version*/
+        %*{COMPSs.getFile(FILE\_NAME);}*)
+	}
     }
 }
 \end{lstlisting}
