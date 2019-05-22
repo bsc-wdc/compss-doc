@@ -117,7 +117,7 @@ The Java interface is used to declare the methods to be executed remotely along 
 specify the necessary metadata about the tasks. The metadata can be of three different types:
 
 \begin{enumerate}
- \item For each parameter of a method, the data type (currently {\it File} type, primitive types and the {\it String} type are supported) and its directions (IN, OUT or INOUT).
+ \item For each parameter of a method, the data type (currently {\it File} type, primitive types and the {\it String} type are supported) and its directions (IN, OUT, INOUT or CONCURRENT).
  \item The Java class that contains the code of the method.
  \item The constraints that a given resource must fulfill to execute the method, such as the number of processors or main memory size.
 \end{enumerate}
@@ -130,8 +130,8 @@ A complete and detailed explanation of the usage of the metadata includes:
          \item \textbf{@Method:} Defines the Java method as a task 
 		\begin{itemize}
 		        \item \textbf{declaringClass} (Mandatory) String specifying the class that implements the Java method.
-			\item \textbf{isModifier} "true" if the method modifies the implicit object, "false" otherwise 
-			(it is a String not a Java boolean).
+			\item \textbf{targetDirection} "INOUT" if the method modifies the implicit object, "IN" or "CONCURRENT" to be specified otherwise.
+			(it is a Direction parameter, defined as Direction.INOUT, Direction.IN or Direction.CONCURRENT).
 			\item \textbf{priority} "true" if the task takes priority and "false" otherwise. This parameter is used
 			by the COMPSs scheduler (it is a String not a Java boolean).
 		\end{itemize}
@@ -178,17 +178,17 @@ A complete and detailed explanation of the usage of the metadata includes:
 
  \item \textbf{Parameter-level Metadata (@Parameter):} for each parameter and method, the user must define:
        \begin{itemize}
-        \item \textbf{Direction:} \textit{Direction.IN, Direction.INOUT or Direction.OUT}
+        \item \textbf{Direction:} \textit{Direction.IN, Direction.INOUT, Direction.OUT or Direction.CONCURRENT}
         \item \textbf{Type:} COMPSs supports the following types for task parameters:
               \begin{itemize}
                \item \textbf{Basic types:} \textit{Type.BOOLEAN, Type.CHAR, Type.BYTE, Type.SHORT, Type.INT, Type.LONG,
                      Type.FLOAT, Type.DOUBLE}. They can only have \textbf{IN} direction, since primitive types in Java are
                      always passed by value.
                \item \textbf{String:} \textit{Type.STRING}. It can only have \textbf{IN} direction, since Java Strings are immutable.
-               \item \textbf{File:} \textit{Type.FILE}. It can have any direction (IN, OUT or INOUT). The real Java type associated
+               \item \textbf{File:} \textit{Type.FILE}. It can have any direction (IN, OUT, INOUT or CONCURRENT). The real Java type associated
                      with a FILE parameter is a String that contains the path to the file. However, if the user specifies
                      a parameter as a FILE, COMPSs will treat it as such.
-               \item \textbf{Object:} \textit{Type.Object}. It can have any direction (IN, OUT or INOUT).
+               \item \textbf{Object:} \textit{Type.Object}. It can have any direction (IN, OUT, INOUT or CONCURRENT).
               \end{itemize}
         \item \textbf{Return type:} Any object or a generic class object. In this case the direction is always OUT.
 \colorComment{Basic types are also supported as return types. However, we do not recommend to use them because they cause an implicit synchronization}
