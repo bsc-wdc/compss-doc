@@ -80,9 +80,12 @@ public static void main() {
  execution. Currently, the only way to avoid transferring these intermediate files is to manually erase them at the end of the
  master's code. Users must take into account that this only applies for files declared as task parameters and \textbf{not} for files
  created and/or erased inside a task. 
-
-\item \textbf{Python object hierarchy dependency detection}: \newline Dependencies are detected only on the objects that are task 
-parameters or outputs. Consider the following code:
+ 
+ \item \textbf{User defined classes in Python:} \newline User defined classes in Python \textbf{must not be} declared \textbf{in the same file
+ that contains the main method} (\emph{if \_\_name\_\_==\'\_\_main\_\_\'}) to avoid serialization problems of the objects.
+ 
+ \item \textbf{Python object hierarchy dependency detection}: \newline Dependencies are detected only on the objects that are task 
+ parameters or outputs. Consider the following code:
 \begin{lstlisting}[language=python]
 # a.py
 class A:
@@ -112,38 +115,39 @@ def main():
 if __name__ == '__main__':
   main()            
 \end{lstlisting}
-Note that there should exist a dependency between \verb|A| and \verb|A.b|. However, PyCOMPSs is not capable
-to detect dependencies of that kind. These dependencies
-must be handled (and avoided) manually.
+ Note that there should exist a dependency between \verb|A| and \verb|A.b|. However, PyCOMPSs is not capable
+ to detect dependencies of that kind. These dependencies
+ must be handled (and avoided) manually.
 
-\item \textbf{Python modules with global states}:\newline Some modules (for example \verb|logging|) have internal variables apart from functions. 
-These modules are not guaranteed to work in PyCOMPSs due to the fact that master and worker code are executed in different interpreters. For instance, if a \verb|logging| configuration is set on some
-worker, it will not be visible from the master interpreter instance.
+ \item \textbf{Python modules with global states}:\newline Some modules (for example \verb|logging|) have internal variables apart from functions. 
+ These modules are not guaranteed to work in PyCOMPSs due to the fact that master and worker code are executed in different interpreters. For instance, if a \verb|logging| configuration is set on some
+ worker, it will not be visible from the master interpreter instance.
 
-\item \textbf{Python global variables}:\newline
-This issue is very similar to the previous one. PyCOMPSs does not guarantee that applications that create or modify global variables while
-worker code is executed will work. In particular, this issue (and the previous one) is due to Python's Global Interpreter Lock (GIL).
+ \item \textbf{Python global variables}:\newline This issue is very similar to the previous one.
+ PyCOMPSs does not guarantee that applications that create or modify global variables while 
+ worker code is executed will work. In particular, this issue (and the previous one) is due to Python's Global Interpreter Lock (GIL).
 
-\item \textbf{Python application directory as a module}:\newline
-If the Python application root folder is a python module (i.e: it contains an \verb|__init__.py| file) then \verb|runcompss| must be called from
-the parent folder. For example, if the Python application is in a folder with an \verb|__init__.py| file named \verb|my_folder| then PyCOMPSs will
-resolve all functions, classes and variables as \verb|my_folder.object_name| instead of \verb|object_name|. For example, consider the following file
-tree:
+ \item \textbf{Python application directory as a module}:\newline
+ If the Python application root folder is a python module (i.e: it contains an \verb|__init__.py| file) then \verb|runcompss| must be called from
+ the parent folder. For example, if the Python application is in a folder with an \verb|__init__.py| file named \verb|my_folder| then PyCOMPSs will
+ resolve all functions, classes and variables as \verb|my_folder.object_name| instead of \verb|object_name|. For example, consider the following file
+ tree:
 \begin{lstlisting}[]
 my_apps/
 |- kmeans/
     |- __init__.py
     |- kmeans.py
 \end{lstlisting}
-Then the correct command to call this app is \verb|runcompss kmeans/kmeans.py| from the \verb|my_apps| directory.
+ Then the correct command to call this app is \verb|runcompss kmeans/kmeans.py| from the \verb|my_apps| directory.
 
-\item \textbf{Python early program exit}:\newline
-All intentional, premature exit operations must be done with \verb|sys.exit|. PyCOMPSs needs to perform some cleanup tasks before exiting and, if an early exit is performed with \verb|sys.exit|, the event will be captured,
-allowing PyCOMPSs to perform these tasks. If the exit operation is done in a different way then there is no guarantee that the application will end properly.
+ \item \textbf{Python early program exit}:\newline
+ All intentional, premature exit operations must be done with \verb|sys.exit|. 
+ PyCOMPSs needs to perform some cleanup tasks before exiting and, if an early exit is performed with \verb|sys.exit|, the event will be captured,
+ allowing PyCOMPSs to perform these tasks. If the exit operation is done in a different way then there is no guarantee that the application will end properly.
 
-\item \textbf{Python with numpy and MKL}:\newline
-Tasks that invoke numpy and MKL may experience issues if tasks use a different number of MKL threads. This is due to the fact that MKL reuses 
-threads along different calls and it does not change the number of threads from one call to another.
+ \item \textbf{Python with numpy and MKL}:\newline
+ Tasks that invoke numpy and MKL may experience issues if tasks use a different number of MKL threads. This is due to the fact that MKL reuses 
+ threads along different calls and it does not change the number of threads from one call to another.
 
 
 \end{itemize}

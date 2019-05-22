@@ -28,9 +28,13 @@ and an integer parameter. The code of \textit{func} updates the file.
 def func(file_path, value):
     # update the file 'file_path'
 
-my_file = '/tmp/sample_file.txt'
-func(my_file, 1)
+if __name__=='__main__':
+    my_file = '/tmp/sample_file.txt'
+    func(my_file, 1)
 \end{lstlisting}
+
+Please, note that the main code is defined within \emph{if \_\_name\_\_==\'\_\_main\_\_\'}.
+A better alternative would be to define the main code within a function and invoke it from the \emph{if \_\_name\_\_==\'\_\_main\_\_\'}.
 
 In order to select {\it func} as a task, the corresponding {\it $@$task} decorator needs to be placed right 
 before the definition of the function, providing some metadata about the parameters of that function. 
@@ -197,6 +201,9 @@ class MyClass(object):
         ... # self is NOT modified here
 \end{lstlisting}
 
+\textbf{NOTE:} In order to avoid serialization issues, the classes must not be declared in the same file that contains 
+the main method (\emph{if \_\_name\_\_==\'\_\_main\_\_\'}).
+
 \paragraph{Scheduler hints}
 
 The programmer can provide hints to the scheduler through specific arguments within the {\it @task} decorator.
@@ -333,9 +340,10 @@ def grepper():
 def grepper(keyword, infile, result):
      pass
      
-infile = "infile.txt"
-outfile = "outfile.txt"
-grepper("Hi", infile, outfile)
+if __name__=='__main__':
+    infile = "infile.txt"
+    outfile = "outfile.txt"
+    grepper("Hi", infile, outfile)
 \end{lstlisting}
 
 The invocation of the {\it grepper} task would be equivalent to:
@@ -360,11 +368,12 @@ from pycompss.api.parameter import *
 @task(hide={Type:FILE_IN, Prefix:"--hide="}, sort={Prefix:"--sort="})
 def myLs(flag, hide, sort):
     pass
-    
-flag = '-l'
-hideFile = "fileToHide.txt"
-sort = "time"
-myLs(flag, hideFile, sort)
+
+if __name__=='__main__':
+    flag = '-l'
+    hideFile = "fileToHide.txt"
+    sort = "time"
+    myLs(flag, hideFile, sort)
 \end{lstlisting}
 
 The invocation of the {\it myLs} task would be equivalent to:
@@ -694,25 +703,26 @@ from pycompss.api.api import compss_delete_file
 from pycompss.api.api import compss_wait_on
 from pycompss.api.api import compss_barrier
 
-my_file = 'file.txt'
-func(my_file)
-fd = %*{\bf compss\_open}*)(my_file)
-...
+if __name__=='__main__':
+    my_file = 'file.txt'
+    func(my_file)
+    fd = %*{\bf compss\_open}*)(my_file)
+    ...
 
-my_file2 = 'file2.txt'
-func(my_file2)
-fd = %*{\bf compss\_delete\_file}*)(my_file2)
-...
+    my_file2 = 'file2.txt'
+    func(my_file2)
+    fd = %*{\bf compss\_delete\_file}*)(my_file2)
+    ...
 
-my_obj = MyClass()
-my_obj.method()
-my_obj = %*{\bf compss\_wait\_on}*)(my_obj)
-...
+    my_obj = MyClass()
+    my_obj.method()
+    my_obj = %*{\bf compss\_wait\_on}*)(my_obj)
+    ...
 
-for i in range(10):
-    func(str(i) + my_file)
-compss_barrier()
-...
+    for i in range(10):
+        func(str(i) + my_file)
+    compss_barrier()
+    ...
 \end{lstlisting}
 
 The corresponding task selection for the example above would be:
@@ -774,10 +784,11 @@ def append_three_ones(v):
 def scale_vector(v, k):
     return [k*x for x in v]
 
-v = [1,2,3]
-append_three_ones(v)
-# %*{\bf v }*) is automatically synchronized when calling the scale_vector function.
-w = scale_vector(v, 2)
+if __name__=='__main__':
+    v = [1,2,3]
+    append_three_ones(v)
+    # %*{\bf v }*) is automatically synchronized when calling the scale_vector function.
+    w = scale_vector(v, 2)
 
 \end{lstlisting}
 
@@ -794,8 +805,9 @@ def ret_func():
 
 ...
 
-# %*{\bf o }*) is a future object
-o = ret_func()
+if __name__=='__main__':
+    # %*{\bf o }*) is a future object
+    o = ret_func()
 \end{lstlisting}
 
 The object returned can be involved in a subsequent task call, and the COMPSs runtime will automatically 
@@ -803,42 +815,45 @@ find the corresponding data dependency. In the following example, the object \te
 and callee of two subsequent (asynchronous) tasks, respectively:
 
 \begin{lstlisting}[language=python]
-# %*{\bf o }*) is a future object
-o = ret_func()
+if __name__=='__main__':
+    # %*{\bf o }*) is a future object
+    o = ret_func()
 
-...
+    ...
 
-another_task(o)
+    another_task(o)
 
-...
+    ...
 
-o.yet_another_task()
+    o.yet_another_task()
 \end{lstlisting}
 
 In order to synchronize the object from the main program, the programmer has to synchronize (using the \textit{compss\_wait\_on} function) in the same way 
 as with any object updated by a task:
 
 \begin{lstlisting}[language=python]
-# %*{\bf o }*) is a future object
-o = ret_func()
+if __name__=='__main__':
+    # %*{\bf o }*) is a future object
+    o = ret_func()
 
-...
+    ...
 
-o = compss_wait_on(o)
+    o = compss_wait_on(o)
 \end{lstlisting}
                          
 Moreover, it is possible to synchronize a list of objects. This is particularly useful when the programmer expect to synchronize more 
 than one elements (using the \textit{compss\_wait\_on} function):
 
 \begin{lstlisting}[language=python]
-# %*{\bf l }*) is a list of objects where some/all of them may be future objects
-l = []
-for i in range(10):
-    l.append(ret_func())
+if __name__=='__main__':
+    # %*{\bf l }*) is a list of objects where some/all of them may be future objects
+    l = []
+    for i in range(10):
+        l.append(ret_func())
 
-...
+    ...
 
-l = compss_wait_on(l)
+    l = compss_wait_on(l)
 \end{lstlisting}
                          
                          
@@ -847,18 +862,23 @@ should have an empty constructor, otherwise the programmer will not be able to i
 methods on those objects:
                                    
 \begin{lstlisting}[language=python]
+# In file utils.py
 class MyClass(object):
     def __init__(self): # empty constructor
         ...
         
     ...
 
-o = ret_func()
+# In file main.py
+from utils import MyClass
 
-# invoking a task instance method on a future object can only
-# be done when an empty constructor is defined in the object's
-# class
-o.yet_another_task()
+if __name__=='__main__':
+    o = ret_func()
+
+    # invoking a task instance method on a future object can only
+    # be done when an empty constructor is defined in the object's
+    # class
+    o.yet_another_task()
 \end{lstlisting}
 
 In order to make the COMPSs Python binding function correctly, the programmer should not use relative imports in the code.
