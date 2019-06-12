@@ -122,9 +122,15 @@ Usage: enqueue_compss [queue_system_options] [COMPSs_options]
                                             Default: disabled
                                             
     --constraints=<constraints>             Constraints to pass to queue system.
-                                            Default: disabled  
+                                            Default: disabled
+                                            
     --qos=<qos>                             Quality of Service to pass to the queue system.
                                             Default: default
+                                            
+    --cpus_per_task                         Activates the cpus per task allocation in the worker's execution.
+                                            Note that this allocation will be equal to the cpus_per_node in a worker node and
+                                            equal to the worker_in_master_cpus in a master node respectively.
+                                            Default: disabled
                                             
     --job_dependency=<jobID>                Postpone job execution until the job dependency has ended.
                                             Default: None
