@@ -49,14 +49,14 @@ The very first step to execute a COMPSs application in Docker is creating your a
 This must be done \textbf{only once} for every new application, and then you can run it as many times as needed. 
 If the application is updated for whatever reason, this step must be done again to create and share 
 the updated image. \\
-In order to do this, you must use the \textbf{runcompss-docker-gen-image} tool, which is available in the standard COMPSs application.
+In order to do this, you must use the \textbf{compss\_docker\_gen\_image} tool, which is available in the standard COMPSs application.
 This tool is the responsible of taking your application, create the needed image, and upload it to Dockerhub to share it. \\
 The image is created injecting your application into a COMPSs base image. This base image is available in Dockerhub. 
 In case you need it, you can pull it using the following command:
 \begin{lstlisting}[language=bash]
 docker pull compss/compss
 \end{lstlisting}
-The \textbf{runcompss-docker-gen-image} script receives 2 parameters:
+The \textbf{compss\_docker\_gen\_image} script receives 2 parameters:
 \begin{itemize}
  \item { 
  \textbf{-{}-c, -{}-context-dir:} \\ 
@@ -113,7 +113,7 @@ The runcompss-docker additional arguments are:
  
  \item { 
  \textbf{-{}-i, -{}-image-name:} \\
- Specify the image name of the application image in Dockerhub. Remember you must generate this with runcompss-docker-gen-image.
+ Specify the image name of the application image in Dockerhub. Remember you must generate this with compss\_docker\_gen\_image
  Remember as well that the format must be: 'DOCKERHUB\_USERNAME/APP\_IMAGE\_NAME:TAG' (the :TAG is optional). \\
  For example: \textbf{-{}-image-name='john123/my-compss-application:1.9'}
  }
@@ -230,7 +230,7 @@ We have created a Dockerhub account with username 'john123'.
 
 The first step will be creating the image:
 \begin{lstlisting}[language=bash]
-runcompss-docker-gen-image --context-dir='/home/john/matmul'
+compss_docker_gen_image    --context-dir='/home/john/matmul'
 			   --image-name='john123/matmul-example'
 \end{lstlisting}
 
@@ -269,7 +269,7 @@ that is also provided as an example COMPSs application to you:
 
 First step, create the image once:
 \begin{lstlisting}[language=bash]
-runcompss-docker-gen-image --context-dir='/home/laura/apps/kmeans'
+compss_docker_gen_image    --context-dir='/home/laura/apps/kmeans'
 			   --image-name='laura-67/my-kmeans'
 \end{lstlisting}
 
