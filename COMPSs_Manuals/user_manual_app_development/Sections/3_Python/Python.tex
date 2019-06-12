@@ -133,7 +133,12 @@ def func(my_collection):
 In order to improve the performance, the depth of the sub-objects can be limited through the use of the
 {\it depth} parameter as:
 
-$@task(my\_collection=\{Type: COLLECTION\_IN, Depth: 2\})$ \\
+\begin{lstlisting}[language=python]
+%*{\bf @task }*)(my_collection={Type: COLLECTION_IN, Depth: 2})
+def func(my_collection):
+     for element in my_collection:
+     ...
+\end{lstlisting}
 
 If the function or method returns a value, the programmer must use the {\it returns}  argument within
 the {\it $@$task} decorator. In this argument, the programmer can specify the type of that value:
@@ -191,12 +196,12 @@ def multiarguments_func(v, w, s = 2, *args, **kwargs):
 
 For tasks corresponding to instance methods, by default the task is assumed to modify the callee object 
 (the object on which the method is invoked). The programmer can tell otherwise by setting the 
-{\it targetDirection} argument of the {\it $@$task} decorator to {\it IN}.
+{\it target\_direction} argument of the {\it $@$task} decorator to {\it IN}.
 
 \begin{lstlisting}[language=python]
 class MyClass(object):
     ...
-    @task(%*{\bf targetDirection }*) = IN)
+    @task(%*{\bf target\_direction }*) = IN)
     def instance_method(self):
         ... # self is NOT modified here
 \end{lstlisting}
@@ -266,7 +271,7 @@ Table \ref{tab:task_decorator_arguments} summarizes the arguments that can be fo
     \hline
     returns & int (for integer and boolean), long, float, str, dict, list, tuple, user-defined classes \\
     \hline
-    targetDirection &  INOUT (default), IN or CONCURRENT \\
+    target\_direction &  INOUT (default), IN or CONCURRENT \\
     \hline
     priority  & True or False (default) \\
     \hline
@@ -442,12 +447,13 @@ Please, check subparagraph \ref{subpar:binary_decorator} for more details.
 \label{subpar:compss_decorator}
 
 The {\it $@$compss} decorator shall be used to define that a task is going to be a COMPSs application.
-It enables to have nested PyCOMPSs\/COMPSs applications.
+It enables to have nested PyCOMPSs/ COMPSs applications.
 
 \begin{lstlisting}[language=python]
 from pycompss.api.compss import compss
 
-@compss(runcompss="${RUNCOMPSS}", flags="-d", appname="/path/to/simple_compss_nested.py", computing_nodes="2")
+@compss(runcompss="${RUNCOMPSS}", flags="-d",
+        app_name="/path/to/simple_compss_nested.py", computing_nodes="2")
 @task()
 def compss_func():
      pass
@@ -499,7 +505,7 @@ Table \ref{tab:other_decorators} summarizes the parameters of these decorators.
     \hline
         \multirow{2}{*}{{\bf $@$compss}} & {\bf runcompss}: (Mandatory) String defining the full path of the runcompss binary that must be executed. \\
                                          & {\bf flags}: String defining the flags needed for the runcompss execution. \\
-                                         & {\bf appname}: (Mandatory) String defining the application that must be executed. \\
+                                         & {\bf app\_name}: (Mandatory) String defining the application that must be executed. \\
                                          & {\bf computing\_nodes}: Integer defining the number of computing nodes reserved for the COMPSs execution
                                            (only a single node is reserved by default). \\
     \hline
@@ -619,7 +625,8 @@ Or another example requesting a CPU core and a GPU:
 from pycompss.api.task import task
 from pycompss.api.constraint import constraint
 
-%*{\bf @constraint }*)(processors=[{'processorType':'CPU', 'computingUnits':'1'}, {'processorType':'GPU', 'computingUnits':'1'}])
+%*{\bf @constraint }*)(processors=[{'processorType':'CPU', 'computingUnits':'1'},
+                          {'processorType':'GPU', 'computingUnits':'1'}])
 %*{\bf @task }*)(returns=1)
 def func(a, b, c):
      ...
@@ -1115,22 +1122,22 @@ the original argument specification of the original function, their usage is don
 This parameter accepts:
 \begin{itemize}
  \item Boolean: True: Applies {\it jit} to the function.
- \item Dictionary{k, v}: Applies {\it jit} with the dictionary parameters to the function (allows to specify specific jit parameters (e.g. {\it nopython=True})).
+ \item Dictionary\{k, v\}: Applies {\it jit} with the dictionary parameters to the function (allows to specify specific jit parameters (e.g. {\it nopython=True})).
  \item String:
    \subitem ``jit'': Applies {\it jit} to the function.
    \subitem ``njit'': Applies {\it jit} with {\it nopython=True} to the function.
    \subitem ``generated\_jit'': Applies {\it generated\_jit} to the function.
    \subitem ``vectorize'': Applies {\it vectorize} to the function.
      \subsubitem Needs some extra flags in the {\it $@$task} decorator:
-     \subsubitem {\it numba\_signature}: String with the {\it vectorize} signature.
+     \subsubitem - {\it numba\_signature}: String with the {\it vectorize} signature.
    \subitem ``guvectorize'': Applies {\it guvectorize} to the function.
      \subsubitem Needs some extra flags in the {\it $@$task} decorator:
-     \subsubitem {\it numba\_signature}: String with the {\it guvectorize} signature.
-     \subsubitem {\it numba\_declaration}: String with the {\it guvectorize} declaration.
+     \subsubitem - {\it numba\_signature}: String with the {\it guvectorize} signature.
+     \subsubitem - {\it numba\_declaration}: String with the {\it guvectorize} declaration.
    \subitem ``stencil'': Applies {\it stencil} to the function.
    \subitem ``cfunc'': Applies {\it cfunc} to the function.
      \subsubitem Needs some extra flags in the {\it $@$task} decorator:
-     \subsubitem {\it numba\_signature}: String with the {\it cfunc} signature.
+     \subsubitem - {\it numba\_signature}: String with the {\it cfunc} signature.
 \end{itemize}
 Moreover, the {\it $@$task} decorator also allows to define specific flags for the {\it jit}, {\it njit}, {\it generated\_jit}, {\it vectorize}, {\it guvectorize} and {\it cfunc} functionalities with the {\it numba\_flags} hint. This hint is used to declare a dictionary with the flags expected to use with these numba functionalities.
 The default flag included by PyCOMPSs is the {\it cache=True} in order to exploit the function caching of Numba across tasks.
