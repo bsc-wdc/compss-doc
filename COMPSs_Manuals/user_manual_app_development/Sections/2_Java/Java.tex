@@ -130,12 +130,12 @@ A complete and detailed explanation of the usage of the metadata includes:
          \item \textbf{@Method:} Defines the Java method as a task 
 		\begin{itemize}
 		        \item \textbf{declaringClass} (Mandatory) String specifying the class that implements the Java method.
-			\item \textbf{targetDirection} "INOUT" if the method modifies the implicit object, "IN" or "CONCURRENT" to be specified otherwise.
-			(it is a Direction parameter, defined as Direction.INOUT, Direction.IN or Direction.CONCURRENT).
+			\item \textbf{targetDirection} This field specifies the direction of the target object of an object method. It can be defined as: INOUT" (default value) if the method modifies the target object, "CONCURRENT" if this object modification can be done concurrently, or ``IN'' if the method does not modify the target object.
+			().
 			\item \textbf{priority} "true" if the task takes priority and "false" otherwise. This parameter is used
 			by the COMPSs scheduler (it is a String not a Java boolean).
-			\item \textbf{onFailure} Expected behaviour if the task fails. \textit{OnFailure.RETRY} makes the task be executed again, 
-			\textit{OnFailure.CANCEL\_SUCCESSORS} cancels the following tasks, \textit{OnFailure.FAIL} stops the runtime once a task fails or 
+			\item \textbf{onFailure} Expected behaviour if the task fails. \textit{OnFailure.RETRY} (default value) makes the task be executed again, 
+			\textit{OnFailure.CANCEL\_SUCCESSORS} ignores the failure and cancels the succesor tasks, \textit{OnFailure.FAIL} stops the whole application in a save mode once a task fails or 
 			\textit{OnFailure.IGNORE} ignores the failure and continues with normal runtime execution.
 		\end{itemize}
 		
