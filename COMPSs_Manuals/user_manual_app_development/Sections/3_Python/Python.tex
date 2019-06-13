@@ -103,8 +103,9 @@ def func(f, i):
 \end{lstlisting}
 
 The user can also define that the access to a parameter is concurrent with {\it CONCURRENT} or to a file {\it FILE\_CONCURRENT}.
-This allows users to have access from multiple tasks to the same object/file during their executions.
-Please, note that COMPSs does not manage the interaction with the objects or files used/modified concurrently.
+Tasks that share a "CONCURRENT" parameter will be executed in parallel, if any other dependency prevents this. 
+The CONCURRENT direction allows users to have access from multiple tasks to the same object/file during their executions.
+However, note that COMPSs does not manage the interaction with the objects or files used/modified concurrently.
 Taking care of the access/modification of the concurrent objects is responsibility of the developer.
 
 \begin{lstlisting}[language=python]
@@ -116,9 +117,12 @@ def func(f, i):
      ...
 \end{lstlisting}
 
-Moreover, it is possible to specify that the parameter is a collection of elements (e.g. list) and its
+Moreover, it is possible to specify that a parameter is a collection of elements (e.g. list) and its
 direction (COLLECTION\_IN or COLLECTION\_INOUT). 
-In this case, the list may contain sub-objects that will be handled automatically by the runtime.
+In this case, the list may contain sub-objects that will be handled automatically by the runtime. 
+It is important to annotate data structures as collections if in other tasks there are accesses to individual elements of these collections as parameters. 
+Without this annotation, the runtime will not be able to identify data dependences between the collections and the individual elements. 
+
 
 \begin{lstlisting}[language=python]
 from pycompss.api.task import task     # Import @task decorator
@@ -241,11 +245,11 @@ def func2():
     ...
 \end{lstlisting}
 
-In case a task fails, its failure behaviour can be defined using the {\it on\_failure} argument. It has 
+In case a task fails, the whole application behaviour can be defined using the {\it on\_failure} argument. It has 
 four possible values: 'RETRY', 'CANCEL\_SUCCESSORS', 'FAIL' and 'IGNORE'. 'RETRY' is the default behaviour, 
-making the task be executed again, both on the same worker and changing worker if it continues failing. 
-'CANCEL\_SUCCESSORS' cancels the following tasks to be executed, 'FAIL' stops the runtime once a task fails and 
-'IGNORE' ignores the failure and continues with runtime normal execution.
+making the task to be executed again, on the same worker or in another worker if the failure remains. 
+'CANCEL\_SUCCESSORS' ignores the failed task and cancels the execution of the successor tasks, 'FAIL' stops the whole execution once a task fails and 
+'IGNORE' ignores the failure and continues with the normal execution.
 \begin{lstlisting}[language=python]
 @task(%*{\bf on\_failure }*)='CANCEL_SUCCESSORS')
 def func():
@@ -262,10 +266,12 @@ Table \ref{tab:task_decorator_arguments} summarizes the arguments that can be fo
     \hline
     \multirow{5}{*}{Formal parameter name}  &  - IN: read-only parameter, all types. \\
     & - INOUT: read-write parameter, all types except file (primitives, strings, objects). \\
-    & - OUT: read-write parameter, all types except file (primitives, strings, objects). \\
+    & - OUT: write-only parameter, all types except file (primitives, strings, objects). \\
+    & - CONCURRENT : concurrent read-write parameter, all types except file (primitives, strings, objects). \\
     & - FILE/FILE\_IN: read-only file parameter. \\
     & - FILE\_INOUT: read-write file parameter. \\
     & - FILE\_OUT: write-only file parameter. \\
+    & - FILE\_CONCURRENT: concurrent read-write file parameter. \\ 
     & - COLLECTION\_IN: read-only collection parameter (list). \\
     & - COLLECTION\_INOUT: read-write collection parameter (list). \\
     \hline
