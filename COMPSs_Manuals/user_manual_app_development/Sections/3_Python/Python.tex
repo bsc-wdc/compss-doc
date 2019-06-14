@@ -125,23 +125,25 @@ Without this annotation, the runtime will not be able to identify data dependenc
 
 
 \begin{lstlisting}[language=python]
-from pycompss.api.task import task     # Import @task decorator
-from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
+from pycompss.api.task import task                # Import @task decorator
+from pycompss.api.parameter import COLLECTION_IN  # Import parameter metadata for the @task decorator
 
 %*{\bf @task }*)(my_collection=COLLECTION_IN)
 def func(my_collection):
      for element in my_collection:
-     ...
+         ...
 \end{lstlisting}
 
-In order to improve the performance, the depth of the sub-objects can be limited through the use of the
-{\it depth} parameter as:
+The sub-objects of the collection can be collections of elements (and recursively). In this case, the runtime also keeps track of all elements contained in all sub-collections.
+In order to improve the performance, the depth of the sub-objects can be limited through the use of the {\it depth} parameter as:
 
 \begin{lstlisting}[language=python]
 %*{\bf @task }*)(my_collection={Type: COLLECTION_IN, Depth: 2})
 def func(my_collection):
-     for element in my_collection:
-     ...
+     for inner_collection in my_collection:
+         for element in inner_collection:
+             # The contents of element will not be tracked
+             ...
 \end{lstlisting}
 
 If the function or method returns a value, the programmer must use the {\it returns}  argument within
@@ -213,6 +215,8 @@ class MyClass(object):
 \textbf{NOTE:} In order to avoid serialization issues, the classes must not be declared in the same file that contains 
 the main method (\emph{if \_\_name\_\_==\'\_\_main\_\_\'}).
 
+\vspace{-0.2cm}
+
 \paragraph{Scheduler hints}
 
 The programmer can provide hints to the scheduler through specific arguments within the {\it @task} decorator.
@@ -222,11 +226,15 @@ For instance, the programmer can mark a task as a high-priority task with the {\
 any of the available low-priority (regular) tasks. This functionality is useful for tasks that are in 
 the critical path of the application’s task dependency graph.
 
+\vspace{-0.1cm}
+
 \begin{lstlisting}[language=python]
 @task(%*{\bf priority }*)=True)
 def func():
     ...
 \end{lstlisting}
+
+\vspace{-0.2cm}
 
 Moreover, the user can also mark a task as distributed with the {\it is\_distributed} argument or as 
 replicated with the {\it is\_replicated} argument. When a task is marked with {\it is\_distributed=True}, 
@@ -234,6 +242,8 @@ the method must be scheduled in a forced round robin among the available resourc
 On the other hand, when a task is marked with {\it is\_replicated=True}, the method must be executed in 
 all the worker nodes when invoked from the main application.
 The default value for these parameters is False.
+
+\vspace{-0.1cm}
 
 \begin{lstlisting}[language=python]
 @task(%*{\bf is\_distributed }*)=True)
@@ -245,11 +255,16 @@ def func2():
     ...
 \end{lstlisting}
 
+\vspace{-0.2cm}
+
 In case a task fails, the whole application behaviour can be defined using the {\it on\_failure} argument. It has 
 four possible values: 'RETRY', 'CANCEL\_SUCCESSORS', 'FAIL' and 'IGNORE'. 'RETRY' is the default behaviour, 
 making the task to be executed again, on the same worker or in another worker if the failure remains. 
 'CANCEL\_SUCCESSORS' ignores the failed task and cancels the execution of the successor tasks, 'FAIL' stops the whole execution once a task fails and 
 'IGNORE' ignores the failure and continues with the normal execution.
+
+\vspace{-0.1cm}
+
 \begin{lstlisting}[language=python]
 @task(%*{\bf on\_failure }*)='CANCEL_SUCCESSORS')
 def func():
@@ -264,7 +279,8 @@ Table \ref{tab:task_decorator_arguments} summarizes the arguments that can be fo
     \hline
     \multicolumn{1}{|c|}{{\bf Argument }}    &  \multicolumn{1}{c|}{{\bf Value }}\\
     \hline
-    \multirow{5}{*}{Formal parameter name}  &  - IN: read-only parameter, all types. \\
+    \multirow{12}{*}{Formal parameter name}  &  {\bf (default: empty)}: The parameter is an object or a simple tipe that will be inferred. \\
+    & - IN: read-only parameter, all types. \\
     & - INOUT: read-write parameter, all types except file (primitives, strings, objects). \\
     & - OUT: write-only parameter, all types except file (primitives, strings, objects). \\
     & - CONCURRENT : concurrent read-write parameter, all types except file (primitives, strings, objects). \\
@@ -274,6 +290,7 @@ Table \ref{tab:task_decorator_arguments} summarizes the arguments that can be fo
     & - FILE\_CONCURRENT: concurrent read-write file parameter. \\ 
     & - COLLECTION\_IN: read-only collection parameter (list). \\
     & - COLLECTION\_INOUT: read-write collection parameter (list). \\
+    & - Dictionary: \{Type:(empty=object)/FILE/COLLECTION, Direction:(empty=IN)/IN/INOUT/OUT/CONCURRENT\} \\
     \hline
     returns & int (for integer and boolean), long, float, str, dict, list, tuple, user-defined classes \\
     \hline
@@ -418,6 +435,8 @@ This feature enables to build more complex binary invocations.
 
 The {\it $@$ompss} decorator shall be used to define that a task is going to invoke a OmpSs executable.
 
+\vspace{1.0cm}
+
 \begin{lstlisting}[language=python]
 from pycompss.api.ompss import ompss
 
@@ -430,6 +449,8 @@ def ompss_func():
 The OmpSs executable invocation can also be enriched with parameters, files and prefixes as with the 
 {\it $@$binary} decorator through the function parameters and {\it $@$task} decorator information.
 Please, check subparagraph \ref{subpar:binary_decorator} for more details.
+
+\vspace{-0.2cm}
 
 \subparagraph{MPI decorator}
 \label{subpar:mpi_decorator}
@@ -449,6 +470,8 @@ The MPI executable invocation can also be enriched with parameters, files and pr
 {\it $@$binary} decorator through the function parameters and {\it $@$task} decorator information.
 Please, check subparagraph \ref{subpar:binary_decorator} for more details.
 
+\vspace{-0.2cm}
+
 \subparagraph{COMPSs decorator}
 \label{subpar:compss_decorator}
 
@@ -467,6 +490,8 @@ def compss_func():
 
 The COMPSs application invocation can also be enriched with the flags accepted by the {\it runcompss} executable.
 Please, check execution manual for more details about the supported flags.
+
+\vspace{-0.2cm}
 
 \subparagraph{Multinode decorator}
 \label{subpar:multinode_decorator}
@@ -492,7 +517,7 @@ The mechanism to get the number of nodes, threads and their names to the task is
 Table \ref{tab:other_decorators} summarizes the parameters of these decorators.
 
 \bgroup
-  \def\arraystretch{1.5}%
+  \def\arraystretch{1.4}%
   \begin{longtable}{| p{0.25\textwidth} | p{0.75\textwidth} |}
     \hline
     \multicolumn{1}{|c|}{{\bf Decorator }} &  \multicolumn{1}{c|}{{\bf Parameters }}\\
@@ -523,8 +548,10 @@ Table \ref{tab:other_decorators} summarizes the parameters of these decorators.
   \end{longtable}
 \egroup
 
-Table \ref{tab:other_parameters} summarizes the parameter key that can be used within the {\it $@$task} decorator for the 
-function parameters when using these decorators.
+In addition to the parameters that can be used within the {\it $@$task} decorator described in Table \ref{tab:task_decorator_arguments},
+Table \ref{tab:other_parameters} summarizes the {\it Stream} parameter that can be used within the {\it $@$task} decorator for the function 
+parameters when using the $@$binary, $@$ompss and $@$mpi decorators. In particular, the {\it Stream} parameter is used to indicate that a 
+parameter is going to be considered as a {\it FILE} but as a stream (e.g. $>$, $<$ and $2>$  in bash) for the $@$binary, $@$ompss and $@$mpi calls.
 
 \bgroup
   \def\arraystretch{1.5}%
@@ -532,26 +559,17 @@ function parameters when using these decorators.
     \hline
     \multicolumn{1}{|c|}{{\bf Parameter key}} &  \multicolumn{1}{c|}{{\bf Values }}\\
     \hline
-        \multirow{3}{*}{{\bf Type}} & {\bf (default: empty)}: The parameter is an object or a simple tipe that will be inferred. \\
-                                    & {\bf COLLECTION}: The parameter is a collection. \\
-                                    & {\bf FILE}: The parameter is a file. \\
-                                    & {\bf Table \ref{tab:other_parameters_shortcuts} shortcut}: See table below.\\
-    \hline
-        \multirow{4}{*}{{\bf Direction}} & {\bf (default: empty)}: In direction. \\
-                                         & {\bf IN}: In direction. \\
-                                         & {\bf OUT}: Out direction. \\
-                                         & {\bf INOUT}: In and out direction. \\
-                                         & {\bf CONCURRENT}: Concurrent direction. \\
-    \hline
         \multirow{4}{*}{{\bf Stream}} & {\bf (default: empty)}: Not a stream. \\
                                       & {\bf STDIN}: Standard input. \\
                                       & {\bf STDOUT}: Standard output. \\
                                       & {\bf STDERR}: Standard error. \\
     \hline
-     \caption{Parameters definition for the $@$binary, $@$ompss and $@$mpi decorators}
+     \caption{Supported Streams for the $@$binary, $@$ompss and $@$mpi decorators}
     \label{tab:other_parameters}
   \end{longtable}
 \egroup
+
+\vspace{-0.4cm}
 
 Moreover, there are some shorcuts that can be used for files type definition as parameters within the {\it $@$task} decorator (Table \ref{tab:other_parameters_shortcuts}).
 It is not necessary to indicate the {\it Direction} nor the {\it Stream} since it may be already be indicated with the shorcut.
@@ -618,7 +636,9 @@ from pycompss.api.task import task
 from pycompss.api.constraint import constraint
 from pycompss.api.parameter import INOUT
 
-%*{\bf @constraint }*)(computing_units="4", app_software="numpy,scipy,gnuplot", memory_size="$MIN_MEM_REQ")
+%*{\bf @constraint }*)(computing_units="4", 
+              app_software="numpy,scipy,gnuplot", 
+              memory_size="$MIN_MEM_REQ")
 %*{\bf @task }*)(c=INOUT)
 def func(a, b, c):
      c += a*b
@@ -626,6 +646,8 @@ def func(a, b, c):
 \end{lstlisting}
 
 Or another example requesting a CPU core and a GPU:
+
+\vspace{1.0cm}
 
 \begin{lstlisting}[language=python]
 from pycompss.api.task import task
