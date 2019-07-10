@@ -158,6 +158,7 @@ Besides the aforementioned {\bf compss\_on}, {\bf compss\_off} and {\bf compss\_
 
 
 \subsubsection{Functions file}
+\label{sec:functionsfile}
 The implementation of the tasks in a C or C++ program has to be provided in a functions file. 
 Its name must be the same as the main file followed by the suffix ``-functions''. In our case Matmul-functions.cc.
 
@@ -179,7 +180,9 @@ In the previous code, class methods have been encapsulated inside a function.
 This is useful when the class method returns an object or a value and we want to avoid the explicit 
 synchronization when returning from the method.
 
-\subsubsection{Additional source Files}
+\subsubsection{Additional source files}
+\label{sec:additionalsources}
+
 Other source files needed by the user application must be placed under the directory ``{\bf src}''.
 In this directory the programmer must provide a {\bf Makefile} that compiles such source files in the proper way. 
 When the binding compiles the whole application it will enter into the src directory and execute the Makefile.
@@ -328,7 +331,58 @@ interface Matmul
 };
 \end{lstlisting}
 
+\subsection{Use of programming models inside tasks}
 
+To improve COMPSs performance in some cases, C/C++ binding offers the possibility to use programming models inside tasks. This feature allows the user to exploit the potential parallelism in their application's tasks.
+
+\subsubsection{OmpSs}
+\label{sec:ompss}
+
+COMPSs C/C++ binding supports the use of the programming model OmpSs. To use OmpSs inside COMPSs tasks we have to annotate the implemented tasks. The implementation of tasks was described in section \ref{sec:functionsfile}. The following code shows a COMPSs C/C++ task without the use of OmpSs.
+
+\begin{lstlisting}[language=C++]
+void compss_task(int* a, int N) {
+
+    int i;
+    for (i = 0; i < N; ++i) {
+    	a[i] = i;
+    }
+}
+\end{lstlisting}
+
+This code will assign to every array element its position in it. A possible use of OmpSs is the following.
+
+\begin{lstlisting}[language=C++]
+void compss_task(int* a, int N) {
+    int i;
+
+    for (i = 0; i < N; ++i) {
+			#pragma omp task
+			{
+    		a[i] = i;
+			}
+    }
+}
+\end{lstlisting}
+
+This will result in the parallelization of the array initialization, of course this can be applied to more complex implementations and the directives offered by OmpSs are much more. You can find the documentation and specification in \url{https://pm.bsc.es/ompss}.
+\par\bigskip
+There's also the possibility to use a newer version of the OmpSs programming model which introduces significant improvements, OmpSs-2. The changes at user level are minimal, the following image shows the array initialization using OmpSs-2.
+
+\begin{lstlisting}[language=C++]
+void compss_task(int* a, int N) {
+    int i;
+
+    for (i = 0; i < N; ++i) {
+			#pragma oss task
+			{
+    		a[i] = i;
+			}
+    }
+}
+\end{lstlisting}
+
+Documentation and specification of OmpSs-2 can be found in \url{https://pm.bsc.es/ompss-2}.
 
 \subsection{Application Compilation}
 
@@ -368,7 +422,7 @@ Command successful.
 
 \end{lstlisting}
 
-In order to build an application for a different architecture e.g. {\it armhf}, an environment must be provided, indicating the compiler used to cross-compile, and also the location of some COMPSs dependences such as java or boost which must be compliant with the target architecture. This environment is passed by flags and arguments;
+In order to build an application for a different architecture e.g. {\it armhf}, an environment must be provided, indicating the compiler used to cross-compile, and also the location of some COMPSs dependencies such as java or boost which must be compliant with the target architecture. This environment is passed by flags and arguments;
 
 \begin{lstlisting}[language=bash]
 user@localhost:~/matmul_objects$ compss_build_app --cross-compile --cross-compile-prefix=arm-linux-gnueabihf- --java_home=/usr/lib/jvm/java-1.8.0-openjdk-armhf Matmul
@@ -404,6 +458,7 @@ The {\textbf {\textit cross-compile}} flag is used to indicate the users desire 
 
 
 \subsubsection{Multiple architectures}
+
 
 The user command ``{\bf compss\_build\_app\_multi\_arch}'' allows a to compile an application for several architectures. Users are able to compile both master and worker for one or more architectures. Environments for the target architectures are defined in a file specified by {\textbf{\textit cfg}} flag. Imagine you wish to build your application to run the master in your Intel-based machine and the worker also in your native machine and in an ARM-based machine, without this command you would have to execute several times the command for a single architecture using its cross compile features. With the multiple architecture command is done in the following way.
 
@@ -501,6 +556,26 @@ Building for single architectures would lead to a directory structure quite diff
 (Note than only directories are shown).
 
 \end{lstlisting}
+
+\subsubsection{Using OmpSs}
+
+As described in section \ref{sec:ompss} applications can use OmpSs and OmpSs-2 programming models. The compilation process differs a little bit compared with a normal COMPSs C/C++ application. Applications using OmpSs must be compiled using the \textit{-{}-ompss} option in the compss\_build\_app command.
+
+\begin{lstlisting}[language=bash]
+user@localhost:~/matmul_objects$ compss_build_app --ompss Matmul
+\end{lstlisting}
+
+Executing the previous command will start the compilation of the application. Sometimes due to configuration issues OmpSs can not be found, the option \textit{-{}-with\_ompss=/path/to/ompss} specifies the OmpSs path that the user wants to use in the compilation.
+
+\par\bigskip
+
+Applications using OmpSs-2 are similarly compiled. The options to compile with OmpSs-2 are \textit{-{}-ompss-2} and \textit{-{}-with\_ompss-2=/path/to/ompss-2}
+
+\begin{lstlisting}[language=bash]
+user@localhost:~/matmul_objects$ compss_build_app --with_ompss-2=/home/mdomingu/ompss-2 --ompss-2 Matmul
+\end{lstlisting}
+
+Remember that additional source files can be used in COMPSs C/C++ applications, if the user expects OmpSs or OmpSs-2 to be used in those files she, must be sure that the files are properly compiled with OmpSs or OmpSs-2.
 
 \subsection{Application Execution}
 
