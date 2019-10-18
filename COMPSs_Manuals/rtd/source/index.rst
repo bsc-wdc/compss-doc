@@ -15,11 +15,11 @@ Welcome to COMPSs's documentation!
    :caption: Table of Contents
 
    Sections/00_Intro
-   Sections/01_Installation_Manual
+   Sections/01_Installation
    Sections/02_User_Manual_App_Development
    Sections/03_User_Manual_App_Exec
-   Sections/04_Supercomputers_Manual
-   Sections/05_Tracing_Manual
+   Sections/04_Supercomputers
+   Sections/05_Tracing
    Sections/06_Sample_Applications
 
 
