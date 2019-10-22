@@ -11,21 +11,27 @@ list provides a general overview of the COMPSs dependencies. For
 specific information about your distribution please check the *Depends*
 section at your package manager (apt, yum, zypper, etc.).
 
+.. table:: COMPSs dependencies
+    :name: COMPSs_dependencies
+    :widths: auto
 
-+-------------------------+---------------------------------------------------------------------------------+
-| COMPSs Runtime          | openjdk-8-jre, graphviz, xdg-utils, openssh-server                              |
-+=========================+=================================================================================+
-| COMPSs Python Binding   | | libtool, automake, build-essential, python (>= 2.7 \| >=3.6),                 |
-|                         | | python-dev \| python3-dev, python-setuptools\|python3-setuptools,             |
-|                         | | libpython2.7                                                                  |
-+-------------------------+---------------------------------------------------------------------------------+
-| COMPSs C/C++ Binding    | | libtool, automake, build-essential, libboost-all-dev, libxml2-dev             |
-+-------------------------+---------------------------------------------------------------------------------+
-| COMPSs Autoparallel     | | libgmp3-dev, flex, bison, libbison-dev, texinfo, libffi-dev, astor,           |
-|                         | | sympy, enum34, islpy                                                          |
-+-------------------------+---------------------------------------------------------------------------------+
-| COMPSs Tracing          | | libxml2 (>= 2.5), libxml2-dev (>= 2.5), gfortran, papi                        |
-+-------------------------+---------------------------------------------------------------------------------+
+    +-------------------------+---------------------------------------------------------------------------------+
+    | Module                  | Dependencies                                                                    |
+    +=========================+=================================================================================+
+    | **COMPSs Runtime**      | | **openjdk-8-jre, graphviz, xdg-utils, openssh-server**                        |
+    +-------------------------+---------------------------------------------------------------------------------+
+    | COMPSs Python Binding   | | libtool, automake, build-essential, python (>= 2.7 \| >=3.6),                 |
+    |                         | | python-dev \| python3-dev, python-setuptools\|python3-setuptools,             |
+    |                         | | libpython2.7                                                                  |
+    +-------------------------+---------------------------------------------------------------------------------+
+    | COMPSs C/C++ Binding    | | libtool, automake, build-essential, libboost-all-dev, libxml2-dev             |
+    +-------------------------+---------------------------------------------------------------------------------+
+    | COMPSs Autoparallel     | | libgmp3-dev, flex, bison, libbison-dev, texinfo, libffi-dev, astor,           |
+    |                         | | sympy, enum34, islpy                                                          |
+    +-------------------------+---------------------------------------------------------------------------------+
+    | COMPSs Tracing          | | libxml2 (>= 2.5), libxml2-dev (>= 2.5), gfortran, papi                        |
+    +-------------------------+---------------------------------------------------------------------------------+
+
 
 Build Dependencies
 ------------------
@@ -49,15 +55,15 @@ This section describes the steps to install COMPSs from the sources.
 
 The first step is downloading the source code from the Git repository.
 
-.. code-block:: bash
+.. code-block:: console
 
-    $> git clone https://github.com/bsc-wdc/compss.git
-    $> cd framework
+    $ git clone https://github.com/bsc-wdc/compss.git
+    $ cd framework
 
 Then, you need to download the embedded dependencies from the git
 submodules.
 
-.. code-block:: bash
+.. code-block:: console
 
     $ framework> ./submodules_get.sh
     $ framework> ./submodules_patch.sh
@@ -66,7 +72,7 @@ Finally you just need to run the installation script. You have to
 options: For installing COMPSs for all the users run the following
 command. (root access is required)
 
-.. code-block:: bash
+.. code-block:: console
 
     $ framework> cd builders/
     $ builders> INSTALL_DIR=/opt/COMPSs/
@@ -74,7 +80,7 @@ command. (root access is required)
 
 For installing COMPSs for the current user run the following command.
 
-.. code-block:: bash
+.. code-block:: console
 
     $ framework> cd builders/
     $ builders> INSTALL_DIR=$HOME/opt/COMPSs/
@@ -82,7 +88,7 @@ For installing COMPSs for the current user run the following command.
 
 The different installation options can be found in the command help.
 
-.. code-block:: bash
+.. code-block:: console
 
     $ framework> cd builders/
     $ builders> ./buildlocal -h
@@ -94,7 +100,7 @@ Once your COMPSs package has been installed remember to log out and back
 in again to end the installation process.
 
 If you need to set up your machine for the first time please take a look
-at Section [sec:Additional\_Configuration] for a detailed description of
+at :ref:`Additional Configuration` Section for a detailed description of
 the additional configuration.
 
 Pip
@@ -107,71 +113,71 @@ In order to be able to install COMPSs and PyCOMPSs with Pip the
 following requirements must be met:
 
 #. Have all the dependencies (excluding the COMPSs packages) mentioned
-   in the section [subsec:packages\_dependencies] satisfied and Python
-   pip. As an example for some distributions: dependencies installation
-   command:
+   in the :ref:`Dependencies` Section satisfied and Python
+   ``pip``. As an example for some distributions:
 
-   .. code-block:: bash
+   **Fedora 25** dependencies installation command:
 
-              sudo dnf install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel graphviz xdg-utils libtool automake python python-libs python-pip python-devel python2-decorator boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools redhat-rpm-config papi
-              # If the libxml softlink is not created during the installation of libxml2, the COMPSs
-              # installation may fail.
-              # In this case, that softlink has to be created manually with the following command:
-              sudo ln -s /usr/include/libxml2/libxml/ /usr/include/libxml
+   .. code-block:: console
 
-
-   dependencies installation command:
-
-   ::
-
-              sudo apt-get install -y openjdk-8-jdk graphviz xdg-utils libtool automake build-essential python2.7 libpython2.7 libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran python-pip libpapi-dev
+              $ sudo dnf install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel graphviz xdg-utils libtool automake python python-libs python-pip python-devel python2-decorator boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools redhat-rpm-config papi
+              $ # If the libxml softlink is not created during the installation of libxml2, the COMPSs installation may fail.
+              $ # In this case, the softlink has to be created manually with the following command:
+              $ sudo ln -s /usr/include/libxml2/libxml/ /usr/include/libxml
 
 
-   dependencies installation command:
+   **Ubuntu 16.04** dependencies installation command:
 
-   ::
+   .. code-block:: console
 
-              sudo apt-get install -y openjdk-8-jdk graphviz xdg-utils libtool automake build-essential python2.7 libpython2.7 python3 python3-dev libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran GMP flex bison texinfo python3-pip libpapi-dev
-
-
-   dependencies installation command:
-
-   ::
-
-              sudo zypper install --type pattern -y devel_basis
-              sudo zypper install -y java-1_8_0-openjdk-headless java-1_8_0-openjdk java-1_8_0-openjdk-devel graphviz xdg-utils python python-devel libpython2_7-1_0 python-decorator libtool automake  boost-devel libboost_serialization1_54_0 libboost_iostreams1_54_0  libxml2-2 libxml2-devel tcsh gcc-fortran python-pip papi libpapi
+              $ sudo apt-get install -y openjdk-8-jdk graphviz xdg-utils libtool automake build-essential python2.7 libpython2.7 libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran python-pip libpapi-dev
 
 
-   dependencies installation command:
+   **Ubuntu 18.04** dependencies installation command:
 
-   ::
+   .. code-block:: console
 
-               su -
-               echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | tee /etc/apt/sources.list.d/webupd8team-java.list
-               echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list
-               apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
-               apt-get update
-               apt-get install oracle-java8-installer
-               apt-get install graphviz xdg-utils libtool automake build-essential python python-decorator python-pip python-dev libboost-serialization1.55.0 libboost-iostreams1.55.0 libxml2 libxml2-dev libboost-dev csh gfortran papi-tools
+              $ sudo apt-get install -y openjdk-8-jdk graphviz xdg-utils libtool automake build-essential python2.7 libpython2.7 python3 python3-dev libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran libgmp3-dev flex bison texinfo python3-pip libpapi-dev
 
 
-   dependencies installation command:
+   **OpenSuse 42.2** dependencies installation command:
 
-   ::
+   .. code-block:: console
 
-               sudo rpm -iUvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-               sudo yum -y update
-               sudo yum install java-1.8.0-openjdk java-1.8.0-openjdk-devel graphviz xdg-utils libtool automake python python-libs python-pip python-devel python2-decorator boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools redhat-rpm-config papi
-               sudo pip install decorator
+              $ sudo zypper install --type pattern -y devel_basis
+              $ sudo zypper install -y java-1_8_0-openjdk-headless java-1_8_0-openjdk java-1_8_0-openjdk-devel graphviz xdg-utils python python-devel libpython2_7-1_0 python-decorator libtool automake  boost-devel libboost_serialization1_54_0 libboost_iostreams1_54_0  libxml2-2 libxml2-devel tcsh gcc-fortran python-pip papi libpapi
+
+
+   **Debian 8** dependencies installation command:
+
+   .. code-block:: console
+
+               $ su -
+               $ echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | tee /etc/apt/sources.list.d/webupd8team-java.list
+               $ echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list
+               $ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
+               $ apt-get update
+               $ apt-get install oracle-java8-installer
+               $ apt-get install graphviz xdg-utils libtool automake build-essential python python-decorator python-pip python-dev libboost-serialization1.55.0 libboost-iostreams1.55.0 libxml2 libxml2-dev libboost-dev csh gfortran papi-tools
+
+
+   **CentOS 7** dependencies installation command:
+
+   .. code-block:: console
+
+               $ sudo rpm -iUvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+               $ sudo yum -y update
+               $ sudo yum install java-1.8.0-openjdk java-1.8.0-openjdk-devel graphviz xdg-utils libtool automake python python-libs python-pip python-devel python2-decorator boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools redhat-rpm-config papi
+               $ sudo pip install decorator
 
 
 #. Have a proper ``JAVA_HOME`` environment variable definition. This
    variable must contain a valid path to a Java JDK (as a remark, it
    must point to a JDK, not JRE). A possible value is the following:
 
-   .. code-block:: bash
+   .. code-block:: console
 
-         user@machine:~> echo $JAVA_HOME
+         $ echo $JAVA_HOME
          /usr/lib64/jvm/java-openjdk/
 
 Installation
@@ -182,57 +188,57 @@ possible scenarios and their proper installation command are:
 
 #. Install systemwide:
 
-   .. code-block:: bash
+   .. code-block:: console
 
-        sudo -E pip install pycompss -v
+        $ sudo -E pip install pycompss -v
 
 
    It is recommended to restart the user session once the installation
    process has finished. Alternatively, the following command sets all
    the COMPSs environment.
 
-   .. code-block:: bash
+   .. code-block:: console
 
-       source /etc/profile.d/compss.sh
+       $ source /etc/profile.d/compss.sh
 
    However, this command should be executed in every different terminal
    during the current user session.
 
 #. Install in user home folder (.local):
 
-   .. code-block:: bash
+   .. code-block:: console
 
-        pip install pycompss -v
+        $ pip install pycompss -v
 
 
    It is recommended to restart the user session once the installation
    process has finished. Alternatively, the following command sets all
    the COMPSs environment.
 
-   .. code-block:: bash
+   .. code-block:: console
 
-       source ~/.bashrc
+       $ source ~/.bashrc
 
 #. Within a Python virtual environment:
 
-   .. code-block:: bash
+   .. code-block:: console
 
-        pip install pycompss -v
+        $ pip install pycompss -v
 
    In this particular case, the installation includes the necessary
    variables in the activate script. So, restart the virtual environment
    in order to set all the COMPSs environment.
 
-Configuration
--------------
+Configuration (using pip)
+-------------------------
 
-The steps mentioned in Section [subsec:Passwordless\_ssh] must be done
+The steps mentioned in Section :ref:`Configure SSH passwordless` must be done
 in order to have a functional COMPSs and PyCOMPSs installation.
 
-Post installation
------------------
+Post installation (using pip)
+-----------------------------
 
-As mentioned in Section [subsec:pip\_installation], it is recommended to
+As mentioned in :ref:`Configure SSH passwordless` Section, it is recommended to
 restart the user session or virtual environment once the installation
 process has finished.
 
@@ -249,8 +255,8 @@ the packaging system, we also provide a **COMPSs zipped file**
 containing a pre-build script to easily install COMPSs. Next subsections
 provide further information about this process.
 
-Prerequisites
--------------
+SC Prerequisites
+----------------
 
 In order to successfully run the installation script some dependencies
 must be present on the target machine. Administrators must provide the
@@ -264,9 +270,9 @@ correct installation and environment of the following software:
 
 The following environment variables must be defined:
 
--  JAVA\_HOME
+-  JAVA_HOME
 
--  BOOST\_CPPFLAGS
+-  BOOST_CPPFLAGS
 
 The tracing system can be enhanced with:
 
@@ -275,25 +281,25 @@ The tracing system can be enhanced with:
 -  MPI, which speeds up the tracing merge (and enables it for huge
    traces)
 
-Installation
-------------
+SC Installation
+---------------
 
 To perform the COMPSs Framework installation please execute the
 following commands:
 
-.. code-block:: bash
+.. code-block:: console
 
-     # Check out the last COMPSs release
+     $ # Check out the last COMPSs release
      $ wget http://compss.bsc.es/repo/sc/stable/COMPSs_<version>.tar.gz
 
-     # Unpackage COMPSs
+     $ # Unpackage COMPSs
      $ tar -xvzf COMPSs_<version>.tar.gz
 
-     # Install COMPSs at your preferred target location
+     $ # Install COMPSs at your preferred target location
      $ cd COMPSs
      $ ./install <targetDir>
 
-     # Clean downloaded files
+     $ # Clean downloaded files
      $ rm -r COMPSs
      $ rm COMPSs_<version>.tar.gz
 
@@ -304,7 +310,7 @@ already exists it will be **automatically erased**.
 
   After completing the previous steps, administrators must ensure that
 the nodes have passwordless ssh access. If it is not the case, please
-contact the COMPSs team at `support-compss@bsc.es <support-compss@bsc.es>`.
+contact the COMPSs team at support-compss@bsc.es.
 
   The COMPSs package also provides a *compssenv* file that loads the
 required environment to allow users work more easily with COMPSs. Thus,
@@ -314,17 +320,18 @@ after the installation process we recomend to source the
   Once done, remember to log out and back in again to end the
 installation process.
 
-Configuration
--------------
+SC Configuration
+----------------
 
 For queue system executions, COMPSs has a pre-build structure (see
-Figure [fig:queue\_scripts\_structure]) to execute applications in
+:numref:`queue_structure`) to execute applications in
 SuperComputers. For this purpose, users must use the *enqueue\_compss*
 script provided in the COMPSs installation. This script has several
 parameters (see *enqueue\_compss -h*) that allow users to customize
 their executions for any SuperComputer.
 
 .. figure:: ./Figures/installation/queue_scripts_structure.png
+   :name: queue_structure
    :alt: Structure of COMPSs queue scripts. In Blue user scripts, in Green queue scripts and in Orange system dependant scripts
    :align: center
    :width: 60.0%
@@ -342,18 +349,18 @@ and several examples for SuperComputer configurations.
 
 To create a new configuration we recommend to use one of the
 configurations provided by COMPSs (such as the configuration for the
-*MareNostrum III* SuperComputer) or to contact us at
-`support-compss@bsc.es <support-compss@bsc.es>`.
+*MareNostrum IV* SuperComputer) or to contact us at
+support-compss@bsc.es.
 
-Post installation
------------------
+SC Post installation
+--------------------
 
 To check that COMPSs Framework has been successfully installed you may
 run:
 
-.. code-block:: bash
+.. code-block:: console
 
-     # Check the COMPSs version
+     $ # Check the COMPSs version
      $ runcompss -v
      COMPSs version <version>
 
@@ -361,7 +368,7 @@ For queue system executions, COMPSs provides several prebuild queue
 scripts than can be accessible throgh the *enqueue\_compss* command.
 Users can check the available options by running:
 
-.. code-block:: bash
+.. code-block:: console
 
     $ enqueue_compss -h
 
@@ -388,7 +395,7 @@ Users can check the available options by running:
                                                 Default: default
         --reservation=<name>                    Reservation to use when submitting the job.
                                                 Default: disabled
-        --constraints=<constraints>		          Constraints to pass to queue system.
+        --constraints=<constraints>             Constraints to pass to queue system.
     					                                  Default:
         --qos=<qos>                             Quality of Service to pass to the queue system.
                                                 Default:
@@ -489,7 +496,7 @@ Users can check the available options by running:
                                                 Default: false
 
       Runtime configuration options:
-        --task_execution=<compss|storage>	      Task execution under COMPSs or Storage.
+        --task_execution=<compss|storage>       Task execution under COMPSs or Storage.
                                                 Default: compss
         --storage_impl=<string>                 Path to an storage implementation. Shortcut to setting pypath and classpath. See Runtime/storage in your installation folder.
         --storage_conf=<path>                   Path to the storage configuration file
@@ -594,7 +601,7 @@ Users can check the available options by running:
 
 If none of the pre-build queue configurations adapts to your
 infrastructure (lsf, pbs, slurm, etc.) please contact the COMPSs team at
-`support-compss@bsc.es <support-compss@bsc.es>` to find out a solution.
+support-compss@bsc.es to find out a solution.
 
   If you are willing to test the COMPSs Framework installation you can
 run any of the applications available at our application repository
@@ -619,7 +626,7 @@ each machine**:
 
 #. Generate an SSH key pair
 
-   .. code-block:: bash
+   .. code-block:: console
 
        	  $ ssh-keygen -t dsa
 
@@ -627,26 +634,26 @@ each machine**:
 #. Distribute the public key to all the other machines and configure it
    as authorized
 
-   .. code-block:: bash
+   .. code-block:: console
 
-          # For every other available machine (MACHINE):
+          $ # For every other available machine (MACHINE):
        	  $ scp ~/.ssh/id_dsa.pub MACHINE:./myDSA.pub
        	  $ ssh MACHINE "cat ./myDSA.pub >> ~/.ssh/authorized_keys; rm ./myDSA.pub"
 
 
 #. Check that passwordless SSH connections are working fine
 
-   .. code-block:: bash
+   .. code-block:: console
 
-          # For every other available machine (MACHINE):
+          $ # For every other available machine (MACHINE):
        	  $ ssh MACHINE
 
 
-For example, considering the cluster shown in Figure [fig:cluster],
+For example, considering the cluster shown in :numref:`cluster`,
 users will have to execute the following commands to grant free ssh
 access between any pair of machines:
 
-.. code-block:: bash
+.. code-block:: text
 
      me@localhost:~$ ssh-keygen -t id_dsa
      # Granting access localhost -> m1.bsc.es
@@ -679,6 +686,7 @@ access between any pair of machines:
      me@localhost:~$ rm ~/userm2_m2.pub
 
 .. figure:: ./Figures/installation/cluster.jpeg
+   :name: cluster
    :alt: Cluster example
    :align: center
    :width: 95.0%
@@ -1229,43 +1237,45 @@ specified by the user inside this ``<Cloud>`` tag.
         </Cloud>
     </Project>
 
-For any connector the Runtime is capable to handle the next list of
-properties:
+For any connector the Runtime is capable to handle the next list of properties:
 
-+--------------------------+------------------------------------------------------------------------------+
-| **Name**                 | **Description**                                                              |
-+==========================+==============================================================================+
-| provider-user            | Username to login in the provider                                            |
-+--------------------------+------------------------------------------------------------------------------+
-| provider-user-credential | Credential to login in the provider                                          |
-+--------------------------+------------------------------------------------------------------------------+
-| time-slot                | Time slot                                                                    |
-+--------------------------+------------------------------------------------------------------------------+
-| estimated-creation-time  | Estimated VM creation time                                                   |
-+--------------------------+------------------------------------------------------------------------------+
-| max-vm-creation-time     | Maximum VM creation time                                                     |
-+--------------------------+------------------------------------------------------------------------------+
+.. table:: Connector supported properties in the ``project.xml`` file
+    :name: jclouds_properties
+    :widths: auto
 
-Table: Connector supported properties in the ``project.xml`` file.
+    +--------------------------+------------------------------------------------------------------------------+
+    | **Name**                 | **Description**                                                              |
+    +==========================+==============================================================================+
+    | provider-user            | Username to login in the provider                                            |
+    +--------------------------+------------------------------------------------------------------------------+
+    | provider-user-credential | Credential to login in the provider                                          |
+    +--------------------------+------------------------------------------------------------------------------+
+    | time-slot                | Time slot                                                                    |
+    +--------------------------+------------------------------------------------------------------------------+
+    | estimated-creation-time  | Estimated VM creation time                                                   |
+    +--------------------------+------------------------------------------------------------------------------+
+    | max-vm-creation-time     | Maximum VM creation time                                                     |
+    +--------------------------+------------------------------------------------------------------------------+
 
 
 Additionally, for any connector based on SSH, the Runtime automatically
 handles the next list of properties:
 
-+--------------------------+------------------------------------------------------------------------------+
-| **Name**                 | **Description**                                                              |
-+==========================+==============================================================================+
-| vm-user                  | User to login in the VM                                                      |
-+--------------------------+------------------------------------------------------------------------------+
-| vm-password              | Password to login in the VM                                                  |
-+--------------------------+------------------------------------------------------------------------------+
-| vm-keypair-name          | Name of the Keypair to login in the VM                                       |
-+--------------------------+------------------------------------------------------------------------------+
-| vm-keypair-location      | Location (in the master) of the Keypair to login in the VM                   |
-+--------------------------+------------------------------------------------------------------------------+
+.. table:: Properties supported by any SSH based connector in the ``project.xml`` file
+    :name: ssh_properties
+    :widths: auto
 
-Table:  Properties supported by any SSH based connector in the ``project.xml`` file.
-
+    +--------------------------+------------------------------------------------------------------------------+
+    | **Name**                 | **Description**                                                              |
+    +==========================+==============================================================================+
+    | vm-user                  | User to login in the VM                                                      |
+    +--------------------------+------------------------------------------------------------------------------+
+    | vm-password              | Password to login in the VM                                                  |
+    +--------------------------+------------------------------------------------------------------------------+
+    | vm-keypair-name          | Name of the Keypair to login in the VM                                       |
+    +--------------------------+------------------------------------------------------------------------------+
+    | vm-keypair-location      | Location (in the master) of the Keypair to login in the VM                   |
+    +--------------------------+------------------------------------------------------------------------------+
 
 Finally, the next sections provide a more accurate description of each
 of the currently available connector and its specific properties.
@@ -1288,96 +1298,103 @@ image and resource template according to the requirements (in terms of
 CPU, memory, disk, etc) by invoking the rOCCI client through Mixins
 (heritable classes that override and extend the base templates).
 
-Table [tab:rOCCI\_extensions] contains the rOCCI specific properties
+:numref:`rOCCI_extensions` contains the rOCCI specific properties
 that must be defined under the ``Provider`` tag in the ``project.xml``
-file and Table [tab:rOCCI\_extensions] contains the specific properties
+file and :numref:`rOCCI_extensions` contains the specific properties
 that must be defined under the ``Instance`` tag.
 
-+--------------------------+------------------------------------------------------------------------------+
-| **Name**                 | **Description**                                                              |
-+==========================+==============================================================================+
-| auth                     | Authentication method, x509 only supported                                   |
-+--------------------------+------------------------------------------------------------------------------+
-| user-cred                | Path of the VOMS proxy                                                       |
-+--------------------------+------------------------------------------------------------------------------+
-| ca-path                  | Path to CA certificates directory                                            |
-+--------------------------+------------------------------------------------------------------------------+
-| ca-file                  | Specific CA filename                                                         |
-+--------------------------+------------------------------------------------------------------------------+
-| owner                    | Optional. Used by the PMES Job-Manager                                       |
-+--------------------------+------------------------------------------------------------------------------+
-| jobname                  | Optional. Used by the PMES Job-Manager                                       |
-+--------------------------+------------------------------------------------------------------------------+
-| timeout                  | Maximum command time                                                         |
-+--------------------------+------------------------------------------------------------------------------+
-| username                 | Username to connect to the back-end cloud provider                           |
-+--------------------------+------------------------------------------------------------------------------+
-| password                 | Password to connect to the back-end cloud provider                           |
-+--------------------------+------------------------------------------------------------------------------+
-| voms                     | Enable VOMS authentication                                                   |
-+--------------------------+------------------------------------------------------------------------------+
-| media-type               | Media type                                                                   |
-+--------------------------+------------------------------------------------------------------------------+
-| resource                 | Resource type                                                                |
-+--------------------------+------------------------------------------------------------------------------+
-| attributes               | Extra resource attributes for the back-end cloud provider                    |
-+--------------------------+------------------------------------------------------------------------------+
-| context                  | Extra context for the back-end cloud provider                                |
-+--------------------------+------------------------------------------------------------------------------+
-| action                   | Extra actions for the back-end cloud provider                                |
-+--------------------------+------------------------------------------------------------------------------+
-| mixin                    | Mixin definition                                                             |
-+--------------------------+------------------------------------------------------------------------------+
-| link                     | Link                                                                         |
-+--------------------------+------------------------------------------------------------------------------+
-| trigger-action           | Adds a trigger                                                               |
-+--------------------------+------------------------------------------------------------------------------+
-| log-to                   | Redirect command logs                                                        |
-+--------------------------+------------------------------------------------------------------------------+
-| skip-ca-check            | Skips CA checks                                                              |
-+--------------------------+------------------------------------------------------------------------------+
-| filter                   | Filters command output                                                       |
-+--------------------------+------------------------------------------------------------------------------+
-| dump-model               | Dumps the internal model                                                     |
-+--------------------------+------------------------------------------------------------------------------+
-| debug                    | Enables the debug mode on the connector commands                             |
-+--------------------------+------------------------------------------------------------------------------+
-| verbose                  | Enables the verbose mode on the connector commands                           |
-+--------------------------+------------------------------------------------------------------------------+
+.. table:: rOCCI extensions in the ``project.xml`` file
+    :name: rOCCI_extensions
+    :widths: auto
 
-Table:  rOCCI extensions in the ``project.xml`` file.
+    +--------------------------+------------------------------------------------------------------------------+
+    | **Name**                 | **Description**                                                              |
+    +==========================+==============================================================================+
+    | auth                     | Authentication method, x509 only supported                                   |
+    +--------------------------+------------------------------------------------------------------------------+
+    | user-cred                | Path of the VOMS proxy                                                       |
+    +--------------------------+------------------------------------------------------------------------------+
+    | ca-path                  | Path to CA certificates directory                                            |
+    +--------------------------+------------------------------------------------------------------------------+
+    | ca-file                  | Specific CA filename                                                         |
+    +--------------------------+------------------------------------------------------------------------------+
+    | owner                    | Optional. Used by the PMES Job-Manager                                       |
+    +--------------------------+------------------------------------------------------------------------------+
+    | jobname                  | Optional. Used by the PMES Job-Manager                                       |
+    +--------------------------+------------------------------------------------------------------------------+
+    | timeout                  | Maximum command time                                                         |
+    +--------------------------+------------------------------------------------------------------------------+
+    | username                 | Username to connect to the back-end cloud provider                           |
+    +--------------------------+------------------------------------------------------------------------------+
+    | password                 | Password to connect to the back-end cloud provider                           |
+    +--------------------------+------------------------------------------------------------------------------+
+    | voms                     | Enable VOMS authentication                                                   |
+    +--------------------------+------------------------------------------------------------------------------+
+    | media-type               | Media type                                                                   |
+    +--------------------------+------------------------------------------------------------------------------+
+    | resource                 | Resource type                                                                |
+    +--------------------------+------------------------------------------------------------------------------+
+    | attributes               | Extra resource attributes for the back-end cloud provider                    |
+    +--------------------------+------------------------------------------------------------------------------+
+    | context                  | Extra context for the back-end cloud provider                                |
+    +--------------------------+------------------------------------------------------------------------------+
+    | action                   | Extra actions for the back-end cloud provider                                |
+    +--------------------------+------------------------------------------------------------------------------+
+    | mixin                    | Mixin definition                                                             |
+    +--------------------------+------------------------------------------------------------------------------+
+    | link                     | Link                                                                         |
+    +--------------------------+------------------------------------------------------------------------------+
+    | trigger-action           | Adds a trigger                                                               |
+    +--------------------------+------------------------------------------------------------------------------+
+    | log-to                   | Redirect command logs                                                        |
+    +--------------------------+------------------------------------------------------------------------------+
+    | skip-ca-check            | Skips CA checks                                                              |
+    +--------------------------+------------------------------------------------------------------------------+
+    | filter                   | Filters command output                                                       |
+    +--------------------------+------------------------------------------------------------------------------+
+    | dump-model               | Dumps the internal model                                                     |
+    +--------------------------+------------------------------------------------------------------------------+
+    | debug                    | Enables the debug mode on the connector commands                             |
+    +--------------------------+------------------------------------------------------------------------------+
+    | verbose                  | Enables the verbose mode on the connector commands                           |
+    +--------------------------+------------------------------------------------------------------------------+
 
 
-+----------------+----------------------------------------------------------------------------------------+
-| **Instance**   | Multiple entries of resource templates.                                                |
-+================+========================================================================================+
-| Type           | Name of the resource template. It has to be the same name than in the previous files   |
-+----------------+----------------------------------------------------------------------------------------+
-| CPU            | Number of cores                                                                        |
-+----------------+----------------------------------------------------------------------------------------+
-| Memory         | Size in GB of the available RAM                                                        |
-+----------------+----------------------------------------------------------------------------------------+
-| Disk           | Size in GB of the storage                                                              |
-+----------------+----------------------------------------------------------------------------------------+
-| Price          | Cost per hour of the instance                                                          |
-+----------------+----------------------------------------------------------------------------------------+
+.. table:: Configuration of the ``<resources>.xml`` templates file
+    :name: rOCCI_configuration
+    :widths: auto
 
-Table: Configuration of the ``<resources>.xml`` templates file.
+    +----------------+----------------------------------------------------------------------------------------+
+    | **Instance**   | Multiple entries of resource templates.                                                |
+    +================+========================================================================================+
+    | Type           | Name of the resource template. It has to be the same name than in the previous files   |
+    +----------------+----------------------------------------------------------------------------------------+
+    | CPU            | Number of cores                                                                        |
+    +----------------+----------------------------------------------------------------------------------------+
+    | Memory         | Size in GB of the available RAM                                                        |
+    +----------------+----------------------------------------------------------------------------------------+
+    | Disk           | Size in GB of the storage                                                              |
+    +----------------+----------------------------------------------------------------------------------------+
+    | Price          | Cost per hour of the instance                                                          |
+    +----------------+----------------------------------------------------------------------------------------+
+
 
 Cloud connectors: JClouds
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The JClouds connector is based on the JClouds API version *1.9.1*. Table
-[tab:jclouds\_extensions] shows the extra available options under the
+:ref:`jclouds_extensions` shows the extra available options under the
 *Properties* tag that are used by this connector.
 
-+----------------+----------------------------------------------------------------------------------------+
-| **Instance**   | **Description**                                                                        |
-+================+========================================================================================+
-| provider       | Back-end provider to use with JClouds (i.e. aws-ec2)                                   |
-+----------------+----------------------------------------------------------------------------------------+
+.. table:: JClouds extensions in the  ``<project>.xml`` file
+    :name: jclouds_extensions
+    :widths: auto
 
-Table:  JClouds extensions in the  ``<project>.xml`` file.
+    +----------------+----------------------------------------------------------------------------------------+
+    | **Instance**   | **Description**                                                                        |
+    +================+========================================================================================+
+    | provider       | Back-end provider to use with JClouds (i.e. aws-ec2)                                   |
+    +----------------+----------------------------------------------------------------------------------------+
 
 Cloud connectors: Docker
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1398,53 +1415,55 @@ workers, each one with an own IP address.
 
 By default it does not use authentication and the timeout timers are set
 to 3 minutes (180.000 milliseconds). The list of **optional** properties
-available from connector is shown in Table [tab:mesos\_extensions].
+available from connector is shown in :numref:`Mesos_options`.
 
-+----------------------------------------+----------------------------------------------------------------+
-| **Instance**                           | **Description**                                                |
-+========================================+================================================================+
-| mesos-framework-name                   | Framework name to show in Mesos.                               |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-woker-name                       | Worker names to show in Mesos.                                 |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-framework-hostname               | Framework hostname to show in Mesos.                           |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-checkpoint                       | Checkpoint for the framework.                                  |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-authenticate                     | Uses authentication? (``true``/``false``)                      |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-principal                        | Principal for authentication.                                  |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-secret                           | Secret for authentication.                                     |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-framework-register-timeout       | Timeout to wait for Framework to register.                     |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-framework-register-timeout-units | Time units to wait for register.                               |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-worker-wait-timeout              | Timeout to wait for worker to be created.                      |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-worker-wait-timeout-units        | Time units for waiting creation.                               |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-worker-kill-timeout              | Number of units to wait for killing a worker.                  |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-worker-kill-timeout-units        | Time units to wait for killing.                                |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-docker-command                   | Command to use at start for each worker.                       |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-containerizer                    | Containers to use: (``MESOS``/``DOCKER``)                      |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-docker-network-type              | Network type to use: (``BRIDGE``/``HOST``/``USER``)            |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-docker-network-name              | Network name to use for workers.                               |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-docker-mount-volume              | Mount volume on workers? (``true``/``false``)                  |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-docker-volume-host-path          | Host path for mounting volume.                                 |
-+----------------------------------------+----------------------------------------------------------------+
-| mesos-docker-volume-container-path     | Container path to mount volume.                                |
-+----------------------------------------+----------------------------------------------------------------+
+.. table:: Mesos connector options in the  ``<project>.xml`` file
+    :name: Mesos_options
+    :widths: auto
 
-Table:  Mesos connector options in the  ``<project>.xml`` file.
+    +----------------------------------------+----------------------------------------------------------------+
+    | **Instance**                           | **Description**                                                |
+    +========================================+================================================================+
+    | mesos-framework-name                   | Framework name to show in Mesos.                               |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-woker-name                       | Worker names to show in Mesos.                                 |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-framework-hostname               | Framework hostname to show in Mesos.                           |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-checkpoint                       | Checkpoint for the framework.                                  |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-authenticate                     | Uses authentication? (``true``/``false``)                      |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-principal                        | Principal for authentication.                                  |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-secret                           | Secret for authentication.                                     |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-framework-register-timeout       | Timeout to wait for Framework to register.                     |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-framework-register-timeout-units | Time units to wait for register.                               |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-worker-wait-timeout              | Timeout to wait for worker to be created.                      |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-worker-wait-timeout-units        | Time units for waiting creation.                               |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-worker-kill-timeout              | Number of units to wait for killing a worker.                  |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-worker-kill-timeout-units        | Time units to wait for killing.                                |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-docker-command                   | Command to use at start for each worker.                       |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-containerizer                    | Containers to use: (``MESOS``/``DOCKER``)                      |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-docker-network-type              | Network type to use: (``BRIDGE``/``HOST``/``USER``)            |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-docker-network-name              | Network name to use for workers.                               |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-docker-mount-volume              | Mount volume on workers? (``true``/``false``)                  |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-docker-volume-host-path          | Host path for mounting volume.                                 |
+    +----------------------------------------+----------------------------------------------------------------+
+    | mesos-docker-volume-container-path     | Container path to mount volume.                                |
+    +----------------------------------------+----------------------------------------------------------------+
 
 TimeUnit avialable values: ``DAYS``, ``HOURS``, ``MICROSECONDS``,
 ``MILLISECONDS``, ``MINUTES``, ``NANOSECONDS``, ``SECONDS``.

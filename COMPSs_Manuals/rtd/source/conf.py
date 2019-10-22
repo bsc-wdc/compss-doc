@@ -35,7 +35,8 @@ extensions = ['sphinx.ext.todo',
               'sphinx.ext.coverage',
               'sphinx.ext.imgmath',
               'sphinx.ext.viewcode',
-              'sphinx.ext.githubpages']
+              'sphinx.ext.githubpages',
+              'sphinx.ext.autosectionlabel']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -81,6 +82,13 @@ pygments_style = 'sphinx'
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
 
+# Specific configuration
+numfig = True
+numfig_format = {'figure':'Figure %s',
+                 'table':'Table %s',
+                 'code-block':'Algorithm %s',
+                 'section':'Section %s'}
+html_add_permalinks = ""  # Disabled permalinks
 
 # -- Options for HTML output ----------------------------------------------
 
