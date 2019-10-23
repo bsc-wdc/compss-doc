@@ -9,6 +9,7 @@ Welcome to COMPSs's documentation!
 .. figure:: /Logos/Logos/degradado-naranja-compss.jpg
    :width: 40.0%
    :align: center
+   :target: http://compss.bsc.es
 
 .. toctree::
    :maxdepth: 2
@@ -28,9 +29,8 @@ Welcome to COMPSs's documentation!
    * :ref:`genindex`
    * :ref:`modindex`
 
-* :ref:`search`
-
 
 .. figure:: /Logos/bsc_280.jpg
   :width: 50.0%
   :align: center
+  :target: http://www.bsc.es

@@ -1,6 +1,6 @@
-===========================
-Application execution guide
-===========================
+=====================
+Application execution
+=====================
 
 Executing COMPSs applications
 =============================

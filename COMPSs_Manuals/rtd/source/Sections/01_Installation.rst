@@ -1511,3 +1511,7 @@ and the limit of tasks as shown in the following example:
 
 .. [1]
    https://appdb.egi.eu/store/software/rocci.cli
+
+.. figure:: /Logos/bsc_280.jpg
+   :width: 40.0%
+   :align: center

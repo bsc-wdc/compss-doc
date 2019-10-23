@@ -1,6 +1,6 @@
-==========================
-COMPSs Sample Applications
-==========================
+===================
+Sample Applications
+===================
 
 Java Sample applications
 ========================

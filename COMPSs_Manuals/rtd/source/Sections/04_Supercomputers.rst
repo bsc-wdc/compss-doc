@@ -1,6 +1,6 @@
-=====================
-Supercomputers Manual
-=====================
+==============
+Supercomputers
+==============
 
 Common usage
 ============

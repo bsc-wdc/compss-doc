@@ -1,9 +1,9 @@
-=====================
-COMPSs Tracing Manual
-=====================
-
+=======
 Tracing
 =======
+
+COMPSs applications tracing
+===========================
 
 COMPSs Runtime has a built-in instrumentation system to generate
 post-execution tracefiles of the applications’ execution. The tracefiles

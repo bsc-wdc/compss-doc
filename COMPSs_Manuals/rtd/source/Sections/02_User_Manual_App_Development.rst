@@ -1,7 +1,6 @@
-=============================
-Application development guide
-=============================
-
+=======================
+Application development
+=======================
 
 Java
 ====
@@ -50,12 +49,14 @@ of the access to files where required. Let’s consider the Simple
 application example that takes an integer as input parameter and
 increases it by one unit.
 
-The main application code of Simple app (**Simple.java**) is executed
+The main application code of Simple app (:numref:`simple_java` **Simple.java**) is executed
 sequentially until the call to the **increment()** method. COMPSs, as
 mentioned above, replaces the call to this method with the generation of
 a remote task that will be executed on an available node.
 
 .. code-block:: java
+    :name: simple_java
+    :caption: Simple in Java (Simple.java)
 
     package simple;
 
@@ -104,10 +105,12 @@ Remote methods code
 ~~~~~~~~~~~~~~~~~~~
 
 The following code contains the implementation of the remote method of
-the *Simple* application (**SimpleImpl.java**) that will be executed
+the *Simple* application (:numref:`simple_impl_java` **SimpleImpl.java**) that will be executed
 remotely by COMPSs.
 
 .. code-block:: java
+    :name: simple_impl_java
+    :caption: Simple Implementation (SimpleImpl.java)
 
     package simple;
 
@@ -173,7 +176,7 @@ includes:
 
       -  **onFailure** Expected behaviour if the task fails.
          *OnFailure.RETRY* (default value) makes the task be executed
-         again, *OnFailure.CANCEL\_SUCCESSORS* ignores the failure and
+         again, *OnFailure.CANCEL_SUCCESSORS* ignores the failure and
          cancels the succesor tasks, *OnFailure.FAIL* stops the whole
          application in a save mode once a task fails or
          *OnFailure.IGNORE* ignores the failure and continues with
@@ -300,7 +303,7 @@ includes:
          otherwise. This parameter is used by the COMPSs scheduler (it
          is a String not a Java boolean).
 
-The Java annotated interface of the Simple app example (SimpleItf.java)
+The Java annotated interface of the Simple app example (:numref:`simple_itf_java` SimpleItf.java)
 includes the description of the *Increment()* method metadata. The
 method interface contains a single input parameter, a string containing
 a path to the file counterFile. In this example there are constraints on
@@ -308,6 +311,8 @@ the minimum number of processors and minimum memory size needed to run
 the method.
 
 .. code-block:: java
+    :name: simple_itf_java
+    :caption: Interface of the Simple application (SimpleItf.java)
 
     package simple;
 
@@ -333,12 +338,14 @@ Alternative method implementations
 
 Since version 1.2, the COMPSs programming model allows developers to
 define sets of alternative implementations of the same method in the
-Java annotated interface. The following code depicts an example where
+Java annotated interface. :numref:`alternative_implementations_java` depicts an example where
 the developer sorts an integer array using two different methods: merge
 sort and quick sort that are respectively hosted in the
 *packagepath.Mergesort* and *packagepath.Quicksort* classes.
 
 .. code-block:: java
+    :name: alternative_implementations_java
+    :caption: Alternative sorting method definition example
 
     @Method(declaringClass = "packagepath.Mergesort")
     @Method(declaringClass = "packagepath.Quicksort")
@@ -359,10 +366,12 @@ As independent remote methods, the sets of equivalent methods might have
 common restrictions to be fulfilled by the resource hosting the
 execution. Or even, each implementation can have specific constraints.
 Through the *@Constraints* annotation, developers can specify the common
-constraints for a whole set of methods. In the following example only
+constraints for a whole set of methods. In the following example (:numref:`constraint_java`) only
 one core is required to run the method of both sorting algorithms.
 
 .. code-block:: java
+    :name: constraint_java
+    :caption: Alternative sorting method definition with constraint example
 
     @Constraints(computingUnits = "1")
     @Method(declaringClass = "packagepath.Mergesort")
@@ -378,11 +387,13 @@ should be stated in the implementation constraints. For this purpose,
 the developer can add a *@Constraints* annotation inside each *@Method*
 annotation containing the specific constraints for that implementation.
 Since the Mergesort has a higher memory consumption than the quicksort,
-the following example sets a requirement of 1 core and 2GB of memory for
+the :numref:`specific_implementation_constraints_java` sets a requirement of 1 core and 2GB of memory for
 the mergesort implementation and 1 core and 500MB of memory for the
 quicksort.
 
 .. code-block:: java
+    :name: specific_implementation_constraints_java
+    :caption: Alternative sorting method definition with specific constraints example
 
     @Constraints(computingUnits = "1")
     @Method(declaringClass = "packagepath.Mergesort", constraints = @Constraints(memorySize = "2.0"))
@@ -399,9 +410,11 @@ COMPSs also provides a explicit synchronization call, namely *barrier*,
 which can be used through the COMPSs Java API. The use of *barrier*
 forces to wait for all tasks that have been submitted before the barrier
 is called. When all tasks submitted before the *barrier* have finished,
-the execution continues.
+the execution continues (:numref:`barrier_java`).
 
 .. code-block:: java
+    :name: barrier_java
+    :caption: COMPSs.barrier() example
 
     import es.bsc.compss.api.COMPSs;
 
@@ -425,10 +438,12 @@ version of these objects could be stored in the runtime data-structures
 preventing the garbage collector to remove it when there are no
 references in the main code. To avoid this situation, developers can
 indicate the runtime that an object is not going to use any more by
-calling the *deregisterObject* API call. The following code snippet
+calling the *deregisterObject* API call. :numref:`deregisterObject_java`
 shows a usage example of this API call.
 
 .. code-block:: java
+    :name: deregisterObject_java
+    :caption: COMPSs.deregisterObject() example
 
     import es.bsc.compss.api.COMPSs;
 
@@ -446,10 +461,12 @@ shows a usage example of this API call.
     }
 
 To synchronize files, the *getFile* API call synchronizes a file,
-returning the last version of file with its original name. The code
-below contains an example of its usage.
+returning the last version of file with its original name. :numref:`getFile_java`
+contains an example of its usage.
 
 .. code-block:: java
+    :name: getFile_java
+    :caption: COMPSs.getFile() example
 
     import es.bsc.compss.api.COMPSs;
 
@@ -473,13 +490,13 @@ implementations and of the *Itf* annotation. Next we provide a set of
 commands to compile the Java Simple application detailed at the *COMPSs
 Sample Applications* available at our website http://compss.bsc.es .
 
-.. code-block:: bash
+.. code-block:: console
 
-    compss@bsc:~$ cd tutorial_apps/java/simple/src/main/java/simple/
-    compss@bsc:~/tutorial_apps/java/simple/src/main/java/simple$ javac *.java
-    compss@bsc:~/tutorial_apps/java/simple/src/main/java/simple$ cd ..
-    compss@bsc:~/tutorial_apps/java/simple/src/main/java$ jar cf simple.jar simple/
-    compss@bsc:~/tutorial_apps/java/simple/src/main/java$ mv ./simple.jar ../../../jar/
+    $ cd tutorial_apps/java/simple/src/main/java/simple/
+    $~/tutorial_apps/java/simple/src/main/java/simple$ javac *.java
+    $~/tutorial_apps/java/simple/src/main/java/simple$ cd ..
+    $~/tutorial_apps/java/simple/src/main/java$ jar cf simple.jar simple/
+    $~/tutorial_apps/java/simple/src/main/java$ mv ./simple.jar ../../../jar/
 
 In order to properly compile the code, the CLASSPATH variable has to
 contain the path of the *compss-engine.jar* package. The default COMPSs
@@ -487,7 +504,7 @@ installation automatically add this package to the CLASSPATH; please
 check that your environment variable CLASSPATH contains the
 *compss-engine.jar* location by running the following command:
 
-.. code-block:: bash
+.. code-block:: console
 
     $ echo $CLASSPATH | grep compss-engine
 
@@ -495,7 +512,7 @@ If the result of the previous command is empty it means that you are
 missing the *compss-engine.jar* package in your classpath. We recommend
 to automatically load the variable by editing the *.bashrc* file:
 
-.. code-block:: bash
+.. code-block:: console
 
     $ echo "# COMPSs variables for Java compilation" >> ~/.bashrc
     $ echo "export CLASSPATH=$CLASSPATH:/opt/COMPSs/Runtime/compss-engine.jar" >> ~/.bashrc
@@ -519,13 +536,12 @@ Application Execution
 A Java COMPSs application is executed through the *runcompss* script. An
 example of an invocation of the script is:
 
-.. code-block:: bash
+.. code-block:: console
 
-    compss@bsc:~$ runcompss --classpath=/home/compss/tutorial_apps/java/simple/jar/simple.jar simple.Simple 1
+    $ runcompss --classpath=/home/compss/tutorial_apps/java/simple/jar/simple.jar simple.Simple 1
 
 A comprehensive description of the *runcompss* command is available in
-the *COMPSs User Manual: Application Execution* document available at
-http://compss.bsc.es .  
+the :ref:`Application execution` section.  
 
 In addition to Java, COMPSs supports the execution of applications
 written in other languages by means of bindings. A binding manages the
@@ -563,11 +579,13 @@ instead of an annotated interface. In particular, the user needs to add
 a *@task* decorator that describes the task before the
 definition of the function/method.
 
-As an example, let us assume that the application calls a function
+As an example (:numref:`code_python`), let us assume that the application calls a function
 *func*, which receives a file path (string parameter) and an integer
 parameter. The code of *func* updates the file.
 
 .. code-block:: python
+    :name: code_python
+    :caption: Python application example
 
     def func(file_path, value):
         # update the file 'file_path'
@@ -577,17 +595,19 @@ parameter. The code of *func* updates the file.
         func(my_file, 1)
 
 Please, note that the main code is defined within *if
-\_\_name\_\_==\_\_main\_\_'*. A better alternative would be to define
+__name__==__main__'*. A better alternative would be to define
 the main code within a function and invoke it from the *if
-\_\_name\_\_==\_\_main\_\_'*.
+__name__==__main__'*.
 
 In order to select *func* as a task, the corresponding *@task*
 decorator needs to be placed right before the definition of the
 function, providing some metadata about the parameters of that function.
 The *@task* decorator has to be imported from the *pycompss*
-library:
+library (:numref:`task_import_python`).
 
 .. code-block:: python
+    :name: task_import_python
+    :caption: Python task import
 
     from pycompss.api.task import task
 
@@ -619,18 +639,18 @@ and *OUT* parameters. Thus, when defining the parameter metadata in the
 -  *CONCURRENT*: the parameter is read-write with concurrent acces. The
    type will be inferred.
 
--  *FILE/FILE\_IN*: the parameter is a file. The direction is assumed to
+-  *FILE/FILE_IN*: the parameter is a file. The direction is assumed to
    be *IN*.
 
--  *FILE\_INOUT*: the parameter is a read-write file.
+-  *FILE_INOUT*: the parameter is a read-write file.
 
--  *FILE\_OUT*: the parameter is a write-only file.
+-  *FILE_OUT*: the parameter is a write-only file.
 
--  *FILE\_CONCURRENT*: the parameter is a concurrent read-write file.
+-  *FILE_CONCURRENT*: the parameter is a concurrent read-write file.
 
--  *COLLECTION\_IN*: the parameter is read-only collection.
+-  *COLLECTION_IN*: the parameter is read-only collection.
 
--  *COLLECTION\_INOUT*: the parameter is read-write collection.
+-  *COLLECTION_INOUT*: the parameter is read-write collection.
 
 Consequently, please note that in the following cases there is no need
 to include an argument in the *@task* decorator for a given
@@ -643,19 +663,23 @@ task parameter:
 -  Read-only object parameters: the type of the parameter is
    automatically inferred, and the direction defaults to *IN*.
 
-The parameter metadata is available from the *pycompss* library:
+The parameter metadata is available from the *pycompss* library (:numref:`parameter_import_python`)
 
 .. code-block:: python
+    :name: parameter_import_python
+    :caption: Python task parameters import
 
     from pycompss.api.parameter import *
 
-Continuing with the example, in the following code snippet the decorator
+Continuing with the example, in :numref:`task_example_python` the decorator
 specifies that *func* has a parameter called *f*, of type *FILE* and
 *INOUT* direction. Note how the second parameter, *i*, does not need to
 be specified, since its type (integer) and direction (*IN*) are
 automatically inferred by COMPSs.
 
 .. code-block:: python
+    :name: task_example_python
+    :caption: Python task example
 
     from pycompss.api.task import task     # Import @task decorator
     from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
@@ -666,7 +690,7 @@ automatically inferred by COMPSs.
          ...
 
 The user can also define that the access to a parameter is concurrent
-with *CONCURRENT* or to a file *FILE\_CONCURRENT*. Tasks that share a
+with *CONCURRENT* or to a file *FILE_CONCURRENT* (:numref:`task_concurrent_python`). Tasks that share a
 "CONCURRENT" parameter will be executed in parallel, if any other
 dependency prevents this. The CONCURRENT direction allows users to have
 access from multiple tasks to the same object/file during their
@@ -676,6 +700,8 @@ access/modification of the concurrent objects is responsibility of the
 developer.
 
 .. code-block:: python
+    :name: task_concurrent_python
+    :caption: Python task example with CONCURRENT
 
     from pycompss.api.task import task     # Import @task decorator
     from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
@@ -685,8 +711,8 @@ developer.
          ...
 
 Moreover, it is possible to specify that a parameter is a collection of
-elements (e.g. list) and its direction (COLLECTION\_IN or
-COLLECTION\_INOUT). In this case, the list may contain sub-objects that
+elements (e.g. list) and its direction (COLLECTION_IN or
+COLLECTION_INOUT) (:numref:`task_collection_python`). In this case, the list may contain sub-objects that
 will be handled automatically by the runtime. It is important to
 annotate data structures as collections if in other tasks there are
 accesses to individual elements of these collections as parameters.
@@ -694,9 +720,11 @@ Without this annotation, the runtime will not be able to identify data
 dependences between the collections and the individual elements.
 
 .. code-block:: python
+    :name: task_collection_python
+    :caption: Python task example with COLLECTION
 
-    from pycompss.api.task import task                # Import @task decorator
-    from pycompss.api.parameter import COLLECTION_IN  # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task    # Import @task decorator
+    from pycompss.api.parameter import *  # Import parameter metadata for the @task decorator
 
     @task(my_collection=COLLECTION_IN)
     def func(my_collection):
@@ -707,9 +735,11 @@ The sub-objects of the collection can be collections of elements (and
 recursively). In this case, the runtime also keeps track of all elements
 contained in all sub-collections. In order to improve the performance,
 the depth of the sub-objects can be limited through the use of the
-*depth* parameter as:
+*depth* parameter (:numref:`task_collection_depth_python`)
 
 .. code-block:: python
+    :name: task_collection_depth_python
+    :caption: Python task example with COLLECTION and depth
 
     @task(my_collection={Type:COLLECTION_IN, Depth:2})
     def func(my_collection):
@@ -720,9 +750,11 @@ the depth of the sub-objects can be limited through the use of the
 
 If the function or method returns a value, the programmer must use the
 *returns* argument within the *@task* decorator. In this
-argument, the programmer can specify the type of that value:
+argument, the programmer can specify the type of that value (:numref:`task_returns_python`).
 
 .. code-block:: python
+    :name: task_returns_python
+    :caption: Python task returns example
 
     @task(returns=int)
     def ret_func():
@@ -730,17 +762,19 @@ argument, the programmer can specify the type of that value:
 
 Moreover, if the function or method returns more than one value, the
 programmer can specify how many and their type in the *returns*
-argument. The next next code snippet shows how to specify that two
-values (an integer and a list) are returned:
+argument. :numref:`task_multireturn_python` shows how to specify that two
+values (an integer and a list) are returned.
 
 .. code-block:: python
+    :name: task_multireturn_python
+    :caption: Python task with multireturn example
 
     @task(returns=(int, list))
     def ret_func():
          return 1, [2, 3]
 
 Alternatively, the user can specify the number of return statements as
-an integer value. This way of specifying the amount of return eases the
+an integer value (:numref:`task_returns_integer_python`). This way of specifying the amount of return eases the
 *returns* definition since the user does not need to specify explicitly
 the type of the return arguments. However, it must be considered that
 the type of the object returned when the task is invoked will be a
@@ -750,6 +784,8 @@ task. In this scenario, the solution is to specify explicitly the return
 type.
 
 .. code-block:: python
+    :name: task_returns_integer_python
+    :caption: Python task returns with integer example
 
     @task(returns=1)
     def ret_func():
@@ -760,20 +796,24 @@ type.
          return 1, [2, 3]
 
 The use of *\*args* and *\*\*kwargs* as function parameters is also
-supported:
+supported (:numref:`task_args_kwargs_python`).
 
 .. code-block:: python
+    :name: task_args_kwargs_python
+    :caption: Python task *args and **kwargs example
 
     @task(returns=int)
     def argkwarg_func(*args, **kwargs):
         return sum(args) + len(kwargs)
 
 And even with other parameters, such as usual parameters and *default
-defined arguments*. The next snippet shows an example of a task with two
+defined arguments*. :numref:`task_default_parameters_python` shows an example of a task with two
 three parameters (whose one of them (*’s’*) has a default value), *\*args*
 and *\*\*kwargs*.
 
 .. code-block:: python
+    :name: task_default_parameters_python
+    :caption: Python task with default parameters example
 
     @task(returns=int)
     def multiarguments_func(v, w, s = 2, *args, **kwargs):
@@ -782,9 +822,11 @@ and *\*\*kwargs*.
 For tasks corresponding to instance methods, by default the task is
 assumed to modify the callee object (the object on which the method is
 invoked). The programmer can tell otherwise by setting the
-*target\_direction* argument of the *@task* decorator to *IN*.
+*target_direction* argument of the *@task* decorator to *IN* (:numref:`task_instance_method_python`).
 
 .. code-block:: python
+    :name: task_instance_method_python
+    :caption: Python instance method example
 
     class MyClass(object):
         ...
@@ -794,7 +836,7 @@ invoked). The programmer can tell otherwise by setting the
 
 **NOTE:** In order to avoid serialization issues, the classes must not
 be declared in the same file that contains the main method (*if
-\_\_name\_\_==\_\_main\_\_'*).
+__name__==__main__'*).
 
 Scheduler hints
 ^^^^^^^^^^^^^^^
@@ -803,27 +845,31 @@ The programmer can provide hints to the scheduler through specific
 arguments within the *@task* decorator.
 
 For instance, the programmer can mark a task as a high-priority task
-with the *priority* argument of the *@task* decorator. In this
+with the *priority* argument of the *@task* decorator (:numref:`task_priority_python`). In this
 way, when the task is free of dependencies, it will be scheduled before
 any of the available low-priority (regular) tasks. This functionality is
 useful for tasks that are in the critical path of the application’s task
 dependency graph.
 
 .. code-block:: python
+    :name: task_priority_python
+    :caption: Python task priority example
 
     @task(priority=True)
     def func():
         ...
 
 Moreover, the user can also mark a task as distributed with the
-*is\_distributed* argument or as replicated with the *is\_replicated*
-argument. When a task is marked with *is\_distributed=True*, the method
+*is_distributed* argument or as replicated with the *is_replicated*
+argument (:numref:`task_isdistributed_isreplicated_python`). When a task is marked with *is_distributed=True*, the method
 must be scheduled in a forced round robin among the available resources.
-On the other hand, when a task is marked with *is\_replicated=True*, the
+On the other hand, when a task is marked with *is_replicated=True*, the
 method must be executed in all the worker nodes when invoked from the
 main application. The default value for these parameters is False.
 
 .. code-block:: python
+    :name: task_isdistributed_isreplicated_python
+    :caption: Python task is_distributed and is_replicated examples
 
     @task(is_distributed=True)
     def func():
@@ -834,61 +880,57 @@ main application. The default value for these parameters is False.
         ...
 
 In case a task fails, the whole application behaviour can be defined
-using the *on\_failure* argument. It has four possible values: ’RETRY’,
-’CANCEL\_SUCCESSORS’, ’FAIL’ and ’IGNORE’. ’RETRY’ is the default
+using the *on_failure* argument (:numref:`task_on_failure_python`). It has four possible values: ’RETRY’,
+’CANCEL_SUCCESSORS’, ’FAIL’ and ’IGNORE’. ’RETRY’ is the default
 behaviour, making the task to be executed again, on the same worker or
-in another worker if the failure remains. ’CANCEL\_SUCCESSORS’ ignores
+in another worker if the failure remains. ’CANCEL_SUCCESSORS’ ignores
 the failed task and cancels the execution of the successor tasks, ’FAIL’
 stops the whole execution once a task fails and ’IGNORE’ ignores the
 failure and continues with the normal execution.
 
 .. code-block:: python
+    :name: task_on_failure_python
+    :caption: Python task on_failure example
 
     @task(on_failure='CANCEL_SUCCESSORS')
     def func():
         ...
 
-Next table summarizes the arguments that can be found in the *@task* decorator.
+:numref:`task_arguments` summarizes the arguments that can be found in the *@task* decorator.
 
-+---------------------+---------------------------------------------------------------------------------------------------------+
-| **(default: empty)**| The parameter is an object or a simple tipe that will be inferred.                                      |
-+---------------------+---------------------------------------------------------------------------------------------------------+
-| IN                  | Read-only parameter, all types.                                                                         |
-+---------------------+---------------------------------------------------------------------------------------------------------+
-| INOUT               | Read-write parameter, all types except file (primitives, strings, objects).                             |
-+---------------------+---------------------------------------------------------------------------------------------------------+
-| OUT                 | Write-only parameter, all types except file (primitives, strings, objects).                             |
-+---------------------+---------------------------------------------------------------------------------------------------------+
-| CONCURRENT          | Concurrent read-write parameter, all types except file (primitives, strings, objects).                  |
-+---------------------+---------------------------------------------------------------------------------------------------------+
-| FILE/FILE\_IN       | Read-only file parameter.                                                                               |
-+---------------------+---------------------------------------------------------------------------------------------------------+
-| FILE\_INOUT         | Read-write file parameter.                                                                              |
-+---------------------+---------------------------------------------------------------------------------------------------------+
-| FILE\_OUT           | Write-only file parameter.                                                                              |
-+---------------------+---------------------------------------------------------------------------------------------------------+
-| FILE\_CONCURRENT    | Concurrent read-write file parameter.                                                                   |
-+---------------------+---------------------------------------------------------------------------------------------------------+
-| COLLECTION\_IN      | Read-only collection parameter (list).                                                                  |
-+---------------------+---------------------------------------------------------------------------------------------------------+
-| COLLECTION\_INOUT   | Read-write collection parameter (list).                                                                 |
-+---------------------+---------------------------------------------------------------------------------------------------------+
-| Dictionary          | {Type:(empty=object)/FILE/COLLECTION, Direction:(empty=IN)/IN/INOUT/OUT/CONCURRENT}                     |
-+---------------------+---------------------------------------------------------------------------------------------------------+
-| returns             | int (for integer and boolean), long, float, str, dict, list, tuple, user-defined classes                |
-+---------------------+---------------------------------------------------------------------------------------------------------+
-| target\_direction   | INOUT (default), IN or CONCURRENT                                                                       |
-+---------------------+---------------------------------------------------------------------------------------------------------+
-| priority            | True or False (default)                                                                                 |
-+---------------------+---------------------------------------------------------------------------------------------------------+
-| is\_distributed     | True or False (default)                                                                                 |
-+---------------------+---------------------------------------------------------------------------------------------------------+
-| is\_replicated      | True or False (default)                                                                                 |
-+---------------------+---------------------------------------------------------------------------------------------------------+
-| on\_failure         | ’RETRY’ (default), ’CANCEL\_SUCCESSORS’, ’FAIL’ or ’IGNORE’                                             |
-+---------------------+---------------------------------------------------------------------------------------------------------+
+.. table:: Arguments of the *@task* decorator
+    :name: task_arguments
+    :widths: auto
 
-Table: Arguments of the *@task* decorator.
+    +---------------------+---------------------------------------------------------------------------------------------------------+
+    | Argument            | Value                                                                                                   |
+    +=====================+=========================================================================================================+
+    | Formal parameter    | - **(default: empty)** The parameter is an object or a simple tipe that will be inferred.               |
+    | name                | - IN: Read-only parameter, all types.                                                                   |
+    |                     | - INOUT: Read-write parameter, all types except file (primitives, strings, objects).                    |
+    |                     | - OUT: Write-only parameter, all types except file (primitives, strings, objects).                      |
+    |                     | - CONCURRENT: Concurrent read-write parameter, all types except file (primitives, strings, objects).    |
+    |                     | - FILE/FILE_IN: Read-only file parameter.                                                               |
+    |                     | - FILE_INOUT: Read-write file parameter.                                                                |
+    |                     | - FILE_OUT: Write-only file parameter.                                                                  |
+    |                     | - FILE_CONCURRENT: Concurrent read-write file parameter.                                                |
+    |                     | - COLLECTION_IN: Read-only collection parameter (list).                                                 |
+    |                     | - COLLECTION_INOUT: Read-write collection parameter (list).                                             |
+    |                     | - Dictionary: {Type:(empty=object)/FILE/COLLECTION, Direction:(empty=IN)/IN/INOUT/OUT/CONCURRENT}       |
+    +---------------------+---------------------------------------------------------------------------------------------------------+
+    | returns             | int (for integer and boolean), long, float, str, dict, list, tuple, user-defined classes                |
+    +---------------------+---------------------------------------------------------------------------------------------------------+
+    | target_direction    | INOUT (default), IN or CONCURRENT                                                                       |
+    +---------------------+---------------------------------------------------------------------------------------------------------+
+    | priority            | True or False (default)                                                                                 |
+    +---------------------+---------------------------------------------------------------------------------------------------------+
+    | is_distributed      | True or False (default)                                                                                 |
+    +---------------------+---------------------------------------------------------------------------------------------------------+
+    | is_replicated       | True or False (default)                                                                                 |
+    +---------------------+---------------------------------------------------------------------------------------------------------+
+    | on_failure          | ’RETRY’ (default), ’CANCEL_SUCCESSORS’, ’FAIL’ or ’IGNORE’                                              |
+    +---------------------+---------------------------------------------------------------------------------------------------------+
+
 
 Other task types
 ^^^^^^^^^^^^^^^^
@@ -924,10 +966,12 @@ function definition). Since the invocation parameters can be of
 different nature, information on their type can be provided through the
 *@task* decorator.
 
-The following snippet shows the most simple binary task definition
+:numref:`binary_task_python` shows the most simple binary task definition
 without/with constraints (without parameters):
 
 .. code-block:: python
+    :name: binary_task_python
+    :caption: Binary task example
 
     from pycompss.api.task import task
     from pycompss.api.binary import binary
@@ -945,16 +989,17 @@ without/with constraints (without parameters):
 
 The invocation of these tasks would be equivalent to:
 
-.. code-block:: bash
+.. code-block:: console
 
-    ./mybinary.bin
+    $ ./mybinary.bin
+    $ ./otherbinary.bin   # in resources that respect the constraint.
 
-    ./otherbinary.bin   # in resources that respect the constraint.
-
-The following snippet shows a more complex binary invocation, with files
+:numref:`complex_binary_task_python` shows a more complex binary invocation, with files
 as parameters:
 
 .. code-block:: python
+    :name: complex_binary_task_python
+    :caption: Binary task example 2
 
     from pycompss.api.task import task
     from pycompss.api.binary import binary
@@ -979,19 +1024,20 @@ as parameters:
 
 The invocation of the *grepper* task would be equivalent to:
 
-.. code-block:: bash
+.. code-block:: console
 
-    # grep keyword < infile > result
-
-    grep Hi < infile.txt > outfile.txt
+    $ # grep keyword < infile > result
+    $ grep Hi < infile.txt > outfile.txt
 
 Please note that the *keyword* parameter is a string, and it is
 respected as is in the invocation call.
 
-Thus, PyCOMPSs can also deal with prefixes for the given parameters. The
-following snippet performs a system call (ls) with specific prefixes:
+Thus, PyCOMPSs can also deal with prefixes for the given parameters. :numref:`complex2_binary_task_python`
+performs a system call (ls) with specific prefixes:
 
 .. code-block:: python
+    :name: complex2_binary_task_python
+    :caption: Binary task example 3
 
     from pycompss.api.task import task
     from pycompss.api.binary import binary
@@ -1010,26 +1056,27 @@ following snippet performs a system call (ls) with specific prefixes:
 
 The invocation of the *myLs* task would be equivalent to:
 
-.. code-block:: bash
+.. code-block:: console
 
-    # ls -l --hide=hide --sort=sort
-
-    ls -l --hide=fileToHide.txt --sort=time
+    $ # ls -l --hide=hide --sort=sort
+    $ ls -l --hide=fileToHide.txt --sort=time
 
 This particular case is intended to show all the power of the
 *@binary* decorator in conjuntion with the *@task*
 decorator. Please note that although the *hide* parameter is used as a
 prefix for the binary invocation, the *fileToHide.txt* would also be
 transfered to the worker (if necessary) since its type is defined as
-FILE\_IN. This feature enables to build more complex binary invocations.
+FILE_IN. This feature enables to build more complex binary invocations.
 
 OmpSs decorator
 '''''''''''''''
 
 The *@ompss* decorator shall be used to define that a task is
-going to invoke a OmpSs executable.
+going to invoke a OmpSs executable (:numref:`ompss_task_python`).
 
 .. code-block:: python
+    :name: ompss_task_python
+    :caption: OmpSs task example
 
     from pycompss.api.ompss import ompss
 
@@ -1041,15 +1088,17 @@ going to invoke a OmpSs executable.
 The OmpSs executable invocation can also be enriched with parameters,
 files and prefixes as with the *@binary* decorator through the
 function parameters and *@task* decorator information. Please,
-check subparagraph [subpar:binary\_decorator] for more details.
+check subparagraph [subpar:binary_decorator] for more details.
 
 MPI decorator
 '''''''''''''
 
 The *@mpi* decorator shall be used to define that a task is
-going to invoke a MPI executable.
+going to invoke a MPI executable (:numref:`mpi_task_python`).
 
 .. code-block:: python
+    :name: mpi_task_python
+    :caption: MPI task example
 
     from pycompss.api.mpi import mpi
 
@@ -1061,16 +1110,18 @@ going to invoke a MPI executable.
 The MPI executable invocation can also be enriched with parameters,
 files and prefixes as with the *@binary* decorator through the
 function parameters and *@task* decorator information. Please,
-check subparagraph [subpar:binary\_decorator] for more details.
+check subparagraph [subpar:binary_decorator] for more details.
 
 COMPSs decorator
 ''''''''''''''''
 
 The *@compss* decorator shall be used to define that a task is
-going to be a COMPSs application. It enables to have nested PyCOMPSs/
-COMPSs applications.
+going to be a COMPSs application (:numref:`compss_task_python`).
+It enables to have nested PyCOMPSs/COMPSs applications.
 
 .. code-block:: python
+    :name: compss_task_python
+    :caption: COMPSs task example
 
     from pycompss.api.compss import compss
 
@@ -1088,9 +1139,11 @@ Multinode decorator
 '''''''''''''''''''
 
 The *@multinode* decorator shall be used to define that a task
-is going to use multiple nodes (e.g. using internal parallelism).
+is going to use multiple nodes (e.g. using internal parallelism) (:numref:`multinode_task_python`).
 
 .. code-block:: python
+    :name: multinode_task_python
+    :caption: Multinode task example
 
     from pycompss.api.multinode import multinode
 
@@ -1099,11 +1152,11 @@ is going to use multiple nodes (e.g. using internal parallelism).
     def multinode_func():
          pass
 
-The only supported parameter is *computing\_nodes*, used to define the
+The only supported parameter is *computing_nodes*, used to define the
 number of nodes required by the task (the default value is 1). The
 mechanism to get the number of nodes, threads and their names to the
-task is through the *COMPSS\_NUM\_NODES*, *COMPSS\_NUM\_THREADS* and
-*COMPSS\_HOSTNAMES* environment variables respectively, which are
+task is through the *COMPSS_NUM_NODES*, *COMPSS_NUM_THREADS* and
+*COMPSS_HOSTNAMES* environment variables respectively, which are
 exported within the task scope by the COMPSs runtime before the task
 execution.
 
@@ -1118,7 +1171,7 @@ Next tables summarizes the parameters of these decorators.
     +========================+===================================================================================================================================+
     | **binary**             | (Mandatory) String defining the full path of the binary that must be executed.                                                    |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
-    | **working\_dir**       | Full path of the binary working directory inside the COMPSs Worker.                                                               |
+    | **working_dir**        | Full path of the binary working directory inside the COMPSs Worker.                                                               |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
 * ompss
@@ -1127,7 +1180,7 @@ Next tables summarizes the parameters of these decorators.
     +========================+===================================================================================================================================+
     | **binary**             | (Mandatory) String defining the full path of the binary that must be executed.                                                    |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
-    | **working\_dir**       | Full path of the binary working directory inside the COMPSs Worker.                                                               |
+    | **working_dir**        | Full path of the binary working directory inside the COMPSs Worker.                                                               |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
 * mpi
@@ -1136,11 +1189,11 @@ Next tables summarizes the parameters of these decorators.
     +========================+===================================================================================================================================+
     | **binary**             | (Mandatory) String defining the full path of the binary that must be executed.                                                    |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
-    | **working\_dir**       | Full path of the binary working directory inside the COMPSs Worker.                                                               |
+    | **working_dir**        | Full path of the binary working directory inside the COMPSs Worker.                                                               |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
     | **runner**             | (Mandatory) String defining the MPI runner command.                                                                               |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
-    | **computing\_nodes**   | Integer defining the number of computing nodes reserved for the MPI execution (only a single node is reserved by default).        |
+    | **computing_nodes**    | Integer defining the number of computing nodes reserved for the MPI execution (only a single node is reserved by default).        |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
 * @compss
@@ -1151,20 +1204,20 @@ Next tables summarizes the parameters of these decorators.
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
     | **flags**              | String defining the flags needed for the runcompss execution.                                                                     |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
-    | **app\_name**          | (Mandatory) String defining the application that must be executed.                                                                |
+    | **app_name**           | (Mandatory) String defining the application that must be executed.                                                                |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
-    | **computing\_nodes**   | Integer defining the number of computing nodes reserved for the COMPSs execution (only a single node is reserved by default).     |
+    | **computing_nodes**    | Integer defining the number of computing nodes reserved for the COMPSs execution (only a single node is reserved by default).     |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
 * @multinode
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
     | Parameter              | Description                                                                                                                       |
     +========================+===================================================================================================================================+
-    | **computing\_nodes**   | Integer defining the number of computing nodes reserved for the task execution (only a single node is reserved by default).       |
+    | **computing_nodes**    | Integer defining the number of computing nodes reserved for the task execution (only a single node is reserved by default).       |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
 In addition to the parameters that can be used within the
-*@task* decorator, next table
+*@task* decorator, :numref:`supported_streams`
 summarizes the *Stream* parameter that can be used within the
 *@task* decorator for the function parameters when using the
 @binary, @ompss and @mpi decorators. In
@@ -1173,62 +1226,64 @@ is going to be considered as a *FILE* but as a stream (e.g. :math:`>`,
 :math:`<` and :math:`2>` in bash) for the @binary,
 @ompss and @mpi calls.
 
-+------------------------+-------------------+
-| Parameter              | Description       |
-+========================+===================+
-| **(default: empty)**   | Not a stream.     |
-+------------------------+-------------------+
-| **STDIN**              | Standard input.   |
-+------------------------+-------------------+
-| **STDOUT**             | Standard output.  |
-+------------------------+-------------------+
-| **STDERR**             | Standard error.   |
-+------------------------+-------------------+
+.. table:: Supported Streams for the @binary, @ompss and @mpi decorators
+    :name: supported_streams
+    :widths: auto
 
-Table: Supported Streams for the @binary, @ompss and
-@mpi decorators
+    +------------------------+-------------------+
+    | Parameter              | Description       |
+    +========================+===================+
+    | **(default: empty)**   | Not a stream.     |
+    +------------------------+-------------------+
+    | **STDIN**              | Standard input.   |
+    +------------------------+-------------------+
+    | **STDOUT**             | Standard output.  |
+    +------------------------+-------------------+
+    | **STDERR**             | Standard error.   |
+    +------------------------+-------------------+
 
 Moreover, there are some shorcuts that can be used for files type
-definition as parameters within the *@task* decorator (Table
-[tab:other\_parameters\_shortcuts]). It is not necessary to indicate the
-*Direction* nor the *Stream* since it may be already be indicated with
+definition as parameters within the *@task* decorator (:numref:`file_parameter_definition`).
+It is not necessary to indicate the *Direction* nor the *Stream* since it may be already be indicated with
 the shorcut.
 
-+-------------------------------+-----------------------------------------------------+
-| Alias                         | Description                                         |
-+===============================+=====================================================+
-| **COLLECTION(\_IN)**          | Type: COLLECTION, Direction: IN                     |
-+-------------------------------+-----------------------------------------------------+
-| **COLLECTION(\_IN)**          | Type: COLLECTION, Direction: INOUT                  |
-+-------------------------------+-----------------------------------------------------+
-| **FILE(\_IN)\_STDIN**         | Type: File, Direction: IN, Stream: STDIN            |
-+-------------------------------+-----------------------------------------------------+
-| **FILE(\_IN)\_STDOUT**        | Type: File, Direction: IN, Stream: STDOUT           |
-+-------------------------------+-----------------------------------------------------+
-| **FILE(\_IN)\_STDERR**        | Type: File, Direction: IN, Stream: STDERR           |
-+-------------------------------+-----------------------------------------------------+
-| **FILE\_OUT\_STDIN**          | Type: File, Direction: OUT, Stream: STDIN           |
-+-------------------------------+-----------------------------------------------------+
-| **FILE\_OUT\_STDOUT**         | Type: File, Direction: OUT, Stream: STDOUT          |
-+-------------------------------+-----------------------------------------------------+
-| **FILE\_OUT\_STDERR**         | Type: File, Direction: OUT, Stream: STDERR          |
-+-------------------------------+-----------------------------------------------------+
-| **FILE\_INOUT\_STDIN**        | Type: File, Direction: INOUT, Stream: STDIN         |
-+-------------------------------+-----------------------------------------------------+
-| **FILE\_INOUT\_STDOUT**       | Type: File, Direction: INOUT, Stream: STDOUT        |
-+-------------------------------+-----------------------------------------------------+
-| **FILE\_INOUT\_STDERR**       | Type: File, Direction: INOUT, Stream: STDERR        |
-+-------------------------------+-----------------------------------------------------+
-| **FILE\_CONCURRENT**          | Type: File, Direction: CONCURRENT                   |
-+-------------------------------+-----------------------------------------------------+
-| **FILE\_CONCURRENT\_STDIN**   | Type: File, Direction: CONCURRENT, Stream: STDIN    |
-+-------------------------------+-----------------------------------------------------+
-| **FILE\_CONCURRENT\_STDOUT**  | Type: File, Direction: CONCURRENT, Stream: STDOUT   |
-+-------------------------------+-----------------------------------------------------+
-| **FILE\_CONCURRENT\_STDERR**  | Type: File, Direction: CONCURRENT, Stream: STDERR   |
-+-------------------------------+-----------------------------------------------------+
+.. table:: File parameters definition shortcuts
+    :name: file_parameter_definition
+    :widths: auto
 
-Table: File parameters definition shortcuts
+    +-----------------------------+-----------------------------------------------------+
+    | Alias                       | Description                                         |
+    +=============================+=====================================================+
+    | **COLLECTION(_IN)**         | Type: COLLECTION, Direction: IN                     |
+    +-----------------------------+-----------------------------------------------------+
+    | **COLLECTION(_IN)**         | Type: COLLECTION, Direction: INOUT                  |
+    +-----------------------------+-----------------------------------------------------+
+    | **FILE(_IN)_STDIN**         | Type: File, Direction: IN, Stream: STDIN            |
+    +-----------------------------+-----------------------------------------------------+
+    | **FILE(_IN)_STDOUT**        | Type: File, Direction: IN, Stream: STDOUT           |
+    +-----------------------------+-----------------------------------------------------+
+    | **FILE(_IN)_STDERR**        | Type: File, Direction: IN, Stream: STDERR           |
+    +-----------------------------+-----------------------------------------------------+
+    | **FILE_OUT_STDIN**          | Type: File, Direction: OUT, Stream: STDIN           |
+    +-----------------------------+-----------------------------------------------------+
+    | **FILE_OUT_STDOUT**         | Type: File, Direction: OUT, Stream: STDOUT          |
+    +-----------------------------+-----------------------------------------------------+
+    | **FILE_OUT_STDERR**         | Type: File, Direction: OUT, Stream: STDERR          |
+    +-----------------------------+-----------------------------------------------------+
+    | **FILE_INOUT_STDIN**        | Type: File, Direction: INOUT, Stream: STDIN         |
+    +-----------------------------+-----------------------------------------------------+
+    | **FILE_INOUT_STDOUT**       | Type: File, Direction: INOUT, Stream: STDOUT        |
+    +-----------------------------+-----------------------------------------------------+
+    | **FILE_INOUT_STDERR**       | Type: File, Direction: INOUT, Stream: STDERR        |
+    +-----------------------------+-----------------------------------------------------+
+    | **FILE_CONCURRENT**         | Type: File, Direction: CONCURRENT                   |
+    +-----------------------------+-----------------------------------------------------+
+    | **FILE_CONCURRENT_STDIN**   | Type: File, Direction: CONCURRENT, Stream: STDIN    |
+    +-----------------------------+-----------------------------------------------------+
+    | **FILE_CONCURRENT_STDOUT**  | Type: File, Direction: CONCURRENT, Stream: STDOUT   |
+    +-----------------------------+-----------------------------------------------------+
+    | **FILE_CONCURRENT_STDERR**  | Type: File, Direction: CONCURRENT, Stream: STDERR   |
+    +-----------------------------+-----------------------------------------------------+
 
 These parameter keys, as well as the shortcuts, can be imported from the
 PyCOMPSs library:
@@ -1243,9 +1298,11 @@ Constraints
 As in Java COMPSs applications, it is possible to define constraints for
 each task. To this end, the decorator *@constraint* followed
 by the desired constraints needs to be placed over the @task
-decorator.
+decorator (:numref:`constraint_task_python`).
 
 .. code-block:: python
+    :name: constraint_task_python
+    :caption: Constrained task example
 
     from pycompss.api.task import task
     from pycompss.api.constraint import constraint
@@ -1260,13 +1317,15 @@ decorator.
 This decorator enables the user to set the particular constraints for
 each task, such as the amount of Cores required explicitly.
 Alternatively, it is also possible to indicate that the value of a
-constraint is specified in a environment variable. A full description of
-the supported constraints can be found in Table [tab:constraints] in
+constraint is specified in a environment variable (:numref:`constraint_env_var_task_python`).
+A full description of the supported constraints can be found in Table [tab:constraints] in
 Section [sec:Constraints].
 
 For example:
 
 .. code-block:: python
+    :name: constraint_env_var_task_python
+    :caption: Constrained task with environment variable example
 
     from pycompss.api.task import task
     from pycompss.api.constraint import constraint
@@ -1280,9 +1339,11 @@ For example:
          c += a * b
          ...
 
-Or another example requesting a CPU core and a GPU:
+Or another example requesting a CPU core and a GPU (:numref:`CPU_GPU_constraint_task_python`).
 
 .. code-block:: python
+    :name: CPU_GPU_constraint_task_python
+    :caption: CPU and GPU constrained task example
 
     from pycompss.api.task import task
     from pycompss.api.constraint import constraint
@@ -1295,8 +1356,8 @@ Or another example requesting a CPU core and a GPU:
          return result
 
 When the task requests a GPU, COMPSs provides the information about
-the assigned GPU through the *COMPSS\_BINDED\_GPUS*,
-*CUDA\_VISIBLE\_DEVICES* and *GPU\_DEVICE\_ORDINAL* environment
+the assigned GPU through the *COMPSS_BINDED_GPUS*,
+*CUDA_VISIBLE_DEVICES* and *GPU_DEVICE_ORDINAL* environment
 variables. This information can be gathered from the task code in
 order to use the GPU.
 
@@ -1320,9 +1381,11 @@ when the application is executed in a heterogeneous distributed
 environment, the runtime will take into account the constraints on each
 implementation and will try to invoke the implementation that fulfills
 the constraints within each resource, keeping this management invisible
-to the user.
+to the user (:numref:`implements_python`).
 
 .. code-block:: python
+    :name: implements_python
+    :caption: Multiple task implementations example
 
     from pycompss.api.implement import implement
 
@@ -1340,7 +1403,7 @@ to the user.
 
 Please, note that if the implementation is used to define a binary,
 OmpSs, MPI, COMPSs or multinode task invocation (see Section
-[par:other\_decorators]), the @implement decorator must be
+[par:other_decorators]), the @implement decorator must be
 always on top of the decorators stack, followed by the
 @constraint decorator, then the
 @binary/\ @ompss/\ @mpi/\ @compss/\ @multinode
@@ -1355,45 +1418,45 @@ calls to the selected tasks. In addition, when synchronizing for task
 data from the main program, there exist four API functions that can to
 be invoked:
 
--  *compss\_open(file\_name, mode=’r’)*: similar to the Python *open()*
-   call. It synchronizes for the last version of file *file\_name* and
+-  *compss_open(file_name, mode=’r’)*: similar to the Python *open()*
+   call. It synchronizes for the last version of file *file_name* and
    returns the file descriptor for that synchronized file. It can have
    an optional parameter *mode*, which defaults to ’\ *r*\ ’, containing
    the mode in which the file will be opened (the open modes are
    analogous to those of Python *open()*).
 
--  *compss\_delete\_file(file\_name)*: notifies the runtime to delete a
+-  *compss_delete_file(file_name)*: notifies the runtime to delete a
    file.
 
--  *compss\_wait\_on\_file(file\_name)*: synchronizes for the last
-   version of the file *file\_name*. and returns True if success (False
+-  *compss_wait_on_file(file_name)*: synchronizes for the last
+   version of the file *file_name*. and returns True if success (False
    otherwise).
 
--  *compss\_delete\_object(object)*: notifies the runtime to delete all
+-  *compss_delete_object(object)*: notifies the runtime to delete all
    the associated files to a given object.
 
--  *compss\_barrier(no\_more\_tasks=False)*: performs a explicit
+-  *compss_barrier(no_more_tasks=False)*: performs a explicit
    synchronization, but does not return any object. The use of
-   *compss\_barrier()* forces to wait for all tasks that have been
-   submitted before the *compss\_barrier()* is called. When all tasks
-   submitted before the *compss\_barrier()* have finished, the execution
-   continues. The *no\_more\_tasks* is used to specify if no more tasks
-   are going to be submitted after the *compss\_barrier()*.
+   *compss_barrier()* forces to wait for all tasks that have been
+   submitted before the *compss_barrier()* is called. When all tasks
+   submitted before the *compss_barrier()* have finished, the execution
+   continues. The *no_more_tasks* is used to specify if no more tasks
+   are going to be submitted after the *compss_barrier()*.
 
--  *compss\_wait\_on(obj, to\_write=True)*: synchronizes for the last
+-  *compss_wait_on(obj, to_write=True)*: synchronizes for the last
    version of object *obj* and returns the synchronized object. It can
-   have an optional boolean parameter *to\_write*, which defaults to
+   have an optional boolean parameter *to_write*, which defaults to
    *True*, that indicates whether the main program will modify the
    returned object. It is possible to wait on a list of objects. In this
    particular case, it will synchronize all future objects contained in
    the list.
 
 To illustrate the use of the aforementioned API functions, the following
-example first invokes a task *func* that writes a file, which is later
-synchronized by calling *compss\_open()*. Later in the program, an
+example (:numref:`api_usage_python`) first invokes a task *func* that writes a file, which is later
+synchronized by calling *compss_open()*. Later in the program, an
 object of class *MyClass* is created and a task method *method* that
 modifies the object is invoked on it; the object is then synchronized
-with *compss\_wait\_on()*, so that it can be used in the main program
+with *compss_wait_on()*, so that it can be used in the main program
 from that point on.
 
 Then, a loop calls again ten times to *func* task. Afterwards, the
@@ -1401,6 +1464,8 @@ barrier performs a synchronization, and the execution of the main user
 code will not continue until the ten *func* tasks have finished.
 
 .. code-block:: python
+    :name: api_usage_python
+    :caption: PyCOMPSs API usage
 
     from pycompss.api.api import compss_open
     from pycompss.api.api import compss_delete_file
@@ -1410,17 +1475,17 @@ code will not continue until the ten *func* tasks have finished.
     if __name__=='__main__':
         my_file = 'file.txt'
         func(my_file)
-        fd = %*{\bf compss\_open}*)(my_file)
+        fd = compss_open(my_file)
         ...
 
         my_file2 = 'file2.txt'
         func(my_file2)
-        fd = %*{\bf compss\_delete\_file}*)(my_file2)
+        fd = compss_delete_file(my_file2)
         ...
 
         my_obj = MyClass()
         my_obj.method()
-        my_obj = %*{\bf compss\_wait\_on}*)(my_obj)
+        my_obj = compss_wait_on(my_obj)
         ...
 
         for i in range(10):
@@ -1428,9 +1493,11 @@ code will not continue until the ten *func* tasks have finished.
         compss_barrier()
         ...
 
-The corresponding task selection for the example above would be:
+The corresponding task selection for the example above would be (:numref:`api_usage_tasks_python`):
 
 .. code-block:: python
+    :name: api_usage_tasks_python
+    :caption: PyCOMPSs API usage tasks
 
     @task(f=FILE_OUT)
     def func(f):
@@ -1443,44 +1510,48 @@ The corresponding task selection for the example above would be:
         def method(self):
             ... # self is modified here
 
-Table [tab:python\_api\_functions] summarizes the API functions to be
+:numref:`python_api_functions` summarizes the API functions to be
 used in the main program of a COMPSs Python application.
 
-+------------------------------------------+-----------------------------------------------------------------------------------------+
-| API Function                             | Description                                                                             |
-+==========================================+=========================================================================================+
-| compss\_open(file\_name, mode=’r’)       | Synchronizes for the last version of a file and returns its file descriptor.            |
-+------------------------------------------+-----------------------------------------------------------------------------------------+
-| compss\_delete\_file(file\_name)         | Notifies the runtime to remove a file.                                                  |
-+------------------------------------------+-----------------------------------------------------------------------------------------+
-| compss\_wait\_on\_file(file\_name)       | Synchronizes for the last version of a file.                                            |
-+------------------------------------------+-----------------------------------------------------------------------------------------+
-| compss\_delete\_object(object)           | Notifies the runtime to delete the associated file to this object.                      |
-+------------------------------------------+-----------------------------------------------------------------------------------------+
-| compss\_barrier(no\_more\_tasks=False)   | Wait for all tasks submitted before the barrier.                                        |
-+------------------------------------------+-----------------------------------------------------------------------------------------+
-| compss\_wait\_on(obj, to\_write=True)    | Synchronizes for the last version of an object (or a list of objects) and returns it.   |
-+------------------------------------------+-----------------------------------------------------------------------------------------+
+.. table:: COMPSs Python API functions
+    :name: python_api_functions
+    :widths: auto
 
-Table: COMPSs Python API functions.
+    +------------------------------------------+-----------------------------------------------------------------------------------------+
+    | API Function                             | Description                                                                             |
+    +==========================================+=========================================================================================+
+    | compss_open(file_name, mode=’r’  )       | Synchronizes for the last version of a file and returns its file descriptor.            |
+    +------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_delete_file(file_name)            | Notifies the runtime to remove a file.                                                  |
+    +------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_wait_on_file(file_name)           | Synchronizes for the last version of a file.                                            |
+    +------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_delete_object(object)             | Notifies the runtime to delete the associated file to this object.                      |
+    +------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_barrier(no_more_tasks=False)      | Wait for all tasks submitted before the barrier.                                        |
+    +------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_wait_on(obj, to_write=True)       | Synchronizes for the last version of an object (or a list of objects) and returns it.   |
+    +------------------------------------------+-----------------------------------------------------------------------------------------+
 
 Besides the synchronization API functions, the programmer has also a
 decorator for automatic function parameters synchronization at his
 disposal. The *@local* decorator can be placed over functions
 that are not decorated as tasks, but that may receive results from
-tasks. In this case, the *@local* decorator synchronizes the
+tasks (:numref:`local_python`). In this case, the *@local* decorator synchronizes the
 necessary parameters in order to continue with the function execution
-without the need of using explicitly the *compss\_wait\_on* call for
+without the need of using explicitly the *compss_wait_on* call for
 each parameter.
 
 .. code-block:: python
+    :name: local_python
+    :caption: @local decorator example
 
     from pycompss.api.task import task
     from pycompss.api.api import compss_wait_on
     from pycompss.api.parameter import INOUT
     from pycompss.api.local import local
 
-    @task(%*{\bf returns }*)=list)
+    @task(returns=list)
     @task(v=INOUT)
     def append_three_ones(v):
         v += [1, 1, 1]
@@ -1499,30 +1570,34 @@ Important Notes
 ~~~~~~~~~~~~~~~
 
 If the programmer selects as a task a function or method that returns a
-value, that value is not generated until the task executes.
+value, that value is not generated until the task executes (:numref:`task_return_value_python`).
 
 .. code-block:: python
+    :name: task_return_value_python
+    :caption: Task return value generation
 
-    @task(%*{\bf returns }*)=MyClass)
+    @task(return=MyClass)
     def ret_func():
         return MyClass(...)
 
     ...
 
     if __name__=='__main__':
-        # %*{\bf o }*) is a future object
+        # o is a future object
         o = ret_func()
 
 The object returned can be involved in a subsequent task call, and the
 COMPSs runtime will automatically find the corresponding data
 dependency. In the following example, the object *o* is passed as a
 parameter and callee of two subsequent (asynchronous) tasks,
-respectively:
+respectively (:numref:`task_return_value_usage_python`).
 
 .. code-block:: python
+    :name: task_return_value_usage_python
+    :caption: Task return value subsequent usage
 
     if __name__=='__main__':
-        # %*{\bf o }*) is a future object
+        # o is a future object
         o = ret_func()
 
         ...
@@ -1534,13 +1609,15 @@ respectively:
         o.yet_another_task()
 
 In order to synchronize the object from the main program, the programmer
-has to synchronize (using the *compss\_wait\_on* function) in the same
-way as with any object updated by a task:
+has to synchronize (using the *compss_wait_on* function) in the same
+way as with any object updated by a task (:numref:`task_return_value_synchronization_python`).
 
 .. code-block:: python
+    :name: task_return_value_synchronization_python
+    :caption: Task return value synchronization
 
     if __name__=='__main__':
-        # %*{\bf o }*) is a future object
+        # o is a future object
         o = ret_func()
 
         ...
@@ -1549,12 +1626,19 @@ way as with any object updated by a task:
 
 Moreover, it is possible to synchronize a list of objects. This is
 particularly useful when the programmer expect to synchronize more than
-one elements (using the *compss\_wait\_on* function):
+one elements (using the *compss_wait_on* function) (:numref:`list_synchronization_python`.
+This feature also works with dictionaries, where the value of each entry
+is synchronized.
+In addition, if the structure synchronized is a combination of lists and
+dictionaries, the *compss_wait_on* will look for all objects to be synchronized
+in the whole structure.
 
 .. code-block:: python
+    :name: list_synchronization_python
+    :caption: Synchronization of a list of objects
 
     if __name__=='__main__':
-        # %*{\bf l }*) is a list of objects where some/all of them may be future objects
+        # l is a list of objects where some/all of them may be future objects
         l = []
         for i in range(10):
             l.append(ret_func())
@@ -1565,19 +1649,35 @@ one elements (using the *compss\_wait\_on* function):
 
 For instances of user-defined classes, the classes of these objects
 should have an empty constructor, otherwise the programmer will not be
-able to invoke task instance methods on those objects:
+able to invoke task instance methods on those objects (:numref:`user_class_return_python`).
 
 .. code-block:: python
+    :name: user_class_return_python
+    :caption: Using user-defined classes as task returns
 
     # In file utils.py
+    from pycompss.api.task import task
     class MyClass(object):
         def __init__(self): # empty constructor
+            ...
+
+        @task()
+        def yet_another_task(self):
+            # do something with the self attributes
             ...
 
         ...
 
     # In file main.py
+    from pycompss.api.task import task
     from utils import MyClass
+
+    @task(returns=MyClass)
+    def ret_func():
+        ...
+        myc = MyClass()
+        ...
+        return myc
 
     if __name__=='__main__':
         o = ret_func()
@@ -1605,8 +1705,8 @@ Environment
 The following environment variables must be defined before executing a
 COMPSs Python application:
 
-JAVA\_HOME: Java JDK installation directory (e.g.
-*/usr/lib/jvm/java-8-openjdk/*)
+JAVA_HOME
+    Java JDK installation directory (e.g. */usr/lib/jvm/java-8-openjdk/*)
 
 Command
 ~~~~~~~
@@ -1615,7 +1715,7 @@ In order to run a Python application with COMPSs, the runcompss script
 can be used, like for Java and C/C++ applications. An example of an
 invocation of the script is:
 
-.. code-block:: bash
+.. code-block:: console
 
     compss@bsc:~$ runcompss \
                     --lang=python \
@@ -1625,7 +1725,7 @@ invocation of the script is:
 
 Or alternatively, use the ``pycompss`` module:
 
-.. code-block:: bash
+.. code-block:: console
 
     compss@bsc:~$ python -m pycompss \
                     --pythonpath=$TEST_DIR \
@@ -1650,13 +1750,14 @@ Environment
 The following libraries must be present in the appropiate environment
 variables in order to enable PyCOMPSs within Jupyter notebook:
 
-PYTHONPATH: The path where PyCOMPSs is installed (e.g.
-*/opt/COMPSs/Bindings/python/*)
+PYTHONPATH
+    The path where PyCOMPSs is installed (e.g. */opt/COMPSs/Bindings/python/*)
 
-LD\_LIBRARY\_PATH: The path where the *libbindings-commons.so* library
-is located (e.g. */opt/COMPSs/Bindings/bindings-common/lib/*) and the
-path where the *libjvm.so* library is located (e.g.
-*/usr/lib/jvm/java-8-openjdk/jre/lib/amd64/server/*).
+LD_LIBRARY_PATH
+    The path where the *libbindings-commons.so* library is located
+    (e.g. */opt/COMPSs/Bindings/bindings-common/lib/*) and the path
+    where the *libjvm.so* library is located (e.g.
+    */usr/lib/jvm/java-8-openjdk/jre/lib/amd64/server/*).
 
 API calls
 ~~~~~~~~~
@@ -1691,91 +1792,98 @@ default parameters:
 Between the *start* and *stop* function calls, the user can write its
 own python code including PyCOMPSs imports, decorators and
 synchronization calls described in Section
-[subsec:Python\_programming\_model]. The code can be splitted into
+[subsec:Python_programming_model]. The code can be splitted into
 multiple cells.
 
 The *start* and *stop* functions accept parameters in order to customize
 the COMPSs runtime (such as the flags that can be selected with the
-"runcompss" command). Table [tab:python\_api\_jupyter\_start] summarizes
-the accepted parameters of the *start* function. Table
-[tab:python\_api\_jupyter\_stop] summarizes the accepted parameters of
+"runcompss" command). Table :numref:`start_jupyter` summarizes
+the accepted parameters of the *start* function. :numref:`stop_jupyter`
+[tab:python_api_jupyter_stop] summarizes the accepted parameters of
 the *stop* function.
 
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Parameter Name                    | Parameter Type | Description                                                                                                                                                                                                                                                                                                                                                    |
-+===================================+================+================================================================================================================================================================================================================================================================================================================================================================+
-| log\_level                        | String         | Log level. Options: "off", "info" and "debug". (Default: "off")                                                                                                                                                                                                                                                                                                |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| debug                             | Boolean        | COMPSs runtime debug (Default: False) (overrides log level)                                                                                                                                                                                                                                                                                                    |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| o\_c                              | Boolean        | Object conversion to string when possible (Default: False)                                                                                                                                                                                                                                                                                                     |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| graph                             | Boolean        | Task dependency graph generation (Default: False)                                                                                                                                                                                                                                                                                                              |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| trace                             | Boolean        | Paraver trace generation (Default: False)                                                                                                                                                                                                                                                                                                                      |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| monitor                           | Integer        | Monitor refresh rate (Default: None - Monitoring disabled)                                                                                                                                                                                                                                                                                                     |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| project\_xml                      | String         | Path to the project XML file (Default: $COMPSS/Runtime/configuration/xml/projects/default project.xml)                                                                                                                                                                                                                                                         |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| resources\_xml                    | String         | Path to the resources XML file (Default: $COMPSs/Runtime/configuration/xml/resources/default resources.xml)                                                                                                                                                                                                                                                    |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| summary                           | Boolean        | Show summary at the end of the execution (Default: False)                                                                                                                                                                                                                                                                                                      |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| storage\_impl                     | String         | Path to an storage implementation (Default: None)                                                                                                                                                                                                                                                                                                              |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| storage\_conf                     | String         | Storage configuration file path (Default: None)                                                                                                                                                                                                                                                                                                                |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| task\_count                       | Integer        | Number of task definitions (Default: 50)                                                                                                                                                                                                                                                                                                                       |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| app\_name                         | String         | Application name (Default: "Interactive")                                                                                                                                                                                                                                                                                                                      |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| uuid                              | String         | Application uuid (Default: None - Will be random)                                                                                                                                                                                                                                                                                                              |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| base\_log\_dir                    | String         | Base directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location) (Default: User homeBase log path)                                                                                                                                                                                                                            |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| specific\_log\_dir                | String         | Use a specific directory to store COMPSs log files (the folder MUST exist and no sandbox is created) (Default: Disabled)                                                                                                                                                                                                                                       |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| extrae\_cfg                       | String         | Sets a custom extrae config file. Must be in a shared disk between all COMPSs workers (Default: None)                                                                                                                                                                                                                                                          |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| comm                              | String         | Class that implements the adaptor for communications. Supported adaptors: "es.bsc.compss.nio.master.NIOAdaptor" and "es.bsc.compss.gat.master.GATAdaptor" (Default: "es.bsc.compss.nio.master.NIOAdaptor")                                                                                                                                                     |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| conn                              | String         | Class that implements the runtime connector for the cloud. Supported connectors: "es.bsc.compss.connectors.DefaultSSHConnector" and "es.bsc.compss.connectors.DefaultNoSSHConnector" (Default: es.bsc.compss.connectors.DefaultSSHConnector)                                                                                                                   |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| master\_name                      | String         | Hostname of the node to run the COMPSs master (Default: "")                                                                                                                                                                                                                                                                                                    |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| master\_port                      | String         | Port to run the COMPSs master communications. Only for NIO adaptor (Default: "[43000,44000]")                                                                                                                                                                                                                                                                  |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| scheduler                         | String         | Class that implements the Scheduler for COMPSs. Supported schedulers: "es.bsc.compss.scheduler.fullGraphScheduler.FullGraphScheduler", "es.bsc.compss.scheduler.fifoScheduler.FIFOScheduler" and "es.bsc.compss.scheduler.resourceEmptyScheduler. ResourceEmptyScheduler" (Default: "es.bsc.compss.scheduler.loadBalancingScheduler.LoadBalancingScheduler")   |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| jvm\_workers                      | String         | Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Default: "-Xms1024m,-Xmx1024m,-Xmn400m")                                                                                                                                                                                                                       |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| cpu\_affinity                     | String         | Sets the CPU affinity for the workers. Supported options: "disabled", "automatic", user defined map of the form "0-8/9,10,11/12-14,15,16" (Default: "automatic")                                                                                                                                                                                               |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| gpu\_affinity                     | String         | Sets the GPU affinity for the workers. Supported options: "disabled", "automatic", user defined map of the form "0-8/9,10,11/12-14,15,16" (Default: "automatic")                                                                                                                                                                                               |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| profile\_input                    | String         | Path to the file which stores the input application profile (Default: "")                                                                                                                                                                                                                                                                                      |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| profile\_output                   | String         | Path to the file to store the application profile at the end of the execution (Default: "")                                                                                                                                                                                                                                                                    |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| scheduler\_config                 | String         | Path to the file which contains the scheduler configuration (Default: "")                                                                                                                                                                                                                                                                                      |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| external\_adaptation              | Boolean        | Enable external adaptation. This option will disable the Resource Optimizer (Default: False)                                                                                                                                                                                                                                                                   |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| propatage\_virtual\_environment   | Boolean        | Propagate the master virtual environment to the workers (DefaultFalse)                                                                                                                                                                                                                                                                                         |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| verbose                           | Boolean        | Verbose mode (Default: False)                                                                                                                                                                                                                                                                                                                                  |
-+-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table: PyCOMPSs start function for Jupyter notebook
+.. table:: PyCOMPSs **start** function for Jupyter notebook
+    :name: start_jupyter
+    :widths: auto
 
-+----------------+----------------+---------------------------------------------------------------------+
-| Parameter Name | Parameter Type | Description                                                         |
-+================+================+=====================================================================+
-| sync           | Boolean        |  Synchronize the objects left on the user scope. (Default: False)   |
-+----------------+----------------+---------------------------------------------------------------------+
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Parameter Name                    | Parameter Type | Description                                                                                                                                                                                                                                                                                                                                                    |
+    +===================================+================+================================================================================================================================================================================================================================================================================================================================================================+
+    | log_level                         | String         | Log level. Options: "off", "info" and "debug". (Default: "off")                                                                                                                                                                                                                                                                                                |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | debug                             | Boolean        | COMPSs runtime debug (Default: False) (overrides log level)                                                                                                                                                                                                                                                                                                    |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | o_c                               | Boolean        | Object conversion to string when possible (Default: False)                                                                                                                                                                                                                                                                                                     |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | graph                             | Boolean        | Task dependency graph generation (Default: False)                                                                                                                                                                                                                                                                                                              |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | trace                             | Boolean        | Paraver trace generation (Default: False)                                                                                                                                                                                                                                                                                                                      |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | monitor                           | Integer        | Monitor refresh rate (Default: None - Monitoring disabled)                                                                                                                                                                                                                                                                                                     |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | project_xml                       | String         | Path to the project XML file (Default: $COMPSS/Runtime/configuration/xml/projects/default project.xml)                                                                                                                                                                                                                                                         |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | resources_xml                     | String         | Path to the resources XML file (Default: $COMPSs/Runtime/configuration/xml/resources/default resources.xml)                                                                                                                                                                                                                                                    |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | summary                           | Boolean        | Show summary at the end of the execution (Default: False)                                                                                                                                                                                                                                                                                                      |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | storage_impl                      | String         | Path to an storage implementation (Default: None)                                                                                                                                                                                                                                                                                                              |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | storage_conf                      | String         | Storage configuration file path (Default: None)                                                                                                                                                                                                                                                                                                                |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | task_count                        | Integer        | Number of task definitions (Default: 50)                                                                                                                                                                                                                                                                                                                       |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | app_name                          | String         | Application name (Default: "Interactive")                                                                                                                                                                                                                                                                                                                      |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | uuid                              | String         | Application uuid (Default: None - Will be random)                                                                                                                                                                                                                                                                                                              |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | base_log_dir                      | String         | Base directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location) (Default: User homeBase log path)                                                                                                                                                                                                                            |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | specific_log_dir                  | String         | Use a specific directory to store COMPSs log files (the folder MUST exist and no sandbox is created) (Default: Disabled)                                                                                                                                                                                                                                       |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | extrae_cfg                        | String         | Sets a custom extrae config file. Must be in a shared disk between all COMPSs workers (Default: None)                                                                                                                                                                                                                                                          |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | comm                              | String         | Class that implements the adaptor for communications. Supported adaptors: "es.bsc.compss.nio.master.NIOAdaptor" and "es.bsc.compss.gat.master.GATAdaptor" (Default: "es.bsc.compss.nio.master.NIOAdaptor")                                                                                                                                                     |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | conn                              | String         | Class that implements the runtime connector for the cloud. Supported connectors: "es.bsc.compss.connectors.DefaultSSHConnector" and "es.bsc.compss.connectors.DefaultNoSSHConnector" (Default: es.bsc.compss.connectors.DefaultSSHConnector)                                                                                                                   |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | master_name                       | String         | Hostname of the node to run the COMPSs master (Default: "")                                                                                                                                                                                                                                                                                                    |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | master_port                       | String         | Port to run the COMPSs master communications. Only for NIO adaptor (Default: "[43000,44000]")                                                                                                                                                                                                                                                                  |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | scheduler                         | String         | Class that implements the Scheduler for COMPSs. Supported schedulers: "es.bsc.compss.scheduler.fullGraphScheduler.FullGraphScheduler", "es.bsc.compss.scheduler.fifoScheduler.FIFOScheduler" and "es.bsc.compss.scheduler.resourceEmptyScheduler. ResourceEmptyScheduler" (Default: "es.bsc.compss.scheduler.loadBalancingScheduler.LoadBalancingScheduler")   |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | jvm_workers                       | String         | Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Default: "-Xms1024m,-Xmx1024m,-Xmn400m")                                                                                                                                                                                                                       |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | cpu_affinity                      | String         | Sets the CPU affinity for the workers. Supported options: "disabled", "automatic", user defined map of the form "0-8/9,10,11/12-14,15,16" (Default: "automatic")                                                                                                                                                                                               |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | gpu_affinity                      | String         | Sets the GPU affinity for the workers. Supported options: "disabled", "automatic", user defined map of the form "0-8/9,10,11/12-14,15,16" (Default: "automatic")                                                                                                                                                                                               |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | profile_input                     | String         | Path to the file which stores the input application profile (Default: "")                                                                                                                                                                                                                                                                                      |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | profile_output                    | String         | Path to the file to store the application profile at the end of the execution (Default: "")                                                                                                                                                                                                                                                                    |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | scheduler_config                  | String         | Path to the file which contains the scheduler configuration (Default: "")                                                                                                                                                                                                                                                                                      |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | external_adaptation               | Boolean        | Enable external adaptation. This option will disable the Resource Optimizer (Default: False)                                                                                                                                                                                                                                                                   |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | propatage_virtual_environment     | Boolean        | Propagate the master virtual environment to the workers (DefaultFalse)                                                                                                                                                                                                                                                                                         |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | verbose                           | Boolean        | Verbose mode (Default: False)                                                                                                                                                                                                                                                                                                                                  |
+    +-----------------------------------+----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table: PyCOMPSs stop function for Jupyter notebook
+
+.. table:: PyCOMPSs **stop** function for Jupyter notebook
+    :name: stop_jupyter
+    :widths: auto
+
+    +----------------+----------------+---------------------------------------------------------------------+
+    | Parameter Name | Parameter Type | Description                                                         |
+    +================+================+=====================================================================+
+    | sync           | Boolean        |  Synchronize the objects left on the user scope. (Default: False)   |
+    +----------------+----------------+---------------------------------------------------------------------+
+
 
 The following code snippet shows how to start a COMPSs runtime with
 tracing and graph generation enabled (with *trace* and *graph*
@@ -1843,29 +1951,29 @@ original argument specification of the original function, their usage is
 done through the *numba* parameter withih the *@task*
 decorator. This parameter accepts:
 
--  Boolean: True: Applies *jit* to the function.
+-  **Boolean**: True: Applies *jit* to the function.
 
--  Dictionary{k, v}: Applies *jit* with the dictionary parameters to the
+-  **Dictionary{k, v}**: Applies *jit* with the dictionary parameters to the
    function (allows to specify specific jit parameters (e.g.
    *nopython=True*)).
 
--  String: "jit": Applies *jit* to the function. "njit": Applies *jit*
-   with *nopython=True* to the function. "generated\_jit": Applies
-   *generated\_jit* to the function. "vectorize": Applies *vectorize* to
+-  **String**: "jit": Applies *jit* to the function. "njit": Applies *jit*
+   with *nopython=True* to the function. "generated_jit": Applies
+   *generated_jit* to the function. "vectorize": Applies *vectorize* to
    the function. Needs some extra flags in the *@task*
-   decorator: - *numba\_signature*: String with the *vectorize*
+   decorator: - *numba_signature*: String with the *vectorize*
    signature. "guvectorize": Applies *guvectorize* to the function.
    Needs some extra flags in the *@task* decorator: -
-   *numba\_signature*: String with the *guvectorize* signature. -
-   *numba\_declaration*: String with the *guvectorize* declaration.
+   *numba_signature*: String with the *guvectorize* signature. -
+   *numba_declaration*: String with the *guvectorize* declaration.
    "stencil": Applies *stencil* to the function. "cfunc": Applies
    *cfunc* to the function. Needs some extra flags in the
-   *@task* decorator: - *numba\_signature*: String with the
+   *@task* decorator: - *numba_signature*: String with the
    *cfunc* signature.
 
 Moreover, the *@task* decorator also allows to define specific
-flags for the *jit*, *njit*, *generated\_jit*, *vectorize*,
-*guvectorize* and *cfunc* functionalities with the *numba\_flags* hint.
+flags for the *jit*, *njit*, *generated_jit*, *vectorize*,
+*guvectorize* and *cfunc* functionalities with the *numba_flags* hint.
 This hint is used to declare a dictionary with the flags expected to use
 with these numba functionalities. The default flag included by PyCOMPSs
 is the *cache=True* in order to exploit the function caching of Numba
@@ -1931,6 +2039,8 @@ application file plus the suffix "idl", i.e. Matmul.idl, where the main
 file is called Matmul.cc.
 
 .. code-block:: C
+    :name: matmul_idl
+    :caption: Matmul.idl
 
     interface Matmul
     {
@@ -1979,6 +2089,8 @@ The next listing includes an example of matrix multiplication written in
 C++.
 
 .. code-block:: C
+    :name: matrix_multiplication
+    :caption: Matrix multiplication
 
     #include "Matmul.h"
     #include "Matrix.h"
@@ -2023,14 +2135,14 @@ The developer has to take into account the following rules:
    generated by the binding and it contains other includes and
    type-definitions that are required.
 
-#. A call to the **compss\_on** binding function is required to turn on
+#. A call to the **compss_on** binding function is required to turn on
    the COMPSs runtime.
 
 #. As in C language, out or inout parameters should be passed by
    reference by means of the "**&**" operator before the parameter name.
 
 #. Synchronization on a parameter can be done calling the
-   **compss\_wait\_on** binding function. The argument of this function
+   **compss_wait_on** binding function. The argument of this function
    must be the variable or object we want to synchronize.
 
 #. There is an **implicit synchronization** in the init method of
@@ -2038,51 +2150,51 @@ The developer has to take into account the following rules:
    the method call and due to this it is necessary to synchronize before
    for the copy of the returned value into "A" for it to be correct.
 
-#. A call to the **compss\_off** binding function is required to turn
+#. A call to the **compss_off** binding function is required to turn
    off the COMPSs runtime.
 
 Binding API
 ~~~~~~~~~~~
 
-Besides the aforementioned **compss\_on**, **compss\_off** and
-**compss\_wait\_on** functions, the C/C++ main program can make use of a
+Besides the aforementioned **compss_on**, **compss_off** and
+**compss_wait_on** functions, the C/C++ main program can make use of a
 variety of other API calls to better manage the synchronization of data
 generated by tasks. These calls are as follows:
 
--  *void compss\_ifstream(char \* filename, ifstream* \ & *ifs)*: given
+-  *void compss_ifstream(char \* filename, ifstream* \ & *ifs)*: given
    an uninitialized input stream *ifs* and a file *filename*, this
    function will synchronize the content of the file and initialize
    *ifs* to read from it.
 
--  *void compss\_ofstream(char \* filename, ofstream* \ & *ofs)*:
-   behaves the same way as *compss\_ifstream*, but in this case the
+-  *void compss_ofstream(char \* filename, ofstream* \ & *ofs)*:
+   behaves the same way as *compss_ifstream*, but in this case the
    opened stream is an output stream, meaning it will be used to write
    to the file.
 
--  *FILE\* compss\_fopen(char \* file\_name, char \* mode)*: similar to
+-  *FILE\* compss_fopen(char \* file_name, char \* mode)*: similar to
    the C/C++ *fopen* call. Synchronizes with the last version of file
-   *file\_name* and returns the FILE\* pointer to further reference it.
+   *file_name* and returns the FILE\* pointer to further reference it.
    As the mode parameter it takes the same that can be used in *fopen*
    (*r, w, a, r+, w+* and *a+*).
 
--  *void compss\_wait\_on(T\** \ & *obj) or T compss\_wait\_on(T* \ &
+-  *void compss_wait_on(T\** \ & *obj) or T compss_wait_on(T* \ &
    *obj)*: synchronizes for the last version of object obj, meaning that
    the execution will stop until the value of *obj* up to that point of
    the code is received (and thus all tasks that can modify it have
    ended).
 
--  *void compss\_delete\_file(char \* file\_name)*: makes an
+-  *void compss_delete_file(char \* file_name)*: makes an
    asynchronous delete of file *filename*. When all previous tasks have
    finished updating the file, it is deleted.
 
--  *void compss\_delete\_object(T\** \ & *obj)*: makes an asynchronous
+-  *void compss_delete_object(T\** \ & *obj)*: makes an asynchronous
    delete of an object. When all previous tasks have finished updating
    the object, it is deleted.
 
--  *void compss\_barrier()*: similarly to the Python binding, performs
+-  *void compss_barrier()*: similarly to the Python binding, performs
    an explicit synchronization without a return. When a
-   *compss\_barrier* is encountered, the execution will not continue
-   until all the tasks submitted before the *compss\_barrier* have
+   *compss_barrier* is encountered, the execution will not continue
+   until all the tasks submitted before the *compss_barrier* have
    finished.
 
 Functions file
@@ -2121,8 +2233,8 @@ binding compiles the whole application it will enter into the src
 directory and execute the Makefile.
 
 It generates two libraries, one for the master application and another
-for the worker application. The directive COMPSS\_MASTER or
-COMPSS\_WORKER must be used in order to compile the source files for
+for the worker application. The directive COMPSS_MASTER or
+COMPSS_WORKER must be used in order to compile the source files for
 each type of library. Both libraries will be copied into the lib
 directory where the binding will look for them when generating the
 master and worker applications.
@@ -2265,7 +2377,7 @@ Another COMPSs functionality supported in the C/C++ binding is the
 definition of different versions for a tasks. The following code shows
 an IDL file where a function has two implementations, with their
 corresponding constraints. It show an example where the
-*multiplyBlocks\_GPU* is defined as a implementation of *multiplyBlocks*
+*multiplyBlocks_GPU* is defined as a implementation of *multiplyBlocks*
 using the annotation/decoration *@Implements*. It also shows how to set
 a processor constraint which requires a GPU processor and a CPU core for
 managing the offloading of the computation to the GPU.
@@ -2361,16 +2473,16 @@ Application Compilation
 -----------------------
 
 To compile user’s applications with the C/C++ binding two commands are
-used: The "\ **compss\_build\_app**\ ’ command allows to compile
+used: The "\ **compss_build_app**\ ’ command allows to compile
 applications for a single architecture, and the
-"**compss\_build\_app\_multi\_arch**" command for multiple
+"**compss_build_app_multi_arch**" command for multiple
 architectures. Both commands must be executed in the directory of the
 main application code.
 
 Single architecture
 ~~~~~~~~~~~~~~~~~~~
 
-The user command "**compss\_build\_app**" compiles both master and
+The user command "**compss_build_app**" compiles both master and
 worker for a single architecture (e.g. x86-64, armhf, etc). Thus,
 whether you want to run your application in Intel based machine or ARM
 based machine, this command is the tool you need.
@@ -2385,9 +2497,9 @@ README.
 When the target is the native architecture, the command to execute is
 very simple;
 
-.. code-block:: bash
+.. code-block:: console
 
-    user@localhost:~/matmul_objects$ compss_build_app Matmul
+    $~/matmul_objects$ compss_build_app Matmul
     [ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-1.8.0-openjdk-amd64//jre/lib/amd64/server
     [ INFO ] Boost libraries are searched in the directory: /usr/lib/
 
@@ -2416,9 +2528,9 @@ to cross-compile, and also the location of some COMPSs dependencies such
 as java or boost which must be compliant with the target architecture.
 This environment is passed by flags and arguments;
 
-.. code-block:: bash
+.. code-block:: console
 
-    user@localhost:~/matmul_objects$ compss_build_app --cross-compile --cross-compile-prefix=arm-linux-gnueabihf- --java_home=/usr/lib/jvm/java-1.8.0-openjdk-armhf Matmul
+    $~/matmul_objects$ compss_build_app --cross-compile --cross-compile-prefix=arm-linux-gnueabihf- --java_home=/usr/lib/jvm/java-1.8.0-openjdk-armhf Matmul
     [ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-1.8.0-openjdk-armhf/jre/lib/arm/server
     [ INFO ] Boost libraries are searched in the directory: /usr/lib/
     [ INFO ] You enabled cross-compile and the prefix to be used is: arm-linux-gnueabihf-
@@ -2447,22 +2559,22 @@ This environment is passed by flags and arguments;
 The **--cross-compile** flag is used to indicate the users desire to
 cross-compile the application. It enables the use of
 **--cross-compile-prefix** flag to define the prefix for the
-cross-compiler. Setting $CROSS\_COMPILE environment variable will also
+cross-compiler. Setting $CROSS_COMPILE environment variable will also
 work (in case you use the environment variable, the prefix passed by
 arguments is overrided with the variable value). This prefix is added to
 *$CC* and *$CXX* to be used by the user *Makefile* and lastly by the
-*GNU toolchain* . Regarding java and boost, **--java\_home** and
+*GNU toolchain* . Regarding java and boost, **--java_home** and
 **--boostlib** flags are used respectively. In this case, users can
-also use teh *$JAVA\_HOME* and *$BOOST\_LIB* variables to indicate the
+also use teh *$JAVA_HOME* and *$BOOST_LIB* variables to indicate the
 java and boost for the target architecture. Note that these last
-arguments are purely for linkage, where *$LD\_LIBRARY\_PATH* is used by
+arguments are purely for linkage, where *$LD_LIBRARY_PATH* is used by
 *Unix/Linux* systems to find libraries, so feel free to use it if you
 want to avoid passing some environment arguments.
 
 Multiple architectures
 ~~~~~~~~~~~~~~~~~~~~~~
 
-The user command "**compss\_build\_app\_multi\_arch**" allows a to
+The user command "**compss_build_app_multi_arch**" allows a to
 compile an application for several architectures. Users are able to
 compile both master and worker for one or more architectures.
 Environments for the target architectures are defined in a file
@@ -2473,9 +2585,9 @@ command you would have to execute several times the command for a single
 architecture using its cross compile features. With the multiple
 architecture command is done in the following way.
 
-.. code-block:: bash
+.. code-block:: console
 
-    user@localhost:~/matmul_objects$ compss_build_app_multi_arch --master=x86_64-linux-gnu --worker=arm-linux-gnueabihf,x86_64-linux-gnu Matmul
+    $~/matmul_objects$ compss_build_app_multi_arch --master=x86_64-linux-gnu --worker=arm-linux-gnueabihf,x86_64-linux-gnu Matmul
 
     [ INFO ] Using default configuration file: /opt/COMPSs/Bindings/c/cfgs/compssrc.
     [ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/amd64/server
@@ -2550,7 +2662,7 @@ architectures. In the single architecture case, only one master and one
 worker directories are expected. In the multiple architectures case, one
 master and one worker is expected per architecture.
 
-.. code-block:: bash
+.. code-block:: text
 
     .
     |-- arm-linux-gnueabihf
@@ -2576,24 +2688,24 @@ As described in section [sec:ompss] applications can use OmpSs and
 OmpSs-2 programming models. The compilation process differs a little bit
 compared with a normal COMPSs C/C++ application. Applications using
 OmpSs must be compiled using the *--ompss* option in the
-compss\_build\_app command.
+compss_build_app command.
 
-.. code-block:: bash
+.. code-block:: console
 
-    user@localhost:~/matmul_objects$ compss_build_app --ompss Matmul
+    $~/matmul_objects$ compss_build_app --ompss Matmul
 
 Executing the previous command will start the compilation of the
 application. Sometimes due to configuration issues OmpSs can not be
-found, the option *--with\_ompss=/path/to/ompss* specifies the OmpSs
+found, the option *--with_ompss=/path/to/ompss* specifies the OmpSs
 path that the user wants to use in the compilation.
 
 Applications using OmpSs-2 are similarly compiled. The options to
 compile with OmpSs-2 are *--ompss-2* and
-*--with\_ompss-2=/path/to/ompss-2*
+*--with_ompss-2=/path/to/ompss-2*
 
-.. code-block:: bash
+.. code-block:: console
 
-    user@localhost:~/matmul_objects$ compss_build_app --with_ompss-2=/home/mdomingu/ompss-2 --ompss-2 Matmul
+    $~/matmul_objects$ compss_build_app --with_ompss-2=/home/mdomingu/ompss-2 --ompss-2 Matmul
 
 Remember that additional source files can be used in COMPSs C/C++
 applications, if the user expects OmpSs or OmpSs-2 to be used in those
@@ -2606,7 +2718,7 @@ Application Execution
 The following environment variables must be defined before executing a
 COMPSs C/C++ application:
 
-JAVA\_HOME: Java JDK installation directory (e.g.
+JAVA_HOME: Java JDK installation directory (e.g.
 /usr/lib/jvm/java-8-openjdk/)
 
 After compiling the application, two directories, master and worker, are
@@ -2618,12 +2730,12 @@ our example is called Matmul-worker.
 
 The *runcompss* script has to be used to run the application:
 
-.. code-block:: bash
+.. code-block:: console
 
-    compss@bsc:~$ runcompss \
-                     --lang=c \
-                     -g \
-                     /home/compss/tutorial_apps/c/matmul_objects/master/Matmul 3 4 2.0
+    $ runcompss \
+                --lang=c \
+                -g \
+                /home/compss/tutorial_apps/c/matmul_objects/master/Matmul 3 4 2.0
 
 The complete list of options of the runcompss command is available in
 the *COMPSs User Manual: Application Execution* at http://compss.bsc.es
@@ -2632,7 +2744,7 @@ the *COMPSs User Manual: Application Execution* at http://compss.bsc.es
 Task Dependency Graph
 ---------------------
 
-Figure [fig:matmul\_exec\_graph] depicts the task dependency graph for
+Figure [fig:matmul_exec_graph] depicts the task dependency graph for
 the Matmul application in its object version with 3x3 blocks matrices,
 each one containing a 4x4 matrix of doubles. Each block in the result
 matrix accumulates three block multiplications, i.e. three
@@ -2664,85 +2776,87 @@ Constraints
 This section provides a detailed information about all the supported
 constraints by the COMPSs runtime for **Java**, **Python** and **C/C++**
 languages. The constraints are defined as key-value pairs, where the key
-is the name of the constraint. Table [tab:constraints] details the
+is the name of the constraint. :numref:`supported_constraints` details the
 available constraints names for *Java*, *Python* and *C/C++*, its value
 type, its default value and a brief description.
 
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| **Java**                      | **Python**                          | **C / C++**                   | **Value type**                           | **Default value**   | **Description**                                                                       |
-+===============================+=====================================+===============================+==========================================+=====================+=======================================================================================+
-| computingUnits                | computing\_units                    | ComputingUnits                | :math:`<`\ string\ :math:`>`             | "1"                 | Required number of computing units                                                    |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| processorName                 | processor\_name                     | ProcessorName                 | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required processor name                                                               |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| processorSpeed                | processor\_speed                    | ProcessorSpeed                | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required processor speed                                                              |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| processorArchitecture         | processor\_architecture             | ProcessorArchitecture         | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required processor architecture                                                       |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| processorType                 | processor\_type                     | ProcessorType                 | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required processor type                                                               |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| processorPropertyName         | processor\_property\_name           | ProcessorPropertyName         | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required processor property                                                           |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| processorPropertyValue        | processor\_property\_value          | ProcessorPropertyValue        | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required processor property value                                                     |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| processorInternalMemorySize   | processor\_internal\_memory\_size   | ProcessorInternalMemorySize   | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required internal device memory                                                       |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| processors                    | processors                          | -                             | List\ :math:`<`\ @Processor\ :math:`>`   | "{}"                | Required processors (check Table [tab:processor\_constraint] for Processor details)   |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| memorySize                    | memory\_size                        | MemorySize                    | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required memory size in GBs                                                           |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| memoryType                    | memory\_type                        | MemoryType                    | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required memory type (SRAM, DRAM, etc.)                                               |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| storageSize                   | storage\_size                       | StorageSize                   | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required storage size in GBs                                                          |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| storageType                   | storage\_type                       | StorageType                   | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required storage type (HDD, SSD, etc.)                                                |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| operatingSystemType           | operating\_system\_type             | OperatingSystemType           | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required operating system type (Windows, MacOS, Linux, etc.)                          |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| operatingSystemDistribution   | operating\_system\_distribution     | OperatingSystemDistribution   | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required operating system distribution (XP, Sierra, openSUSE, etc.)                   |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| operatingSystemVersion        | operating\_system\_version          | OperatingSystemVersion        | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required operating system version                                                     |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| wallClockLimit                | wall\_clock\_limit                  | WallClockLimit                | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Maximum wall clock time                                                               |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| hostQueues                    | host\_queues                        | HostQueues                    | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required queues                                                                       |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-| appSoftware                   | app\_software                       | AppSoftware                   | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required applications that must be available within the remote node for the task      |
-+-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+.. table:: Arguments of the *@constraint* decorator
+    :name: supported_constraints
+    :widths: auto
 
-Table: Arguments of the *@constraint* decorator
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | **Java**                      | **Python**                          | **C / C++**                   | **Value type**                           | **Default value**   | **Description**                                                                       |
+    +===============================+=====================================+===============================+==========================================+=====================+=======================================================================================+
+    | computingUnits                | computing_units                     | ComputingUnits                | :math:`<`\ string\ :math:`>`             | "1"                 | Required number of computing units                                                    |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | processorName                 | processor_name                      | ProcessorName                 | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required processor name                                                               |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | processorSpeed                | processor_speed                     | ProcessorSpeed                | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required processor speed                                                              |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | processorArchitecture         | processor_architecture              | ProcessorArchitecture         | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required processor architecture                                                       |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | processorType                 | processor_type                      | ProcessorType                 | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required processor type                                                               |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | processorPropertyName         | processor_property_name             | ProcessorPropertyName         | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required processor property                                                           |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | processorPropertyValue        | processor_property_value            | ProcessorPropertyValue        | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required processor property value                                                     |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | processorInternalMemorySize   | processor_internal_memory_size      | ProcessorInternalMemorySize   | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required internal device memory                                                       |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | processors                    | processors                          | -                             | List\ :math:`<`\ @Processor\ :math:`>`   | "{}"                | Required processors (check Table [tab:processor_constraint] for Processor details)    |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | memorySize                    | memory_size                         | MemorySize                    | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required memory size in GBs                                                           |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | memoryType                    | memory_type                         | MemoryType                    | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required memory type (SRAM, DRAM, etc.)                                               |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | storageSize                   | storage_size                        | StorageSize                   | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required storage size in GBs                                                          |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | storageType                   | storage_type                        | StorageType                   | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required storage type (HDD, SSD, etc.)                                                |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | operatingSystemType           | operating_system_type               | OperatingSystemType           | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required operating system type (Windows, MacOS, Linux, etc.)                          |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | operatingSystemDistribution   | operating_system_distribution       | OperatingSystemDistribution   | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required operating system distribution (XP, Sierra, openSUSE, etc.)                   |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | operatingSystemVersion        | operating_system_version            | OperatingSystemVersion        | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required operating system version                                                     |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | wallClockLimit                | wall_clock_limit                    | WallClockLimit                | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Maximum wall clock time                                                               |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | hostQueues                    | host_queues                         | HostQueues                    | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required queues                                                                       |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
+    | appSoftware                   | app_software                        | AppSoftware                   | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required applications that must be available within the remote node for the task      |
+    +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
 
 All constraints are defined with a simple value except the *HostQueue*
 and *AppSoftware* constraints, which allow multiple values.
 
 The *processors* constraint allows the users to define multiple
 processors for a task execution. This constraint is specified as a list
-of @Processor annotations that must be defined as shown in table
-[tab:processor\_constraint]
+of @Processor annotations that must be defined as shown in :numref:`processor_constraints`
 
- 
+.. table:: Arguments of the *@Processor* decorator
+    :name: processor_constraints
+    :widths: auto
 
-+----------------------+--------------------------------+---------------------+---------------------------------------------+
-| **Annotation**       | **Value type**                 | **Default value**   | **Description**                             |
-+======================+================================+=====================+=============================================+
-| processorType        | :math:`<`\ string\ :math:`>`   | "CPU"               | Required processor type (e.g. CPU or GPU)   |
-+----------------------+--------------------------------+---------------------+---------------------------------------------+
-| computingUnits       | :math:`<`\ string\ :math:`>`   | "1"                 | Required number of computing units          |
-+----------------------+--------------------------------+---------------------+---------------------------------------------+
-| name                 | :math:`<`\ string\ :math:`>`   | "[unassigned]"      | Required processor name                     |
-+----------------------+--------------------------------+---------------------+---------------------------------------------+
-| speed                | :math:`<`\ string\ :math:`>`   | "[unassigned]"      | Required processor speed                    |
-+----------------------+--------------------------------+---------------------+---------------------------------------------+
-| architecture         | :math:`<`\ string\ :math:`>`   | "[unassigned]"      | Required processor architecture             |
-+----------------------+--------------------------------+---------------------+---------------------------------------------+
-| propertyName         | :math:`<`\ string\ :math:`>`   | "[unassigned]"      | Required processor property                 |
-+----------------------+--------------------------------+---------------------+---------------------------------------------+
-| propertyValue        | :math:`<`\ string\ :math:`>`   | "[unassigned]"      | Required processor property value           |
-+----------------------+--------------------------------+---------------------+---------------------------------------------+
-| internalMemorySize   | :math:`<`\ string\ :math:`>`   | "[unassigned]"      | Required internal device memory             |
-+----------------------+--------------------------------+---------------------+---------------------------------------------+
+    +----------------------+--------------------------------+---------------------+---------------------------------------------+
+    | **Annotation**       | **Value type**                 | **Default value**   | **Description**                             |
+    +======================+================================+=====================+=============================================+
+    | processorType        | :math:`<`\ string\ :math:`>`   | "CPU"               | Required processor type (e.g. CPU or GPU)   |
+    +----------------------+--------------------------------+---------------------+---------------------------------------------+
+    | computingUnits       | :math:`<`\ string\ :math:`>`   | "1"                 | Required number of computing units          |
+    +----------------------+--------------------------------+---------------------+---------------------------------------------+
+    | name                 | :math:`<`\ string\ :math:`>`   | "[unassigned]"      | Required processor name                     |
+    +----------------------+--------------------------------+---------------------+---------------------------------------------+
+    | speed                | :math:`<`\ string\ :math:`>`   | "[unassigned]"      | Required processor speed                    |
+    +----------------------+--------------------------------+---------------------+---------------------------------------------+
+    | architecture         | :math:`<`\ string\ :math:`>`   | "[unassigned]"      | Required processor architecture             |
+    +----------------------+--------------------------------+---------------------+---------------------------------------------+
+    | propertyName         | :math:`<`\ string\ :math:`>`   | "[unassigned]"      | Required processor property                 |
+    +----------------------+--------------------------------+---------------------+---------------------------------------------+
+    | propertyValue        | :math:`<`\ string\ :math:`>`   | "[unassigned]"      | Required processor property value           |
+    +----------------------+--------------------------------+---------------------+---------------------------------------------+
+    | internalMemorySize   | :math:`<`\ string\ :math:`>`   | "[unassigned]"      | Required internal device memory             |
+    +----------------------+--------------------------------+---------------------+---------------------------------------------+
 
-Table: Arguments of the *@Processor* decorator
 
 Known Limitations
 =================
@@ -2843,7 +2957,7 @@ The current COMPSs version () has the following limitations:
 
 -  **User defined classes in Python:** User defined classes in Python
    **must not be** declared **in the same file that contains the main
-   method** (*if \_\_name\_\_==\_\_main\_\_'*) to avoid serialization
+   method** (*if __name__==__main__'*) to avoid serialization
    problems of the objects.
 
 -  **Python object hierarchy dependency detection**: Dependencies are
@@ -2906,7 +3020,7 @@ The current COMPSs version () has the following limitations:
    ``my_folder.object_name`` instead of ``object_name``. For example,
    consider the following file tree:
 
-   .. code-block:: bash
+   .. code-block:: text
 
        my_apps/
        |- kmeans/

@@ -77,18 +77,23 @@ language = None
 exclude_patterns = []
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+pygments_style = 'default' # 'sphinx'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
 
 # Specific configuration
 numfig = True
+numfig_secnum_depth = 0
 numfig_format = {'figure':'Figure %s',
                  'table':'Table %s',
-                 'code-block':'Algorithm %s',
+                 'code-block':'Code %s',
                  'section':'Section %s'}
 html_add_permalinks = ""  # Disabled permalinks
+html_logo = './Logos/Logos/logo_compss_small.png'
+html_show_sourcelink = False
+html_show_copyright = False
+nitpicky = True
 
 # -- Options for HTML output ----------------------------------------------
 
@@ -101,7 +106,7 @@ html_theme = 'sphinx_rtd_theme' # 'alabaster'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {'logo_only': True}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
