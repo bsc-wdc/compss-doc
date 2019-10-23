@@ -3,14 +3,22 @@
 
 This section provides answers for the most common issues of the execution of COMPSs applications.
 For specific issues not covered in this section, please do not hesitate to contact us at:
+
 \begin{center}
   \textbf{\url{support-compss@bsc.es}}
 \end{center}
 
+
+%
+% SUBSECTION
+%
 \subsection{How to debug}
-When the application does not behave as expected the first thing users must do is to run it in \textbf{debug} mode executing the \texttt{runcompss} command withthe \texttt{-d} flag to enable the debug log level.
+
+When the application does not behave as expected the first thing users must do is to run it in \textbf{debug} mode executing
+the \texttt{runcompss} command withthe \texttt{-d} flag to enable the debug log level.
 
 In this case the application execution will produce the following files:
+
 \begin{itemize}
  \item \texttt{runtime.log}
  \item \texttt{resources.log}
@@ -22,7 +30,12 @@ will appear in this file. If the file-transfers are successfully and the jobs ar
 at the error messages produced inside each job. Users should notice that if there are $\_RESUBMITTED$ files something 
 inside the job is failing.
 
+
+%
+% SUBSECTION
+%
 \subsection{Tasks are not executed}
+
 If the tasks remain in \textbf{Blocked} state probably there are no existing resources matching the specific task constraints. 
 This error can be potentially caused by two facts: the resources are not correctly loaded into the runtime, or the task constraints do not match with any resource. 
 
@@ -30,10 +43,16 @@ In the first case, users should take a look at the \texttt{resouces.log} and che
 defined in the \texttt{project.xml} file are available to the runtime. In the second case users should re-define the task 
 constraints taking into account the resources capabilities defined into the \texttt{resources.xml} and \texttt{project.xml} files.
 
+
+%
+% SUBSECTION
+%
 \subsection{Jobs fail}
+
 If all the application's tasks fail because all the submitted jobs fail, it is probably due to the fact that there is a resource 
 miss-configuration. In most of the cases, the resource that the application is trying to access has no passwordless access through
 the configured user. This can be checked by:
+
 \begin{itemize}
  \item Open the \texttt{project.xml}. (The default file is stored under \\ \texttt{/opt/COMPSs/
  Runtime/configuration/xml/projects/project.xml})
@@ -44,6 +63,7 @@ the configured user. This can be checked by:
 \end{itemize}
 
 The problem can be solved running the following commands:
+
 \begin{lstlisting}[language=bash]
 compss@bsc:~$ scp ~/.ssh/id_dsa.pub user@resourceName:./mydsa.pub
 compss@bsc:~$ ssh user@resourceName "cat mydsa.pub >> ~/.ssh/authorized_keys; rm ./mydsa.pub"
@@ -52,7 +72,45 @@ compss@bsc:~$ ssh user@resourceName "cat mydsa.pub >> ~/.ssh/authorized_keys; rm
 These commands are a quick solution, for further details please check the \textit{Additional Configuration} section 
 inside the \textit{COMPSs Installation Manual} available at our website \url{http://compss.bsc.es}.
 
+
+%
+% SUBSECTION
+%
+\subsection{Exceptions when starting the Worker processes}
+
+When the COMPSs master is not able to communicate with one of the COMPSs workers described in the \textit{project.xml} and 
+\textit{resources.xml} files, different exceptions can be raised and logged on the \textit{runtime.log} of the application. All of
+them are raised during the worker start up and contain the \texttt{[WorkerStarter]} prefix. Next we provide a list with the common
+exceptions:
+
+\begin{itemize}
+ \item \texttt{InitNodeException}: Exception raised when the remote SSH process to start the worker has failed.
+ \item \texttt{UnstartedNodeException}: Exception raised when the worker process has aborted.
+ \item \texttt{Connection refused}: Exception raised when the master cannot communicate with the worker process (NIO).
+\end{itemize}
+
+All these exceptions encapsulate an error when starting the worker process. This means that \textbf{the worker machine is not properly configured} and thus,
+you need to check the environment of the failing worker. Further information about the specific error can be found on the worker log,
+available at the working directory path in the remote worker machine (the worker working directory specified in the \textit{project.xml}
+file). 
+
+Next, we list the most common errors and their solutions:
+
+\begin{itemize}
+ \item \textbf{java command not found}: Invalid path to the java binary. Check the \texttt{JAVA\_HOME} definition at the remote worker machine. 
+ \item \textbf{Cannot create WD}: Invalid working directory. Check the rw permissions of the worker's working directory.
+ \item \textbf{No exception}: The worker process has started normally and there is no exception. In this case the issue is normally due to the
+ firewall configuration preventing the communication between the COMPSs master and worker. Please check that the worker firewall has in and out
+ permissions for TCP and UDP in the adaptor ports (the adaptor ports are specified in the \textit{resources.xml} file. By default the port rank
+ is 43000-44000.
+\end{itemize}
+
+
+%
+% SUBSECTION
+%
 \subsection{Compilation error: @Method not found}
+
 When trying to compile Java applications users can get some of the following compilation errors:
 \begin{lstlisting}[language=bash]
 error: package es.bsc.compss.types.annotations does not exist
@@ -92,17 +150,22 @@ error: cannot find symbol
 All these errors are raised because the \texttt{compss-engine.jar} is not listed in the CLASSPATH. The default COMPSs installation
 automatically inserts this package into the CLASSPATH but it may have been overwritten or deleted. Please check that your 
 environment variable CLASSPATH containts the \texttt{compss-engine.jar} location by running the following command:
+
 \begin{lstlisting}[language=bash]
 $ echo $CLASSPATH | grep compss-engine
 \end{lstlisting}
+
 If the result of the previous command is empty it means that you are missing the \texttt{compss-engine.jar} package in your classpath. 
 
 The easiest solution is to manually export the CLASSPATH variable into the user session:
+
 \begin{lstlisting}[language=bash]
 $ export CLASSPATH=$CLASSPATH:/opt/COMPSs/Runtime/compss-engine.jar
 \end{lstlisting}
+
 However, you will need to remember to export this variable every time you log out and back in again. Consequently, we recommend to 
 add this export to the \texttt{.bashrc} file:
+
 \begin{lstlisting}[language=bash]
 $ echo "# COMPSs variables for Java compilation" >> ~/.bashrc
 $ echo "export CLASSPATH=$CLASSPATH:/opt/COMPSs/Runtime/compss-engine.jar" >> ~/.bashrc
@@ -111,7 +174,12 @@ $ echo "export CLASSPATH=$CLASSPATH:/opt/COMPSs/Runtime/compss-engine.jar" >> ~/
 \colorComment{Attention: The \texttt{compss-engine.jar} is installed inside the COMPSs installation directory. If you have performed
 a custom installation, the path of the package may be different.}
 
+
+%
+% SUBSECTION
+%
 \subsection{Jobs failed on method reflection}
+
 When executing an application the main code gets stuck executing a task. Taking a look at the \texttt{runtime.log} users can check
 that the job associated to the task has failed (and all its resubmissions too). Then, opening the \texttt{jobX\_NEW.out} or the
 \texttt{jobX\_NEW.err} files users find the following error:
@@ -140,7 +208,12 @@ one of the following errors:
  \item The tasks have not been defined as \textit{public}.
 \end{itemize}
 
+
+%
+% SUBSECTION
+%
 \subsection{Jobs failed on reflect target invocation null pointer}
+
 When executing an application the main code gets stuck executing a task. Taking a look at the \texttt{runtime.log} users can check
 that the job associated to the task has failed (and all its resubmissions too). Then, opening the \texttt{jobX\_NEW.out} or the
 \texttt{jobX\_NEW.err} files users find the following error:
@@ -170,9 +243,16 @@ is null. The transfer failure is normally caused because the transferred object 
 Users should check that all the object parameters in the task are either implementing the serializable interface or following 
 the \textit{java beans} model (by implementing an empty constructor and getters and setters for each attribute).
 
+
+%
+% SUBSECTION
+%
 \subsection{Tracing merge failed: too many open files}
 
-When too many nodes and threads are instrumented, the tracing merge can fail due to an OS limitation, namely: the maximum open files. This problem usually happens when using advanced mode due to the larger number of threads instrumented. To overcome this issue users have two choices. \textbf{First option}, use \textit{Extrae} parallel MPI merger. This merger is automatically used if COMPSs was installed with MPI support. In Ubuntu you can install the following packets to get MPI support:
+When too many nodes and threads are instrumented, the tracing merge can fail due to an OS limitation, namely: the maximum open files. This
+problem usually happens when using advanced mode due to the larger number of threads instrumented. To overcome this issue users have two
+choices. \textbf{First option}, use \textit{Extrae} parallel MPI merger. This merger is automatically used if COMPSs was installed with MPI
+support. In Ubuntu you can install the following packets to get MPI support:
 
 \begin{lstlisting}[language=bash]
 sudo apt-get install libcr-dev mpich2 mpich2-doc
@@ -196,7 +276,9 @@ MPI instrumentation: yes
 	MPI launcher: /apps/OPENMPI/1.8.1-mellanox/bin/mpirun
 \end{lstlisting}
 
-On the other hand, if you already installed COMPSs, you can check \textit{Extrae} configuration executing the script \texttt{/opt/COMPSs/Dependencies/extrae/etc/configured.sh}. Users should check that flags \texttt{--with-mpi=/usr} and \texttt{--enable-parallel-merge} are present and that MPI path is correct and exists. Sample output:
+On the other hand, if you already installed COMPSs, you can check \textit{Extrae} configuration executing the script
+\texttt{/opt/COMPSs/Dependencies/extrae/etc/configured.sh}. Users should check that flags \texttt{--with-mpi=/usr} and
+\texttt{--enable-parallel-merge} are present and that MPI path is correct and exists. Sample output:
 
 \begin{lstlisting}[language=bash]
 EXTRAE_HOME is not set. Guessing from the script invoked that Extrae was installed in /opt/COMPSs/Dependencies/extrae
@@ -223,13 +305,10 @@ Translating addresses into source code references seems to be disabled (or not n
 Please, report bugs to tools@bsc.es
 \end{lstlisting}
 
-\textbf{Disclaimer:} the parallel merge with MPI will not bypass the system's maximum number of open files, just distribute the files among the resources. If all resources belong to the same machine, the merge will fail anyways.
+\textbf{Disclaimer:} the parallel merge with MPI will not bypass the system's maximum number of open files, just distribute the
+files among the resources. If all resources belong to the same machine, the merge will fail anyways.
 
 \hfill
 
-The \textbf{second option} is to increase the OS maximum number of open files. For instance, in Ubuntu add \texttt{ ulimit -n 40000 } just before the start-stop-daemon line in the do\_start section.
-
-
-
-
-
+The \textbf{second option} is to increase the OS maximum number of open files. For instance, in Ubuntu add \texttt{ ulimit -n 40000 } just before
+the start-stop-daemon line in the do\_start section.
