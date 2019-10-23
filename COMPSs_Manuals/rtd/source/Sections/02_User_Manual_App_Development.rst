@@ -1088,7 +1088,7 @@ going to invoke a OmpSs executable (:numref:`ompss_task_python`).
 The OmpSs executable invocation can also be enriched with parameters,
 files and prefixes as with the *@binary* decorator through the
 function parameters and *@task* decorator information. Please,
-check subparagraph [subpar:binary_decorator] for more details.
+check :ref:`Binary decorator` for more details.
 
 MPI decorator
 '''''''''''''
@@ -1110,7 +1110,7 @@ going to invoke a MPI executable (:numref:`mpi_task_python`).
 The MPI executable invocation can also be enriched with parameters,
 files and prefixes as with the *@binary* decorator through the
 function parameters and *@task* decorator information. Please,
-check subparagraph [subpar:binary_decorator] for more details.
+check :ref:`Binary decorator` for more details.
 
 COMPSs decorator
 ''''''''''''''''
@@ -1402,8 +1402,7 @@ to the user (:numref:`implements_python`).
         return resultList
 
 Please, note that if the implementation is used to define a binary,
-OmpSs, MPI, COMPSs or multinode task invocation (see Section
-[par:other_decorators]), the @implement decorator must be
+OmpSs, MPI, COMPSs or multinode task invocation (see :ref:`Other task types`), the @implement decorator must be
 always on top of the decorators stack, followed by the
 @constraint decorator, then the
 @binary/\ @ompss/\ @mpi/\ @compss/\ @multinode

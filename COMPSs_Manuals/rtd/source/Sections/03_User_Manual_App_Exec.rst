@@ -25,7 +25,7 @@ COMPSs applications are executed using the **runcompss** command:
 
 .. code-block:: console
 
-    compss@bsc:~$ runcompss [options] application_name [application_arguments]
+    $ runcompss [options] application_name [application_arguments]
 
 The application name must be the fully qualified name of the application
 in Java, the path to the *.py* file containing the main program in
@@ -41,7 +41,7 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
 
 .. code-block:: console
 
-    compss@bsc:~$ runcompss -h
+    $ runcompss -h
 
     Usage: runcompss [options] application_name application_arguments
 
@@ -182,7 +182,7 @@ Running a COMPSs application
 Before running COMPSs applications the application files **must** be in
 the **CLASSPATH**. Thus, when launching a COMPSs application, users can
 manually pre-set the **CLASSPATH** environment variable or can add the
-``–classpath`` option to the ``runcompss`` command.
+``--classpath`` option to the ``runcompss`` command.
 
 The next three sections provide specific information for launching
 COMPSs applications developed in different code languages (Java, Python
