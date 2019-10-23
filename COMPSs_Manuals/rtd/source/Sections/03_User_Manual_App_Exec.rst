@@ -25,7 +25,7 @@ COMPSs applications are executed using the **runcompss** command:
 
 .. code-block:: console
 
-    $ runcompss [options] application_name [application_arguments]
+    compss@bsc:~$ runcompss [options] application_name [application_arguments]
 
 The application name must be the fully qualified name of the application
 in Java, the path to the *.py* file containing the main program in
@@ -41,7 +41,7 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
 
 .. code-block:: console
 
-    $ runcompss -h
+    compss@bsc:~$ runcompss -h
 
     Usage: runcompss [options] application_name application_arguments
 
@@ -222,11 +222,11 @@ A Java COMPSs application can be launched through the following command:
 
     ------------------------------------------------------------
 
-In this first execution we use the default value of the ``–classpath``
+In this first execution we use the default value of the ``--classpath``
 option to automatically add the jar file to the classpath (by executing
 runcompss in the directory which contains the jar file). However, we can
 explicitly do this by exporting the **CLASSPATH** variable or by
-providing the ``–classpath`` value. Next, we provide two more ways to
+providing the ``--classpath`` value. Next, we provide two more ways to
 perform the same execution:
 
 .. code-block:: console
@@ -236,14 +236,14 @@ perform the same execution:
 
 .. code-block:: console
 
-    compss@bsc:~$ runcompss --classpath=/home/compss/tutorial_apps/java/simple/jar/simple.jar
+    compss@bsc:~$ runcompss --classpath=/home/compss/tutorial_apps/java/simple/jar/simple.jar \
                             simple.Simple <initial_number>
 
 Running Python applications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To launch a COMPSs Python application users have to provide the
-``–lang=python`` option to the runcompss command. If the extension of
+``--lang=python`` option to the runcompss command. If the extension of
 the main file is a regular Python extension (``.py`` or ``.pyc``) the
 *runcompss* command can also infer the application language without
 specifying the *lang* flag.
@@ -272,7 +272,7 @@ specifying the *lang* flag.
     ------------------------------------------------------------
 
 **Attention**: Executing without debug (e.g. default log level or
-``–log_level=off``) uses -O2 compiled sources, disabling ``asserts``
+``--log_level=off``) uses -O2 compiled sources, disabling ``asserts``
 and ``__debug__``.
 
 Alternatively, it is possible to execute the a COMPSs Python application
@@ -280,7 +280,7 @@ using ``pycompss`` as module:
 
 .. code-block:: console
 
-    $ python -m pycompss <runcompss_flags> <application> <application_parameters>
+    compss@bsc:~$ python -m pycompss <runcompss_flags> <application> <application_parameters>
 
 Consequently, the previous example could also be run as follows:
 
@@ -321,7 +321,7 @@ To launch a COMPSs C/C++ application users have to compile the
 C/C++ application by means of the ``buildapp`` command. For
 further information please refer to the *COMPSs User Manual: Application
 development guide* document available at http://compss.bsc.es . Once
-complied, the ``–lang=c`` option must be provided to the runcompss
+complied, the ``--lang=c`` option must be provided to the runcompss
 command. If the main file is a C/C++ binary the *runcompss* command
 can also infer the application language without specifying the *lang*
 flag.
@@ -364,20 +364,15 @@ environment and are completely independent from the application.
 
 For each execution users can load the default configuration files or
 specify their custom configurations by using, respectively, the
-``–resources=<absolute_path_to_resources.xml>`` and the
-``–project=<absolute_path_to_project.xml>`` in the ``runcompss``
+``--resources=<absolute_path_to_resources.xml>`` and the
+``--project=<absolute_path_to_project.xml>`` in the ``runcompss``
 command. The default files are located in the
 ``/opt/COMPSs/Runtime/configuration/xml/`` path. Users can manually edit
 these files or can use the *Eclipse IDE* tool developed for COMPSs. For
-further information about the *Eclipse IDE* please refer to Section
-[subsec:IDE].
+further information about the *Eclipse IDE* please refer to :ref:`COMPSs IDE` Section.
 
- 
-
-For further details please check the *Configuration Files* Section
-inside the *COMPSs Installation and Administration Manual* available at
-http://compss.bsc.es/releases/compss/latest/docs/COMPSs_Installation_Manual.pdf
-.
+For further details please check the :ref:`Configuration Files` Subsection
+inside the :ref:`Installation and Administration` Section.
 
 Results and logs
 ================
@@ -396,17 +391,18 @@ results:
 
 Regarding the application output, COMPSs will preserve the application
 output but will add some pre and post output to indicate the COMPSs
-Runtime state. Figure [fig:compss\_out] shows the standard output
+Runtime state. :numref:`simple_java_stdout` shows the standard output
 generated by the execution of the Simple Java application. The green box
 highlights the application ``stdout`` while the rest of the output is
 produced by COMPSs.
 
 .. figure:: ./Figures/app_execution/simple_java_stdout.jpeg
+   :name: simple_java_stdout
    :alt: Output generated by the execution of the *Simple* Java application with COMPSs
+   :align: center
    :width: 95.0%
 
-   Output generated by the execution of the *Simple* Java application
-   with COMPSs
+   Output generated by the execution of the *Simple* Java application with COMPSs
 
 Regarding the application files, COMPSs **does not modify** any of them
 and thus, the results obtained by executing the application with COMPSs
@@ -420,23 +416,28 @@ task execution) inside the
 **``/home/$USER/.COMPSs/$APPNAME/$EXEC_NUMBER/jobs/``** directory of
 the main application node.
 
-Figures [fig:hello\_seq] and [fig:hello\_compss] show an example of the
+:numref:`hello_seq` and :numref:`hello_compss` show an example of the
 results obtained from the execution of the *Hello* Java application.
-While Figure [fig:hello\_seq] provides the output of the sequential
-execution of the application (without COMPSs), Figure
-[fig:hello\_compss] provides the output of the equivalent COMPSs
+While :numref:`hello_seq` provides the output of the sequential
+execution of the application (without COMPSs), :numref:`hello_compss`
+provides the output of the equivalent COMPSs
 execution. Please note that the sequential execution produces the
 ``Hello World! (from a task)`` message in the ``stdout`` while the
 COMPSs execution stores the message inside the ``job1_NEW.out`` file.
 
 .. figure:: ./Figures/app_execution/hello_seq_stdout.jpeg
+   :name: hello_seq
    :alt: Sequential execution of the *Hello* java application
-   :width: 70.0%
+   :align: center
+   :width: 80.0%
 
    Sequential execution of the *Hello* java application
 
 .. figure:: ./Figures/app_execution/hello_compss_stdout_and_job.jpeg
+   :name: hello_compss
    :alt: COMPSs execution of the *Hello* java application
+   :align: center
+   :width: 95.0%
 
    COMPSs execution of the *Hello* java application
 
@@ -446,7 +447,7 @@ Logs
 COMPSs includes three log levels for running applications but users can
 modify them or add more levels by editing the logger files under the
 ``/opt/COMPSs/Runtime/configuration`` ``/log/`` folder. Any of these log
-levels can be selected by adding the ``–log_level=<debug | info | off>``
+levels can be selected by adding the ``--log_level=<debug | info | off>``
 flag to the ``runcompss`` command. The default value is ``off``.
 
 The logs generated by the ``NUM_EXEC`` execution of the application APP
@@ -462,16 +463,17 @@ This means that the *base log folder* will contain two empty files
 If somehow the application has failed, the ``runtime.log`` and/or the
 ``resources.log`` will not be empty and a new file per failed job will
 appear inside the ``jobs`` folder to store the ``stdout`` and the
-``stderr``. Figure [fig:simple\_log\_off] shows the logs generated by
+``stderr``. :numref:`simple_log_off` shows the logs generated by
 the execution of the Simple java application (without errors) in **off**
 mode.
 
 .. figure:: ./Figures/app_execution/simple_log_off.jpeg
+   :name: simple_log_off
    :alt: Structure of the logs folder for the Simple java application in **off** mode
+   :align: center
    :width: 40.0%
 
-   Structure of the logs folder for the Simple java application in
-   **off** mode
+   Structure of the logs folder for the Simple java application in **off** mode
 
 When running COMPSs with **log level info** the *base log folder* will
 contain two files (``runtime.log`` and ``resources.log``) and one folder
@@ -483,47 +485,51 @@ resource (slots), the information about running or pending tasks in the
 resource queue and the created and destroyed resources. The jobs folder
 will be empty unless there has been a failed job. In this case it will
 store, for each failed job, one file for the ``stdout`` and another for
-the ``stderr``. As an example, Figure [fig:simple\_log\_info] shows the
+the ``stderr``. As an example, :numref:`simple_log_info` shows the
 logs generated by the same execution than the previous case but with
 **info** mode.
 
 .. figure:: ./Figures/app_execution/simple_log_info.jpeg
+   :name: simple_log_info
    :alt: Structure of the logs folder for the Simple java application in **info** mode
+   :align: center
    :width: 40.0%
 
-   Structure of the logs folder for the Simple java application in
-   **info** mode
+   Structure of the logs folder for the Simple java application in **info** mode
 
 The ``runtime.log`` and ``resources.log`` are quite large files, thus
 they should be only checked by advanced users. For an easier
 interpretation of these files the COMPSs Framework includes a monitor
 tool. For further information about the COMPSs Monitor please check
-Section [subsec:monitor].
+:ref:`COMPSs Monitor`.
 
-Figures [fig:simple\_runtimelog] and [fig:simple\_resourceslog] provide
+:numref:`simple_runtimelog` and :numref:`simple_resourceslog` provide
 the content of these two files generated by the execution of the
 *Simple* java application.
 
 .. figure:: ./Figures/app_execution/simple_runtimelog.jpeg
+   :name: simple_runtimelog
    :alt: runtime.log generated by the execution of the *Simple* java application
+   :align: center
    :width: 95.0%
 
    runtime.log generated by the execution of the *Simple* java
    application
 
 .. figure:: ./Figures/app_execution/simple_resourceslog.jpeg
+   :name: simple_resourceslog
    :alt: resources.log generated by the execution of the *Simple* java application
+   :align: center
    :width: 95.0%
 
-   resources.log generated by the execution of the *Simple* java
-   application
+   resources.log generated by the execution of the *Simple* java application
 
 Running COMPSs with **log level debug** generates the same files as the
 info log level but with more detailed information. Additionally, the
 ``jobs`` folder contains two files per **submitted** job; one for the
 ``stdout`` and another for the ``stderr``. In the other hand, the COMPSs
-Runtime state is printed out on the ``stdout``. Figure
-[fig:simple\_log\_debug] shows the logs generated by the same execution
+Runtime state is printed out on the ``stdout``.
+:numref:`simple_log_debug` shows the logs generated by the same execution
 than the previous cases but with **debug** mode.
 
 The runtime.log and the resources.log files generated in this mode can
@@ -531,11 +537,12 @@ be **extremely large**. Consequently, the users should take care of
 their quota and manually erase these files if needed.
 
 .. figure:: ./Figures/app_execution/simple_log_debug.jpeg
+   :name: simple_log_debug
    :alt: Structure of the logs folder for the Simple java application in **debug** mode
+   :align: center
    :width: 40.0%
 
-   Structure of the logs folder for the Simple java application in
-   **debug** mode
+   Structure of the logs folder for the Simple java application in **debug** mode
 
 When running Python applications a ``pycompss.log`` file is written
 inside the *base log folder* containing debug information about the
@@ -544,7 +551,7 @@ specific calls to PyCOMPSs.
 Furthermore, when running ``runcompss`` with additional flags (such as
 monitoring or tracing) additional folders will appear inside the *base
 log folder*. The meaning of the files inside these folders is explained
-in Section [sec:Tools].
+in :ref:`COMPSs Tools`.
 
 COMPSs Tools
 ============
@@ -559,7 +566,7 @@ has to be passed to the ``runcompss`` command; the graph file is written
 in the ``base_log_folder/monitor/complete_graph.dot`` at the end of the
 execution.
 
-Figure [fig:complete\_graph] shows a dependency graph example of a
+:numref:`complete_graph` shows a dependency graph example of a
 *SparseLU* java application. The graph can be visualized by running the
 following command:
 
@@ -568,7 +575,9 @@ following command:
     compss@bsc:~$ compss_gengraph ~/.COMPSs/sparseLU.arrays.SparseLU_01/monitor/complete_graph.dot
 
 .. figure:: ./Figures/app_execution/dependency_graph.jpeg
+   :name: complete_graph
    :alt: The dependency graph of the SparseLU application
+   :align: center
    :width: 40.0%
 
    The dependency graph of the SparseLU application
@@ -607,10 +616,12 @@ Usage
 ~~~~~
 
 In order to use the COMPSs Monitor users need to start the service as
-shown in Figure [fig:monitor\_start].
+shown in :numref:`monitor_start`.
 
 .. figure:: ./Figures/app_execution/monitor_start.jpeg
+   :name: monitor_start
    :alt: COMPSs Monitor start command
+   :align: center
 
    COMPSs Monitor start command
 
@@ -622,22 +633,22 @@ And use a web browser to open the specific URL:
 
 The COMPSs Monitor allows to monitor applications from different users
 and thus, users need to first login to access their applications. As
-shown in Figure [fig:monitoring\_interface], the users can select any of
+shown in :numref:`monitoring_interface`, the users can select any of
 their executed or running COMPSs applications and display it.
 
 .. figure:: ./Figures/app_execution/compss_monitor.jpeg
+   :name: monitoring_interface
    :alt: COMPSs monitoring interface
+   :align: center
    :width: 95.0%
 
    COMPSs monitoring interface
 
- 
-
 To enable **all** the COMPSs Monitor features, applications must run the
 ``runcompss`` command with the ``-m`` flag. This flag allows the COMPSs
 Runtime to store special information inside inside the
-``log_base_folder`` under the ``monitor`` folder (see Figures
-[fig:simple\_exec\_monitor] and [fig:simple\_logs\_monitor]). Only
+``log_base_folder`` under the ``monitor`` folder (see
+:numref:`monitoring_interface` and :numref:`simple_logs_monitor`). Only
 advanced users should modify or delete any of these files. If the
 application that a user is trying to monitor has not been executed with
 this flag, some of the COMPSs Monitor features will be disabled.
@@ -679,8 +690,10 @@ this flag, some of the COMPSs Monitor features will be disabled.
 
 
 .. figure:: ./Figures/app_execution/logs_with_monitor.jpeg
+   :name: simple_logs_monitor
    :alt: Logs generated by the Simple java application with the monitoring flag enabled
-   :width: 60.0%
+   :align: center
+   :width: 40.0%
 
    Logs generated by the Simple java application with the monitoring
    flag enabled
@@ -743,17 +756,17 @@ In this manual we only provide information about how to obtain a trace
 and about the available Paraver (the tool used to analyze the traces)
 configurations. For further information about the application
 instrumentation or the trace visualization and configurations please
-check the *COMPSs Tracing Manual* available at http://compss.bsc.es .
+check the :ref:`Tracing` Section.
 
 Trace Command
 ~~~~~~~~~~~~~
 
 In order to obtain a post-execution trace file one of the following
-options ``-t``, ``–tracing``, ``–tracing=true``, ``–tracing=basic`` must
+options ``-t``, ``--tracing``, ``--tracing=true``, ``--tracing=basic`` must
 be added to the ``runcompss`` command. All this options activate the
 basic tracing mode; the advanced mode is activated with the option
-``–tracing=advanced``. For further information about advanced mode check
-the *COMPSs Tracing Manual*. Next, we provide an example of the command
+``--tracing=advanced``. For further information about advanced mode check
+the :ref:`Tracing` Section. Next, we provide an example of the command
 execution with the basic tracing option enabled for a java K-Means
 application.
 
@@ -941,7 +954,7 @@ you can run it as many times as needed. If the application is updated
 for whatever reason, this step must be done again to create and share
 the updated image.
 
-In order to do this, you must use the **compss\_docker\_gen\_image**
+In order to do this, you must use the **compss_docker_gen_image**
 tool, which is available in the standard COMPSs application. This tool
 is the responsible of taking your application, create the needed
 image, and upload it to Dockerhub to share it.
@@ -954,7 +967,7 @@ you can pull it using the following command:
 
     $ docker pull compss/compss
 
-The **compss\_docker\_gen\_image** script receives 2 parameters:
+The **compss_docker_gen_image** script receives 2 parameters:
 
 -  **--c, --context-dir:**
    Specifies the **context directory** path of the application. This
@@ -973,14 +986,14 @@ The **compss\_docker\_gen\_image** script receives 2 parameters:
 -  **--image-name:**
    Specifies a name for the created image. It MUST have this format:
    ’DOCKERHUB-USERNAME/image-name’.
-   The *DOCKERHUB\_USERNAME* must be the username of your personal
+   The *DOCKERHUB_USERNAME* must be the username of your personal
    Dockerhub account.
-   The *image\_name* can be whatever you want, and will be used as the
+   The *image_name* can be whatever you want, and will be used as the
    identifier for the image in Dockerhub. This name will be the one
    you will use to execute the application in Docker.
    For example, if my Dockerhub username is john123 and I want my
    image to be named “my-image-app”:
-   –image-name=“john123/my-image-app”.
+   --image-name=“john123/my-image-app”.
 
    As stated before, this is needed to share your container application
    image with the nodes that need it. Image tags are also supported (for
@@ -1027,9 +1040,9 @@ For example: **--swarm-manager=’129.114.108.8:4000’**
 -   **--i, --image-name:**
 
 Specify the image name of the application image in Dockerhub.
-Remember you must generate this with compss\_docker\_gen\_image
+Remember you must generate this with compss_docker_gen_image
 Remember as well that the format must be:
-’DOCKERHUB\_USERNAME/APP\_IMAGE\_NAME:TAG’ (the :TAG is optional).
+’DOCKERHUB_USERNAME/APP_IMAGE_NAME:TAG’ (the :TAG is optional).
 For example: **--image-name=’john123/my-compss-application:1.9’**
 
 -   **--c, --context-dir:**
@@ -1076,14 +1089,14 @@ If your cluster uses **TLS** or has been created using
 **Docker-Machine**, you will have to **export two environment
 variables** before using runcompss-docker:
 
-On one hand, **DOCKER\_TLS\_VERIFY** environment variable will tell
+On one hand, **DOCKER_TLS_VERIFY** environment variable will tell
 Docker that you are using TLS:
 
 .. code-block:: bash
 
     export DOCKER_TLS_VERIFY="1"
 
-On the other hand, **DOCKER\_CERT\_PATH** variable will tell Docker
+On the other hand, **DOCKER_CERT_PATH** variable will tell Docker
 where to find your TLS certificates. As an example:
 
 .. code-block:: bash
@@ -1091,7 +1104,7 @@ where to find your TLS certificates. As an example:
     export DOCKER_CERT_PATH="/home/compss-user/.docker/machine/machines/my-manager-node"
 
 In case you have created your cluster using docker-machine, in order to
-know what your *DOCKER\_CERT\_PATH* is, you can use this command:
+know what your *DOCKER_CERT_PATH* is, you can use this command:
 
 .. code-block:: console
 
@@ -1139,7 +1152,8 @@ we executed the **Matmul example application** that we provide you:
 
 .. figure:: ./Figures/app_execution/docker-matmul-results-tree.png
    :alt: Result and log folders of a *Matmul* execution with COMPSs and Docker
-   :width: 60.0%
+   :align: center
+   :width: 50.0%
 
    Result and log folders of a *Matmul* execution with COMPSs and Docker
 
@@ -1264,7 +1278,7 @@ execute COMPSs applications at Chameleon:
    workers needed plus one
 
 -  Instantiate the master image (based on the published image
-   *COMPSs\_\_CC-CentOS7*)
+   *COMPSs__CC-CentOS7*)
 
 -  Attach a public IP and login to the master instance (the instance is
    correctly contextualized for COMPSs executions if you see a COMPSs
@@ -1291,7 +1305,7 @@ SuperComputers
 --------------
 
 To maintain the portability between different environments, COMPSs has a
-pre-build structure (see Figure [fig:queue\_scripts\_structure]) to
+pre-build structure (see Figure [fig:queue_scripts_structure]) to
 execute applications in SuperComputers. For this purpose, users must use
 the ``enqueue_compss`` script provided in the COMPSs installation. This
 script has several parameters (see ``enqueue_compss -h``) that allow
@@ -1299,7 +1313,8 @@ users to customize their executions for any SuperComputer.
 
 .. figure:: ./Figures/app_execution/queue_scripts_structure.png
    :alt: Structure of COMPSs queue scripts. In Blue user scripts, in Green queue scripts and in Orange system dependant scripts
-   :width: 80.0%
+   :align: center
+   :width: 60.0%
 
    Structure of COMPSs queue scripts. In Blue user scripts, in Green
    queue scripts and in Orange system dependant scripts
@@ -1350,7 +1365,7 @@ file-transfers or the tasks are failing an error message will appear in
 this file. If the file-transfers are successfully and the jobs are
 submitted, users should check the ``jobs`` folder and look at the error
 messages produced inside each job. Users should notice that if there are
-:math:`\_RESUBMITTED` files something inside the job is failing.
+:math:`_RESUBMITTED` files something inside the job is failing.
 
 Tasks are not executed
 ----------------------
@@ -1406,7 +1421,7 @@ Compilation error: @Method not found
 When trying to compile Java applications users can get some of the
 following compilation errors:
 
-.. code-block:: console
+.. code-block:: text
 
     error: package es.bsc.compss.types.annotations does not exist
     import es.bsc.compss.types.annotations.Constraints;
@@ -1485,7 +1500,7 @@ associated to the task has failed (and all its resubmissions too). Then,
 opening the ``jobX_NEW.out`` or the ``jobX_NEW.err`` files users find
 the following error:
 
-.. code-block:: console
+.. code-block:: text
 
     [ERROR|es.bsc.compss.Worker|Executor] Can not get method by reflection
     es.bsc.compss.nio.worker.executors.Executor$JobExecutionException: Can not get method by reflection
@@ -1521,7 +1536,7 @@ associated to the task has failed (and all its resubmissions too). Then,
 opening the ``jobX_NEW.out`` or the ``jobX_NEW.err`` files users find
 the following error:
 
-.. code-block:: console
+.. code-block:: text
 
     [ERROR|es.bsc.compss.Worker|Executor]
     java.lang.reflect.InvocationTargetException
@@ -1572,7 +1587,7 @@ To check if COMPSs was deployed with MPI support, you can check the
 installation log and look for the following *Extrae* configuration
 output:
 
-.. code-block:: console
+.. code-block:: text
 
     Package configuration for Extrae VERSION based on extrae/trunk rev. 3966:
     -----------------------
@@ -1589,10 +1604,10 @@ output:
 On the other hand, if you already installed COMPSs, you can check
 *Extrae* configuration executing the script
 ``/opt/COMPSs/Dependencies/extrae/etc/configured.sh``. Users should
-check that flags ``–with-mpi=/usr`` and ``–enable-parallel-merge`` are
+check that flags ``--with-mpi=/usr`` and ``--enable-parallel-merge`` are
 present and that MPI path is correct and exists. Sample output:
 
-.. code-block:: console
+.. code-block:: text
 
     EXTRAE_HOME is not set. Guessing from the script invoked that Extrae was installed in /opt/COMPSs/Dependencies/extrae
     The directory exists .. OK
@@ -1624,4 +1639,4 @@ fail anyways.
 
 The **second option** is to increase the OS maximum number of open
 files. For instance, in Ubuntu add `` ulimit -n 40000 `` just before the
-start-stop-daemon line in the do\_start section.
+start-stop-daemon line in the do_start section.
