@@ -800,7 +800,7 @@ supported (:numref:`task_args_kwargs_python`).
 
 .. code-block:: python
     :name: task_args_kwargs_python
-    :caption: Python task *args and **kwargs example
+    :caption: Python task *\*args* and *\*\*kwargs example*
 
     @task(returns=int)
     def argkwarg_func(*args, **kwargs):
