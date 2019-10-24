@@ -46,127 +46,123 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
     Usage: runcompss [options] application_name application_arguments
 
     * Options:
-      General:
-        --help, -h                              Print this help message
+    General:
+      --help, -h                              Print this help message
 
-        --opts                                  Show available options
+      --opts                                  Show available options
 
-        --version, -v                           Print COMPSs version
+      --version, -v 			    Print COMPSs version
 
-      Tools enablers:
-        --graph=<bool>, --graph, -g             Generation of the complete graph (true/false)
-                                                When no value is provided it is set to true
-                                                Default: false
-        --tracing=<level>, --tracing, -t        Set generation of traces and/or tracing level
-                                                ( [ true | basic ] | advanced | false)
-                                                True and basic levels will produce the same traces.
-                                                When no value is provided it is set to true
-                                                Default: false
-        --monitoring=<int>, --monitoring, -m    Period between monitoring samples (milliseconds)
-                                                When no value is provided it is set to 2000
-                                                Default: 0
-        --external_debugger=<int>,
-        --external_debugger                     Enables external debugger connection on the specified
-                                                port (or 9999 if empty)
-                                                Default: false
+    Tools enablers:
+      --graph=<bool>, --graph, -g             Generation of the complete graph (true/false)
+                                              When no value is provided it is set to true
+                                              Default: false
+      --tracing=<level>, --tracing, -t        Set generation of traces and/or tracing level ( [ true | basic ] | advanced | scorep | arm-map | arm-ddt | false)
+                                              True and basic levels will produce the same traces.
+                                              When no value is provided it is set to true
+                                              Default: false
+      --monitoring=<int>, --monitoring, -m    Period between monitoring samples (milliseconds)
+                                              When no value is provided it is set to 2000
+                                              Default: 0
+      --external_debugger=<int>,
+      --external_debugger                     Enables external debugger connection on the specified port (or 9999 if empty)
+                                              Default: false
 
-      Runtime configuration options:
-        --task_execution=<compss|storage>       Task execution under COMPSs or Storage.
-                                                Default: compss
-        --storage_conf=<path>                   Path to the storage configuration file
-                                                Default: None
-        --project=<path>                        Path to the project XML file
-                                                Default: /opt/COMPSs/Runtime/configuration/xml/
-                                                projects/default_project.xml
-        --resources=<path>                      Path to the resources XML file
-                                                Default: /opt/COMPSs/Runtime/configuration/xml/
-                                                resources/default_resources.xml
-        --lang=<name>                           Language of the application (java/c/python)
-                                                Default: java
-        --summary                               Displays a task execution summary at the end of
-                                                the application execution
-                                                Default: false
-        --log_level=<level>, --debug, -d        Set the debug level: off | info | debug
-                                                Default: off
+    Runtime configuration options:
+      --task_execution=<compss|storage>       Task execution under COMPSs or Storage.
+                                              Default: compss
+      --storage_impl=<string>                 Path to an storage implementation. Shortcut to setting pypath and classpath. See Runtime/storage in your installation folder.
+      --storage_conf=<path>                   Path to the storage configuration file
+                                              Default: null
+      --project=<path>                        Path to the project XML file
+                                              Default: /apps/COMPSs/2.6.pr/Runtime/configuration/xml/projects/default_project.xml
+      --resources=<path>                      Path to the resources XML file
+                                              Default: /apps/COMPSs/2.6.pr/Runtime/configuration/xml/resources/default_resources.xml
+      --lang=<name>                           Language of the application (java/c/python)
+                                              Default: Inferred is possible. Otherwise: java
+      --summary                               Displays a task execution summary at the end of the application execution
+                                              Default: false
+      --log_level=<level>, --debug, -d        Set the debug level: off | info | debug
+                                              Warning: Off level compiles with -O2 option disabling asserts and __debug__
+                                              Default: off
 
-      Advanced options:
-        --extrae_config_file=<path>             Sets a custom extrae config file. Must be in a shared disk
-                                                between all COMPSs workers.
-                                                Default: null
-        --comm=<ClassName>                      Class that implements the adaptor for communications
-                                                Supported adaptors: es.bsc.compss.nio.master.NIOAdaptor
-                                                                  | es.bsc.compss.gat.master.GATAdaptor
-                                                Default: es.bsc.compss.nio.master.NIOAdaptor
-        --conn=<className>                      Class that implements the runtime connector for the cloud
-                                                Supported connectors:
-                                                            es.bsc.compss.connectors.DefaultSSHConnector
-                                                          | es.bsc.compss.connectors.DefaultNoSSHConnector
-                                                Default: es.bsc.compss.connectors.DefaultSSHConnector
-        --scheduler=<className>                 Class that implements the Scheduler for COMPSs
-                                                Supported schedulers:
-                                                  es.bsc.compss.scheduler.fullGraphScheduler.FullGraphScheduler
-                                                | es.bsc.compss.scheduler.fifoScheduler.FIFOScheduler
-                                                | es.bsc.compss.scheduler.resourceEmptyScheduler.
-                                                  ResourceEmptyScheduler
-                                                Default: es.bsc.compss.scheduler.loadBalancingScheduler.
-                                                         LoadBalancingScheduler
-        --scheduler_config_file=<path>          Path to the file which contains the scheduler configuration.
-                                                Default: Empty
-        --library_path=<path>                   Non-standard directories to search for libraries (e.g. Java JVM
-                                                library, Python library, C binding library)
-                                                Default: Working Directory
-        --classpath=<path>                      Path for the application classes / modules
-                                                Default: Working Directory
-        --appdir=<path>                         Path for the application class folder.
-                                                Default: /home/user/
-        --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
-                                                Default: /home/user/
-        --base_log_dir=<path>                   Base directory to store COMPSs log files (a .COMPSs/ folder
-                                                will be created inside this location)
-                                                Default: User home
-        --specific_log_dir=<path>               Use a specific directory to store COMPSs log files (the folder
-                                                MUST exist and no sandbox is created)
-                                                Warning: Overwrites --base_log_dir option
-                                                Default: Disabled
-        --uuid=<int>                            Preset an application UUID
-                                                Default: Automatic random generation
-        --master_name=<string>                  Hostname of the node to run the COMPSs master
-                                                Default:
-        --master_port=<int>                     Port to run the COMPSs master communications.
-                                                Only for NIO adaptor
-                                                Default: [43000,44000]
-        --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed
-                                                by "," and without blank spaces (Notice the quotes)
-                                                Default:
-        --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed
-                                                by "," and without blank spaces (Notice the quotes)
-                                                Default: -Xms1024m,-Xmx1024m,-Xmn400m
-        --cpu_affinity="<string>"               Sets the CPU affinity for the workers
-                                                Supported options: disabled, automatic, user defined map of
-                                                the form "0-8/9,10,11/12-14,15,16"
-                                                Default: automatic
-        --gpu_affinity="<string>"               Sets the GPU affinity for the workers
-                                                Supported options: disabled, automatic, user defined map of
-                                                the form "0-8/9,10,11/12-14,15,16"
-                                                Default: automatic
-        --task_count=<int>                      Only for C/Python Bindings. Maximum number of different
-                                                functions/methods, invoked from the application, that have
-                                                been selected as tasks
-                                                Default: 50
-        --input_profile=<path>                  Path to the file which stores the input application profile
-                                                Default: Empty
-        --output_profile=<path>                 Path to the file to store the application profile at the end of
-                                                the execution
-                                                Default: Empty
-        --PyObject_serialize=<bool>             Only for Python Binding. Enable the object serialization to
-                                                string when possible (true/false).
-                                                Default: false
-        --persistent_worker_c=<bool>            Only for C Binding. Enable the persistent worker in c
-                                                (true/false).
-                                                Default: false
-        --enable_external_adaptation=<bool>     Enable external adaptation. This option will disable the
-                                                Resource Optimizer.
-                                                Default: false
+    Advanced options:
+      --extrae_config_file=<path>             Sets a custom extrae config file. Must be in a shared disk between all COMPSs workers.
+                                              Default: null
+      --comm=<ClassName>                      Class that implements the adaptor for communications
+                                              Supported adaptors: es.bsc.compss.nio.master.NIOAdaptor | es.bsc.compss.gat.master.GATAdaptor
+                                              Default: es.bsc.compss.nio.master.NIOAdaptor
+      --conn=<className>                      Class that implements the runtime connector for the cloud
+                                              Supported connectors: es.bsc.compss.connectors.DefaultSSHConnector
+                                                                  | es.bsc.compss.connectors.DefaultNoSSHConnector
+                                              Default: es.bsc.compss.connectors.DefaultSSHConnector
+      --streaming=<type>                      Enable the streaming mode for the given type.
+                                              Supported types: FILES, OBJECTS, PSCOS, ALL, NONE
+                                              Default: null
+      --streaming_master_name=<str>           Use an specific streaming master node name.
+                                              Default: null
+      --streaming_master_port=<int>           Use an specific port for the streaming master.
+                                              Default: null
+      --scheduler=<className>                 Class that implements the Scheduler for COMPSs
+                                              Supported schedulers: es.bsc.compss.scheduler.fullGraphScheduler.FullGraphScheduler
+                                                                  | es.bsc.compss.scheduler.fifoScheduler.FIFOScheduler
+                                                                  | es.bsc.compss.scheduler.resourceEmptyScheduler.ResourceEmptyScheduler
+                                              Default: es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
+      --scheduler_config_file=<path>          Path to the file which contains the scheduler configuration.
+                                              Default: Empty
+      --library_path=<path>                   Non-standard directories to search for libraries (e.g. Java JVM library, Python library, C binding library)
+                                              Default: Working Directory
+      --classpath=<path>                      Path for the application classes / modules
+                                              Default: Working Directory
+      --appdir=<path>                         Path for the application class folder.
+                                              Default: /home/bsc19/bsc19234
+      --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
+                                              Default: /home/bsc19/bsc19234
+      --base_log_dir=<path>                   Base directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location)
+                                              Default: User home
+      --specific_log_dir=<path>               Use a specific directory to store COMPSs log files (no sandbox is created)
+                                              Warning: Overwrites --base_log_dir option
+                                              Default: Disabled
+      --uuid=<int>                            Preset an application UUID
+                                              Default: Automatic random generation
+      --master_name=<string>                  Hostname of the node to run the COMPSs master
+                                              Default:
+      --master_port=<int>                     Port to run the COMPSs master communications.
+                                              Only for NIO adaptor
+                                              Default: [43000,44000]
+      --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed by "," and without blank spaces (Notice the quotes)
+                                              Default:
+      --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Notice the quotes)
+                                              Default: -Xms1024m,-Xmx1024m,-Xmn400m
+      --cpu_affinity="<string>"               Sets the CPU affinity for the workers
+                                              Supported options: disabled, automatic, user defined map of the form "0-8/9,10,11/12-14,15,16"
+                                              Default: automatic
+      --gpu_affinity="<string>"               Sets the GPU affinity for the workers
+                                              Supported options: disabled, automatic, user defined map of the form "0-8/9,10,11/12-14,15,16"
+                                              Default: automatic
+      --fpga_affinity="<string>"              Sets the FPGA affinity for the workers
+                                              Supported options: disabled, automatic, user defined map of the form "0-8/9,10,11/12-14,15,16"
+                                              Default: automatic
+      --fpga_reprogram="<string>"             Specify the full command that needs to be executed to reprogram the FPGA with the desired bitstream. The location must be an absolute path.
+                                              Default:
+      --task_count=<int>                      Only for C/Python Bindings. Maximum number of different functions/methods, invoked from the application, that have been selected as tasks
+                                              Default: 50
+      --input_profile=<path>                  Path to the file which stores the input application profile
+                                              Default: Empty
+      --output_profile=<path>                 Path to the file to store the application profile at the end of the execution
+                                              Default: Empty
+      --PyObject_serialize=<bool>             Only for Python Binding. Enable the object serialization to string when possible (true/false).
+                                              Default: false
+      --persistent_worker_c=<bool>            Only for C Binding. Enable the persistent worker in c (true/false).
+                                              Default: false
+      --enable_external_adaptation=<bool>     Enable external adaptation. This option will disable the Resource Optimizer.
+                                              Default: false
+      --python_interpreter=<string>           Python interpreter to use (python/python2/python3).
+                                              Default: python Version: 2
+      --python_propagate_virtual_environment=<true>  Propagate the master virtual environment to the workers (true/false).
+                                                     Default: true
+      --python_mpi_worker=<false>             Use MPI to run the python worker instead of multiprocessing. (true/false).
+                                              Default: false
 
     * Application name:
         For Java applications:   Fully qualified name of the application

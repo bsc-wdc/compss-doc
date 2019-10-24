@@ -26,6 +26,7 @@ COMPSs module.
     COMPSs/2.3
     COMPSs/2.4
     COMPSs/2.5
+    COMPSs/2.6
 
     COMPSs/release(default)
     COMPSs/trunk
@@ -110,273 +111,224 @@ command:
               application_name [application_arguments]
 
     * Options:
-
       General:
-
         --help, -h                              Print this help message
-
+        --heterogeneous                         Indicates submission is going to be heterogeneous
+                                                Default: Disabled
       Queue system configuration:
-
-        --sc_cfg=<name>                         SuperComputer configuration file to use.
-                                                Must exist inside queues/cfgs/
+        --sc_cfg=<name>                         SuperComputer configuration file to use. Must exist inside queues/cfgs/
                                                 Default: default
 
       Submission configuration:
-
+      General submision arguments:
         --exec_time=<minutes>                   Expected execution time of the application (in minutes)
                                                 Default: 10
-
+        --job_name=<name>                       Job name
+                                                Default: COMPSs
+        --queue=<name>                          Queue name to submit the job. Depends on the queue system.
+                                                For example (MN3): bsc_cs | bsc_debug | debug | interactive
+                                                Default: default
+        --reservation=<name>                    Reservation to use when submitting the job.
+                                                Default: disabled
+        --constraints=<constraints>             Constraints to pass to queue system.
+                                                Default: disabled
+        --qos=<qos>                             Quality of Service to pass to the queue system.
+                                                Default: default
+        --cpus_per_task                         Number of cpus per task the queue system must allocate per task.
+                                                Note that this will be equal to the cpus_per_node in a worker node and
+                                                equal to the worker_in_master_cpus in a master node respectively.
+                                                Default: false
+        --job_dependency=<jobID>                Postpone job execution until the job dependency has ended.
+                                                Default: None
+        --storage_home=<string>                 Root installation dir of the storage implementation
+                                                Default: null
+        --storage_props=<string>                Absolute path of the storage properties file
+                                                Mandatory if storage_home is defined
+      Normal submission arguments:
         --num_nodes=<int>                       Number of nodes to use
                                                 Default: 2
-
-        --num_switches=<int>                    Maximum number of different switches.
-                                                Select 0 for no restrictions.
+        --num_switches=<int>                    Maximum number of different switches. Select 0 for no restrictions.
                                                 Maximum nodes per switch: 18
                                                 Only available for at least 4 nodes.
                                                 Default: 0
-
-        --queue=<name>                          Queue name to submit the job. Depends on the queue system.
-                                                For example (Nord3): bsc_cs | bsc_debug | debug | interactive
-                                                Default: default
-
-        --reservation=<name>                    Reservation to use when submitting the job.
-                                                Default: disabled
-
-        --constraints=<constraints>             Constraints to pass to queue system.
-                                                Default: disabled
-
-        --qos=<qos>                             Quality of Service to pass to the queue system.
-                                                Default: default
-
-        --cpus_per_task                         Activates the cpus per task allocation in the worker's execution.
-                                                Note that this allocation will be equal to the cpus_per_node in a worker node and
-                                                equal to the worker_in_master_cpus in a master node respectively.
-                                                Default: disabled
-
-        --job_dependency=<jobID>                Postpone job execution until the job dependency has ended.
-                                                Default: None
-
-        --storage_home=<string>                 Root installation dir of the storage implementation
-                                                Default: null
-
-        --storage_props=<string>                Absolute path of the storage properties file
-                                                Mandatory if storage_home is defined
-
+      Heterogeneous submission arguments:
+        --type_cfg=<file_location>              Location of the file with the descriptions of node type requests
+                                                File should follow the following format:
+                                                type_X(){
+                                                  cpus_per_node=24
+                                                  node_memory=96
+                                                  ...
+                                                }
+                                                type_Y(){
+                                                  ...
+                                                }
+        --master=<master_node_type>             Node type for the master
+                                                (Node type descriptions are provided in the --type_cfg flag)
+        --workers=type_X:nodes,type_Y:nodes     Node type and number of nodes per type for the workers
+                                                (Node type descriptions are provided in the --type_cfg flag)
       Launch configuration:
-
         --cpus_per_node=<int>                   Available CPU computing units on each node
                                                 Default: 48
-
         --gpus_per_node=<int>                   Available GPU computing units on each node
                                                 Default: 0
-
+        --fpgas_per_node=<int>                  Available FPGA computing units on each node
+                                                Default: 0
+        --fpga_reprogram="<string>              Specify the full command that needs to be executed to reprogram the FPGA with
+                                                the desired bitstream. The location must be an absolute path.
+                                                Default:
         --max_tasks_per_node=<int>              Maximum number of simultaneous tasks running on a node
                                                 Default: -1
-
         --node_memory=<MB>                      Maximum node memory: disabled | <int> (MB)
                                                 Default: disabled
-
-        --network=<name>                        Communication network for transfers:
-                                                default | ethernet | infiniband | data.
+        --network=<name>                        Communication network for transfers: default | ethernet | infiniband | data.
                                                 Default: infiniband
 
         --prolog="<string>"                     Task to execute before launching COMPSs (Notice the quotes)
                                                 If the task has arguments split them by "," rather than spaces.
-                                                This argument can appear multiple times for more than one
-                                                prolog action
+                                                This argument can appear multiple times for more than one prolog action
                                                 Default: Empty
-
-        --epilog="<string>"                     Task to execute after executing the COMPSs application (Notice
-                                                the quotes)
+        --epilog="<string>"                     Task to execute after executing the COMPSs application (Notice the quotes)
                                                 If the task has arguments split them by "," rather than spaces.
-                                                This argument can appear multiple times for more than one
-                                                epilog action
+                                                This argument can appear multiple times for more than one epilog action
                                                 Default: Empty
 
         --master_working_dir=<path>             Working directory of the application
                                                 Default: .
-
         --worker_working_dir=<name | path>      Worker directory. Use: scratch | gpfs | <path>
                                                 Default: scratch
 
-        --worker_in_master_cpus=<int>           Maximum number of CPU computing units that the master node can
-                                                run as worker. Cannot exceed cpus_per_node.
+        --worker_in_master_cpus=<int>           Maximum number of CPU computing units that the master node can run as worker. Cannot exceed cpus_per_node.
                                                 Default: 24
-
-        --worker_in_master_memory=<int> MB      Maximum memory in master node assigned to the worker. Cannot
-                                                exceed the node_memory.
+        --worker_in_master_memory=<int> MB      Maximum memory in master node assigned to the worker. Cannot exceed the node_memory.
                                                 Mandatory if worker_in_master_cpus is specified.
                                                 Default: 50000
-
-        --jvm_worker_in_master_opts="<string>"  Extra options for the JVM of the COMPSs Worker in the Master
-                                                Node.
-                                                Each option separed by "," and without blank spaces (Notice the
-                                                quotes)
+        --jvm_worker_in_master_opts="<string>"  Extra options for the JVM of the COMPSs Worker in the Master Node.
+                                                Each option separed by "," and without blank spaces (Notice the quotes)
                                                 Default:
-
         --container_image=<path>                Runs the application by means of a container engine image
                                                 Default: Empty
-
         --container_compss_path=<path>          Path where compss is installed in the container image
                                                 Default: /opt/COMPSs
-
         --container_opts="<string>"             Options to pass to the container engine
                                                 Default: empty
-
-        --elasticity=<max_extra_nodes>          Activate elasticity specifiying the maximum extra nodes (ONLY
-                                                AVAILABLE FORM SLURM CLUSTERS WITH NIO ADAPTOR)
+        --elasticity=<max_extra_nodes>          Activate elasticity specifiying the maximum extra nodes (ONLY AVAILABLE FORM SLURM CLUSTERS WITH NIO ADAPTOR)
                                                 Default: 0
+
+        --jupyter_notebook=<path>,              Swap the COMPSs master initialization with jupyter notebook from the specified path.
+        --jupyter_notebook                      Default: false
 
       Runcompss configuration:
 
-      Tools enablers:
 
+      Tools enablers:
         --graph=<bool>, --graph, -g             Generation of the complete graph (true/false)
                                                 When no value is provided it is set to true
                                                 Default: false
-
-        --tracing=<level>, --tracing, -t        Set generation of traces and/or tracing level
-                                                ( [ true | basic ] | advanced | false)
+        --tracing=<level>, --tracing, -t        Set generation of traces and/or tracing level ( [ true | basic ] | advanced | scorep | arm-map | arm-ddt | false)
                                                 True and basic levels will produce the same traces.
                                                 When no value is provided it is set to true
                                                 Default: false
-
         --monitoring=<int>, --monitoring, -m    Period between monitoring samples (milliseconds)
                                                 When no value is provided it is set to 2000
                                                 Default: 0
-
         --external_debugger=<int>,
-        --external_debugger                     Enables external debugger connection on the specified port
-                                                (or 9999 if empty)
+        --external_debugger                     Enables external debugger connection on the specified port (or 9999 if empty)
                                                 Default: false
 
       Runtime configuration options:
-
         --task_execution=<compss|storage>       Task execution under COMPSs or Storage.
                                                 Default: compss
-
+        --storage_impl=<string>                 Path to an storage implementation. Shortcut to setting pypath and classpath. See Runtime/storage in your installation folder.
         --storage_conf=<path>                   Path to the storage configuration file
-                                                Default: None
-
+                                                Default: null
         --project=<path>                        Path to the project XML file
-                                                Default: /apps/COMPSs/2.3/Runtime/configuration/xml/projects/
-                                                default_project.xml
-
+                                                Default: /apps/COMPSs/2.6.pr/Runtime/configuration/xml/projects/default_project.xml
         --resources=<path>                      Path to the resources XML file
-                                                Default: /apps/COMPSs/2.3/Runtime/configuration/xml/resources/
-                                                default_resources.xml
-
+                                                Default: /apps/COMPSs/2.6.pr/Runtime/configuration/xml/resources/default_resources.xml
         --lang=<name>                           Language of the application (java/c/python)
                                                 Default: Inferred is possible. Otherwise: java
-
-        --summary                               Displays a task execution summary at the end of the application
-                                                execution
+        --summary                               Displays a task execution summary at the end of the application execution
                                                 Default: false
-
         --log_level=<level>, --debug, -d        Set the debug level: off | info | debug
+                                                Warning: Off level compiles with -O2 option disabling asserts and __debug__
                                                 Default: off
 
       Advanced options:
-
-        --extrae_config_file=<path>             Sets a custom extrae config file. Must be in a shared disk
-                                                between all COMPSs workers.
+        --extrae_config_file=<path>             Sets a custom extrae config file. Must be in a shared disk between all COMPSs workers.
                                                 Default: null
-
         --comm=<ClassName>                      Class that implements the adaptor for communications
-                                                Supported adaptors: es.bsc.compss.nio.master.NIOAdaptor
-                                                                  | es.bsc.compss.gat.master.GATAdaptor
+                                                Supported adaptors: es.bsc.compss.nio.master.NIOAdaptor | es.bsc.compss.gat.master.GATAdaptor
                                                 Default: es.bsc.compss.nio.master.NIOAdaptor
-
         --conn=<className>                      Class that implements the runtime connector for the cloud
-                                                Supported connectors:
-                                                            es.bsc.compss.connectors.DefaultSSHConnector
-                                                          | es.bsc.compss.connectors.DefaultNoSSHConnector
+                                                Supported connectors: es.bsc.compss.connectors.DefaultSSHConnector
+                                                                    | es.bsc.compss.connectors.DefaultNoSSHConnector
                                                 Default: es.bsc.compss.connectors.DefaultSSHConnector
-
+        --streaming=<type>                      Enable the streaming mode for the given type.
+                                                Supported types: FILES, OBJECTS, PSCOS, ALL, NONE
+                                                Default: null
+        --streaming_master_name=<str>           Use an specific streaming master node name.
+                                                Default: null
+        --streaming_master_port=<int>           Use an specific port for the streaming master.
+                                                Default: null
         --scheduler=<className>                 Class that implements the Scheduler for COMPSs
-                                                Supported schedulers:
-                                                  es.bsc.compss.scheduler.fullGraphScheduler.FullGraphScheduler
-                                                | es.bsc.compss.scheduler.fifoScheduler.FIFOScheduler
-                                                | es.bsc.compss.scheduler.resourceEmptyScheduler.
-                                                  ResourceEmptyScheduler
-                                                Default: es.bsc.compss.scheduler.loadBalancingScheduler.
-                                                         LoadBalancingScheduler
-
+                                                Supported schedulers: es.bsc.compss.scheduler.fullGraphScheduler.FullGraphScheduler
+                                                                    | es.bsc.compss.scheduler.fifoScheduler.FIFOScheduler
+                                                                    | es.bsc.compss.scheduler.resourceEmptyScheduler.ResourceEmptyScheduler
+                                                Default: es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
         --scheduler_config_file=<path>          Path to the file which contains the scheduler configuration.
                                                 Default: Empty
-
-        --library_path=<path>                   Non-standard directories to search for libraries (e.g. Java JVM
-                                                library, Python library, C binding library)
+        --library_path=<path>                   Non-standard directories to search for libraries (e.g. Java JVM library, Python library, C binding library)
                                                 Default: Working Directory
-
         --classpath=<path>                      Path for the application classes / modules
                                                 Default: Working Directory
-
         --appdir=<path>                         Path for the application class folder.
-                                                Default: /home/user/
-
+                                                Default: /home/bsc19/bsc19234
         --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
-                                                Default: /home/user/
-
-        --base_log_dir=<path>                   Base directory to store COMPSs log files (a .COMPSs/ folder
-                                                will be created inside this location)
+                                                Default: /home/bsc19/bsc19234
+        --base_log_dir=<path>                   Base directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location)
                                                 Default: User home
-
-        --specific_log_dir=<path>               Use a specific directory to store COMPSs log files (the folder
-                                                MUST exist and no sandbox is created)
+        --specific_log_dir=<path>               Use a specific directory to store COMPSs log files (no sandbox is created)
                                                 Warning: Overwrites --base_log_dir option
                                                 Default: Disabled
-
         --uuid=<int>                            Preset an application UUID
                                                 Default: Automatic random generation
-
         --master_name=<string>                  Hostname of the node to run the COMPSs master
                                                 Default:
-
         --master_port=<int>                     Port to run the COMPSs master communications.
                                                 Only for NIO adaptor
                                                 Default: [43000,44000]
-
-        --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed
-                                                by "," and without blank spaces (Notice the quotes)
+        --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed by "," and without blank spaces (Notice the quotes)
                                                 Default:
-
-        --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed
-                                                by "," and without blank spaces (Notice the quotes)
+        --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Notice the quotes)
                                                 Default: -Xms1024m,-Xmx1024m,-Xmn400m
-
         --cpu_affinity="<string>"               Sets the CPU affinity for the workers
-                                                Supported options: disabled, automatic, user defined map of
-                                                the form "0-8/9,10,11/12-14,15,16"
+                                                Supported options: disabled, automatic, user defined map of the form "0-8/9,10,11/12-14,15,16"
                                                 Default: automatic
-
         --gpu_affinity="<string>"               Sets the GPU affinity for the workers
-                                                Supported options: disabled, automatic, user defined map of
-                                                the form "0-8/9,10,11/12-14,15,16"
+                                                Supported options: disabled, automatic, user defined map of the form "0-8/9,10,11/12-14,15,16"
                                                 Default: automatic
-
-        --task_count=<int>                      Only for C/Python Bindings. Maximum number of different
-                                                functions/methods, invoked from the application, that have
-                                                been selected as tasks
+        --fpga_affinity="<string>"              Sets the FPGA affinity for the workers
+                                                Supported options: disabled, automatic, user defined map of the form "0-8/9,10,11/12-14,15,16"
+                                                Default: automatic
+        --fpga_reprogram="<string>"             Specify the full command that needs to be executed to reprogram the FPGA with the desired bitstream. The location must be an absolute path.
+                                                Default:
+        --task_count=<int>                      Only for C/Python Bindings. Maximum number of different functions/methods, invoked from the application, that have been selected as tasks
                                                 Default: 50
-
         --input_profile=<path>                  Path to the file which stores the input application profile
                                                 Default: Empty
-
-        --output_profile=<path>                 Path to the file to store the application profile at the end of
-                                                the execution
+        --output_profile=<path>                 Path to the file to store the application profile at the end of the execution
                                                 Default: Empty
-
-        --PyObject_serialize=<bool>             Only for Python Binding. Enable the object serialization to
-                                                string when possible (true/false).
+        --PyObject_serialize=<bool>             Only for Python Binding. Enable the object serialization to string when possible (true/false).
                                                 Default: false
-
-        --persistent_worker_c=<bool>            Only for C Binding. Enable the persistent worker in c
-                                                (true/false).
+        --persistent_worker_c=<bool>            Only for C Binding. Enable the persistent worker in c (true/false).
                                                 Default: false
-
-        --enable_external_adaptation=<bool>     Enable external adaptation. This option will disable the
-                                                Resource Optimizer.
+        --enable_external_adaptation=<bool>     Enable external adaptation. This option will disable the Resource Optimizer.
+                                                Default: false
+        --python_interpreter=<string>           Python interpreter to use (python/python2/python3).
+                                                Default: python Version: 2
+        --python_propagate_virtual_environment=<true>  Propagate the master virtual environment to the workers (true/false).
+                                                       Default: true
+        --python_mpi_worker=<false>             Use MPI to run the python worker instead of multiprocessing. (true/false).
                                                 Default: false
 
     * Application name:
@@ -475,9 +427,8 @@ In order to trac the jobs state users can run the following command:
     474130    main    COMPSs    XX    0:15:00    0:15:00        N/A      PD    3   144   -
 
 The specific COMPSs logs are stored under the ``~/.COMPSs/`` folder;
-saved as a local *runcompss* execution. For further details please check
-*COMPSs User Manual: Application Execution* available at our webpage
-http://compss.bsc.es .
+saved as a local *runcompss* execution. For further details please check the
+:ref:`Application execution` Section.
 
 MinoTauro
 =========
@@ -565,9 +516,8 @@ In order to trac the jobs state users can run the following command:
     XXXX   projects    COMPSs   XX   R   00:02       3  nvb[6-8]
 
 The specific COMPSs logs are stored under the ``~/.COMPSs/`` folder;
-saved as a local *runcompss* execution. For further details please check
-*COMPSs User Manual: Application Execution* available at our webpage
-http://compss.bsc.es .
+saved as a local *runcompss* execution. For further details please check the
+:ref:`Application execution` Section.
 
 Nord 3
 ======
@@ -656,9 +606,8 @@ In order to trac the jobs state users can run the following command:
     XXXX   bscXX  PEND  XX     login1     XX         COMPSs    Month Day Hour
 
 The specific COMPSs logs are stored under the ``~/.COMPSs/`` folder;
-saved as a local *runcompss* execution. For further details please check
-*COMPSs User Manual: Application Execution* available at our webpage
-http://compss.bsc.es .
+saved as a local *runcompss* execution. For further details please check the
+:ref:`Application execution` Section.
 
 Enabling COMPSs Monitor
 =======================
@@ -713,22 +662,25 @@ Access the COMPSs Monitor through its webpage
 ``TARGET_LOCAL_FOLDER`` to enable the COMPSs Monitor for MareNostrum.
 
 Please remember that to enable **all** the COMPSs Monitor features
-applications must be ran with the *-m* flag. For further information
-please check the *COMPSs User Manual: Application Execution* available
-at our webpage http://compss.bsc.es .
+applications must be ran with the *-m* flag. For further details please check the
+:ref:`Application execution` Section.
 
-Figure [fig:mn\_monitor1] illustrates how to login and Figure
-[fig:mn\_monitor2] shows the COMPSs Monitor main page for an application
+:numref:`mn_monitor1` illustrates how to login and :numref:`mn_monitor2`
+shows the COMPSs Monitor main page for an application
 run inside a Supercomputer.
 
 .. figure:: ./Figures/supercomputers/mn_monitor1.jpeg
+   :name: mn_monitor1
    :alt: COMPSs Monitor login for Supercomputers
-   :width: 100.0%
+   :align: center
+   :width: 95.0%
 
    COMPSs Monitor login for Supercomputers
 
 .. figure:: ./Figures/supercomputers/mn_monitor2.jpeg
+   :name: mn_monitor2
    :alt: COMPSs Monitor main page for a test application at Supercomputers
-   :width: 100.0%
+   :align: center
+   :width: 95.0%
 
    COMPSs Monitor main page for a test application at Supercomputers
