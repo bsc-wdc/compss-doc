@@ -20,7 +20,7 @@ to access the data directly during the rest of the execution.
 The Virtual Machine available at our webpage (http://compss.bsc.es/)
 provides a development environment with all the applications listed in
 the following sections. The codes of all the applications can be found
-under the :math:`/home/compss/tutorial\_apps/java/` folder.
+under the ``/home/compss/tutorial_apps/java/`` folder.
 
 Hello World
 -----------
@@ -69,7 +69,7 @@ only declares the task which has no parameters:
     	// hello.HelloItf
 
     	@Method(declaringClass = "hello.HelloImpl")
-    	void sayHello(
+    	  void sayHello(
     	);
 
 Notice that there is a first Hello World message printed from the main
@@ -266,6 +266,7 @@ Next we provide the main code of this application. The code inside the
 .. code-block:: java
 
     	// increment.Increment
+
     	public static void main(String[] args) throws Exception {
     		// Check and get parameters
     		if (args.length != 4) {
@@ -341,9 +342,9 @@ execution.
 
     ------------------------------------------------------------
 
-By running the *compss\_gengraph* command users can obtain the task
+By running the *compss_gengraph* command users can obtain the task
 graph of the above execution. Next we provide the set of commands to
-obtain the graph show in Figure [fig:increment\_java].
+obtain the graph show in :numref:`increment_java`.
 
 .. code-block:: console
 
@@ -352,7 +353,9 @@ obtain the graph show in Figure [fig:increment\_java].
     compss@bsc:~/.COMPSs/increment.Increment_01/monitor$ evince complete_graph.pdf
 
 .. figure:: ./Figures/sample_applications/java/increment_graph.jpeg
+   :name: increment_java
    :alt: Java increment tasks graph
+   :align: center
    :width: 30.0%
 
    Java increment tasks graph
@@ -375,7 +378,9 @@ differ on the way of storing the matrix:
 #. **matmul.arrays.Matmul** Matrix represented by an array
 
 .. figure:: ./Figures/sample_applications/java/matrix.jpeg
+   :name: matmul
    :alt: Matrix multiplication
+   :align: center
    :width: 80.0%
 
    Matrix multiplication
@@ -388,6 +393,7 @@ implementation and the tasks interface for the objects implementation.
 .. code-block:: java
 
     	// matmul.objects.Block
+
     	public void multiplyAccumulative(Block a, Block b) {
     		for (int i = 0; i < M; i++) {
     			for (int j = 0; j < M; j++) {
@@ -401,6 +407,7 @@ implementation and the tasks interface for the objects implementation.
 .. code-block:: java
 
     	// matmul.objects.MatmulItf
+
     	@Method(declaringClass = "matmul.objects.Block")
     	void multiplyAccumulative(
     		@Parameter Block a,
@@ -488,7 +495,9 @@ decomposition, which factorizes a matrix as a product of a lower
 triangular matrix and an upper one.
 
 .. figure:: ./Figures/sample_applications/java/SparseLU.jpeg
+   :name: sparse_lu
    :alt: Sparse LU decomposition
+   :align: center
    :width: 60.0%
 
    Sparse LU decomposition
@@ -588,7 +597,9 @@ a certain threshold. The work performed by the COMPSs Blast workflow is
 computationally intensive and embarrassingly parallel.
 
 .. figure:: ./Figures/sample_applications/java/blast_workflow.jpeg
+   :name: blast_workflow
    :alt: The COMPSs Blast workflow
+   :align: center
    :width: 70.0%
 
    The COMPSs Blast workflow
@@ -626,19 +637,19 @@ Where:
 
 -  **debug**: The debug flag of the application (true or false).
 
--  **bin\_location**: Path of the Blast binary.
+-  **bin_location**: Path of the Blast binary.
 
--  **database\_file**: Path of database file; the shared disk
+-  **database_file**: Path of database file; the shared disk
    **/sharedDisk/** is suggested to avoid big data transfers.
 
--  **sequences\_file**: Path of sequences file.
+-  **sequences_file**: Path of sequences file.
 
--  **frag\_number**: Number of fragments of the original sequence file,
+-  **frag_number**: Number of fragments of the original sequence file,
    this number determines the number of parallel Align tasks.
 
 -  **tmpdir**: Temporary directory (**/home/compss/tmp/**).
 
--  **output\_file**: Path of the result file.
+-  **output_file**: Path of the result file.
 
 Example:
 
@@ -670,7 +681,7 @@ to access the data directly during the rest of the execution.
 The Virtual Machine available at our webpage (http://compss.bsc.es/)
 provides a development environment with all the applications listed in
 the following sections. The codes of all the applications can be found
-under the :math:`/home/compss/tutorial\_apps/python/` folder.
+under the :math:`/home/compss/tutorial_apps/python/` folder.
 
 Simple
 ------
@@ -726,7 +737,7 @@ main code and the task declaration:
         main_program()
 
 The simple application can be executed by invoking the runcompss command
-with the *–lang=python* flag. The following lines provide an example of
+with the ``--lang=python`` flag. The following lines provide an example of
 its execution.
 
 .. code-block:: console
@@ -839,9 +850,9 @@ generate the final graph at the end of the execution.
 
     ------------------------------------------------------------
 
-By running the *compss\_gengraph* command users can obtain the task
+By running the *compss_gengraph* command users can obtain the task
 graph of the above execution. Next we provide the set of commands to
-obtain the graph show in Figure [fig:increment\_python].
+obtain the graph show in :numref:`increment_python`.
 
 .. code-block:: console
 
@@ -850,7 +861,9 @@ obtain the graph show in Figure [fig:increment\_python].
     compss@bsc:~/.COMPSs/increment.py_01/monitor$ evince complete_graph.pdf
 
 .. figure:: ./Figures/sample_applications/python/increment_graph.jpeg
+   :name: increment_python
    :alt: Python increment tasks graph
+   :align: center
    :width: 30.0%
 
    Python increment tasks graph
@@ -873,7 +886,7 @@ to access the data directly during the rest of the execution.
 The Virtual Machine available at our webpage (http://compss.bsc.es/)
 provides a development environment with all the applications listed in
 the following sections. The codes of all the applications can be found
-under the :math:`/home/compss/tutorial\_apps/c/` folder.
+under the ``/home/compss/tutorial_apps/c/`` folder.
 
 Simple
 ------
@@ -1374,9 +1387,9 @@ execution.
 
     ------------------------------------------------------------
 
-By running the *compss\_gengraph* command users can obtain the task
+By running the *compss_gengraph* command users can obtain the task
 graph of the above execution. Next we provide the set of commands to
-obtain the graph show in Figure [fig:increment\_c].
+obtain the graph show in :numref:`increment_c`.
 
 .. code-block:: console
 
@@ -1385,7 +1398,9 @@ obtain the graph show in Figure [fig:increment\_c].
     compss@bsc:~/.COMPSs/increment_01/monitor$ evince complete_graph.pdf
 
 .. figure:: ./Figures/sample_applications/c/increment_graph.jpeg
+   :name: increment_c
    :alt: C increment tasks graph
+   :align: center
    :width: 30.0%
 
    C increment tasks graph
