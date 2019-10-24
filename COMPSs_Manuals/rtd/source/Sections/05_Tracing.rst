@@ -909,3 +909,8 @@ the default directory
 
 .. [2]
    For more information: https://www.bsc.es/computer-sciences/performance-tools/paraver
+
+
+.. figure:: /Logos/bsc_280.jpg
+   :width: 40.0%
+   :align: center
