@@ -1411,6 +1411,47 @@ These commands are a quick solution, for further details please check
 the *Additional Configuration* section inside the *COMPSs Installation
 Manual* available at our website http://compss.bsc.es.
 
+
+Exceptions when starting the Worker processes
+---------------------------------------------
+
+When the COMPSs master is not able to communicate with one of the COMPSs
+workers described in the `project.xml` and `resources.xml` files, different
+exceptions can be raised and logged on the `runtime.log` of the application.
+All of them are raised during the worker start up and contain the
+*[WorkerStarter]* prefix. Next we provide a list with the common
+exceptions:
+
+- **InitNodeException**: Exception raised when the remote SSH process to start the worker has failed.
+
+- **UnstartedNodeException**: Exception raised when the worker process has aborted.
+
+- **Connection refused**: Exception raised when the master cannot communicate with the worker process (NIO).
+
+All these exceptions encapsulate an error when starting the worker process.
+This means that **the worker machine is not properly configured** and thus,
+you need to check the environment of the failing worker. Further information
+about the specific error can be found on the worker log, available at the
+working directory path in the remote worker machine (the worker working
+directory specified in the `project.xml`}
+file).
+
+Next, we list the most common errors and their solutions:
+
+- **java command not found**: Invalid path to the java binary.
+  Check the `JAVA_HOME` definition at the remote worker machine.
+
+- **Cannot create WD**: Invalid working directory.
+  Check the rw permissions of the worker's working directory.
+
+- **No exception**: The worker process has started normally and there is no exception.
+  In this case the issue is normally due to the firewall configuration preventing
+  the communication between the COMPSs master and worker.
+  Please check that the worker firewall has in and out permissions for TCP
+  and UDP in the adaptor ports (the adaptor ports are specified in the
+  `resources.xml` file. By default the port rank is 43000-44000.
+
+
 Compilation error: @Method not found
 ------------------------------------
 
