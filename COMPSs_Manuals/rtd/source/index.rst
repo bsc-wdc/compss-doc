@@ -22,6 +22,7 @@ Welcome to COMPSs's documentation!
    Sections/04_Supercomputers
    Sections/05_Tracing
    Sections/06_Sample_Applications
+   Sections/07_Persistent_Storage
 
 
 .. Indices and tables
