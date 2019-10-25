@@ -1671,6 +1671,6 @@ The **second option** is to increase the OS maximum number of open
 files. For instance, in Ubuntu add `` ulimit -n 40000 `` just before the
 start-stop-daemon line in the do_start section.
 
-.. figure:: /Logos/bsc_280.jpg
+.. figure:: /Logos/bsc_logo.jpg
    :width: 40.0%
    :align: center

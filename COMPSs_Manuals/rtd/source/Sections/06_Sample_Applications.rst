@@ -1405,6 +1405,6 @@ obtain the graph show in :numref:`increment_c`.
 
    C increment tasks graph
 
-.. figure:: /Logos/bsc_280.jpg
+.. figure:: /Logos/bsc_logo.jpg
    :width: 40.0%
    :align: center

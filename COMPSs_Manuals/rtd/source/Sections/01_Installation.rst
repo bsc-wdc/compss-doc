@@ -308,7 +308,7 @@ The installation script will create a COMPSs folder inside the given
 the ``<targetDir>/COMPSs`` folder.
 
 .. warning::
-   If the ``<targetDir>/COMPSs` folder already exists it will be **automatically erased**.
+   If the ``<targetDir>/COMPSs`` folder already exists it will be **automatically erased**.
 
   After completing the previous steps, administrators must ensure that
 the nodes have passwordless ssh access. If it is not the case, please
@@ -1522,6 +1522,6 @@ and the limit of tasks as shown in the following example:
 .. [1]
    https://appdb.egi.eu/store/software/rocci.cli
 
-.. figure:: /Logos/bsc_280.jpg
+.. figure:: /Logos/bsc_logo.jpg
    :width: 40.0%
    :align: center

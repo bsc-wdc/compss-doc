@@ -6,8 +6,8 @@
 Welcome to COMPSs's documentation!
 ==================================
 
-.. figure:: /Logos/Logos/degradado-naranja-compss.jpg
-   :width: 40.0%
+.. figure:: /Logos/COMPSs_logo.png
+   :width: 50.0%
    :align: center
    :target: http://compss.bsc.es
 
@@ -30,7 +30,7 @@ Welcome to COMPSs's documentation!
    * :ref:`modindex`
 
 
-.. figure:: /Logos/bsc_280.jpg
+.. figure:: /Logos/bsc_logo.jpg
   :width: 50.0%
   :align: center
   :target: http://www.bsc.es
