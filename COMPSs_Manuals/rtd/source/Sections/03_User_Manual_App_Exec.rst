@@ -15,8 +15,7 @@ requirements and for C/C++ applications the code must have been
 previously compiled by using the *buildapp* command.
 
 For further information about how to develop COMPSs applications please
-refer to the *COMPSs User Manual: Application development guide*
-available at the http://compss.bsc.es/ webpage.
+refer to :ref:`Application development`.
 
 Runcompss command
 -----------------
@@ -187,8 +186,7 @@ application (developed in Java, Python and C++) available in the
 COMPSs Virtual Machine or at https://compss.bsc.es/projects/bar webpage.
 This application takes an integer as input parameter and increases it by
 one unit using a task. For further details about the codes please refer
-to the *Sample Applications* document available at http://compss.bsc.es
-.
+to :ref:`Sample Applications`.
 
 Running Java applications
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -315,8 +313,7 @@ Running C/C++ applications
 
 To launch a COMPSs C/C++ application users have to compile the
 C/C++ application by means of the ``buildapp`` command. For
-further information please refer to the *COMPSs User Manual: Application
-development guide* document available at http://compss.bsc.es . Once
+further information please refer to :ref:`Application development`. Once
 complied, the ``--lang=c`` option must be provided to the runcompss
 command. If the main file is a C/C++ binary the *runcompss* command
 can also infer the application language without specifying the *lang*
@@ -598,15 +595,15 @@ The COMPSs Monitor service can be configured by editing the
 ``/opt/COMPSs/Tools/monitor/apache-tomcat/conf/compss-monitor.conf`` file which contains
 one line per property:
 
--  ``COMPSS_MONITOR`` Default directory to retrieve monitored
-   applications (defaults to the ``.COMPSs`` folder inside the ``root``
-   user).
+COMPSS_MONITOR
+   Default directory to retrieve monitored applications
+   (defaults to the ``.COMPSs`` folder inside the ``root`` user).
 
--  ``COMPSs_MONITOR_PORT`` Port where to run the compss-monitor web
-   service (defaults to 8080).
+COMPSs_MONITOR_PORT
+   Port where to run the compss-monitor web service (defaults to 8080).
 
--  ``COMPSs_MONITOR_TIMEOUT`` Web page timeout between browser and
-   server (defaults to 20s).
+COMPSs_MONITOR_TIMEOUT
+   Web page timeout between browser and server (defaults to 20s).
 
 Usage
 ~~~~~
@@ -723,8 +720,8 @@ features available through the graphical interface:
 -  **Statistics** Shows application statistics such as the accumulated
    cloud cost.
 
-**Attention**: To enable all the COMPSs Monitor features applications
-must run with the ``-m`` flag.
+.. warning::
+   To enable all the COMPSs Monitor features applications must run with the ``-m`` flag.
 
 The webpage also allows users to configure some performance parameters
 of the monitoring service by accessing the *Configuration* button at the
@@ -996,13 +993,13 @@ The **compss_docker_gen_image** script receives 2 parameters:
    example "john123/my-image-app:1.23).
 
 
-**IMPORTANT NOTE:**
-After creating the image, be sure to write down the absolute
-context-directory and the absolute classpath (the absolute path to the
-executable jar). You will need it to run the application using
-**runcompss-docker**. In addition, if you plan on distributing the
-application, you can use the Dockerhub image’s information tab to
-write them, so the application users can retrieve them.
+.. note::
+   After creating the image, be sure to write down the absolute
+   context-directory and the absolute classpath (the absolute path to the
+   executable jar). You will need it to run the application using
+   **runcompss-docker**. In addition, if you plan on distributing the
+   application, you can use the Dockerhub image’s information tab to
+   write them, so the application users can retrieve them.
 
 
 Execution step 2: Run the application
@@ -1322,15 +1319,12 @@ provides queue configurations for *LSF* and *SLURM* and several examples
 for SuperComputer configurations. To create a new configuration we
 recommend to use one of the configurations provided by COMPSs (such as
 the configuration for the *MareNostrum IV* SuperComputer) or to contact
-us at `support-compss@bsc.es <support-compss@bsc.es>`__ .
+us at support-compss@bsc.es .
 
  
 
 For information about how to submit COMPSs applications at any
-Supercomputer please refer to the *COMPSs Supercomputers* manual
-available at
-http://compss.bsc.es/releases/compss/latest/docs/COMPSs_Supercomputers_Manual.pdf
-.
+Supercomputer please refer to :ref:`Supercomputers`.
 
 Common Issues
 =============
@@ -1338,8 +1332,7 @@ Common Issues
 This section provides answers for the most common issues of the
 execution of COMPSs applications. For specific issues not covered in
 this section, please do not hesitate to contact us at:
-
-**`support-compss@bsc.es <support-compss@bsc.es>`__**
+support-compss@bsc.es .
 
 How to debug
 ------------
@@ -1361,7 +1354,7 @@ file-transfers or the tasks are failing an error message will appear in
 this file. If the file-transfers are successfully and the jobs are
 submitted, users should check the ``jobs`` folder and look at the error
 messages produced inside each job. Users should notice that if there are
-:math:`_RESUBMITTED` files something inside the job is failing.
+*RESUBMITTED* files something inside the job is failing.
 
 Tasks are not executed
 ----------------------
@@ -1408,8 +1401,7 @@ The problem can be solved running the following commands:
     compss@bsc:~$ ssh user@resourceName "cat mydsa.pub >> ~/.ssh/authorized_keys; rm ./mydsa.pub"
 
 These commands are a quick solution, for further details please check
-the *Additional Configuration* section inside the *COMPSs Installation
-Manual* available at our website http://compss.bsc.es.
+the :ref:`Additional Configuration` Section.
 
 
 Exceptions when starting the Worker processes
@@ -1523,9 +1515,10 @@ export to the ``.bashrc`` file:
     $ echo "# COMPSs variables for Java compilation" >> ~/.bashrc
     $ echo "export CLASSPATH=$CLASSPATH:/opt/COMPSs/Runtime/compss-engine.jar" >> ~/.bashrc
 
-Attention: The ``compss-engine.jar`` is installed inside the COMPSs
-installation directory. If you have performed a custom installation,
-the path of the package may be different.
+.. warning::
+   The ``compss-engine.jar`` is installed inside the COMPSs
+   installation directory. If you have performed a custom installation,
+   the path of the package may be different.
 
 
 Jobs failed on method reflection

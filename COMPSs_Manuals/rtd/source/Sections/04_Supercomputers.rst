@@ -80,27 +80,29 @@ well loaded COMPSs installation.
     load PYTHON/2.7.3 (PATH, MANPATH, LD_LIBRARY_PATH, C_INCLUDE_PATH)
     load COMPSs/release (PATH, MANPATH, COMPSS_HOME)
 
-    $ enqueue_compss --version
+    USER@SC$ enqueue_compss --version
     COMPSs version <version>
 
-Please remember that COMPSs runs in several nodes and your current
-enviroment is not exported to them. Thus, all the needed environment
-variables **must** be loaded through the *.bashrc* file.
+.. note::
+   Please remember that COMPSs runs in several nodes and your current
+   enviroment is not exported to them. Thus, all the needed environment
+   variables **must** be loaded through the *.bashrc* file.
 
-Please remember that PyCOMPSs uses Python 2.7 by default. In order to
-use Python 3, the Python 2.7 module **must** be unloaded after loading
-COMPSs module, and then load the Python 3 module.
+.. note::
+   Please remember that PyCOMPSs uses Python 2.7 by default. In order to
+   use Python 3, the Python 2.7 module **must** be unloaded after loading
+   COMPSs module, and then load the Python 3 module.
 
 COMPSs Job submission
 ---------------------
 
-COMPSs jobs can be easily submited by running the **enqueue\_compss**
+COMPSs jobs can be easily submited by running the **enqueue_compss**
 command. This command allows to configure any **runcompss** option and
 some particular queue options such as the queue system, the number of
 nodes, the wallclock time, the master working directory, the workers
 working directory and number of tasks per node.
 
-Next, we provide detailed information about the *enqueue\_compss*
+Next, we provide detailed information about the ``enqueue_compss``
 command:
 
 .. code-block:: console
@@ -626,10 +628,9 @@ please install the following packages:
 -  sshfs
 
 For further details about the COMPSs packages installation and
-configuration please refer to the *COMPSs Installation Manual* available
-at our webpage http://compss.bsc.es . If you are not willing to install
-COMPSs in your local machine please consider to download our Virtual
-Machine available at our webpage.
+configuration please refer to :ref:`Installation and Administration` Section.
+If you are not willing to install COMPSs in your local machine please
+consider to download our Virtual Machine available at our webpage.
 
 Once the packages have been installed and configured, users need to
 mount the sshfs directory as follows. The ``SC_USER`` stands for your

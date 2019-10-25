@@ -305,8 +305,10 @@ following commands:
 
 The installation script will create a COMPSs folder inside the given
 ``<targetDir>`` so the final COMPSs installation will be placed under
-the ``<targetDir>/COMPSs`` folder. Please note that if the folder
-already exists it will be **automatically erased**.
+the ``<targetDir>/COMPSs`` folder.
+
+.. warning::
+   If the ``<targetDir>/COMPSs` folder already exists it will be **automatically erased**.
 
   After completing the previous steps, administrators must ensure that
 the nodes have passwordless ssh access. If it is not the case, please
@@ -368,12 +370,13 @@ For queue system executions, COMPSs provides several prebuild queue
 scripts than can be accessible throgh the *enqueue\_compss* command.
 Users can check the available options by running:
 
+
 .. code-block:: console
 
     $ enqueue_compss -h
 
-    Usage: /opt/COMPSs/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options]
-           application_name application_arguments
+    Usage: enqueue_compss [queue_system_options] [COMPSs_options]
+              application_name [application_arguments]
 
     * Options:
       General:
@@ -396,9 +399,9 @@ Users can check the available options by running:
         --reservation=<name>                    Reservation to use when submitting the job.
                                                 Default: disabled
         --constraints=<constraints>             Constraints to pass to queue system.
-    					                                  Default:
+                                                Default: disabled
         --qos=<qos>                             Quality of Service to pass to the queue system.
-                                                Default:
+                                                Default: default
         --cpus_per_task                         Number of cpus per task the queue system must allocate per task.
                                                 Note that this will be equal to the cpus_per_node in a worker node and
                                                 equal to the worker_in_master_cpus in a master node respectively.
@@ -433,11 +436,11 @@ Users can check the available options by running:
                                                 (Node type descriptions are provided in the --type_cfg flag)
       Launch configuration:
         --cpus_per_node=<int>                   Available CPU computing units on each node
-                                                Default: 32
+                                                Default: 48
         --gpus_per_node=<int>                   Available GPU computing units on each node
                                                 Default: 0
         --fpgas_per_node=<int>                  Available FPGA computing units on each node
-                                                Default:
+                                                Default: 0
         --fpga_reprogram="<string>              Specify the full command that needs to be executed to reprogram the FPGA with
                                                 the desired bitstream. The location must be an absolute path.
                                                 Default:
@@ -446,7 +449,8 @@ Users can check the available options by running:
         --node_memory=<MB>                      Maximum node memory: disabled | <int> (MB)
                                                 Default: disabled
         --network=<name>                        Communication network for transfers: default | ethernet | infiniband | data.
-                                                Default: ethernet
+                                                Default: infiniband
+
         --prolog="<string>"                     Task to execute before launching COMPSs (Notice the quotes)
                                                 If the task has arguments split them by "," rather than spaces.
                                                 This argument can appear multiple times for more than one prolog action
@@ -455,15 +459,17 @@ Users can check the available options by running:
                                                 If the task has arguments split them by "," rather than spaces.
                                                 This argument can appear multiple times for more than one epilog action
                                                 Default: Empty
+
         --master_working_dir=<path>             Working directory of the application
                                                 Default: .
         --worker_working_dir=<name | path>      Worker directory. Use: scratch | gpfs | <path>
                                                 Default: scratch
+
         --worker_in_master_cpus=<int>           Maximum number of CPU computing units that the master node can run as worker. Cannot exceed cpus_per_node.
-                                                Default: 0
+                                                Default: 24
         --worker_in_master_memory=<int> MB      Maximum memory in master node assigned to the worker. Cannot exceed the node_memory.
                                                 Mandatory if worker_in_master_cpus is specified.
-                                                Default: disabled
+                                                Default: 50000
         --jvm_worker_in_master_opts="<string>"  Extra options for the JVM of the COMPSs Worker in the Master Node.
                                                 Each option separed by "," and without blank spaces (Notice the quotes)
                                                 Default:
@@ -475,10 +481,12 @@ Users can check the available options by running:
                                                 Default: empty
         --elasticity=<max_extra_nodes>          Activate elasticity specifiying the maximum extra nodes (ONLY AVAILABLE FORM SLURM CLUSTERS WITH NIO ADAPTOR)
                                                 Default: 0
+
         --jupyter_notebook=<path>,              Swap the COMPSs master initialization with jupyter notebook from the specified path.
         --jupyter_notebook                      Default: false
 
       Runcompss configuration:
+
 
       Tools enablers:
         --graph=<bool>, --graph, -g             Generation of the complete graph (true/false)
@@ -502,9 +510,9 @@ Users can check the available options by running:
         --storage_conf=<path>                   Path to the storage configuration file
                                                 Default: null
         --project=<path>                        Path to the project XML file
-                                                Default: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
+                                                Default: /apps/COMPSs/2.6.pr/Runtime/configuration/xml/projects/default_project.xml
         --resources=<path>                      Path to the resources XML file
-                                                Default: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
+                                                Default: /apps/COMPSs/2.6.pr/Runtime/configuration/xml/resources/default_resources.xml
         --lang=<name>                           Language of the application (java/c/python)
                                                 Default: Inferred is possible. Otherwise: java
         --summary                               Displays a task execution summary at the end of the application execution
@@ -520,7 +528,8 @@ Users can check the available options by running:
                                                 Supported adaptors: es.bsc.compss.nio.master.NIOAdaptor | es.bsc.compss.gat.master.GATAdaptor
                                                 Default: es.bsc.compss.nio.master.NIOAdaptor
         --conn=<className>                      Class that implements the runtime connector for the cloud
-                                                Supported connectors: es.bsc.compss.connectors.DefaultSSHConnector | es.bsc.compss.connectors.DefaultNoSSHConnector
+                                                Supported connectors: es.bsc.compss.connectors.DefaultSSHConnector
+                                                                    | es.bsc.compss.connectors.DefaultNoSSHConnector
                                                 Default: es.bsc.compss.connectors.DefaultSSHConnector
         --streaming=<type>                      Enable the streaming mode for the given type.
                                                 Supported types: FILES, OBJECTS, PSCOS, ALL, NONE
@@ -531,8 +540,8 @@ Users can check the available options by running:
                                                 Default: null
         --scheduler=<className>                 Class that implements the Scheduler for COMPSs
                                                 Supported schedulers: es.bsc.compss.scheduler.fullGraphScheduler.FullGraphScheduler
-                                                                      | es.bsc.compss.scheduler.fifoScheduler.FIFOScheduler
-                                                                      | es.bsc.compss.scheduler.resourceEmptyScheduler.ResourceEmptyScheduler
+                                                                    | es.bsc.compss.scheduler.fifoScheduler.FIFOScheduler
+                                                                    | es.bsc.compss.scheduler.resourceEmptyScheduler.ResourceEmptyScheduler
                                                 Default: es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
         --scheduler_config_file=<path>          Path to the file which contains the scheduler configuration.
                                                 Default: Empty
@@ -541,9 +550,9 @@ Users can check the available options by running:
         --classpath=<path>                      Path for the application classes / modules
                                                 Default: Working Directory
         --appdir=<path>                         Path for the application class folder.
-                                                Default: /home/javier/gitlab/documentation/COMPSs_Manuals/docs
+                                                Default: /home/bsc19/bsc19234
         --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
-                                                Default: /home/javier/gitlab/documentation/COMPSs_Manuals/docs
+                                                Default: /home/bsc19/bsc19234
         --base_log_dir=<path>                   Base directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location)
                                                 Default: User home
         --specific_log_dir=<path>               Use a specific directory to store COMPSs log files (no sandbox is created)
@@ -591,11 +600,13 @@ Users can check the available options by running:
                                                 Default: false
 
     * Application name:
+
         For Java applications:   Fully qualified name of the application
         For C applications:      Path to the master binary
         For Python applications: Path to the .py file containing the main program
 
     * Application arguments:
+
         Command line arguments to pass to the application. Can be empty.
 
 
@@ -718,8 +729,8 @@ environment and are completely independent from the application.
 
 For each execution users can load the default configuration files or
 specify their custom configurations by using, respectively, the
-``–resources=<absolute_path_to_resources.xml>`` and the
-``–project=<absolute_path_to_project.xml>`` in the ``runcompss``
+``--resources=<absolute_path_to_resources.xml>`` and the
+``--project=<absolute_path_to_project.xml>`` in the ``runcompss``
 command. The default files are located in the
 ``/opt/COMPSs/Runtime/configuration/xml/`` path.
 
@@ -810,9 +821,8 @@ installDir
 
 User
     Indicates the username used to connect via ssh to the resource. This
-    user **must** have passwordless access to the resource (for more
-    information check the *COMPSs Installation Manual* available at our
-    website http://compss.bsc.es). If left empty COMPSs will
+    user **must** have passwordless access to the resource (see
+    :ref:`Configure SSH passwordless` Section). If left empty COMPSs will
     automatically try to access the resource with the **same username
     than the one that lauches the COMPSs main application**.
 
@@ -1076,7 +1086,7 @@ to abstract the runtime from the particular API of each provider and
 facilitates the addition of new connectors for other providers.
 
 The ``resources.xml`` file must contain one or more
-**``<CloudProvider>``** tags that include the information about a
+``<CloudProvider>`` tags that include the information about a
 particular provider, associated to a given connector. The tag **must**
 have an attribute **Name** to uniquely identify the provider. Next
 example summarizes the information to be specified by the user inside
@@ -1158,9 +1168,9 @@ this tag.
     </ResourcesList>
 
 The ``project.xml`` complements the information about a provider listed
-in the ``resources.xml`` file. This file can contain a **``<Cloud>``**
+in the ``resources.xml`` file. This file can contain a ``<Cloud>``
 tag where to specify a list of providers, each with a
-**``<CloudProvider>``** tag, whose **name** attribute must match one of
+``<CloudProvider>`` tag, whose **name** attribute must match one of
 the providers in the ``resources.xml`` file. Thus, the ``project.xml``
 file **must** contain a subset of the providers specified in the
 ``resources.xml`` file. Next example summarizes the information to be

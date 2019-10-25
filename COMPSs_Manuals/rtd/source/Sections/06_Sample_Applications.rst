@@ -681,7 +681,7 @@ to access the data directly during the rest of the execution.
 The Virtual Machine available at our webpage (http://compss.bsc.es/)
 provides a development environment with all the applications listed in
 the following sections. The codes of all the applications can be found
-under the :math:`/home/compss/tutorial_apps/python/` folder.
+under the ``/home/compss/tutorial_apps/python/`` folder.
 
 Simple
 ------

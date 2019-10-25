@@ -28,7 +28,7 @@ A COMPSs application is composed of three parts:
 
 The main application file name has to be the same of the main class and
 starts with capital letter, in this case it is **Simple.java**. The Java
-annotated interface filename is *application name+Itf.java*, in this
+annotated interface filename is *application name + Itf.java*, in this
 case it is **SimpleItf.java**. And the code that implements the remote
 tasks is defined in the *application name + Impl.java* file, in this
 case it is **SimpleImpl.java**.
@@ -39,7 +39,7 @@ of the development environment.
 Main application code
 ~~~~~~~~~~~~~~~~~~~~~
 
-In COMPSs the user’s application code is kept unchanged, no API calls
+In COMPSs, the user’s application code is kept unchanged, no API calls
 need to be included in the main application code in order to run the
 selected tasks on the nodes.
 
@@ -229,8 +229,7 @@ includes:
       resource must have in order to run a method. For example, in a
       cloud execution the COMPSs runtime creates a VM that fulfils the
       specified requirements in order to perform the execution. A full
-      description of the supported constraints can be found in Table
-      [tab:constraints] in Section [sec:Constraints].
+      description of the supported constraints can be found in :numref:`supported_constraints`.
 
    -  **@SchedulerHints:** It specifies the class that implements the
       method.
@@ -487,8 +486,7 @@ Application Compilation
 A COMPSs Java application needs to be packaged in a *jar* file
 containing the class files of the main code, of the methods
 implementations and of the *Itf* annotation. Next we provide a set of
-commands to compile the Java Simple application detailed at the *COMPSs
-Sample Applications* available at our website http://compss.bsc.es .
+commands to compile the Java Simple application (detailed at :ref:`Sample Applications`).
 
 .. code-block:: console
 
@@ -594,10 +592,10 @@ parameter. The code of *func* updates the file.
         my_file = '/tmp/sample_file.txt'
         func(my_file, 1)
 
-Please, note that the main code is defined within *if
-__name__==__main__'*. A better alternative would be to define
-the main code within a function and invoke it from the *if
-__name__==__main__'*.
+.. note::
+   the main code is defined within *if __name__==__main__'*.
+   A better alternative would be to define the main code within a function
+   and invoke it from the *if __name__=='__main__'*.
 
 In order to select *func* as a task, the corresponding *@task*
 decorator needs to be placed right before the definition of the
@@ -834,9 +832,9 @@ invoked). The programmer can tell otherwise by setting the
         def instance_method(self):
             ... # self is NOT modified here
 
-**NOTE:** In order to avoid serialization issues, the classes must not
-be declared in the same file that contains the main method (*if
-__name__==__main__'*).
+.. warning::
+   In order to avoid serialization issues, the classes must not
+   be declared in the same file that contains the main method (*if __name__=='__main__'*).
 
 Scheduler hints
 ^^^^^^^^^^^^^^^
@@ -880,12 +878,13 @@ main application. The default value for these parameters is False.
         ...
 
 In case a task fails, the whole application behaviour can be defined
-using the *on_failure* argument (:numref:`task_on_failure_python`). It has four possible values: ’RETRY’,
-’CANCEL_SUCCESSORS’, ’FAIL’ and ’IGNORE’. ’RETRY’ is the default
+using the *on_failure* argument (:numref:`task_on_failure_python`).
+It has four possible values: **'RETRY'**,
+**’CANCEL_SUCCESSORS’**, **’FAIL’** and **’IGNORE’**. *’RETRY’* is the default
 behaviour, making the task to be executed again, on the same worker or
-in another worker if the failure remains. ’CANCEL_SUCCESSORS’ ignores
-the failed task and cancels the execution of the successor tasks, ’FAIL’
-stops the whole execution once a task fails and ’IGNORE’ ignores the
+in another worker if the failure remains. *’CANCEL_SUCCESSORS’* ignores
+the failed task and cancels the execution of the successor tasks, *’FAIL’*
+stops the whole execution once a task fails and *’IGNORE’* ignores the
 failure and continues with the normal execution.
 
 .. code-block:: python
@@ -940,11 +939,11 @@ decorators for other purposes.
 
 For instance, there is a set of decorators that can be placed over the
 *@task* decorator in order to define the task methods as a
-binary invocation (with the *@binary* decorator), as a OmpSs
-invocation (with the *@ompss* decorator), as a MPI invocation
-(with the *@mpi* decorator), as a COMPSs application (with the
-*@compss* decorator), or as a task that requires multiple
-nodes (with the *@multinode* decorator). These decorators must
+**binary invocation** (with the :ref:`Binary decorator`), as a **OmpSs
+invocation** (with the :ref:`OmpSs decorator`), as a **MPI invocation**
+(with the :ref:`MPI decorator`), as a **COMPSs application** (with the
+:ref:`COMPSs decorator`), or as a **task that requires multiple
+nodes** (with the :ref:`Multinode decorator`). These decorators must
 be placed over the *@task* decorator, and under the
 *@constraint* decorator if defined.
 
@@ -1174,7 +1173,7 @@ Next tables summarizes the parameters of these decorators.
     | **working_dir**        | Full path of the binary working directory inside the COMPSs Worker.                                                               |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
-* ompss
+* @ompss
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
     | Parameter              | Description                                                                                                                       |
     +========================+===================================================================================================================================+
@@ -1183,7 +1182,7 @@ Next tables summarizes the parameters of these decorators.
     | **working_dir**        | Full path of the binary working directory inside the COMPSs Worker.                                                               |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
-* mpi
+* @mpi
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
     | Parameter              | Description                                                                                                                       |
     +========================+===================================================================================================================================+
@@ -1318,8 +1317,7 @@ This decorator enables the user to set the particular constraints for
 each task, such as the amount of Cores required explicitly.
 Alternatively, it is also possible to indicate that the value of a
 constraint is specified in a environment variable (:numref:`constraint_env_var_task_python`).
-A full description of the supported constraints can be found in Table [tab:constraints] in
-Section [sec:Constraints].
+A full description of the supported constraints can be found in :numref:`supported_constraints`.
 
 For example:
 
@@ -1417,34 +1415,35 @@ calls to the selected tasks. In addition, when synchronizing for task
 data from the main program, there exist four API functions that can to
 be invoked:
 
--  *compss_open(file_name, mode=’r’)*: similar to the Python *open()*
-   call. It synchronizes for the last version of file *file_name* and
+compss_open(file_name, mode=’r’)
+   Similar to the Python *open()* call.
+   It synchronizes for the last version of file *file_name* and
    returns the file descriptor for that synchronized file. It can have
    an optional parameter *mode*, which defaults to ’\ *r*\ ’, containing
    the mode in which the file will be opened (the open modes are
    analogous to those of Python *open()*).
 
--  *compss_delete_file(file_name)*: notifies the runtime to delete a
-   file.
+compss_delete_file(file_name)
+   Notifies the runtime to delete a file.
 
--  *compss_wait_on_file(file_name)*: synchronizes for the last
-   version of the file *file_name*. and returns True if success (False
-   otherwise).
+compss_wait_on_file(file_name)
+   Synchronizes for the last version of the file *file_name*.
+   Returns True if success (False otherwise).
 
--  *compss_delete_object(object)*: notifies the runtime to delete all
-   the associated files to a given object.
+compss_delete_object(object)
+   Notifies the runtime to delete all the associated files to a given object.
 
--  *compss_barrier(no_more_tasks=False)*: performs a explicit
-   synchronization, but does not return any object. The use of
-   *compss_barrier()* forces to wait for all tasks that have been
+compss_barrier(no_more_tasks=False)
+   Performs a explicit synchronization, but does not return any object.
+   The use of *compss_barrier()* forces to wait for all tasks that have been
    submitted before the *compss_barrier()* is called. When all tasks
    submitted before the *compss_barrier()* have finished, the execution
    continues. The *no_more_tasks* is used to specify if no more tasks
    are going to be submitted after the *compss_barrier()*.
 
--  *compss_wait_on(obj, to_write=True)*: synchronizes for the last
-   version of object *obj* and returns the synchronized object. It can
-   have an optional boolean parameter *to_write*, which defaults to
+compss_wait_on(obj, to_write=True)
+   Synchronizes for the last version of object *obj* and returns the synchronized object.
+   It can have an optional boolean parameter *to_write*, which defaults to
    *True*, that indicates whether the main program will modify the
    returned object. It is possible to wait on a list of objects. In this
    particular case, it will synchronize all future objects contained in
@@ -1732,8 +1731,7 @@ Or alternatively, use the ``pycompss`` module:
                     $TEST_DIR/test.py arg1 arg2
 
 For full description about the options available for the runcompss
-command please check the *COMPSs User Manual: Application Execution*
-available at http://compss.bsc.es.
+command please check the :ref:`Application execution` Section.
 
 Development with Jupyter notebook
 ---------------------------------
@@ -1798,7 +1796,7 @@ The *start* and *stop* functions accept parameters in order to customize
 the COMPSs runtime (such as the flags that can be selected with the
 "runcompss" command). Table :numref:`start_jupyter` summarizes
 the accepted parameters of the *start* function. :numref:`stop_jupyter`
-[tab:python_api_jupyter_stop] summarizes the accepted parameters of
+summarizes the accepted parameters of
 the *stop* function.
 
 
@@ -1909,10 +1907,11 @@ Application execution
 The application can be executed as a common Jupyter notebook by steps or
 the whole application.
 
-Please, note that once the COMPSs runtime has been stopped it is
-necessary to restart the python kernel in Jupyter before starting
-another COMPSs runtime. To this end, click on "Kernel" and "Restart" (or
-"Restart & Clear Output" or "Restart & Run All", depending on the need).
+.. Note::
+   Once the COMPSs runtime has been stopped it is necessary to restart the
+   python kernel in Jupyter before starting another COMPSs runtime.
+   To this end, click on "Kernel" and "Restart" (or "Restart & Clear Output"
+   or "Restart & Run All", depending on the need).
 
 Integration with Numba
 ----------------------
@@ -2084,8 +2083,7 @@ The grammar for the interface file is:
 Main Program
 ~~~~~~~~~~~~
 
-The next listing includes an example of matrix multiplication written in
-C++.
+:numref:`matrix_multiplication` shows an example of matrix multiplication written in C++.
 
 .. code-block:: C
     :name: matrix_multiplication
@@ -2160,37 +2158,38 @@ Besides the aforementioned **compss_on**, **compss_off** and
 variety of other API calls to better manage the synchronization of data
 generated by tasks. These calls are as follows:
 
--  *void compss_ifstream(char \* filename, ifstream* \ & *ifs)*: given
-   an uninitialized input stream *ifs* and a file *filename*, this
+void compss_ifstream(char \* filename, ifstream* \ & \* ifs)
+   Given an uninitialized input stream *ifs* and a file *filename*, this
    function will synchronize the content of the file and initialize
    *ifs* to read from it.
 
--  *void compss_ofstream(char \* filename, ofstream* \ & *ofs)*:
-   behaves the same way as *compss_ifstream*, but in this case the
+void compss_ofstream(char \* filename, ofstream* \ & \* ofs)
+   Behaves the same way as *compss_ifstream*, but in this case the
    opened stream is an output stream, meaning it will be used to write
    to the file.
 
--  *FILE\* compss_fopen(char \* file_name, char \* mode)*: similar to
-   the C/C++ *fopen* call. Synchronizes with the last version of file
+FILE\* compss_fopen(char \* file_name, char \* mode)
+   Similar to the C/C++ *fopen* call. Synchronizes with the last version of file
    *file_name* and returns the FILE\* pointer to further reference it.
    As the mode parameter it takes the same that can be used in *fopen*
    (*r, w, a, r+, w+* and *a+*).
 
--  *void compss_wait_on(T\** \ & *obj) or T compss_wait_on(T* \ &
-   *obj)*: synchronizes for the last version of object obj, meaning that
+void compss_wait_on(T\** \ & \* obj) or T compss_wait_on(T* \ & \* obj)
+   Synchronizes for the last version of object obj, meaning that
    the execution will stop until the value of *obj* up to that point of
    the code is received (and thus all tasks that can modify it have
    ended).
 
--  *void compss_delete_file(char \* file_name)*: makes an
-   asynchronous delete of file *filename*. When all previous tasks have
+void compss_delete_file(char \* file_name)
+   Makes an asynchronous delete of file *filename*. When all previous tasks have
    finished updating the file, it is deleted.
 
--  *void compss_delete_object(T\** \ & *obj)*: makes an asynchronous
-   delete of an object. When all previous tasks have finished updating
-   the object, it is deleted.
+void compss_delete_object(T\** \ & \* obj)
+   Makes an asynchronous delete of an object. When all previous tasks have
+   finished updating the object, it is deleted.
 
--  *void compss_barrier()*: similarly to the Python binding, performs
+void compss_barrier()
+   Similarly to the Python binding, performs
    an explicit synchronization without a return. When a
    *compss_barrier* is encountered, the execution will not continue
    until all the tasks submitted before the *compss_barrier* have
@@ -2435,10 +2434,10 @@ possible use of OmpSs is the following.
     void compss_task(int* a, int N) {
       int i;
       for (i = 0; i < N; ++i) {
-    		#pragma omp task
-    		{
-      		a[i] = i;
-    		}
+       #pragma omp task
+       {
+        a[i] = i;
+       }
       }
     }
 
@@ -2458,10 +2457,10 @@ array initialization using OmpSs-2.
         int i;
 
         for (i = 0; i < N; ++i) {
-    			#pragma oss task
-    			{
-        		a[i] = i;
-    			}
+         #pragma oss task
+         {
+          a[i] = i;
+         }
         }
     }
 
@@ -2498,7 +2497,7 @@ very simple;
 
 .. code-block:: console
 
-    $~/matmul_objects$ compss_build_app Matmul
+    $~/matmul_objects> compss_build_app Matmul
     [ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-1.8.0-openjdk-amd64//jre/lib/amd64/server
     [ INFO ] Boost libraries are searched in the directory: /usr/lib/
 
@@ -2529,7 +2528,7 @@ This environment is passed by flags and arguments;
 
 .. code-block:: console
 
-    $~/matmul_objects$ compss_build_app --cross-compile --cross-compile-prefix=arm-linux-gnueabihf- --java_home=/usr/lib/jvm/java-1.8.0-openjdk-armhf Matmul
+    $~/matmul_objects> compss_build_app --cross-compile --cross-compile-prefix=arm-linux-gnueabihf- --java_home=/usr/lib/jvm/java-1.8.0-openjdk-armhf Matmul
     [ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-1.8.0-openjdk-armhf/jre/lib/arm/server
     [ INFO ] Boost libraries are searched in the directory: /usr/lib/
     [ INFO ] You enabled cross-compile and the prefix to be used is: arm-linux-gnueabihf-
@@ -2586,7 +2585,7 @@ architecture command is done in the following way.
 
 .. code-block:: console
 
-    $~/matmul_objects$ compss_build_app_multi_arch --master=x86_64-linux-gnu --worker=arm-linux-gnueabihf,x86_64-linux-gnu Matmul
+    $~/matmul_objects> compss_build_app_multi_arch --master=x86_64-linux-gnu --worker=arm-linux-gnueabihf,x86_64-linux-gnu Matmul
 
     [ INFO ] Using default configuration file: /opt/COMPSs/Bindings/c/cfgs/compssrc.
     [ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/amd64/server
@@ -2686,25 +2685,24 @@ Using OmpSs
 As described in section [sec:ompss] applications can use OmpSs and
 OmpSs-2 programming models. The compilation process differs a little bit
 compared with a normal COMPSs C/C++ application. Applications using
-OmpSs must be compiled using the *--ompss* option in the
+OmpSs must be compiled using the ``--ompss`` option in the
 compss_build_app command.
 
 .. code-block:: console
 
-    $~/matmul_objects$ compss_build_app --ompss Matmul
+    $~/matmul_objects> compss_build_app --ompss Matmul
 
 Executing the previous command will start the compilation of the
 application. Sometimes due to configuration issues OmpSs can not be
-found, the option *--with_ompss=/path/to/ompss* specifies the OmpSs
+found, the option ``--with_ompss=/path/to/ompss`` specifies the OmpSs
 path that the user wants to use in the compilation.
 
 Applications using OmpSs-2 are similarly compiled. The options to
-compile with OmpSs-2 are *--ompss-2* and
-*--with_ompss-2=/path/to/ompss-2*
+compile with OmpSs-2 are ``--ompss-2`` and ``--with_ompss-2=/path/to/ompss-2``
 
 .. code-block:: console
 
-    $~/matmul_objects$ compss_build_app --with_ompss-2=/home/mdomingu/ompss-2 --ompss-2 Matmul
+    $~/matmul_objects> compss_build_app --with_ompss-2=/home/mdomingu/ompss-2 --ompss-2 Matmul
 
 Remember that additional source files can be used in COMPSs C/C++
 applications, if the user expects OmpSs or OmpSs-2 to be used in those
@@ -2717,8 +2715,8 @@ Application Execution
 The following environment variables must be defined before executing a
 COMPSs C/C++ application:
 
-JAVA_HOME: Java JDK installation directory (e.g.
-/usr/lib/jvm/java-8-openjdk/)
+JAVA_HOME
+   Java JDK installation directory (e.g. /usr/lib/jvm/java-8-openjdk/)
 
 After compiling the application, two directories, master and worker, are
 generated. The master directory contains a binary called as the main
@@ -2727,7 +2725,7 @@ The worker directory contains another binary called as the main file
 followed by the suffix "-worker", which is the worker application, in
 our example is called Matmul-worker.
 
-The *runcompss* script has to be used to run the application:
+The ``runcompss`` script has to be used to run the application:
 
 .. code-block:: console
 
@@ -2737,13 +2735,13 @@ The *runcompss* script has to be used to run the application:
                 /home/compss/tutorial_apps/c/matmul_objects/master/Matmul 3 4 2.0
 
 The complete list of options of the runcompss command is available in
-the *COMPSs User Manual: Application Execution* at http://compss.bsc.es
+Section :ref:`Application execution`.
 .
 
 Task Dependency Graph
 ---------------------
 
-Figure [fig:matmul_exec_graph] depicts the task dependency graph for
+:numref:`matmul_exec_graph` depicts the task dependency graph for
 the Matmul application in its object version with 3x3 blocks matrices,
 each one containing a 4x4 matrix of doubles. Each block in the result
 matrix accumulates three block multiplications, i.e. three
@@ -2764,6 +2762,7 @@ synchronization. All green tasks are method-tasks and they are executed
 in parallel.
 
 .. figure:: ./Figures/app_development/matmul.jpeg
+   :name: matmul_exec_graph
    :alt: Matmul Execution Graph.
    :width: 100.0%
 
@@ -2802,7 +2801,7 @@ type, its default value and a brief description.
     +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
     | processorInternalMemorySize   | processor_internal_memory_size      | ProcessorInternalMemorySize   | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required internal device memory                                                       |
     +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
-    | processors                    | processors                          | -                             | List\ :math:`<`\ @Processor\ :math:`>`   | "{}"                | Required processors (check Table [tab:processor_constraint] for Processor details)    |
+    | processors                    | processors                          | -                             | List\ :math:`<`\ @Processor\ :math:`>`   | "{}"                | Required processors (check :numref:`processor_constraints` for Processor details)     |
     +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
     | memorySize                    | memory_size                         | MemorySize                    | :math:`<`\ string\ :math:`>`             | "[unassigned]"      | Required memory size in GBs                                                           |
     +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
@@ -2969,6 +2968,7 @@ The current COMPSs version () has the following limitations:
        class A:
          def __init__(self, b):
            self.b  = b
+
        # main.py
        from a import A
        from pycompss.api.task import task

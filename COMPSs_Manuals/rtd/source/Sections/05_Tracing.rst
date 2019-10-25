@@ -24,8 +24,8 @@ For each worker node and the master, Extrae keeps track of the events in
 an intermediate format file (with *.mpit* extension). At the end of the
 execution, all intermediate files are gathered and merged with Extrae’s
 *mpi2prv* command in order to create the final tracefile, a Paraver
-format file (.prv). See the visualization Section [sec:Visualization] of
-this manual for further information about the Paraver tool.
+format file (.prv). See the :ref:`Visualization` Sectio for further
+information about the Paraver tool.
 
 When instrumentation is activated, Extrae outputs several messages
 corresponding to the tracing initialization, intermediate files’
@@ -49,7 +49,7 @@ Basic Mode
 This mode is aimed at COMPSs’ apps users and developers. It instruments
 computing threads and some management resources providing information
 about tasks’ executions, data transfers, and hardware counters if PAPI
-is available (see PAPI counters Appendix [sec:papi] for more info).
+is available (see :ref:`PAPI: Hardware Counters` for more info).
 
 Usage
 ~~~~~
@@ -736,10 +736,11 @@ detected in the Extrae config report:
       PAPI home: /usr
       Sampling support: yes
 
-**N.B.** PAPI detection is only performed in the machine where COMPSs is
-installed. User is responsible of providing a valid PAPI installation to
-the worker machines to be used (if they are different from the master),
-otherwise workers will crash because of the missing *libpapi.so*.
+.. note::
+   PAPI detection is only performed in the machine where COMPSs is
+   installed. User is responsible of providing a valid PAPI installation to
+   the worker machines to be used (if they are different from the master),
+   otherwise workers will crash because of the missing *libpapi.so*.
 
 PAPI installation and requirements depend on the OS. On Ubuntu 14.04 it
 is available under textitpapi-tools package; on OpenSuse textitpapi and
