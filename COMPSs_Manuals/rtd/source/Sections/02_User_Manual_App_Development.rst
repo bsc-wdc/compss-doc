@@ -592,7 +592,7 @@ parameter. The code of *func* updates the file.
         my_file = '/tmp/sample_file.txt'
         func(my_file, 1)
 
-.. note::
+.. hint::
    the main code is defined within *if __name__==__main__'*.
    A better alternative would be to define the main code within a function
    and invoke it from the *if __name__=='__main__'*.
@@ -832,9 +832,9 @@ invoked). The programmer can tell otherwise by setting the
         def instance_method(self):
             ... # self is NOT modified here
 
-.. warning::
+.. caution::
    In order to avoid serialization issues, the classes must not
-   be declared in the same file that contains the main method (*if __name__=='__main__'*).
+   be declared in the same file that contains the main method (``if __name__=='__main__'``).
 
 Scheduler hints
 ^^^^^^^^^^^^^^^
@@ -1907,7 +1907,7 @@ Application execution
 The application can be executed as a common Jupyter notebook by steps or
 the whole application.
 
-.. Note::
+.. attention::
    Once the COMPSs runtime has been stopped it is necessary to restart the
    python kernel in Jupyter before starting another COMPSs runtime.
    To this end, click on "Kernel" and "Restart" (or "Restart & Clear Output"

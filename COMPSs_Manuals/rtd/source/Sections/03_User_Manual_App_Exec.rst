@@ -720,7 +720,7 @@ features available through the graphical interface:
 -  **Statistics** Shows application statistics such as the accumulated
    cloud cost.
 
-.. warning::
+.. important::
    To enable all the COMPSs Monitor features applications must run with the ``-m`` flag.
 
 The webpage also allows users to configure some performance parameters
@@ -993,7 +993,7 @@ The **compss_docker_gen_image** script receives 2 parameters:
    example "john123/my-image-app:1.23).
 
 
-.. note::
+.. important::
    After creating the image, be sure to write down the absolute
    context-directory and the absolute classpath (the absolute path to the
    executable jar). You will need it to run the application using

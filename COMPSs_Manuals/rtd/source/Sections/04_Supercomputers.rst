@@ -83,12 +83,12 @@ well loaded COMPSs installation.
     USER@SC$ enqueue_compss --version
     COMPSs version <version>
 
-.. note::
+.. important::
    Please remember that COMPSs runs in several nodes and your current
    enviroment is not exported to them. Thus, all the needed environment
    variables **must** be loaded through the *.bashrc* file.
 
-.. note::
+.. important::
    Please remember that PyCOMPSs uses Python 2.7 by default. In order to
    use Python 3, the Python 2.7 module **must** be unloaded after loading
    COMPSs module, and then load the Python 3 module.

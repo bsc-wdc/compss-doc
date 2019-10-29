@@ -307,7 +307,7 @@ The installation script will create a COMPSs folder inside the given
 ``<targetDir>`` so the final COMPSs installation will be placed under
 the ``<targetDir>/COMPSs`` folder.
 
-.. warning::
+.. attention::
    If the ``<targetDir>/COMPSs`` folder already exists it will be **automatically erased**.
 
   After completing the previous steps, administrators must ensure that

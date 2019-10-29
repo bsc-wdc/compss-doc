@@ -736,7 +736,7 @@ detected in the Extrae config report:
       PAPI home: /usr
       Sampling support: yes
 
-.. note::
+.. caution::
    PAPI detection is only performed in the machine where COMPSs is
    installed. User is responsible of providing a valid PAPI installation to
    the worker machines to be used (if they are different from the master),
