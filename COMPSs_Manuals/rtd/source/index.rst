@@ -3,6 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+:gitlab_url: http://compss.bsc.es/gitlab/documents/documentation/tree/rtd-documentation/COMPSs_Manuals/rtd
+
 Welcome to COMPSs's documentation!
 ==================================
 
