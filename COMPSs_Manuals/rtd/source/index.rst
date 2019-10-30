@@ -31,6 +31,7 @@ Welcome to COMPSs's documentation!
    ==================
    * :ref:`genindex`
    * :ref:`modindex`
+   * :ref:`search`
 
 
 .. figure:: /Logos/bsc_logo.jpg
