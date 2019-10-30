@@ -9,7 +9,7 @@ Welcome to COMPSs's documentation!
 ==================================
 
 .. figure:: /Logos/COMPSs_logo.png
-   :width: 50.0%
+   :width: 40.0%
    :align: center
    :target: http://compss.bsc.es
 
