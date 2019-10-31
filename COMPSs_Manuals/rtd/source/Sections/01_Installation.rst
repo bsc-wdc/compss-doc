@@ -343,9 +343,9 @@ their executions for any SuperComputer.
 
 To make this structure works, the administrators must define a
 configuration file for the queue system (under
-``<targetDir>/COMPSs/scripts/queues/cfgs/QUEUE/QUEUE.cfg``) and a
+``<targetDir>/COMPSs/scripts/queues/queue_system/QUEUE.cfg``) and a
 configuration file for the specific SuperComputer parameters (under
-``<targetDir>`` ``/COMPSs/scripts/queues/cfgs/SC_NAME.cfg``). The COMPSs
+``<targetDir>`` ``/COMPSs/scripts/queues/supercomputers/SC_NAME.cfg``). The COMPSs
 installation already provides queue configurations for *LSF* and *SLURM*
 and several examples for SuperComputer configurations.
 
