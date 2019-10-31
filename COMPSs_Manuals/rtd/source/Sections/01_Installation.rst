@@ -336,7 +336,7 @@ their executions for any SuperComputer.
    :name: queue_structure
    :alt: Structure of COMPSs queue scripts. In Blue user scripts, in Green queue scripts and in Orange system dependant scripts
    :align: center
-   :width: 60.0%
+   :width: 50.0%
 
    Structure of COMPSs queue scripts. In Blue user scripts, in Green
    queue scripts and in Orange system dependant scripts
@@ -700,7 +700,7 @@ access between any pair of machines:
    :name: cluster
    :alt: Cluster example
    :align: center
-   :width: 95.0%
+   :width: 65.0%
 
    Cluster example
 

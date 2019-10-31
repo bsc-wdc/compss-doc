@@ -453,7 +453,7 @@ configuration file, another window appears showing the view.
    :name: tracing_1
    :alt: Paraver menu
    :align: center
-   :width: 45.0%
+   :width: 25.0%
 
    Paraver menu
 
@@ -461,7 +461,7 @@ configuration file, another window appears showing the view.
    :name: tracing_2
    :alt: Trace file
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
    Trace file
 
@@ -485,7 +485,7 @@ trace correctly:
    :name: tracing_3
    :alt: Paraver view adjustment: Fit window
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
    Paraver view adjustment: Fit window
 
@@ -499,7 +499,7 @@ trace correctly:
    :name: tracing_4
    :alt: Paraver view adjustment: View Event Flags
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
    Paraver view adjustment: View Event Flags
 
@@ -516,7 +516,7 @@ trace correctly:
    :name: tracing_5
    :alt: Paraver view adjustment: Show info panel
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
    Paraver view adjustment: Show info panel
 
@@ -533,7 +533,7 @@ trace correctly:
    :name: tracing_6
    :alt: Paraver view adjustment: Zoom configuration
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
    Paraver view adjustment: Zoom configuration
 
@@ -541,7 +541,7 @@ trace correctly:
    :name: tracing_6_2
    :alt: Paraver view adjustment: Zoom configuration
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
    Paraver view adjustment: Zoom configuration
 
@@ -570,6 +570,7 @@ adjusted as described in the previous section.
    :name: tracing_7
    :alt: Trace interpretation
    :align: center
+   :width: 60.0%
 
    Trace interpretation
 
@@ -591,7 +592,7 @@ this means, the duration of computational bursts.
    :name: tracing_8
    :alt: Basic trace view of a Hmmpfam execution.
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
    Basic trace view of a Hmmpfam execution.
 
@@ -615,7 +616,7 @@ the last part of the trace.
    :name: tracing_9
    :alt: Data dependencies graph of a Hmmpfam execution.
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
    Data dependencies graph of a Hmmpfam execution.
 
@@ -623,7 +624,7 @@ the last part of the trace.
    :name: tracing_10
    :alt: Zoomed in view of a Hmmpfam execution.
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
    Zoomed in view of a Hmmpfam execution.
 
@@ -651,7 +652,7 @@ Hmmer program.
    :name: tracing_11
    :alt: Original sample trace interval corresponding to the obtained Histogram.
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
    Original sample trace interval corresponding to the obtained Histogram.
 
@@ -664,7 +665,7 @@ appear.
    :name: tracing_12
    :alt: Paraver Menu - New Histogram
    :align: center
-   :width: 50.0%
+   :width: 40.0%
 
    Paraver Menu - New Histogram
 
@@ -678,7 +679,7 @@ dark-blue for higher ones. This conforms a color based histogram.
    :name: tracing_13
    :alt: Hmmpfam histogram corresponding to previous trace
    :align: center
-   :width: 80.0%
+   :width: 60.0%
 
    Hmmpfam histogram corresponding to previous trace
 
@@ -694,7 +695,7 @@ time, for example, the number of bursts.
    :name: tracing_14
    :alt: Paraver histogram options menu
    :align: center
-   :width: 80.0%
+   :width: 60.0%
 
    Paraver histogram options menu
 
@@ -707,7 +708,7 @@ dark-blue changes with the new values.
    :name: tracing_15
    :alt: Hmmpfam histogram with the number of bursts
    :align: center
-   :width: 80.0%
+   :width: 60.0%
 
    Hmmpfam histogram with the number of bursts
 

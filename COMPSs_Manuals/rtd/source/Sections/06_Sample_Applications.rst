@@ -356,7 +356,7 @@ obtain the graph show in :numref:`increment_java`.
    :name: increment_java
    :alt: Java increment tasks graph
    :align: center
-   :width: 30.0%
+   :width: 25.0%
 
    Java increment tasks graph
 
@@ -381,7 +381,7 @@ differ on the way of storing the matrix:
    :name: matmul
    :alt: Matrix multiplication
    :align: center
-   :width: 80.0%
+   :width: 70.0%
 
    Matrix multiplication
 
@@ -498,7 +498,7 @@ triangular matrix and an upper one.
    :name: sparse_lu
    :alt: Sparse LU decomposition
    :align: center
-   :width: 60.0%
+   :width: 50.0%
 
    Sparse LU decomposition
 
@@ -600,7 +600,7 @@ computationally intensive and embarrassingly parallel.
    :name: blast_workflow
    :alt: The COMPSs Blast workflow
    :align: center
-   :width: 70.0%
+   :width: 50.0%
 
    The COMPSs Blast workflow
 
@@ -864,7 +864,7 @@ obtain the graph show in :numref:`increment_python`.
    :name: increment_python
    :alt: Python increment tasks graph
    :align: center
-   :width: 30.0%
+   :width: 25.0%
 
    Python increment tasks graph
 
@@ -1401,7 +1401,7 @@ obtain the graph show in :numref:`increment_c`.
    :name: increment_c
    :alt: C increment tasks graph
    :align: center
-   :width: 30.0%
+   :width: 25.0%
 
    C increment tasks graph
 

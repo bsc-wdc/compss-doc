@@ -674,7 +674,7 @@ run inside a Supercomputer.
    :name: mn_monitor1
    :alt: COMPSs Monitor login for Supercomputers
    :align: center
-   :width: 95.0%
+   :width: 50.0%
 
    COMPSs Monitor login for Supercomputers
 

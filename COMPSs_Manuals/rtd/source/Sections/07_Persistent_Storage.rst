@@ -17,7 +17,7 @@ modules: *Storage Object Interface* (SOI) and *Storage Runtime Interface* (SRI)
    :name: storage_architecture
    :alt: COMPSs with persistent storage architecture
    :align: center
-   :width: 70.0%
+   :width: 50.0%
 
    COMPSs with persistent storage architecture
 

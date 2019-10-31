@@ -2764,7 +2764,8 @@ in parallel.
 .. figure:: ./Figures/app_development/matmul.jpeg
    :name: matmul_exec_graph
    :alt: Matmul Execution Graph.
-   :width: 100.0%
+   :width: 75.0%
+   :align: center
 
    Matmul Execution Graph.
 
