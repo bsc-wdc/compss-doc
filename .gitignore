@@ -15,3 +15,7 @@
 
 # Ignore pdfs
 *.pdf
+
+# Ignore documentation builds
+build/
+
