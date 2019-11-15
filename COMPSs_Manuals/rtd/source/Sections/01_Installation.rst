@@ -58,15 +58,15 @@ The first step is downloading the source code from the Git repository.
 .. code-block:: console
 
     $ git clone https://github.com/bsc-wdc/compss.git
-    $ cd framework
+    $ cd compss
 
 Then, you need to download the embedded dependencies from the git
 submodules.
 
 .. code-block:: console
 
-    $ framework> ./submodules_get.sh
-    $ framework> ./submodules_patch.sh
+    $ compss> ./submodules_get.sh
+    $ compss> ./submodules_patch.sh
 
 Finally you just need to run the installation script. You have to
 options: For installing COMPSs for all the users run the following
@@ -74,7 +74,7 @@ command. (root access is required)
 
 .. code-block:: console
 
-    $ framework> cd builders/
+    $ compssk> cd builders/
     $ builders> INSTALL_DIR=/opt/COMPSs/
     $ builders> sudo -E ./buildlocal [options] ${INSTALL_DIR}
 
@@ -82,7 +82,7 @@ For installing COMPSs for the current user run the following command.
 
 .. code-block:: console
 
-    $ framework> cd builders/
+    $ compss> cd builders/
     $ builders> INSTALL_DIR=$HOME/opt/COMPSs/
     $ builders> ./buildlocal [options] ${INSTALL_DIR}
 
@@ -90,7 +90,7 @@ The different installation options can be found in the command help.
 
 .. code-block:: console
 
-    $ framework> cd builders/
+    $ compss> cd builders/
     $ builders> ./buildlocal -h
 
 Post installation
@@ -297,7 +297,7 @@ following commands:
 
      $ # Install COMPSs at your preferred target location
      $ cd COMPSs
-     $ ./install <targetDir>
+     $ ./install <targetDir> [<supercomputer.cfg>]
 
      $ # Clean downloaded files
      $ rm -r COMPSs
