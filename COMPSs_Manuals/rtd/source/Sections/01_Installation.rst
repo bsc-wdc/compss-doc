@@ -57,7 +57,7 @@ The first step is downloading the source code from the Git repository.
 
 .. code-block:: console
 
-    $ git clone https://github.com/bsc-wdc/compss.git
+    $ git clone --single-branch --branch=2.6 https://github.com/bsc-wdc/compss.git
     $ cd compss
 
 Then, you need to download the embedded dependencies from the git
