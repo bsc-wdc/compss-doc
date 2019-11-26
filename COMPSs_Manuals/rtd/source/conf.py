@@ -52,7 +52,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'COMPSs'
-copyright = '2019, Workflows and Distributed Computing Group (WDC)'
+copyright = 'Barcelona Supercomputing Center (BSC)'
 author = 'Workflows and Distributed Computing Group (WDC)'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -92,7 +92,7 @@ numfig_format = {'figure':'Figure %s',
 html_add_permalinks = ""  # Disabled permalinks
 html_logo = './Logos/COMPSs_logo_small.png'
 html_show_sourcelink = False
-html_show_copyright = False
+html_show_copyright = True
 html_show_sphinx = True
 nitpicky = True
 latex_logo = './Logos/COMPSs_logo.png'
