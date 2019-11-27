@@ -52,7 +52,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'COMPSs'
-copyright = '2019, Workflows and Distributed Computing Group (WDC)'
+copyright = 'Barcelona Supercomputing Center (BSC)'
 author = 'Workflows and Distributed Computing Group (WDC)'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -92,7 +92,7 @@ numfig_format = {'figure':'Figure %s',
 html_add_permalinks = ""  # Disabled permalinks
 html_logo = './Logos/COMPSs_logo_small.png'
 html_show_sourcelink = False
-html_show_copyright = False
+html_show_copyright = True
 html_show_sphinx = True
 nitpicky = True
 latex_logo = './Logos/COMPSs_logo.png'
@@ -116,7 +116,7 @@ html_theme_options = {'logo_only': True}
 html_static_path = ['_static']
 
 html_context = {
-    'css_files': ['_static/theme_overrides.css',  # override wide tables in RTD theme
+    'css_files': ['_static/_theme_overrides.css',  # override wide tables in RTD theme
                  ],
 }
 
@@ -185,6 +185,6 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'COMPSs', 'COMPSs Documentation',
-     author, 'COMPSs', 'One line description of project.',
-     'Miscellaneous'),
+     author, 'COMPSs', 'COMPSs Manuals.',
+     'Programming Model'),
 ]
