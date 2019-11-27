@@ -1466,8 +1466,3 @@ is shown:
 Details about numba and the specification of the signature, declaration
 and flags can be found in the Numba’s webpage
 (http://numba.pydata.org/).
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

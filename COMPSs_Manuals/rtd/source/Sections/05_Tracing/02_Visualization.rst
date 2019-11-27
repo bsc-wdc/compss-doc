@@ -138,8 +138,3 @@ trace correctly:
    :width: 60.0%
 
    Paraver view adjustment: Zoom configuration
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

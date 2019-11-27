@@ -183,7 +183,3 @@ The current COMPSs version () has the following limitations:
    This is due to the fact that MKL reuses threads along different calls
    and it does not change the number of threads from one call to
    another.
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

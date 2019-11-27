@@ -99,7 +99,3 @@ http://appdb.egi.eu/store/software/rocci.cli
 
 .. [1]
    https://appdb.egi.eu/store/software/rocci.cli
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

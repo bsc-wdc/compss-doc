@@ -362,7 +362,3 @@ further information about the *Eclipse IDE* please refer to :ref:`COMPSs IDE` Se
 
 For further details please check the :ref:`Configuration Files` Subsection
 inside the :ref:`Installation and Administration` Section.
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

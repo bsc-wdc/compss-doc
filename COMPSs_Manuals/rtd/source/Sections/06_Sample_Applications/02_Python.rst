@@ -202,8 +202,3 @@ obtain the graph show in :numref:`increment_python`.
    :width: 25.0%
 
    Python increment tasks graph
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

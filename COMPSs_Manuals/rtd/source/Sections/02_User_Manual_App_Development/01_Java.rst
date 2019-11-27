@@ -544,8 +544,3 @@ providing the necessary language translation.
 
 The next sections describe the Python and C/C++ language bindings
 offered by COMPSs.
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

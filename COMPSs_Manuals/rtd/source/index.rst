@@ -32,9 +32,3 @@ Welcome to COMPSs's documentation!
    * :ref:`genindex`
    * :ref:`modindex`
    * :ref:`search`
-
-
-.. figure:: /Logos/bsc_logo.jpg
-  :width: 50.0%
-  :align: center
-  :target: http://www.bsc.es

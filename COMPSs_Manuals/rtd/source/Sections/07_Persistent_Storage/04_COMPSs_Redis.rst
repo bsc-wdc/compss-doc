@@ -376,7 +376,3 @@ must add the following flags to the ``enqueue_compss`` command:
 
 .. [2]
    https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

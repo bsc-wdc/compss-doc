@@ -176,7 +176,3 @@ Furthermore, when running ``runcompss`` with additional flags (such as
 monitoring or tracing) additional folders will appear inside the *base
 log folder*. The meaning of the files inside these folders is explained
 in :ref:`COMPSs Tools`.
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

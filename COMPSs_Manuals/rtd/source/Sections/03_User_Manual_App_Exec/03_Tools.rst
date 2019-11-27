@@ -327,7 +327,3 @@ with COMPSs.
 
 For further information please check the *COMPSs IDE User Guide*
 available at: http://compss.bsc.es .
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

@@ -136,8 +136,3 @@ Post installation (using pip)
 As mentioned in :ref:`Configure SSH passwordless` Section, it is recommended to
 restart the user session or virtual environment once the installation
 process has finished.
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

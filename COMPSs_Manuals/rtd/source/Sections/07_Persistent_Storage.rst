@@ -17,8 +17,3 @@ and its integration with some Persistent Storage frameworks.
     07_Persistent_Storage/03_COMPSs_Hecuba
     07_Persistent_Storage/04_COMPSs_Redis
     07_Persistent_Storage/05_Own_interface
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

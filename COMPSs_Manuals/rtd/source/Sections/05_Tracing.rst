@@ -18,8 +18,3 @@ applications in order to analyse the performance with great detail.
     05_Tracing/05_Papi
     05_Tracing/06_Paraver_configs
     05_Tracing/07_User_events
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

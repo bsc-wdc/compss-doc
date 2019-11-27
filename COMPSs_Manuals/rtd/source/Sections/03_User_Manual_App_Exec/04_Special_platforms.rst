@@ -447,7 +447,3 @@ us at support-compss@bsc.es .
 
 For information about how to submit COMPSs applications at any
 Supercomputer please refer to :ref:`Supercomputers`.
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

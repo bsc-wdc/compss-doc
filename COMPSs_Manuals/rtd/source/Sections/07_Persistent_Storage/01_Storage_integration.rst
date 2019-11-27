@@ -33,8 +33,3 @@ required functionalities described in :ref:`Implement your own Storage interface
 .. _Hecuba: https://www.bsc.es/research-and-development/software-and-apps/software-list/hecuba
 
 .. _Redis: https://redis.io/
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

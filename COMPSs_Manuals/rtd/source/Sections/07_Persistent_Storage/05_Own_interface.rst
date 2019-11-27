@@ -227,8 +227,3 @@ must add the following flags to the ``enqueue_compss`` command:
 #. If you are running a Python application, also add the
    ``--pythonpath=${app_path}:${path_to_the_user_storage_folder}`` flag, where
    the SOI for Python must exist.
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

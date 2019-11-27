@@ -13,9 +13,3 @@ This section is intended to walk you through the COMPSs usage in Supercomputers.
     04_Supercomputers/03_Minotauro
     04_Supercomputers/04_Nord3
     04_Supercomputers/05_COMPSs_monitor
-
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

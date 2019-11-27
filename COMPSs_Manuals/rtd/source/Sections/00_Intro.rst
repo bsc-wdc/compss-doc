@@ -36,8 +36,3 @@ characteristics:
    the application; everything is pure standard Java syntax and
    libraries. With regard the Python and C/C++ bindings, a small set of
    API calls should be used on the COMPSs applications.
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

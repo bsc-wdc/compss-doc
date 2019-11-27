@@ -748,7 +748,3 @@ in parallel.
    :align: center
 
    Matmul Execution Graph.
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

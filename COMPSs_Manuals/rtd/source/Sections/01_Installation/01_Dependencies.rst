@@ -43,8 +43,3 @@ For the Python binding it is also recommended to have ``dill`` and
 serializable objects by Python (for example: lambda functions), and the
 ``guppy`` package is needed to use the ``@local`` decorator. Both
 packages can be found in pyPI and can be installed via ``pip``.
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

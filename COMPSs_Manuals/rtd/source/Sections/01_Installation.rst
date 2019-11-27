@@ -14,8 +14,3 @@ This section is intended to walk you through the COMPSs installation.
     01_Installation/04_Supercomputers
     01_Installation/05_Additional_configuration
     01_Installation/06_Configuration_files
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

@@ -72,8 +72,3 @@ run inside a Supercomputer.
    :width: 95.0%
 
    COMPSs Monitor main page for a test application at Supercomputers
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

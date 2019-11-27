@@ -84,8 +84,3 @@ of @Processor annotations that must be defined as shown in :numref:`processor_co
     +----------------------+--------------------------------+---------------------+---------------------------------------------+
     | internalMemorySize   | :math:`<`\ string\ :math:`>`   | "[unassigned]"      | Required internal device memory             |
     +----------------------+--------------------------------+---------------------+---------------------------------------------+
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

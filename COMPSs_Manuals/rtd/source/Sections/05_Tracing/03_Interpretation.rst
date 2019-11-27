@@ -26,7 +26,3 @@ adjusted as described in the previous section.
    :width: 60.0%
 
    Trace interpretation
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

@@ -23,8 +23,3 @@ the tracefile.q  
 More information and examples of common python usage can be found under
 the default directory
 ``/opt/COMPSs/Dependencies/extrae/share/examples/PYTHON``.
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

@@ -116,7 +116,7 @@ html_theme_options = {'logo_only': True}
 html_static_path = ['_static']
 
 html_context = {
-    'css_files': ['_static/theme_overrides.css',  # override wide tables in RTD theme
+    'css_files': ['_static/_theme_overrides.css',  # override wide tables in RTD theme
                  ],
 }
 
@@ -185,6 +185,6 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'COMPSs', 'COMPSs Documentation',
-     author, 'COMPSs', 'One line description of project.',
-     'Miscellaneous'),
+     author, 'COMPSs', 'COMPSs Manuals.',
+     'Programming Model'),
 ]

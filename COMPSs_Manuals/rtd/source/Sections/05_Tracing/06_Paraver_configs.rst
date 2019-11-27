@@ -72,8 +72,3 @@ folder contains the configurations for Python events, and finally the
     +--------------------------------------------+-----------------------------------------------------------------------------+
     | communication_matrix.cfg                   | Table view of communications between each node                              |
     +--------------------------------------------+-----------------------------------------------------------------------------+
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

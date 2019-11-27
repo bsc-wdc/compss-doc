@@ -406,8 +406,3 @@ path to that file.
 
 .. [2]
    For more information: https://www.bsc.es/computer-sciences/performance-tools/paraver
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

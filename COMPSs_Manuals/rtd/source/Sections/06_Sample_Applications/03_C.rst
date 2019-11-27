@@ -534,7 +534,3 @@ obtain the graph show in :numref:`increment_c`.
    :width: 25.0%
 
    C increment tasks graph
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

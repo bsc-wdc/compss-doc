@@ -338,8 +338,3 @@ command:
     * Application arguments:
 
         Command line arguments to pass to the application. Can be empty.
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

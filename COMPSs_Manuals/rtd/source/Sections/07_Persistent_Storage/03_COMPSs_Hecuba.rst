@@ -41,8 +41,3 @@ Launching using an existing Hecuba deployment
 
 Launching on queue system based environments
 ````````````````````````````````````````````
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

@@ -658,8 +658,3 @@ Example:
                             4 \
                             /tmp/ \
                             /home/compss/out.txt
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

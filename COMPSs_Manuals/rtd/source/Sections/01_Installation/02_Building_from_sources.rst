@@ -52,8 +52,3 @@ in again to end the installation process.
 If you need to set up your machine for the first time please take a look
 at :ref:`Additional Configuration` Section for a detailed description of
 the additional configuration.
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

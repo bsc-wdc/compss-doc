@@ -88,8 +88,3 @@ needs. To find the available PAPI counters on a given computer issue the
 command *papi_avail -a*. For more information about Extrae’s XML
 configuration refer to
 https://www.bsc.es/computer-sciences/performance-tools/trace-generation/extrae/extrae-user-guide.
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

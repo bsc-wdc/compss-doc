@@ -135,8 +135,3 @@ dark-blue changes with the new values.
    :width: 60.0%
 
    Hmmpfam histogram with the number of bursts
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center

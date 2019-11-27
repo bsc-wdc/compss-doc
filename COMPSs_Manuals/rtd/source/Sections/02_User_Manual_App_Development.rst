@@ -14,9 +14,3 @@ applications.
     02_User_Manual_App_Development/03_C
     02_User_Manual_App_Development/04_Constraints
     02_User_Manual_App_Development/05_Known_limitations
-
-
-
-.. figure:: /Logos/bsc_logo.jpg
-   :width: 40.0%
-   :align: center
