@@ -273,13 +273,13 @@ includes:
       not recommend to use them because they cause an implicit
       synchronization
 
-   -  **Stream:** For non-native tasks (binaries, MPI, and OmpSs) COMPSs
+   -  **StdIOStream:** For non-native tasks (binaries, MPI, and OmpSs) COMPSs
       supports the automatic redirection of the Linux streams by
-      specifying Stream.STDIN, Stream.STDOUT or Stream.STDERR. Notice
-      that any parameter annotated with the stream annotation must be of
+      specifying StdIOStream.STDIN, StdIOStream.STDOUT or StdIOStream.STDERR. Notice
+      that any parameter annotated with the StdIOStream annotation must be of
       type *Type.FILE*, and with direction *Direction.IN* for
-      *Stream.STDIN* or *Direction.OUT/ Direction.INOUT* for
-      *Stream.STDOUT* and *Stream.STDERR*.
+      *StdIOStream.STDIN* or *Direction.OUT/ Direction.INOUT* for
+      *StdIOStream.STDOUT* and *StdIOStream.STDERR*.
 
    -  **Prefix:** For non-native tasks (binaries, MPI, and OmpSs) COMPSs
       allows to prepend a constant String to the parameter value to use
@@ -1012,7 +1012,7 @@ as parameters:
     # This task definition is equivalent to the folloowing, which is more verbose:
 
     @binary(binary="grep", working_dir=".")
-    @task(infile={Type:FILE_IN, Stream:STDIN}, result={Type:FILE_OUT, Stream:STDOUT})
+    @task(infile={Type:FILE_IN, StdIOStream:STDIN}, result={Type:FILE_OUT, StdIOStream:STDOUT})
     def grepper(keyword, infile, result):
          pass
 
@@ -1217,15 +1217,15 @@ Next tables summarizes the parameters of these decorators.
 
 In addition to the parameters that can be used within the
 *@task* decorator, :numref:`supported_streams`
-summarizes the *Stream* parameter that can be used within the
+summarizes the *StdIOStream* parameter that can be used within the
 *@task* decorator for the function parameters when using the
 @binary, @ompss and @mpi decorators. In
-particular, the *Stream* parameter is used to indicate that a parameter
+particular, the *StdIOStream* parameter is used to indicate that a parameter
 is going to be considered as a *FILE* but as a stream (e.g. :math:`>`,
 :math:`<` and :math:`2>` in bash) for the @binary,
 @ompss and @mpi calls.
 
-.. table:: Supported Streams for the @binary, @ompss and @mpi decorators
+.. table:: Supported StdIOStreams for the @binary, @ompss and @mpi decorators
     :name: supported_streams
     :widths: auto
 
@@ -1243,46 +1243,46 @@ is going to be considered as a *FILE* but as a stream (e.g. :math:`>`,
 
 Moreover, there are some shorcuts that can be used for files type
 definition as parameters within the *@task* decorator (:numref:`file_parameter_definition`).
-It is not necessary to indicate the *Direction* nor the *Stream* since it may be already be indicated with
+It is not necessary to indicate the *Direction* nor the *StdIOStream* since it may be already be indicated with
 the shorcut.
 
 .. table:: File parameters definition shortcuts
     :name: file_parameter_definition
     :widths: auto
 
-    +-----------------------------+-----------------------------------------------------+
-    | Alias                       | Description                                         |
-    +=============================+=====================================================+
-    | **COLLECTION(_IN)**         | Type: COLLECTION, Direction: IN                     |
-    +-----------------------------+-----------------------------------------------------+
-    | **COLLECTION(_IN)**         | Type: COLLECTION, Direction: INOUT                  |
-    +-----------------------------+-----------------------------------------------------+
-    | **FILE(_IN)_STDIN**         | Type: File, Direction: IN, Stream: STDIN            |
-    +-----------------------------+-----------------------------------------------------+
-    | **FILE(_IN)_STDOUT**        | Type: File, Direction: IN, Stream: STDOUT           |
-    +-----------------------------+-----------------------------------------------------+
-    | **FILE(_IN)_STDERR**        | Type: File, Direction: IN, Stream: STDERR           |
-    +-----------------------------+-----------------------------------------------------+
-    | **FILE_OUT_STDIN**          | Type: File, Direction: OUT, Stream: STDIN           |
-    +-----------------------------+-----------------------------------------------------+
-    | **FILE_OUT_STDOUT**         | Type: File, Direction: OUT, Stream: STDOUT          |
-    +-----------------------------+-----------------------------------------------------+
-    | **FILE_OUT_STDERR**         | Type: File, Direction: OUT, Stream: STDERR          |
-    +-----------------------------+-----------------------------------------------------+
-    | **FILE_INOUT_STDIN**        | Type: File, Direction: INOUT, Stream: STDIN         |
-    +-----------------------------+-----------------------------------------------------+
-    | **FILE_INOUT_STDOUT**       | Type: File, Direction: INOUT, Stream: STDOUT        |
-    +-----------------------------+-----------------------------------------------------+
-    | **FILE_INOUT_STDERR**       | Type: File, Direction: INOUT, Stream: STDERR        |
-    +-----------------------------+-----------------------------------------------------+
-    | **FILE_CONCURRENT**         | Type: File, Direction: CONCURRENT                   |
-    +-----------------------------+-----------------------------------------------------+
-    | **FILE_CONCURRENT_STDIN**   | Type: File, Direction: CONCURRENT, Stream: STDIN    |
-    +-----------------------------+-----------------------------------------------------+
-    | **FILE_CONCURRENT_STDOUT**  | Type: File, Direction: CONCURRENT, Stream: STDOUT   |
-    +-----------------------------+-----------------------------------------------------+
-    | **FILE_CONCURRENT_STDERR**  | Type: File, Direction: CONCURRENT, Stream: STDERR   |
-    +-----------------------------+-----------------------------------------------------+
+    +-----------------------------+--------------------------------------------------------+
+    | Alias                       | Description                                            |
+    +=============================+========================================================+
+    | **COLLECTION(_IN)**         | Type: COLLECTION, Direction: IN                        |
+    +-----------------------------+--------------------------------------------------------+
+    | **COLLECTION(_IN)**         | Type: COLLECTION, Direction: INOUT                     |
+    +-----------------------------+--------------------------------------------------------+
+    | **FILE(_IN)_STDIN**         | Type: File, Direction: IN, StdIOStream: STDIN          |
+    +-----------------------------+--------------------------------------------------------+
+    | **FILE(_IN)_STDOUT**        | Type: File, Direction: IN, StdIOStream: STDOUT         |
+    +-----------------------------+--------------------------------------------------------+
+    | **FILE(_IN)_STDERR**        | Type: File, Direction: IN, StdIOStream: STDERR         |
+    +-----------------------------+--------------------------------------------------------+
+    | **FILE_OUT_STDIN**          | Type: File, Direction: OUT, StdIOStream: STDIN         |
+    +-----------------------------+--------------------------------------------------------+
+    | **FILE_OUT_STDOUT**         | Type: File, Direction: OUT, StdIOStream: STDOUT        |
+    +-----------------------------+--------------------------------------------------------+
+    | **FILE_OUT_STDERR**         | Type: File, Direction: OUT, StdIOStream: STDERR        |
+    +-----------------------------+--------------------------------------------------------+
+    | **FILE_INOUT_STDIN**        | Type: File, Direction: INOUT, StdIOStream: STDIN       |
+    +-----------------------------+--------------------------------------------------------+
+    | **FILE_INOUT_STDOUT**       | Type: File, Direction: INOUT, StdIOStream: STDOUT      |
+    +-----------------------------+--------------------------------------------------------+
+    | **FILE_INOUT_STDERR**       | Type: File, Direction: INOUT, StdIOStream: STDERR      |
+    +-----------------------------+--------------------------------------------------------+
+    | **FILE_CONCURRENT**         | Type: File, Direction: CONCURRENT                      |
+    +-----------------------------+--------------------------------------------------------+
+    | **FILE_CONCURRENT_STDIN**   | Type: File, Direction: CONCURRENT, StdIOStream: STDIN  |
+    +-----------------------------+--------------------------------------------------------+
+    | **FILE_CONCURRENT_STDOUT**  | Type: File, Direction: CONCURRENT, StdIOStream: STDOUT |
+    +-----------------------------+--------------------------------------------------------+
+    | **FILE_CONCURRENT_STDERR**  | Type: File, Direction: CONCURRENT, StdIOStream: STDERR |
+    +-----------------------------+--------------------------------------------------------+
 
 These parameter keys, as well as the shortcuts, can be imported from the
 PyCOMPSs library:
