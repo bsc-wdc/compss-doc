@@ -269,13 +269,13 @@ includes:
       not recommend to use them because they cause an implicit
       synchronization
 
-   -  **Stream:** For non-native tasks (binaries, MPI, and OmpSs) COMPSs
+   -  **StdIOStream:** For non-native tasks (binaries, MPI, and OmpSs) COMPSs
       supports the automatic redirection of the Linux streams by
-      specifying Stream.STDIN, Stream.STDOUT or Stream.STDERR. Notice
+      specifying StdIOStream.STDIN, StdIOStream.STDOUT or StdIOStream.STDERR. Notice
       that any parameter annotated with the stream annotation must be of
       type *Type.FILE*, and with direction *Direction.IN* for
-      *Stream.STDIN* or *Direction.OUT/ Direction.INOUT* for
-      *Stream.STDOUT* and *Stream.STDERR*.
+      *StdIOStream.STDIN* or *Direction.OUT/ Direction.INOUT* for
+      *StdIOStream.STDOUT* and *StdIOStream.STDERR*.
 
    -  **Prefix:** For non-native tasks (binaries, MPI, and OmpSs) COMPSs
       allows to prepend a constant String to the parameter value to use
