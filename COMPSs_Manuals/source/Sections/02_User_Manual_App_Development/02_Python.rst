@@ -745,8 +745,8 @@ Constraints
 
 As in Java COMPSs applications, it is possible to define constraints for
 each task. To this end, the decorator *@constraint* followed
-by the desired constraints needs to be placed over the @task
-decorator (:numref:`constraint_task_python`).
+by the desired constraints needs to be placed ON TOP of the @task
+decorator (:numref:`constraint_task_python`). Please note the the order of @constraint and @task decorators is important.
 
 .. code-block:: python
     :name: constraint_task_python
@@ -822,7 +822,7 @@ task with the same objective, but with different constraints (e.g.
 specific libraries, hardware, etc). To this end, the *@implement*
 decorator followed with the specific implementations constraints (with
 the *@constraint* decorator, see Section [subsubsec:constraints]) needs
-to be placed over the @task decorator. Although the user only
+to be placed ON TOP of the @task decorator. Although the user only
 calls the task that is not decorated with the *@implement* decorator,
 when the application is executed in a heterogeneous distributed
 environment, the runtime will take into account the constraints on each
