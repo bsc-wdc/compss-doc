@@ -415,7 +415,7 @@ different nature, information on their type can be provided through the
 *@task* decorator.
 
 :numref:`binary_task_python` shows the most simple binary task definition
-without/with constraints (without parameters):
+without/with constraints (without parameters); please note that @constraint decorator has to be provided on top of the others.
 
 .. code-block:: python
     :name: binary_task_python
