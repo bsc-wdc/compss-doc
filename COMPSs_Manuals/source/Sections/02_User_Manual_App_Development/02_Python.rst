@@ -93,6 +93,13 @@ and *OUT* parameters. Thus, when defining the parameter metadata in the
 
 -  *FILE_OUT*: the parameter is a write-only file.
 
+-  *DIRECTORY_IN*: the parameter is a directory and the direction is *IN*. In this 
+   case the directory will be compressed before any transfer amongst nodes.
+
+-  *DIRECTORY_INOUT*: the parameter is a read-write directory. 
+
+-  *DIRECTORY_OUT*: the parameter is a write-only directory.
+
 -  *FILE_CONCURRENT*: the parameter is a concurrent read-write file.
 
 -  *COLLECTION_IN*: the parameter is read-only collection.
