@@ -4,8 +4,8 @@ COMPSs + dataClay
 .. warning::
    To Be Done
 
-Dependencies
-------------
+COMPSs + dataClay Dependencies
+------------------------------
 
 dataClay
 ````````

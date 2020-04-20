@@ -15,8 +15,8 @@ the storage API for COMPSs.
    It is advisable to read the Redis Cluster tutorial for beginners [1]_
    in order to understand all the terminology that is used.
 
-Dependencies
-------------
+COMPSs + Redis Dependencies
+---------------------------
 
 The required dependencies are:
 
