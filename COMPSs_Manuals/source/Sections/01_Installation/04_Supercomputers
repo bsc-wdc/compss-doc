@@ -88,7 +88,7 @@ script provided in the COMPSs installation. This script has several
 parameters (see *enqueue\_compss -h*) that allow users to customize
 their executions for any SuperComputer.
 
-.. figure:: ./Figures/installation/queue_scripts_structure.png
+.. figure:: ./Figures/queue_scripts_structure.png
    :name: queue_structure
    :alt: Structure of COMPSs queue scripts. In Blue user scripts, in Green queue scripts and in Orange system dependant scripts
    :align: center

@@ -72,7 +72,7 @@ access between any pair of machines:
      me@localhost:~$ ssh user_m1@m1.bsc.es "cat ./userm2_m2.pub >> ~/.ssh/authorized_keys; rm ./userm2_m2.pub"
      me@localhost:~$ rm ~/userm2_m2.pub
 
-.. figure:: ./Figures/installation/cluster.jpeg
+.. figure:: ./Figures/cluster.jpeg
    :name: cluster
    :alt: Cluster example
    :align: center

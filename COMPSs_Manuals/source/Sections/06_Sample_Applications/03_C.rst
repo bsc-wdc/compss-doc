@@ -527,7 +527,7 @@ obtain the graph show in :numref:`increment_c`.
     compss@bsc:~/.COMPSs/increment_01/monitor$ compss_gengraph complete_graph.dot
     compss@bsc:~/.COMPSs/increment_01/monitor$ evince complete_graph.pdf
 
-.. figure:: ./Figures/sample_applications/c/increment_graph.jpeg
+.. figure:: ./Figures/c/increment_graph.jpeg
    :name: increment_c
    :alt: C increment tasks graph
    :align: center
