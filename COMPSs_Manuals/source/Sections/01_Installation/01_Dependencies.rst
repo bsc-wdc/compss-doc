@@ -16,7 +16,7 @@ section at your package manager (apt, yum, zypper, etc.).
     +=========================+=================================================================================+
     | **COMPSs Runtime**      | | **openjdk-8-jre, graphviz, xdg-utils, openssh-server**                        |
     +-------------------------+---------------------------------------------------------------------------------+
-    | COMPSs Python Binding   | | libtool, automake, build-essential, python (>= 2.7 \| >=3.6),                 |
+    | COMPSs Python Binding   | | libtool, automake, build-essential, python (>= 2.7 \| >=3.5),                 |
     |                         | | python-dev \| python3-dev, python-setuptools\|python3-setuptools,             |
     |                         | | libpython2.7                                                                  |
     +-------------------------+---------------------------------------------------------------------------------+
