@@ -27,12 +27,12 @@ wish to deploy the supercomputer files):
 
 .. code-block:: console
 
-    compss@bsc:~$ scp $HOME/.ssh/id_dsa.pub ${SC_USER}@mn1.bsc.es:~/id_dsa_local.pub
+    compss@bsc:~$ scp $HOME/.ssh/id_rsa.pub ${SC_USER}@mn1.bsc.es:~/id_rsa_local.pub
     compss@bsc:~$ ssh SC_USER@SC_ENDPOINT \
-                      "cat ~/id_dsa_local.pub >> ~/.ssh/authorized_keys; \
-                      rm ~/id_dsa_local.pub"
+                      "cat ~/id_rsa_local.pub >> ~/.ssh/authorized_keys; \
+                      rm ~/id_rsa_local.pub"
     compss@bsc:~$ mkdir -p TARGET_LOCAL_FOLDER/.COMPSs
-    compss@bsc:~$ sshfs -o IdentityFile=$HOME/.ssh/id_dsa -o allow_other \
+    compss@bsc:~$ sshfs -o IdentityFile=$HOME/.ssh/id_rsa -o allow_other \
                        SC_USER@SC_ENDPOINT:~/.COMPSs \
                        TARGET_LOCAL_FOLDER/.COMPSs
 
