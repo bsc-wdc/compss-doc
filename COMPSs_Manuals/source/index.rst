@@ -48,12 +48,13 @@ characteristics:
     libraries. With regard the Python and C/C++ bindings, a small set of
     API calls should be used on the COMPSs applications.
 
-This manual is divided in 7 sections:
+This manual is divided in 8 sections:
 
 .. toctree::
    :maxdepth: 1
 
    Sections/00_Intro
+   Sections/00_Quickstart
    Sections/01_Installation
    Sections/02_User_Manual_App_Development
    Sections/03_User_Manual_App_Exec
