@@ -24,8 +24,8 @@ command. (root access is required)
 
 .. code-block:: console
 
-    $ compssk> cd builders/
-    $ builders> INSTALL_DIR=/opt/COMPSs/
+    $ compss> cd builders/
+    $ builders> export INSTALL_DIR=/opt/COMPSs/
     $ builders> sudo -E ./buildlocal [options] ${INSTALL_DIR}
 
 For installing COMPSs for the current user run the following command.
