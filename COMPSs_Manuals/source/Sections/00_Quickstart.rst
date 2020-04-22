@@ -278,9 +278,9 @@ Choose your flavour:
 
               ------------------------------------------------------------
 
-        **Nice!** we have the expected output... and PyCOMPSs has been able to
-        run the same application in almost half of the time required by the
-        sequential execution... *What happened under the hood?*
+        **Nice!** it run successfully in my 8 core laptop, we have the expected output,
+        and PyCOMPSs has been able to run the ``increment.py`` application in almost half
+        of the time required by the sequential execution. *What happened under the hood?*
 
         COMPSs started a master and one worker (by default configured to execute up to four tasks at the same time)
         and executed the application (offloading the tasks execution to the worker).
