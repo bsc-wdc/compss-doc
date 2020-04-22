@@ -282,8 +282,8 @@ Choose your flavour:
         run the same application in almost half of the time required by the
         sequential execution... *What happened under the hood?*
 
-        COMPSs has started a master and one worker (by default configured to execute up to four tasks at the same time),
-        executed the application, and offloaded the tasks execution to the worker.
+        COMPSs started a master and one worker (by default configured to execute up to four tasks at the same time)
+        and executed the application (offloading the tasks execution to the worker).
 
         Let's check the task dependency graph to see the parallelism that
         COMPSs has extracted and taken advantage of.
