@@ -18,23 +18,35 @@ submodules.
     $ compss> ./submodules_get.sh
     $ compss> ./submodules_patch.sh
 
-Finally you just need to run the installation script. You have to
-options: For installing COMPSs for all the users run the following
-command. (root access is required)
+Finally you just need to run the installation script. You have to options:
 
-.. code-block:: console
+.. content-tabs::
 
-    $ compss> cd builders/
-    $ builders> export INSTALL_DIR=/opt/COMPSs/
-    $ builders> sudo -E ./buildlocal [options] ${INSTALL_DIR}
+    .. tab-container:: For_all_users
+        :title: For all users
 
-For installing COMPSs for the current user run the following command.
+        For installing COMPSs for all users run the following command:
 
-.. code-block:: console
+        .. code-block:: console
 
-    $ compss> cd builders/
-    $ builders> INSTALL_DIR=$HOME/opt/COMPSs/
-    $ builders> ./buildlocal [options] ${INSTALL_DIR}
+            $ compss> cd builders/
+            $ builders> export INSTALL_DIR=/opt/COMPSs/
+            $ builders> sudo -E ./buildlocal [options] ${INSTALL_DIR}
+
+        .. ATTENTION::
+        
+            Root access is required.
+
+    .. tab-container:: For_current_user
+        :title: For the current user
+
+        For installing COMPSs for the current user run the following command:
+
+        .. code-block:: console
+
+            $ compss> cd builders/
+            $ builders> INSTALL_DIR=$HOME/opt/COMPSs/
+            $ builders> ./buildlocal [options] ${INSTALL_DIR}
 
 The different installation options can be found in the command help.
 

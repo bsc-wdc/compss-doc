@@ -76,7 +76,7 @@ access between any pair of machines:
    :name: cluster
    :alt: Cluster example
    :align: center
-   :width: 65.0%
+   :width: 50.0%
 
    Cluster example
 
