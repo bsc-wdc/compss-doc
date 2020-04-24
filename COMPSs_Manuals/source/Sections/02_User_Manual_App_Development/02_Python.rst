@@ -93,10 +93,10 @@ and *OUT* parameters. Thus, when defining the parameter metadata in the
 
 -  *FILE_OUT*: the parameter is a write-only file.
 
--  *DIRECTORY_IN*: the parameter is a directory and the direction is *IN*. In this 
+-  *DIRECTORY_IN*: the parameter is a directory and the direction is *IN*. In this
    case the directory will be compressed before any transfer amongst nodes.
 
--  *DIRECTORY_INOUT*: the parameter is a read-write directory. 
+-  *DIRECTORY_INOUT*: the parameter is a read-write directory.
 
 -  *DIRECTORY_OUT*: the parameter is a write-only directory.
 
@@ -369,8 +369,12 @@ failure and continues with the normal execution.
     |                     | - FILE_INOUT: Read-write file parameter.                                                                |
     |                     | - FILE_OUT: Write-only file parameter.                                                                  |
     |                     | - FILE_CONCURRENT: Concurrent read-write file parameter.                                                |
+    |                     | - DIRECTORY_IN: the parameter is a read-only directory.                                                 |
+    |                     | - DIRECTORY_INOUT: the parameter is a read-write directory.                                             |
+    |                     | - DIRECTORY_OUT: the parameter is a write-only directory.                                               |
     |                     | - COLLECTION_IN: Read-only collection parameter (list).                                                 |
     |                     | - COLLECTION_INOUT: Read-write collection parameter (list).                                             |
+    |                     | - COLLECTION_OUT: Read-only collection parameter (list).                                                |
     |                     | - Dictionary: {Type:(empty=object)/FILE/COLLECTION, Direction:(empty=IN)/IN/INOUT/OUT/CONCURRENT}       |
     +---------------------+---------------------------------------------------------------------------------------------------------+
     | returns             | int (for integer and boolean), long, float, str, dict, list, tuple, user-defined classes                |
