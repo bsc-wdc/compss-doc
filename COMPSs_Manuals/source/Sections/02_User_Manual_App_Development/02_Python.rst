@@ -97,7 +97,10 @@ and *OUT* parameters. Thus, when defining the parameter metadata in the
 
 -  *OUT*: the parameter is write-only. The type will be inferred.
 
--  *CONCURRENT*: the parameter is read-write with concurrent acces. The
+-  *CONCURRENT*: the parameter is read-write with concurrent access. The
+   type will be inferred.
+
+-  *CONMUTATIVE*: the parameter is read-write with conmutative access. The
    type will be inferred.
 
 -  *FILE/FILE_IN*: the parameter is a file. The direction is assumed to
@@ -116,6 +119,8 @@ and *OUT* parameters. Thus, when defining the parameter metadata in the
 
 -  *FILE_CONCURRENT*: the parameter is a concurrent read-write file.
 
+-  *FILE_CONMUTATIVE*: the parameter is a conmutative read-write file.
+
 -  *COLLECTION_IN*: the parameter is read-only collection.
 
 -  *COLLECTION_INOUT*: the parameter is read-write collection.
@@ -127,6 +132,7 @@ and *OUT* parameters. Thus, when defining the parameter metadata in the
 -  *COLLECTION_FILE_INOUT*: the parameter is read-write collection of files.
 
 -  *COLLECTION_FILE_OUT*: the parameter is write-only collection of files.
+
 
 Consequently, please note that in the following cases there is no need
 to include an argument in the *@task* decorator for a given
@@ -183,6 +189,22 @@ developer.
     from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
 
     @task(f=FILE_CONCURRENT)
+    def func(f, i):
+         ...
+
+In addition, the user can also define that the access to a parameter is conmutative
+with *CONMUTATIVE* or to a file *FILE_CONMUTATIVE* (:numref:`task_conmutative_python`).
+The execution order of tasks that share a "CONMUTATIVE" parameter can be changed
+by the runtime following the conmutative property.
+
+.. code-block:: python
+    :name: task_conmutative_python
+    :caption: Python task example with CONMUTATIVE
+
+    from pycompss.api.task import task     # Import @task decorator
+    from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
+
+    @task(f=FILE_CONMUTATIVE)
     def func(f, i):
          ...
 
@@ -387,10 +409,12 @@ failure and continues with the normal execution.
     |                     | - INOUT: Read-write parameter, all types except file (primitives, strings, objects).                    |
     |                     | - OUT: Write-only parameter, all types except file (primitives, strings, objects).                      |
     |                     | - CONCURRENT: Concurrent read-write parameter, all types except file (primitives, strings, objects).    |
+    |                     | - CONMUTATIVE: Conmutative read-write parameter, all types except file (primitives, strings, objects).  |
     |                     | - FILE/FILE_IN: Read-only file parameter.                                                               |
     |                     | - FILE_INOUT: Read-write file parameter.                                                                |
     |                     | - FILE_OUT: Write-only file parameter.                                                                  |
     |                     | - FILE_CONCURRENT: Concurrent read-write file parameter.                                                |
+    |                     | - FILE_CONMUTATIVE: Conmutative read-write file parameter.                                                |
     |                     | - DIRECTORY_IN: the parameter is a read-only directory.                                                 |
     |                     | - DIRECTORY_INOUT: the parameter is a read-write directory.                                             |
     |                     | - DIRECTORY_OUT: the parameter is a write-only directory.                                               |
@@ -735,47 +759,55 @@ the shorcut.
     :name: file_parameter_definition
     :widths: auto
 
-    +-----------------------------+--------------------------------------------------------+
-    | Alias                       | Description                                            |
-    +=============================+========================================================+
-    | **COLLECTION(_IN)**         | Type: COLLECTION, Direction: IN                        |
-    +-----------------------------+--------------------------------------------------------+
-    | **COLLECTION_INOUT**        | Type: COLLECTION, Direction: INOUT                     |
-    +-----------------------------+--------------------------------------------------------+
-    | **COLLECTION_OUT**          | Type: COLLECTION, Direction: OUT                       |
-    +-----------------------------+--------------------------------------------------------+
-    | **COLLECTION_FILE(_IN)**    | Type: COLLECTION (File), Direction: IN                 |
-    +-----------------------------+--------------------------------------------------------+
-    | **COLLECTION_FILE_INOUT**   | Type: COLLECTION (File), Direction: INOUT              |
-    +-----------------------------+--------------------------------------------------------+
-    | **COLLECTION_FILE_OUT**     | Type: COLLECTION (File), Direction: OUT                |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE(_IN)_STDIN**         | Type: File, Direction: IN, StdIOStream: STDIN          |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE(_IN)_STDOUT**        | Type: File, Direction: IN, StdIOStream: STDOUT         |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE(_IN)_STDERR**        | Type: File, Direction: IN, StdIOStream: STDERR         |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_OUT_STDIN**          | Type: File, Direction: OUT, StdIOStream: STDIN         |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_OUT_STDOUT**         | Type: File, Direction: OUT, StdIOStream: STDOUT        |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_OUT_STDERR**         | Type: File, Direction: OUT, StdIOStream: STDERR        |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_INOUT_STDIN**        | Type: File, Direction: INOUT, StdIOStream: STDIN       |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_INOUT_STDOUT**       | Type: File, Direction: INOUT, StdIOStream: STDOUT      |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_INOUT_STDERR**       | Type: File, Direction: INOUT, StdIOStream: STDERR      |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_CONCURRENT**         | Type: File, Direction: CONCURRENT                      |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_CONCURRENT_STDIN**   | Type: File, Direction: CONCURRENT, StdIOStream: STDIN  |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_CONCURRENT_STDOUT**  | Type: File, Direction: CONCURRENT, StdIOStream: STDOUT |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_CONCURRENT_STDERR**  | Type: File, Direction: CONCURRENT, StdIOStream: STDERR |
-    +-----------------------------+--------------------------------------------------------+
+    +-----------------------------+---------------------------------------------------------+
+    | Alias                       | Description                                             |
+    +=============================+=========================================================+
+    | **COLLECTION(_IN)**         | Type: COLLECTION, Direction: IN                         |
+    +-----------------------------+---------------------------------------------------------+
+    | **COLLECTION_INOUT**        | Type: COLLECTION, Direction: INOUT                      |
+    +-----------------------------+---------------------------------------------------------+
+    | **COLLECTION_OUT**          | Type: COLLECTION, Direction: OUT                        |
+    +-----------------------------+---------------------------------------------------------+
+    | **COLLECTION_FILE(_IN)**    | Type: COLLECTION (File), Direction: IN                  |
+    +-----------------------------+---------------------------------------------------------+
+    | **COLLECTION_FILE_INOUT**   | Type: COLLECTION (File), Direction: INOUT               |
+    +-----------------------------+---------------------------------------------------------+
+    | **COLLECTION_FILE_OUT**     | Type: COLLECTION (File), Direction: OUT                 |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE(_IN)_STDIN**         | Type: File, Direction: IN, StdIOStream: STDIN           |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE(_IN)_STDOUT**        | Type: File, Direction: IN, StdIOStream: STDOUT          |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE(_IN)_STDERR**        | Type: File, Direction: IN, StdIOStream: STDERR          |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_OUT_STDIN**          | Type: File, Direction: OUT, StdIOStream: STDIN          |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_OUT_STDOUT**         | Type: File, Direction: OUT, StdIOStream: STDOUT         |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_OUT_STDERR**         | Type: File, Direction: OUT, StdIOStream: STDERR         |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_INOUT_STDIN**        | Type: File, Direction: INOUT, StdIOStream: STDIN        |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_INOUT_STDOUT**       | Type: File, Direction: INOUT, StdIOStream: STDOUT       |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_INOUT_STDERR**       | Type: File, Direction: INOUT, StdIOStream: STDERR       |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_CONCURRENT**         | Type: File, Direction: CONCURRENT                       |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_CONCURRENT_STDIN**   | Type: File, Direction: CONCURRENT, StdIOStream: STDIN   |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_CONCURRENT_STDOUT**  | Type: File, Direction: CONCURRENT, StdIOStream: STDOUT  |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_CONCURRENT_STDERR**  | Type: File, Direction: CONCURRENT, StdIOStream: STDERR  |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_CONMUTATIVE**        | Type: File, Direction: CONMUTATIVE                      |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_CONMUTATIVE_STDIN**  | Type: File, Direction: CONMUTATIVE, StdIOStream: STDIN  |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_CONMUTATIVE_STDOUT** | Type: File, Direction: CONMUTATIVE, StdIOStream: STDOUT |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_CONMUTATIVE_STDERR** | Type: File, Direction: CONMUTATIVE, StdIOStream: STDERR |
+    +-----------------------------+---------------------------------------------------------+
 
 These parameter keys, as well as the shortcuts, can be imported from the
 PyCOMPSs library:
