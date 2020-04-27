@@ -42,9 +42,23 @@ parameter. The code of *func* updates the file.
         func(my_file, 1)
 
 .. hint::
-   the main code is defined within *if __name__==__main__'*.
-   A better alternative would be to define the main code within a function
-   and invoke it from the *if __name__=='__main__'*.
+
+   The main code is defined within *if __name__==__main__'*.
+   A better performance alternative would be to define the main code within a function
+   and invoke it from the *if __name__=='__main__'*:
+
+   .. code-block:: python
+
+       def func(file_path, value):
+           # update the file 'file_path'
+
+       def main():
+           my_file = '/tmp/sample_file.txt'
+           func(my_file, 1)
+
+       if __name__=='__main__':
+           main()
+
 
 In order to select *func* as a task, the corresponding *@task*
 decorator needs to be placed right before the definition of the
