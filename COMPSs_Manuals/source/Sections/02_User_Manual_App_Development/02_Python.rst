@@ -336,6 +336,21 @@ invoked). The programmer can tell otherwise by setting the
    In order to avoid serialization issues, the classes must not
    be declared in the same file that contains the main method (``if __name__=='__main__'``).
 
+
+The user is also able to define the time out of a task within the ``@task`` decorator
+with the ``time_out=<TIME_IN_SECONDS>`` hint.
+The runtime will cancel the task if the time to execute the task exceeds the time defined by the user.
+For example, :numref:`task_time_out` shows how to specify that the ``unknown_duration_task``
+maximum duration before canceling (if exceeded) is one hour.
+
+.. code-block:: python
+    :name: task_time_out
+    :caption: Python tasl time out example
+
+    @task(time_out=3600)
+    def unknown_duration_task(self):
+        ...
+
 Scheduler hints
 ^^^^^^^^^^^^^^^
 
@@ -437,6 +452,8 @@ failure and continues with the normal execution.
     | is_replicated       | True or False (default)                                                                                 |
     +---------------------+---------------------------------------------------------------------------------------------------------+
     | on_failure          | ’RETRY’ (default), ’CANCEL_SUCCESSORS’, ’FAIL’ or ’IGNORE’                                              |
+    +---------------------+---------------------------------------------------------------------------------------------------------+
+    | time_out            | int (time in seconds)                                                                                   |
     +---------------------+---------------------------------------------------------------------------------------------------------+
 
 
@@ -932,6 +949,7 @@ always on top of the decorators stack, followed by the
 decorator, and finally, the @task decorator in the lowest
 level.
 
+
 Main Program
 ~~~~~~~~~~~~
 
@@ -1112,6 +1130,66 @@ each parameter.
         append_three_ones(v)
         # v is automatically synchronized when calling the scale_vector function.
         w = scale_vector(v, 2)
+
+Exceptions
+~~~~~~~~~~
+
+COMPSs is able to deal with exceptions raised during the execution of the
+applications. In this case, if a user/python defined exception happens, the
+user can choose the task behaviour using the *on_failure* argument within the
+*@task* decorator (with four possible values: **'RETRY'**,
+**’CANCEL_SUCCESSORS’**, **’FAIL’** and **’IGNORE’**. *’RETRY’* is the default
+behaviour).
+
+However, COMPSs provides an exception (``COMPSsException``) that the user can
+raise when necessary and can be catched in the main code for user defined
+behaviour management (:numref:`task_compss_exception`). This mechanism avoids
+any synchronization, and enables applications to react under particular
+circunstances.
+
+.. code-block:: python
+    :name: task_compss_exception
+    :caption: COMPSs Exception example
+    from pycompss.api.exceptions import COMPSsException
+
+    @task()
+    def func():
+        ...
+        raise COMPSsException("Something happened!")
+
+    ...
+
+    if __name__=='__main__':
+        try:
+            func()
+        except COMPSsException:
+            ...  # React to the exception (maybe calling other tasks or with other parameters)
+
+In addition, the *COMPSsException* can be combined with task groups, so that
+the tasks which belong to the group will also be cancelled as soon as the
+*COMPSsException* is raised ()
+
+.. code-block:: python
+    :name: task_group_compss_exception
+    :caption: COMPSs Exception with task group example
+    from pycompss.api.exceptions import COMPSsException
+    from pycompss.api.api import TaskGroup
+
+    @task()
+    def func(v):
+        ...
+        if v == 8:
+            raise COMPSsException("8 found!")
+
+    ...
+
+    if __name__=='__main__':
+        try:
+            with TaskGroup('exceptionGroup1'):
+                for i in range(10):
+                    func(i)
+        except COMPSsException:
+            ...  # React to the exception (maybe calling other tasks or with other parameters)
 
 Important Notes
 ~~~~~~~~~~~~~~~
