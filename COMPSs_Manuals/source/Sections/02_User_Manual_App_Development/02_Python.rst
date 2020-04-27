@@ -106,6 +106,14 @@ and *OUT* parameters. Thus, when defining the parameter metadata in the
 
 -  *COLLECTION_INOUT*: the parameter is read-write collection.
 
+-  *COLLECTION_OUT*: the parameter is write-only collection.
+
+-  *COLLECTION_FILE/COLLECTION_FILE_IN*: the parameter is read-only collection of files.
+
+-  *COLLECTION_FILE_INOUT*: the parameter is read-write collection of files.
+
+-  *COLLECTION_FILE_OUT*: the parameter is write-only collection of files.
+
 Consequently, please note that in the following cases there is no need
 to include an argument in the *@task* decorator for a given
 task parameter:
@@ -375,6 +383,9 @@ failure and continues with the normal execution.
     |                     | - COLLECTION_IN: Read-only collection parameter (list).                                                 |
     |                     | - COLLECTION_INOUT: Read-write collection parameter (list).                                             |
     |                     | - COLLECTION_OUT: Read-only collection parameter (list).                                                |
+    |                     | - COLLECTION_FILE/COLLECTION_FILE_IN: Read-only collection of files parameter (list of files).          |
+    |                     | - COLLECTION_FILE_INOUT: Read-write collection of files parameter (list of files).                      |
+    |                     | - COLLECTION_FILE_OUT: Read-only collection of files parameter (list opf files).                        |
     |                     | - Dictionary: {Type:(empty=object)/FILE/COLLECTION, Direction:(empty=IN)/IN/INOUT/OUT/CONCURRENT}       |
     +---------------------+---------------------------------------------------------------------------------------------------------+
     | returns             | int (for integer and boolean), long, float, str, dict, list, tuple, user-defined classes                |
@@ -715,7 +726,15 @@ the shorcut.
     +=============================+========================================================+
     | **COLLECTION(_IN)**         | Type: COLLECTION, Direction: IN                        |
     +-----------------------------+--------------------------------------------------------+
-    | **COLLECTION(_IN)**         | Type: COLLECTION, Direction: INOUT                     |
+    | **COLLECTION_INOUT**        | Type: COLLECTION, Direction: INOUT                     |
+    +-----------------------------+--------------------------------------------------------+
+    | **COLLECTION_OUT**          | Type: COLLECTION, Direction: OUT                       |
+    +-----------------------------+--------------------------------------------------------+
+    | **COLLECTION_FILE(_IN)**    | Type: COLLECTION (File), Direction: IN                 |
+    +-----------------------------+--------------------------------------------------------+
+    | **COLLECTION_FILE_INOUT**   | Type: COLLECTION (File), Direction: INOUT              |
+    +-----------------------------+--------------------------------------------------------+
+    | **COLLECTION_FILE_OUT**     | Type: COLLECTION (File), Direction: OUT                |
     +-----------------------------+--------------------------------------------------------+
     | **FILE(_IN)_STDIN**         | Type: File, Direction: IN, StdIOStream: STDIN          |
     +-----------------------------+--------------------------------------------------------+
