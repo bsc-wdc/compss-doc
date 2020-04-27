@@ -146,11 +146,26 @@ Install COMPSs
         |
         | **Requirements:**
         |
-        | - Python 2/3 and pip 2/3
-        | - Docker
+        | - `docker <https://www.docker.com>`_ >= 17.12.0-ce
+        | - Python 3
+        | - pip
+        | - `docker <https://pypi.org/project/docker-py/>`_ for python
         |
-        | TODO: Add instructions to install pycompss-player.
+        | Since the PyCOMPSs player package is available in Pypi (`pycompss-player <https://pypi.org/project/pycompss-player/>`_), it can be easly installed with ``pip`` as follows:
         |
+
+          .. code-block:: console
+
+              $ python3 -m pip install pycompss-player
+
+        |
+        | A complete guide about the PyCOMPSs Player installation and usage can be found in the :ref:`PyCOMPSs Player` Section.
+        |
+
+          .. TIP::
+
+              Please, check the PyCOMPSs player :ref:`Installation` Section for the further information with regard to the requirements installation and troubleshooting.
+
 
 
 Write your first app
@@ -223,22 +238,44 @@ Choose your flavour:
         decorator, and synchronize the results with the ``compss_wait_on``
         API call.
 
-        *Copy and paste it into* ``increment.py``.
+        .. NOTE::
+
+            If you are using the PyCOMPSs player (`pycompss-player <https://pypi.org/project/pycompss-player/>`_),
+            it is time to deploy the COMPSs environment within your current folder:
+
+            .. code-block:: console
+
+                    $ pycompss init
+
+            Please, be aware that the first time needs to download the docker image from the
+            repository, and it may take a while.
+
+        *Copy and paste the increment code it into* ``increment.py``.
 
         .. rubric:: Execution
 
         Now let's execute ``increment.py``. To this end, we will use the
-        ``runcompss`` script provided by COMPSs.
+        ``runcompss`` script provided by COMPSs:
 
         .. code-block:: console
 
             $ runcompss -g increment.py
               [Output in next step]
 
+        Or alternatively, the ``pycompss run`` command if using the PyCOMPSs player
+        (which wraps the ``runcompss`` command and launches it within the COMPSs' docker
+        container):
+
+        .. code-block:: console
+
+            $ pycompss run -g increment.py
+            [Output in next step]
+
         .. note::
             The ``-g`` flag enables the task dependency graph generation (*used later*).
 
             The ``runcompss`` command has a lot of supported options that can be checked with the ``-h`` flag.
+            They can also be used within the ``pycompss run`` command.
 
         .. tip::
             It is possible to run also with the ``python`` command using the ``pycompss`` module,
@@ -306,6 +343,14 @@ Choose your flavour:
                 $ compss_gengraph complete_graph.dot
                 $ evince complete_graph.pdf  # or use any other pdf viewer you like
 
+            It is also available within the PyCOMPSs player:
+
+            .. code-block:: console
+
+                $ cd $HOME/.COMPSs/increment.py_01/monitor
+                $ pycompss gengraph complete_graph.dot
+                $ evince complete_graph.pdf  # or use any other pdf viewer you like
+
         And you should see:
 
         .. figure:: ./Figures/increment.png
@@ -361,11 +406,26 @@ Choose your flavour:
             $ cd $HOME/.COMPSs/increment.py_02/trace
             $ wxparaver increment.py_compss_trace_*.prv
 
+        .. NOTE::
+
+            In the case of using the PyCOMPSs player, the trace will be generated
+            in the ``.COMPSs/<APP_NAME>_<00-99>/trace`` directory:
+
+            .. code-block:: console
+
+                $ cd .COMPSs/increment.py_02/trace
+                $ wxparaver increment.py_compss_trace_*.prv
+
         Once Paraver has started, lets visualize the tasks:
 
         - Click in ``File`` and then in ``Load Configuration``
 
-        - Look for ``/PATH/TO/COMPSs/Dependencies/paraver/cfgs/compss_tasks.cfg`` and click ``Open``
+        - Look for ``/PATH/TO/COMPSs/Dependencies/paraver/cfgs/compss_tasks.cfg`` and click ``Open``.
+
+        .. NOTE::
+
+            In the case of using the PyCOMPSs player, the configuration files can be
+            obtained by downloading them from the `COMPSs repositoy <https://github.com/bsc-wdc/compss/tree/stable/files/paraver/cfgs>`_.
 
         And you should see:
 
@@ -389,6 +449,13 @@ Choose your flavour:
         Paraver is a very powerful tool for performance analysis. For more information,
         check the :ref:`Tracing` Section.
 
+        .. NOTE::
+
+            If you are using the PyCOMPSs player, it is time to stop the COMPSs environment:
+
+            .. code-block:: console
+
+                    $ pycompss stop
 
     .. tab-container:: C
         :title: C/C++
