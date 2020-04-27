@@ -1073,6 +1073,37 @@ The corresponding task selection for the example above would be (:numref:`api_us
         def method(self):
             ... # self is modified here
 
+
+COMPSs also enables to specify task groups. To this end, COMPSs provides the
+*TaskGroup* context (:numref:`task_group`) which can be tuned with the group name, and a second parameter (boolean) to
+perform an implicit barrier for the whole group. Users can also define
+task groups within task groups.
+
+.. code-block:: python
+    :name: task_group
+    :caption: PyCOMPSs Task group definiton
+
+    @task()
+    def func1():
+        ...
+
+    @task()
+    def func2():
+        ...
+
+    def test_taskgroup():
+        # Creation of group
+        with TaskGroup('Group1', True):
+            for i in range(NUM_TASKS):
+                func1()
+                func2()
+            ...
+        ...
+
+    if __name__=='__main__':
+        test_taskgroup()
+
+
 :numref:`python_api_functions` summarizes the API functions to be
 used in the main program of a COMPSs Python application.
 
@@ -1150,6 +1181,7 @@ circunstances.
 .. code-block:: python
     :name: task_compss_exception
     :caption: COMPSs Exception example
+
     from pycompss.api.exceptions import COMPSsException
 
     @task()
@@ -1167,11 +1199,12 @@ circunstances.
 
 In addition, the *COMPSsException* can be combined with task groups, so that
 the tasks which belong to the group will also be cancelled as soon as the
-*COMPSsException* is raised ()
+*COMPSsException* is raised (:numref:`task_group_compss_exception`)
 
 .. code-block:: python
     :name: task_group_compss_exception
     :caption: COMPSs Exception with task group example
+
     from pycompss.api.exceptions import COMPSsException
     from pycompss.api.api import TaskGroup
 
