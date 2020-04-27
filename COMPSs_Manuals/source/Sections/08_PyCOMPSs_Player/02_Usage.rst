@@ -15,7 +15,7 @@ and run it inside the container.
 .. NOTE::
 
     The first time needs to download the docker image from the
-    registry, and it may take a while.
+    repository, and it may take a while.
 
 Alternatively, you can specify the working directory, the COMPSs docker image
 to use, or both at the same time:

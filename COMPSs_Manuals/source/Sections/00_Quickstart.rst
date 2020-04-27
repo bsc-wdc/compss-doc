@@ -269,7 +269,7 @@ Choose your flavour:
         .. code-block:: console
 
             $ pycompss run -g increment.py
-            [Output in next step]
+              [Output in next step]
 
         .. note::
             The ``-g`` flag enables the task dependency graph generation (*used later*).
