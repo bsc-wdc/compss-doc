@@ -53,7 +53,7 @@ This manual is divided in 9 sections:
 .. toctree::
    :maxdepth: 1
 
-   Sections/00_Intro
+   Sections/0_Intro
    Sections/00_Quickstart
    Sections/01_Installation
    Sections/02_User_Manual_App_Development
