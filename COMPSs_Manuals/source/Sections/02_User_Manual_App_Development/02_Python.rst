@@ -905,8 +905,12 @@ Main Program
 
 The main program of the application is a sequential code that contains
 calls to the selected tasks. In addition, when synchronizing for task
-data from the main program, there exist four API functions that can to
+data from the main program, there exist seven API functions that can to
 be invoked:
+
+compss_file_exists(file_name)
+   Check if a file exists. If it does not exist, it check
+   if file has been accessed before by calling the runtime.
 
 compss_open(file_name, mode=’r’)
    Similar to the Python *open()* call.
@@ -958,25 +962,43 @@ code will not continue until the ten *func* tasks have finished.
     :name: api_usage_python
     :caption: PyCOMPSs API usage
 
+    from pycompss.api.api import compss_file_exists
     from pycompss.api.api import compss_open
     from pycompss.api.api import compss_delete_file
+    from pycompss.api.api import compss_delete_object
     from pycompss.api.api import compss_wait_on
+    from pycompss.api.api import compss_wait_on_file
     from pycompss.api.api import compss_barrier
 
     if __name__=='__main__':
         my_file = 'file.txt'
         func(my_file)
+        if compss_file_exists(my_file):
+            print("Exists")
+        else:
+            print("Not exists")
+        ...
         fd = compss_open(my_file)
         ...
 
         my_file2 = 'file2.txt'
         func(my_file2)
-        fd = compss_delete_file(my_file2)
+        compss_delete_file(my_file2)
         ...
 
-        my_obj = MyClass()
-        my_obj.method()
-        my_obj = compss_wait_on(my_obj)
+        my_file3 = 'file3.txt'
+        func(my_file3)
+        compss_wait_on_file(my_file3)
+        ...
+
+        my_obj1 = MyClass()
+        my_obj1.method()
+        compss_delete_object(my_obj1)
+        ...
+
+        my_obj2 = MyClass()
+        my_obj2.method()
+        my_obj2 = compss_wait_on(my_obj2)
         ...
 
         for i in range(10):
@@ -1011,7 +1033,9 @@ used in the main program of a COMPSs Python application.
     +------------------------------------------+-----------------------------------------------------------------------------------------+
     | API Function                             | Description                                                                             |
     +==========================================+=========================================================================================+
-    | compss_open(file_name, mode=’r’  )       | Synchronizes for the last version of a file and returns its file descriptor.            |
+    | compss_file_exists(file_name)            | Check if a file exists.                                                                 |
+    +------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_open(file_name, mode=’r’)         | Synchronizes for the last version of a file and returns its file descriptor.            |
     +------------------------------------------+-----------------------------------------------------------------------------------------+
     | compss_delete_file(file_name)            | Notifies the runtime to remove a file.                                                  |
     +------------------------------------------+-----------------------------------------------------------------------------------------+
