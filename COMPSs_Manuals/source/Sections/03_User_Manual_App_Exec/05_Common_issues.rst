@@ -69,11 +69,11 @@ The problem can be solved running the following commands:
 
 .. code-block:: console
 
-    compss@bsc:~$ scp ~/.ssh/id_dsa.pub user@resourceName:./mydsa.pub
-    compss@bsc:~$ ssh user@resourceName "cat mydsa.pub >> ~/.ssh/authorized_keys; rm ./mydsa.pub"
+    compss@bsc:~$ scp ~/.ssh/id_rsa.pub user@resourceName:./myRSA.pub
+    compss@bsc:~$ ssh user@resourceName "cat myRSA.pub >> ~/.ssh/authorized_keys; rm ./myRSA.pub"
 
 These commands are a quick solution, for further details please check
-the :ref:`Additional Configuration` Section.
+the :ref:`Sections/01_Installation/05_Additional_configuration:Additional Configuration` Section.
 
 
 Exceptions when starting the Worker processes

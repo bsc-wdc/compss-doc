@@ -36,7 +36,8 @@ installation. To open one of them, go to the “Load Configuration” option
 in the main window and select “File”. The configuration files are under
 the following path for the default installation
 ``/opt/COMPSs/Dependencies/`` ``paraver/cfgs/``. A detailed list of all
-the available configurations can be found in :ref:`Paraver: configurations`.
+the available configurations can be found in
+:ref:`Sections/05_Tracing/06_Paraver_configs:Paraver: configurations`.
 
 The following guide uses the *compss_tasks.cfg* as an example to
 illustrate the basic usage of Paraver. After accepting the load of the

@@ -195,7 +195,7 @@ obtain the graph show in :numref:`increment_python`.
     compss@bsc:~/.COMPSs/increment.py_01/monitor$ compss_gengraph complete_graph.dot
     compss@bsc:~/.COMPSs/increment.py_01/monitor$ evince complete_graph.pdf
 
-.. figure:: ./Figures/sample_applications/python/increment_graph.jpeg
+.. figure:: ./Figures/python/increment_graph.jpeg
    :name: increment_python
    :alt: Python increment tasks graph
    :align: center

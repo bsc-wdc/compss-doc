@@ -5,8 +5,8 @@
 
 :gitlab_url: http://compss.bsc.es/gitlab/documents/documentation/tree/rtd-documentation/COMPSs_Manuals/rtd
 
-Welcome to COMPSs's!
-====================
+Welcome to COMPSs!
+==================
 
 .. figure:: /Logos/COMPSs_logo.png
    :width: 30.0%
@@ -48,12 +48,13 @@ characteristics:
     libraries. With regard the Python and C/C++ bindings, a small set of
     API calls should be used on the COMPSs applications.
 
-This manual is divided in 7 sections:
+This manual is divided in 9 sections:
 
 .. toctree::
    :maxdepth: 1
 
-   Sections/00_Intro
+   Sections/0_Intro
+   Sections/00_Quickstart
    Sections/01_Installation
    Sections/02_User_Manual_App_Development
    Sections/03_User_Manual_App_Exec
@@ -61,6 +62,7 @@ This manual is divided in 7 sections:
    Sections/05_Tracing
    Sections/06_Sample_Applications
    Sections/07_Persistent_Storage
+   Sections/08_PyCOMPSs_Player
 
 
 .. Indices and tables

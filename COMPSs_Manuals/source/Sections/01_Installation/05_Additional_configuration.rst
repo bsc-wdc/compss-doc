@@ -15,7 +15,7 @@ each machine**:
 
    .. code-block:: console
 
-       	  $ ssh-keygen -t dsa
+          $ ssh-keygen -t rsa
 
 
 #. Distribute the public key to all the other machines and configure it
@@ -24,8 +24,8 @@ each machine**:
    .. code-block:: console
 
           $ # For every other available machine (MACHINE):
-       	  $ scp ~/.ssh/id_dsa.pub MACHINE:./myDSA.pub
-       	  $ ssh MACHINE "cat ./myDSA.pub >> ~/.ssh/authorized_keys; rm ./myDSA.pub"
+          $ scp ~/.ssh/id_rsa.pub MACHINE:./myRSA.pub
+          $ ssh MACHINE "cat ./myRSA.pub >> ~/.ssh/authorized_keys; rm ./myRSA.pub"
 
 
 #. Check that passwordless SSH connections are working fine
@@ -42,19 +42,19 @@ access between any pair of machines:
 
 .. code-block:: text
 
-     me@localhost:~$ ssh-keygen -t id_dsa
+     me@localhost:~$ ssh-keygen -t id_rsa
      # Granting access localhost -> m1.bsc.es
-     me@localhost:~$ scp ~/.ssh/id_dsa.pub user_m1@m1.bsc.es:./me_localhost.pub
+     me@localhost:~$ scp ~/.ssh/id_rsa.pub user_m1@m1.bsc.es:./me_localhost.pub
      me@localhost:~$ ssh user_m1@m1.bsc.es "cat ./me_localhost.pub >> ~/.ssh/authorized_keys; rm ./me_localhost.pub"
      # Granting access localhost -> m2.bsc.es
-     me@localhost:~$ scp ~/.ssh/id_dsa.pub user_m2@m2.bsc.es:./me_localhost.pub
+     me@localhost:~$ scp ~/.ssh/id_rsa.pub user_m2@m2.bsc.es:./me_localhost.pub
      me@localhost:~$ ssh user_m2@m2.bsc.es "cat ./me_localhost.pub >> ~/.ssh/authorized_keys; rm ./me_localhost.pub"
 
      me@localhost:~$ ssh user_m1@m1.bsc.es
-     user_m1@m1.bsc.es:~> ssh-keygen -t id_dsa
+     user_m1@m1.bsc.es:~> ssh-keygen -t id_rsa
      user_m1@m1.bsc.es:~> exit
      # Granting access m1.bsc.es -> localhost
-     me@localhost:~$ scp user_m1@m1.bsc.es:~/.ssh/id_dsa.pub ~/userm1_m1.pub
+     me@localhost:~$ scp user_m1@m1.bsc.es:~/.ssh/id_rsa.pub ~/userm1_m1.pub
      me@localhost:~$ cat ~/userm1_m1.pub >> ~/.ssh/authorized_keys
      # Granting access m1.bsc.es -> m2.bsc.es
      me@localhost:~$ scp ~/userm1_m1.pub user_m2@m2.bsc.es:~/userm1_m1.pub
@@ -62,21 +62,21 @@ access between any pair of machines:
      me@localhost:~$ rm ~/userm1_m1.pub
 
      me@localhost:~$ ssh user_m2@m2.bsc.es
-     user_m2@m2.bsc.es:~> ssh-keygen -t id_dsa
+     user_m2@m2.bsc.es:~> ssh-keygen -t id_rsa
      user_m2@m2.bsc.es:~> exit
      # Granting access m2.bsc.es -> localhost
-     me@localhost:~$ scp user_m2@m1.bsc.es:~/.ssh/id_dsa.pub ~/userm2_m2.pub
+     me@localhost:~$ scp user_m2@m1.bsc.es:~/.ssh/id_rsa.pub ~/userm2_m2.pub
      me@localhost:~$ cat ~/userm2_m2.pub >> ~/.ssh/authorized_keys
      # Granting access m2.bsc.es -> m1.bsc.es
      me@localhost:~$ scp ~/userm2_m2.pub user_m1@m1.bsc.es:~/userm2_m2.pub
      me@localhost:~$ ssh user_m1@m1.bsc.es "cat ./userm2_m2.pub >> ~/.ssh/authorized_keys; rm ./userm2_m2.pub"
      me@localhost:~$ rm ~/userm2_m2.pub
 
-.. figure:: ./Figures/installation/cluster.jpeg
+.. figure:: ./Figures/cluster.jpeg
    :name: cluster
    :alt: Cluster example
    :align: center
-   :width: 65.0%
+   :width: 50.0%
 
    Cluster example
 

@@ -36,7 +36,8 @@ extensions = ['sphinx.ext.todo',
               'sphinx.ext.imgmath',
               'sphinx.ext.viewcode',
               'sphinx.ext.githubpages',
-              'sphinx.ext.autosectionlabel']
+              'sphinx.ext.autosectionlabel',
+              'sphinxcontrib.contentui']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -82,6 +83,10 @@ pygments_style = 'default' # 'sphinx'
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
 
+# True to prefix each section label with the name of the document it is in,
+# followed by a colon.
+autosectionlabel_prefix_document = True
+
 # Specific configuration
 numfig = True
 numfig_secnum_depth = 0
@@ -113,12 +118,12 @@ html_theme_options = {'logo_only': True}
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
-
-html_context = {
-    'css_files': ['_static/_theme_overrides.css',  # override wide tables in RTD theme
-                 ],
-}
+# html_static_path = ['_static']
+#
+# html_context = {
+#     'css_files': ['_static/_theme_overrides.css',  # override wide tables in RTD theme
+#                  ],
+# }
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.

@@ -4,8 +4,8 @@ COMPSs + Hecuba
 .. warning::
    To Be Done
 
-Dependencies
-------------
+COMPSs + Hecuba Dependencies
+----------------------------
 
 Hecuba
 ``````

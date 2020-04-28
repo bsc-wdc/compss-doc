@@ -15,7 +15,7 @@ please install the following packages:
 -  sshfs
 
 For further details about the COMPSs packages installation and
-configuration please refer to :ref:`Installation and Administration` Section.
+configuration please refer to :ref:`Sections/01_Installation:Installation and Administration` Section.
 If you are not willing to install COMPSs in your local machine please
 consider to download our Virtual Machine available at our webpage.
 
@@ -27,12 +27,12 @@ wish to deploy the supercomputer files):
 
 .. code-block:: console
 
-    compss@bsc:~$ scp $HOME/.ssh/id_dsa.pub ${SC_USER}@mn1.bsc.es:~/id_dsa_local.pub
+    compss@bsc:~$ scp $HOME/.ssh/id_rsa.pub ${SC_USER}@mn1.bsc.es:~/id_rsa_local.pub
     compss@bsc:~$ ssh SC_USER@SC_ENDPOINT \
-                      "cat ~/id_dsa_local.pub >> ~/.ssh/authorized_keys; \
-                      rm ~/id_dsa_local.pub"
+                      "cat ~/id_rsa_local.pub >> ~/.ssh/authorized_keys; \
+                      rm ~/id_rsa_local.pub"
     compss@bsc:~$ mkdir -p TARGET_LOCAL_FOLDER/.COMPSs
-    compss@bsc:~$ sshfs -o IdentityFile=$HOME/.ssh/id_dsa -o allow_other \
+    compss@bsc:~$ sshfs -o IdentityFile=$HOME/.ssh/id_rsa -o allow_other \
                        SC_USER@SC_ENDPOINT:~/.COMPSs \
                        TARGET_LOCAL_FOLDER/.COMPSs
 
@@ -51,7 +51,7 @@ Access the COMPSs Monitor through its webpage
 
 Please remember that to enable **all** the COMPSs Monitor features
 applications must be ran with the *-m* flag. For further details please check the
-:ref:`Application execution` Section.
+:ref:`Sections/03_User_Manual_App_Exec:Application execution` Section.
 
 :numref:`mn_monitor1` illustrates how to login and :numref:`mn_monitor2`
 shows the COMPSs Monitor main page for an application

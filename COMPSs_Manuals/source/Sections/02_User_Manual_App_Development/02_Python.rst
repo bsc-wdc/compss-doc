@@ -42,9 +42,23 @@ parameter. The code of *func* updates the file.
         func(my_file, 1)
 
 .. hint::
-   the main code is defined within *if __name__==__main__'*.
-   A better alternative would be to define the main code within a function
-   and invoke it from the *if __name__=='__main__'*.
+
+   The main code is defined within *if __name__==__main__'*.
+   A better performance alternative would be to define the main code within a function
+   and invoke it from the *if __name__=='__main__'*:
+
+   .. code-block:: python
+
+       def func(file_path, value):
+           # update the file 'file_path'
+
+       def main():
+           my_file = '/tmp/sample_file.txt'
+           func(my_file, 1)
+
+       if __name__=='__main__':
+           main()
+
 
 In order to select *func* as a task, the corresponding *@task*
 decorator needs to be placed right before the definition of the
@@ -83,7 +97,10 @@ and *OUT* parameters. Thus, when defining the parameter metadata in the
 
 -  *OUT*: the parameter is write-only. The type will be inferred.
 
--  *CONCURRENT*: the parameter is read-write with concurrent acces. The
+-  *CONCURRENT*: the parameter is read-write with concurrent access. The
+   type will be inferred.
+
+-  *CONMUTATIVE*: the parameter is read-write with conmutative access. The
    type will be inferred.
 
 -  *FILE/FILE_IN*: the parameter is a file. The direction is assumed to
@@ -93,18 +110,29 @@ and *OUT* parameters. Thus, when defining the parameter metadata in the
 
 -  *FILE_OUT*: the parameter is a write-only file.
 
--  *DIRECTORY_IN*: the parameter is a directory and the direction is *IN*. In this 
+-  *DIRECTORY_IN*: the parameter is a directory and the direction is *IN*. In this
    case the directory will be compressed before any transfer amongst nodes.
 
--  *DIRECTORY_INOUT*: the parameter is a read-write directory. 
+-  *DIRECTORY_INOUT*: the parameter is a read-write directory.
 
 -  *DIRECTORY_OUT*: the parameter is a write-only directory.
 
 -  *FILE_CONCURRENT*: the parameter is a concurrent read-write file.
 
+-  *FILE_CONMUTATIVE*: the parameter is a conmutative read-write file.
+
 -  *COLLECTION_IN*: the parameter is read-only collection.
 
 -  *COLLECTION_INOUT*: the parameter is read-write collection.
+
+-  *COLLECTION_OUT*: the parameter is write-only collection.
+
+-  *COLLECTION_FILE/COLLECTION_FILE_IN*: the parameter is read-only collection of files.
+
+-  *COLLECTION_FILE_INOUT*: the parameter is read-write collection of files.
+
+-  *COLLECTION_FILE_OUT*: the parameter is write-only collection of files.
+
 
 Consequently, please note that in the following cases there is no need
 to include an argument in the *@task* decorator for a given
@@ -161,6 +189,22 @@ developer.
     from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
 
     @task(f=FILE_CONCURRENT)
+    def func(f, i):
+         ...
+
+In addition, the user can also define that the access to a parameter is conmutative
+with *CONMUTATIVE* or to a file *FILE_CONMUTATIVE* (:numref:`task_conmutative_python`).
+The execution order of tasks that share a "CONMUTATIVE" parameter can be changed
+by the runtime following the conmutative property.
+
+.. code-block:: python
+    :name: task_conmutative_python
+    :caption: Python task example with CONMUTATIVE
+
+    from pycompss.api.task import task     # Import @task decorator
+    from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
+
+    @task(f=FILE_CONMUTATIVE)
     def func(f, i):
          ...
 
@@ -292,6 +336,21 @@ invoked). The programmer can tell otherwise by setting the
    In order to avoid serialization issues, the classes must not
    be declared in the same file that contains the main method (``if __name__=='__main__'``).
 
+
+The user is also able to define the time out of a task within the ``@task`` decorator
+with the ``time_out=<TIME_IN_SECONDS>`` hint.
+The runtime will cancel the task if the time to execute the task exceeds the time defined by the user.
+For example, :numref:`task_time_out` shows how to specify that the ``unknown_duration_task``
+maximum duration before canceling (if exceeded) is one hour.
+
+.. code-block:: python
+    :name: task_time_out
+    :caption: Python tasl time out example
+
+    @task(time_out=3600)
+    def unknown_duration_task(self):
+        ...
+
 Scheduler hints
 ^^^^^^^^^^^^^^^
 
@@ -365,12 +424,21 @@ failure and continues with the normal execution.
     |                     | - INOUT: Read-write parameter, all types except file (primitives, strings, objects).                    |
     |                     | - OUT: Write-only parameter, all types except file (primitives, strings, objects).                      |
     |                     | - CONCURRENT: Concurrent read-write parameter, all types except file (primitives, strings, objects).    |
+    |                     | - CONMUTATIVE: Conmutative read-write parameter, all types except file (primitives, strings, objects).  |
     |                     | - FILE/FILE_IN: Read-only file parameter.                                                               |
     |                     | - FILE_INOUT: Read-write file parameter.                                                                |
     |                     | - FILE_OUT: Write-only file parameter.                                                                  |
     |                     | - FILE_CONCURRENT: Concurrent read-write file parameter.                                                |
+    |                     | - FILE_CONMUTATIVE: Conmutative read-write file parameter.                                              |
+    |                     | - DIRECTORY_IN: the parameter is a read-only directory.                                                 |
+    |                     | - DIRECTORY_INOUT: the parameter is a read-write directory.                                             |
+    |                     | - DIRECTORY_OUT: the parameter is a write-only directory.                                               |
     |                     | - COLLECTION_IN: Read-only collection parameter (list).                                                 |
     |                     | - COLLECTION_INOUT: Read-write collection parameter (list).                                             |
+    |                     | - COLLECTION_OUT: Read-only collection parameter (list).                                                |
+    |                     | - COLLECTION_FILE/COLLECTION_FILE_IN: Read-only collection of files parameter (list of files).          |
+    |                     | - COLLECTION_FILE_INOUT: Read-write collection of files parameter (list of files).                      |
+    |                     | - COLLECTION_FILE_OUT: Read-only collection of files parameter (list opf files).                        |
     |                     | - Dictionary: {Type:(empty=object)/FILE/COLLECTION, Direction:(empty=IN)/IN/INOUT/OUT/CONCURRENT}       |
     +---------------------+---------------------------------------------------------------------------------------------------------+
     | returns             | int (for integer and boolean), long, float, str, dict, list, tuple, user-defined classes                |
@@ -385,6 +453,8 @@ failure and continues with the normal execution.
     +---------------------+---------------------------------------------------------------------------------------------------------+
     | on_failure          | ’RETRY’ (default), ’CANCEL_SUCCESSORS’, ’FAIL’ or ’IGNORE’                                              |
     +---------------------+---------------------------------------------------------------------------------------------------------+
+    | time_out            | int (time in seconds)                                                                                   |
+    +---------------------+---------------------------------------------------------------------------------------------------------+
 
 
 Other task types
@@ -395,11 +465,11 @@ decorators for other purposes.
 
 For instance, there is a set of decorators that can be placed over the
 *@task* decorator in order to define the task methods as a
-**binary invocation** (with the :ref:`Binary decorator`), as a **OmpSs
-invocation** (with the :ref:`OmpSs decorator`), as a **MPI invocation**
-(with the :ref:`MPI decorator`), as a **COMPSs application** (with the
-:ref:`COMPSs decorator`), or as a **task that requires multiple
-nodes** (with the :ref:`Multinode decorator`). These decorators must
+**binary invocation** (with the :ref:`Sections/02_User_Manual_App_Development/02_Python:Binary decorator`), as a **OmpSs
+invocation** (with the :ref:`Sections/02_User_Manual_App_Development/02_Python:OmpSs decorator`), as a **MPI invocation**
+(with the :ref:`Sections/02_User_Manual_App_Development/02_Python:MPI decorator`), as a **COMPSs application** (with the
+:ref:`Sections/02_User_Manual_App_Development/02_Python:COMPSs decorator`), or as a **task that requires multiple
+nodes** (with the :ref:`Sections/02_User_Manual_App_Development/02_Python:Multinode decorator`). These decorators must
 be placed over the *@task* decorator, and under the
 *@constraint* decorator if defined.
 
@@ -543,7 +613,7 @@ going to invoke a OmpSs executable (:numref:`ompss_task_python`).
 The OmpSs executable invocation can also be enriched with parameters,
 files and prefixes as with the *@binary* decorator through the
 function parameters and *@task* decorator information. Please,
-check :ref:`Binary decorator` for more details.
+check :ref:`Sections/02_User_Manual_App_Development/02_Python:Binary decorator` for more details.
 
 MPI decorator
 '''''''''''''
@@ -565,7 +635,7 @@ going to invoke a MPI executable (:numref:`mpi_task_python`).
 The MPI executable invocation can also be enriched with parameters,
 files and prefixes as with the *@binary* decorator through the
 function parameters and *@task* decorator information. Please,
-check :ref:`Binary decorator` for more details.
+check :ref:`Sections/02_User_Manual_App_Development/02_Python:Binary decorator` for more details.
 
 COMPSs decorator
 ''''''''''''''''
@@ -706,39 +776,55 @@ the shorcut.
     :name: file_parameter_definition
     :widths: auto
 
-    +-----------------------------+--------------------------------------------------------+
-    | Alias                       | Description                                            |
-    +=============================+========================================================+
-    | **COLLECTION(_IN)**         | Type: COLLECTION, Direction: IN                        |
-    +-----------------------------+--------------------------------------------------------+
-    | **COLLECTION(_IN)**         | Type: COLLECTION, Direction: INOUT                     |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE(_IN)_STDIN**         | Type: File, Direction: IN, StdIOStream: STDIN          |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE(_IN)_STDOUT**        | Type: File, Direction: IN, StdIOStream: STDOUT         |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE(_IN)_STDERR**        | Type: File, Direction: IN, StdIOStream: STDERR         |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_OUT_STDIN**          | Type: File, Direction: OUT, StdIOStream: STDIN         |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_OUT_STDOUT**         | Type: File, Direction: OUT, StdIOStream: STDOUT        |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_OUT_STDERR**         | Type: File, Direction: OUT, StdIOStream: STDERR        |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_INOUT_STDIN**        | Type: File, Direction: INOUT, StdIOStream: STDIN       |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_INOUT_STDOUT**       | Type: File, Direction: INOUT, StdIOStream: STDOUT      |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_INOUT_STDERR**       | Type: File, Direction: INOUT, StdIOStream: STDERR      |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_CONCURRENT**         | Type: File, Direction: CONCURRENT                      |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_CONCURRENT_STDIN**   | Type: File, Direction: CONCURRENT, StdIOStream: STDIN  |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_CONCURRENT_STDOUT**  | Type: File, Direction: CONCURRENT, StdIOStream: STDOUT |
-    +-----------------------------+--------------------------------------------------------+
-    | **FILE_CONCURRENT_STDERR**  | Type: File, Direction: CONCURRENT, StdIOStream: STDERR |
-    +-----------------------------+--------------------------------------------------------+
+    +-----------------------------+---------------------------------------------------------+
+    | Alias                       | Description                                             |
+    +=============================+=========================================================+
+    | **COLLECTION(_IN)**         | Type: COLLECTION, Direction: IN                         |
+    +-----------------------------+---------------------------------------------------------+
+    | **COLLECTION_INOUT**        | Type: COLLECTION, Direction: INOUT                      |
+    +-----------------------------+---------------------------------------------------------+
+    | **COLLECTION_OUT**          | Type: COLLECTION, Direction: OUT                        |
+    +-----------------------------+---------------------------------------------------------+
+    | **COLLECTION_FILE(_IN)**    | Type: COLLECTION (File), Direction: IN                  |
+    +-----------------------------+---------------------------------------------------------+
+    | **COLLECTION_FILE_INOUT**   | Type: COLLECTION (File), Direction: INOUT               |
+    +-----------------------------+---------------------------------------------------------+
+    | **COLLECTION_FILE_OUT**     | Type: COLLECTION (File), Direction: OUT                 |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE(_IN)_STDIN**         | Type: File, Direction: IN, StdIOStream: STDIN           |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE(_IN)_STDOUT**        | Type: File, Direction: IN, StdIOStream: STDOUT          |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE(_IN)_STDERR**        | Type: File, Direction: IN, StdIOStream: STDERR          |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_OUT_STDIN**          | Type: File, Direction: OUT, StdIOStream: STDIN          |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_OUT_STDOUT**         | Type: File, Direction: OUT, StdIOStream: STDOUT         |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_OUT_STDERR**         | Type: File, Direction: OUT, StdIOStream: STDERR         |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_INOUT_STDIN**        | Type: File, Direction: INOUT, StdIOStream: STDIN        |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_INOUT_STDOUT**       | Type: File, Direction: INOUT, StdIOStream: STDOUT       |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_INOUT_STDERR**       | Type: File, Direction: INOUT, StdIOStream: STDERR       |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_CONCURRENT**         | Type: File, Direction: CONCURRENT                       |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_CONCURRENT_STDIN**   | Type: File, Direction: CONCURRENT, StdIOStream: STDIN   |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_CONCURRENT_STDOUT**  | Type: File, Direction: CONCURRENT, StdIOStream: STDOUT  |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_CONCURRENT_STDERR**  | Type: File, Direction: CONCURRENT, StdIOStream: STDERR  |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_CONMUTATIVE**        | Type: File, Direction: CONMUTATIVE                      |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_CONMUTATIVE_STDIN**  | Type: File, Direction: CONMUTATIVE, StdIOStream: STDIN  |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_CONMUTATIVE_STDOUT** | Type: File, Direction: CONMUTATIVE, StdIOStream: STDOUT |
+    +-----------------------------+---------------------------------------------------------+
+    | **FILE_CONMUTATIVE_STDERR** | Type: File, Direction: CONMUTATIVE, StdIOStream: STDERR |
+    +-----------------------------+---------------------------------------------------------+
 
 These parameter keys, as well as the shortcuts, can be imported from the
 PyCOMPSs library:
@@ -856,20 +942,26 @@ to the user (:numref:`implements_python`).
         return resultList
 
 Please, note that if the implementation is used to define a binary,
-OmpSs, MPI, COMPSs or multinode task invocation (see :ref:`Other task types`), the @implement decorator must be
-always on top of the decorators stack, followed by the
-@constraint decorator, then the
+OmpSs, MPI, COMPSs or multinode task invocation (see
+:ref:`Sections/02_User_Manual_App_Development/02_Python:Other task types`),
+the @implement decorator must be always on top of the decorators stack,
+followed by the @constraint decorator, then the
 @binary/\ @ompss/\ @mpi/\ @compss/\ @multinode
 decorator, and finally, the @task decorator in the lowest
 level.
+
 
 Main Program
 ~~~~~~~~~~~~
 
 The main program of the application is a sequential code that contains
 calls to the selected tasks. In addition, when synchronizing for task
-data from the main program, there exist four API functions that can to
+data from the main program, there exist seven API functions that can to
 be invoked:
+
+compss_file_exists(file_name)
+   Check if a file exists. If it does not exist, it check
+   if file has been accessed before by calling the runtime.
 
 compss_open(file_name, mode=’r’)
    Similar to the Python *open()* call.
@@ -921,25 +1013,43 @@ code will not continue until the ten *func* tasks have finished.
     :name: api_usage_python
     :caption: PyCOMPSs API usage
 
+    from pycompss.api.api import compss_file_exists
     from pycompss.api.api import compss_open
     from pycompss.api.api import compss_delete_file
+    from pycompss.api.api import compss_delete_object
     from pycompss.api.api import compss_wait_on
+    from pycompss.api.api import compss_wait_on_file
     from pycompss.api.api import compss_barrier
 
     if __name__=='__main__':
         my_file = 'file.txt'
         func(my_file)
+        if compss_file_exists(my_file):
+            print("Exists")
+        else:
+            print("Not exists")
+        ...
         fd = compss_open(my_file)
         ...
 
         my_file2 = 'file2.txt'
         func(my_file2)
-        fd = compss_delete_file(my_file2)
+        compss_delete_file(my_file2)
         ...
 
-        my_obj = MyClass()
-        my_obj.method()
-        my_obj = compss_wait_on(my_obj)
+        my_file3 = 'file3.txt'
+        func(my_file3)
+        compss_wait_on_file(my_file3)
+        ...
+
+        my_obj1 = MyClass()
+        my_obj1.method()
+        compss_delete_object(my_obj1)
+        ...
+
+        my_obj2 = MyClass()
+        my_obj2.method()
+        my_obj2 = compss_wait_on(my_obj2)
         ...
 
         for i in range(10):
@@ -964,6 +1074,37 @@ The corresponding task selection for the example above would be (:numref:`api_us
         def method(self):
             ... # self is modified here
 
+
+COMPSs also enables to specify task groups. To this end, COMPSs provides the
+*TaskGroup* context (:numref:`task_group`) which can be tuned with the group name, and a second parameter (boolean) to
+perform an implicit barrier for the whole group. Users can also define
+task groups within task groups.
+
+.. code-block:: python
+    :name: task_group
+    :caption: PyCOMPSs Task group definiton
+
+    @task()
+    def func1():
+        ...
+
+    @task()
+    def func2():
+        ...
+
+    def test_taskgroup():
+        # Creation of group
+        with TaskGroup('Group1', True):
+            for i in range(NUM_TASKS):
+                func1()
+                func2()
+            ...
+        ...
+
+    if __name__=='__main__':
+        test_taskgroup()
+
+
 :numref:`python_api_functions` summarizes the API functions to be
 used in the main program of a COMPSs Python application.
 
@@ -974,7 +1115,9 @@ used in the main program of a COMPSs Python application.
     +------------------------------------------+-----------------------------------------------------------------------------------------+
     | API Function                             | Description                                                                             |
     +==========================================+=========================================================================================+
-    | compss_open(file_name, mode=’r’  )       | Synchronizes for the last version of a file and returns its file descriptor.            |
+    | compss_file_exists(file_name)            | Check if a file exists.                                                                 |
+    +------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_open(file_name, mode=’r’)         | Synchronizes for the last version of a file and returns its file descriptor.            |
     +------------------------------------------+-----------------------------------------------------------------------------------------+
     | compss_delete_file(file_name)            | Notifies the runtime to remove a file.                                                  |
     +------------------------------------------+-----------------------------------------------------------------------------------------+
@@ -1019,6 +1162,68 @@ each parameter.
         append_three_ones(v)
         # v is automatically synchronized when calling the scale_vector function.
         w = scale_vector(v, 2)
+
+Exceptions
+~~~~~~~~~~
+
+COMPSs is able to deal with exceptions raised during the execution of the
+applications. In this case, if a user/python defined exception happens, the
+user can choose the task behaviour using the *on_failure* argument within the
+*@task* decorator (with four possible values: **'RETRY'**,
+**’CANCEL_SUCCESSORS’**, **’FAIL’** and **’IGNORE’**. *’RETRY’* is the default
+behaviour).
+
+However, COMPSs provides an exception (``COMPSsException``) that the user can
+raise when necessary and can be catched in the main code for user defined
+behaviour management (:numref:`task_compss_exception`). This mechanism avoids
+any synchronization, and enables applications to react under particular
+circunstances.
+
+.. code-block:: python
+    :name: task_compss_exception
+    :caption: COMPSs Exception example
+
+    from pycompss.api.exceptions import COMPSsException
+
+    @task()
+    def func():
+        ...
+        raise COMPSsException("Something happened!")
+
+    ...
+
+    if __name__=='__main__':
+        try:
+            func()
+        except COMPSsException:
+            ...  # React to the exception (maybe calling other tasks or with other parameters)
+
+In addition, the *COMPSsException* can be combined with task groups, so that
+the tasks which belong to the group will also be cancelled as soon as the
+*COMPSsException* is raised (:numref:`task_group_compss_exception`)
+
+.. code-block:: python
+    :name: task_group_compss_exception
+    :caption: COMPSs Exception with task group example
+
+    from pycompss.api.exceptions import COMPSsException
+    from pycompss.api.api import TaskGroup
+
+    @task()
+    def func(v):
+        ...
+        if v == 8:
+            raise COMPSsException("8 found!")
+
+    ...
+
+    if __name__=='__main__':
+        try:
+            with TaskGroup('exceptionGroup1'):
+                for i in range(10):
+                    func(i)
+        except COMPSsException:
+            ...  # React to the exception (maybe calling other tasks or with other parameters)
 
 Important Notes
 ~~~~~~~~~~~~~~~
@@ -1187,7 +1392,7 @@ Or alternatively, use the ``pycompss`` module:
                     $TEST_DIR/test.py arg1 arg2
 
 For full description about the options available for the runcompss
-command please check the :ref:`Application execution` Section.
+command please check the :ref:`Sections/03_User_Manual_App_Exec/01_Executing:Executing COMPSs applications` Section.
 
 Development with Jupyter notebook
 ---------------------------------
@@ -1197,8 +1402,8 @@ users to develop and run their PyCOMPSs applications in a Jupyter
 notebook, where it is possible to modify the code during the execution
 and experience an interactive behaviour.
 
-Environment
-~~~~~~~~~~~
+Environment Variables
+~~~~~~~~~~~~~~~~~~~~~
 
 The following libraries must be present in the appropiate environment
 variables in order to enable PyCOMPSs within Jupyter notebook:
@@ -1357,8 +1562,8 @@ the *stop* function.
 
     # Subsequent code
 
-Application execution
-~~~~~~~~~~~~~~~~~~~~~
+Notebook execution
+~~~~~~~~~~~~~~~~~~
 
 The application can be executed as a common Jupyter notebook by steps or
 the whole application.

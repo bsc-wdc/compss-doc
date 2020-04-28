@@ -715,7 +715,7 @@ The ``runcompss`` script has to be used to run the application:
                 /home/compss/tutorial_apps/c/matmul_objects/master/Matmul 3 4 2.0
 
 The complete list of options of the runcompss command is available in
-Section :ref:`Application execution`.
+Section :ref:`Sections/03_User_Manual_App_Exec/01_Executing:Executing COMPSs applications`.
 .
 
 Task Dependency Graph

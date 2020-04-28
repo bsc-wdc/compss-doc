@@ -10,7 +10,7 @@ provided by COMPSs.
 Generic Storage Object Interface
 --------------------------------
 
-:ref:`sco_object_definition` shows the functions that must exist in the storage
+:numref:`sco_object_definition` shows the functions that must exist in the storage
 object interface, that enables the object that inherits it to interact with the
 storage framework.
 
@@ -48,7 +48,7 @@ This interface must be implemented in the target language desired (e.g. Java or 
 Generic Storage Runtime Interfaces
 ----------------------------------
 
-:ref:`java_api` shows the functions that must exist in the storage
+:numref:`java_api` shows the functions that must exist in the storage
 runtime interface, that enables the COMPSs runtime to interact with the
 storage framework.
 
@@ -93,7 +93,7 @@ storage framework.
 This functions enable the COMPSs runtime to keep the data consistency through
 the distributed execution.
 
-In addition, :ref:`python_api` shows the functions that must exist in the storage
+In addition, :numref:`python_api` shows the functions that must exist in the storage
 runtime interface, that enables the COMPSs Python binding to interact with the
 storage framework. It is only necessary if the target language is Python.
 
