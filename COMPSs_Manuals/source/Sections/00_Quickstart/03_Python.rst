@@ -1,4 +1,9 @@
-Let's write your first Python application parallelized with PyCOMPSs. |br|
+.. |qpybr| raw:: html
+
+   <br />
+
+
+Let's write your first Python application parallelized with PyCOMPSs. |qpybr|
 Consider the following code:
 
 .. code-block:: python
@@ -28,12 +33,12 @@ Consider the following code:
           main()
 
 This code increments the elements of an array (``values``) by calling
-iteratively to the ``increment`` function. |br|
+iteratively to the ``increment`` function. |qpybr|
 The increment function sleeps the number of seconds indicated by the
-``value`` parameter to represent some computational time. |br|
+``value`` parameter to represent some computational time. |qpybr|
 On a normal python execution, each element of the array will be
 incremented after the other (sequentially), accumulating the
-computational time. |br|
+computational time. |qpybr|
 PyCOMPSs is able to parallelize this loop thanks to its ``@task``
 decorator, and synchronize the results with the ``compss_wait_on``
 API call.
@@ -128,7 +133,7 @@ COMPSs has extracted and taken advantage of.
 .. rubric:: Task dependency graph
 
 COMPSs stores the generated task dependecy graph within the
-``$HOME/.COMPSs/<APP_NAME>_<00-99>/monitor`` directory in dot format. |br|
+``$HOME/.COMPSs/<APP_NAME>_<00-99>/monitor`` directory in dot format. |qpybr|
 The generated graph is ``complete_graph.dot`` file, which can be
 displayed with any dot viewer.
 

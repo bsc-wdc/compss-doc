@@ -429,7 +429,7 @@ failure and continues with the normal execution.
     |                     | - FILE_INOUT: Read-write file parameter.                                                                |
     |                     | - FILE_OUT: Write-only file parameter.                                                                  |
     |                     | - FILE_CONCURRENT: Concurrent read-write file parameter.                                                |
-    |                     | - FILE_CONMUTATIVE: Conmutative read-write file parameter.                                                |
+    |                     | - FILE_CONMUTATIVE: Conmutative read-write file parameter.                                              |
     |                     | - DIRECTORY_IN: the parameter is a read-only directory.                                                 |
     |                     | - DIRECTORY_INOUT: the parameter is a read-write directory.                                             |
     |                     | - DIRECTORY_OUT: the parameter is a write-only directory.                                               |
