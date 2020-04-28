@@ -34,7 +34,7 @@ Finally you just need to run the installation script. You have to options:
             $ builders> sudo -E ./buildlocal [options] ${INSTALL_DIR}
 
         .. ATTENTION::
-        
+
             Root access is required.
 
     .. tab-container:: For_current_user
@@ -62,5 +62,5 @@ Once your COMPSs package has been installed remember to log out and back
 in again to end the installation process.
 
 If you need to set up your machine for the first time please take a look
-at :ref:`Additional Configuration` Section for a detailed description of
-the additional configuration.
+at :ref:`Sections/01_Installation/05_Additional_configuration:Additional Configuration`
+Section for a detailed description of the additional configuration.

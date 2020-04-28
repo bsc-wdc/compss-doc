@@ -6,7 +6,7 @@ Pre-requisites
 
 In order to be able to install COMPSs and PyCOMPSs with Pip, the
 dependencies (excluding the COMPSs packages) mentioned
-in the :ref:`Dependencies` Section must be satisfied (*do not forget*
+in the :ref:`Sections/01_Installation/01_Dependencies:Dependencies` Section must be satisfied (*do not forget*
 to have a proper ``JAVA_HOME`` environment variable pointing to the
 java JDK folder) and Python ``pip``.
 
@@ -75,5 +75,5 @@ Post installation
 -----------------
 
 If you need to set up your machine for the first time please take a look
-at :ref:`Additional Configuration` Section for a detailed description of
-the additional configuration.
+at :ref:`Sections/01_Installation/05_Additional_configuration:Additional Configuration`
+Section for a detailed description of the additional configuration.

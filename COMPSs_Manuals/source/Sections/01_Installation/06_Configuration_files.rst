@@ -100,9 +100,9 @@ installDir
 User
     Indicates the username used to connect via ssh to the resource. This
     user **must** have passwordless access to the resource (see
-    :ref:`Configure SSH passwordless` Section). If left empty COMPSs will
-    automatically try to access the resource with the **same username
-    than the one that lauches the COMPSs main application**.
+    :ref:`Sections/01_Installation/05_Additional_configuration:Configure SSH passwordless` Section).
+    If left empty COMPSs will automatically try to access the resource with
+    the **same username as the one that lauches the COMPSs main application**.
 
 LimitOfTasks
     The maximum number of tasks that can be simultaneously scheduled to
@@ -588,7 +588,7 @@ CPU, memory, disk, etc) by invoking the rOCCI client through Mixins
 
 :numref:`rOCCI_extensions` contains the rOCCI specific properties
 that must be defined under the ``Provider`` tag in the ``project.xml``
-file and :numref:`rOCCI_extensions` contains the specific properties
+file and :numref:`rOCCI_configuration` contains the specific properties
 that must be defined under the ``Instance`` tag.
 
 .. table:: rOCCI extensions in the ``project.xml`` file
@@ -671,7 +671,7 @@ Cloud connectors: JClouds
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The JClouds connector is based on the JClouds API version *1.9.1*. Table
-:ref:`jclouds_extensions` shows the extra available options under the
+:numref:`jclouds_extensions` shows the extra available options under the
 *Properties* tag that are used by this connector.
 
 .. table:: JClouds extensions in the  ``<project>.xml`` file

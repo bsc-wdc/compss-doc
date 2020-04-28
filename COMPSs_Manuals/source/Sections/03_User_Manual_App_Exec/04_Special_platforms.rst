@@ -7,8 +7,8 @@ in specific platforms such as *Docker*, *Chameleon* or *MareNostrum*.
 Docker
 ------
 
-Introduction
-~~~~~~~~~~~~
+What is Docker?
+~~~~~~~~~~~~~~~
 
 Docker is an open-source project that automates the deployment of
 applications inside software containers, by providing an additional
@@ -40,8 +40,8 @@ In order to use COMPSs with Docker, some requirements must be fulfilled:
    existing layers of previous images (for example the COMPSs base
    image).
 
-Execution
-~~~~~~~~~
+Execution in Docker
+~~~~~~~~~~~~~~~~~~~
 
 The runcompss-docker execution workflow uses Docker-Compose, which is
 in charge of spawning the different application containers into the
@@ -354,8 +354,8 @@ And now execute with 30 worker containers, and Swarm located in
 Chameleon
 ---------
 
-Introduction
-~~~~~~~~~~~~
+What is Chameleon?
+~~~~~~~~~~~~~~~~~~
 
 The Chameleon project is a configurable experimental environment for
 large-scale cloud research based on a *OpenStack* KVM Cloud. With
@@ -381,8 +381,8 @@ Cloud (OSDC)*.
 
 For more information please check https://www.chameleoncloud.org/ .
 
-Execution
-~~~~~~~~~
+Execution in Chameleon
+~~~~~~~~~~~~~~~~~~~~~~
 
 Currently, COMPSs can only handle the Chameleon infrastructure as a
 cluster (deployed inside a lease). Next, we provide the steps needed to
@@ -443,7 +443,5 @@ recommend to use one of the configurations provided by COMPSs (such as
 the configuration for the *MareNostrum IV* SuperComputer) or to contact
 us at support-compss@bsc.es .
 
- 
-
 For information about how to submit COMPSs applications at any
-Supercomputer please refer to :ref:`Supercomputers`.
+Supercomputer please refer to :ref:`Sections/04_Supercomputers:Supercomputers`.

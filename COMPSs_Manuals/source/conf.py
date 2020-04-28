@@ -83,6 +83,10 @@ pygments_style = 'default' # 'sphinx'
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
 
+# True to prefix each section label with the name of the document it is in,
+# followed by a colon.
+autosectionlabel_prefix_document = True
+
 # Specific configuration
 numfig = True
 numfig_secnum_depth = 0

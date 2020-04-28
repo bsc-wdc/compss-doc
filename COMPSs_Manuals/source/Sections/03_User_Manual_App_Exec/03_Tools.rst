@@ -201,7 +201,7 @@ In this manual we only provide information about how to obtain a trace
 and about the available Paraver (the tool used to analyze the traces)
 configurations. For further information about the application
 instrumentation or the trace visualization and configurations please
-check the :ref:`Tracing` Section.
+check the :ref:`Sections/05_Tracing:Tracing` Section.
 
 Trace Command
 ~~~~~~~~~~~~~
@@ -211,9 +211,9 @@ options ``-t``, ``--tracing``, ``--tracing=true``, ``--tracing=basic`` must
 be added to the ``runcompss`` command. All this options activate the
 basic tracing mode; the advanced mode is activated with the option
 ``--tracing=advanced``. For further information about advanced mode check
-the :ref:`Tracing` Section. Next, we provide an example of the command
-execution with the basic tracing option enabled for a java K-Means
-application.
+the :ref:`Sections/05_Tracing/01_Apps_tracing:COMPSs applications tracing`
+Section. Next, we provide an example of the command execution with the basic
+tracing option enabled for a java K-Means application.
 
 .. code-block:: console
 

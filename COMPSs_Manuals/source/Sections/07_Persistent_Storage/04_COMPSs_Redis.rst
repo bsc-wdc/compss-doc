@@ -6,7 +6,7 @@ from COMPSs' applications.
 
 .. note::
    We assume that COMPSs is already installed.
-   See :ref:`Installation and Administration`
+   See :ref:`Sections/01_Installation:Installation and Administration`
 
 The next subsections focus on how to install the Redis utilities and
 the storage API for COMPSs.
@@ -20,11 +20,11 @@ COMPSs + Redis Dependencies
 
 The required dependencies are:
 
-* :ref:`Redis Server`
+* :ref:`Sections/07_Persistent_Storage/04_COMPSs_Redis:Redis Server`
 
-* :ref:`Redis Cluster script`
+* :ref:`Sections/07_Persistent_Storage/04_COMPSs_Redis:Redis Cluster script`
 
-* :ref:`COMPSs-Redis Bundle`
+* :ref:`Sections/07_Persistent_Storage/04_COMPSs_Redis:COMPSs-Redis Bundle`
 
 
 Redis Server

@@ -7,7 +7,6 @@ Let's write your first Python application parallelized with PyCOMPSs. |qpybr|
 Consider the following code:
 
 .. code-block:: python
-      :name: python-increment
       :caption: ``increment.py``
 
       import time
@@ -158,13 +157,12 @@ displayed with any dot viewer.
 
 And you should see:
 
-.. figure:: ./Figures/increment.png
-   :name: increment_graph
-   :alt: The dependency graph of the increment application
-   :align: center
-   :width: 30.0%
+  .. figure:: /Sections/00_Quickstart/Figures/increment.png
+     :alt: The dependency graph of the increment application
+     :align: center
+     :width: 30.0%
 
-   The dependency graph of the increment application
+     The dependency graph of the increment application
 
 COMPSs has detected that the increment of each element is independent,
 and consequently, that all of them can be done in parallel. In this
@@ -234,13 +232,12 @@ Once Paraver has started, lets visualize the tasks:
 
 And you should see:
 
-.. figure:: ./Figures/increment_trace.png
-   :name: increment_trace
-   :alt: Trace of the increment application
-   :align: center
-   :width: 50.0%
+  .. figure:: /Sections/00_Quickstart/Figures/increment_trace.png
+      :alt: Trace of the increment application
+      :align: center
+      :width: 50.0%
 
-   Trace of the increment application
+      Trace of the increment application
 
 The X axis represents the time, and the Y axis the deployed processes
 (the first three (1.1.1-1.1.3) belong to the master and the fourth belongs
@@ -252,7 +249,7 @@ The rest, represent the worker cores, which process the ``increment`` tasks
 have been executed in parallel.
 
 Paraver is a very powerful tool for performance analysis. For more information,
-check the :ref:`Tracing` Section.
+check the :ref:`Sections/05_Tracing:Tracing` Section.
 
 .. NOTE::
 

@@ -73,7 +73,7 @@ The problem can be solved running the following commands:
     compss@bsc:~$ ssh user@resourceName "cat myRSA.pub >> ~/.ssh/authorized_keys; rm ./myRSA.pub"
 
 These commands are a quick solution, for further details please check
-the :ref:`Additional Configuration` Section.
+the :ref:`Sections/01_Installation/05_Additional_configuration:Additional Configuration` Section.
 
 
 Exceptions when starting the Worker processes

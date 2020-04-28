@@ -1,3 +1,6 @@
+Install COMPSs
+--------------
+
 * Choose the installation method:
 
 .. content-tabs::
@@ -8,9 +11,9 @@
         |
         | **Requirements:**
         |
-        | - Ensure that the required system :ref:`Dependencies` are installed.
+        | - Ensure that the required system :ref:`Sections/01_Installation/01_Dependencies:Dependencies` are installed.
         | - Check that your ``JAVA_HOME`` points to the Java JDK folder.
-        | - Enable SSH passwordless to localhost. See :ref:`Configure SSH passwordless`.
+        | - Enable SSH passwordless to localhost. See :ref:`Sections/01_Installation/05_Additional_configuration:Configure SSH passwordless`.
         |
         | COMPSs will be installed within the ``$HOME/.local/`` folder (or alternatively within the active virtual environment).
         |
@@ -29,7 +32,7 @@
                If installed within a virtual environment, deactivate and activate
                it to ensure that the environment is propperly updated.
 
-        | See :ref:`Installation and Administration` section for more information
+        | See :ref:`Sections/01_Installation:Installation and Administration` section for more information
         |
 
     .. tab-container:: Systemwide
@@ -38,9 +41,9 @@
         |
         | **Requirements:**
         |
-        | - Ensure that the required system :ref:`Dependencies` are installed.
+        | - Ensure that the required system :ref:`Sections/01_Installation/01_Dependencies:Dependencies` are installed.
         | - Check that your ``JAVA_HOME`` points to the Java JDK folder.
-        | - Enable SSH passwordless to localhost. See :ref:`Configure SSH passwordless`.
+        | - Enable SSH passwordless to localhost. See :ref:`Sections/01_Installation/05_Additional_configuration:Configure SSH passwordless`.
         |
         | COMPSs will be installed within the ``/usr/lib64/pythonX.Y/site-packages/pycompss/`` folder.
         |
@@ -56,7 +59,7 @@
 
                    $ source /etc/profile.d/compss.sh  # or alternatively reboot the machine
 
-        | See :ref:`Installation and Administration` section for more information
+        | See :ref:`Sections/01_Installation:Installation and Administration` section for more information
         |
 
     .. tab-container:: SourcesLocal
@@ -65,9 +68,9 @@
         |
         | **Requirements:**
         |
-        | - Ensure that the required system :ref:`Dependencies` are installed.
+        | - Ensure that the required system :ref:`Sections/01_Installation/01_Dependencies:Dependencies` are installed.
         | - Check that your ``JAVA_HOME`` points to the Java JDK folder.
-        | - Enable SSH passwordless to localhost. See :ref:`Configure SSH passwordless`.
+        | - Enable SSH passwordless to localhost. See :ref:`Sections/01_Installation/05_Additional_configuration:Configure SSH passwordless`.
         |
         | COMPSs will be installed within the ``$HOME/COMPSs/`` folder.
         |
@@ -88,7 +91,7 @@
 
                $ ./buildlocal -h
 
-        | See :ref:`Installation and Administration` section for more information
+        | See :ref:`Sections/01_Installation:Installation and Administration` section for more information
         |
 
     .. tab-container:: SourcesSystemwide
@@ -97,9 +100,9 @@
         |
         | **Requirements:**
         |
-        | - Ensure that the required system :ref:`Dependencies` are installed.
+        | - Ensure that the required system :ref:`Sections/01_Installation/01_Dependencies:Dependencies` are installed.
         | - Check that your ``JAVA_HOME`` points to the Java JDK folder.
-        | - Enable SSH passwordless to localhost. See :ref:`Configure SSH passwordless`.
+        | - Enable SSH passwordless to localhost. See :ref:`Sections/01_Installation/05_Additional_configuration:Configure SSH passwordless`.
         |
         | COMPSs will be installed within the ``/opt/COMPSs/`` folder.
         |
@@ -120,14 +123,14 @@
 
                $ ./buildlocal -h
 
-        | See :ref:`Installation and Administration` section for more information
+        | See :ref:`Sections/01_Installation:Installation and Administration` section for more information
         |
 
     .. tab-container:: Supercomputer
         :title: Supercomputer
 
         |
-        | Please, check the :ref:`Supercomputers` section.
+        | Please, check the :ref:`Sections/01_Installation/04_Supercomputers:Supercomputers` section.
         |
 
     .. tab-container:: Docker
@@ -139,7 +142,7 @@
         | - `docker <https://www.docker.com>`_ >= 17.12.0-ce
         | - Python 3
         | - pip
-        | - `docker <https://pypi.org/project/docker-py/>`_ for python
+        | - `docker-py <https://pypi.org/project/docker-py/>`_ for python
         |
         | Since the PyCOMPSs player package is available in Pypi (`pycompss-player <https://pypi.org/project/pycompss-player/>`_), it can be easly installed with ``pip`` as follows:
         |
@@ -149,9 +152,9 @@
               $ python3 -m pip install pycompss-player
 
         |
-        | A complete guide about the PyCOMPSs Player installation and usage can be found in the :ref:`PyCOMPSs Player` Section.
+        | A complete guide about the PyCOMPSs Player installation and usage can be found in the :ref:`Sections/08_PyCOMPSs_Player:PyCOMPSs Player` Section.
         |
 
           .. TIP::
 
-              Please, check the PyCOMPSs player :ref:`Installation` Section for the further information with regard to the requirements installation and troubleshooting.
+              Please, check the PyCOMPSs player :ref:`Sections/08_PyCOMPSs_Player/01_Installation:Installation` Section for the further information with regard to the requirements installation and troubleshooting.

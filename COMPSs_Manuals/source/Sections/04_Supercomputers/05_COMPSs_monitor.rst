@@ -15,7 +15,7 @@ please install the following packages:
 -  sshfs
 
 For further details about the COMPSs packages installation and
-configuration please refer to :ref:`Installation and Administration` Section.
+configuration please refer to :ref:`Sections/01_Installation:Installation and Administration` Section.
 If you are not willing to install COMPSs in your local machine please
 consider to download our Virtual Machine available at our webpage.
 
@@ -51,7 +51,7 @@ Access the COMPSs Monitor through its webpage
 
 Please remember that to enable **all** the COMPSs Monitor features
 applications must be ran with the *-m* flag. For further details please check the
-:ref:`Application execution` Section.
+:ref:`Sections/03_User_Manual_App_Exec:Application execution` Section.
 
 :numref:`mn_monitor1` illustrates how to login and :numref:`mn_monitor2`
 shows the COMPSs Monitor main page for an application

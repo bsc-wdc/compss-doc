@@ -465,11 +465,11 @@ decorators for other purposes.
 
 For instance, there is a set of decorators that can be placed over the
 *@task* decorator in order to define the task methods as a
-**binary invocation** (with the :ref:`Binary decorator`), as a **OmpSs
-invocation** (with the :ref:`OmpSs decorator`), as a **MPI invocation**
-(with the :ref:`MPI decorator`), as a **COMPSs application** (with the
-:ref:`COMPSs decorator`), or as a **task that requires multiple
-nodes** (with the :ref:`Multinode decorator`). These decorators must
+**binary invocation** (with the :ref:`Sections/02_User_Manual_App_Development/02_Python:Binary decorator`), as a **OmpSs
+invocation** (with the :ref:`Sections/02_User_Manual_App_Development/02_Python:OmpSs decorator`), as a **MPI invocation**
+(with the :ref:`Sections/02_User_Manual_App_Development/02_Python:MPI decorator`), as a **COMPSs application** (with the
+:ref:`Sections/02_User_Manual_App_Development/02_Python:COMPSs decorator`), or as a **task that requires multiple
+nodes** (with the :ref:`Sections/02_User_Manual_App_Development/02_Python:Multinode decorator`). These decorators must
 be placed over the *@task* decorator, and under the
 *@constraint* decorator if defined.
 
@@ -613,7 +613,7 @@ going to invoke a OmpSs executable (:numref:`ompss_task_python`).
 The OmpSs executable invocation can also be enriched with parameters,
 files and prefixes as with the *@binary* decorator through the
 function parameters and *@task* decorator information. Please,
-check :ref:`Binary decorator` for more details.
+check :ref:`Sections/02_User_Manual_App_Development/02_Python:Binary decorator` for more details.
 
 MPI decorator
 '''''''''''''
@@ -635,7 +635,7 @@ going to invoke a MPI executable (:numref:`mpi_task_python`).
 The MPI executable invocation can also be enriched with parameters,
 files and prefixes as with the *@binary* decorator through the
 function parameters and *@task* decorator information. Please,
-check :ref:`Binary decorator` for more details.
+check :ref:`Sections/02_User_Manual_App_Development/02_Python:Binary decorator` for more details.
 
 COMPSs decorator
 ''''''''''''''''
@@ -942,9 +942,10 @@ to the user (:numref:`implements_python`).
         return resultList
 
 Please, note that if the implementation is used to define a binary,
-OmpSs, MPI, COMPSs or multinode task invocation (see :ref:`Other task types`), the @implement decorator must be
-always on top of the decorators stack, followed by the
-@constraint decorator, then the
+OmpSs, MPI, COMPSs or multinode task invocation (see
+:ref:`Sections/02_User_Manual_App_Development/02_Python:Other task types`),
+the @implement decorator must be always on top of the decorators stack,
+followed by the @constraint decorator, then the
 @binary/\ @ompss/\ @mpi/\ @compss/\ @multinode
 decorator, and finally, the @task decorator in the lowest
 level.
@@ -1391,7 +1392,7 @@ Or alternatively, use the ``pycompss`` module:
                     $TEST_DIR/test.py arg1 arg2
 
 For full description about the options available for the runcompss
-command please check the :ref:`Application execution` Section.
+command please check the :ref:`Sections/03_User_Manual_App_Exec/01_Executing:Executing COMPSs applications` Section.
 
 Development with Jupyter notebook
 ---------------------------------
@@ -1401,8 +1402,8 @@ users to develop and run their PyCOMPSs applications in a Jupyter
 notebook, where it is possible to modify the code during the execution
 and experience an interactive behaviour.
 
-Environment
-~~~~~~~~~~~
+Environment Variables
+~~~~~~~~~~~~~~~~~~~~~
 
 The following libraries must be present in the appropiate environment
 variables in order to enable PyCOMPSs within Jupyter notebook:
@@ -1561,8 +1562,8 @@ the *stop* function.
 
     # Subsequent code
 
-Application execution
-~~~~~~~~~~~~~~~~~~~~~
+Notebook execution
+~~~~~~~~~~~~~~~~~~
 
 The application can be executed as a common Jupyter notebook by steps or
 the whole application.

@@ -1,11 +1,7 @@
 Quickstart
 ==========
 
-Install COMPSs
---------------
-
-.. INCLUDE:: ./00_Quickstart/01_Install.rst
-
+.. include:: ./00_Quickstart/01_Install.rst
 
 Write your first app
 --------------------
@@ -30,7 +26,4 @@ Choose your flavour:
         .. INCLUDE:: ./00_Quickstart/04_C.rst
 
 
-Useful information
-------------------
-
-.. INCLUDE:: ./00_Quickstart/05_Useful_Info.rst
+.. include:: ./00_Quickstart/05_Useful_Info.rst
