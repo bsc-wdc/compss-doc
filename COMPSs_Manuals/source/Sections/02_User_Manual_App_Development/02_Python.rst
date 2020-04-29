@@ -519,6 +519,9 @@ The invocation of these tasks would be equivalent to:
     $ ./mybinary.bin
     $ ./otherbinary.bin   # in resources that respect the constraint.
 
+The ``@binary`` decorator supports the ``working_dir`` parameter to define
+the working directory for the execution of the defined binary.
+
 :numref:`complex_binary_task_python` shows a more complex binary invocation, with files
 as parameters:
 
@@ -592,6 +595,26 @@ decorator. Please note that although the *hide* parameter is used as a
 prefix for the binary invocation, the *fileToHide.txt* would also be
 transfered to the worker (if necessary) since its type is defined as
 FILE_IN. This feature enables to build more complex binary invocations.
+
+In addition, the ``@binary`` decorator also supports the ``fail_by_exit_value``
+parameter to define the failure of the task by the exit value of the binary
+(:numref:`binary_task_python_exit`).
+It accepts a boolean (``True`` to consider the task failed if the exit value is
+not 0, or ``False`` to ignore the failure by the exit value (**default**)), or
+a string to determine the environment variable that defines the fail by
+exit value (as boolean).
+The default behaviour (``fail_by_exit_value=False``) allows users to receive
+the exit value of the binary as the task return value, and take the
+necessary decissions based on this value.
+
+.. code-block:: python
+    :name: binary_task_python_exit
+    :caption: Binary task example with ``fail_by_exit_value``
+
+    @binary(binary="mybinary.bin", fail_by_exit_value=True)
+    @task()
+    def binary_func():
+         pass
 
 OmpSs decorator
 '''''''''''''''
