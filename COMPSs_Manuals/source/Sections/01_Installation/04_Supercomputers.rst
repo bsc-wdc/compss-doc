@@ -81,34 +81,187 @@ installation process.
 SC Configuration
 ----------------
 
-For queue system executions, COMPSs has a pre-build structure (see
-:numref:`queue_structure`) to execute applications in
-SuperComputers. For this purpose, users must use the *enqueue\_compss*
-script provided in the COMPSs installation. This script has several
-parameters (see *enqueue\_compss -h*) that allow users to customize
-their executions for any SuperComputer.
+To maintain the portability between different environments, COMPSs has a
+pre-built structure of scripts to execute applications in Supercomputers.
+For this purpose, users must use the ``enqueue_compss`` script provided in the
+COMPSs installation and specify the supercomputer configuration with
+``--sc_cfg`` flag.
+
+When installing COMPSs for a supercomputer, system administrators must define
+a configuration file for the specific Supercomputer parameters.
+This document gives and overview about how to modify the configuration files
+in order to customize the enqueue_compss for a specific queue system and
+supercomputer.
+As overview, the easier way to proceed when creating a new configuration is to
+modify one of the configurations provided by COMPSs. System sdministrators can
+find configurations for **LSF**, **SLURM**, **PBS** and **SGE** as well as
+several examples for Supercomputer configurations in
+``<installation_dir>/Runtime/scripts/queues``.
+For instance, the configuration for the *MareNostrum IV* Supercomputer and the
+*Slurm* queue system, can be used as base file for  new supercomputer and queue
+system cfgs. Sysadmins can modify these files by changing the flags,
+parameters, paths and default values that corresponds to your supercomputer.
+Once, the files have been modified, they must be copied to the queues folder
+to make them available to the users. The following paragraph describe more
+in detail the scripts and configuration files
+If you need help, contact support-compss@bsc.es.
+
+COMPSs Queue structure overview
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+All the scripts and cfg files shown in :numref:`queue_structure` are located
+in the ``<installation_dir>/Runtime/scripts/`` folder.
+``enqueue_compss`` and ``launch_compss`` (**launch.sh in the figure**) are in
+the user subfolder and ``submit.sh`` and the ``cfgs`` are located in queues.
+There are two types of cfg files: the *queue system cfg* files, which are
+located in ``queues/queue_systems``; and the *supercomputers cfg* files, which
+are located in ``queues/supercomputers``.
 
 .. figure:: ./Figures/queue_scripts_structure.png
    :name: queue_structure
    :alt: Structure of COMPSs queue scripts. In Blue user scripts, in Green queue scripts and in Orange system dependant scripts
    :align: center
-   :width: 50.0%
+   :width: 30.0%
 
    Structure of COMPSs queue scripts. In Blue user scripts, in Green
    queue scripts and in Orange system dependant scripts
 
-To make this structure works, the administrators must define a
-configuration file for the queue system (under
-``<targetDir>/COMPSs/scripts/queues/queue_system/QUEUE.cfg``) and a
-configuration file for the specific SuperComputer parameters (under
-``<targetDir>`` ``/COMPSs/scripts/queues/supercomputers/SC_NAME.cfg``). The COMPSs
-installation already provides queue configurations for *LSF* and *SLURM*
-and several examples for SuperComputer configurations.
+Configuration Files
+~~~~~~~~~~~~~~~~~~~
 
-To create a new configuration we recommend to use one of the
-configurations provided by COMPSs (such as the configuration for the
-*MareNostrum IV* SuperComputer) or to contact us at
-support-compss@bsc.es.
+The cfg files contain a set of bash variables which are used by the other scripts.
+On the one hand, the queue system cfgs contain the variables to indicate the
+commands used by the system to submit and spawn processes, the commands or
+variables to get the allocated nodes and the directives to indicate the number
+of nodes, processes, etc.
+Below you can see an example of the most important variable definition for Slurm
+
+.. code-block:: bash
+
+    # Submission command (submit.sh)
+    SUBMISSION_CMD="sbatch"
+    SUBMISSION_PIPE="< "
+    ...
+    # Variables to define the directives as #${QUEUE_CMD} ${ARG_*}${QUEUE_SEPARATOR}value (submit.sh)
+    QUEUE_CMD="SBATCH"
+    QUEUE_SEPARATOR=""
+    QARG_JOB_NAME="--job-name="
+    QARG_JOB_OUT="-o"
+    QARG_JOB_ERROR="-e"
+    QARG_WD="--workdir="
+    QARG_WALLCLOCK="-t"
+    QARG_NUM_NODES="-N"
+    QARG_NUM_PROCESSES="-n"
+    ...
+    #vars to customize the commands know job id and allocated nodes (submit.sh)
+    ENV_VAR_JOB_ID="SLURM_JOB_ID"
+    ENV_VAR_NODE_LIST="SLURM_JOB_NODELIST"
+    HOSTLIST_CMD="scontrol show hostname"
+    HOSTLIST_TREATMENT="| awk {' print \$1 '} | sed -e 's/\.[^\ ]*//g'"
+    ...
+    #vars to customize worker process spawn inside the job (launch_compss)
+    LAUNCH_CMD="srun"
+    LAUNCH_PARAMS="-n1 -N1 --nodelist="
+    LAUNCH_SEPARATOR=""
+    CMD_SEPARATOR=""
+
+To adapt this script to your queue system, you just need to change the variable
+value to the command, argument or value required in your system.
+If you find that some of this variables are not available in your system, leave it empty.
+
+On the other hand, the supercomputers cfg files contains a set of variables to
+indicate the queue system used by a supercomputer, paths where the shared disk
+is mounted, the default values that COMPSs will set in the project and resources
+files when they are not set by the user and flags to indicate if a functionality
+is available or not in a supercomputer. The following lines show examples of this
+variables for the *MareNostrum IV* supercomputer.
+
+.. code-block:: bash
+
+    QUEUE_SYSTEM="slurm"
+
+    # Default values enqueue_compss
+    DEFAULT_EXEC_TIME=10
+    DEFAULT_NUM_NODES=2
+    DEFAULT_QUEUE=default
+    DEFAULT_CPUS_PER_NODE=48
+    DEFAULT_NODE_MEMORY_SIZE=92
+    DEFAULT_MASTER_WORKING_DIR=.
+    MINIMUM_NUM_NODES=1
+    MINIMUM_CPUS_PER_NODE=1
+    ...
+    # Enabling/disabling queue system features
+    DISABLE_QARG_MEMORY=true
+    DISABLE_QARG_CONSTRAINTS=false
+    DISABLE_QARG_QOS=false
+    DISABLE_QARG_OVERCOMMIT=true
+    DISABLE_QARG_CPUS_PER_TASK=false
+    HETEROGENEOUS_MULTIJOB=false
+    ...
+    #Paths
+    SCRATCH_DIR="/scratch/tmp"
+    GPFS_PREFIX="/gpfs/"
+    ...
+    #Other values
+    REMOTE_EXECUTOR="none" #disable the ssh spawn at runtime
+    NETWORK_INFINIBAND_SUFFIX="-ib0" #hostname suffix to add in order to use infiniband
+    NETWORK_DATA_SUFFIX="-data" #hostname suffix to add in order to use infiniband
+    MASTER_NAME_CMD=hostname #command to know the mastername
+
+To adapt this script to your supercomputer, you just need to change the
+variables to commands paths or values which are set in your system.
+If you find that some of this values are not available in your system,
+leave them empty or as they are in the MareNostrum IV.
+
+How are cfg files used in scripts?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``submit.sh`` is in charge of getting some of the arguments from
+``enqueue_compss``, generating the a temporal job submission script for the
+*queue_system* (function *create_normal_tmp_submit*) and performing the
+submission in the scheduler (function *submit*).
+The functions used in ``submit.sh`` are implemented in ``common.sh``.
+If you look at the code of this script, you will see that most of the code is
+customized by a set of bash vars which are mainly defined in the cfg files.
+
+For instance the submit command is customized in the following way:
+
+.. code-block:: bash
+
+    eval ${SUBMISSION_CMD} ${SUBMISSION_PIPE}${TMP_SUBMIT_SCRIPT}
+
+Where ``${SUBMISSION_CMD}`` and ``${SUBMISSION_PIPE}`` are defined in the
+``queue_system.cfg``. So, for the case of Slurm, at execution time it is
+translated to something like ``sbatch < /tmp/tmp_submit_script``
+
+The same approach is used for the queue system directives defined in the
+submission script or in the command to get the assigned host list.
+
+The following lines show the examples in these cases.
+
+.. code-block:: bash
+
+    #${QUEUE_CMD} ${QARG_JOB_NAME}${QUEUE_SEPARATOR}${job_name}
+
+In the case of Slurm in MN, it generates something like ``#SBATCH --job-name=COMPSs``
+
+.. code-block:: bash
+
+    host_list=\$(${HOSTLIST_CMD} \$${ENV_VAR_NODE_LIST}${env_var_suffix} ${HOSTLIST_TREATMENT})
+
+The same approach is used in the ``launch_compss`` script where it is using
+the defined vars to customize the *project.xml* and *resources.xml* file
+generation and spawning the master and worker processes in the assigned resources.
+
+At first, you should not need to modify any script. The goal of the cfg files
+is that sysadmins just require to modify the supercomputers cfg, and in the
+case that the used queue system is not in the *queue_systems*, folder it
+should create a new one for the new one.
+
+If you think that some of the features of your system are not supported in
+the current implementation, please contact us at support-compss@bsc.es.
+We will discuss how it should be incorporated in the scripts.
+
 
 SC Post installation
 --------------------
