@@ -13,6 +13,7 @@ It is divided into three main folders:
 .. toctree::
     :maxdepth: 2
     :caption: Table of Contents
+    :numbered: 2
 
     09_PyCOMPSs_Notebooks/01_Syntax
     09_PyCOMPSs_Notebooks/02_Hands-on

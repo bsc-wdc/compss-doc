@@ -6,7 +6,6 @@ Here you will find the syntax notebooks used in the tutorials.
 .. toctree::
     :maxdepth: 1
     :caption: Table of Contents
-    :numbered:
 
     syntax/1_Basic
     syntax/2_Synchronization

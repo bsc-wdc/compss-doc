@@ -6,7 +6,6 @@ Here you will find the hands on notebooks used in the tutorials.
 .. toctree::
     :maxdepth: 1
     :caption: Table of Contents
-    :numbered:
 
     hands-on/8_SortByKey
     hands-on/9_KMeans-reduce-chunks
