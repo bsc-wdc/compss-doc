@@ -36,7 +36,7 @@ It is divided into three main folders:
 
         * Using **PyCOMPSs Player**:
 
-            * ``pycompss-player`` (see :ref:`Sections/08_PyCOMPSs_Player/01_Installation:PyCOMPSs Player Installation`)
+            * ``pycompss-player`` (see :ref:`Sections/08_PyCOMPSs_Player/01_Installation:Requirements and Installation`)
 
         * Using **Docker**:
 
