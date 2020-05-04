@@ -2,7 +2,7 @@
 PyCOMPSs Notebooks
 ==================
 
-This section contains all PyCOMPSs related tutorial notebooks.
+This section contains all PyCOMPSs related tutorial notebooks (sources available in https://github.com/bsc-wdc/notebooks).
 
 It is divided into three main folders:
 

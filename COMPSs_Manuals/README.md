@@ -65,6 +65,23 @@ pip3 install rst2pdf --user
 # or
 sudo pip3 install rst2pdf
 ```
+* sphinxcontrib-svg2pdfconverter
+```
+pip3 install sphinxcontrib-svg2pdfconverter --user
+# or
+sudo pip3 install sphinxcontrib-svg2pdfconverter
+```
+* rsvg-view (rsvg-convert neede by sphinxcontrib-svg2pdfconverter)
+```
+sudo zypper install rsvg-view
+```
+* sphinxcontrib-bibtex
+```
+pip3 install sphinxcontrib-bibtex --user
+# or
+sudo pip3 install sphinxcontrib-bibtex
+```
+
 
 ## 2. Build COMPSs documentation
 
