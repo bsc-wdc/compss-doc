@@ -37,7 +37,10 @@ extensions = ['sphinx.ext.todo',
               'sphinx.ext.viewcode',
               'sphinx.ext.githubpages',
               'sphinx.ext.autosectionlabel',
-              'sphinxcontrib.contentui']
+              'sphinxcontrib.contentui',
+              'nbsphinx',
+              'sphinx_copybutton',
+              'sphinx.ext.mathjax']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -101,6 +104,15 @@ html_show_copyright = True
 html_show_sphinx = True
 nitpicky = True
 latex_logo = './Logos/COMPSs_logo.png'
+
+# Disabe notebooks Building
+nbsphinx_execute = 'never'
+# Do not allow building if execution is enabled and a notebook fails
+nbsphinx_allow_errors = False
+nbsphinx_execute_arguments = [
+    "--InlineBackend.figure_formats={'svg', 'pdf'}",
+    "--InlineBackend.rc={'figure.dpi': 96}",
+]
 
 # -- Options for HTML output ----------------------------------------------
 
