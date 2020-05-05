@@ -34,6 +34,8 @@
 extensions = ['sphinx.ext.todo',
               'sphinx.ext.coverage',
               'sphinx.ext.imgmath',
+              'sphinx.ext.ifconfig',
+              'sphinx.ext.imgconverter',
               'sphinx.ext.viewcode',
               'sphinx.ext.githubpages',
               'sphinx.ext.autosectionlabel',
@@ -109,12 +111,13 @@ latex_logo = './Logos/COMPSs_logo.png'
 
 # Disabe notebooks Building
 nbsphinx_execute = 'never'
-# Do not allow building if execution is enabled and a notebook fails
-nbsphinx_allow_errors = False
 nbsphinx_execute_arguments = [
     "--InlineBackend.figure_formats={'svg', 'pdf'}",
     "--InlineBackend.rc={'figure.dpi': 96}",
 ]
+# Do not allow building if execution is enabled and a notebook fails
+nbsphinx_allow_errors = True
+
 
 # -- Options for HTML output ----------------------------------------------
 
@@ -158,25 +161,165 @@ html_sidebars = {
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'COMPSsdoc'
 
+html_scaled_image_link = False
 
 # -- Options for LaTeX output ---------------------------------------------
-
+latex_engine = 'pdflatex'
+latex_additional_files = ['./Logos/bsc_logo.jpg']
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     #
-    # 'papersize': 'letterpaper',
+    'papersize': 'a4paper',
+    'releasename':" ",
+    # Sonny, Lenny, Glenn, Conny, Rejne, Bjarne and Bjornstrup
+    # 'fncychap': '\\usepackage[Lenny]{fncychap}',
+    'fncychap': '\\usepackage{fncychap}',
+    'fontpkg': '\\usepackage{amsmath,amsfonts,amssymb,amsthm}',
 
+    'figure_align':'htbp',
     # The font size ('10pt', '11pt' or '12pt').
     #
-    # 'pointsize': '10pt',
+    'pointsize': '10pt',
 
     # Additional stuff for the LaTeX preamble.
     #
-    # 'preamble': '',
+    'preamble': r'''
+        %%%%%%%%%%%%%%%%%%%% PREAMBLE %%%%%%%%%%%%%%%%%%
+        %%% Add number to subsubsection 2=subsection, 3=subsubsection
+        %%% Below subsubsection is not good idea.
+        \setcounter{secnumdepth}{3}
 
+        %%% Table of content upto 2=subsection, 3=subsubsection
+        \setcounter{tocdepth}{2}
+
+        %%% Load packages
+        \usepackage{amsmath,amsfonts,amssymb,amsthm}
+        \usepackage{graphicx}
+        \usepackage[strings]{underscore}
+
+        %%% Reduce spaces for Table of contents, figures and tables-
+        %%% It is used "\addtocontents{toc}{\vskip -1.2cm}" etc. in the document
+        \usepackage[notlot,nottoc,notlof]{}
+
+        \usepackage{color}
+        \usepackage{transparent}
+        \usepackage{eso-pic}
+        \usepackage{lipsum}
+
+        %%% Link at the footnote to go to the place of footnote in the text
+        \usepackage{footnotebackref}
+
+        %%% Spacing between line
+        \usepackage{setspace}
+        %%%% \onehalfspacing
+        %%%% \doublespacing
+        \singlespacing
+
+        %%% Datetime
+        \usepackage{datetime}
+        \newdateformat{MonthYearFormat}{%
+            \monthname[\THEMONTH], \THEYEAR}
+
+        %% RO, LE will not work for 'oneside' layout.
+        %% Change oneside to twoside in document class
+        \usepackage{fancyhdr}
+        \pagestyle{fancy}
+        \fancyhf{}
+
+        %%% Alternating Header for oneside
+        \fancyhead[L]{\ifthenelse{\isodd{\value{page}}}{ \small \nouppercase{\leftmark} }{}}
+        \fancyhead[R]{\ifthenelse{\isodd{\value{page}}}{}{ \small \nouppercase{\rightmark} }}
+
+        %%% Alternating Header for two side
+        %\fancyhead[RO]{\small \nouppercase{\rightmark}}
+        %\fancyhead[LE]{\small \nouppercase{\leftmark}}
+
+        %%% For oneside: change footer at right side. If you want to use Left and right then use same as header defined above.
+        \fancyfoot[R]{\ifthenelse{\isodd{\value{page}}}{{\tiny BSC-WDC Group} }{\href{http://www.bsc.es}{\tiny BSC}}}
+
+        %%% Alternating Footer for two side
+        %\fancyfoot[RO, RE]{\scriptsize BSC-WDC Group (support-compss@bsc.es)}
+
+        %%% page number
+        \fancyfoot[CO, CE]{\thepage}
+
+        \renewcommand{\headrulewidth}{0.5pt}
+        \renewcommand{\footrulewidth}{0.5pt}
+
+        \RequirePackage{tocbibind} %%% comment this to remove page number for following
+        \addto\captionsenglish{\renewcommand{\contentsname}{Table of contents}}
+        \addto\captionsenglish{\renewcommand{\listfigurename}{List of figures}}
+        \addto\captionsenglish{\renewcommand{\listtablename}{List of tables}}
+        % \addto\captionsenglish{\renewcommand{\chaptername}{Chapter}}
+
+        %%% Reduce spacing for itemize
+        \usepackage{enumitem}
+        \setlist{nosep}
+
+        %%% Quote Styles at the top of chapter
+        \usepackage{epigraph}
+        \setlength{\epigraphwidth}{0.8\columnwidth}
+        \newcommand{\chapterquote}[2]{\epigraphhead[60]{\epigraph{\textit{#1}}{\textbf {\textit{--#2}}}}}
+        %%% Quote for all places except Chapter
+        \newcommand{\sectionquote}[2]{{\quote{\textit{``#1''}}{\textbf {\textit{--#2}}}}}
+
+        %%%%%%%%%%%%%%%%%% END PREAMBLE %%%%%%%%%%%%%%%%%
+    ''',
+
+    'maketitle': r'''
+        \pagenumbering{Roman} %%% to avoid page 1 conflict with actual page 1
+
+        \begin{titlepage}
+            \centering
+
+            \vspace*{40mm} %%% * is used to give space from top
+            %%% \textbf{\Huge {Title over the logo}}
+
+            \vspace{0mm}
+            \begin{figure}[!h]
+             \centering
+             \includegraphics[scale=0.4]{COMPSs_logo.png}
+            \end{figure}
+
+            \vspace{0mm}
+            \Huge \textbf{{COMPSs Manual}}
+
+            \Large Workflows and Distributed Computing Group
+            \vspace{0mm}
+            \begin{figure}[!h]
+             \centering
+             \includegraphics[scale=0.3]{bsc_logo.jpg}
+            \end{figure}
+
+            \vspace*{20mm}
+            \large  Last updated : \MonthYearFormat\today
+
+            %% \vfill adds at the bottom
+            \vfill
+            \normalsize \textit{Online version available at }{\href{https://compss-doc.readthedocs.io/en/latest/}{COMPSs - ReadTheDocs}}
+        \end{titlepage}
+
+        \clearpage
+        \pagenumbering{roman}
+        \tableofcontents
+        \listoffigures
+        \listoftables
+        \clearpage
+        \pagenumbering{arabic}
+
+        ''',
     # Latex figure (float) alignment
     #
     # 'figure_align': 'htbp',
+    'sphinxsetup': \
+        'hmargin={0.7in,0.7in}, vmargin={1in,1in}, \
+        verbatimwithframe=true, \
+        TitleColor={rgb}{0,0,0}, \
+        HeaderFamily=\\rmfamily\\bfseries, \
+        InnerLinkColor={rgb}{0,0,1}, \
+        OuterLinkColor={rgb}{0,0,1}',
+
+        'tableofcontents':' ',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples

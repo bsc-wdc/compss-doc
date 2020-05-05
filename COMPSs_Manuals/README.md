@@ -81,6 +81,16 @@ pip3 install sphinxcontrib-bibtex --user
 # or
 sudo pip3 install sphinxcontrib-bibtex
 ```
+* nbsphinx
+```
+pip3 install nbsphinx --user
+# or
+sudo pip3 install nbsphinx
+```
+* Latex packages:
+```
+sudo zypper install texlive-footnotebackref texlive-datetime texlive-epigraph texlive-eso-pic texlive-lipsum texlive-footnotebackref texlive-setspace texlive-amsmath texlive-amsfonts texlive-amstex texlive-lipsum texlive-fancyhdr
+```
 
 
 ## 2. Build COMPSs documentation

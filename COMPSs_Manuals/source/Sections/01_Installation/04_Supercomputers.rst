@@ -525,7 +525,7 @@ support-compss@bsc.es to find out a solution.
 
 If you are willing to test the COMPSs Framework installation you can
 run any of the applications available at our application repository
-https://compss.bsc.es/projects/bar. We suggest to run the java simple
+http://compss.bsc.es/projects/bar. We suggest to run the java simple
 application following the steps listed inside its *README* file.
 
 For further information about either the installation or the usage
