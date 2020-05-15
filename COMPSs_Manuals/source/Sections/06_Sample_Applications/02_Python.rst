@@ -25,3 +25,4 @@ under the ``/home/compss/tutorial_apps/python/`` folder.
 
     02_Python/Simple
     02_Python/Increment
+    02_Python/Lysozyme_in_water
