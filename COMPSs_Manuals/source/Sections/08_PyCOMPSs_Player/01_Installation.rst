@@ -1,5 +1,5 @@
-PyCOMPSs Player Installation
-============================
+Requirements and Installation
+=============================
 
 Requirements
 ------------

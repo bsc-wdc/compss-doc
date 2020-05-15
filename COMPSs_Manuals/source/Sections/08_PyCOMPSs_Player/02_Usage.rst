@@ -59,7 +59,7 @@ Now we can run the ``simple.py`` application:
 
     $ pycompss run python/simple/src/simple.py 1
 
-The log files of the execution can be found at $HOME/.COMPSs.
+The log files of the execution can be found at ``$HOME/.COMPSs``.
 
 You can also init the COMPSs environment inside the examples folder.
 This will mount the examples directory inside the container so you can

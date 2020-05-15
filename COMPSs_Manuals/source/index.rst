@@ -63,6 +63,7 @@ This manual is divided in 9 sections:
    Sections/06_Sample_Applications
    Sections/07_Persistent_Storage
    Sections/08_PyCOMPSs_Player
+   Sections/09_PyCOMPSs_Notebooks
 
 
 .. Indices and tables
