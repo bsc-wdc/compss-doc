@@ -46,8 +46,7 @@ As an example for some distributions:
             Before installing it is important to have a proper ``JAVA_HOME`` environment
             variable definition. This variable must contain a valid path to a Java JDK
             (as a remark, it must point to a JDK, not JRE).
-            So, please, export this variable and include it into your ``.bashrc``
-            if it is not already available with the previous command.
+            So, please, export this variable and include it into your ``.bashrc``:
 
             .. code-block:: console
 
@@ -71,8 +70,7 @@ As an example for some distributions:
             Before installing it is important to have a proper ``JAVA_HOME`` environment
             variable definition. This variable must contain a valid path to a Java JDK
             (as a remark, it must point to a JDK, not JRE).
-            So, please, export this variable and include it into your ``.bashrc``
-            if it is not already available with the previous command.
+            So, please, export this variable and include it into your ``.bashrc``:
 
             .. code-block:: console
 
@@ -96,8 +94,7 @@ As an example for some distributions:
             Before installing it is important to have a proper ``JAVA_HOME`` environment
             variable definition. This variable must contain a valid path to a Java JDK
             (as a remark, it must point to a JDK, not JRE).
-            So, please, export this variable and include it into your ``.bashrc``
-            if it is not already available with the previous command.
+            So, please, export this variable and include it into your ``.bashrc``:
 
             .. code-block:: console
 
@@ -122,8 +119,7 @@ As an example for some distributions:
             Before installing it is important to have a proper ``JAVA_HOME`` environment
             variable definition. This variable must contain a valid path to a Java JDK
             (as a remark, it must point to a JDK, not JRE).
-            So, please, export this variable and include it into your ``.bashrc``
-            if it is not already available with the previous command.
+            So, please, export this variable and include it into your ``.bashrc``:
 
             .. code-block:: console
 
@@ -148,8 +144,7 @@ As an example for some distributions:
             Before installing it is important to have a proper ``JAVA_HOME`` environment
             variable definition. This variable must contain a valid path to a Java JDK
             (as a remark, it must point to a JDK, not JRE).
-            So, please, export this variable and include it into your ``.bashrc``
-            if it is not already available with the previous command.
+            So, please, export this variable and include it into your ``.bashrc``:
 
             .. code-block:: console
 
@@ -183,13 +178,39 @@ As an example for some distributions:
             Before installing it is important to have a proper ``JAVA_HOME`` environment
             variable definition. This variable must contain a valid path to a Java JDK
             (as a remark, it must point to a JDK, not JRE).
-            So, please, export this variable and include it into your ``.bashrc``
-            if it is not already available with the previous command.
+            So, please, export this variable and include it into your ``.bashrc``:
 
             .. code-block:: console
 
                 $ echo 'export JAVA_HOME=/usr/lib64/jvm/java-1.8.0-openjdk/' >> ~/.bashrc
                 $ export JAVA_HOME=/usr/lib64/jvm/java-1.8.0-openjdk/
+
+
+    .. tab-container:: Fedora_32
+        :title: Fedora 32
+
+        **Fedora 32** dependencies installation commands:
+
+        .. code-block:: console
+
+             $ sudo dnf install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel graphviz xdg-utils libtool automake python27 python3 python3-devel boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools bison flex texinfo papi papi-devel gmp-devel
+             $ # If the libxml softlink is not created during the installation of libxml2, the COMPSs installation may fail.
+             $ # In this case, the softlink has to be created manually with the following command:
+             $ sudo ln -s /usr/include/libxml2/libxml/ /usr/include/libxml
+             $ sudo wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
+             $ sudo unzip /opt/gradle-5.4.1-bin.zip -d /opt
+
+        .. ATTENTION::
+
+            Before installing it is important to have a proper ``JAVA_HOME`` environment
+            variable definition. This variable must contain a valid path to a Java JDK
+            (as a remark, it must point to a JDK, not JRE).
+            So, please, export this variable and include it into your ``.bashrc``:
+
+            .. code-block:: console
+
+                $ echo 'export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/' >> ~/.bashrc
+                $ export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/
 
 
     .. tab-container:: Fedora_25
@@ -210,20 +231,14 @@ As an example for some distributions:
 
             Before installing it is important to have a proper ``JAVA_HOME`` environment
             variable definition. This variable must contain a valid path to a Java JDK
-            (as a remark, it must point to a JDK, not JRE). A possible value is the following:
+            (as a remark, it must point to a JDK, not JRE).
+            So, please, export this variable and include it into your ``.bashrc``:
 
             .. code-block:: console
 
-                $ echo $JAVA_HOME
-                /usr/lib64/jvm/java-openjdk/
+                $ echo 'export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/' >> ~/.bashrc
+                $ export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/
 
-            So, please, check its location, export this variable and include it into your ``.bashrc``
-            if it is not already available with the previous command.
-
-            .. code-block:: console
-
-                $ echo 'export JAVA_HOME=/usr/lib64/jvm/java-openjdk/' >> ~/.bashrc
-                $ export JAVA_HOME=/usr/lib64/jvm/java-openjdk/
 
     .. tab-container:: Debian_8
         :title: Debian 8
