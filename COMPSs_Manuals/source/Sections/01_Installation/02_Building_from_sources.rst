@@ -10,15 +10,14 @@ The first step is downloading the source code from the Git repository.
     $ git clone https://github.com/bsc-wdc/compss.git
     $ cd compss
 
-Then, you need to download the embedded dependencies from the git
-submodules.
+Then, you need to download the embedded dependencies from the git submodules.
 
 .. code-block:: console
 
     $ compss> ./submodules_get.sh
     $ compss> ./submodules_patch.sh
 
-Finally you just need to run the installation script. You have to options:
+Finally you just need to run the installation script. You have two options:
 
 .. content-tabs::
 
@@ -40,7 +39,7 @@ Finally you just need to run the installation script. You have to options:
     .. tab-container:: For_current_user
         :title: For the current user
 
-        For installing COMPSs for the current user run the following command:
+        For installing COMPSs for the current user run the following commands:
 
         .. code-block:: console
 
@@ -128,9 +127,7 @@ in again to end the installation process.
         #       *) return;;   # from the whole gnome (or restart the machine).
         # esac                #
 
-
-
-
+In addition, COMPSs requires **ssh passwordless access**.
 If you need to set up your machine for the first time please take a look
 at :ref:`Sections/01_Installation/05_Additional_configuration:Additional Configuration`
 Section for a detailed description of the additional configuration.
