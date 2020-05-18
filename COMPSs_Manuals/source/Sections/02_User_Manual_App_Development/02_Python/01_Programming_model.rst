@@ -30,27 +30,12 @@ parameter. The code of *func* updates the file.
     def func(file_path, value):
         # update the file 'file_path'
 
-    if __name__ == '__main__':
+    def main():
         my_file = '/tmp/sample_file.txt'
         func(my_file, 1)
 
-.. hint::
-
-   The main code is defined within ``if __name__ == '__main__'``.
-   A better performance alternative would be to define the main code within a function
-   and invoke it from the ``if __name__ == '__main__'``:
-
-   .. code-block:: python
-
-       def func(file_path, value):
-           # update the file 'file_path'
-
-       def main():
-           my_file = '/tmp/sample_file.txt'
-           func(my_file, 1)
-
-       if __name__ == '__main__':
-           main()
+    if __name__ == '__main__':
+        main()
 
 
 In order to select *func* as a task, the corresponding *@task*
@@ -161,8 +146,12 @@ Note that there is no need to use the *target_direction* flag within the
 
 .. CAUTION::
 
-   In order to avoid serialization issues, the classes must not
-   be declared in the same file that contains the main method (``if __name__=='__main__'``).
+   The objects used as task parameters **MUST BE** serializable:
+
+      * Implement the ``__getstate__`` and ``__setstate__`` functions in their
+        classes for those objects that are not automatically serializable.
+      * The classes must not be declared in the same file that contains the
+        main method (``if __name__=='__main__'``) (known pickle issue).
 
 .. IMPORTANT::
 
@@ -198,13 +187,15 @@ Note that there is no need to use the *target_direction* flag within the
            ...
            return myc
 
-       if __name__=='__main__':
+       def main():
            o = ret_func()
-
            # invoking a task instance method on a future object can only
            # be done when an empty constructor is defined in the object's
            # class
            o.yet_another_task()
+
+       if __name__=='__main__':
+           main()
 
 
 Task Parameters
@@ -216,14 +207,17 @@ value defines the type and direction of the parameter. The parameter types and
 directions can be:
 
 Types
-   *Primitive types* (integer, long, float, boolean), *strings*,
-   *objects* (instances of user-defined classes, dictionaries, lists,
-   tuples, complex numbers) and *files* are supported.
+   * *Primitive types* (integer, long, float, boolean)
+   * *Strings*
+   * *Objects* (instances of user-defined classes, dictionaries, lists, tuples, complex numbers)
+   * *Files*
 
 Direction
-   It can be read-only (*IN* - default), read-write
-   (*INOUT*), write-only (*OUT*) or in some cases concurrent
-   (*CONCURRENT*) or conmutative (*CONMUTATIVE*).
+   * Read-only (*IN* - default)
+   * Read-write (*INOUT*)
+   * Write-only (*OUT*)
+   * Concurrent (*CONCURRENT*)
+   * Conmutative (*CONMUTATIVE*)
 
 COMPSs is able to automatically infer the parameter type for primitive
 types, strings and objects, while the user needs to specify it for
@@ -254,11 +248,11 @@ and *OUT* parameters. Thus, when defining the parameter metadata in the
     * - *FILE_OUT*
       - The parameter is a write-only file.
     * - *DIRECTORY_IN*
-      - The parameter is a directory and the direction is *IN*. In this case the directory will be compressed before any transfer amongst nodes.
+      - The parameter is a directory and the direction is *IN*. The directory will be compressed before any transfer amongst nodes.
     * - *DIRECTORY_INOUT*
-      - the parameter is a read-write directory.
+      - The parameter is a read-write directory. The directory will be compressed before any transfer amongst nodes.
     * - *DIRECTORY_OUT*
-      - The parameter is a write-only directory.
+      - The parameter is a write-only directory. The directory will be compressed before any transfer amongst nodes.
     * - *FILE_CONCURRENT*
       - The parameter is a concurrent read-write file.
     * - *FILE_CONMUTATIVE*
@@ -304,7 +298,7 @@ automatically inferred by COMPSs.
 
 .. code-block:: python
     :name: task_example_python
-    :caption: Python task example
+    :caption: Python task example with input output file (*FILE_INOUT*)
 
     from pycompss.api.task import task     # Import @task decorator
     from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
@@ -326,7 +320,7 @@ developer.
 
 .. code-block:: python
     :name: task_concurrent_python
-    :caption: Python task example with FILE_CONCURRENT
+    :caption: Python task example with *FILE_CONCURRENT*
 
     from pycompss.api.task import task     # Import @task decorator
     from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
@@ -342,7 +336,7 @@ by the runtime following the conmutative property.
 
 .. code-block:: python
     :name: task_conmutative_python
-    :caption: Python task example with CONMUTATIVE
+    :caption: Python task example with *FILE_CONMUTATIVE*
 
     from pycompss.api.task import task     # Import @task decorator
     from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
@@ -362,12 +356,12 @@ dependences between the collections and the individual elements.
 
 .. code-block:: python
     :name: task_collection_python
-    :caption: Python task example with COLLECTION
+    :caption: Python task example with *COLLECTION* (*IN*)
 
     from pycompss.api.task import task    # Import @task decorator
     from pycompss.api.parameter import *  # Import parameter metadata for the @task decorator
 
-    @task(my_collection=COLLECTION_IN)
+    @task(my_collection=COLLECTION)
     def func(my_collection):
          for element in my_collection:
              ...
@@ -380,7 +374,7 @@ the depth of the sub-objects can be limited through the use of the
 
 .. code-block:: python
     :name: task_collection_depth_python
-    :caption: Python task example with COLLECTION and depth
+    :caption: Python task example with *COLLECTION_IN* and *Depth*
 
     @task(my_collection={Type:COLLECTION_IN, Depth:2})
     def func(my_collection):
@@ -403,7 +397,7 @@ maximum duration before canceling (if exceeded) is one hour.
 
 .. code-block:: python
     :name: task_time_out
-    :caption: Python tasl time out example
+    :caption: Python task *time_out* example
 
     @task(time_out=3600)
     def unknown_duration_task(self):
@@ -416,15 +410,15 @@ The programmer can provide hints to the scheduler through specific
 arguments within the *@task* decorator.
 
 For instance, the programmer can mark a task as a high-priority task
-with the *priority* argument of the *@task* decorator (:numref:`task_priority_python`). In this
-way, when the task is free of dependencies, it will be scheduled before
+with the ``priority`` argument of the ``@task`` decorator (:numref:`task_priority_python`).
+In this way, when the task is free of dependencies, it will be scheduled before
 any of the available low-priority (regular) tasks. This functionality is
 useful for tasks that are in the critical path of the application’s task
 dependency graph.
 
 .. code-block:: python
     :name: task_priority_python
-    :caption: Python task priority example
+    :caption: Python task *priority* example
 
     @task(priority=True)
     def func():
@@ -440,7 +434,7 @@ main application. The default value for these parameters is False.
 
 .. code-block:: python
     :name: task_isdistributed_isreplicated_python
-    :caption: Python task is_distributed and is_replicated examples
+    :caption: Python task *is_distributed* and *is_replicated* examples
 
     @task(is_distributed=True)
     def func():
@@ -457,15 +451,15 @@ In case a task fails, the whole application behaviour can be defined
 using the *on_failure* argument (:numref:`task_on_failure_python`).
 It has four possible values: **'RETRY'**,
 **’CANCEL_SUCCESSORS’**, **’FAIL’** and **’IGNORE’**. *’RETRY’* is the default
-behaviour, making the task to be executed again, on the same worker or
-in another worker if the failure remains. *’CANCEL_SUCCESSORS’* ignores
+behaviour, making the task to be executed again (on the same worker or
+in another worker if the failure remains). *’CANCEL_SUCCESSORS’* ignores
 the failed task and cancels the execution of the successor tasks, *’FAIL’*
 stops the whole execution once a task fails and *’IGNORE’* ignores the
 failure and continues with the normal execution.
 
 .. code-block:: python
     :name: task_on_failure_python
-    :caption: Python task on_failure example
+    :caption: Python task *on_failure* example
 
     @task(on_failure='CANCEL_SUCCESSORS')
     def func():
@@ -480,45 +474,65 @@ Task Parameters Summary
     :name: task_arguments
     :widths: auto
 
-    +---------------------+---------------------------------------------------------------------------------------------------------+
-    | Argument            | Value                                                                                                   |
-    +=====================+=========================================================================================================+
-    | Formal parameter    | - **(default: empty)** The parameter is an object or a simple tipe that will be inferred.               |
-    | name                | - IN: Read-only parameter, all types.                                                                   |
-    |                     | - INOUT: Read-write parameter, all types except file (primitives, strings, objects).                    |
-    |                     | - OUT: Write-only parameter, all types except file (primitives, strings, objects).                      |
-    |                     | - CONCURRENT: Concurrent read-write parameter, all types except file (primitives, strings, objects).    |
-    |                     | - CONMUTATIVE: Conmutative read-write parameter, all types except file (primitives, strings, objects).  |
-    |                     | - FILE/FILE_IN: Read-only file parameter.                                                               |
-    |                     | - FILE_INOUT: Read-write file parameter.                                                                |
-    |                     | - FILE_OUT: Write-only file parameter.                                                                  |
-    |                     | - FILE_CONCURRENT: Concurrent read-write file parameter.                                                |
-    |                     | - FILE_CONMUTATIVE: Conmutative read-write file parameter.                                              |
-    |                     | - DIRECTORY_IN: the parameter is a read-only directory.                                                 |
-    |                     | - DIRECTORY_INOUT: the parameter is a read-write directory.                                             |
-    |                     | - DIRECTORY_OUT: the parameter is a write-only directory.                                               |
-    |                     | - COLLECTION_IN: Read-only collection parameter (list).                                                 |
-    |                     | - COLLECTION_INOUT: Read-write collection parameter (list).                                             |
-    |                     | - COLLECTION_OUT: Read-only collection parameter (list).                                                |
-    |                     | - COLLECTION_FILE/COLLECTION_FILE_IN: Read-only collection of files parameter (list of files).          |
-    |                     | - COLLECTION_FILE_INOUT: Read-write collection of files parameter (list of files).                      |
-    |                     | - COLLECTION_FILE_OUT: Read-only collection of files parameter (list opf files).                        |
-    |                     | - Dictionary: {Type:(empty=object)/FILE/COLLECTION, Direction:(empty=IN)/IN/INOUT/OUT/CONCURRENT}       |
-    +---------------------+---------------------------------------------------------------------------------------------------------+
-    | returns             | int (for integer and boolean), long, float, str, dict, list, tuple, user-defined classes                |
-    +---------------------+---------------------------------------------------------------------------------------------------------+
-    | target_direction    | INOUT (default), IN or CONCURRENT                                                                       |
-    +---------------------+---------------------------------------------------------------------------------------------------------+
-    | priority            | True or False (default)                                                                                 |
-    +---------------------+---------------------------------------------------------------------------------------------------------+
-    | is_distributed      | True or False (default)                                                                                 |
-    +---------------------+---------------------------------------------------------------------------------------------------------+
-    | is_replicated       | True or False (default)                                                                                 |
-    +---------------------+---------------------------------------------------------------------------------------------------------+
-    | on_failure          | ’RETRY’ (default), ’CANCEL_SUCCESSORS’, ’FAIL’ or ’IGNORE’                                              |
-    +---------------------+---------------------------------------------------------------------------------------------------------+
-    | time_out            | int (time in seconds)                                                                                   |
-    +---------------------+---------------------------------------------------------------------------------------------------------+
+    +---------------------+-----------------------------------------------------------------------------------------------------------------+
+    | Argument            | Value                                                                                                           |
+    +=====================+=======================+=========================================================================================+
+    | Formal parameter    | **(default: empty)**  | The parameter is an object or a simple tipe that will be inferred.                      |
+    | name                +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | IN                    | Read-only parameter, all types.                                                         |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | INOUT                 | Read-write parameter, all types except file (primitives, strings, objects).             |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | OUT                   | Write-only parameter, all types except file (primitives, strings, objects).             |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | CONCURRENT            | Concurrent read-write parameter, all types except file (primitives, strings, objects).  |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | CONMUTATIVE           | Conmutative read-write parameter, all types except file (primitives, strings, objects). |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | FILE(_IN)             | Read-only file parameter.                                                               |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | FILE_INOUT            | Read-write file parameter.                                                              |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | FILE_OUT              | Write-only file parameter.                                                              |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | FILE_CONCURRENT       | Concurrent read-write file parameter.                                                   |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | FILE_CONMUTATIVE      | Conmutative read-write file parameter.                                                  |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | DIRECTORY(_IN)        | The parameter is a read-only directory.                                                 |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | DIRECTORY_INOUT       | The parameter is a read-write directory.                                                |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | DIRECTORY_OUT         | the parameter is a write-only directory.                                                |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | COLLECTION(_IN)       | Read-only collection parameter (list).                                                  |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | COLLECTION_INOUT      | Read-write collection parameter (list).                                                 |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | COLLECTION_OUT        | Read-only collection parameter (list).                                                  |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | COLLECTION_FILE(_IN)  | Read-only collection of files parameter (list of files).                                |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | COLLECTION_FILE_INOUT | Read-write collection of files parameter (list of files).                               |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | COLLECTION_FILE_OUT   | Read-only collection of files parameter (list opf files).                               |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | Dictionary: {Type:(empty=object)/FILE/COLLECTION, Direction:(empty=IN)/IN/INOUT/OUT/CONCURRENT}                 |
+    +---------------------+-----------------------------------------------------------------------------------------------------------------+
+    | returns             | int (for integer and boolean), long, float, str, dict, list, tuple, user-defined classes                        |
+    +---------------------+-----------------------------------------------------------------------------------------------------------------+
+    | target_direction    | INOUT (default), IN or CONCURRENT                                                                               |
+    +---------------------+-----------------------------------------------------------------------------------------------------------------+
+    | priority            | True or False (default)                                                                                         |
+    +---------------------+-----------------------------------------------------------------------------------------------------------------+
+    | is_distributed      | True or False (default)                                                                                         |
+    +---------------------+-----------------------------------------------------------------------------------------------------------------+
+    | is_replicated       | True or False (default)                                                                                         |
+    +---------------------+-----------------------------------------------------------------------------------------------------------------+
+    | on_failure          | ’RETRY’ (default), ’CANCEL_SUCCESSORS’, ’FAIL’ or ’IGNORE’                                                      |
+    +---------------------+-----------------------------------------------------------------------------------------------------------------+
+    | time_out            | int (time in seconds)                                                                                           |
+    +---------------------+-----------------------------------------------------------------------------------------------------------------+
 
 Task Return
 ~~~~~~~~~~~
@@ -1187,6 +1201,10 @@ compss_wait_on_file(file_name)
    Synchronizes for the last version of the file *file_name*.
    Returns True if success (False otherwise).
 
+compss_wait_on_directory(directory_name)
+   Synchronizes for the last version of the directory *directory_name*.
+   Returns True if success (False otherwise).
+
 compss_delete_object(object)
    Notifies the runtime to delete all the associated files to a given object.
 
@@ -1198,6 +1216,16 @@ compss_barrier(no_more_tasks=False)
    continues. The *no_more_tasks* is used to specify if no more tasks
    are going to be submitted after the *compss_barrier()*.
 
+compss_barrier_group(group_name)
+   Performs a explicit synchronization over the tasks that belong to the group
+   *group_name*, but does not return any object.
+   The use of *compss_barrier_group()* forces to wait for all tasks that belong
+   to the given group submitted before the *compss_barrier_group()* is called.
+   When all group tasks submitted before the *compss_barrier_group()* have
+   finished, the execution continues.
+   See :ref:`Sections/02_User_Manual_App_Development/02_Python/01_Programming_model:Group Tasks`
+   for more information about task groups.
+
 compss_wait_on(obj, to_write=True)
    Synchronizes for the last version of object *obj* and returns the synchronized object.
    It can have an optional boolean parameter *to_write*, which defaults to
@@ -1205,6 +1233,14 @@ compss_wait_on(obj, to_write=True)
    returned object. It is possible to wait on a list of objects. In this
    particular case, it will synchronize all future objects contained in
    the list.
+
+TaskGroup(group_name, implicit_barrier=True)
+   Python context to define a group of tasks. All tasks submitted within the
+   context will belong to *group_name* context and are sensitive to wait for
+   them while the rest are being executed. Tasks groups are depicted within
+   a box into the generated task dependency graph.
+   See :ref:`Sections/02_User_Manual_App_Development/02_Python/01_Programming_model:Group Tasks`
+   for more information about task groups.
 
 To illustrate the use of the aforementioned API functions, the following
 example (:numref:`api_usage_python`) first invokes a task *func* that writes a file, which is later
@@ -1228,6 +1264,7 @@ code will not continue until the ten *func* tasks have finished.
     from pycompss.api.api import compss_delete_object
     from pycompss.api.api import compss_wait_on
     from pycompss.api.api import compss_wait_on_file
+    from pycompss.api.api import compss_wait_on_directory
     from pycompss.api.api import compss_barrier
 
     if __name__=='__main__':
@@ -1249,6 +1286,11 @@ code will not continue until the ten *func* tasks have finished.
         my_file3 = 'file3.txt'
         func(my_file3)
         compss_wait_on_file(my_file3)
+        ...
+
+        my_directory = '/tmp/data'
+        func_dir(my_directory)
+        compss_wait_on_directory(my_directory)
         ...
 
         my_obj1 = MyClass()
@@ -1329,6 +1371,10 @@ task groups within task groups.
     :name: task_group
     :caption: PyCOMPSs Task group definiton
 
+    from pycompss.api.task import task
+    from pycompss.api.api import TaskGroup
+    from pycompss.api.api import compss_barrier_group
+
     @task()
     def func1():
         ...
@@ -1339,10 +1385,12 @@ task groups within task groups.
 
     def test_taskgroup():
         # Creation of group
-        with TaskGroup('Group1', True):
+        with TaskGroup('Group1', False):
             for i in range(NUM_TASKS):
                 func1()
                 func2()
+            ...
+            compss_barrier_group('Group1')
             ...
         ...
 
@@ -1360,23 +1408,29 @@ used in the main program of a COMPSs Python application.
     :name: python_api_functions
     :widths: auto
 
-    +------------------------------------------+-----------------------------------------------------------------------------------------+
-    | API Function                             | Description                                                                             |
-    +==========================================+=========================================================================================+
-    | compss_file_exists(file_name)            | Check if a file exists.                                                                 |
-    +------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_open(file_name, mode=’r’)         | Synchronizes for the last version of a file and returns its file descriptor.            |
-    +------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_delete_file(file_name)            | Notifies the runtime to remove a file.                                                  |
-    +------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_wait_on_file(file_name)           | Synchronizes for the last version of a file.                                            |
-    +------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_delete_object(object)             | Notifies the runtime to delete the associated file to this object.                      |
-    +------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_barrier(no_more_tasks=False)      | Wait for all tasks submitted before the barrier.                                        |
-    +------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_wait_on(obj, to_write=True)       | Synchronizes for the last version of an object (or a list of objects) and returns it.   |
-    +------------------------------------------+-----------------------------------------------------------------------------------------+
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | API Function                                 | Description                                                                             |
+    +==============================================+=========================================================================================+
+    | compss_file_exists(file_name)                | Check if a file exists.                                                                 |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_open(file_name, mode=’r’)             | Synchronizes for the last version of a file and returns its file descriptor.            |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_delete_file(file_name)                | Notifies the runtime to remove a file.                                                  |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_wait_on_file(file_name)               | Synchronizes for the last version of a file.                                            |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_wait_on_directory(directory_name)     | Synchronizes for the last version of a directory.                                       |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_delete_object(object)                 | Notifies the runtime to delete the associated file to this object.                      |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_barrier(no_more_tasks=False)          | Wait for all tasks submitted before the barrier.                                        |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_barrier_group(group_name)             | Wait for all tasks that belong to *group_name* group submitted before the barrier.      |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_wait_on(obj, to_write=True)           | Synchronizes for the last version of an object (or a list of objects) and returns it.   |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | TaskGroup(group_name, implicit_barrier=True) | Context to define a group of tasks. *implicit_barrier* forces waiting on context exit.  |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
 
 Local Decorator
 ^^^^^^^^^^^^^^^
@@ -1434,6 +1488,7 @@ circunstances.
     :name: task_compss_exception
     :caption: COMPSs Exception example
 
+    from pycompss.api.task import task
     from pycompss.api.exceptions import COMPSsException
 
     @task()
@@ -1457,6 +1512,7 @@ the tasks which belong to the group will also be cancelled as soon as the
     :name: task_group_compss_exception
     :caption: COMPSs Exception with task group example
 
+    from pycompss.api.task import task
     from pycompss.api.exceptions import COMPSsException
     from pycompss.api.api import TaskGroup
 

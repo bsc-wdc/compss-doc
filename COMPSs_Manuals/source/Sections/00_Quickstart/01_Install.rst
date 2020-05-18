@@ -12,7 +12,7 @@ Install COMPSs
         | **Requirements:**
         |
         | - Ensure that the required system :ref:`Sections/01_Installation/01_Dependencies:Dependencies` are installed.
-        | - Check that your ``JAVA_HOME`` points to the Java JDK folder.
+        | - Check that your ``JAVA_HOME`` environment variable points to the Java JDK folder, that the ``GRADLE_HOME`` environment variable points to the GRADLE folder, and the ``gradle`` binary is in the ``PATH`` environment variable.
         | - Enable SSH passwordless to localhost. See :ref:`Sections/01_Installation/05_Additional_configuration:Configure SSH passwordless`.
         |
         | COMPSs will be installed within the ``$HOME/.local/`` folder (or alternatively within the active virtual environment).
@@ -23,6 +23,7 @@ Install COMPSs
                $ pip install pycompss -v
 
            .. important::
+
                Please, update the environment after installing COMPSs:
 
                .. code-block:: console
@@ -31,6 +32,13 @@ Install COMPSs
 
                If installed within a virtual environment, deactivate and activate
                it to ensure that the environment is propperly updated.
+
+               .. WARNING::
+
+                   If using Ubuntu 18.04 or higher, you will need to comment
+                   some lines of your ``.bashrc`` and do a complete logout.
+                   Please, check the :ref:`Sections/01_Installation/02_Building_from_sources:Post installation`
+                   Section for detailed instructions.
 
         | See :ref:`Sections/01_Installation:Installation and Administration` section for more information
         |
@@ -42,7 +50,7 @@ Install COMPSs
         | **Requirements:**
         |
         | - Ensure that the required system :ref:`Sections/01_Installation/01_Dependencies:Dependencies` are installed.
-        | - Check that your ``JAVA_HOME`` points to the Java JDK folder.
+        | - Check that your ``JAVA_HOME`` environment variable points to the Java JDK folder, that the ``GRADLE_HOME`` environment variable points to the GRADLE folder, and the ``gradle`` binary is in the ``PATH`` environment variable.
         | - Enable SSH passwordless to localhost. See :ref:`Sections/01_Installation/05_Additional_configuration:Configure SSH passwordless`.
         |
         | COMPSs will be installed within the ``/usr/lib64/pythonX.Y/site-packages/pycompss/`` folder.
@@ -53,11 +61,19 @@ Install COMPSs
                $ sudo -E pip install pycompss -v
 
            .. important::
+
                Please, update the environment after installing COMPSs:
 
                .. code-block:: console
 
                    $ source /etc/profile.d/compss.sh  # or alternatively reboot the machine
+
+               .. WARNING::
+
+                   If using Ubuntu 18.04 or higher, you will need to comment
+                   some lines of your ``.bashrc`` and do a complete logout.
+                   Please, check the :ref:`Sections/01_Installation/02_Building_from_sources:Post installation`
+                   Section for detailed instructions.
 
         | See :ref:`Sections/01_Installation:Installation and Administration` section for more information
         |
@@ -69,7 +85,7 @@ Install COMPSs
         | **Requirements:**
         |
         | - Ensure that the required system :ref:`Sections/01_Installation/01_Dependencies:Dependencies` are installed.
-        | - Check that your ``JAVA_HOME`` points to the Java JDK folder.
+        | - Check that your ``JAVA_HOME`` environment variable points to the Java JDK folder, that the ``GRADLE_HOME`` environment variable points to the GRADLE folder, and the ``gradle`` binary is in the ``PATH`` environment variable.
         | - Enable SSH passwordless to localhost. See :ref:`Sections/01_Installation/05_Additional_configuration:Configure SSH passwordless`.
         |
         | COMPSs will be installed within the ``$HOME/COMPSs/`` folder.
@@ -83,13 +99,15 @@ Install COMPSs
                $ ./submodules_patch.sh
                $ cd builders/
                $ export INSTALL_DIR=$HOME/COMPSs/
-               $ ./buildlocal [options] ${INSTALL_DIR}
+               $ ./buildlocal ${INSTALL_DIR}
 
         | The different installation options can be found in the command help.
 
            .. code-block:: console
 
                $ ./buildlocal -h
+
+        | Please, check the :ref:`Sections/01_Installation/02_Building_from_sources:Post installation` Section.
 
         | See :ref:`Sections/01_Installation:Installation and Administration` section for more information
         |
@@ -101,7 +119,7 @@ Install COMPSs
         | **Requirements:**
         |
         | - Ensure that the required system :ref:`Sections/01_Installation/01_Dependencies:Dependencies` are installed.
-        | - Check that your ``JAVA_HOME`` points to the Java JDK folder.
+        | - Check that your ``JAVA_HOME`` environment variable points to the Java JDK folder, that the ``GRADLE_HOME`` environment variable points to the GRADLE folder, and the ``gradle`` binary is in the ``PATH`` environment variable.
         | - Enable SSH passwordless to localhost. See :ref:`Sections/01_Installation/05_Additional_configuration:Configure SSH passwordless`.
         |
         | COMPSs will be installed within the ``/opt/COMPSs/`` folder.
@@ -115,13 +133,15 @@ Install COMPSs
                $ ./submodules_patch.sh
                $ cd builders/
                $ export INSTALL_DIR=/opt/COMPSs/
-               $ sudo -E ./buildlocal [options] ${INSTALL_DIR}
+               $ sudo -E ./buildlocal ${INSTALL_DIR}
 
         | The different installation options can be found in the command help.
 
            .. code-block:: console
 
                $ ./buildlocal -h
+
+        | Please, check the :ref:`Sections/01_Installation/02_Building_from_sources:Post installation` Section.
 
         | See :ref:`Sections/01_Installation:Installation and Administration` section for more information
         |

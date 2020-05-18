@@ -75,7 +75,7 @@ Installation
        in the ``PATH`` environment variable, preventing to access to the ``pycompss-player``
        commands (and any other Python packages installed in the user HOME).
 
-       If you experience that the ``pycompss``\| ``compss``\|``dislib`` command is
+       If you experience that the ``pycompss``\| ``compss``\| ``dislib`` command is
        not available after the installation, you may need to include the
        following line into your ``.bashrc`` and execute it in your current session:
 

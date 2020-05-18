@@ -7,8 +7,9 @@ Pre-requisites
 In order to be able to install COMPSs and PyCOMPSs with Pip, the
 dependencies (excluding the COMPSs packages) mentioned
 in the :ref:`Sections/01_Installation/01_Dependencies:Dependencies` Section must be satisfied (*do not forget*
-to have a proper ``JAVA_HOME`` environment variable pointing to the
-java JDK folder) and Python ``pip``.
+to have proper ``JAVA_HOME`` and ``GRADLE_HOME`` environment variables pointing to the
+java JDK folder and Gradle home respectively, as well as the ``gradle`` binary in the
+``PATH`` environment variable) and Python ``pip``.
 
 Installation
 ------------
@@ -64,7 +65,7 @@ possible scenarios and their proper installation command are:
 
         .. code-block:: console
 
-            $ pip install pycompss -v
+            (virtualenv) $ pip install pycompss -v
 
         In this particular case, the installation includes the necessary
         variables in the activate script. So, restart the virtual environment

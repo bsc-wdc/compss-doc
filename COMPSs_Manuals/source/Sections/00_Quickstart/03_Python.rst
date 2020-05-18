@@ -244,9 +244,10 @@ The X axis represents the time, and the Y axis the deployed processes
 to the master process in the worker (1.2.1) whose events are
 shown with the ``compss_runtime.cfg`` configuration file).
 
-The rest, represent the worker cores, which process the ``increment`` tasks
-(shown in blue). We can quickly see that the four `increment` tasks
-have been executed in parallel.
+The ``increment`` tasks are depicted in blue.
+We can quickly see that the four `increment` tasks have been executed in parallel
+(one per core), and that their lengths are different (depending on the
+computing time of the task represented by the ``time.sleep(value * 2)`` line).
 
 Paraver is a very powerful tool for performance analysis. For more information,
 check the :ref:`Sections/05_Tracing:Tracing` Section.
