@@ -458,6 +458,6 @@ of the application, which can be visualized with GRACE.
    :name: 1xyw_potential
    :alt: 1xyw Potential result
    :align: center
-   :width: 50.0%
+   :width: 40.0%
 
    1xyw Potential result (plotted with GRACE)
