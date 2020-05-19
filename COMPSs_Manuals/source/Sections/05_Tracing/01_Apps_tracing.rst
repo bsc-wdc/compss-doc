@@ -53,13 +53,13 @@ Basic Mode Usage
 In order to activate basic tracing one needs to provide one of the
 following arguments to the execution command:
 
--  -t
+-  ``-t``
 
--  --tracing
+-  ``--tracing``
 
--  --tracing=basic
+-  ``--tracing=basic``
 
--  --tracing=true
+-  ``--tracing=true``
 
 Examples given:
 
@@ -273,7 +273,7 @@ Advanced Mode Usage
 In order to activate the advanced tracing add the following option to
 the execution:
 
--  --tracing=advanced
+-  ``--tracing=advanced``
 
 Examples given:
 

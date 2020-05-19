@@ -24,30 +24,54 @@ folder contains the configurations for Python events, and finally the
     +-----------------------------------+------------------------------------------------------------------------+
     | 3dh_duration_tasks.cfg            | 3D Histogram of tasks duration                                         |
     +-----------------------------------+------------------------------------------------------------------------+
+    | Interval_between_runtime.cfg      | Interval between runtime events                                        |
+    +-----------------------------------+------------------------------------------------------------------------+
     | compss_runtime.cfg                | Shows COMPSs Runtime events (master and workers)                       |
     +-----------------------------------+------------------------------------------------------------------------+
-    | compss_tasks_and_runtime.cfg      | Shows COMPSs Runtime events (master and workers) and tasks execution   |
+    | compss_runtime_master.cfg         | Shows COMPSs Runtime master events                                     |
+    +-----------------------------------+------------------------------------------------------------------------+
+    | compss_storage.cfg                | Shows COMPSs persistent storage events                                 |
     +-----------------------------------+------------------------------------------------------------------------+
     | compss_tasks.cfg                  | Shows tasks execution                                                  |
     +-----------------------------------+------------------------------------------------------------------------+
+    | compss_tasks_and_runtime.cfg      | Shows COMPSs Runtime events (master and workers) and tasks execution   |
+    +-----------------------------------+------------------------------------------------------------------------+
     | compss_tasks_numbers.cfg          | Shows tasks execution by task id                                       |
     +-----------------------------------+------------------------------------------------------------------------+
-    | Interval_between_runtime.cfg      | Interval between runtime events                                        |
+    | compss_waiting_tasks.cfg          | Shows waiting tasks                                                    |
     +-----------------------------------+------------------------------------------------------------------------+
-    | thread_cpu.cfg                    | Shows the initial executing CPU.                                       |
+    | nb_executing_tasks.cfg            | Number of executing tasks                                              |
+    +-----------------------------------+------------------------------------------------------------------------+
+    | nb_requested_cpus.cfg             | Number of requested CPUs                                               |
+    +-----------------------------------+------------------------------------------------------------------------+
+    | nb_requested_disk_bw.cfg          | Number of requested disk bandwidth                                     |
+    +-----------------------------------+------------------------------------------------------------------------+
+    | nb_requested_gpus.cfg             | Number of requested GPUs                                               |
+    +-----------------------------------+------------------------------------------------------------------------+
+    | nb_executing_mem.cfg              | Number of executing memory                                             |
+    +-----------------------------------+------------------------------------------------------------------------+
+    | task_duration.cfg                 | Shows tasks duration                                                   |
+    +-----------------------------------+------------------------------------------------------------------------+
+    | thread_cpu.cfg                    | Shows the initial executing CPU                                        |
+    +-----------------------------------+------------------------------------------------------------------------+
+    | time_betw_tasks.cfg               | Shows the time between tasks                                           |
     +-----------------------------------+------------------------------------------------------------------------+
 
 .. table:: Available paraver configurations for Python events of COMPSs Applications
     :name: paraver_configs_python
     :widths: auto
 
-    +-----------------------------------+---------------------------------------------------------------------------------------------------------------+
-    | Configuration File Name           | Description                                                                                                   |
-    +===================================+===============================================================================================================+
-    | 3dh_events_inside_task.cfg        | 3D Histogram of python events                                                                                 |
-    +-----------------------------------+---------------------------------------------------------------------------------------------------------------+
-    | 3dh_events_inside_tasks.cfg       | Events showing python information such as user function execution time, modules imports, or serializations.   |
-    +-----------------------------------+---------------------------------------------------------------------------------------------------------------+
+    +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
+    | Configuration File Name              | Description                                                                                                   |
+    +======================================+===============================================================================================================+
+    | 3dh_events_inside_task.cfg           | 3D Histogram of python events                                                                                 |
+    +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
+    | events_inside_tasks.cfg              | Events showing python information such as user function execution time, modules imports, or serializations    |
+    +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
+    | Time_between_events_inside_tasks.cfg | Shows the time between events inside tasks                                                                    |
+    +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
+    | nb_user_code_executing.cfg           | Number of user code executing                                                                                 |
+    +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
 
 .. table:: Available paraver configurations for COMPSs Applications
     :name: paraver_configs_comm

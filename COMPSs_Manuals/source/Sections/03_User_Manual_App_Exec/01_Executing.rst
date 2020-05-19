@@ -261,9 +261,10 @@ specifying the *lang* flag.
 
     ------------------------------------------------------------
 
-**Attention**: Executing without debug (e.g. default log level or
-``--log_level=off``) uses -O2 compiled sources, disabling ``asserts``
-and ``__debug__``.
+.. ATTENTION::
+
+    Executing without debug (e.g. default log level or ``--log_level=off``)
+    uses -O2 compiled sources, disabling ``asserts`` and ``__debug__``.
 
 Alternatively, it is possible to execute the a COMPSs Python application
 using ``pycompss`` as module:

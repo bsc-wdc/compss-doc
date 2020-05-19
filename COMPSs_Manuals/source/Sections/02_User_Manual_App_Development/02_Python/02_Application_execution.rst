@@ -16,7 +16,7 @@ JAVA_HOME
 Command
 ~~~~~~~
 
-In order to run a Python application with COMPSs, the runcompss script
+In order to run a Python application with COMPSs, the ``runcompss`` script
 can be used, like for Java and C/C++ applications. An example of an
 invocation of the script is:
 
@@ -34,6 +34,17 @@ Or alternatively, use the ``pycompss`` module:
     compss@bsc:~$ python -m pycompss \
                     --pythonpath=$TEST_DIR \
                     $TEST_DIR/application.py arg1 arg2
+
+.. TIP::
+
+    The ``runcompss`` command is able to detect the application language.
+    Consequently, the ``--lang=python`` is not mandatory.
+
+.. TIP::
+
+    The ``--pythonpath`` flag enables the user to add directories to the
+    ``PYTHONPATH`` environment variable and export them into the workers, so
+    that the tasks can resolve successfully its imports.
 
 For full description about the options available for the runcompss
 command please check the :ref:`Sections/03_User_Manual_App_Exec/01_Executing:Executing COMPSs applications` Section.
