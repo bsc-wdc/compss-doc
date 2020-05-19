@@ -1,12 +1,12 @@
 Kmeans
 ------
 
-The Kmeans is a clustering application aimed at finding the best centers in
-a set of multidimensional points.
+KMeans is machine-learning algorithm (NP-hard), popularly employed for cluster
+analysis in data mining, and interesting for benchmarking and performance evaluation.
 
-This example represents a more complex application where external libraries
-are used (e.g. ``sklearn`` and ``argparse``) and we have more tasks defined,
-building a more complex workflow.
+The objective of the Kmeans algorithm to group a set of multidimensional points
+into a predefined number of clusters, in which each point belongs to the closest
+cluster (with the nearest mean distance), in an iterative process.
 
 
 .. code-block:: python
