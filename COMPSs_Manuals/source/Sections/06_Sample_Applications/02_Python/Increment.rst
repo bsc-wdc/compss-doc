@@ -67,7 +67,7 @@ counter2
 counter3
     Initial value for counter 3
 
-Next we run the Increment application with the ``-g` option to be able to
+Next we run the Increment application with the ``-g`` option to be able to
 generate the final graph at the end of the execution.
 
 .. code-block:: console
