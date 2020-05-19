@@ -60,8 +60,8 @@ This manual is divided in 9 sections:
    Sections/03_User_Manual_App_Exec
    Sections/04_Supercomputers
    Sections/05_Tracing
-   Sections/06_Sample_Applications
-   Sections/07_Persistent_Storage
+   Sections/06_Persistent_Storage
+   Sections/07_Sample_Applications
    Sections/08_PyCOMPSs_Player
    Sections/09_PyCOMPSs_Notebooks
 

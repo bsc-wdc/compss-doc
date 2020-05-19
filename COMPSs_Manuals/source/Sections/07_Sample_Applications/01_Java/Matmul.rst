@@ -9,11 +9,14 @@ matrices by blocks.
 This application provides three different implementations that only
 differ on the way of storing the matrix:
 
-#. **matmul.objects.Matmul** Matrix stored by means of objects
+matmul.objects.Matmul
+    Matrix stored by means of objects
 
-#. **matmul.files.Matmul** Matrix stored in files
+matmul.files.Matmul
+    Matrix stored in files
 
-#. **matmul.arrays.Matmul** Matrix represented by an array
+matmul.arrays.Matmul
+    Matrix represented by an array
 
 .. figure:: ./Figures/matrix.jpeg
    :name: matmul

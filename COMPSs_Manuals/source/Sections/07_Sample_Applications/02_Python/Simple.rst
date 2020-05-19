@@ -51,14 +51,15 @@ main code and the task declaration:
     if __name__=='__main__':
         main_program()
 
-The simple application can be executed by invoking the runcompss command
-with the ``--lang=python`` flag. The following lines provide an example of
-its execution.
+The simple application can be executed by invoking the ``runcompss`` command
+with the application file name and the initial counter value.
+
+The following lines provide an example of its execution.
 
 .. code-block:: console
 
     compss@bsc:~$ cd ~/tutorial_apps/python/simple/
-    compss@bsc:~/tutorial_apps/python/simple$ runcompss --lang=python ~/tutorial_apps/python/simple/simple.py 1
+    compss@bsc:~/tutorial_apps/python/simple$ runcompss ~/tutorial_apps/python/simple/simple.py 1
     [  INFO] Using default execution type: compss
     [  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
     [  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml

@@ -334,10 +334,12 @@ present and that MPI path is correct and exists. Sample output:
 
     Please, report bugs to tools@bsc.es
 
-**Disclaimer:** the parallel merge with MPI will not bypass the system’s
-maximum number of open files, just distribute the files among the
-resources. If all resources belong to the same machine, the merge will
-fail anyways.
+.. IMPORTANT::
+
+    **Disclaimer:** the parallel merge with MPI will not bypass the system’s
+    maximum number of open files, just distribute the files among the
+    resources. If all resources belong to the same machine, the merge will
+    fail anyways.
 
 The **second option** is to increase the OS maximum number of open
 files. For instance, in Ubuntu add `` ulimit -n 40000 `` just before the

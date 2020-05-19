@@ -182,7 +182,7 @@ application (developed in Java, Python and C++) available in the
 COMPSs Virtual Machine or at https://compss.bsc.es/projects/bar webpage.
 This application takes an integer as input parameter and increases it by
 one unit using a task. For further details about the codes please refer
-to :ref:`Sections/06_Sample_Applications:Sample Applications`.
+to :ref:`Sections/07_Sample_Applications:Sample Applications`.
 
 Running Java applications
 ~~~~~~~~~~~~~~~~~~~~~~~~~

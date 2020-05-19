@@ -260,12 +260,10 @@ supercomputer:
     module load COMPSs/2.6
     module load gromacs/2016.4   # exposes gmx_mpi binary
 
-    export GMX_BIN=/home/user/gromacs5.1.2/bin   # exposes gmx binary
+    export GMX_BIN=/home/user/lysozyme5.1.2/bin   # exposes gmx binary
 
     # Enqueue the application
     enqueue_compss \
-    --qos=training \
-    --reservation=PATC20-COMPSs \
     --num_nodes=$numNodes \
     --exec_time=$executionTime \
     --master_working_dir=. \
@@ -285,6 +283,181 @@ supercomputer:
     #       ./launch_md.sh <NUMBER_OF_NODES> <EXECUTION_TIME> <TRACING> <CONFIG_PATH> <DATASET_PATH> <OUTPUT_PATH>
     #
     # Example:
-    #       ./launch_md.sh 2 10 true $(pwd)/config/ $(pwd)/dataset/ $(pwd)/output/
+    #       ./launch_md.sh 2 10 false $(pwd)/config/ $(pwd)/dataset/ $(pwd)/output/
     #
     #####################################################
+
+Having the ``1aki.pdb``, ``1u3m.pdb`` and 1xyw.pdb`` proteins in the ``dataset``
+folder, the execution of this script produces the submission of the job with
+the following output:
+
+.. code-block:: console
+
+    $ ./launch_md.sh 2 10 false $(pwd)/config/ $(pwd)/dataset/ $(pwd)/output/
+
+    remove mkl/2017.4 (LD_LIBRARY_PATH)
+    remove impi/2017.4 (PATH, MANPATH, LD_LIBRARY_PATH)
+    Set INTEL compilers as MPI wrappers backend
+    load impi/2017.4 (PATH, MANPATH, LD_LIBRARY_PATH)
+    load mkl/2017.4 (LD_LIBRARY_PATH)
+    load java/8u131 (PATH, MANPATH, JAVA_HOME, JAVA_ROOT, JAVA_BINDIR, SDK_HOME, JDK_HOME, JRE_HOME)
+    load papi/5.5.1 (PATH, LD_LIBRARY_PATH, C_INCLUDE_PATH)
+    Loading default Python 2.7.13.
+    * For alternative Python versions, please set the COMPSS_PYTHON_VERSION environment variable with 2, 3, 2-jupyter or 3-jupyter before loading the COMPSs module.
+    load PYTHON/2.7.13 (PATH, MANPATH, LD_LIBRARY_PATH, LIBRARY_PATH, PKG_CONFIG_PATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, PYTHONHOME)
+    load lzo/2.10 (LD_LIBRARY_PATH,PKG_CONFIG_PATH,CFLAGS,CXXFLAGS,LDFLAGS)
+    load boost/1.64.0_py2 (LD_LIBRARY_PATH, LIBRARY_PATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, BOOST_ROOT)
+    load COMPSs/2.6 (PATH, CLASSPATH, MANPATH, GAT_LOCATION, COMPSS_HOME, JAVA_TOOL_OPTIONS, LDFLAGS, CPPFLAGS)
+    load gromacs/2016.4 (PATH, LD_LIBRARY_PATH)
+    SC Configuration:          default.cfg
+    JobName:                   COMPSs
+    Queue:                     default
+    Reservation:               disabled
+    Num Nodes:                 2
+    Num Switches:              0
+    GPUs per node:             0
+    Job dependency:            None
+    Exec-Time:                 00:10:00
+    QoS:                       debug
+    Constraints:               disabled
+    Storage Home:              null
+    Storage Properties:
+    Other:
+    			--sc_cfg=default.cfg
+    			--qos=debug
+    			--master_working_dir=.
+    			--worker_working_dir=/gpfs/home/user/lysozyme
+    			--tracing=false
+    			--graph=true
+    			--classpath=/home/user/lysozyme/./src/
+    			--pythonpath=/home/user/lysozyme/./src/
+    			--lang=python /home/user/lysozyme/./src/lysozyme_in_water.py /home/user/lysozyme/config/ /home/user/lysozyme/dataset/ /home/user/lysozyme/output/
+
+    Temp submit script is: /scratch/tmp/tmp.sMHLsaTUJj
+    Requesting 96 processes
+    Submitted batch job 10178129
+
+
+Once executed, it produces the ``compss-10178129.out`` file, containing all the
+standard output messages flushed during the execution:
+
+.. code-block:: console
+
+    $ cat compss-10178129.out
+
+    ------ Launching COMPSs application ------
+    [  INFO] Using default execution type: compss
+    [  INFO] Relative Classpath resolved: /home/user/lysozyme/./src/:
+
+    ----------------- Executing lysozyme_in_water.py --------------------------
+    [(590)    API]  -  Starting COMPSs Runtime v2.6 (build 20191110-1437.rb64656e825a88a4b49e60e5e505999f7b9866662)
+    Starting demo
+
+    # Here it takes some time to process the dataset
+
+    [(290788)    API]  -  Execution Finished
+
+    ------------------------------------------------------------
+    [LAUNCH_COMPSS] Waiting for application completion
+
+
+
+Since the execution has been performed with the task dependency graph generation
+enabled, the result is depicted in :numref:`lysozyme_python`. It can be
+identified that PyCOMPSs has been able to analyse the three given proteins
+in parallel.
+
+
+.. figure:: ./Figures/lysozyme_graph.jpeg
+   :name: lysozyme_python
+   :alt: Python Lysozyme in Water tasks graph
+   :align: center
+   :width: 50.0%
+
+   Python Lysozyme in Water tasks graph
+
+
+The output of the application is a set of files within the output folder.
+It can be seen that the files decorated with *FILE_OUT* are stored in this
+folder. In particular, potential (``.xvg``) files represent the final results
+of the application, which can be visualized with GRACE.
+
+.. code-block:: console
+
+    user@login:~/lysozyme/output> ls -l
+    total 79411
+    -rw-r--r-- 1 user group    8976 may 19 17:06 1aki_em_energy.edr
+    -rw-r--r-- 1 user group 1280044 may 19 17:03 1aki_em.tpr
+    -rw-r--r-- 1 user group   88246 may 19 17:03 1aki.gro
+    -rw-r--r-- 1 user group 1279304 may 19 17:03 1aki_ions.tpr
+    -rw-r--r-- 1 user group   88246 may 19 17:03 1aki_newbox.gro
+    -rw-r--r-- 1 user group    2141 may 19 17:06 1aki_potential.xvg  <-------
+    -rw-r--r-- 1 user group 1525186 may 19 17:03 1aki_solv.gro
+    -rw-r--r-- 1 user group 1524475 may 19 17:03 1aki_solv_ions.gro
+    -rw-r--r-- 1 user group  577616 may 19 17:03 1aki.top
+    -rw-r--r-- 1 user group  577570 ene 24 16:11 #1aki.top.1#
+    -rw-r--r-- 1 user group  577601 may 19 16:59 #1aki.top.10#
+    -rw-r--r-- 1 user group  577570 may 19 17:03 #1aki.top.11#
+    -rw-r--r-- 1 user group  577601 may 19 17:03 #1aki.top.12#
+    -rw-r--r-- 1 user group  577601 ene 24 16:11 #1aki.top.2#
+    -rw-r--r-- 1 user group  577570 ene 24 16:20 #1aki.top.3#
+    -rw-r--r-- 1 user group  577601 ene 24 16:20 #1aki.top.4#
+    -rw-r--r-- 1 user group  577570 ene 24 16:25 #1aki.top.5#
+    -rw-r--r-- 1 user group  577601 ene 24 16:25 #1aki.top.6#
+    -rw-r--r-- 1 user group  577570 ene 24 16:31 #1aki.top.7#
+    -rw-r--r-- 1 user group  577601 ene 24 16:31 #1aki.top.8#
+    -rw-r--r-- 1 user group  577570 may 19 16:59 #1aki.top.9#
+    -rw-r--r-- 1 user group    8976 may 19 17:08 1u3m_em_energy.edr
+    -rw-r--r-- 1 user group 1416272 may 19 17:03 1u3m_em.tpr
+    -rw-r--r-- 1 user group   82046 may 19 17:03 1u3m.gro
+    -rw-r--r-- 1 user group 1415196 may 19 17:03 1u3m_ions.tpr
+    -rw-r--r-- 1 user group   82046 may 19 17:03 1u3m_newbox.gro
+    -rw-r--r-- 1 user group    2151 may 19 17:08 1u3m_potential.xvg  <-------
+    -rw-r--r-- 1 user group 1837046 may 19 17:03 1u3m_solv.gro
+    -rw-r--r-- 1 user group 1836965 may 19 17:03 1u3m_solv_ions.gro
+    -rw-r--r-- 1 user group  537950 may 19 17:03 1u3m.top
+    -rw-r--r-- 1 user group  537904 ene 24 16:11 #1u3m.top.1#
+    -rw-r--r-- 1 user group  537935 may 19 16:59 #1u3m.top.10#
+    -rw-r--r-- 1 user group  537904 may 19 17:03 #1u3m.top.11#
+    -rw-r--r-- 1 user group  537935 may 19 17:03 #1u3m.top.12#
+    -rw-r--r-- 1 user group  537935 ene 24 16:11 #1u3m.top.2#
+    -rw-r--r-- 1 user group  537904 ene 24 16:20 #1u3m.top.3#
+    -rw-r--r-- 1 user group  537935 ene 24 16:20 #1u3m.top.4#
+    -rw-r--r-- 1 user group  537904 ene 24 16:25 #1u3m.top.5#
+    -rw-r--r-- 1 user group  537935 ene 24 16:25 #1u3m.top.6#
+    -rw-r--r-- 1 user group  537904 ene 24 16:31 #1u3m.top.7#
+    -rw-r--r-- 1 user group  537935 ene 24 16:31 #1u3m.top.8#
+    -rw-r--r-- 1 user group  537904 may 19 16:59 #1u3m.top.9#
+    -rw-r--r-- 1 user group    8780 may 19 17:08 1xyw_em_energy.edr
+    -rw-r--r-- 1 user group 1408872 may 19 17:03 1xyw_em.tpr
+    -rw-r--r-- 1 user group   80112 may 19 17:03 1xyw.gro
+    -rw-r--r-- 1 user group 1407844 may 19 17:03 1xyw_ions.tpr
+    -rw-r--r-- 1 user group   80112 may 19 17:03 1xyw_newbox.gro
+    -rw-r--r-- 1 user group    2141 may 19 17:08 1xyw_potential.xvg  <-------
+    -rw-r--r-- 1 user group 1845237 may 19 17:03 1xyw_solv.gro
+    -rw-r--r-- 1 user group 1845066 may 19 17:03 1xyw_solv_ions.gro
+    -rw-r--r-- 1 user group  524026 may 19 17:03 1xyw.top
+    -rw-r--r-- 1 user group  523980 ene 24 16:11 #1xyw.top.1#
+    -rw-r--r-- 1 user group  524011 may 19 16:59 #1xyw.top.10#
+    -rw-r--r-- 1 user group  523980 may 19 17:03 #1xyw.top.11#
+    -rw-r--r-- 1 user group  524011 may 19 17:03 #1xyw.top.12#
+    -rw-r--r-- 1 user group  524011 ene 24 16:11 #1xyw.top.2#
+    -rw-r--r-- 1 user group  523980 ene 24 16:20 #1xyw.top.3#
+    -rw-r--r-- 1 user group  524011 ene 24 16:20 #1xyw.top.4#
+    -rw-r--r-- 1 user group  523980 ene 24 16:25 #1xyw.top.5#
+    -rw-r--r-- 1 user group  524011 ene 24 16:25 #1xyw.top.6#
+    -rw-r--r-- 1 user group  523980 ene 24 16:31 #1xyw.top.7#
+    -rw-r--r-- 1 user group  524011 ene 24 16:31 #1xyw.top.8#
+    -rw-r--r-- 1 user group  523980 may 19 16:59 #1xyw.top.9#
+
+
+:numref:`1xyw_potential` depicts the potential results obtained for the
+1xyw protein.
+
+.. figure:: ./Figures/1xyw_potential.png
+   :name: 1xyw_potential
+   :alt: 1xyw Potential result
+   :align: center
+   :width: 40.0%
+
+   1xyw Potential result (plotted with GRACE)
