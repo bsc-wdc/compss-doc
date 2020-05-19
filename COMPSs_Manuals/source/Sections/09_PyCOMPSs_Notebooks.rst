@@ -220,5 +220,4 @@ It is divided into three main folders:
 
 .. |Binder| image:: https://mybinder.org/badge_logo.svg
     :alt: MyBinder
-    :scale: 100%
     :target: https://mybinder.org/v2/gh/bsc-wdc/notebooks/master?urlpath=/tree/home/jovyan
