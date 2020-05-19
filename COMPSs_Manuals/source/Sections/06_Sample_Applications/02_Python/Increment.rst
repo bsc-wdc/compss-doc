@@ -53,18 +53,21 @@ Next we provide the main code of this application. The code inside the
     if __name__=='__main__':
         main_program()
 
-As shown in the main code, this application has 4 parameters that stand
-for:
+As shown in the main code, this application has 4 parameters that stand for:
 
-#. **N:** Number of times to increase a counter
+N
+    Number of times to increase a counter
 
-#. **counter1:** Initial value for counter 1
+counter1
+    Initial value for counter 1
 
-#. **counter2:** Initial value for counter 2
+counter2
+    Initial value for counter 2
 
-#. **counter3:** Initial value for counter 3
+counter3
+    Initial value for counter 3
 
-Next we run the Increment application with the *-g* option to be able to
+Next we run the Increment application with the ``-g` option to be able to
 generate the final graph at the end of the execution.
 
 .. code-block:: console
@@ -90,7 +93,7 @@ generate the final graph at the end of the execution.
 
     ------------------------------------------------------------
 
-By running the *compss_gengraph* command users can obtain the task
+By running the ``compss_gengraph`` command users can obtain the task
 graph of the above execution. Next we provide the set of commands to
 obtain the graph show in :numref:`increment_python`.
 
