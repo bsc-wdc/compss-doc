@@ -483,7 +483,7 @@ A COMPSs Java application needs to be packaged in a *jar* file
 containing the class files of the main code, of the methods
 implementations and of the *Itf* annotation. Next we provide a set of
 commands to compile the Java Simple application (detailed at
-:ref:`Sections/06_Sample_Applications/01_Java:Java Sample applications`).
+:ref:`Sections/07_Sample_Applications/01_Java:Java Sample applications`).
 
 .. code-block:: console
 

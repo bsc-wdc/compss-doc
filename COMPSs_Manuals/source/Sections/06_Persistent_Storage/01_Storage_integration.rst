@@ -22,13 +22,13 @@ using a persistent storage framework requires some specific flags in
 
 Currently, there exists storage interfaces for dataClay_, Hecuba_ and Redis_.
 They are thoroughly described from the developer and user point of view in
-:ref:`Sections/07_Persistent_Storage/02_COMPSs_dataClay:COMPSs + dataClay`,
-:ref:`Sections/07_Persistent_Storage/03_COMPSs_Hecuba:COMPSs + Hecuba` and
-:ref:`Sections/07_Persistent_Storage/04_COMPSs_Redis:COMPSs + Redis` Sections.
+:ref:`Sections/06_Persistent_Storage/02_COMPSs_dataClay:COMPSs + dataClay`,
+:ref:`Sections/06_Persistent_Storage/03_COMPSs_Hecuba:COMPSs + Hecuba` and
+:ref:`Sections/06_Persistent_Storage/04_COMPSs_Redis:COMPSs + Redis` Sections.
 
 The interface is open to any other storage framework by implementing the
 required functionalities described in
-:ref:`Sections/07_Persistent_Storage/05_Own_interface:Implement your own Storage interface for COMPSs`.
+:ref:`Sections/06_Persistent_Storage/05_Own_interface:Implement your own Storage interface for COMPSs`.
 
 
 .. _dataClay: https://www.bsc.es/research-and-development/software-and-apps/software-list/dataclay

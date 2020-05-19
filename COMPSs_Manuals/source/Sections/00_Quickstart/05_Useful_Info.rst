@@ -20,9 +20,9 @@ Choose your flavour:
 
         - Troubleshooting -> :ref:`Sections/03_User_Manual_App_Exec/05_Common_issues:Common Issues`
 
-        - Sample applications -> :ref:`Sections/06_Sample_Applications/01_Java:Java Sample applications`
+        - Sample applications -> :ref:`Sections/07_Sample_Applications/01_Java:Java Sample applications`
 
-        - Using COMPSs with persistent storage frameworks (e.g. dataClay, Hecuba) -> :ref:`Sections/07_Persistent_Storage:Persistent Storage`
+        - Using COMPSs with persistent storage frameworks (e.g. dataClay, Hecuba) -> :ref:`Sections/06_Persistent_Storage:Persistent Storage`
 
     .. tab-container:: Python
         :title: Python
@@ -39,9 +39,9 @@ Choose your flavour:
 
         - Troubleshooting -> :ref:`Sections/03_User_Manual_App_Exec/05_Common_issues:Common Issues`
 
-        - Sample applications -> :ref:`Sections/06_Sample_Applications/02_Python:Python Sample applications`
+        - Sample applications -> :ref:`Sections/07_Sample_Applications/02_Python:Python Sample applications`
 
-        - Using COMPSs with persistent storage frameworks (e.g. dataClay, Hecuba) -> :ref:`Sections/07_Persistent_Storage:Persistent Storage`
+        - Using COMPSs with persistent storage frameworks (e.g. dataClay, Hecuba) -> :ref:`Sections/06_Persistent_Storage:Persistent Storage`
 
     .. tab-container:: C
         :title: C/C++
@@ -58,4 +58,4 @@ Choose your flavour:
 
         - Troubleshooting -> :ref:`Sections/03_User_Manual_App_Exec/05_Common_issues:Common Issues`
 
-        - Sample applications -> :ref:`Sections/06_Sample_Applications/03_C:C/C++ Sample applications`
+        - Sample applications -> :ref:`Sections/07_Sample_Applications/03_C:C/C++ Sample applications`

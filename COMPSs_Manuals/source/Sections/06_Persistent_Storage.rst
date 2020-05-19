@@ -12,8 +12,8 @@ and its integration with some Persistent Storage frameworks.
     :maxdepth: 2
     :caption: Table of Contents
 
-    07_Persistent_Storage/01_Storage_integration
-    07_Persistent_Storage/02_COMPSs_dataClay
-    07_Persistent_Storage/03_COMPSs_Hecuba
-    07_Persistent_Storage/04_COMPSs_Redis
-    07_Persistent_Storage/05_Own_interface
+    06_Persistent_Storage/01_Storage_integration
+    06_Persistent_Storage/02_COMPSs_dataClay
+    06_Persistent_Storage/03_COMPSs_Hecuba
+    06_Persistent_Storage/04_COMPSs_Redis
+    06_Persistent_Storage/05_Own_interface
