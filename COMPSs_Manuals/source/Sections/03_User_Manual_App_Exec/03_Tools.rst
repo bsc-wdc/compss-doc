@@ -314,7 +314,6 @@ given tracefile:
     compss@bsc:~$ wxparaver path/to/trace/trace_name.prv
 
 For further information about *Paraver* please visit the following site:
-
 http://www.bsc.es/computer-sciences/performance-tools/paraver
 
 COMPSs IDE
