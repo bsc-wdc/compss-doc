@@ -39,10 +39,10 @@ extensions = ['sphinx.ext.todo',
               'sphinx.ext.viewcode',
               'sphinx.ext.githubpages',
               'sphinx.ext.autosectionlabel',
+              'sphinx.ext.mathjax',
               'sphinxcontrib.contentui',
               'nbsphinx',
               'sphinx_copybutton',
-              'sphinx.ext.mathjax',
               'sphinxcontrib.rsvgconverter',
               'sphinxcontrib.bibtex']
 
