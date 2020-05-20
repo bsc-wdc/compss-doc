@@ -1,2 +1,6 @@
 ipykernel
 nbsphinx
+sphinxcontrib-contentui
+sphinx-copybutton
+sphinxcontrib-svg2pdfconverter
+sphinxcontrib-bibtex
