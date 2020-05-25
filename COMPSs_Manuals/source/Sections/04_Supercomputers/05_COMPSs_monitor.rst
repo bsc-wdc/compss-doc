@@ -51,7 +51,7 @@ Access the COMPSs Monitor through its webpage
 
 Please remember that to enable **all** the COMPSs Monitor features
 applications must be ran with the *-m* flag. For further details please check the
-:ref:`Sections/03_App_Execution:Application execution` Section.
+:ref:`Sections/03_Execution_Environments:Application execution` Section.
 
 :numref:`mn_monitor1` illustrates how to login and :numref:`mn_monitor2`
 shows the COMPSs Monitor main page for an application
