@@ -58,12 +58,12 @@ This manual is divided in 9 sections:
    Sections/01_Installation
    Sections/02_App_Development
    Sections/03_Execution_Environments
-   Sections/04_Common_issues
    Sections/05_Tracing
    Sections/06_Persistent_Storage
    Sections/07_Sample_Applications
    Sections/08_PyCOMPSs_Player
    Sections/09_PyCOMPSs_Notebooks
+   Sections/04_Common_issues
 
 
 .. Indices and tables
