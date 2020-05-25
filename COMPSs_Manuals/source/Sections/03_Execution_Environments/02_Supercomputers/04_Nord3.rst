@@ -1,22 +1,24 @@
-MareNostrum 4
-=============
+Nord 3
+======
 
 Basic queue commands
 --------------------
 
-The MareNostrum supercomputer uses the SLURM (Simple Linux Utility for
-Resource Management) workload manager. The basic commands to manage jobs
-are listed below:
+The Nord3 supercomputer uses the LSF (Load Sharing Facility) workload
+manager. The basic commands to manage jobs are listed below:
 
--  **sbatch** Submit a batch job to the SLURM system
+-  **bsub** Submit a batch job to the LSF system
 
--  **scancel** Kill a running job
+-  **bkill** Kill a running job
 
--  **squeue -u <username>** See the status of jobs
-   in the SLURM queue
+-  **bjobs** See the status of jobs in the LSF queue
 
-For more extended information please check the *SLURM: Quick start user
-guide* at https://slurm.schedmd.com/quickstart.html .
+-  **bqueues** Information about LSF batch queues
+
+For more extended information please check the *IBM Platform LSF Command
+Reference* at
+https://www.ibm.com/support/knowledgecenter/en/SSETD4_9.1.2/lsf_kc_cmd_ref.html
+.
 
 Tracking COMPSs jobs
 --------------------
@@ -49,7 +51,7 @@ job information. For example:
     Storage Properties:        null
     Other:
             --sc_cfg=default.cfg
-            --cpus_per_node=48
+            --cpus_per_node=16
             --master_working_dir=.
             --worker_working_dir=gpfs
             --lang=python
@@ -65,24 +67,23 @@ job information. For example:
     $ cat /scratch/tmp/tmp.pBG5yfFxEo
     #!/bin/bash
     #
-    #SBATCH --job-name=COMPSs
-    #SBATCH --workdir=.
-    #SBATCH -o compss-%J.out
-    #SBATCH -e compss-%J.err
-    #SBATCH -N 3
-    #SBATCH -n 144
-    #SBATCH --exclusive
-    #SBATCH -t00:15:00
+    #BSUB -J COMPSs
+    #BSUB -cwd .
+    #BSUB -oo compss-%J.out
+    #BSUB -eo compss-%J.err
+    #BSUB -n 3
+    #BSUB -R "span[ptile=1]"
+    #BSUB -W 00:15
     ...
 
 In order to trac the jobs state users can run the following command:
 
 .. code-block:: console
 
-    $ squeue
-    JOBID   PARTITION  NAME    USER  TIME_LEFT  TIME_LIMIT   START_TIME  ST NODES  CPUS  NODELIST
-    474130    main    COMPSs    XX    0:15:00    0:15:00        N/A      PD    3   144   -
+    $ bjobs
+    JOBID  USER   STAT  QUEUE  FROM_HOST  EXEC_HOST  JOB_NAME  SUBMIT_TIME
+    XXXX   bscXX  PEND  XX     login1     XX         COMPSs    Month Day Hour
 
 The specific COMPSs logs are stored under the ``~/.COMPSs/`` folder;
 saved as a local *runcompss* execution. For further details please check the
-:ref:`Sections/03_User_Manual_App_Exec:Application execution` Section.
+:ref:`Sections/03_Execution_Environments/01_Local/01_Executing:Executing COMPSs applications` Section.

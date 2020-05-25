@@ -1,14 +1,8 @@
-Special Execution Platforms
-===========================
-
-This section provides information about how to run COMPSs Applications
-in specific platforms such as *Docker*, *Chameleon* or *MareNostrum*.
-
 Docker
-------
+======
 
 What is Docker?
-~~~~~~~~~~~~~~~
+---------------
 
 Docker is an open-source project that automates the deployment of
 applications inside software containers, by providing an additional
@@ -22,7 +16,7 @@ COMPSs supports running a distributed application in a Docker Swarm
 cluster.
 
 Requirements
-~~~~~~~~~~~~
+------------
 
 In order to use COMPSs with Docker, some requirements must be fulfilled:
 
@@ -41,7 +35,7 @@ In order to use COMPSs with Docker, some requirements must be fulfilled:
    image).
 
 Execution in Docker
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 The runcompss-docker execution workflow uses Docker-Compose, which is
 in charge of spawning the different application containers into the
@@ -192,7 +186,7 @@ Or alternatively, in its shortest form:
                        [rest of classic runcompss args]
 
 Execution with TLS
-~~~~~~~~~~~~~~~~~~
+------------------
 
 If your cluster uses **TLS** or has been created using
 **Docker-Machine**, you will have to **export two environment
@@ -225,7 +219,7 @@ With these environment variables set, you are ready to use
 ``runcompss-docker`` in a cluster using TLS.
 
 Execution results
-~~~~~~~~~~~~~~~~~
+-----------------
 
 The execution results will be retrieved from the master container of
 your application.
@@ -265,7 +259,7 @@ we executed the **Matmul example application** that we provide you:
    Result and log folders of a *Matmul* execution with COMPSs and Docker
 
 Execution examples
-~~~~~~~~~~~~~~~~~~
+------------------
 
 Next we will use the *Matmul* application as an example of a Java
 application running with COMPSs and Docker.
@@ -340,99 +334,3 @@ And now execute with 30 worker containers, and Swarm located in
                        --image-name='laura-67/my-kmeans' \
                        --classpath=/home/laura/apps/kmeans/kmeans.jar \
                        kmeans.KMeans
-
-Chameleon
----------
-
-What is Chameleon?
-~~~~~~~~~~~~~~~~~~
-
-The Chameleon project is a configurable experimental environment for
-large-scale cloud research based on a *OpenStack* KVM Cloud. With
-funding from the *National Science Foundation (NSF)*, it provides a
-large-scale platform to the open research community allowing them
-explore transformative concepts in deeply programmable cloud services,
-design, and core technologies. The Chameleon testbed, is deployed at the
-*University of Chicago* and the *Texas Advanced Computing Center* and
-consists of 650 multi-core cloud nodes, 5PB of total disk space, and
-leverage 100 Gbps connection between the sites.
-
-The project is led by the *Computation Institute* at the *University of
-Chicago* and partners from the *Texas Advanced Computing Center* at the
-*University of Texas* at Austin, the *International Center for Advanced
-Internet Research* at *Northwestern University*, the *Ohio State
-University*, and *University of Texas* at *San Antoni*, comprising a
-highly qualified and experienced team. The team includes members from
-the *NSF* supported *FutureGrid* project and from the *GENI* community,
-both forerunners of the *NSFCloud* solicitation under which this project
-is funded. Chameleon will also sets of partnerships with commercial and
-academic clouds, such as *Rackspace*, *CERN* and *Open Science Data
-Cloud (OSDC)*.
-
-For more information please check https://www.chameleoncloud.org/ .
-
-Execution in Chameleon
-~~~~~~~~~~~~~~~~~~~~~~
-
-Currently, COMPSs can only handle the Chameleon infrastructure as a
-cluster (deployed inside a lease). Next, we provide the steps needed to
-execute COMPSs applications at Chameleon:
-
--  Make a lease reservation with 1 minimum node (for the COMPSs master
-   instance) and a maximum number of nodes equal to the number of COMPSs
-   workers needed plus one
-
--  Instantiate the master image (based on the published image
-   *COMPSs__CC-CentOS7*)
-
--  Attach a public IP and login to the master instance (the instance is
-   correctly contextualized for COMPSs executions if you see a COMPSs
-   login banner)
-
--  Set the instance as COMPSs master by running
-   ``/etc/init.d/chameleon_init start``
-
--  Copy your CH file (API credentials) to the Master and source it
-
--  Run the ``chameleon_cluster_setup`` script and fill the information
-   when prompted (you will be asked for the name of the master instance,
-   the reservation id and number of workers). This scripts may take
-   several minutes since it sets up the all cluster.
-
--  Execute your COMPSs applications normally using the ``runcompss``
-   script
-
-As an example you can check this video
-https://www.youtube.com/watch?v=BrQ6anPHjAU performing a full setup and
-execution of a COMPSs application at Chameleon.
-
-SuperComputers
---------------
-
-To maintain the portability between different environments, COMPSs has a
-pre-build structure (see :numref:`queue_scripts_structure`) to
-execute applications in SuperComputers. For this purpose, users must use
-the ``enqueue_compss`` script provided in the COMPSs installation. This
-script has several parameters (see ``enqueue_compss -h``) that allow
-users to customize their executions for any SuperComputer.
-
-.. figure:: ./Figures/queue_scripts_structure.png
-   :name: queue_scripts_structure
-   :alt: Structure of COMPSs queue scripts. In Blue user scripts, in Green queue scripts and in Orange system dependant scripts
-   :align: center
-   :width: 40.0%
-
-   Structure of COMPSs queue scripts. In Blue user scripts, in Green
-   queue scripts and in Orange system dependant scripts
-
-To make this structure works, the administrators must define a
-configuration file for the queue system and a configuration file for the
-specific SuperComputer parameters. The COMPSs installation already
-provides queue configurations for *LSF* and *SLURM* and several examples
-for SuperComputer configurations. To create a new configuration we
-recommend to use one of the configurations provided by COMPSs (such as
-the configuration for the *MareNostrum IV* SuperComputer) or to contact
-us at support-compss@bsc.es .
-
-For information about how to submit COMPSs applications at any
-Supercomputer please refer to :ref:`Sections/04_Supercomputers:Supercomputers`.

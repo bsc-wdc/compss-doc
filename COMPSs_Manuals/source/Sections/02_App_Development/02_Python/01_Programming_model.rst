@@ -660,11 +660,11 @@ decorators for other purposes.
 
 For instance, there is a set of decorators that can be placed over the
 *@task* decorator in order to define the task methods as a
-**binary invocation** (with the :ref:`Sections/02_User_Manual_App_Development/02_Python/01_Programming_model:Binary decorator`), as a **OmpSs
-invocation** (with the :ref:`Sections/02_User_Manual_App_Development/02_Python/01_Programming_model:OmpSs decorator`), as a **MPI invocation**
-(with the :ref:`Sections/02_User_Manual_App_Development/02_Python/01_Programming_model:MPI decorator`), as a **COMPSs application** (with the
-:ref:`Sections/02_User_Manual_App_Development/02_Python/01_Programming_model:COMPSs decorator`), or as a **task that requires multiple
-nodes** (with the :ref:`Sections/02_User_Manual_App_Development/02_Python/01_Programming_model:Multinode decorator`). These decorators must
+**binary invocation** (with the :ref:`Sections/02_App_Development/02_Python/01_Programming_model:Binary decorator`), as a **OmpSs
+invocation** (with the :ref:`Sections/02_App_Development/02_Python/01_Programming_model:OmpSs decorator`), as a **MPI invocation**
+(with the :ref:`Sections/02_App_Development/02_Python/01_Programming_model:MPI decorator`), as a **COMPSs application** (with the
+:ref:`Sections/02_App_Development/02_Python/01_Programming_model:COMPSs decorator`), or as a **task that requires multiple
+nodes** (with the :ref:`Sections/02_App_Development/02_Python/01_Programming_model:Multinode decorator`). These decorators must
 be placed over the *@task* decorator, and under the
 *@constraint* decorator if defined.
 
@@ -831,7 +831,7 @@ going to invoke a OmpSs executable (:numref:`ompss_task_python`).
 The OmpSs executable invocation can also be enriched with parameters,
 files and prefixes as with the *@binary* decorator through the
 function parameters and *@task* decorator information. Please,
-check :ref:`Sections/02_User_Manual_App_Development/02_Python/01_Programming_model:Binary decorator` for more details.
+check :ref:`Sections/02_App_Development/02_Python/01_Programming_model:Binary decorator` for more details.
 
 MPI decorator
 ^^^^^^^^^^^^^
@@ -853,7 +853,7 @@ going to invoke a MPI executable (:numref:`mpi_task_python`).
 The MPI executable invocation can also be enriched with parameters,
 files and prefixes as with the *@binary* decorator through the
 function parameters and *@task* decorator information. Please,
-check :ref:`Sections/02_User_Manual_App_Development/02_Python/01_Programming_model:Binary decorator` for more details.
+check :ref:`Sections/02_App_Development/02_Python/01_Programming_model:Binary decorator` for more details.
 
 COMPSs decorator
 ^^^^^^^^^^^^^^^^
@@ -1166,7 +1166,7 @@ to the user (:numref:`implements_python`).
 
 Please, note that if the implementation is used to define a binary,
 OmpSs, MPI, COMPSs or multinode task invocation (see
-:ref:`Sections/02_User_Manual_App_Development/02_Python/01_Programming_model:Other task types`),
+:ref:`Sections/02_App_Development/02_Python/01_Programming_model:Other task types`),
 the @implement decorator must be always on top of the decorators stack,
 followed by the @constraint decorator, then the
 @binary/\ @ompss/\ @mpi/\ @compss/\ @multinode
@@ -1223,7 +1223,7 @@ compss_barrier_group(group_name)
    to the given group submitted before the *compss_barrier_group()* is called.
    When all group tasks submitted before the *compss_barrier_group()* have
    finished, the execution continues.
-   See :ref:`Sections/02_User_Manual_App_Development/02_Python/01_Programming_model:Group Tasks`
+   See :ref:`Sections/02_App_Development/02_Python/01_Programming_model:Group Tasks`
    for more information about task groups.
 
 compss_wait_on(obj, to_write=True)
@@ -1239,7 +1239,7 @@ TaskGroup(group_name, implicit_barrier=True)
    context will belong to *group_name* context and are sensitive to wait for
    them while the rest are being executed. Tasks groups are depicted within
    a box into the generated task dependency graph.
-   See :ref:`Sections/02_User_Manual_App_Development/02_Python/01_Programming_model:Group Tasks`
+   See :ref:`Sections/02_App_Development/02_Python/01_Programming_model:Group Tasks`
    for more information about task groups.
 
 To illustrate the use of the aforementioned API functions, the following
