@@ -61,7 +61,7 @@ default parameters:
 Between the *start* and *stop* function calls, the user can write its
 own python code including PyCOMPSs imports, decorators and
 synchronization calls described in the
-:ref:`Sections/02_User_Manual_App_Development/02_Python/01_Programming_model:Programming Model` Section.
+:ref:`Sections/02_App_Development/02_Python/01_Programming_model:Programming Model` Section.
 The code can be splitted into multiple cells.
 
 The *start* and *stop* functions accept parameters in order to customize

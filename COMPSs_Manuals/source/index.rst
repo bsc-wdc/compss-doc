@@ -56,7 +56,7 @@ This manual is divided in 9 sections:
    Sections/0_Intro
    Sections/00_Quickstart
    Sections/01_Installation
-   Sections/02_User_Manual_App_Development
+   Sections/02_App_Development
    Sections/03_User_Manual_App_Exec
    Sections/04_Supercomputers
    Sections/05_Tracing

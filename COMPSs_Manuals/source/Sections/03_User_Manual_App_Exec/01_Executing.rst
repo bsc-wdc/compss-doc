@@ -11,7 +11,7 @@ requirements and for C/C++ applications the code must have been
 previously compiled by using the *buildapp* command.
 
 For further information about how to develop COMPSs applications please
-refer to :ref:`Sections/02_User_Manual_App_Development:Application development`.
+refer to :ref:`Sections/02_App_Development:Application development`.
 
 Runcompss command
 -----------------
@@ -310,7 +310,7 @@ Running C/C++ applications
 
 To launch a COMPSs C/C++ application users have to compile the
 C/C++ application by means of the ``buildapp`` command. For
-further information please refer to :ref:`Sections/02_User_Manual_App_Development/03_C:C/C++ Binding`. Once
+further information please refer to :ref:`Sections/02_App_Development/03_C:C/C++ Binding`. Once
 complied, the ``--lang=c`` option must be provided to the runcompss
 command. If the main file is a C/C++ binary the *runcompss* command
 can also infer the application language without specifying the *lang*

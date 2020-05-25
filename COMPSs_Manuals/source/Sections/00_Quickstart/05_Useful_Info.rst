@@ -8,9 +8,9 @@ Choose your flavour:
     .. tab-container:: Java
         :title: Java
 
-        - Syntax detailed information -> :ref:`Sections/02_User_Manual_App_Development/01_Java:Java`
+        - Syntax detailed information -> :ref:`Sections/02_App_Development/01_Java:Java`
 
-        - Constraint definition -> :ref:`Sections/02_User_Manual_App_Development/04_Constraints:Constraints`
+        - Constraint definition -> :ref:`Sections/02_App_Development/04_Constraints:Constraints`
 
         - Execution details -> :ref:`Sections/03_User_Manual_App_Exec/01_Executing:Executing COMPSs applications`
 
@@ -27,9 +27,9 @@ Choose your flavour:
     .. tab-container:: Python
         :title: Python
 
-        - Syntax detailed information -> :ref:`Sections/02_User_Manual_App_Development/02_Python:Python Binding`
+        - Syntax detailed information -> :ref:`Sections/02_App_Development/02_Python:Python Binding`
 
-        - Constraint definition -> :ref:`Sections/02_User_Manual_App_Development/04_Constraints:Constraints`
+        - Constraint definition -> :ref:`Sections/02_App_Development/04_Constraints:Constraints`
 
         - Execution details -> :ref:`Sections/03_User_Manual_App_Exec/01_Executing:Executing COMPSs applications`
 
@@ -46,9 +46,9 @@ Choose your flavour:
     .. tab-container:: C
         :title: C/C++
 
-        - Syntax detailed information -> :ref:`Sections/02_User_Manual_App_Development/03_C:C/C++ Binding`
+        - Syntax detailed information -> :ref:`Sections/02_App_Development/03_C:C/C++ Binding`
 
-        - Constraint definition -> :ref:`Sections/02_User_Manual_App_Development/04_Constraints:Constraints`
+        - Constraint definition -> :ref:`Sections/02_App_Development/04_Constraints:Constraints`
 
         - Execution details -> :ref:`Sections/03_User_Manual_App_Exec/01_Executing:Executing COMPSs applications`
 
