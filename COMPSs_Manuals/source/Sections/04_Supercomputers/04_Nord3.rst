@@ -86,4 +86,4 @@ In order to trac the jobs state users can run the following command:
 
 The specific COMPSs logs are stored under the ``~/.COMPSs/`` folder;
 saved as a local *runcompss* execution. For further details please check the
-:ref:`Sections/03_User_Manual_App_Exec:Application execution` Section.
+:ref:`Sections/03_App_Execution:Application execution` Section.

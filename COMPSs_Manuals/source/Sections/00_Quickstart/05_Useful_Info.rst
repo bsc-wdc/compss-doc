@@ -12,13 +12,13 @@ Choose your flavour:
 
         - Constraint definition -> :ref:`Sections/02_App_Development/04_Constraints:Constraints`
 
-        - Execution details -> :ref:`Sections/03_User_Manual_App_Exec/01_Executing:Executing COMPSs applications`
+        - Execution details -> :ref:`Sections/03_App_Execution/01_Executing:Executing COMPSs applications`
 
-        - Graph, tracing and monitoring facilities -> :ref:`Sections/03_User_Manual_App_Exec/03_Tools:COMPSs Tools`
+        - Graph, tracing and monitoring facilities -> :ref:`Sections/03_App_Execution/03_Tools:COMPSs Tools`
 
         - Performance analysis -> :ref:`Sections/05_Tracing:Tracing`
 
-        - Troubleshooting -> :ref:`Sections/03_User_Manual_App_Exec/05_Common_issues:Common Issues`
+        - Troubleshooting -> :ref:`Sections/03_App_Execution/05_Common_issues:Common Issues`
 
         - Sample applications -> :ref:`Sections/07_Sample_Applications/01_Java:Java Sample applications`
 
@@ -31,13 +31,13 @@ Choose your flavour:
 
         - Constraint definition -> :ref:`Sections/02_App_Development/04_Constraints:Constraints`
 
-        - Execution details -> :ref:`Sections/03_User_Manual_App_Exec/01_Executing:Executing COMPSs applications`
+        - Execution details -> :ref:`Sections/03_App_Execution/01_Executing:Executing COMPSs applications`
 
-        - Graph, tracing and monitoring facilities -> :ref:`Sections/03_User_Manual_App_Exec/03_Tools:COMPSs Tools`
+        - Graph, tracing and monitoring facilities -> :ref:`Sections/03_App_Execution/03_Tools:COMPSs Tools`
 
         - Performance analysis -> :ref:`Sections/05_Tracing:Tracing`
 
-        - Troubleshooting -> :ref:`Sections/03_User_Manual_App_Exec/05_Common_issues:Common Issues`
+        - Troubleshooting -> :ref:`Sections/03_App_Execution/05_Common_issues:Common Issues`
 
         - Sample applications -> :ref:`Sections/07_Sample_Applications/02_Python:Python Sample applications`
 
@@ -50,12 +50,12 @@ Choose your flavour:
 
         - Constraint definition -> :ref:`Sections/02_App_Development/04_Constraints:Constraints`
 
-        - Execution details -> :ref:`Sections/03_User_Manual_App_Exec/01_Executing:Executing COMPSs applications`
+        - Execution details -> :ref:`Sections/03_App_Execution/01_Executing:Executing COMPSs applications`
 
-        - Graph, tracing and monitoring facilities -> :ref:`Sections/03_User_Manual_App_Exec/03_Tools:COMPSs Tools`
+        - Graph, tracing and monitoring facilities -> :ref:`Sections/03_App_Execution/03_Tools:COMPSs Tools`
 
         - Performance analysis -> :ref:`Sections/05_Tracing:Tracing`
 
-        - Troubleshooting -> :ref:`Sections/03_User_Manual_App_Exec/05_Common_issues:Common Issues`
+        - Troubleshooting -> :ref:`Sections/03_App_Execution/05_Common_issues:Common Issues`
 
         - Sample applications -> :ref:`Sections/07_Sample_Applications/03_C:C/C++ Sample applications`
