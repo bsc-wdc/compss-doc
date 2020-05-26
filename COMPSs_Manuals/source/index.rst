@@ -63,7 +63,7 @@ This manual is divided in 9 sections:
    Sections/07_Sample_Applications
    Sections/08_PyCOMPSs_Player
    Sections/09_PyCOMPSs_Notebooks
-   Sections/04_Common_issues
+   Sections/04_Common_issues_and_limitations
 
 
 .. Indices and tables
