@@ -20,7 +20,7 @@ Choose your flavour:
 
         - Performance analysis -> :ref:`Sections/05_Tracing:Tracing`
 
-        - Troubleshooting -> :ref:`Sections/04_Common_issues_and_limitations:Common Issues and Known Limitations`
+        - Troubleshooting -> :ref:`Sections/04_Troubleshooting:Troubleshooting`
 
         - Sample applications -> :ref:`Sections/07_Sample_Applications/01_Java:Java Sample applications`
 
@@ -41,7 +41,7 @@ Choose your flavour:
 
         - Performance analysis -> :ref:`Sections/05_Tracing:Tracing`
 
-        - Troubleshooting -> :ref:`Sections/04_Common_issues_and_limitations:Common Issues and Known Limitations`
+        - Troubleshooting -> :ref:`Sections/04_Troubleshooting:Troubleshooting`
 
         - Sample applications -> :ref:`Sections/07_Sample_Applications/02_Python:Python Sample applications`
 
@@ -62,6 +62,6 @@ Choose your flavour:
 
         - Performance analysis -> :ref:`Sections/05_Tracing:Tracing`
 
-        - Troubleshooting -> :ref:`Sections/04_Common_issues_and_limitations:Common Issues and Known Limitations`
+        - Troubleshooting -> :ref:`Sections/04_Troubleshooting:Troubleshooting`
 
         - Sample applications -> :ref:`Sections/07_Sample_Applications/03_C:C/C++ Sample applications`
