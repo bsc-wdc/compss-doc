@@ -1,8 +1,9 @@
 COMPSs + dataClay
 =================
 
-.. warning::
-   To Be Done
+.. WARNING::
+
+   Under construction
 
 COMPSs + dataClay Dependencies
 ------------------------------
@@ -25,9 +26,11 @@ Python
 C/C++
 `````
 
-.. warning::
+.. ADMONITION:: Unsupported
+    :class: warning
 
-    Unsupported language
+    C/C++ COMPSs applications are not supported with dataClay.
+
 
 Executing a COMPSs application with dataClay
 --------------------------------------------

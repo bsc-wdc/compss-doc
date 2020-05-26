@@ -1,5 +1,5 @@
-Storage Integration
-===================
+First steps
+===========
 
 COMPSs relies on a Storage API to enable the interation with persistent storage
 frameworks (:numref:`storage_architecture`), which is composed by two main

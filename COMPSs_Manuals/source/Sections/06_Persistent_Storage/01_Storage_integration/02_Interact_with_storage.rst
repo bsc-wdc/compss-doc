@@ -14,4 +14,7 @@ TODO
 C/C++
 ~~~~~
 
-Persistent storage is not supported with C/C++ COMPSs applications.
+.. ADMONITION:: Unsupported
+    :class: warning
+
+    Persistent storage is not supported with C/C++ COMPSs applications.
