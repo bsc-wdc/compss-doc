@@ -2,9 +2,10 @@ User Events in Python
 =====================
 
 Users can emit custom events inside their python **tasks**. Thanks to
-the fact that python isn’t a compiled language, users can emit events
+the fact that python is not a compiled language, users can emit events
 inside their own tasks using the available EXTRAE instrumentation object
-because it is already imported.  
+because it is already loaded and available in the PYTHONPATH when
+running with tracing enabled.  
 
 To emit an event first import pyextrae using
 ``import pyextrae.multiprocessing as pyextrae``, and then just use the call
@@ -14,7 +15,7 @@ you also want to emit PAPI hardware counters).
 .. TIP::
 
     It is recommended to use a type number higher than 8000050 in order to
-    avoid type’s conflicts.
+    avoid type conflicts.
 
 Usage example:
 
