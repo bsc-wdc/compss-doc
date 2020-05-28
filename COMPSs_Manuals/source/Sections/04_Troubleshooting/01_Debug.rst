@@ -66,3 +66,15 @@ and ``JOB<TASK_NUMBER>_NEW.err`` files when a task fails.
     ``--worker_working_directory=/shared/folder`` where a ``tmp_XXXXXX`` folder
     will be created on the application execution and all worker logs will be
     stored.
+
+
+The following subsections show debugging examples depending on the choosen
+flavour (Java, Python or C/C++).
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Debugging examples
+
+    01_Debugging_examples/01_Java
+    01_Debugging_examples/02_Python
+    01_Debugging_examples/03_C
