@@ -459,9 +459,9 @@ Users can check the available options by running:
         --classpath=<path>                      Path for the application classes / modules
                                                 Default: Working Directory
         --appdir=<path>                         Path for the application class folder.
-                                                Default: /home/bsc19/bsc19234
+                                                Default: /home/user
         --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
-                                                Default: /home/bsc19/bsc19234
+                                                Default: /home/user
         --base_log_dir=<path>                   Base directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location)
                                                 Default: User home
         --specific_log_dir=<path>               Use a specific directory to store COMPSs log files (no sandbox is created)
