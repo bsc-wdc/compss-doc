@@ -1,8 +1,9 @@
 COMPSs + Hecuba
 ===============
 
-.. warning::
-   To Be Done
+.. WARNING::
+
+   Under construction
 
 COMPSs + Hecuba Dependencies
 ----------------------------
@@ -19,19 +20,23 @@ Enabling COMPSs applications with Hecuba
 Java
 ````
 
-.. warning::
+.. ADMONITION:: Unsupported
+    :class: warning
 
-    Unsupported language
+    Java COMPSs applications are not supported with Hecuba.
 
 Python
 ``````
 
+
 C/C++
 `````
 
-.. warning::
+.. ADMONITION:: Unsupported
+    :class: warning
 
-    Unsupported language
+    C/C++ COMPSs applications are not supported with Hecuba.
+
 
 Executing a COMPSs application with Hecuba
 ------------------------------------------

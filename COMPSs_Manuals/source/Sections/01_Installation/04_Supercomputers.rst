@@ -11,8 +11,8 @@ the packaging system, we also provide a **COMPSs zipped file**
 containing a pre-build script to easily install COMPSs. Next subsections
 provide further information about this process.
 
-SC Prerequisites
-----------------
+Prerequisites
+-------------
 
 In order to successfully run the installation script some dependencies
 must be present on the target machine. Administrators must provide the
@@ -37,8 +37,8 @@ The tracing system can be enhanced with:
 -  MPI, which speeds up the tracing merge (and enables it for huge
    traces)
 
-SC Installation
----------------
+Installation
+------------
 
 To perform the COMPSs Framework installation please execute the
 following commands:
@@ -78,8 +78,8 @@ after the installation process we recomend to source the
   Once done, remember to log out and back in again to end the
 installation process.
 
-SC Configuration
-----------------
+Configuration
+-------------
 
 To maintain the portability between different environments, COMPSs has a
 pre-built structure of scripts to execute applications in Supercomputers.
@@ -263,8 +263,8 @@ the current implementation, please contact us at support-compss@bsc.es.
 We will discuss how it should be incorporated in the scripts.
 
 
-SC Post installation
---------------------
+Post installation
+-----------------
 
 To check that COMPSs Framework has been successfully installed you may
 run:
@@ -459,9 +459,9 @@ Users can check the available options by running:
         --classpath=<path>                      Path for the application classes / modules
                                                 Default: Working Directory
         --appdir=<path>                         Path for the application class folder.
-                                                Default: /home/bsc19/bsc19234
+                                                Default: /home/user
         --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
-                                                Default: /home/bsc19/bsc19234
+                                                Default: /home/user
         --base_log_dir=<path>                   Base directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location)
                                                 Default: User home
         --specific_log_dir=<path>               Use a specific directory to store COMPSs log files (no sandbox is created)

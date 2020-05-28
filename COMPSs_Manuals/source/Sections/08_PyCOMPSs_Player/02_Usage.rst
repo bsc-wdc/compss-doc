@@ -1,8 +1,46 @@
 Usage
 =====
 
-Start ``pycompss`` in your development directory
-------------------------------------------------
+``pycompss-player`` provides the ``pycompss`` command line tool (``compss``
+and ``dislib`` are also alternatives to ``pycompss``).
+
+This command line tool enables to deal with docker in order to deploy a COMPSs
+infrastructure in containers.
+
+The supported flags are:
+
+.. code-block:: console
+
+    $ pycompss
+    PyCOMPSs|COMPSS Player:
+
+    Usage: pycompss COMMAND  |  compss COMMAND  |  dislib COMMAND
+
+    Available commands:
+        init -w [WORK_DIR] -i [IMAGE]:  initializes COMPSs in the current working dir or in WORK_DIR if -w is set.
+                                        The COMPSs docker image to be used can be specified with -i (it can also be
+                                        specified with the COMPSS_DOCKER_IMAGE environment variable).
+        kill:                           stops and kills all instances of the COMPSs.
+        update:                         updates the COMPSs docker image (use only when installing master branch).
+        exec CMD:                       executes the CMD command inside the COMPSs master container.
+        run [OPTIONS] FILE [PARAMS]:    runs FILE with COMPSs, where OPTIONS are COMPSs options and PARAMS are application parameters.
+        monitor [start|stop]:           starts or stops the COMPSs monitoring.
+        jupyter [PATH|FILE]:            starts jupyter-notebook in the given PATH or FILE.
+        gengraph [FILE.dot]:            converts the .dot graph into .pdf
+        components list:                lists COMPSs actives components.
+        components add RESOURCE:        adds the RESOURCE to the pool of workers of the COMPSs.
+           Example given: pycompss components add worker 2 # to add 2 local workers.
+           Example given: pycompss components add worker <IP>:<CORES> # to add a remote worker
+                    Note: compss and dislib can be used instead of pycompss in both examples.
+        components remove RESOURCE:   removes the RESOURCE to the pool of workers of the COMPSs.
+           Example given: pycompss components remove worker 2 # to remove 2 local workers.
+           Example given: pycompss components remove worker <IP>:<CORES> # to remove a remote worker
+                    Note: compss and dislib can be used instead of pycompss in both examples.
+
+
+
+Start COMPSs infrastructure in your development directory
+---------------------------------------------------------
 
 Initialize the COMPSs infrastructure where your source code will be (you
 can re-init anytime). This will allow docker to access your local code

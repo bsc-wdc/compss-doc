@@ -111,7 +111,7 @@ Intermediate files
 
 User defined classes in Python
    User defined classes in Python **must not be** declared **in the same file
-   that contains the main method** (*if __name__==__main__'*) to avoid
+   that contains the main method** (``if __name__==__main__'``) to avoid
    serialization problems of the objects.
 
 Python object hierarchy dependency detection
@@ -181,9 +181,9 @@ Python application directory as a module
    .. code-block:: text
 
        my_apps/
-       |- kmeans/
-           |- __init__.py
-           |- kmeans.py
+       └── kmeans/
+           ├── __init__.py
+           └── kmeans.py
 
    Then the correct command to call this app is
    ``runcompss kmeans/kmeans.py`` from the ``my_apps`` directory.

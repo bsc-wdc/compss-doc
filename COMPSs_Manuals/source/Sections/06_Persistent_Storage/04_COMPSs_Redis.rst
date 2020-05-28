@@ -165,7 +165,8 @@ methods can be found in :numref:`storage_obj_methods`.
     | getID()                   | String  | | Returns the current object identifier if the object is not persistent (null instead). |
     +---------------------------+---------+-----------------------------------------------------------------------------------------+
 
-.. caution::
+.. CAUTION::
+
    Redis Storage Objects that are used as INOUTs must be manually updated.
    This is due to the fact that COMPSs does not know the exact effects of
    the interaction between the object and the storage, so the runtime cannot
@@ -274,9 +275,10 @@ This way is preferred for two main reasons:
 C/C++
 `````
 
-.. warning::
+.. ADMONITION:: Unsupported
+    :class: warning
 
-    Unsupported language
+    C/C++ COMPSs applications are not supported with Redis.
 
 
 Executing a COMPSs application with Redis
