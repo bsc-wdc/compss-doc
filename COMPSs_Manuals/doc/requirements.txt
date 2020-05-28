@@ -4,3 +4,4 @@ sphinxcontrib-contentui
 sphinx-copybutton
 sphinxcontrib-svg2pdfconverter
 sphinxcontrib-bibtex
+sphinx-rtd-theme>=0.5.0rc1
