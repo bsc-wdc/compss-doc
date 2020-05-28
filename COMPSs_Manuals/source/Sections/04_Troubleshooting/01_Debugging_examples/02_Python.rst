@@ -1,5 +1,5 @@
-Python
-------
+Python examples
+---------------
 
 Exception in the main code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

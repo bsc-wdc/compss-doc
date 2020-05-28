@@ -1,5 +1,5 @@
-Java
-----
+Java examples
+-------------
 
 Exception in the main code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
