@@ -11,8 +11,8 @@ the packaging system, we also provide a **COMPSs zipped file**
 containing a pre-build script to easily install COMPSs. Next subsections
 provide further information about this process.
 
-SC Prerequisites
-----------------
+Prerequisites
+-------------
 
 In order to successfully run the installation script some dependencies
 must be present on the target machine. Administrators must provide the
@@ -37,8 +37,8 @@ The tracing system can be enhanced with:
 -  MPI, which speeds up the tracing merge (and enables it for huge
    traces)
 
-SC Installation
----------------
+Installation
+------------
 
 To perform the COMPSs Framework installation please execute the
 following commands:
@@ -78,8 +78,8 @@ after the installation process we recomend to source the
   Once done, remember to log out and back in again to end the
 installation process.
 
-SC Configuration
-----------------
+Configuration
+-------------
 
 To maintain the portability between different environments, COMPSs has a
 pre-built structure of scripts to execute applications in Supercomputers.
@@ -263,8 +263,8 @@ the current implementation, please contact us at support-compss@bsc.es.
 We will discuss how it should be incorporated in the scripts.
 
 
-SC Post installation
---------------------
+Post installation
+-----------------
 
 To check that COMPSs Framework has been successfully installed you may
 run:
