@@ -257,7 +257,7 @@ supercomputer:
     # Load necessary modules
     module purge
     module load intel/2017.4 impi/2017.4 mkl/2017.4 bsc/1.0
-    module load COMPSs/2.6
+    module load COMPSs/2.7
     module load gromacs/2016.4   # exposes gmx_mpi binary
 
     export GMX_BIN=/home/user/lysozyme5.1.2/bin   # exposes gmx binary
@@ -307,7 +307,7 @@ the following output:
     load PYTHON/2.7.13 (PATH, MANPATH, LD_LIBRARY_PATH, LIBRARY_PATH, PKG_CONFIG_PATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, PYTHONHOME)
     load lzo/2.10 (LD_LIBRARY_PATH,PKG_CONFIG_PATH,CFLAGS,CXXFLAGS,LDFLAGS)
     load boost/1.64.0_py2 (LD_LIBRARY_PATH, LIBRARY_PATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, BOOST_ROOT)
-    load COMPSs/2.6 (PATH, CLASSPATH, MANPATH, GAT_LOCATION, COMPSS_HOME, JAVA_TOOL_OPTIONS, LDFLAGS, CPPFLAGS)
+    load COMPSs/2.7 (PATH, CLASSPATH, MANPATH, GAT_LOCATION, COMPSS_HOME, JAVA_TOOL_OPTIONS, LDFLAGS, CPPFLAGS)
     load gromacs/2016.4 (PATH, LD_LIBRARY_PATH)
     SC Configuration:          default.cfg
     JobName:                   COMPSs
@@ -350,7 +350,7 @@ standard output messages flushed during the execution:
     [  INFO] Relative Classpath resolved: /home/user/lysozyme/./src/:
 
     ----------------- Executing lysozyme_in_water.py --------------------------
-    [(590)    API]  -  Starting COMPSs Runtime v2.6 (build 20191110-1437.rb64656e825a88a4b49e60e5e505999f7b9866662)
+    [(590)    API]  -  Starting COMPSs Runtime v2.7 (build 20200519-1005.r6093e5ac94d67250e097a6fad9d3ec00d676fe6c)
     Starting demo
 
     # Here it takes some time to process the dataset
