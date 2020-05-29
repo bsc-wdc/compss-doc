@@ -21,7 +21,7 @@ hardware counters).
     It must be used a type number higher than ``8000050`` in order to avoid type
     conflicts.
 
-    **We suggest to use ``9000000``** since we provide the ``user_events.cfg``
+    **We suggest to use** ``9000000`` since we provide the ``user_events.cfg``
     configuration file to visualize the user events of this type in PARAVER.
 
 
@@ -73,7 +73,7 @@ In this case it is necessary to import ``pyextrae.multiprocessing``.
         ...
         pyextrae.eventandcounters(9000000, 0)
 
-.. IMPORTANT::
+.. CAUTION::
 
     Please, note that the ``import pyextrae.multiprocessing as pyextrae`` is
     performed within the task. If the user needs to add more events to tasks
@@ -99,19 +99,101 @@ In this case it is necessary to import ``pyextrae.multiprocessing``.
     introduced by tracing avoiding to intercept all function calls within the
     task code.
 
-Result
-------
+Result trace
+------------
 
 The events will appear automatically on the generated trace.
-In order to visualize them, take, for example, ``compss_runtime.cfg`` and go
+In order to visualize them, just load the ``user_events.cfg`` configuration file
+in PARAVER.
+
+If a different type value is choosen, take the same ``user_events.cfg`` and go
 to ``Window Properties -> Filter -> Events`` ``-> Event Type`` and change
 the value labeled *Types* for your custom events type.
 
 .. TIP::
 
     If you want to name the events, you will need to manually add them to the
-    ``.pcf`` file.
+    ``.pcf`` file with the corresponding name for each ``value``.
 
-    Paraver uses by default the ``.pcf`` with the same name as the tracefile so
-    if you add them to one, you can reuse it just by changing its name to
-    the tracefile.
+
+Practical example
+-----------------
+
+Consider the following application where we define an event in the main code
+(``1``) and another within the task (``2``).
+The ``increment`` task is invoked 8 times (with a mimic computation time of
+the value received as parameter.)
+
+.. code-block:: python
+
+    from pycompss.api.api import compss_wait_on
+    from pycompss.api.task import task
+    import time
+
+    @task(returns=1)
+    def increment(value):
+        import pyextrae.multiprocessing as pyextrae
+        pyextrae.eventandcounters(9000000, 2)
+        time.sleep(value)  # mimic some computation
+        pyextrae.eventandcounters(9000000, 0)
+        return value + 1
+
+    def main():
+        import pyextrae.sequential as pyextrae
+        elements = [1, 2, 3, 4, 5, 6, 7, 8]
+        results = []
+        pyextrae.eventandcounters(9000000, 1)
+        for element in elements:
+            results.append(increment(element))
+        results = compss_wait_on(results)
+        pyextrae.eventandcounters(9000000, 0)
+        print("results: " + str(results))
+
+    if __name__ == "__main__":
+        main()
+
+After launching with tracing enabled (``-t`` flag), the trace has been
+generated into the logs folder:
+
+    * ``$HOME/.COMPSs/events.py_01/trace`` if using ``runcompss``.
+
+    * ``$HOME/.COMPSs/<JOB_ID>/trace`` if using ``enqueue_compss``.
+
+Now it is time to modify the ``.pcf`` file including the folling text at
+the end of the file with your favourite text editor:
+
+.. code-block:: text
+
+    EVENT_TYPE
+    0    9000000    User events
+    VALUES
+    0      End
+    1      Main code event
+    2      Task event
+
+.. CAUTION::
+
+    Keep value 0 with the End message.
+
+    Add all values defined in the application with a descriptive short
+    name to ease the event identification in PARAVER.
+
+Open PARAVER, load the tracefile (``.prv``) and open the ``user_events.cfg``
+configuration file. The result (see :numref:`user_events`) shows that
+there are 8 "Task event" (in white), and 1 "Main code event" (in blue) as
+we expected.
+Their length can be seen with the event flags (green flags), and measured
+by double clicking on the event of interest.
+
+.. figure:: ./Figures/user_events.png
+   :name: user_events
+   :alt: User events trace file
+   :align: center
+   :width: 60.0%
+
+   User events trace file
+
+
+Paraver uses by default the ``.pcf`` with the same name as the tracefile so
+if you add them to one, you can reuse it just by changing its name to
+the tracefile.
