@@ -18,8 +18,11 @@ hardware counters).
 
 .. TIP::
 
-    It is recommended to use a type number higher than 8000050 in order to
-    avoid type conflicts.
+    It must be used a type number higher than ``8000050`` in order to avoid type
+    conflicts.
+
+    **We suggest to use ``9000000``** since we provide the ``user_events.cfg``
+    configuration file to visualize the user events of this type in PARAVER.
 
 
 Events in main code
