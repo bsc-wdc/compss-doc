@@ -56,6 +56,8 @@ folder contains the configurations for Python events, and finally the
     +-----------------------------------+------------------------------------------------------------------------+
     | time_betw_tasks.cfg               | Shows the time between tasks                                           |
     +-----------------------------------+------------------------------------------------------------------------+
+    | user_events.cfg                   | Shows the user events (type ``9000000``)                               |
+    +-----------------------------------+------------------------------------------------------------------------+
 
 .. table:: Available paraver configurations for Python events of COMPSs Applications
     :name: paraver_configs_python
