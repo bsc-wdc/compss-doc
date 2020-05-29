@@ -64,10 +64,10 @@ to use, or both at the same time:
     $ pycompss init -w /home/user/replace/path/
     $
     $ # Or the COMPSs docker image to use
-    $ pycompss init -i compss/compss-tutorial:2.6
+    $ pycompss init -i compss/compss-tutorial:2.7
     $
     $ # Or both
-    $ pycompss init -w /home/user/replace/path/ -i compss/compss-tutorial:2.6
+    $ pycompss init -w /home/user/replace/path/ -i compss/compss-tutorial:2.7
 
 
 Running applications

@@ -284,8 +284,7 @@ Users can check the available options by running:
 
     $ enqueue_compss -h
 
-    Usage: enqueue_compss [queue_system_options] [COMPSs_options]
-              application_name [application_arguments]
+    Usage: /apps/COMPSs/2.7/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
 
     * Options:
       General:
@@ -328,6 +327,10 @@ Users can check the available options by running:
                                                 Maximum nodes per switch: 18
                                                 Only available for at least 4 nodes.
                                                 Default: 0
+        --agents=<string>                       Hierarchy of agents for the deployment. Accepted values: plain|tree
+                                                Default: tree
+        --agents                                Deploys the runtime as agents instead of the classic Master-Worker deployment.
+                                                Default: disabled
       Heterogeneous submission arguments:
         --type_cfg=<file_location>              Location of the file with the descriptions of node type requests
                                                 File should follow the following format:
@@ -350,6 +353,8 @@ Users can check the available options by running:
                                                 Default: 0
         --fpgas_per_node=<int>                  Available FPGA computing units on each node
                                                 Default: 0
+        --io_executors=<int>                    Number of IO executors on each node
+                                                Default: 0
         --fpga_reprogram="<string>              Specify the full command that needs to be executed to reprogram the FPGA with
                                                 the desired bitstream. The location must be an absolute path.
                                                 Default:
@@ -357,6 +362,9 @@ Users can check the available options by running:
                                                 Default: -1
         --node_memory=<MB>                      Maximum node memory: disabled | <int> (MB)
                                                 Default: disabled
+        --node_storage_bandwidth=<MB>           Maximum node storage bandwidth: <int> (MB)
+                                                Default: 450
+
         --network=<name>                        Communication network for transfers: default | ethernet | infiniband | data.
                                                 Default: infiniband
 
@@ -379,6 +387,8 @@ Users can check the available options by running:
         --worker_in_master_memory=<int> MB      Maximum memory in master node assigned to the worker. Cannot exceed the node_memory.
                                                 Mandatory if worker_in_master_cpus is specified.
                                                 Default: 50000
+        --worker_port_range=<min>,<max>         Port range used by the NIO adaptor at the worker side
+                                                Default: 43001,43005
         --jvm_worker_in_master_opts="<string>"  Extra options for the JVM of the COMPSs Worker in the Master Node.
                                                 Each option separed by "," and without blank spaces (Notice the quotes)
                                                 Default:
@@ -390,7 +400,8 @@ Users can check the available options by running:
                                                 Default: empty
         --elasticity=<max_extra_nodes>          Activate elasticity specifiying the maximum extra nodes (ONLY AVAILABLE FORM SLURM CLUSTERS WITH NIO ADAPTOR)
                                                 Default: 0
-
+        --automatic_scaling=<bool>              Enable or disable the runtime automatic scaling (for elasticity)
+                                                Default: true
         --jupyter_notebook=<path>,              Swap the COMPSs master initialization with jupyter notebook from the specified path.
         --jupyter_notebook                      Default: false
 
@@ -403,14 +414,15 @@ Users can check the available options by running:
                                                 Default: false
         --tracing=<level>, --tracing, -t        Set generation of traces and/or tracing level ( [ true | basic ] | advanced | scorep | arm-map | arm-ddt | false)
                                                 True and basic levels will produce the same traces.
-                                                When no value is provided it is set to true
-                                                Default: false
+                                                When no value is provided it is set to 1
+                                                Default: 0
         --monitoring=<int>, --monitoring, -m    Period between monitoring samples (milliseconds)
                                                 When no value is provided it is set to 2000
                                                 Default: 0
         --external_debugger=<int>,
         --external_debugger                     Enables external debugger connection on the specified port (or 9999 if empty)
                                                 Default: false
+        --jmx_port=<int>                        Enable JVM profiling on specified port
 
       Runtime configuration options:
         --task_execution=<compss|storage>       Task execution under COMPSs or Storage.
@@ -419,9 +431,9 @@ Users can check the available options by running:
         --storage_conf=<path>                   Path to the storage configuration file
                                                 Default: null
         --project=<path>                        Path to the project XML file
-                                                Default: /apps/COMPSs/2.6.pr/Runtime/configuration/xml/projects/default_project.xml
+                                                Default: /apps/COMPSs/2.7//Runtime/configuration/xml/projects/default_project.xml
         --resources=<path>                      Path to the resources XML file
-                                                Default: /apps/COMPSs/2.6.pr/Runtime/configuration/xml/resources/default_resources.xml
+                                                Default: /apps/COMPSs/2.7//Runtime/configuration/xml/resources/default_resources.xml
         --lang=<name>                           Language of the application (java/c/python)
                                                 Default: Inferred is possible. Otherwise: java
         --summary                               Displays a task execution summary at the end of the application execution
@@ -433,24 +445,33 @@ Users can check the available options by running:
       Advanced options:
         --extrae_config_file=<path>             Sets a custom extrae config file. Must be in a shared disk between all COMPSs workers.
                                                 Default: null
+        --trace_label=<string>                  Add a label in the generated trace file. Only used in the case of tracing is activated.
+                                                Default: None
         --comm=<ClassName>                      Class that implements the adaptor for communications
-                                                Supported adaptors: es.bsc.compss.nio.master.NIOAdaptor | es.bsc.compss.gat.master.GATAdaptor
+                                                Supported adaptors:
+                                                      ├── es.bsc.compss.nio.master.NIOAdaptor
+                                                      └── es.bsc.compss.gat.master.GATAdaptor
                                                 Default: es.bsc.compss.nio.master.NIOAdaptor
         --conn=<className>                      Class that implements the runtime connector for the cloud
-                                                Supported connectors: es.bsc.compss.connectors.DefaultSSHConnector
-                                                                    | es.bsc.compss.connectors.DefaultNoSSHConnector
+                                                Supported connectors:
+                                                      ├── es.bsc.compss.connectors.DefaultSSHConnector
+                                                      └── es.bsc.compss.connectors.DefaultNoSSHConnector
                                                 Default: es.bsc.compss.connectors.DefaultSSHConnector
         --streaming=<type>                      Enable the streaming mode for the given type.
                                                 Supported types: FILES, OBJECTS, PSCOS, ALL, NONE
-                                                Default: null
+                                                Default: NONE
         --streaming_master_name=<str>           Use an specific streaming master node name.
                                                 Default: null
         --streaming_master_port=<int>           Use an specific port for the streaming master.
                                                 Default: null
         --scheduler=<className>                 Class that implements the Scheduler for COMPSs
-                                                Supported schedulers: es.bsc.compss.scheduler.fullGraphScheduler.FullGraphScheduler
-                                                                    | es.bsc.compss.scheduler.fifoScheduler.FIFOScheduler
-                                                                    | es.bsc.compss.scheduler.resourceEmptyScheduler.ResourceEmptyScheduler
+                                                Supported schedulers:
+                                                      ├── es.bsc.compss.scheduler.data.DataScheduler
+                                                      ├── es.bsc.compss.scheduler.fifo.FIFOScheduler
+                                                      ├── es.bsc.compss.scheduler.fifodata.FIFODataScheduler
+                                                      ├── es.bsc.compss.scheduler.lifo.LIFOScheduler
+                                                      ├── es.bsc.compss.components.impl.TaskScheduler
+                                                      └── es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
                                                 Default: es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
         --scheduler_config_file=<path>          Path to the file which contains the scheduler configuration.
                                                 Default: Empty
@@ -459,9 +480,9 @@ Users can check the available options by running:
         --classpath=<path>                      Path for the application classes / modules
                                                 Default: Working Directory
         --appdir=<path>                         Path for the application class folder.
-                                                Default: /home/user
+                                                Default: /home/group/user
         --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
-                                                Default: /home/user
+                                                Default: /home/group/user
         --base_log_dir=<path>                   Base directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location)
                                                 Default: User home
         --specific_log_dir=<path>               Use a specific directory to store COMPSs log files (no sandbox is created)
@@ -489,6 +510,8 @@ Users can check the available options by running:
                                                 Default: automatic
         --fpga_reprogram="<string>"             Specify the full command that needs to be executed to reprogram the FPGA with the desired bitstream. The location must be an absolute path.
                                                 Default:
+        --io_executors=<int>                    IO Executors per worker
+                                                Default: 0
         --task_count=<int>                      Only for C/Python Bindings. Maximum number of different functions/methods, invoked from the application, that have been selected as tasks
                                                 Default: 50
         --input_profile=<path>                  Path to the file which stores the input application profile
@@ -501,21 +524,21 @@ Users can check the available options by running:
                                                 Default: false
         --enable_external_adaptation=<bool>     Enable external adaptation. This option will disable the Resource Optimizer.
                                                 Default: false
+        --gen_coredump                          Enable master coredump generation
+                                                Default: false
         --python_interpreter=<string>           Python interpreter to use (python/python2/python3).
-                                                Default: python Version: 2
+                                                Default: python Version: 3
         --python_propagate_virtual_environment=<true>  Propagate the master virtual environment to the workers (true/false).
                                                        Default: true
         --python_mpi_worker=<false>             Use MPI to run the python worker instead of multiprocessing. (true/false).
                                                 Default: false
 
     * Application name:
-
         For Java applications:   Fully qualified name of the application
         For C applications:      Path to the master binary
         For Python applications: Path to the .py file containing the main program
 
     * Application arguments:
-
         Command line arguments to pass to the application. Can be empty.
 
 
