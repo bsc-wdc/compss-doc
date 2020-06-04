@@ -97,6 +97,7 @@ pip3 install ipython --user
 
 
 * Latex packages:
+
 ```
 sudo zypper install texlive-footnotebackref texlive-datetime texlive-epigraph texlive-eso-pic texlive-lipsum texlive-footnotebackref texlive-setspace texlive-amsmath texlive-amsfonts texlive-amstex texlive-lipsum texlive-fancyhdr
 ```
@@ -114,6 +115,7 @@ sudo zypper install texlive-footnotebackref texlive-datetime texlive-epigraph te
 ## 3. Building Issues
 
 * Java lexer not found.
+
 ```
 # Solution:
 pip3 install prompt-toolkit --upgrade
