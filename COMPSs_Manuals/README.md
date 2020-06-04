@@ -46,9 +46,13 @@ Follow the next steps to build COMPSs in your current machine.
 ## 1. Dependencies
 
 * python3
+
 ```
 sudo zypper install python3
+# or
+sudo apt-get install python3
 ```
+
 
 Some OS do not include pip3 (e.g. Ubuntu, which provides just pip).
 To make sure that you are using the Python 3 pip, create an alias:
