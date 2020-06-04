@@ -9,7 +9,6 @@ section at your package manager (apt, yum, zypper, etc.).
 
 .. table:: COMPSs dependencies
     :name: COMPSs_dependencies
-    :widths: auto
 
     +-------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
     | Module                  | Dependencies                                                                                                                                 |

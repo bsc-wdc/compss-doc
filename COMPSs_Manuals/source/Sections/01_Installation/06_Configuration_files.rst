@@ -529,7 +529,6 @@ For any connector the Runtime is capable to handle the next list of properties:
 
 .. table:: Connector supported properties in the ``project.xml`` file
     :name: jclouds_properties
-    :widths: auto
 
     +--------------------------+------------------------------------------------------------------------------+
     | **Name**                 | **Description**                                                              |
@@ -551,7 +550,6 @@ handles the next list of properties:
 
 .. table:: Properties supported by any SSH based connector in the ``project.xml`` file
     :name: ssh_properties
-    :widths: auto
 
     +--------------------------+------------------------------------------------------------------------------+
     | **Name**                 | **Description**                                                              |
@@ -593,7 +591,6 @@ that must be defined under the ``Instance`` tag.
 
 .. table:: rOCCI extensions in the ``project.xml`` file
     :name: rOCCI_extensions
-    :widths: auto
 
     +--------------------------+------------------------------------------------------------------------------+
     | **Name**                 | **Description**                                                              |
@@ -650,7 +647,6 @@ that must be defined under the ``Instance`` tag.
 
 .. table:: Configuration of the ``<resources>.xml`` templates file
     :name: rOCCI_configuration
-    :widths: auto
 
     +----------------+----------------------------------------------------------------------------------------+
     | **Instance**   | Multiple entries of resource templates.                                                |
@@ -676,7 +672,6 @@ The JClouds connector is based on the JClouds API version *1.9.1*. Table
 
 .. table:: JClouds extensions in the  ``<project>.xml`` file
     :name: jclouds_extensions
-    :widths: auto
 
     +----------------+----------------------------------------------------------------------------------------+
     | **Instance**   | **Description**                                                                        |
@@ -707,7 +702,6 @@ available from connector is shown in :numref:`Mesos_options`.
 
 .. table:: Mesos connector options in the  ``<project>.xml`` file
     :name: Mesos_options
-    :widths: auto
 
     +----------------------------------------+----------------------------------------------------------------+
     | **Instance**                           | **Description**                                                |

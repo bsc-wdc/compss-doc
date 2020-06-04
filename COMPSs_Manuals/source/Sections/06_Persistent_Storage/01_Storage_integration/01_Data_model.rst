@@ -49,7 +49,6 @@ found in :numref:`storage_obj_methods_java`.
 
 .. table:: Available methods from StorageObject
     :name: storage_obj_methods_java
-    :widths: auto
 
     +---------------------------+---------+-----------------------------------------------------------------------------------------+
     | Name                      | Returns | Comments                                                                                |
@@ -179,7 +178,6 @@ will be available from the instantiated objects
 
 .. table:: Available methods from StorageObject in Python
     :name: storage_obj_methods_python
-    :widths: auto
 
     +---------------------------+---------+---------------------------------------------------------------------------------------------+
     | Name                      | Returns | Comments                                                                                    |
