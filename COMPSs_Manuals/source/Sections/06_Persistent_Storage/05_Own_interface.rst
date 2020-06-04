@@ -16,7 +16,6 @@ storage framework.
 
 .. table:: SCO object definition
     :name: sco_object_definition
-    :widths: auto
 
     +---------------------------+---------+-----------------------------------------------------------------------------------------+
     | Name                      | Returns | Comments                                                                                |
@@ -54,7 +53,6 @@ storage framework.
 
 .. table:: Java API
     :name: java_api
-    :widths: auto
 
     +----------------------------------------+--------------+---------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
     | Name                                   | Returns      | Comments                                    | Signature                                                                                                                                            |
@@ -99,7 +97,6 @@ storage framework. It is only necessary if the target language is Python.
 
 .. table:: Python API
     :name: python_api
-    :widths: auto
 
     +---------------------------+---------+-----------------------------------------------------------------------------------+-------------------------------------------------------------------------------+
     | Name                      | Returns | Comments                                                                          | Signature                                                                     |

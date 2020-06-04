@@ -472,7 +472,6 @@ Task Parameters Summary
 
 .. table:: Arguments of the *@task* decorator
     :name: task_arguments
-    :widths: auto
 
     +---------------------+-----------------------------------------------------------------------------------------------------------------+
     | Argument            | Value                                                                                                           |
@@ -971,7 +970,6 @@ is going to be considered as a *FILE* but as a stream (e.g. :math:`>`,
 
 .. table:: Supported StdIOStreams for the @binary, @ompss and @mpi decorators
     :name: supported_streams
-    :widths: auto
 
     +------------------------+-------------------+
     | Parameter              | Description       |
@@ -992,7 +990,6 @@ the shorcut.
 
 .. table:: File parameters definition shortcuts
     :name: file_parameter_definition
-    :widths: auto
 
     +-----------------------------+---------------------------------------------------------+
     | Alias                       | Description                                             |
@@ -1406,7 +1403,6 @@ used in the main program of a COMPSs Python application.
 
 .. table:: COMPSs Python API functions
     :name: python_api_functions
-    :widths: auto
 
     +----------------------------------------------+-----------------------------------------------------------------------------------------+
     | API Function                                 | Description                                                                             |

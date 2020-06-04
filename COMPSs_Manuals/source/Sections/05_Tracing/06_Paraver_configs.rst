@@ -11,7 +11,6 @@ folder contains the configurations for Python events, and finally the
 
 .. table:: General paraver configurations for COMPSs Applications
     :name: paraver_configs_general
-    :widths: auto
 
     +-----------------------------------+------------------------------------------------------------------------+
     | Configuration File Name           | Description                                                            |
@@ -61,7 +60,6 @@ folder contains the configurations for Python events, and finally the
 
 .. table:: Available paraver configurations for Python events of COMPSs Applications
     :name: paraver_configs_python
-    :widths: auto
 
     +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
     | Configuration File Name              | Description                                                                                                   |
@@ -77,7 +75,6 @@ folder contains the configurations for Python events, and finally the
 
 .. table:: Available paraver configurations for COMPSs Applications
     :name: paraver_configs_comm
-    :widths: auto
 
     +--------------------------------------------+-----------------------------------------------------------------------------+
     | Configuration File Name                    | Description                                                                 |

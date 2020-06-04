@@ -10,7 +10,6 @@ type, its default value and a brief description.
 
 .. table:: Arguments of the *@constraint* decorator
     :name: supported_constraints
-    :widths: auto
 
     +-------------------------------+-------------------------------------+-------------------------------+------------------------------------------+---------------------+---------------------------------------------------------------------------------------+
     | **Java**                      | **Python**                          | **C / C++**                   | **Value type**                           | **Default value**   | **Description**                                                                       |
@@ -63,7 +62,6 @@ of @Processor annotations that must be defined as shown in :numref:`processor_co
 
 .. table:: Arguments of the *@Processor* decorator
     :name: processor_constraints
-    :widths: auto
 
     +----------------------+--------------------------------+---------------------+---------------------------------------------+
     | **Annotation**       | **Value type**                 | **Default value**   | **Description**                             |

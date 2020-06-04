@@ -151,7 +151,6 @@ methods can be found in :numref:`storage_obj_methods`.
 
 .. table:: Available methods from StorageObject
     :name: storage_obj_methods
-    :widths: auto
 
     +---------------------------+---------+-----------------------------------------------------------------------------------------+
     | Name                      | Returns | Comments                                                                                |
