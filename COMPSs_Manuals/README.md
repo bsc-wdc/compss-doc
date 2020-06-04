@@ -86,7 +86,6 @@ pip3 install ipython --user
   sudo apt-get install pandoc
   sudo apt-get install librsvg2-bin
   ```
-
   * For OpenSuse:
 
     ```
@@ -94,7 +93,6 @@ pip3 install ipython --user
     sudo zypper install python3-Sphinx-latex
     sudo zypper install rsvg-view
     ```
-
 
 * Latex packages:
 
