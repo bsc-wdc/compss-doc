@@ -11,51 +11,17 @@ main application code.
 Single architecture
 ~~~~~~~~~~~~~~~~~~~
 
-The user command "**compss_build_app**" compiles both master and
-worker for a single architecture (e.g. x86-64, armhf, etc). Thus,
-whether you want to run your application in Intel based machine or ARM
-based machine, this command is the tool you need.
-
-Therefore, let’s see two examples, first, the application is going to be
-build for the native architecture, in our case *x86-64*, and then for a
-target architecture, for instance *armhf*. Please note that to use cross
-compilation features and multiple architecture builds, you need to do
-the proper installation of COMPSs, find more information in the builders
-README.
-
-When the target is the native architecture, the command to execute is
-very simple;
-
-.. code-block:: console
-
-    $~/matmul_objects> compss_build_app Matmul
-    [ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-1.8.0-openjdk-amd64//jre/lib/amd64/server
-    [ INFO ] Boost libraries are searched in the directory: /usr/lib/
-
-    ...
-
-    [Info] The target host is: x86_64-linux-gnu
-
-    Building application for master...
-    g++ -g -O3 -I. -I/Bindings/c/share/c_build/worker/files/ -c Block.cc Matrix.cc
-    ar rvs libmaster.a Block.o Matrix.o
-    ranlib libmaster.a
-
-    Building application for workers...
-    g++ -DCOMPSS_WORKER -g -O3 -I. -I/Bindings/c/share/c_build/worker/files/ -c Block.cc -o Block.o
-    g++ -DCOMPSS_WORKER -g -O3 -I. -I/Bindings/c/share/c_build/worker/files/ -c Matrix.cc -o Matrix.o
-    ar rvs libworker.a Block.o Matrix.o
-    ranlib libworker.a
-
-    ...
-
-    Command successful.
+.. include:: 03_1_Single_application_compilation.rst
 
 In order to build an application for a different architecture e.g.
 *armhf*, an environment must be provided, indicating the compiler used
 to cross-compile, and also the location of some COMPSs dependencies such
 as java or boost which must be compliant with the target architecture.
 This environment is passed by flags and arguments;
+
+Please note that to use cross compilation features and multiple architecture
+builds, you need to do the proper installation of COMPSs, find more information
+in the builders README.
 
 .. code-block:: console
 

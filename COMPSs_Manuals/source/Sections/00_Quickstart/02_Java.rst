@@ -1,16 +1,12 @@
- 
-.. rubric:: Java Increment
 
-Code
+.. rubric:: Application Overview
 
-.. rubric:: Execution
+.. include:: /Sections/02_App_Development/01_Java/01_1_Application_overview.rst
 
-Command
+.. rubric:: Application compilation
 
-.. rubric:: Output
+.. include:: /Sections/02_App_Development/01_Java/02_1_Application_compilation_inc.rst
 
-Output
+.. rubric:: Application execution
 
-.. rubric:: Task dependency graph
-
-how to get and generated Graph
+.. include:: /Sections/02_App_Development/01_Java/03_1_Application_execution_inc.rst

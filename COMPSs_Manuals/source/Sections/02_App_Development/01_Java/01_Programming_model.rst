@@ -1,151 +1,49 @@
 Programming Model
 -----------------
+This section shows how the COMPSs programming model is used to develop
+a Java task-based parallel application for distributed computing. First,
+We introduce the structure of a COMPSs Java application and with a simple
+example. Then, we will provide a complete guide about how to define the
+application tasks. Finally, we will show special API calls and other
+optimization hints.
 
-A COMPSs application is composed of three parts:
+Application Overview
+~~~~~~~~~~~~~~~~~~~~
+.. include :: 01_1_Application_overview.rst
 
--  **Main application code:** the code that is executed sequentially and
-   contains the calls to the user-selected methods that will be executed
-   by the COMPSs runtime as asynchronous parallel tasks.
+The following sections show a detailed guide of how to implement complex
+applications.
 
--  **Remote methods code:** the implementation of the tasks.
 
--  **Java annotated interface:** It declares the methods to be run as
-   remote tasks along with metadata information needed by the runtime to
-   properly schedule the tasks.
+Task definition reference guide
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The main application file name has to be the same of the main class and
-starts with capital letter, in this case it is **Simple.java**. The Java
-annotated interface filename is *application name + Itf.java*, in this
-case it is **SimpleItf.java**. And the code that implements the remote
-tasks is defined in the *application name + Impl.java* file, in this
-case it is **SimpleImpl.java**.
+The task definition interface is a Java annotated interface where developers
+define tasks as annotated methods in the interfaces. Annotations can be of
+three different types:
 
-All code examples are in the ``/home/compss/tutorial_apps/java/`` folder
-of the development environment.
+#. Task-definition annotations are method annotations to indicate which
+   type of task is a method declared in the interface.
 
-Main application code
-~~~~~~~~~~~~~~~~~~~~~
+#. The Parameter annotation provides metadata about the task parameters,
+   such as data type, direction and other property for runtime optimization.
 
-In COMPSs, the user’s application code is kept unchanged, no API calls
-need to be included in the main application code in order to run the
-selected tasks on the nodes.
+#. The Constraints annotation describes the minimum capabilities that a
+   given resource must fulfill to execute the task, such as the number of
+   processors or main memory size.
 
-The COMPSs runtime is in charge of replacing the invocations to the
-user-selected methods with the creation of remote tasks also taking care
-of the access to files where required. Let’s consider the Simple
-application example that takes an integer as input parameter and
-increases it by one unit.
-
-The main application code of Simple app (:numref:`simple_java` **Simple.java**) is executed
-sequentially until the call to the **increment()** method. COMPSs, as
-mentioned above, replaces the call to this method with the generation of
-a remote task that will be executed on an available node.
-
-.. code-block:: java
-    :name: simple_java
-    :caption: Simple in Java (Simple.java)
-
-    package simple;
-
-    import java.io.FileInputStream;
-    import java.io.FileOutputStream;
-    import java.io.IOException;
-    import simple.SimpleImpl;
-
-    public class Simple {
-
-      public static void main(String[] args) {
-        String counterName = "counter";
-        int initialValue = args[0];
-
-        //--------------------------------------------------------------//
-        // Creation of the file which will contain the counter variable //
-        //--------------------------------------------------------------//
-        try {
-           FileOutputStream fos = new FileOutputStream(counterName);
-           fos.write(initialValue);
-           System.out.println("Initial counter value is " + initialValue);
-           fos.close();
-        }catch(IOException ioe) {
-           ioe.printStackTrace();
-        }
-
-        //----------------------------------------------//
-        //           Execution of the program           //
-        //----------------------------------------------//
-        SimpleImpl.increment(counterName);
-
-        //----------------------------------------------//
-        //    Reading from an object stored in a File   //
-        //----------------------------------------------//
-        try {
-           FileInputStream fis = new FileInputStream(counterName);
-           System.out.println("Final counter value is " + fis.read());
-           fis.close();
-        }catch(IOException ioe) {
-           ioe.printStackTrace();
-        }
-      }
-    }
-
-Remote methods code
-~~~~~~~~~~~~~~~~~~~
-
-The following code contains the implementation of the remote method of
-the *Simple* application (:numref:`simple_impl_java` **SimpleImpl.java**) that will be executed
-remotely by COMPSs.
-
-.. code-block:: java
-    :name: simple_impl_java
-    :caption: Simple Implementation (SimpleImpl.java)
-
-    package simple;
-
-    import  java.io.FileInputStream;
-    import  java.io.FileOutputStream;
-    import  java.io.IOException;
-    import  java.io.FileNotFoundException;
-
-    public class SimpleImpl {
-      public static void increment(String counterFile) {
-        try{
-          FileInputStream fis = new FileInputStream(counterFile);
-          int count = fis.read();
-          fis.close();
-          FileOutputStream fos = new FileOutputStream(counterFile);
-          fos.write(++count);
-          fos.close();
-        }catch(FileNotFoundException fnfe){
-          fnfe.printStackTrace();
-        }catch(IOException ioe){
-          ioe.printStackTrace();
-        }
-      }
-    }
-
-Java annotated interface
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-The Java interface is used to declare the methods to be executed
-remotely along with Java annotations that specify the necessary metadata
-about the tasks. The metadata can be of three different types:
-
-#. For each parameter of a method, the data type (currently *File* type,
-   primitive types and the *String* type are supported) and its
-   directions (IN, OUT, INOUT or CONCURRENT).
-
-#. The Java class that contains the code of the method.
-
-#. The constraints that a given resource must fulfill to execute the
-   method, such as the number of processors or main memory size.
+#. Scheduler hint annotation provides information about how to deal with
+   tasks of this type at scheduling and execution
 
 A complete and detailed explanation of the usage of the metadata
 includes:
 
--  **Method-level Metadata:** for each selected method, the following
-   metadata has to be defined:
+Task-definition Annotations
+***************************
+For each declared methods, developers has to define a task type.
+The following list enumerates the possible task types:
 
-   -  **@Method:** Defines the Java method as a task
+-  **@Method:** Defines the Java method as a task
 
       -  **declaringClass** (Mandatory) String specifying the class that
          implements the Java method.
@@ -169,7 +67,7 @@ includes:
          *OnFailure.IGNORE* ignores the failure and continues with
          normal runtime execution.
 
-   -  **@Binary:** Defines the Java method as a binary invokation
+-  **@Binary:** Defines the Java method as a binary invokation
 
       -  **binary** (Mandatory) String defining the full path of the
          binary that must be executed.
@@ -181,7 +79,7 @@ includes:
          otherwise. This parameter is used by the COMPSs scheduler (it
          is a String not a Java boolean).
 
-   -  **@MPI:** Defines the Java method as a MPI invokation
+-  **@MPI:** Defines the Java method as a MPI invokation
 
       -  **mpiRunner** (Mandatory) String defining the mpi runner
          command.
@@ -189,9 +87,16 @@ includes:
       -  **binary** (Mandatory) String defining the full path of the
          binary that must be executed.
 
-      -  **computingNodes** String defining the number of computing
-         nodes reserved for the MPI execution (only a single node is
-         reserved by default).
+      -  **processes** String defining the number of MPI processes spawn
+         in the task execution. This can be combined with the constraints
+         annotation to create define a MPI+OpenMP task. (Default is 1)
+
+      -  **scaleByCU** It indicates that the defined *processes* will be
+         scaled by the defined *computingUnits* in the constraints. So, the
+         total MPI processes will be *processes* multiplied by *computingUnits*.
+         This functionality is used to groups MPI processes per node. Number
+         of groups will be set in processes and the number of processes per
+         node will be indicated by *computingUnits*
 
       -  **workingDir** Full path of the binary working directory inside
          the COMPSs Worker.
@@ -200,7 +105,7 @@ includes:
          otherwise. This parameter is used by the COMPSs scheduler (it
          is a String not a Java boolean).
 
-   -  **@OmpSs:** Defines the Java method as a OmpSs invokation
+ -  **@OmpSs:** Defines the Java method as a OmpSs invokation
 
       -  **binary** (Mandatory) String defining the full path of the
          binary that must be executed.
@@ -212,47 +117,74 @@ includes:
          otherwise. This parameter is used by the COMPSs scheduler (it
          is a String not a Java boolean).
 
-   -  **@Constraints:** The user can specify the capabilities that a
-      resource must have in order to run a method. For example, in a
-      cloud execution the COMPSs runtime creates a VM that fulfils the
-      specified requirements in order to perform the execution. A full
-      description of the supported constraints can be found in :numref:`supported_constraints`.
+ -  **@Service:** Mandatory. It specifies the service properties.
 
-   -  **@SchedulerHints:** It specifies the class that implements the
-      method.
+      -  **namespace** Mandatory. Service namespace
 
-      -  **isReplicated** "true" if the method must be executed in all
-         the worker nodes when invoked from the main application (it is
-         a String not a Java boolean).
+      -  **name** Mandatory. Service name.
 
-      -  **isDistributed** "true" if the method must be scheduled in a
-         forced round robin among the available resources (it is a
-         String not a Java boolean).
+      -  **port** Mandatory. Service port.
 
--  **Parameter-level Metadata (@Parameter):** for each parameter and
-   method, the user must define:
+      -  **operation** Operation type.
 
-   -  **Direction:** *Direction.IN, Direction.INOUT, Direction.OUT or
-      Direction.CONCURRENT*
+      -  **priority** "true" if the service takes priority, "false"
+         otherwise. This parameter is used by the COMPSs scheduler (it
+         is a String not a Java boolean).
 
-   -  **Type:** COMPSs supports the following types for task parameters:
 
-      -  **Basic types:** *Type.BOOLEAN, Type.CHAR, Type.BYTE,
+Parameter-level annotations
+***************************
+For each parameter of task (method declared in the interface), the user
+must include a **@Parameter** annotation. The properties
+
+   -  **Direction:** Describes how a task uses the parameter (Default is IN).
+
+      -  **Direction.IN:** Task only reads the data.
+
+      -  **Direction.INOUT:** Task reads and modifies
+
+      -  **Direction.OUT:** Task completely modify the data, or previous content
+         or not modified data is not important.
+
+      -  **Direction.COMMUTATIVE:** An INOUT usage of the data which can be
+         re-ordered with other executions of the defined task.
+
+      -  **Direction.CONCURRENT:** The task allow concurrent modifications
+         of this data. It requires a storage backend that manages concurrent
+         modifications.
+
+   -  **Type:** Describes the data type of the task parameter. By default,
+      the runtime infers the type according to the Java datatype. However,
+      it is mandatory to define it for files, directories and Streams.
+
+      COMPSs supports the following types for task parameters:
+
+      -  **Basic types:** To indicate a parameter is a Java primitive type
+         use the follwing types: *Type.BOOLEAN, Type.CHAR, Type.BYTE,
          Type.SHORT, Type.INT, Type.LONG, Type.FLOAT, Type.DOUBLE*. They
          can only have **IN** direction, since primitive types in Java
          are always passed by value.
 
-      -  **String:** *Type.STRING*. It can only have **IN** direction,
-         since Java Strings are immutable.
+      -  **String:** To indicate a parameter is a Java String use *Type.STRING*.
+         It can only have **IN** direction, since Java Strings are immutable.
 
-      -  **File:** *Type.FILE*. It can have any direction (IN, OUT,
-         INOUT or CONCURRENT). The real Java type associated with a FILE
-         parameter is a String that contains the path to the file.
-         However, if the user specifies a parameter as a FILE, COMPSs
-         will treat it as such.
+      -  **File:** The real Java type associated with a file parameter is a
+         String that contains the path to the file. However, if the user
+         specifies a parameter as *Type.FILE*, COMPSs will treat it as such.
+         It can have any direction (IN, OUT, INOUT, CONMMUTATIVE or CONCURRENT).
 
-      -  **Object:** *Type.Object*. It can have any direction (IN, OUT,
-         INOUT or CONCURRENT).
+      -  **Directory:** The real Java type associated with a directory parameter
+         is a String that contains the path to the directory. However, if the
+         user specifies a parameter as *Type.DIRECTORY*, COMPSs will treat it
+         as such. It can have any direction (IN, OUT, INOUT, CONMMUTATIVE or
+         CONCURRENT).
+
+      -  **Object:** An object parameter is defined with *Type.Object*. It can
+         have any direction (IN, INOUT, COMMUTATIVE or CONCURRENT).
+
+      -  **Streams:** A Task parameters can be defined as stream with
+         Type.STREAM. It can have direction IN, if the task pull data from
+         the stream, or OUT if the task pushes data to the stream.
 
    -  **Return type:** Any object or a generic class object. In this
       case the direction is always OUT.
@@ -272,52 +204,38 @@ includes:
       allows to prepend a constant String to the parameter value to use
       the Linux joint-prefixes as parameters of the binary execution.
 
--  **Service-level Metadata:** for each selected service, the following
-   metadata has to be defined:
+   -  **Weight:** Provides a hint of the size of this parameter compared to
+      a default one. For instance, if a parameters is 3 times larger than the
+      others, set the weigh property of this paramenter to 3.0. (Default is 1.0).
 
-   -  **@Service:** Mandatory. It specifies the service properties.
+   -  **keepRename:** Runtime rename files to avoid some data dependencies.
+      It is transparent to the final user because we rename back the filename
+      when invoking the task at worker. This management creates an overhead,
+      if developers know that the task is not name nor extension sensitive
+      (i.e can work with rename), they can set this property to true to
+      reduce the overhead.
 
-      -  **namespace** Mandatory. Service namespace
+Constraints annotations
+***********************
 
-      -  **name** Mandatory. Service name.
+   -  **@Constraints:** The user can specify the capabilities that a
+      resource must have in order to run a method. For example, in a
+      cloud execution the COMPSs runtime creates a VM that fulfils the
+      specified requirements in order to perform the execution. A full
+      description of the supported constraints can be found in :numref:`supported_constraints`.
 
-      -  **port** Mandatory. Service port.
+Scheduler annotations
+*********************
+   -  **@SchedulerHints:** It specifies hints for the scheduler about how to
+      treat the task.
 
-      -  **operation** Operation type.
+         -  **isReplicated** "true" if the method must be executed in all
+            the worker nodes when invoked from the main application (it is
+            a String not a Java boolean).
 
-      -  **priority** "true" if the service takes priority, "false"
-         otherwise. This parameter is used by the COMPSs scheduler (it
-         is a String not a Java boolean).
-
-The Java annotated interface of the Simple app example (:numref:`simple_itf_java` SimpleItf.java)
-includes the description of the *Increment()* method metadata. The
-method interface contains a single input parameter, a string containing
-a path to the file counterFile. In this example there are constraints on
-the minimum number of processors and minimum memory size needed to run
-the method.
-
-.. code-block:: java
-    :name: simple_itf_java
-    :caption: Interface of the Simple application (SimpleItf.java)
-
-    package simple;
-
-    import  es.bsc.compss.types.annotations.Constraints;
-    import  es.bsc.compss.types.annotations.task.Method;
-    import  es.bsc.compss.types.annotations.Parameter;
-    import  es.bsc.compss.types.annotations.parameter.Direction;
-    import  es.bsc.compss.types.annotations.parameter.Type;
-
-    public interface SimpleItf {
-
-      @Constraints(computingUnits = "1", memorySize = "0.3")
-      @Method(declaringClass = "simple.SimpleImpl")
-      void increment(
-          @Parameter(type = Type.FILE, direction = Direction.INOUT)
-          String file
-      );
-
-    }
+         -  **isDistributed** "true" if the method must be scheduled in a
+            forced round robin among the available resources (it is a
+            String not a Java boolean).
 
 Alternative method implementations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
