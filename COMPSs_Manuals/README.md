@@ -67,7 +67,7 @@ pip3 install sphinx --user
 pip3 install sphinxcontrib.contentui --user
 pip3 install six --upgrade
 pip3 install nbsphinx --user
-pip3 install sphinx-copybutton --user_events
+pip3 install sphinx-copybutton --user
 pip3 install sphinxcontrib-svg2pdfconverter --user
 pip3 install rst2pdf --user
 pip3 install sphinxcontrib-bibtex --user
@@ -97,7 +97,7 @@ pip3 install ipython --user
 * Latex packages:
 
 ```
-sudo zypper install texlive-footnotebackref texlive-datetime texlive-epigraph texlive-eso-pic texlive-lipsum texlive-footnotebackref texlive-setspace texlive-amsmath texlive-amsfonts texlive-amstex texlive-lipsum texlive-fancyhdr
+sudo zypper install texlive-footnotebackref texlive-datetime texlive-epigraph texlive-eso-pic texlive-lipsum texlive-footnotebackref texlive-setspace texlive-amsmath texlive-amsfonts texlive-amstex texlive-lipsum texlive-fancyhdr texlive-anyfontsize
 ```
 
 

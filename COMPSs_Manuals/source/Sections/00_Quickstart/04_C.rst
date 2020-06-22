@@ -1,16 +1,16 @@
 
-.. rubric:: C/C++ Increment
+.. rubric:: Application Overview
 
-Code
+.. include:: /Sections/02_App_Development/03_C/01_1_Application_overview.rst
 
-.. rubric:: Execution
+.. rubric:: Application Compilation
 
-Command
+.. include:: /Sections/02_App_Development/03_C/03_1_Single_application_compilation.rst
 
-.. rubric:: Output
+.. rubric :: Application Execution
 
-Output
+.. include:: /Sections/02_App_Development/03_C/04_1_Application_execution_inc.rst
 
-.. rubric:: Task dependency graph
+.. rubric :: Task Dependency Graph
 
-how to get and generated Graph
+.. include:: /Sections/02_App_Development/03_C/05_1_Task_dependency_graph_inc.rst
