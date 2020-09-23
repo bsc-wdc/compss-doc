@@ -238,7 +238,7 @@ Access Processor - Thread 1.1.3
 
 Worker X Master - Thread 1.X.1
     This thread is the master of each worker and handles the computing
-    resources and transfers. Is is repeated for each available
+    resources and transfers. It is repeated for each available
     resource. All data events of the worker, such as requests,
     transfers and receives are marked on this timeline (when using the
     appropriate configurations).

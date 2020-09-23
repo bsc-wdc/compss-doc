@@ -84,7 +84,7 @@ trace correctly:
 
    Paraver view adjustment: Fit window
 
--  View Event Flags: marks with a green flag all the emitted the events.
+-  View Event Flags: marks with a green flag all the emitted events.
 
    -  Right click on the trace window
 
