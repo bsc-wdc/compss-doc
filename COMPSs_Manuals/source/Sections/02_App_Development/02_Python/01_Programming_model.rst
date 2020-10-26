@@ -986,7 +986,7 @@ Next tables summarizes the parameters of these decorators.
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
     | Parameter              | Description                                                                                                                       |
     +========================+===================================================================================================================================+
-    | **chunk_size**         |  Size of data fragments to be given as input parameter to the reduction function.                                                    |
+    | **chunk_size**         |  Size of data fragments to be given as input parameter to the reduction function.                                                 |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
 In addition to the parameters that can be used within the
