@@ -96,9 +96,17 @@ pip3 install ipython --user
 
 * Latex packages:
 
-```
-sudo zypper install texlive-footnotebackref texlive-datetime texlive-epigraph texlive-eso-pic texlive-lipsum texlive-footnotebackref texlive-setspace texlive-amsmath texlive-amsfonts texlive-amstex texlive-lipsum texlive-fancyhdr texlive-anyfontsize
-```
+  * For Ubuntu:
+
+  ````
+  sudo apt install texlive-latex-extra
+  sudo apt-get install -y latexmk
+  ````
+  *For OpenSuse:
+  
+    ```
+    sudo zypper install texlive-footnotebackref texlive-datetime texlive-epigraph texlive-eso-pic texlive-lipsum texlive-footnotebackref texlive-setspace texlive-amsmath texlive-amsfonts texlive-amstex texlive-lipsum texlive-fancyhdr texlive-anyfontsize
+    ```
 
 
 ## 2. Build COMPSs documentation
