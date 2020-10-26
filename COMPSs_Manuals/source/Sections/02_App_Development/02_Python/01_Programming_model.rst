@@ -663,9 +663,9 @@ For instance, there is a set of decorators that can be placed over the
 invocation** (with the :ref:`Sections/02_App_Development/02_Python/01_Programming_model:OmpSs decorator`), as a **MPI invocation**
 (with the :ref:`Sections/02_App_Development/02_Python/01_Programming_model:MPI decorator`), as a **COMPSs application** (with the
 :ref:`Sections/02_App_Development/02_Python/01_Programming_model:COMPSs decorator`), as a **task that requires multiple
-nodes** (with the :ref:`Sections/02_App_Development/02_Python/01_Programming_model:Multinode decorator`), or as a **reduce task** that 
-can be executed in parallel having a subset of the original input data as input (with the 
-:ref:`Sections/02_App_Development/02_Python/01_Programming_model:Reduce decorator`). These decorators must be placed over the 
+nodes** (with the :ref:`Sections/02_App_Development/02_Python/01_Programming_model:Multinode decorator`), or as a **Reduction task** that
+can be executed in parallel having a subset of the original input data as input (with the
+:ref:`Sections/02_App_Development/02_Python/01_Programming_model:Reduction decorator`). These decorators must be placed over the
 *@task* decorator, and under the *@constraint* decorator if defined.
 
 Consequently, the task body will be empty and the function parameters
@@ -903,27 +903,27 @@ task is through the *COMPSS_NUM_NODES*, *COMPSS_NUM_THREADS* and
 exported within the task scope by the COMPSs runtime before the task
 execution.
 
-Reduce decorator
+Reduction decorator
 ^^^^^^^^^^^^^^^^^^^
 
-The *@reduce* decorator shall be used to define that a task
-is going to be subdivided into smaller tasks that take as input 
-a subset of the input data. (:numref:`reduce_task_python`).
+The *@reduction* decorator shall be used to define that a task
+is going to be subdivided into smaller tasks that take as input
+a subset of the input data. (:numref:`reduction_task_python`).
 
 .. code-block:: python
-    :name: reduce_task_python
-    :caption: Reduce task example
+    :name: reduction_task_python
+    :caption: Reduction task example
 
-    from pycompss.api.reduce import reduce
+    from pycompss.api.reduction import reduction
 
-    @reduce(chunk_size="2")
+    @reduction(chunk_size="2")
     @task()
     def myreduction():
         pass
 
 The only supported parameter is *chunk_size*, used to define the
 size of the data that the generated tasks will get as input parameter.
-The data given as input to the main reduce task is subdivided into chunks 
+The data given as input to the main reduction task is subdivided into chunks
 of the set size.
 
 Other task types summary
@@ -982,11 +982,11 @@ Next tables summarizes the parameters of these decorators.
     | **computing_nodes**    | Integer defining the number of computing nodes reserved for the task execution (only a single node is reserved by default).       |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
-* @reduce
+* @reduction
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
     | Parameter              | Description                                                                                                                       |
     +========================+===================================================================================================================================+
-    | **chunk_size**         |  Size of data fragments to be given as input parameter to the reduce function.                                                    |
+    | **chunk_size**         |  Size of data fragments to be given as input parameter to the reduction function.                                                    |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
 In addition to the parameters that can be used within the
@@ -1193,7 +1193,7 @@ to the user (:numref:`implements_python`).
         return resultList
 
 Please, note that if the implementation is used to define a binary,
-OmpSs, MPI, COMPSs, multinode or reduce task invocation (see
+OmpSs, MPI, COMPSs, multinode or reduction task invocation (see
 :ref:`Sections/02_App_Development/02_Python/01_Programming_model:Other task types`),
 the @implement decorator must be always on top of the decorators stack,
 followed by the @constraint decorator, then the
