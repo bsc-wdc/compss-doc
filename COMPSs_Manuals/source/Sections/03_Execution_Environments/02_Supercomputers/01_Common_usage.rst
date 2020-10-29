@@ -24,7 +24,7 @@ COMPSs module.
     COMPSs/2.5
     COMPSs/2.6
     COMPSs/2.7
-
+    COMPSs/2.8
     COMPSs/release(default)
     COMPSs/trunk
 
@@ -106,7 +106,7 @@ command:
 
     $ enqueue_compss -h
 
-    Usage: /apps/COMPSs/2.7/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
+    Usage: /apps/COMPSs/2.8/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
 
     * Options:
       General:
@@ -128,8 +128,8 @@ command:
                                                 Default: default
         --reservation=<name>                    Reservation to use when submitting the job.
                                                 Default: disabled
-        --constraints=<constraints>             Constraints to pass to queue system.
-                                                Default: disabled
+        --constraints=<constraints>		          Constraints to pass to queue system.
+    					                                  Default: disabled
         --qos=<qos>                             Quality of Service to pass to the queue system.
                                                 Default: default
         --cpus_per_task                         Number of cpus per task the queue system must allocate per task.
@@ -201,16 +201,16 @@ command:
 
         --master_working_dir=<path>             Working directory of the application
                                                 Default: .
-        --worker_working_dir=<name | path>      Worker directory. Use: scratch | gpfs | <path>
-                                                Default: scratch
+        --worker_working_dir=<name | path>      Worker directory. Use: local_disk | shared_disk | <path>
+                                                Default: local_disk
 
         --worker_in_master_cpus=<int>           Maximum number of CPU computing units that the master node can run as worker. Cannot exceed cpus_per_node.
                                                 Default: 24
         --worker_in_master_memory=<int> MB      Maximum memory in master node assigned to the worker. Cannot exceed the node_memory.
                                                 Mandatory if worker_in_master_cpus is specified.
                                                 Default: 50000
-        --worker_port_range=<min>,<max>         Port range used by the NIO adaptor at the worker side
-                                                Default: 43001,43005
+        --worker_port_range=<min>,<max>	        Port range used by the NIO adaptor at the worker side
+    					                                  Default: 43001,43005
         --jvm_worker_in_master_opts="<string>"  Extra options for the JVM of the COMPSs Worker in the Master Node.
                                                 Each option separed by "," and without blank spaces (Notice the quotes)
                                                 Default:
@@ -226,6 +226,9 @@ command:
                                                 Default: true
         --jupyter_notebook=<path>,              Swap the COMPSs master initialization with jupyter notebook from the specified path.
         --jupyter_notebook                      Default: false
+        --ipython                               Swap the COMPSs master initialization with ipython.
+                                                Default: empty
+
 
       Runcompss configuration:
 
@@ -247,20 +250,20 @@ command:
         --jmx_port=<int>                        Enable JVM profiling on specified port
 
       Runtime configuration options:
-        --task_execution=<compss|storage>       Task execution under COMPSs or Storage.
+        --task_execution=<compss|storage>	      Task execution under COMPSs or Storage.
                                                 Default: compss
         --storage_impl=<string>                 Path to an storage implementation. Shortcut to setting pypath and classpath. See Runtime/storage in your installation folder.
         --storage_conf=<path>                   Path to the storage configuration file
                                                 Default: null
         --project=<path>                        Path to the project XML file
-                                                Default: /apps/COMPSs/2.7//Runtime/configuration/xml/projects/default_project.xml
+                                                Default: /apps/COMPSs/2.8.pr//Runtime/configuration/xml/projects/default_project.xml
         --resources=<path>                      Path to the resources XML file
-                                                Default: /apps/COMPSs/2.7//Runtime/configuration/xml/resources/default_resources.xml
+                                                Default: /apps/COMPSs/2.8.pr//Runtime/configuration/xml/resources/default_resources.xml
         --lang=<name>                           Language of the application (java/c/python)
                                                 Default: Inferred is possible. Otherwise: java
         --summary                               Displays a task execution summary at the end of the application execution
                                                 Default: false
-        --log_level=<level>, --debug, -d        Set the debug level: off | info | debug
+        --log_level=<level>, --debug, -d        Set the debug level: off | info | api | debug | trace
                                                 Warning: Off level compiles with -O2 option disabling asserts and __debug__
                                                 Default: off
 
@@ -288,10 +291,10 @@ command:
                                                 Default: null
         --scheduler=<className>                 Class that implements the Scheduler for COMPSs
                                                 Supported schedulers:
-                                                      ├── es.bsc.compss.scheduler.data.DataScheduler
-                                                      ├── es.bsc.compss.scheduler.fifo.FIFOScheduler
-                                                      ├── es.bsc.compss.scheduler.fifodata.FIFODataScheduler
-                                                      ├── es.bsc.compss.scheduler.lifo.LIFOScheduler
+                                                      ├── es.bsc.compss.scheduler.fifodatalocation.FIFODataLoctionScheduler
+                                                      ├── es.bsc.compss.scheduler.fifonew.FIFOScheduler
+                                                      ├── es.bsc.compss.scheduler.fifodatanew.FIFODataScheduler
+                                                      ├── es.bsc.compss.scheduler.lifonew.LIFOScheduler
                                                       ├── es.bsc.compss.components.impl.TaskScheduler
                                                       └── es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
                                                 Default: es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
@@ -349,10 +352,12 @@ command:
         --gen_coredump                          Enable master coredump generation
                                                 Default: false
         --python_interpreter=<string>           Python interpreter to use (python/python2/python3).
-                                                Default: python Version: 3
+                                                Default: python Version: 2
         --python_propagate_virtual_environment=<true>  Propagate the master virtual environment to the workers (true/false).
                                                        Default: true
         --python_mpi_worker=<false>             Use MPI to run the python worker instead of multiprocessing. (true/false).
+                                                Default: false
+        --python_memory_profile                 Generate a memory profile of the master.
                                                 Default: false
 
     * Application name:
