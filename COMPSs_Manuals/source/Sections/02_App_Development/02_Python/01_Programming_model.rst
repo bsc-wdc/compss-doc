@@ -1202,8 +1202,8 @@ decorator, and finally, the @task decorator in the lowest
 level.
 
 
-Main Program
-~~~~~~~~~~~~
+API
+~~~
 
 The main program of the application is a sequential code that contains
 calls to the selected tasks. In addition, when synchronizing for task
@@ -1387,10 +1387,7 @@ The corresponding task selection for the example above would be (:numref:`api_us
     http://docs.python.org/2/faq/programming.html#what-are-the-best-practices-for-using-import-in-a-module
 
 
-API
-^^^
-
-:numref:`python_api_functions` summarizes the API functions to be
+Finally, :numref:`python_api_functions` summarizes the API functions to be
 used in the main program of a COMPSs Python application.
 
 .. table:: COMPSs Python API functions
