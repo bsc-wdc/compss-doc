@@ -138,32 +138,80 @@ Below you can see an example of the most important variable definition for Slurm
 
 .. code-block:: bash
 
-    # Submission command (submit.sh)
-    SUBMISSION_CMD="sbatch"
-    SUBMISSION_PIPE="< "
-    ...
+    # File: Runtime/scripts/queues/queue_systems/slurm.cfg
+
+    ################################
+    ## SUBMISSION VARIABLES
+    ################################
     # Variables to define the directives as #${QUEUE_CMD} ${ARG_*}${QUEUE_SEPARATOR}value (submit.sh)
     QUEUE_CMD="SBATCH"
-    QUEUE_SEPARATOR=""
-    QARG_JOB_NAME="--job-name="
-    QARG_JOB_OUT="-o"
-    QARG_JOB_ERROR="-e"
-    QARG_WD="--workdir="
-    QARG_WALLCLOCK="-t"
-    QARG_NUM_NODES="-N"
-    QARG_NUM_PROCESSES="-n"
-    ...
-    #vars to customize the commands know job id and allocated nodes (submit.sh)
+    SUBMISSION_CMD="sbatch"
+    SUBMISSION_PIPE="< "
+    SUBMISSION_HET_SEPARATOR=' : '
+    SUBMISSION_HET_PIPE=" "
+
+    # Variables to customize the commands know job id and allocated nodes (submit.sh)
     ENV_VAR_JOB_ID="SLURM_JOB_ID"
     ENV_VAR_NODE_LIST="SLURM_JOB_NODELIST"
-    HOSTLIST_CMD="scontrol show hostname"
-    HOSTLIST_TREATMENT="| awk {' print \$1 '} | sed -e 's/\.[^\ ]*//g'"
-    ...
-    #vars to customize worker process spawn inside the job (launch_compss)
+
+    QUEUE_SEPARATOR=""
+    EMPTY_WC_LIMIT=":00"
+
+    QARG_JOB_NAME="--job-name="
+    QARG_JOB_DEP_INLINE="false"
+    QARG_JOB_DEPENDENCY_OPEN="--dependency=afterany:"
+    QARG_JOB_DEPENDENCY_CLOSE=""
+
+    QARG_JOB_OUT="-o "
+    QARG_JOB_ERROR="-e "
+    QARG_WD="--workdir="
+    QARG_WALLCLOCK="-t"
+
+    QARG_NUM_NODES="-N"
+    QARG_NUM_PROCESSES="-n"
+    QNUM_PROCESSES_VALUE="\$(expr \${num_nodes} \* \${req_cpus_per_node})"
+    QARG_EXCLUSIVE_NODES="--exclusive"
+    QARG_SPAN=""
+
+    QARG_MEMORY="--mem="
+    QARG_QUEUE_SELECTION="-p "
+    QARG_NUM_SWITCHES="--gres="
+    QARG_GPUS_PER_NODE="--gres gpu:"
+    QARG_RESERVATION="--reservation="
+    QARG_CONSTRAINTS="--constraint="
+    QARG_QOS="--qos="
+    QARG_OVERCOMMIT="--overcommit"
+    QARG_CPUS_PER_TASK="-c"
+    QJOB_ID="%J"
+    QARG_PACKJOB="packjob"
+
+    ################################
+    ## LAUNCH VARIABLES
+    ################################
+    # Variables to customize worker process spawn inside the job (launch_compss)
     LAUNCH_CMD="srun"
     LAUNCH_PARAMS="-n1 -N1 --nodelist="
     LAUNCH_SEPARATOR=""
     CMD_SEPARATOR=""
+    HOSTLIST_CMD="scontrol show hostname"
+    HOSTLIST_TREATMENT="| awk {' print \$1 '} | sed -e 's/\.[^\ ]*//g'"
+
+    ################################
+    ## QUEUE VARIABLES
+    ##  - Used in interactive
+    ##  - Substitute the %JOBID% keyword with the real job identifier dinamically
+    ################################
+    QUEUE_JOB_STATUS_CMD="squeue -h -o %T --job %JOBID%"
+    QUEUE_JOB_RUNNING_TAG="RUNNING"
+    QUEUE_JOB_NODES_CMD="squeue -h -o %N --job %JOBID%"
+    QUEUE_JOB_CANCEL_CMD="scancel %JOBID%"
+    QUEUE_JOB_LIST_CMD="squeue -h -o %i"
+    QUEUE_JOB_NAME_CMD="squeue -h -o %j --job %JOBID%"
+
+    ################################
+    ## CONTACT VARIABLES
+    ################################
+    CONTACT_CMD="ssh"
 
 To adapt this script to your queue system, you just need to change the variable
 value to the command, argument or value required in your system.
@@ -178,35 +226,74 @@ variables for the *MareNostrum IV* supercomputer.
 
 .. code-block:: bash
 
+    # File: Runtime/scripts/queues/supercomputers/mn.cfg
+
+    ################################
+    ## STRUCTURE VARIABLES
+    ################################
     QUEUE_SYSTEM="slurm"
 
-    # Default values enqueue_compss
+    ################################
+    ## ENQUEUE_COMPSS VARIABLES
+    ################################
     DEFAULT_EXEC_TIME=10
     DEFAULT_NUM_NODES=2
+    DEFAULT_NUM_SWITCHES=0
+    MAX_NODES_SWITCH=18
+    MIN_NODES_REQ_SWITCH=4
     DEFAULT_QUEUE=default
+    DEFAULT_MAX_TASKS_PER_NODE=-1
     DEFAULT_CPUS_PER_NODE=48
-    DEFAULT_NODE_MEMORY_SIZE=92
+    DEFAULT_IO_EXECUTORS=0
+    DEFAULT_GPUS_PER_NODE=0
+    DEFAULT_FPGAS_PER_NODE=0
+    DEFAULT_WORKER_IN_MASTER_CPUS=24
+    DEFAULT_WORKER_IN_MASTER_MEMORY=50000
     DEFAULT_MASTER_WORKING_DIR=.
-    MINIMUM_NUM_NODES=1
-    MINIMUM_CPUS_PER_NODE=1
-    ...
-    # Enabling/disabling queue system features
+    DEFAULT_WORKER_WORKING_DIR=local_disk
+    DEFAULT_NETWORK=infiniband
+    DEFAULT_DEPENDENCY_JOB=None
+    DEFAULT_RESERVATION=disabled
+    DEFAULT_NODE_MEMORY=disabled
+    DEFAULT_JVM_MASTER=""
+    DEFAULT_JVM_WORKERS="-Xms16000m,-Xmx92000m,-Xmn1600m"
+    DEFAULT_JVM_WORKER_IN_MASTER=""
+    DEFAULT_QOS=default
+    DEFAULT_CONSTRAINTS=disabled
+
+    ################################
+    ## Enabling/disabling passing
+    ## requirements to queue system
+    ################################
     DISABLE_QARG_MEMORY=true
     DISABLE_QARG_CONSTRAINTS=false
     DISABLE_QARG_QOS=false
     DISABLE_QARG_OVERCOMMIT=true
     DISABLE_QARG_CPUS_PER_TASK=false
+    DISABLE_QARG_NVRAM=true
     HETEROGENEOUS_MULTIJOB=false
-    ...
-    #Paths
-    SCRATCH_DIR="/scratch/tmp"
-    GPFS_PREFIX="/gpfs/"
-    ...
-    #Other values
-    REMOTE_EXECUTOR="none" #disable the ssh spawn at runtime
-    NETWORK_INFINIBAND_SUFFIX="-ib0" #hostname suffix to add in order to use infiniband
-    NETWORK_DATA_SUFFIX="-data" #hostname suffix to add in order to use infiniband
-    MASTER_NAME_CMD=hostname #command to know the mastername
+
+    ################################
+    ## SUBMISSION VARIABLES
+    ################################
+    MINIMUM_NUM_NODES=1
+    MINIMUM_CPUS_PER_NODE=1
+    DEFAULT_STORAGE_HOME="null"
+    DISABLED_STORAGE_HOME="null"
+
+    ################################
+    ## LAUNCH VARIABLES
+    ################################
+    LOCAL_DISK_PREFIX="/scratch/tmp"
+    REMOTE_EXECUTOR="none"  # Disable the ssh spawn at runtime
+    NETWORK_INFINIBAND_SUFFIX="-ib0"  # Hostname suffix to add in order to use infiniband network
+    NETWORK_DATA_SUFFIX="-data"  # Hostname suffix to add in order to use data network
+    SHARED_DISK_PREFIX="/gpfs/"
+    SHARED_DISK_2_PREFIX="/.statelite/tmpfs/gpfs/"
+    DEFAULT_NODE_MEMORY_SIZE=92
+    DEFAULT_NODE_STORAGE_BANDWIDTH=450
+    MASTER_NAME_CMD=hostname  # Command to know the mastername
+    ELASTICITY_BATCH=true
 
 To adapt this script to your supercomputer, you just need to change the
 variables to commands paths or values which are set in your system.
@@ -428,7 +515,7 @@ Users can check the available options by running:
         --jmx_port=<int>                        Enable JVM profiling on specified port
 
       Runtime configuration options:
-        --task_execution=<compss|storage>	      Task execution under COMPSs or Storage.
+        --task_execution=<compss|storage>       Task execution under COMPSs or Storage.
                                                 Default: compss
         --storage_impl=<string>                 Path to an storage implementation. Shortcut to setting pypath and classpath. See Runtime/storage in your installation folder.
         --storage_conf=<path>                   Path to the storage configuration file

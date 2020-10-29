@@ -250,7 +250,7 @@ command:
         --jmx_port=<int>                        Enable JVM profiling on specified port
 
       Runtime configuration options:
-        --task_execution=<compss|storage>	      Task execution under COMPSs or Storage.
+        --task_execution=<compss|storage>       Task execution under COMPSs or Storage.
                                                 Default: compss
         --storage_impl=<string>                 Path to an storage implementation. Shortcut to setting pypath and classpath. See Runtime/storage in your installation folder.
         --storage_conf=<path>                   Path to the storage configuration file
