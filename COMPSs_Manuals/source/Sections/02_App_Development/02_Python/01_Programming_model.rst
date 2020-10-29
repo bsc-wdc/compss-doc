@@ -1251,7 +1251,7 @@ compss_barrier_group(group_name)
    to the given group submitted before the *compss_barrier_group()* is called.
    When all group tasks submitted before the *compss_barrier_group()* have
    finished, the execution continues.
-   See :ref:`Sections/02_App_Development/02_Python/01_Programming_model:Group Tasks`
+   See :ref:`Sections/02_App_Development/02_Python/01_Programming_model:Task Groups`
    for more information about task groups.
 
 compss_wait_on(obj, to_write=True)
@@ -1267,7 +1267,7 @@ TaskGroup(group_name, implicit_barrier=True)
    context will belong to *group_name* context and are sensitive to wait for
    them while the rest are being executed. Tasks groups are depicted within
    a box into the generated task dependency graph.
-   See :ref:`Sections/02_App_Development/02_Python/01_Programming_model:Group Tasks`
+   See :ref:`Sections/02_App_Development/02_Python/01_Programming_model:Task Groups`
    for more information about task groups.
 
 To illustrate the use of the aforementioned API functions, the following
@@ -1387,7 +1387,42 @@ The corresponding task selection for the example above would be (:numref:`api_us
     http://docs.python.org/2/faq/programming.html#what-are-the-best-practices-for-using-import-in-a-module
 
 
-Group Tasks
+API
+^^^
+
+:numref:`python_api_functions` summarizes the API functions to be
+used in the main program of a COMPSs Python application.
+
+.. table:: COMPSs Python API functions
+    :name: python_api_functions
+
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | API Function                                 | Description                                                                             |
+    +==============================================+=========================================================================================+
+    | compss_file_exists(file_name)                | Check if a file exists.                                                                 |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_open(file_name, mode=’r’)             | Synchronizes for the last version of a file and returns its file descriptor.            |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_delete_file(file_name)                | Notifies the runtime to remove a file.                                                  |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_wait_on_file(file_name)               | Synchronizes for the last version of a file.                                            |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_wait_on_directory(directory_name)     | Synchronizes for the last version of a directory.                                       |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_delete_object(object)                 | Notifies the runtime to delete the associated file to this object.                      |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_barrier(no_more_tasks=False)          | Wait for all tasks submitted before the barrier.                                        |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_barrier_group(group_name)             | Wait for all tasks that belong to *group_name* group submitted before the barrier.      |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | compss_wait_on(obj, to_write=True)           | Synchronizes for the last version of an object (or a list of objects) and returns it.   |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | TaskGroup(group_name, implicit_barrier=True) | Context to define a group of tasks. *implicit_barrier* forces waiting on context exit.  |
+    +----------------------------------------------+-----------------------------------------------------------------------------------------+
+
+
+
+Task Groups
 ^^^^^^^^^^^
 
 COMPSs also enables to specify task groups. To this end, COMPSs provides the
@@ -1426,39 +1461,6 @@ task groups within task groups.
         test_taskgroup()
 
 
-API
-^^^
-
-:numref:`python_api_functions` summarizes the API functions to be
-used in the main program of a COMPSs Python application.
-
-.. table:: COMPSs Python API functions
-    :name: python_api_functions
-
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | API Function                                 | Description                                                                             |
-    +==============================================+=========================================================================================+
-    | compss_file_exists(file_name)                | Check if a file exists.                                                                 |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_open(file_name, mode=’r’)             | Synchronizes for the last version of a file and returns its file descriptor.            |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_delete_file(file_name)                | Notifies the runtime to remove a file.                                                  |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_wait_on_file(file_name)               | Synchronizes for the last version of a file.                                            |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_wait_on_directory(directory_name)     | Synchronizes for the last version of a directory.                                       |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_delete_object(object)                 | Notifies the runtime to delete the associated file to this object.                      |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_barrier(no_more_tasks=False)          | Wait for all tasks submitted before the barrier.                                        |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_barrier_group(group_name)             | Wait for all tasks that belong to *group_name* group submitted before the barrier.      |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_wait_on(obj, to_write=True)           | Synchronizes for the last version of an object (or a list of objects) and returns it.   |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | TaskGroup(group_name, implicit_barrier=True) | Context to define a group of tasks. *implicit_barrier* forces waiting on context exit.  |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-
 Local Decorator
 ^^^^^^^^^^^^^^^
 
@@ -1494,6 +1496,7 @@ each parameter.
         append_three_ones(v)
         # v is automatically synchronized when calling the scale_vector function.
         w = scale_vector(v, 2)
+
 
 Exceptions
 ~~~~~~~~~~
