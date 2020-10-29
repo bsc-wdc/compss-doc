@@ -23,7 +23,7 @@ folder contains the configurations for Python events, and finally the
     +-----------------------------------+------------------------------------------------------------------------+
     | 3dh_duration_tasks.cfg            | 3D Histogram of tasks duration                                         |
     +-----------------------------------+------------------------------------------------------------------------+
-    | Interval_between_runtime.cfg      | Interval between runtime events                                        |
+    | compss_cpu_constraints.cfg        | Shows tasks cpu constraints                                            |
     +-----------------------------------+------------------------------------------------------------------------+
     | compss_runtime.cfg                | Shows COMPSs Runtime events (master and workers)                       |
     +-----------------------------------+------------------------------------------------------------------------+
@@ -31,13 +31,25 @@ folder contains the configurations for Python events, and finally the
     +-----------------------------------+------------------------------------------------------------------------+
     | compss_storage.cfg                | Shows COMPSs persistent storage events                                 |
     +-----------------------------------+------------------------------------------------------------------------+
-    | compss_tasks.cfg                  | Shows tasks execution                                                  |
+    | compss_tasks_and_binding.cfg      | Shows COMPSs Binding events (master and workers) and tasks execution   |
     +-----------------------------------+------------------------------------------------------------------------+
     | compss_tasks_and_runtime.cfg      | Shows COMPSs Runtime events (master and workers) and tasks execution   |
     +-----------------------------------+------------------------------------------------------------------------+
-    | compss_tasks_numbers.cfg          | Shows tasks execution by task id                                       |
+    | compss_tasks.cfg                  | Shows tasks execution                                                  |
+    +-----------------------------------+------------------------------------------------------------------------+
+    | compss_tasks_cpu_affinity.cfg     | Shows tasks CPU affinity                                               |
+    +-----------------------------------+------------------------------------------------------------------------+
+    | compss_tasks_gpu_affinity.cfg     | Shows tasks GPU affinity                                               |
+    +-----------------------------------+------------------------------------------------------------------------+
+    | compss_tasks_id.cfg               | Shows tasks execution by task id                                       |
     +-----------------------------------+------------------------------------------------------------------------+
     | compss_waiting_tasks.cfg          | Shows waiting tasks                                                    |
+    +-----------------------------------+------------------------------------------------------------------------+
+    | histograms_HW_counters.cfg        | Shows hardware counters histograms                                     |
+    +-----------------------------------+------------------------------------------------------------------------+
+    | instantiation_time.cfg            | Shows the instantiation time                                           |
+    +-----------------------------------+------------------------------------------------------------------------+
+    | Interval_between_runtime.cfg      | Interval between runtime events                                        |
     +-----------------------------------+------------------------------------------------------------------------+
     | nb_executing_tasks.cfg            | Number of executing tasks                                              |
     +-----------------------------------+------------------------------------------------------------------------+
@@ -68,10 +80,17 @@ folder contains the configurations for Python events, and finally the
     +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
     | events_inside_tasks.cfg              | Events showing python information such as user function execution time, modules imports, or serializations    |
     +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
-    | Time_between_events_inside_tasks.cfg | Shows the time between events inside tasks                                                                    |
+    | events_in_workers.cfg                | Events showing python binding information in worker                                                           |
     +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
     | nb_user_code_executing.cfg           | Number of user code executing                                                                                 |
     +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
+    | tasks_cpu_affinity.cfg               | Events showing the CPU affinity of the tasks (shows only the first core if multiple assigned)                 |
+    +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
+    | tasks_gpu_affinity.cfg               | Events showing the GPU affinity of the tasks (shows only the first GPU if multiple assigned)                  |
+    +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
+    | Time_between_events_inside_tasks.cfg | Shows the time between events inside tasks                                                                    |
+    +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
+
 
 .. table:: Available paraver configurations for COMPSs Applications
     :name: paraver_configs_comm
@@ -79,19 +98,17 @@ folder contains the configurations for Python events, and finally the
     +--------------------------------------------+-----------------------------------------------------------------------------+
     | Configuration File Name                    | Description                                                                 |
     +============================================+=============================================================================+
-    | sr_bandwith.cfg                            | Send/Receive bandwith view for each node                                    |
-    +--------------------------------------------+-----------------------------------------------------------------------------+
-    | send_bandwith.cfg                          | Send bandwith view for each node                                            |
-    +--------------------------------------------+-----------------------------------------------------------------------------+
-    | receive_bandwith.cfg                       | Receive bandwith view for each node                                         |
-    +--------------------------------------------+-----------------------------------------------------------------------------+
-    | process_bandwith.cfg                       | Send/Receive bandwith table for each node                                   |
-    +--------------------------------------------+-----------------------------------------------------------------------------+
-    | compss_tasks_scheduling_transfers.cfg      | Task’s transfers requests for scheduling (gradient of tasks ID)             |
-    +--------------------------------------------+-----------------------------------------------------------------------------+
-    | compss_tasksID_transfers.cfg               | Task’s transfers request for each task (task with its IDs are also shown)   |
+    | communication_matrix.cfg                   | Table view of communications between each node                              |
     +--------------------------------------------+-----------------------------------------------------------------------------+
     | compss_data_transfers.cfg                  | Shows data transfers for each task’s parameter                              |
     +--------------------------------------------+-----------------------------------------------------------------------------+
-    | communication_matrix.cfg                   | Table view of communications between each node                              |
+    | compss_tasksID_transfers.cfg               | Task’s transfers request for each task (task with its IDs are also shown)   |
+    +--------------------------------------------+-----------------------------------------------------------------------------+
+    | process_bandwith.cfg                       | Send/Receive bandwith table for each node                                   |
+    +--------------------------------------------+-----------------------------------------------------------------------------+
+    | receive_bandwith.cfg                       | Receive bandwith view for each node                                         |
+    +--------------------------------------------+-----------------------------------------------------------------------------+
+    | send_bandwith.cfg                          | Send bandwith view for each node                                            |
+    +--------------------------------------------+-----------------------------------------------------------------------------+
+    | sr_bandwith.cfg                            | Send/Receive bandwith view for each node                                    |
     +--------------------------------------------+-----------------------------------------------------------------------------+
