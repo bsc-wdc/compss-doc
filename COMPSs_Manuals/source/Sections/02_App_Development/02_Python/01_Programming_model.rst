@@ -1205,14 +1205,16 @@ level.
 API
 ~~~
 
+PyCOMPSs provides an API for data synchronization and other functionalities,
+such as task group definition and automatic function parameter synchronization
+(local decorator).
+
+Synchronization
+^^^^^^^^^^^^^^^
+
 The main program of the application is a sequential code that contains
 calls to the selected tasks. In addition, when synchronizing for task
-data from the main program, there exist seven API functions that can to
-be invoked:
-
-compss_file_exists(file_name)
-   Check if a file exists. If it does not exist, it check
-   if file has been accessed before by calling the runtime.
+data from the main program, there exist six API functions that can be invoked:
 
 compss_open(file_name, mode=’r’)
    Similar to the Python *open()* call.
@@ -1222,9 +1224,6 @@ compss_open(file_name, mode=’r’)
    the mode in which the file will be opened (the open modes are
    analogous to those of Python *open()*).
 
-compss_delete_file(file_name)
-   Notifies the runtime to delete a file.
-
 compss_wait_on_file(file_name)
    Synchronizes for the last version of the file *file_name*.
    Returns True if success (False otherwise).
@@ -1232,9 +1231,6 @@ compss_wait_on_file(file_name)
 compss_wait_on_directory(directory_name)
    Synchronizes for the last version of the directory *directory_name*.
    Returns True if success (False otherwise).
-
-compss_delete_object(object)
-   Notifies the runtime to delete all the associated files to a given object.
 
 compss_barrier(no_more_tasks=False)
    Performs a explicit synchronization, but does not return any object.
@@ -1262,34 +1258,25 @@ compss_wait_on(obj, to_write=True)
    particular case, it will synchronize all future objects contained in
    the list.
 
-TaskGroup(group_name, implicit_barrier=True)
-   Python context to define a group of tasks. All tasks submitted within the
-   context will belong to *group_name* context and are sensitive to wait for
-   them while the rest are being executed. Tasks groups are depicted within
-   a box into the generated task dependency graph.
-   See :ref:`Sections/02_App_Development/02_Python/01_Programming_model:Task Groups`
-   for more information about task groups.
 
 To illustrate the use of the aforementioned API functions, the following
-example (:numref:`api_usage_python`) first invokes a task *func* that writes a file, which is later
-synchronized by calling *compss_open()*. Later in the program, an
-object of class *MyClass* is created and a task method *method* that
-modifies the object is invoked on it; the object is then synchronized
-with *compss_wait_on()*, so that it can be used in the main program
-from that point on.
+example (:numref:`api_usage_python`) first invokes a task *func* that writes a
+file, which is later synchronized by calling *compss_open()*.
+Later in the program, an object of class *MyClass* is created and a task method
+*method* that modifies the object is invoked on it; the object is then
+synchronized with *compss_wait_on()*, so that it can be used in the main
+program from that point on.
 
 Then, a loop calls again ten times to *func* task. Afterwards, the
-barrier performs a synchronization, and the execution of the main user
-code will not continue until the ten *func* tasks have finished.
+*compss_barrier()* call performs a synchronization, and the execution of
+the main user code will not continue until the ten *func* tasks have finished.
+This call does not retrieve any information.
 
 .. code-block:: python
     :name: api_usage_python
-    :caption: PyCOMPSs API usage
+    :caption: PyCOMPSs Synchronization API functions usage
 
-    from pycompss.api.api import compss_file_exists
     from pycompss.api.api import compss_open
-    from pycompss.api.api import compss_delete_file
-    from pycompss.api.api import compss_delete_object
     from pycompss.api.api import compss_wait_on
     from pycompss.api.api import compss_wait_on_file
     from pycompss.api.api import compss_wait_on_directory
@@ -1298,32 +1285,17 @@ code will not continue until the ten *func* tasks have finished.
     if __name__=='__main__':
         my_file = 'file.txt'
         func(my_file)
-        if compss_file_exists(my_file):
-            print("Exists")
-        else:
-            print("Not exists")
-        ...
         fd = compss_open(my_file)
         ...
 
         my_file2 = 'file2.txt'
         func(my_file2)
-        compss_delete_file(my_file2)
-        ...
-
-        my_file3 = 'file3.txt'
-        func(my_file3)
-        compss_wait_on_file(my_file3)
+        compss_wait_on_file(my_file2)
         ...
 
         my_directory = '/tmp/data'
         func_dir(my_directory)
         compss_wait_on_directory(my_directory)
-        ...
-
-        my_obj1 = MyClass()
-        my_obj1.method()
-        compss_delete_object(my_obj1)
         ...
 
         my_obj2 = MyClass()
@@ -1336,11 +1308,12 @@ code will not continue until the ten *func* tasks have finished.
         compss_barrier()
         ...
 
-The corresponding task selection for the example above would be (:numref:`api_usage_tasks_python`):
+The corresponding task definition for the example above would be
+(:numref:`api_usage_tasks_python`):
 
 .. code-block:: python
     :name: api_usage_tasks_python
-    :caption: PyCOMPSs API usage tasks
+    :caption: PyCOMPSs Synchronization API usage tasks
 
     @task(f=FILE_OUT)
     def func(f):
@@ -1357,12 +1330,13 @@ The corresponding task selection for the example above would be (:numref:`api_us
 
     It is possible to synchronize a list of objects. This is
     particularly useful when the programmer expect to synchronize more than
-    one elements (using the *compss_wait_on* function) (:numref:`list_synchronization_python`.
+    one elements (using the *compss_wait_on* function)
+    (:numref:`list_synchronization_python`).
     This feature also works with dictionaries, where the value of each entry
     is synchronized.
     In addition, if the structure synchronized is a combination of lists and
-    dictionaries, the *compss_wait_on* will look for all objects to be synchronized
-    in the whole structure.
+    dictionaries, the *compss_wait_on* will look for all objects to be
+    synchronized in the whole structure.
 
     .. code-block:: python
         :name: list_synchronization_python
@@ -1381,85 +1355,14 @@ The corresponding task selection for the example above would be (:numref:`api_us
 .. IMPORTANT::
 
     In order to make the COMPSs Python binding function correctly, the
-    programmer should not use relative imports in the code. Relative imports
+    programmer **should not use relative imports** in the code. Relative imports
     can lead to ambiguous code and they are discouraged in Python, as
     explained in:
     http://docs.python.org/2/faq/programming.html#what-are-the-best-practices-for-using-import-in-a-module
 
 
-Finally, :numref:`python_api_functions` summarizes the API functions to be
-used in the main program of a COMPSs Python application.
-
-.. table:: COMPSs Python API functions
-    :name: python_api_functions
-
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | API Function                                 | Description                                                                             |
-    +==============================================+=========================================================================================+
-    | compss_file_exists(file_name)                | Check if a file exists.                                                                 |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_open(file_name, mode=’r’)             | Synchronizes for the last version of a file and returns its file descriptor.            |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_delete_file(file_name)                | Notifies the runtime to remove a file.                                                  |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_wait_on_file(file_name)               | Synchronizes for the last version of a file.                                            |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_wait_on_directory(directory_name)     | Synchronizes for the last version of a directory.                                       |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_delete_object(object)                 | Notifies the runtime to delete the associated file to this object.                      |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_barrier(no_more_tasks=False)          | Wait for all tasks submitted before the barrier.                                        |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_barrier_group(group_name)             | Wait for all tasks that belong to *group_name* group submitted before the barrier.      |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | compss_wait_on(obj, to_write=True)           | Synchronizes for the last version of an object (or a list of objects) and returns it.   |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | TaskGroup(group_name, implicit_barrier=True) | Context to define a group of tasks. *implicit_barrier* forces waiting on context exit.  |
-    +----------------------------------------------+-----------------------------------------------------------------------------------------+
-
-
-
-Task Groups
-^^^^^^^^^^^
-
-COMPSs also enables to specify task groups. To this end, COMPSs provides the
-*TaskGroup* context (:numref:`task_group`) which can be tuned with the group name, and a second parameter (boolean) to
-perform an implicit barrier for the whole group. Users can also define
-task groups within task groups.
-
-.. code-block:: python
-    :name: task_group
-    :caption: PyCOMPSs Task group definiton
-
-    from pycompss.api.task import task
-    from pycompss.api.api import TaskGroup
-    from pycompss.api.api import compss_barrier_group
-
-    @task()
-    def func1():
-        ...
-
-    @task()
-    def func2():
-        ...
-
-    def test_taskgroup():
-        # Creation of group
-        with TaskGroup('Group1', False):
-            for i in range(NUM_TASKS):
-                func1()
-                func2()
-            ...
-            compss_barrier_group('Group1')
-            ...
-        ...
-
-    if __name__=='__main__':
-        test_taskgroup()
-
-
 Local Decorator
-^^^^^^^^^^^^^^^
+"""""""""""""""
 
 Besides the synchronization API functions, the programmer has also a
 decorator for automatic function parameters synchronization at his
@@ -1493,6 +1396,186 @@ each parameter.
         append_three_ones(v)
         # v is automatically synchronized when calling the scale_vector function.
         w = scale_vector(v, 2)
+
+
+
+
+File/Object deletion
+^^^^^^^^^^^^^^^^^^^^
+
+PyCOMPSs also provides two functions within its API for object/file deletion.
+These calls allow the runtime to clean the infrastructure explicitly, but
+the deletion of the objects/files will be performed as soon as the
+objects/files dependencies are released.
+
+compss_delete_file(file_name)
+ Notifies the runtime to delete a file.
+
+compss_delete_object(object)
+  Notifies the runtime to delete all the associated files to a given object.
+
+
+The following example (:numref:`api_delete_usage_python`) illustrates the use
+of the aforementioned API functions.
+
+
+.. code-block:: python
+    :name: api_delete_usage_python
+    :caption: PyCOMPSs delete API functions usage
+
+    from pycompss.api.api import compss_delete_file
+    from pycompss.api.api import compss_delete_object
+
+    if __name__=='__main__':
+        my_file = 'file.txt'
+        func(my_file)
+        compss_delete_file(my_file)
+        ...
+
+        my_obj = MyClass()
+        my_obj.method()
+        compss_delete_object(my_obj)
+        ...
+
+
+The corresponding task definition for the example above would be
+(:numref:`api_delete_usage_tasks_python`):
+
+.. code-block:: python
+    :name: api_delete_usage_tasks_python
+    :caption: PyCOMPSs delete API usage tasks
+
+    @task(f=FILE_OUT)
+    def func(f):
+        ...
+
+    class MyClass(object):
+        ...
+
+        @task()
+        def method(self):
+            ... # self is modified here
+
+
+Task Groups
+^^^^^^^^^^^
+
+COMPSs also enables to specify task groups. To this end, COMPSs provides the
+*TaskGroup* context (:numref:`task_group`) which can be tuned with the group name, and a second parameter (boolean) to
+perform an implicit barrier for the whole group. Users can also define
+task groups within task groups.
+
+TaskGroup(group_name, implicit_barrier=True)
+   Python context to define a group of tasks. All tasks submitted within the
+   context will belong to *group_name* context and are sensitive to wait for
+   them while the rest are being executed. Tasks groups are depicted within
+   a box into the generated task dependency graph.
+
+
+.. code-block:: python
+    :name: task_group
+    :caption: PyCOMPSs Task group definiton
+
+    from pycompss.api.task import task
+    from pycompss.api.api import TaskGroup
+    from pycompss.api.api import compss_barrier_group
+
+    @task()
+    def func1():
+        ...
+
+    @task()
+    def func2():
+        ...
+
+    def test_taskgroup():
+        # Creation of group
+        with TaskGroup('Group1', False):
+            for i in range(NUM_TASKS):
+                func1()
+                func2()
+            ...
+            compss_barrier_group('Group1')
+            ...
+        ...
+
+    if __name__=='__main__':
+        test_taskgroup()
+
+
+Other
+^^^^^
+
+PyCOMPSs also provides other function within its API to check if a file exists.
+
+compss_file_exists(file_name)
+ Check if a file exists. If it does not exist, it check
+ if file has been accessed before by calling the runtime.
+
+:numref:`api_file_exists` illustrates its usage.
+
+.. code-block:: python
+    :name: api_file_exists
+    :caption: PyCOMPSs API file exists usage
+
+    from pycompss.api.api import compss_file_exists
+
+    if __name__=='__main__':
+        my_file = 'file.txt'
+        func(my_file)
+        if compss_file_exists(my_file):
+            print("Exists")
+        else:
+            print("Not exists")
+        ...
+
+The corresponding task definition for the example above would be
+(:numref:`api_file_exists_usage_tasks_python`):
+
+.. code-block:: python
+    :name: api_file_exists_usage_tasks_python
+    :caption: PyCOMPSs delete API usage tasks
+
+    @task(f=FILE_OUT)
+    def func(f):
+        ...
+
+
+API Summary
+^^^^^^^^^^^
+
+Finally, :numref:`python_api_functions` summarizes the API functions to be
+used in the main program of a COMPSs Python application.
+
+.. table:: COMPSs Python API functions
+    :name: python_api_functions
+
+    +-----------------+----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | Type            | API Function                                 | Description                                                                             |
+    +=================+==============================================+=========================================================================================+
+    | Synchronization | compss_open(file_name, mode=’r’)             | Synchronizes for the last version of a file and returns its file descriptor.            |
+    |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    |                 | compss_wait_on_file(file_name)               | Synchronizes for the last version of a file.                                            |
+    |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    |                 | compss_wait_on_directory(directory_name)     | Synchronizes for the last version of a directory.                                       |
+    |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    |                 | compss_barrier(no_more_tasks=False)          | Wait for all tasks submitted before the barrier.                                        |
+    |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    |                 | compss_barrier_group(group_name)             | Wait for all tasks that belong to *group_name* group submitted before the barrier.      |
+    |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    |                 | compss_wait_on(obj, to_write=True)           | Synchronizes for the last version of an object (or a list of objects) and returns it.   |
+    +-----------------+----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | File/Object     | compss_file_exists(file_name)                | Check if a file exists.                                                                 |
+    | deletion        +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    |                 | compss_delete_file(file_name)                | Notifies the runtime to remove a file.                                                  |
+    |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    |                 | compss_delete_object(object)                 | Notifies the runtime to delete the associated file to this object.                      |
+    +-----------------+----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | Task Groups     | TaskGroup(group_name, implicit_barrier=True) | Context to define a group of tasks. *implicit_barrier* forces waiting on context exit.  |
+    +-----------------+----------------------------------------------+-----------------------------------------------------------------------------------------+
+    | Other           | compss_file_exists(file_name)                | Check if a file exists.                                                                 |
+    +-----------------+----------------------------------------------+-----------------------------------------------------------------------------------------+
+
 
 
 Exceptions
