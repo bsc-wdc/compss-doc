@@ -985,6 +985,31 @@ size of the data that the generated tasks will get as input parameter.
 The data given as input to the main reduction task is subdivided into chunks
 of the set size.
 
+Container decorator
+^^^^^^^^^^^^^^^^^^^
+
+The *@container* decorator shall be used to define that a task is
+going to be executed within a container (:numref:`container_task_python`).
+
+.. code-block:: python
+    :name: container_task_python
+    :caption: Container task example
+
+    from pycompss.api.compss import container
+
+    @container(engine="DOCKER",
+               image="compss/compss")
+    @task()
+    def container_func():
+         pass
+
+The *container_fun* will be executed within the container defined in the
+*@container* decorator. For example, using *docker* engine with the *image*
+compss/compss.
+
+This feature allows to use specific containers for tasks where the dependencies
+are met.
+
 Other task types summary
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1046,6 +1071,15 @@ Next tables summarizes the parameters of these decorators.
     | Parameter              | Description                                                                                                                       |
     +========================+===================================================================================================================================+
     | **chunk_size**         |  Size of data fragments to be given as input parameter to the reduction function.                                                 |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+
+* @container
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+    | Parameter              | Description                                                                                                                       |
+    +========================+===================================================================================================================================+
+    | **engine**             |  Container engine to use (e.g. DOCKER).                                                                                           |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+    | **image**              |  Container image to be deployed and used for the task execution.                                                                  |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
 In addition to the parameters that can be used within the
