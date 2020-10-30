@@ -367,3 +367,51 @@ command:
 
     * Application arguments:
         Command line arguments to pass to the application. Can be empty.
+
+
+PyCOMPSs within interactive jobs
+--------------------------------
+
+PyCOMPSs can be used in interactive jobs through the use of ipython. To this
+end, the first thing is to request an interactive job. For example, an
+interactive job with Slurm for one node with 48 cores (as in MareNostrum 4)
+can be requested as follows:
+
+.. code-block:: console
+
+    $ salloc --qos=debug -N1 -n48
+
+    salloc: Pending job allocation 12189081
+    salloc: job 12189081 queued and waiting for resources
+    salloc: job 12189081 has been allocated resources
+    salloc: Granted job allocation 12189081
+    salloc: Waiting for resource configuration
+    salloc: Nodes s02r2b27 are ready for job
+
+When the job starts running, the terminal directly opens within the given node.
+
+Then, it is necessary to start the COMPSs infrastructure in the given nodes.
+To this end, the following command will start one worker with 24 cores
+(default worker in master), and then launch the *ipython* interpreter:
+
+.. code-block:: console
+
+    $ launch_compss \
+      --sc_cfg=mn.cfg \
+      --master_node="$SLURMD_NODENAME" \
+      --worker_nodes="" \
+      --ipython \
+      --pythonpath=$(pwd) \
+      "dummy"
+
+Note that the *launch_compss* command requires the supercomputing configuration
+file, which in the MareNostrum 4 case is *mn.cfg* (more information about the
+supercomputer configuration can be found in
+:ref:`Sections/01_Installation/04_Supercomputers:Configuration Files`).
+In addition, requires to define which node is going to be the master, and
+which ones the workers (if none, takes the default worker in master).
+Finally, the *--ipython* flag indicates that use ipython is expected.
+
+When ipython is started, the COMPSs infrastructure is ready, and the user can
+start running interactive commands considering the PyCOMPSs API for jupyter
+notebook (see Jupyter :ref:`Sections/02_App_Development/02_Python/03_Jupyter_integration:API calls`).
