@@ -269,6 +269,10 @@ and *OUT* parameters. Thus, when defining the parameter metadata in the
       - The parameter is read-write collection of files.
     * - *COLLECTION_FILE_OUT*
       - The parameter is write-only collection of files.
+    * - *DICTIONARY_IN*
+      - The parameter is read-only dictionary.
+    * - *DICTIONARY_INOUT*
+      - The parameter is read-write dictionary.
 
 
 Consequently, please note that in the following cases there is no need
@@ -347,10 +351,10 @@ by the runtime following the conmutative property.
 
 Moreover, it is possible to specify that a parameter is a collection of
 elements (e.g. list) and its direction (COLLECTION_IN or
-COLLECTION_INOUT) (:numref:`task_collection_python`). In this case, the list may contain sub-objects that
-will be handled automatically by the runtime. It is important to
-annotate data structures as collections if in other tasks there are
-accesses to individual elements of these collections as parameters.
+COLLECTION_INOUT) (:numref:`task_collection_python`). In this case, the list
+may contain sub-objects that will be handled automatically by the runtime.
+It is important to annotate data structures as collections if in other tasks
+there are accesses to individual elements of these collections as parameters.
 Without this annotation, the runtime will not be able to identify data
 dependences between the collections and the individual elements.
 
@@ -358,8 +362,8 @@ dependences between the collections and the individual elements.
     :name: task_collection_python
     :caption: Python task example with *COLLECTION* (*IN*)
 
-    from pycompss.api.task import task    # Import @task decorator
-    from pycompss.api.parameter import *  # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task             # Import @task decorator
+    from pycompss.api.parameter import COLLECTION  # Import parameter metadata for the @task decorator
 
     @task(my_collection=COLLECTION)
     def func(my_collection):
@@ -376,12 +380,59 @@ the depth of the sub-objects can be limited through the use of the
     :name: task_collection_depth_python
     :caption: Python task example with *COLLECTION_IN* and *Depth*
 
+    from pycompss.api.task import task                # Import @task decorator
+    from pycompss.api.parameter import COLLECTION_IN  # Import parameter metadata for the @task decorator
+
     @task(my_collection={Type:COLLECTION_IN, Depth:2})
     def func(my_collection):
          for inner_collection in my_collection:
              for element in inner_collection:
                  # The contents of element will not be tracked
                  ...
+
+As with the collections, it is possible to specify that a parameter is
+a dictionary of elements (e.g. dict) and its direction (DICTIONARY_IN or
+DICTIONARY_INOUT) (:numref:`task_dictionary_python`),
+whose sub-objects will be handled automatically by the runtime.
+
+.. code-block:: python
+    :name: task_dictionary_python
+    :caption: Python task example with *DICTIONARY* (*IN*)
+
+    from pycompss.api.task import task             # Import @task decorator
+    from pycompss.api.parameter import DICTIONARY  # Import parameter metadata for the @task decorator
+
+    @task(my_dictionary=DICTIONARY)
+    def func(my_dictionary):
+         for k, v in my_dictionary.items():
+             ...
+
+The sub-objects of the dictionary can be collections or dictionary of elements
+(and recursively). In this case, the runtime also keeps track of all elements
+contained in all sub-collections/sub-dictionaries.
+In order to improve the performance, the depth of the sub-objects can be
+limited through the use of the *depth* parameter
+(:numref:`task_dictionary_depth_python`)
+
+.. code-block:: python
+    :name: task_dictionary_depth_python
+    :caption: Python task example with *DICTIONARY_IN* and *Depth*
+
+    from pycompss.api.task import task                # Import @task decorator
+    from pycompss.api.parameter import DICTIONARY_IN  # Import parameter metadata for the @task decorator
+
+    @task(my_dictionary={Type:DICTIONARY_IN, Depth:2})
+    def func(my_dictionary):
+         for key, inner_dictionary in my_dictionary.items():
+             for sub_key, sub_value in inner_dictionary.items():
+                 # The contents of element will not be tracked
+                 ...
+
+.. TIP::
+
+    A collection can contain dictionaries, and dictionaries can contain
+    collections.
+
 
 Other Task Parameters
 ~~~~~~~~~~~~~~~~~~~~~
@@ -516,7 +567,11 @@ Task Parameters Summary
     |                     +-----------------------+-----------------------------------------------------------------------------------------+
     |                     | COLLECTION_FILE_OUT   | Read-only collection of files parameter (list opf files).                               |
     |                     +-----------------------+-----------------------------------------------------------------------------------------+
-    |                     | Dictionary: {Type:(empty=object)/FILE/COLLECTION, Direction:(empty=IN)/IN/INOUT/OUT/CONCURRENT}                 |
+    |                     | DICTIONARY(_IN)       | Read-only dictionary parameter (dict).                                                  |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | DICTIONARY_INOUT      | Read-write dictionary parameter (dict).                                                 |
+    |                     +-----------------------+-----------------------------------------------------------------------------------------+
+    |                     | Explicit: {Type:(empty=object)/FILE/COLLECTION/DICTIONARY, Direction:(empty=IN)/IN/INOUT/OUT/CONCURRENT}        |
     +---------------------+-----------------------------------------------------------------------------------------------------------------+
     | returns             | int (for integer and boolean), long, float, str, dict, list, tuple, user-defined classes                        |
     +---------------------+-----------------------------------------------------------------------------------------------------------------+
