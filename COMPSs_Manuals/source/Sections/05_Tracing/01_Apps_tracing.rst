@@ -156,7 +156,8 @@ is working correctly:
 
 It contains diverse information about the tracing, for example, Extrae
 version used (``VERSION`` will be replaced by the actual number during
-executions), the XML configuration file used (``extrae_basic.xml``), the
+executions), the XML configuration file used (``/opt/COMPSs/Runtime/configuration/xml/tracing/extrae_basic.xml``
+-- if using python, the ``extrae_python_worker.xml`` located in the same folder will be used in the workers), the
 amount of threads instrumented (objects through 1.1.1 to 1.2.5),
 available hardware counters (``PAPI_TOT_INS (0x80000032)`` ...
 ``PAPI_L3_TCM (0x80000008)`` ) or the name of the generated tracefile
@@ -164,20 +165,30 @@ available hardware counters (``PAPI_TOT_INS (0x80000032)`` ...
 NIO communications adaptor with debug activated, the log of each worker
 also contains the Extrae initialization information.
 
-**N.B.** when using Python, COMPSs needs to perform an extra merging
-step in order to add the Python-produced events to the main tracefile.
-If Python events are not shown, check *runtime.log* file and search for
-the following expected output of this merging process to find possible
-errors:
+.. TIP::
 
-.. code-block:: console
+    The extrae configuration files used in basic mode are:
 
-    [(9788)(2016-11-15 11:22:27,687)  Tracing]    @generateTrace -  Tracing: Generating trace
-    [(9851)(2016-11-15 11:22:27,750)  Tracing]    @<init>        -  Trace's merger initialization successful
-    [(9851)(2016-11-15 11:22:27,750)  Tracing]    @merge         -  Parsing master sync events
-    [(9905)(2016-11-15 11:22:27,804)  Tracing]    @merge         -  Proceeding to merge task traces into master
-    [(9944)(2016-11-15 11:22:27,843)  Tracing]    @merge         -  Merging finished,
-    [(9944)(2016-11-15 11:22:27,843)  Tracing]    @merge         -  Temporal task folder removed.
+    * ``$COMPSS_HOME/Runtime/configuration/xml/tracing/extrae_basic.xml``
+    * ``$COMPSS_HOME/Runtime/configuration/xml/tracing/extrae_python_worker.xml`` (when using Python)
+
+
+.. IMPORTANT::
+
+    COMPSs needs to perform an extra merging step when using Python
+    in order to add the Python-produced events to the main tracefile.
+    If Python events are not shown, check *runtime.log* file and search for
+    the following expected output of this merging process to find possible
+    errors:
+
+    .. code-block:: console
+
+        [(9788)(2016-11-15 11:22:27,687)  Tracing]    @generateTrace -  Tracing: Generating trace
+        [(9851)(2016-11-15 11:22:27,750)  Tracing]    @<init>        -  Trace's merger initialization successful
+        [(9851)(2016-11-15 11:22:27,750)  Tracing]    @merge         -  Parsing master sync events
+        [(9905)(2016-11-15 11:22:27,804)  Tracing]    @merge         -  Proceeding to merge task traces into master
+        [(9944)(2016-11-15 11:22:27,843)  Tracing]    @merge         -  Merging finished,
+        [(9944)(2016-11-15 11:22:27,843)  Tracing]    @merge         -  Temporal task folder removed.
 
 Instrumented Threads in Basic Mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -264,8 +275,10 @@ to customize further the information provided by the tracing or need
 rawer information like pthreads calls or Java garbage collection. With
 it, every single thread created during the execution is traced.
 
-**N.B.:** The extra information provided by the advanced mode is only
-available on the workers when using NIO adaptor.
+.. IMPORTANT::
+
+    The extra information provided by the advanced mode is only
+    available on the workers when using NIO adaptor.
 
 Advanced Mode Usage
 ~~~~~~~~~~~~~~~~~~~
@@ -292,7 +305,7 @@ Examples given:
          kmeans.KMeans
 
 When advanced tracing is activated, the configuration file reported on
-the output is *extrae_advanced.xml*.
+the output is ``$COMPSS_HOME/Runtime/configuration/xml/tracing/extrae_advanced.xml``.
 
 .. code-block:: console
 
@@ -303,17 +316,26 @@ the output is *extrae_advanced.xml*.
     Welcome to Extrae VERSION
     Extrae: Parsing the configuration file (/opt/COMPSs/Runtime/scripts/user/../../configuration/xml/tracing/extrae_advanced.xml) begins
 
-This is the default file used for advanced tracing. However, advanced
-users can modify it in order to customize the information provided by
-Extrae. The configuration file is read first by the master on the
+This is the default file used for advanced tracing as well as
+``extrae_python_worker.xml`` if using Python.
+However, advanced users can modify it in order to customize the information
+provided by Extrae. The configuration file is read first by the master on the
 *runcompss* script. When using NIO adaptor for communication, the
 configuration file is also read when each worker is started (on
 *persistent_worker.sh* or *persistent_worker_starter.sh* depending on
 the execution environment).
 
-If the default file is modified, the changes always affect the master,
-and also the workers when using NIO. Modifying the scripts which turn on
-the master and the workers is possible to achieve different
+.. TIP::
+
+    The extrae configuration files used in advanced mode are:
+
+    * ``$COMPSS_HOME/Runtime/configuration/xml/tracing/extrae_advanced.xml``
+    * ``$COMPSS_HOME/Runtime/configuration/xml/tracing/extrae_python_worker.xml`` (when using Python)
+
+
+If the ``extrae_advanced.xml`` file is modified, the changes always affect the
+master, and also the workers when using NIO. Modifying the scripts which turn
+on the master and the workers is possible to achieve different
 instrumentations for master/workers. However, not all Extrae available
 XML configurations work with COMPSs, some of them can make the runtime
 or workers crash so modify them at your discretion and risk. More
