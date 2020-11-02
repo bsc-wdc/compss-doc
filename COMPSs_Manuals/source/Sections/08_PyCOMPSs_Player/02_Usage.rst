@@ -48,7 +48,7 @@ and run it inside the container.
 
 .. code-block:: console
 
-        $ pycompss init  # operates on the current directory as working directoyr.
+        $ pycompss init  # operates on the current directory as working directory.
 
 .. NOTE::
 
