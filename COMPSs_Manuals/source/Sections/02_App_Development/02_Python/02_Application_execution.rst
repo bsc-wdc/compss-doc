@@ -46,5 +46,20 @@ Or alternatively, use the ``pycompss`` module:
     ``PYTHONPATH`` environment variable and export them into the workers, so
     that the tasks can resolve successfully its imports.
 
+.. TIP::
+
+    PyCOMPSs applications can also be launched without parallelization
+    (as a common python script) by avoiding the ``-m pycompss`` and its flags
+    when using ``python``:
+
+    .. code-block:: console
+
+        compss@bsc:~$ python $TEST_DIR/application.py arg1 arg2
+
+    The main limitation is that the application must only contain ``@task``,
+    ``@binary`` and/or ``@mpi`` decorators and PyCOMPSs needs to be installed.
+
+
+
 For full description about the options available for the runcompss
 command please check the :ref:`Sections/03_Execution_Environments/01_Local/01_Executing:Executing COMPSs applications` Section.
