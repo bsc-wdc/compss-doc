@@ -1588,8 +1588,8 @@ TaskGroup(group_name, implicit_barrier=True)
                 func1()
                 func2()
             ...
-            compss_barrier_group('Group1')
-            ...
+        ...
+        compss_barrier_group('Group1')
         ...
 
     if __name__=='__main__':
@@ -1683,33 +1683,16 @@ behaviour).
 
 However, COMPSs provides an exception (``COMPSsException``) that the user can
 raise when necessary and can be catched in the main code for user defined
-behaviour management (:numref:`task_compss_exception`). This mechanism avoids
-any synchronization, and enables applications to react under particular
-circunstances.
+behaviour management. :numref:`task_group_compss_exception`
+shows an example of *COMPSsException* raising. In this case, the group
+definition is blocking, and waits for all task groups to finish.
+When all tasks of the group have finished, a *COMPSsException* will be raised
+if any of the tasks has raised the exception and will be captured by the
+except clause, enabling to react on this case.
+Consequenty, the *COMPSsException* must be combined with task groups.
 
-.. code-block:: python
-    :name: task_compss_exception
-    :caption: COMPSs Exception example
-
-    from pycompss.api.task import task
-    from pycompss.api.exceptions import COMPSsException
-
-    @task()
-    def func():
-        ...
-        raise COMPSsException("Something happened!")
-
-    ...
-
-    if __name__=='__main__':
-        try:
-            func()
-        except COMPSsException:
-            ...  # React to the exception (maybe calling other tasks or with other parameters)
-
-In addition, the *COMPSsException* can be combined with task groups, so that
-the tasks which belong to the group will also be cancelled as soon as the
-*COMPSsException* is raised (:numref:`task_group_compss_exception`)
+In addition, the tasks which belong to the group will be affected by the
+*on_failure* value defined in the *@task* decorator.
 
 .. code-block:: python
     :name: task_group_compss_exception
@@ -1734,3 +1717,44 @@ the tasks which belong to the group will also be cancelled as soon as the
                     func(i)
         except COMPSsException:
             ...  # React to the exception (maybe calling other tasks or with other parameters)
+
+
+It is possible to use a non-blocking task group for asynchronous behaviour
+(see :numref:`task_group_compss_exception_async`).
+In this case, the *try-except* can be defined later in the code surrounding
+the *compss_barrier_group*, enabling to check exception from the defined
+groups without retrieving data while other tasks are being executed.
+
+.. code-block:: python
+    :name: task_group_compss_exception_async
+    :caption: Asynchronous COMPSs Exception with task group example
+
+    from pycompss.api.task import task
+    from pycompss.api.api import TaskGroup
+    from pycompss.api.api import compss_barrier_group
+
+    @task()
+    def func1():
+        ...
+
+    @task()
+    def func2():
+        ...
+
+    def test_taskgroup():
+        # Creation of group
+        for i in range(10):
+            with TaskGroup('Group' + str(i), False):
+                for i in range(NUM_TASKS):
+                    func1()
+                    func2()
+                ...
+        for i in range(10):
+            try:
+                compss_barrier_group('Group' + str(i))
+            except COMPSsException:
+                ...  # React to the exception (maybe calling other tasks or with other parameters)
+        ...
+
+    if __name__=='__main__':
+        test_taskgroup()
