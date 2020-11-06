@@ -211,6 +211,8 @@ Types
    * *Strings*
    * *Objects* (instances of user-defined classes, dictionaries, lists, tuples, complex numbers)
    * *Files*
+   * *Streams*
+   * *IO streams* (for binaries)
 
 Direction
    * Read-only (*IN* - default or *IN_DELETE*)
@@ -275,7 +277,16 @@ and *OUT* parameters. Thus, when defining the parameter metadata in the
       - The parameter is read-only dictionary.
     * - *DICTIONARY_INOUT*
       - The parameter is read-write dictionary.
-
+    * - *STREAM_IN*
+      - The parameter is a read-only stream.
+    * - *STREAM_OUT*
+      - The parameter is a write-only stream*
+    * - *STDIN*
+      - The parameter is a IO stream for standard input redirection (only for binaries).
+    * - *STDOUT*
+      - The parameter is a IO stream for standard output redirection (only for binaries).
+    * - *STDERR*
+      - The parameter is a IO stream for standard error redirection (only for binaries).
 
 Consequently, please note that in the following cases there is no need
 to include an argument in the *@task* decorator for a given
@@ -288,7 +299,8 @@ task parameter:
 -  Read-only object parameters: the type of the parameter is
    automatically inferred, and the direction defaults to *IN*.
 
-The parameter metadata is available from the *pycompss* library (:numref:`parameter_import_python`)
+The parameter metadata is available from the *pycompss* library
+(:numref:`parameter_import_python`)
 
 .. code-block:: python
     :name: parameter_import_python
@@ -315,14 +327,13 @@ automatically inferred by COMPSs.
          ...
 
 The user can also define that the access to a parameter is concurrent
-with *CONCURRENT* or to a file *FILE_CONCURRENT* (:numref:`task_concurrent_python`). Tasks that share a
-"CONCURRENT" parameter will be executed in parallel, if any other
-dependency prevents this. The CONCURRENT direction allows users to have
-access from multiple tasks to the same object/file during their
-executions. However, note that COMPSs does not manage the interaction
-with the objects or files used/modified concurrently. Taking care of the
-access/modification of the concurrent objects is responsibility of the
-developer.
+with *CONCURRENT* or to a file *FILE_CONCURRENT* (:numref:`task_concurrent_python`).
+Tasks that share a "CONCURRENT" parameter will be executed in parallel, if any
+other dependency prevents this. The CONCURRENT direction allows users to have
+access from multiple tasks to the same object/file during their executions.
+However, note that COMPSs does not manage the interaction with the objects or
+files used/modified concurrently. Taking care of the access/modification of
+the concurrent objects is responsibility of the developer.
 
 .. code-block:: python
     :name: task_concurrent_python
@@ -434,6 +445,107 @@ limited through the use of the *depth* parameter
 
     A collection can contain dictionaries, and dictionaries can contain
     collections.
+
+
+It is possible to use streams as input or output of the tasks by defining
+that a parameter is *STREAM_IN* or *STREAM_OUT* accordingly
+(:numref:`task_streams`).
+This parameters enable to mix a task-driven workflow with a data-driven
+workflow.
+
+
+.. code-block:: python
+    :name: task_streams
+    :caption: Python task example with *STREAM_IN* and *STREAM_OUT*
+
+    from pycompss.api.task import task             # Import @task decorator
+    from pycompss.api.parameter import STREAM_IN   # Import parameter metadata for the @task decorator
+    from pycompss.api.parameter import STREAM_OUT  # Import parameter metadata for the @task decorator
+
+    @task(ods=STREAM_OUT)
+    def write_objects(ods):
+        ...
+        for i in range(NUM_OBJECTS):
+            # Build object
+            obj = MyObject()
+            # Publish object
+            ods.publish(obj)
+            ...
+        ...
+        # Mark the stream for closure
+        ods.close()
+
+    @task(ods=STREAM_IN, returns=int)
+    def read_objects(ods):
+        ...
+        num_total = 0
+        while not ods.is_closed():
+            # Poll new objects
+            new_objects = ods.poll()
+            # Process files
+            ...
+            # Accumulate read files
+            num_total += len(new_objects)
+        ...
+        # Return the number of processed files
+        return num_total
+
+The stream parameter also supports Files (:numref:`task_streams_files`).
+
+.. code-block:: python
+    :name: task_streams_files
+    :caption: Python task example with *STREAM_IN* and *STREAM_OUT* for files
+
+    from pycompss.api.task import task             # Import @task decorator
+    from pycompss.api.parameter import STREAM_IN   # Import parameter metadata for the @task decorator
+    from pycompss.api.parameter import STREAM_OUT  # Import parameter metadata for the @task decorator
+
+    @task(fds=STREAM_OUT)
+    def write_files(fds):
+        ...
+        for i in range(NUM_FILES):
+            file_name = str(uuid.uuid4())
+            # Write file
+            with open(file_path, 'w') as f:
+                f.write("Test " + str(i))
+            ...
+        ...
+        # Mark the stream for closure
+        fds.close()
+
+    @task(fds=STREAM_IN, returns=int)
+    def read_files(fds):
+        ...
+        num_total = 0
+        while not fds.is_closed():
+            # Poll new files
+            new_files = fds.poll()
+            # Process files
+            for nf in new_files:
+                with open(nf, 'r') as f:
+                    ...
+            # Accumulate read files
+            num_total += len(new_files)
+            ...
+        ...
+        # Return the number of processed files
+        return num_total
+
+In addition, the stream parameter can also be defined for binary tasks
+(:numref:`task_streams_binary`).
+
+.. code-block:: python
+    :name: task_streams_binary
+    :caption: Python task example with *STREAM_OUT* for binaries
+
+    from pycompss.api.task import task             # Import @task decorator
+    from pycompss.api.binary import binary         # Import @task decorator
+    from pycompss.api.parameter import STREAM_OUT  # Import parameter metadata for the @task decorator
+
+    @binary(binary="file_generator.sh")
+    @task(fds=STREAM_OUT)
+    def write_files(fds):
+        pass
 
 
 Other Task Parameters
@@ -569,11 +681,21 @@ Task Parameters Summary
     |                     +-----------------------+--------------------------------------------------------------------------------------------+
     |                     | COLLECTION_FILE_INOUT | Read-write collection of files parameter (list of files).                                  |
     |                     +-----------------------+--------------------------------------------------------------------------------------------+
-    |                     | COLLECTION_FILE_OUT   | Read-only collection of files parameter (list opf files).                                  |
+    |                     | COLLECTION_FILE_OUT   | Read-only collection of files parameter (list of files).                                   |
     |                     +-----------------------+--------------------------------------------------------------------------------------------+
     |                     | DICTIONARY(_IN)       | Read-only dictionary parameter (dict).                                                     |
     |                     +-----------------------+--------------------------------------------------------------------------------------------+
     |                     | DICTIONARY_INOUT      | Read-write dictionary parameter (dict).                                                    |
+    |                     +-----------------------+--------------------------------------------------------------------------------------------+
+    |                     | STREAM_IN             | The parameter is a read-only stream.                                                       |
+    |                     +-----------------------+--------------------------------------------------------------------------------------------+
+    |                     | STREAM_OUT            | The parameter is a write-only stream.                                                      |
+    |                     +-----------------------+--------------------------------------------------------------------------------------------+
+    |                     | STDIN                 | The parameter is a file for standard input redirection (only for binaries).                |
+    |                     +-----------------------+--------------------------------------------------------------------------------------------+
+    |                     | STDOUT                | The parameter is a file for standard output redirection (only for binaries).               |
+    |                     +-----------------------+--------------------------------------------------------------------------------------------+
+    |                     | STDERR                | The parameter is a file for standard error redirection (only for binaries).                |
     |                     +-----------------------+--------------------------------------------------------------------------------------------+
     |                     | Explicit: {Type:(empty=object)/FILE/COLLECTION/DICTIONARY, Direction:(empty=IN)/IN/IN_DELETE/INOUT/OUT/CONCURRENT} |
     +---------------------+--------------------------------------------------------------------------------------------------------------------+
