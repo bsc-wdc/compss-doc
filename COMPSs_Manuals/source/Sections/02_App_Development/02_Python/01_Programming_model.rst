@@ -1010,6 +1010,9 @@ compss/compss.
 This feature allows to use specific containers for tasks where the dependencies
 are met.
 
+In addition, the *@container* decorator can be placed on top of the
+*@binary*, *@ompss* or *@mpi* decorators.
+
 Other task types summary
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
