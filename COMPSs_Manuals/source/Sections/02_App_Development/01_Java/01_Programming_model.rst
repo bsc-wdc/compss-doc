@@ -384,3 +384,88 @@ contains an example of its usage.
             COMPSs.getFile(FILE_NAME);
     	}
     }
+
+Managing Failures in Tasks
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+COMPSs provide mechanism to manage failures in tasks. Developers can specify two
+properties in the task definition what the runtime should do when a task is
+blocked or failed.
+
+The *timeOut* property indicates the runtime that a task of this type is considered failed
+when its duration is larger than the value specified in the property (in seconds)
+
+The *onFailure* property indicates what to do when a task of this type is failed.
+The possible values are:
+  - *OnFaiure.RETRY* (Default): The task is executed twice in the same worker and a different worker.
+  - *OnFailure.CANCEL_SUCCESSORS*: All successors of this task are canceled.
+  - *OnFailure.FAIL*: The task failure produces a failure of the whole application.
+  - *OnFailure.IGNORE*: The task failure is ignored and the output parameters are set with empty values.
+
+Usage examples of these properties are shown in :numref:`failures_java`
+.. code-block:: java
+    :name: failures_java
+    :caption: Failure example
+
+    public interface FailuresItf {
+
+       @Method(declaringClass = "example.Example", timeOut = "3000", onFailure = OnFailure.IGNORE)
+       void task_example(@Parameter(type = Type.FILE, direction = Direction.OUT) String fileName);
+    }
+
+Tasks Groups and COMPSs exceptions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+COMPSs allow users to define task groups which can be combined with an special exception (``COMPSsException``) that the user can
+to achieve parallel distributed try/catch blocks :numref:`compss_exception_java`
+shows an example of *COMPSsException* raising. In this case, the group
+definition is blocking, and waits for all task groups to finish.
+If a task of the group raises a *COMPSsException* it will be captured by the
+runtime. It will react to it by canceling the running and pending tasks of the
+group and raising the COMPSsException to enable the execution
+except clause.
+Consequenty, the *COMPSsException* must be combined with task groups.
+
+.. code-block:: java
+    :name: compss_exception_java
+    :caption: COMPSs Exception example
+
+    ...
+        try (COMPSsGroup a = new COMPSsGroup("GroupA")) {
+            for (int j = 0; j < N; j++) {
+                Test.taskWithCOMPSsException(FILE_NAME);
+            }
+        } catch (COMPSsException e) {
+            Test.otherTask(FILE_NAME);
+        }
+    ...
+
+It is possible to use a non-blocking task group for asynchronous behaviour
+(see :numref:`compss_exception_java_async`).
+In this case, the try/catch can be defined later in the code surrounding
+the *COMPSs.barrierGroup*, enabling to check exception from the defined
+groups without retrieving data while other tasks are being executed.
+
+.. code-block:: java
+    :name: compss_exception_java_async
+    :caption: COMPSs Exception example
+
+    ...
+    for (int i=0; i<10; i++){
+        try (COMPSsGroup a = new COMPSsGroup("Group" + i, false)) {
+            for (int j = 0; j < N; j++) {
+                Test.taskWithCOMPSsException(FILE_NAME);
+            }
+        } catch (Exception e) {
+            //This is just for compilation. Exception not catch here!
+        }
+    }
+    for (int i=0; i<10; i++){
+        // The group exception will be thrown from the barrier
+        try {
+            COMPSs.barrierGroup("FailedGroup2");
+        } catch (COMPSsException e) {
+            System.out.println("Exception caught in barrier!!");
+            Test.otherTask(FILE_NAME);
+        }
+    }

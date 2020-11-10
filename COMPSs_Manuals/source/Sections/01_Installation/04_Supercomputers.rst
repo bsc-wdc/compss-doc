@@ -53,18 +53,23 @@ following commands:
 
      $ # Install COMPSs at your preferred target location
      $ cd COMPSs
-     $ ./install <targetDir> [<supercomputer.cfg>]
+     $ ./install [options] <targetDir> [<supercomputer.cfg>]
 
      $ # Clean downloaded files
      $ rm -r COMPSs
      $ rm COMPSs_<version>.tar.gz
 
-The installation script will create a COMPSs folder inside the given
-``<targetDir>`` so the final COMPSs installation will be placed under
-the ``<targetDir>/COMPSs`` folder.
+The installation script will install COMPSs inside the given ``<targetDir>``
+folder and it will copy the ``<supercomputer.cfg>`` as default configuration.
+It also provides some options to skip the installation of optional features or
+bound the installation to an specific python version. You can see the available
+options with the following command.
+
+.. code-block:: console
+     $ ./install --help
 
 .. attention::
-   If the ``<targetDir>/COMPSs`` folder already exists it will be **automatically erased**.
+   If the ``<targetDir>`` folder already exists it will be **automatically erased**.
 
   After completing the previous steps, administrators must ensure that
 the nodes have passwordless ssh access. If it is not the case, please
@@ -72,8 +77,8 @@ contact the COMPSs team at support-compss@bsc.es.
 
   The COMPSs package also provides a *compssenv* file that loads the
 required environment to allow users work more easily with COMPSs. Thus,
-after the installation process we recomend to source the
-``<targetDir>/COMPSs/compssenv`` into the users *.bashrc*.
+after the installation process we recommend to source the
+``<targetDir>/compssenv`` into the users *.bashrc*.
 
   Once done, remember to log out and back in again to end the
 installation process.
@@ -114,7 +119,7 @@ in the ``<installation_dir>/Runtime/scripts/`` folder.
 ``enqueue_compss`` and ``launch_compss`` (**launch.sh in the figure**) are in
 the user subfolder and ``submit.sh`` and the ``cfgs`` are located in queues.
 There are two types of cfg files: the *queue system cfg* files, which are
-located in ``queues/queue_systems``; and the *supercomputers cfg* files, which
+located in ``queues/queue_systems``; and the *supercomputers.cfg* files, which
 are located in ``queues/supercomputers``.
 
 .. figure:: ./Figures/queue_scripts_structure.png
@@ -143,7 +148,8 @@ Below you can see an example of the most important variable definition for Slurm
     ################################
     ## SUBMISSION VARIABLES
     ################################
-    # Variables to define the directives as #${QUEUE_CMD} ${ARG_*}${QUEUE_SEPARATOR}value (submit.sh)
+    # Variables to define the queue system directives.
+    # The are built as #${QUEUE_CMD} ${QARG_*}${QUEUE_SEPARATOR}value (submit.sh)
     QUEUE_CMD="SBATCH"
     SUBMISSION_CMD="sbatch"
     SUBMISSION_PIPE="< "
