@@ -397,21 +397,23 @@ when its duration is larger than the value specified in the property (in seconds
 
 The *onFailure* property indicates what to do when a task of this type is failed.
 The possible values are:
-  - *OnFaiure.RETRY* (Default): The task is executed twice in the same worker and a different worker.
-  - *OnFailure.CANCEL_SUCCESSORS*: All successors of this task are canceled.
-  - *OnFailure.FAIL*: The task failure produces a failure of the whole application.
-  - *OnFailure.IGNORE*: The task failure is ignored and the output parameters are set with empty values.
+
+- *OnFaiure.RETRY* (Default): The task is executed twice in the same worker and a different worker.
+- *OnFailure.CANCEL_SUCCESSORS*: All successors of this task are canceled.
+- *OnFailure.FAIL*: The task failure produces a failure of the whole application.
+- *OnFailure.IGNORE*: The task failure is ignored and the output parameters are set with empty values.
 
 Usage examples of these properties are shown in :numref:`failures_java`
+
 .. code-block:: java
     :name: failures_java
     :caption: Failure example
 
-    public interface FailuresItf {
-
+    public interface FailuresItf{
        @Method(declaringClass = "example.Example", timeOut = "3000", onFailure = OnFailure.IGNORE)
        void task_example(@Parameter(type = Type.FILE, direction = Direction.OUT) String fileName);
     }
+
 
 Tasks Groups and COMPSs exceptions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

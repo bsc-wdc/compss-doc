@@ -66,6 +66,7 @@ bound the installation to an specific python version. You can see the available
 options with the following command.
 
 .. code-block:: console
+
      $ ./install --help
 
 .. attention::
@@ -647,7 +648,7 @@ support-compss@bsc.es to find out a solution.
 
 If you are willing to test the COMPSs Framework installation you can
 run any of the applications available at our application repository
-http://compss.bsc.es/projects/bar. We suggest to run the java simple
+https://github.com/bsc-wdc/apps. We suggest to run the java simple
 application following the steps listed inside its *README* file.
 
 For further information about either the installation or the usage

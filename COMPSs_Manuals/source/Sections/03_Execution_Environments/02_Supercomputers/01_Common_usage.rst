@@ -15,6 +15,7 @@ the *compssenv* script in the folder where COMPSs was installed. This script can
 be used to load the COMPSs environment in the system as indicated below.
 
 .. code-block:: console
+
     $ source <COMPSS_INSTALLATION_DIR>/compssenv
 
 COMPSs Environment Module
@@ -379,11 +380,13 @@ command:
     * Application arguments:
         Command line arguments to pass to the application. Can be empty.
 
+
 .. attention::
-Form COMPSs 2.8 version, the ``worker_working_dir`` has changed its built-in
-values to be more generic. The current values are: ``local_disk`` which
-substitutes the former ``scratch`` value; and ``shared_disk`` which replaces the
-``gpfs`` value.
+  Form COMPSs 2.8 version, the ``worker_working_dir`` has changed its built-in
+  values to be more generic. The current values are: ``local_disk`` which
+  substitutes the former ``scratch`` value; and ``shared_disk`` which replaces the
+  ``gpfs`` value.
+
 
 PyCOMPSs within interactive jobs
 --------------------------------

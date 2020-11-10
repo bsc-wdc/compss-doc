@@ -1056,8 +1056,7 @@ following example (:numref:`mpi_for_python`).
 
 In both cases, users can also define, MPI + OpenMP tasks by using ``processes``
 property to indicate the number of MPI processes and ``computing_units`` in the
-:ref:`Sections/02_App_Development/02_Python/01_Programming_model:Tasks Constraints`
-to indicate the number of OpenMP threads per MPI process.
+Task Constraints to indicate the number of OpenMP threads per MPI process.
 
 The *@mpi* decorator can be combined with collections to allow the process of
 a list of parameters in the same MPI execution. By the default, all parameters
