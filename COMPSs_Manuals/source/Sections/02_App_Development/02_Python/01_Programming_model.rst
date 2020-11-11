@@ -243,8 +243,8 @@ and *OUT* parameters. Thus, when defining the parameter metadata in the
       - The parameter is write-only. The type will be inferred.
     * - *CONCURRENT*
       - The parameter is read-write with concurrent access. The type will be inferred.
-    * - *CONMUTATIVE*
-      - The parameter is read-write with conmutative access. The type will be inferred.
+    * - *COMMUTATIVE*
+      - The parameter is read-write with commutative access. The type will be inferred.
     * - *FILE/FILE_IN*
       - The parameter is a file. The direction is assumed to be *IN*.
     * - *FILE_INOUT*
@@ -259,8 +259,8 @@ and *OUT* parameters. Thus, when defining the parameter metadata in the
       - The parameter is a write-only directory. The directory will be compressed before any transfer amongst nodes.
     * - *FILE_CONCURRENT*
       - The parameter is a concurrent read-write file.
-    * - *FILE_CONMUTATIVE*
-      - The parameter is a conmutative read-write file.
+    * - *FILE_COMMUTATIVE*
+      - The parameter is a commutative read-write file.
     * - *COLLECTION_IN*
       - The parameter is read-only collection.
     * - *COLLECTION_INOUT*
@@ -1026,7 +1026,7 @@ going to invoke a MPI executable (:numref:`mpi_task_python`).
 
     from pycompss.api.mpi import mpi
 
-    @mpi(binary="mpiApp.bin", runner="mpirun", computing_nodes=2)
+    @mpi(binary="mpiApp.bin", runner="mpirun", processes=2)
     @task()
     def mpi_func():
          pass
@@ -1035,6 +1035,56 @@ The MPI executable invocation can also be enriched with parameters,
 files and prefixes as with the *@binary* decorator through the
 function parameters and *@task* decorator information. Please,
 check :ref:`Sections/02_App_Development/02_Python/01_Programming_model:Binary decorator` for more details.
+
+The *@mpi* decorator can be also used to execute a MPI for python (mpi4py) code.
+To indicate it, developers only need to remove the binary field and include
+the Python MPI task implementation inside the function body as shown in the
+following example (:numref:`mpi_for_python`).
+
+.. code-block:: python
+    :name: mpi_for_python
+    :caption: MPI task example with collections and data layout
+
+    from pycompss.api.mpi import mpi
+
+    @mpi(processes=4)
+    @task()
+    def layout_test_with_all():
+       from mpi4py import MPI
+       rank = MPI.COMM_WORLD.rank
+       return rank
+
+In both cases, users can also define, MPI + OpenMP tasks by using ``processes``
+property to indicate the number of MPI processes and ``computing_units`` in the
+Task Constraints to indicate the number of OpenMP threads per MPI process.
+
+The *@mpi* decorator can be combined with collections to allow the process of
+a list of parameters in the same MPI execution. By the default, all parameters
+of the list will be deserialized to all the MPI processes. However, a common
+pattern in MPI is that each MPI processes performs the computation in a subset
+of data. So, all data serialization is not needed. To indicate the subset used
+by each MPI process, developers can use the ``data_layout`` notation inside the
+MPI task declaration.
+
+.. code-block:: python
+    :name: mpi_data_layout_python
+    :caption: MPI task example with collections and data layout
+
+    from pycompss.api.mpi import mpi
+
+    @mpi(processes=4, col_layout={block_count: 4, block_length: 2, stride: 1})
+    @task(col=COLLECTION_IN, returns=4)
+    def layout_test_with_all(col):
+       from mpi4py import MPI
+       rank = MPI.COMM_WORLD.rank
+       return data[0]+data[1]+rank
+
+Figure (:numref:`mpi_data_layout_python`) shows an example about how to combine
+MPI tasks with collections and data layouts. In this example, we have define a
+MPI task with an input collection (``col``). We have also defined a data layout
+with the property ``<arg_name>_layout`` and we specify the number of blocks
+(``block_count``), the elements per block (``block_length``), and the number of
+element between the starting block points (``stride``).
 
 COMPSs decorator
 ^^^^^^^^^^^^^^^^
@@ -1162,13 +1212,13 @@ Next tables summarizes the parameters of these decorators.
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
     | Parameter              | Description                                                                                                                       |
     +========================+===================================================================================================================================+
-    | **binary**             | (Mandatory) String defining the full path of the binary that must be executed.                                                    |
+    | **binary**             | (Optional) String defining the full path of the binary that must be executed. Empty indicates python MPI code.                    |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
     | **working_dir**        | Full path of the binary working directory inside the COMPSs Worker.                                                               |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
     | **runner**             | (Mandatory) String defining the MPI runner command.                                                                               |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
-    | **computing_nodes**    | Integer defining the number of computing nodes reserved for the MPI execution (only a single node is reserved by default).        |
+    | **processes**          | Integer defining the number of computing nodes reserved for the MPI execution (only a single node is reserved by default).        |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
 * @compss
@@ -1796,24 +1846,45 @@ used in the main program of a COMPSs Python application.
 
 
 
-Exceptions
-~~~~~~~~~~
+Failures and Exceptions
+~~~~~~~~~~~~~~~~~~~~~~~
 
-COMPSs is able to deal with exceptions raised during the execution of the
+COMPSs is able to deal with failures and exceptions raised during the execution of the
 applications. In this case, if a user/python defined exception happens, the
 user can choose the task behaviour using the *on_failure* argument within the
-*@task* decorator (with four possible values: **'RETRY'**,
-**’CANCEL_SUCCESSORS’**, **’FAIL’** and **’IGNORE’**. *’RETRY’* is the default
-behaviour).
+*@task* decorator.
 
-However, COMPSs provides an exception (``COMPSsException``) that the user can
+The possible values are:
+  - **'RETRY'** (Default): The task is executed twice in the same worker and a different worker.
+  - **’CANCEL_SUCCESSORS’**: All successors of this task are canceled.
+  - **’FAIL’**: The task failure produces a failure of the whole application.
+  - **’IGNORE’**: The task failure is ignored and the output parameters are set with empty values.
+
+A part from failures, COMPSs can also manage blocked tasks executions. Users can
+use the *time_out* property in the task definition to indicate the maximum duration
+of a task. If the task execution takes more seconds than the specified in the
+property. The task will be considered failed. This property can be combined with
+the *on_failure* mechanism.
+
+.. code-block:: python
+    :name: task_failures
+    :caption: Task failures example
+
+    from pycompss.api.task import task
+
+    @task(time_out=60, on_failure='IGNORE')
+    def func(v):
+        ...
+
+COMPSs provides an special exception (``COMPSsException``) that the user can
 raise when necessary and can be catched in the main code for user defined
 behaviour management. :numref:`task_group_compss_exception`
 shows an example of *COMPSsException* raising. In this case, the group
 definition is blocking, and waits for all task groups to finish.
-When all tasks of the group have finished, a *COMPSsException* will be raised
-if any of the tasks has raised the exception and will be captured by the
-except clause, enabling to react on this case.
+If a task of the group raises a *COMPSsException* it will be captured by the
+runtime. It will react to it by canceling the running and pending tasks of the
+group and raising the COMPSsException to enable the execution
+except clause.
 Consequenty, the *COMPSsException* must be combined with task groups.
 
 In addition, the tasks which belong to the group will be affected by the

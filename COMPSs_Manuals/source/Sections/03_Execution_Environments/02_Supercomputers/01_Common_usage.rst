@@ -1,14 +1,30 @@
 Common usage
 ============
 
-Available COMPSs modules
-------------------------
+Loading the COMPSs Environment
+------------------------------
+Depending on the supercomputer installation, COMPSs can be loaded by an
+environment script, or an Environment Module. The following paragraphs
+provide the details about how to load the COMPSs environment in the different
+situations.
 
-COMPSs is configured as a Linux Module. As shown in next Figure, the
-users can type the ``module available COMPSs`` command to list the
-supported COMPSs modules in the supercomputer. The users can also
-execute the ``module load COMPSs/<version>`` command to load an specific
-COMPSs module.
+COMPSs Environment Script
+~~~~~~~~~~~~~~~~~~~~~~~~~
+After a successful installation from the supercomputers package, users can find
+the *compssenv* script in the folder where COMPSs was installed. This script can
+be used to load the COMPSs environment in the system as indicated below.
+
+.. code-block:: console
+
+    $ source <COMPSS_INSTALLATION_DIR>/compssenv
+
+COMPSs Environment Module
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In BSC supercomputers, COMPSs is configured as an Environment Module. As shown in
+next Figure, users can type the ``module available COMPSs`` command to list the
+supported COMPSs modules in the supercomputer. The users can also execute the
+``module load COMPSs/<version>`` command to load an specific COMPSs module.
 
 .. code-block:: console
 
@@ -44,8 +60,8 @@ has been loaded:
     $ enqueue_compss --version
     COMPSs version <version>
 
-Configuration
--------------
+Configuration Notes
+~~~~~~~~~~~~~~~~~~~
 
 The COMPSs module contains **all** the COMPSs dependencies, including
 Java, Python and MKL. Modifying any of these dependencies can cause
@@ -54,10 +70,11 @@ Before running any COMPSs job please check your environment and, if
 needed, comment out any line inside the ``.bashrc`` file that loads
 custom COMPSs, Java, Python and/or MKL modules.
 
-The COMPSs module needs to be loaded in all the nodes that will run
-COMPSs jobs. Consequently, the ``module load`` **must** be included in
-your ``.bashrc`` file. To do so, please run the following command with
-the corresponding COMPSs version:
+The COMPSs environment needs to be loaded in all the nodes that will run
+COMPSs jobs. Some queue system (such as Slurm) already forward the environment
+in the allocated nodes. If it is not the case, the ``module load`` or the
+``compssenv`` script **must** be included in your ``.bashrc`` file. To do so,
+please run the following command with the corresponding COMPSs version:
 
 .. code-block:: console
 
@@ -79,11 +96,6 @@ well loaded COMPSs installation.
 
     USER@SC$ enqueue_compss --version
     COMPSs version <version>
-
-.. important::
-   Please remember that COMPSs runs in several nodes and your current
-   enviroment is not exported to them. Thus, all the needed environment
-   variables **must** be loaded through the *.bashrc* file.
 
 .. important::
    Please remember that PyCOMPSs uses Python 2.7 by default. In order to
@@ -367,6 +379,13 @@ command:
 
     * Application arguments:
         Command line arguments to pass to the application. Can be empty.
+
+
+.. attention::
+  Form COMPSs 2.8 version, the ``worker_working_dir`` has changed its built-in
+  values to be more generic. The current values are: ``local_disk`` which
+  substitutes the former ``scratch`` value; and ``shared_disk`` which replaces the
+  ``gpfs`` value.
 
 
 PyCOMPSs within interactive jobs
