@@ -65,7 +65,7 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
         --jmx_port=<int>                        Enable JVM profiling on specified port
 
       Runtime configuration options:
-        --task_execution=<compss|storage>	    Task execution under COMPSs or Storage.
+        --task_execution=<compss|storage>       Task execution under COMPSs or Storage.
                                                 Default: compss
         --storage_impl=<string>                 Path to an storage implementation. Shortcut to setting pypath and classpath. See Runtime/storage in your installation folder.
         --storage_conf=<path>                   Path to the storage configuration file
@@ -78,7 +78,7 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: Inferred is possible. Otherwise: java
         --summary                               Displays a task execution summary at the end of the application execution
                                                 Default: false
-        --log_level=<level>, --debug, -d        Set the debug level: off | info | debug
+        --log_level=<level>, --debug, -d        Set the debug level: off | info | api | debug | trace
                                                 Warning: Off level compiles with -O2 option disabling asserts and __debug__
                                                 Default: off
 
@@ -106,10 +106,10 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: null
         --scheduler=<className>                 Class that implements the Scheduler for COMPSs
                                                 Supported schedulers:
-                                                      ├── es.bsc.compss.scheduler.data.DataScheduler
-                                                      ├── es.bsc.compss.scheduler.fifo.FIFOScheduler
-                                                      ├── es.bsc.compss.scheduler.fifodata.FIFODataScheduler
-                                                      ├── es.bsc.compss.scheduler.lifo.LIFOScheduler
+                                                      ├── es.bsc.compss.scheduler.fifodatalocation.FIFODataLoctionScheduler
+                                                      ├── es.bsc.compss.scheduler.fifonew.FIFOScheduler
+                                                      ├── es.bsc.compss.scheduler.fifodatanew.FIFODataScheduler
+                                                      ├── es.bsc.compss.scheduler.lifonew.LIFOScheduler
                                                       ├── es.bsc.compss.components.impl.TaskScheduler
                                                       └── es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
                                                 Default: es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
@@ -172,6 +172,8 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                        Default: true
         --python_mpi_worker=<false>             Use MPI to run the python worker instead of multiprocessing. (true/false).
                                                 Default: false
+        --python_memory_profile                 Generate a memory profile of the master.
+                                                Default: false
 
     * Application name:
         For Java applications:   Fully qualified name of the application
@@ -180,6 +182,8 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
 
     * Application arguments:
         Command line arguments to pass to the application. Can be empty.
+
+
 
 
 Running a COMPSs application

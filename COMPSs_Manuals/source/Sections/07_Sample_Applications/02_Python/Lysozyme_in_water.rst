@@ -267,7 +267,7 @@ supercomputer:
     --num_nodes=$numNodes \
     --exec_time=$executionTime \
     --master_working_dir=. \
-    --worker_working_dir=scratch \
+    --worker_working_dir=/gpfs/home/user/lysozyme \
     --tracing=$tracing \
     --graph=true \
     -d \

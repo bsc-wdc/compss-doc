@@ -12,7 +12,8 @@ Here you will find the syntax notebooks used in the tutorials.
     syntax/3.0_Defining_classes_and_objects
     syntax/3.1_Defining_classes_and_objects-with-reduce
     syntax/3.2_Defining_classes_and_objects-with-collections
-    syntax/3.3_Defining_classes_and_objects-with-fault-tolerance
+    syntax/3.3_Defining_classes_and_objects-with-dictionary
+    syntax/3.4_Defining_classes_and_objects-with-fault-tolerance
     syntax/4_Files
     syntax/5_UsingConstraints
     syntax/6_Polymorphism

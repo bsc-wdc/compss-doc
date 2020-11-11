@@ -33,7 +33,7 @@ job information. For example:
       --num_nodes=3 \
       --cpus_per_node=16 \
       --master_working_dir=. \
-      --worker_working_dir=gpfs \
+      --worker_working_dir=shared_disk \
       --lang=python \
       --log_level=debug \
       <APP> <APP_PARAMETERS>
@@ -53,7 +53,7 @@ job information. For example:
             --sc_cfg=default.cfg
             --cpus_per_node=16
             --master_working_dir=.
-            --worker_working_dir=gpfs
+            --worker_working_dir=shared_disk
             --lang=python
             --classpath=.
             --library_path=.

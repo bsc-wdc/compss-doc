@@ -138,32 +138,80 @@ Below you can see an example of the most important variable definition for Slurm
 
 .. code-block:: bash
 
-    # Submission command (submit.sh)
-    SUBMISSION_CMD="sbatch"
-    SUBMISSION_PIPE="< "
-    ...
+    # File: Runtime/scripts/queues/queue_systems/slurm.cfg
+
+    ################################
+    ## SUBMISSION VARIABLES
+    ################################
     # Variables to define the directives as #${QUEUE_CMD} ${ARG_*}${QUEUE_SEPARATOR}value (submit.sh)
     QUEUE_CMD="SBATCH"
-    QUEUE_SEPARATOR=""
-    QARG_JOB_NAME="--job-name="
-    QARG_JOB_OUT="-o"
-    QARG_JOB_ERROR="-e"
-    QARG_WD="--workdir="
-    QARG_WALLCLOCK="-t"
-    QARG_NUM_NODES="-N"
-    QARG_NUM_PROCESSES="-n"
-    ...
-    #vars to customize the commands know job id and allocated nodes (submit.sh)
+    SUBMISSION_CMD="sbatch"
+    SUBMISSION_PIPE="< "
+    SUBMISSION_HET_SEPARATOR=' : '
+    SUBMISSION_HET_PIPE=" "
+
+    # Variables to customize the commands know job id and allocated nodes (submit.sh)
     ENV_VAR_JOB_ID="SLURM_JOB_ID"
     ENV_VAR_NODE_LIST="SLURM_JOB_NODELIST"
-    HOSTLIST_CMD="scontrol show hostname"
-    HOSTLIST_TREATMENT="| awk {' print \$1 '} | sed -e 's/\.[^\ ]*//g'"
-    ...
-    #vars to customize worker process spawn inside the job (launch_compss)
+
+    QUEUE_SEPARATOR=""
+    EMPTY_WC_LIMIT=":00"
+
+    QARG_JOB_NAME="--job-name="
+    QARG_JOB_DEP_INLINE="false"
+    QARG_JOB_DEPENDENCY_OPEN="--dependency=afterany:"
+    QARG_JOB_DEPENDENCY_CLOSE=""
+
+    QARG_JOB_OUT="-o "
+    QARG_JOB_ERROR="-e "
+    QARG_WD="--workdir="
+    QARG_WALLCLOCK="-t"
+
+    QARG_NUM_NODES="-N"
+    QARG_NUM_PROCESSES="-n"
+    QNUM_PROCESSES_VALUE="\$(expr \${num_nodes} \* \${req_cpus_per_node})"
+    QARG_EXCLUSIVE_NODES="--exclusive"
+    QARG_SPAN=""
+
+    QARG_MEMORY="--mem="
+    QARG_QUEUE_SELECTION="-p "
+    QARG_NUM_SWITCHES="--gres="
+    QARG_GPUS_PER_NODE="--gres gpu:"
+    QARG_RESERVATION="--reservation="
+    QARG_CONSTRAINTS="--constraint="
+    QARG_QOS="--qos="
+    QARG_OVERCOMMIT="--overcommit"
+    QARG_CPUS_PER_TASK="-c"
+    QJOB_ID="%J"
+    QARG_PACKJOB="packjob"
+
+    ################################
+    ## LAUNCH VARIABLES
+    ################################
+    # Variables to customize worker process spawn inside the job (launch_compss)
     LAUNCH_CMD="srun"
     LAUNCH_PARAMS="-n1 -N1 --nodelist="
     LAUNCH_SEPARATOR=""
     CMD_SEPARATOR=""
+    HOSTLIST_CMD="scontrol show hostname"
+    HOSTLIST_TREATMENT="| awk {' print \$1 '} | sed -e 's/\.[^\ ]*//g'"
+
+    ################################
+    ## QUEUE VARIABLES
+    ##  - Used in interactive
+    ##  - Substitute the %JOBID% keyword with the real job identifier dinamically
+    ################################
+    QUEUE_JOB_STATUS_CMD="squeue -h -o %T --job %JOBID%"
+    QUEUE_JOB_RUNNING_TAG="RUNNING"
+    QUEUE_JOB_NODES_CMD="squeue -h -o %N --job %JOBID%"
+    QUEUE_JOB_CANCEL_CMD="scancel %JOBID%"
+    QUEUE_JOB_LIST_CMD="squeue -h -o %i"
+    QUEUE_JOB_NAME_CMD="squeue -h -o %j --job %JOBID%"
+
+    ################################
+    ## CONTACT VARIABLES
+    ################################
+    CONTACT_CMD="ssh"
 
 To adapt this script to your queue system, you just need to change the variable
 value to the command, argument or value required in your system.
@@ -178,35 +226,74 @@ variables for the *MareNostrum IV* supercomputer.
 
 .. code-block:: bash
 
+    # File: Runtime/scripts/queues/supercomputers/mn.cfg
+
+    ################################
+    ## STRUCTURE VARIABLES
+    ################################
     QUEUE_SYSTEM="slurm"
 
-    # Default values enqueue_compss
+    ################################
+    ## ENQUEUE_COMPSS VARIABLES
+    ################################
     DEFAULT_EXEC_TIME=10
     DEFAULT_NUM_NODES=2
+    DEFAULT_NUM_SWITCHES=0
+    MAX_NODES_SWITCH=18
+    MIN_NODES_REQ_SWITCH=4
     DEFAULT_QUEUE=default
+    DEFAULT_MAX_TASKS_PER_NODE=-1
     DEFAULT_CPUS_PER_NODE=48
-    DEFAULT_NODE_MEMORY_SIZE=92
+    DEFAULT_IO_EXECUTORS=0
+    DEFAULT_GPUS_PER_NODE=0
+    DEFAULT_FPGAS_PER_NODE=0
+    DEFAULT_WORKER_IN_MASTER_CPUS=24
+    DEFAULT_WORKER_IN_MASTER_MEMORY=50000
     DEFAULT_MASTER_WORKING_DIR=.
-    MINIMUM_NUM_NODES=1
-    MINIMUM_CPUS_PER_NODE=1
-    ...
-    # Enabling/disabling queue system features
+    DEFAULT_WORKER_WORKING_DIR=local_disk
+    DEFAULT_NETWORK=infiniband
+    DEFAULT_DEPENDENCY_JOB=None
+    DEFAULT_RESERVATION=disabled
+    DEFAULT_NODE_MEMORY=disabled
+    DEFAULT_JVM_MASTER=""
+    DEFAULT_JVM_WORKERS="-Xms16000m,-Xmx92000m,-Xmn1600m"
+    DEFAULT_JVM_WORKER_IN_MASTER=""
+    DEFAULT_QOS=default
+    DEFAULT_CONSTRAINTS=disabled
+
+    ################################
+    ## Enabling/disabling passing
+    ## requirements to queue system
+    ################################
     DISABLE_QARG_MEMORY=true
     DISABLE_QARG_CONSTRAINTS=false
     DISABLE_QARG_QOS=false
     DISABLE_QARG_OVERCOMMIT=true
     DISABLE_QARG_CPUS_PER_TASK=false
+    DISABLE_QARG_NVRAM=true
     HETEROGENEOUS_MULTIJOB=false
-    ...
-    #Paths
-    SCRATCH_DIR="/scratch/tmp"
-    GPFS_PREFIX="/gpfs/"
-    ...
-    #Other values
-    REMOTE_EXECUTOR="none" #disable the ssh spawn at runtime
-    NETWORK_INFINIBAND_SUFFIX="-ib0" #hostname suffix to add in order to use infiniband
-    NETWORK_DATA_SUFFIX="-data" #hostname suffix to add in order to use infiniband
-    MASTER_NAME_CMD=hostname #command to know the mastername
+
+    ################################
+    ## SUBMISSION VARIABLES
+    ################################
+    MINIMUM_NUM_NODES=1
+    MINIMUM_CPUS_PER_NODE=1
+    DEFAULT_STORAGE_HOME="null"
+    DISABLED_STORAGE_HOME="null"
+
+    ################################
+    ## LAUNCH VARIABLES
+    ################################
+    LOCAL_DISK_PREFIX="/scratch/tmp"
+    REMOTE_EXECUTOR="none"  # Disable the ssh spawn at runtime
+    NETWORK_INFINIBAND_SUFFIX="-ib0"  # Hostname suffix to add in order to use infiniband network
+    NETWORK_DATA_SUFFIX="-data"  # Hostname suffix to add in order to use data network
+    SHARED_DISK_PREFIX="/gpfs/"
+    SHARED_DISK_2_PREFIX="/.statelite/tmpfs/gpfs/"
+    DEFAULT_NODE_MEMORY_SIZE=92
+    DEFAULT_NODE_STORAGE_BANDWIDTH=450
+    MASTER_NAME_CMD=hostname  # Command to know the mastername
+    ELASTICITY_BATCH=true
 
 To adapt this script to your supercomputer, you just need to change the
 variables to commands paths or values which are set in your system.
@@ -284,7 +371,7 @@ Users can check the available options by running:
 
     $ enqueue_compss -h
 
-    Usage: /apps/COMPSs/2.7/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
+    Usage: /apps/COMPSs/2.8/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
 
     * Options:
       General:
@@ -306,8 +393,8 @@ Users can check the available options by running:
                                                 Default: default
         --reservation=<name>                    Reservation to use when submitting the job.
                                                 Default: disabled
-        --constraints=<constraints>             Constraints to pass to queue system.
-                                                Default: disabled
+        --constraints=<constraints>		          Constraints to pass to queue system.
+    					                                  Default: disabled
         --qos=<qos>                             Quality of Service to pass to the queue system.
                                                 Default: default
         --cpus_per_task                         Number of cpus per task the queue system must allocate per task.
@@ -379,16 +466,16 @@ Users can check the available options by running:
 
         --master_working_dir=<path>             Working directory of the application
                                                 Default: .
-        --worker_working_dir=<name | path>      Worker directory. Use: scratch | gpfs | <path>
-                                                Default: scratch
+        --worker_working_dir=<name | path>      Worker directory. Use: local_disk | shared_disk | <path>
+                                                Default: local_disk
 
         --worker_in_master_cpus=<int>           Maximum number of CPU computing units that the master node can run as worker. Cannot exceed cpus_per_node.
                                                 Default: 24
         --worker_in_master_memory=<int> MB      Maximum memory in master node assigned to the worker. Cannot exceed the node_memory.
                                                 Mandatory if worker_in_master_cpus is specified.
                                                 Default: 50000
-        --worker_port_range=<min>,<max>         Port range used by the NIO adaptor at the worker side
-                                                Default: 43001,43005
+        --worker_port_range=<min>,<max>	        Port range used by the NIO adaptor at the worker side
+    					                                  Default: 43001,43005
         --jvm_worker_in_master_opts="<string>"  Extra options for the JVM of the COMPSs Worker in the Master Node.
                                                 Each option separed by "," and without blank spaces (Notice the quotes)
                                                 Default:
@@ -404,6 +491,9 @@ Users can check the available options by running:
                                                 Default: true
         --jupyter_notebook=<path>,              Swap the COMPSs master initialization with jupyter notebook from the specified path.
         --jupyter_notebook                      Default: false
+        --ipython                               Swap the COMPSs master initialization with ipython.
+                                                Default: empty
+
 
       Runcompss configuration:
 
@@ -431,14 +521,14 @@ Users can check the available options by running:
         --storage_conf=<path>                   Path to the storage configuration file
                                                 Default: null
         --project=<path>                        Path to the project XML file
-                                                Default: /apps/COMPSs/2.7//Runtime/configuration/xml/projects/default_project.xml
+                                                Default: /apps/COMPSs/2.8.pr//Runtime/configuration/xml/projects/default_project.xml
         --resources=<path>                      Path to the resources XML file
-                                                Default: /apps/COMPSs/2.7//Runtime/configuration/xml/resources/default_resources.xml
+                                                Default: /apps/COMPSs/2.8.pr//Runtime/configuration/xml/resources/default_resources.xml
         --lang=<name>                           Language of the application (java/c/python)
                                                 Default: Inferred is possible. Otherwise: java
         --summary                               Displays a task execution summary at the end of the application execution
                                                 Default: false
-        --log_level=<level>, --debug, -d        Set the debug level: off | info | debug
+        --log_level=<level>, --debug, -d        Set the debug level: off | info | api | debug | trace
                                                 Warning: Off level compiles with -O2 option disabling asserts and __debug__
                                                 Default: off
 
@@ -466,10 +556,10 @@ Users can check the available options by running:
                                                 Default: null
         --scheduler=<className>                 Class that implements the Scheduler for COMPSs
                                                 Supported schedulers:
-                                                      ├── es.bsc.compss.scheduler.data.DataScheduler
-                                                      ├── es.bsc.compss.scheduler.fifo.FIFOScheduler
-                                                      ├── es.bsc.compss.scheduler.fifodata.FIFODataScheduler
-                                                      ├── es.bsc.compss.scheduler.lifo.LIFOScheduler
+                                                      ├── es.bsc.compss.scheduler.fifodatalocation.FIFODataLoctionScheduler
+                                                      ├── es.bsc.compss.scheduler.fifonew.FIFOScheduler
+                                                      ├── es.bsc.compss.scheduler.fifodatanew.FIFODataScheduler
+                                                      ├── es.bsc.compss.scheduler.lifonew.LIFOScheduler
                                                       ├── es.bsc.compss.components.impl.TaskScheduler
                                                       └── es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
                                                 Default: es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
@@ -527,10 +617,12 @@ Users can check the available options by running:
         --gen_coredump                          Enable master coredump generation
                                                 Default: false
         --python_interpreter=<string>           Python interpreter to use (python/python2/python3).
-                                                Default: python Version: 3
+                                                Default: python Version: 2
         --python_propagate_virtual_environment=<true>  Propagate the master virtual environment to the workers (true/false).
                                                        Default: true
         --python_mpi_worker=<false>             Use MPI to run the python worker instead of multiprocessing. (true/false).
+                                                Default: false
+        --python_memory_profile                 Generate a memory profile of the master.
                                                 Default: false
 
     * Application name:
@@ -540,6 +632,7 @@ Users can check the available options by running:
 
     * Application arguments:
         Command line arguments to pass to the application. Can be empty.
+
 
 
 If none of the pre-build queue configurations adapts to your

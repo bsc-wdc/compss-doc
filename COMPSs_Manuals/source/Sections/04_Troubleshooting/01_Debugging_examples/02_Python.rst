@@ -180,7 +180,7 @@ consequence of using a string for the task input which tries to add 1):
       return self.worker_call(*args, **kwargs)
     File "/opt/COMPSs/Bindings/python/2/pycompss/api/task.py", line 1523, in worker_call
       **user_kwargs)
-    File "/home/javier/temp/Bugs/documentation/error_in_task.py", line 6, in increment
+    File "/home/user/temp/Bugs/documentation/error_in_task.py", line 6, in increment
       return value + 1
   TypeError: cannot concatenate 'str' and 'int' objects
 
