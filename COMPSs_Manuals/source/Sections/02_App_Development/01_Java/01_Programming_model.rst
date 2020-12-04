@@ -418,13 +418,13 @@ Usage examples of these properties are shown in :numref:`failures_java`
 Tasks Groups and COMPSs exceptions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-COMPSs allow users to define task groups which can be combined with an special exception (``COMPSsException``) that the user can use
-to achieve parallel distributed try/catch blocks :numref:`compss_exception_java`
+COMPSs allows users to define task groups which can be combined with an special exception (``COMPSsException``) that the user can use
+to achieve parallel distributed try/catch blocks; :numref:`compss_exception_java`
 shows an example of *COMPSsException* raising. In this case, the group
 definition is blocking, and waits for all task groups to finish.
-If a task of the group raises a *COMPSsException* it will be captured by the
-runtime. It will react to it by canceling the running and pending tasks of the
-group and raising the COMPSsException to enable the execution
+If a task of the group raises a *COMPSsException*, it will be captured by the
+runtime which reacts to it by canceling the running and pending tasks of the
+group and forwarding the COMPSsException to enable the execution
 except clause.
 Consequenty, the *COMPSsException* must be combined with task groups.
 
