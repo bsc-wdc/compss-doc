@@ -1777,8 +1777,8 @@ Other
 PyCOMPSs also provides other function within its API to check if a file exists.
 
 compss_file_exists(file_name)
- Check if a file exists. If it does not exist, it check
- if file has been accessed before by calling the runtime.
+ Checks if a file exists. If it does not exist, the function checks
+ if the file has been accessed before by calling the runtime.
 
 :numref:`api_file_exists` illustrates its usage.
 
