@@ -157,7 +157,7 @@ For example, to submit the execution of the ``demoFunction`` method from the ``e
 
     compss@bsc.es:~$ compss_agent_call_operation --master_node="127.0.0.1" --master_port="46101" --method_name="demoFunction" es.bsc.compss.test.DemoClass 1 
 
-For the agent to detect inner tasks within the operation execution, the COMPSs Programming model requires an interface selecting the methods to be replaced by asyncrhonous task creations. An invoker should use the ``--cei`` option to specify the name of the interface selecting the tasks. 
+For the agent to detect inner tasks within the operation execution, the COMPSs Programming model requires an interface selecting the methods to be replaced by asynchronous task creations. An invoker should use the ``--cei`` option to specify the name of the interface selecting the tasks. 
 
 Modifying the available resources
 ---------------------------------
@@ -227,7 +227,7 @@ The following command adds a new Agent onto the pool of resources of the Agent d
 
     compss@bsc.es:~$ compss_agent_add_resources --agent_node=192.168.1.70 --agent_port=46101 --cpu=4 192.168.1.72 Port=46102
 
-Conversely, the ``compss_agent_reduce_resources`` command allows to reduce the number of resources configured in an agent. Executing the command causes the target agent to reduce the specified amount of resources from one of its configured neighbors. At the moment the reception of the resource removal request, the agent might be using actively using those remote resources by executing some tasks. If that is the case, the agent will register the resource reduction request, stop submitting more workload to the corresponding node, and, when the idle resources of the node match the request, the agent removes them from the pool. If upon the completion of the ``compss_agent_reduce_resources`` command no resources are associated to the reduced node, the node is completely removed from the resource pool of the agent. The options and default values are the same than for the ``compss_agent_add_resources`` command. Notice that ``--comm`` option is not available because only one resource can associated to that name regardless the selected adaptor.
+Conversely, the ``compss_agent_reduce_resources`` command allows to reduce the number of resources configured in an agent. Executing the command causes the target agent to reduce the specified amount of resources from one of its configured neighbors. At the moment of the reception of the resource removal request, the agent might be actively using those remote resources by executing some tasks. If that is the case, the agent will register the resource reduction request, stop submitting more workload to the corresponding node, and, when the idle resources of the node match the request, the agent removes them from the pool. If upon the completion of the ``compss_agent_reduce_resources`` command no resources are associated to the reduced node, the node is completely removed from the resource pool of the agent. The options and default values are the same than for the ``compss_agent_add_resources`` command. Notice that ``--comm`` option is not available because only one resource can be associated to that name regardless the selected adaptor.
 
 .. code-block:: console
 
