@@ -30,8 +30,8 @@ detected in the Extrae config report:
    otherwise workers will crash because of the missing *libpapi.so*.
 
 PAPI installation and requirements depend on the OS. On Ubuntu 14.04 it
-is available under textitpapi-tools package; on OpenSuse textitpapi and
-textitpapi-dev. For more information check
+is available under *papi-tools* package; on OpenSuse *libpapi*, *papi* and
+*papi-devel* packages. For more information check
 https://icl.cs.utk.edu/projects/papi/wiki/Installing_PAPI.
 
 Extrae only supports 8 active hardware counters at the same time. Both
