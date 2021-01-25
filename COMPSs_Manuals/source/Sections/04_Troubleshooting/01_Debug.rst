@@ -24,7 +24,7 @@ and ``JOB<TASK_NUMBER>_NEW.err`` files when a task fails.
 
 .. TIP::
 
-    If the user enables the **debug mode** by including the ``-t`` flag into
+    If the user enables the **debug mode** by including the ``-d`` flag into
     ``runcompss`` or ``enqueue_compss`` command, more information will be
     stored in the log folder of each run easing the error detection.
     In particular, all output and error output of all tasks will appear
