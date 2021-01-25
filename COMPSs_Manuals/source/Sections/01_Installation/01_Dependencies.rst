@@ -324,20 +324,20 @@ As an example for some distributions:
 Build Dependencies
 ------------------
 
-To build COMPSs from sources you will also need ``wget``, ``git`` and ``maven``.
-
+To build COMPSs from sources you will also need ``wget``, ``git`` and
+``maven`` (`maven web <https://maven.apache.org/>`_).
 To install with Pip, ``pip`` for the target Python version is required.
 
 
 Optional Dependencies
 ---------------------
 
-For the Python binding it is recommended to have `dill <https://pypi.org/project/dill/>`_ and
-`guppy <https://pypi.org/project/guppy/>`_/`guppy3 <https://pypi.org/project/guppy3/>`_ installed.
+For the Python binding it is recommended to have ``dill`` (`dill project <https://pypi.org/project/dill/>`_) and
+``guppy`` (`guppy project <https://pypi.org/project/guppy/>`_)/``guppy3`` (`guppy3 project <https://pypi.org/project/guppy3/>`_) installed.
 The ``dill`` package increases the variety of serializable objects by Python
 (for example: lambda functions), and the ``guppy``/``guppy3`` package is needed to use the
 ``@local`` decorator. Both packages can be found in pyPI and can be installed via ``pip``.
 
 Since it is possible to execute python applications using workers spawning
-MPI processes instead of multiprocessing, it is necessary to have `openmpi`,
-`openmpi-devel` and `openmpi-libs` system packages installed and `mpi4py` with pip.
+MPI processes instead of multiprocessing, it is necessary to have ``openmpi``,
+``openmpi-devel`` and ``openmpi-libs`` system packages installed and ``mpi4py`` with pip.
