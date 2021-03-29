@@ -208,6 +208,16 @@ latex_elements = {
 
         %%% Link at the footnote to go to the place of footnote in the text
         \usepackage{footnotebackref}
+        \makeatletter
+        \LetLtxMacro{\BHFN@Old@footnotemark}{\@footnotemark}
+
+        \renewcommand*{\@footnotemark}{%
+            \refstepcounter{BackrefHyperFootnoteCounter}%
+            \xdef\BackrefFootnoteTag{bhfn:\theBackrefHyperFootnoteCounter}%
+            \label{\BackrefFootnoteTag}%
+            \BHFN@Old@footnotemark
+        }
+        \makeatother
 
         %%% Spacing between line
         \usepackage{setspace}
