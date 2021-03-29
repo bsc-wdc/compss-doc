@@ -323,3 +323,18 @@ present and that MPI path is correct and exists. Sample output:
 The **second option** is to increase the OS maximum number of open
 files. For instance, in Ubuntu add `` ulimit -n 40000 `` just before the
 start-stop-daemon line in the do_start section.
+
+
+Performance issues
+------------------
+
+Different work directories
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Having different work directories (for master and workers) may lead to
+performance issues. In particular, if the work directories belong to different
+mount points and with different performance, where the copy of files may be
+required.
+For example, using folders that are shared across nodes in a supercomputer
+but with different performance (e.g. ``scratch`` and ``projects`` in MareNostrum 4)
+for the master and worker workspaces.
