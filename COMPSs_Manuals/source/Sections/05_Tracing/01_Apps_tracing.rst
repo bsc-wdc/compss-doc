@@ -415,14 +415,28 @@ Custom Configuration file
 
 COMPSs offers the possibility to specify an extrae custom configuration
 file in order to harness all the tracing capabilities further tailoring
-which information about the execution is displayed. To do so just pass
-the file as an execution parameter as follows:
+which information about the execution is displayed (except for Python workers).
+To do so just indicate the file as an execution parameter as follows:
 
 ``--extrae_config_file=/path/to/config/file.xml``
 
-The configuration file must be in a shared disk between all COMPSs
+In addition, there is also the possibility to specify an extrae custom
+configuration file for the Python workers as follows:
+
+``--extrae_config_file_python=/path/to/config/file_python.xml``
+
+The configuration files must be in a shared disk between all COMPSs
 workers because a file’s copy is not distributed among them, just the
 path to that file.
+
+.. TIP::
+
+    The default configuration files are in:
+
+    * ``$COMPSS_HOME/Runtime/configuration/xml/tracing/extrae_advanced.xml``
+    * ``$COMPSS_HOME/Runtime/configuration/xml/tracing/extrae_python_worker.xml`` (when using Python)
+
+    The can be taken as base for customization.
 
 
 .. [1]

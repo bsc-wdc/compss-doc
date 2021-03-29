@@ -109,7 +109,7 @@ As an example for some distributions:
         .. code-block:: console
 
             $ sudo zypper install --type pattern -y devel_basis
-            $ sudo zypper install -y java-1_8_0-openjdk-headless java-1_8_0-openjdk java-1_8_0-openjdk-devel graphviz xdg-utils python python-devel python3 python3-devel python3-decorator libtool automake libboost_headers1_71_0-devel libboost_serialization1_71_0 libboost_iostreams1_71_0  libxml2-2 libxml2-devel tcsh gcc-fortran papi libpapi gcc-c++ papi-devel gmp-devel
+            $ sudo zypper install -y java-1_8_0-openjdk-headless java-1_8_0-openjdk java-1_8_0-openjdk-devel graphviz xdg-utils python python-devel python3 python3-devel python3-decorator libtool automake libboost_headers1_71_0-devel libboost_serialization1_71_0 libboost_iostreams1_71_0  libxml2-2 libxml2-devel tcsh gcc-fortran papi libpapi gcc-c++ libpapi papi papi-devel gmp-devel
             $ sudo wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
             $ sudo unzip /opt/gradle-5.4.1-bin.zip -d /opt
 
@@ -134,7 +134,7 @@ As an example for some distributions:
         .. code-block:: console
 
             $ sudo zypper install --type pattern -y devel_basis
-            $ sudo zypper install -y java-1_8_0-openjdk-headless java-1_8_0-openjdk java-1_8_0-openjdk-devel graphviz xdg-utils python python-devel python-decorator python3 python3-devel python3-decorator libtool automake libboost_headers1_66_0-devel libboost_serialization1_66_0 libboost_iostreams1_66_0  libxml2-2 libxml2-devel tcsh gcc-fortran papi libpapi gcc-c++ papi-devel gmp-devel
+            $ sudo zypper install -y java-1_8_0-openjdk-headless java-1_8_0-openjdk java-1_8_0-openjdk-devel graphviz xdg-utils python python-devel python-decorator python3 python3-devel python3-decorator libtool automake libboost_headers1_66_0-devel libboost_serialization1_66_0 libboost_iostreams1_66_0  libxml2-2 libxml2-devel tcsh gcc-fortran papi libpapi gcc-c++ libpapi papi papi-devel gmp-devel
             $ sudo wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
             $ sudo unzip /opt/gradle-5.4.1-bin.zip -d /opt
 
@@ -159,7 +159,7 @@ As an example for some distributions:
         .. code-block:: console
 
             $ sudo zypper install --type pattern -y devel_basis
-            $ sudo zypper install -y java-1_8_0-openjdk-headless java-1_8_0-openjdk java-1_8_0-openjdk-devel graphviz xdg-utils python python-devel libpython2_7-1_0 python-decorator libtool automake boost-devel libboost_serialization1_54_0 libboost_iostreams1_54_0 libxml2-2 libxml2-devel tcsh gcc-fortran python-pip papi libpapi gcc-c++ papi-devel gmp-devel
+            $ sudo zypper install -y java-1_8_0-openjdk-headless java-1_8_0-openjdk java-1_8_0-openjdk-devel graphviz xdg-utils python python-devel libpython2_7-1_0 python-decorator libtool automake boost-devel libboost_serialization1_54_0 libboost_iostreams1_54_0 libxml2-2 libxml2-devel tcsh gcc-fortran python-pip papi libpapi gcc-c++ libpapi papi papi-devel gmp-devel
             $ sudo wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
             $ sudo unzip /opt/gradle-5.4.1-bin.zip -d /opt
 
@@ -324,16 +324,20 @@ As an example for some distributions:
 Build Dependencies
 ------------------
 
-To build COMPSs from sources you will also need ``wget``, ``git`` and ``maven``.
-
+To build COMPSs from sources you will also need ``wget``, ``git`` and
+``maven`` (`maven web <https://maven.apache.org/>`_).
 To install with Pip, ``pip`` for the target Python version is required.
 
 
 Optional Dependencies
 ---------------------
 
-For the Python binding it is also recommended to have `dill <https://pypi.org/project/dill/>`_ and
-`guppy <https://pypi.org/project/guppy/>`_/`guppy3 <https://pypi.org/project/guppy3/>`_ installed.
+For the Python binding it is recommended to have ``dill`` (`dill project <https://pypi.org/project/dill/>`_) and
+``guppy`` (`guppy project <https://pypi.org/project/guppy/>`_)/``guppy3`` (`guppy3 project <https://pypi.org/project/guppy3/>`_) installed.
 The ``dill`` package increases the variety of serializable objects by Python
 (for example: lambda functions), and the ``guppy``/``guppy3`` package is needed to use the
 ``@local`` decorator. Both packages can be found in pyPI and can be installed via ``pip``.
+
+Since it is possible to execute python applications using workers spawning
+MPI processes instead of multiprocessing, it is necessary to have ``openmpi``,
+``openmpi-devel`` and ``openmpi-libs`` system packages installed and ``mpi4py`` with pip.

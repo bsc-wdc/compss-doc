@@ -1492,12 +1492,12 @@ compss_open(file_name, mode=’r’)
    the mode in which the file will be opened (the open modes are
    analogous to those of Python *open()*).
 
-compss_wait_on_file(file_name)
-   Synchronizes for the last version of the file *file_name*.
+compss_wait_on_file(\*file_name)
+   Synchronizes for the last version of the file/s specified by *file_name*.
    Returns True if success (False otherwise).
 
-compss_wait_on_directory(directory_name)
-   Synchronizes for the last version of the directory *directory_name*.
+compss_wait_on_directory(\*directory_name)
+   Synchronizes for the last version of the directory/ies specified by *directory_name*.
    Returns True if success (False otherwise).
 
 compss_barrier(no_more_tasks=False)
@@ -1518,13 +1518,14 @@ compss_barrier_group(group_name)
    See :ref:`Sections/02_App_Development/02_Python/01_Programming_model:Task Groups`
    for more information about task groups.
 
-compss_wait_on(obj, to_write=True)
-   Synchronizes for the last version of object *obj* and returns the synchronized object.
-   It can have an optional boolean parameter *to_write*, which defaults to
-   *True*, that indicates whether the main program will modify the
+compss_wait_on(\*obj, mode="r" | "rw")
+   Synchronizes for the last version of object/s specifed by *obj* and returns
+   the synchronized object.
+   It can have an optional string parameter *mode*, which defaults to
+   *rw*, that indicates whether the main program will modify the
    returned object. It is possible to wait on a list of objects. In this
    particular case, it will synchronize all future objects contained in
-   the list.
+   the list recursively.
 
 
 To illustrate the use of the aforementioned API functions, the following
@@ -1532,7 +1533,7 @@ example (:numref:`api_usage_python`) first invokes a task *func* that writes a
 file, which is later synchronized by calling *compss_open()*.
 Later in the program, an object of class *MyClass* is created and a task method
 *method* that modifies the object is invoked on it; the object is then
-synchronized with *compss_wait_on()*, so that it can be used in the main
+synchronized with *compss_wait_on*, so that it can be used in the main
 program from that point on.
 
 Then, a loop calls again ten times to *func* task. Afterwards, the
@@ -1676,11 +1677,11 @@ These calls allow the runtime to clean the infrastructure explicitly, but
 the deletion of the objects/files will be performed as soon as the
 objects/files dependencies are released.
 
-compss_delete_file(file_name)
- Notifies the runtime to delete a file.
+compss_delete_file(\*file_name)
+ Notifies the runtime to delete a file/s.
 
-compss_delete_object(object)
-  Notifies the runtime to delete all the associated files to a given object.
+compss_delete_object(\*object)
+  Notifies the runtime to delete all the associated files to a given object/s.
 
 
 The following example (:numref:`api_delete_usage_python`) illustrates the use
@@ -1776,8 +1777,8 @@ Other
 
 PyCOMPSs also provides other function within its API to check if a file exists.
 
-compss_file_exists(file_name)
- Checks if a file exists. If it does not exist, the function checks
+compss_file_exists(\*file_name)
+ Checks if a file or files exist. If it does not exist, the function checks
  if the file has been accessed before by calling the runtime.
 
 :numref:`api_file_exists` illustrates its usage.
@@ -1823,25 +1824,23 @@ used in the main program of a COMPSs Python application.
     +=================+==============================================+=========================================================================================+
     | Synchronization | compss_open(file_name, mode=’r’)             | Synchronizes for the last version of a file and returns its file descriptor.            |
     |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    |                 | compss_wait_on_file(file_name)               | Synchronizes for the last version of a file.                                            |
+    |                 | compss_wait_on_file(\*file_name)             | Synchronizes for the last version of the specified file/s.                              |
     |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    |                 | compss_wait_on_directory(directory_name)     | Synchronizes for the last version of a directory.                                       |
+    |                 | compss_wait_on_directory(\*directory_name)   | Synchronizes for the last version of the specified directory/ies.                       |
     |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+
     |                 | compss_barrier(no_more_tasks=False)          | Wait for all tasks submitted before the barrier.                                        |
     |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+
     |                 | compss_barrier_group(group_name)             | Wait for all tasks that belong to *group_name* group submitted before the barrier.      |
     |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    |                 | compss_wait_on(obj, to_write=True)           | Synchronizes for the last version of an object (or a list of objects) and returns it.   |
+    |                 | compss_wait_on(\*obj, mode="r" | "rw")       | Synchronizes for the last version of an object (or a list of objects) and returns it.   |
     +-----------------+----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | File/Object     | compss_file_exists(file_name)                | Check if a file exists.                                                                 |
+    | File/Object     | compss_delete_file(\*file_name)              | Notifies the runtime to remove the given file/s.                                        |
     | deletion        +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    |                 | compss_delete_file(file_name)                | Notifies the runtime to remove a file.                                                  |
-    |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    |                 | compss_delete_object(object)                 | Notifies the runtime to delete the associated file to this object.                      |
+    |                 | compss_delete_object(\*object)               | Notifies the runtime to delete the associated file to the object/s.                     |
     +-----------------+----------------------------------------------+-----------------------------------------------------------------------------------------+
     | Task Groups     | TaskGroup(group_name, implicit_barrier=True) | Context to define a group of tasks. *implicit_barrier* forces waiting on context exit.  |
     +-----------------+----------------------------------------------+-----------------------------------------------------------------------------------------+
-    | Other           | compss_file_exists(file_name)                | Check if a file exists.                                                                 |
+    | Other           | compss_file_exists(\*file_name)              | Check if a file or files exist.                                                         |
     +-----------------+----------------------------------------------+-----------------------------------------------------------------------------------------+
 
 

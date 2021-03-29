@@ -24,7 +24,7 @@ and ``JOB<TASK_NUMBER>_NEW.err`` files when a task fails.
 
 .. TIP::
 
-    If the user enables the **debug mode** by including the ``-t`` flag into
+    If the user enables the **debug mode** by including the ``-d`` flag into
     ``runcompss`` or ``enqueue_compss`` command, more information will be
     stored in the log folder of each run easing the error detection.
     In particular, all output and error output of all tasks will appear
@@ -66,6 +66,29 @@ and ``JOB<TASK_NUMBER>_NEW.err`` files when a task fails.
     ``--worker_working_directory=/shared/folder`` where a ``tmp_XXXXXX`` folder
     will be created on the application execution and all worker logs will be
     stored.
+
+
+.. TIP::
+
+    When debug is enabled, the workers also produce log files which are
+    transferred to the master when the application finishes. These log files
+    are always removed from the workers (even if there is a failure to avoid
+    abandoning files).
+    Consequently, it is possible **to disable the removal of the log files
+    produced by the workers**, so that users can still check them in the
+    worker nodes if something fails and these logs are not transferred to the
+    master node. To this end, include the following flag into ``runcompss`` or
+    ``enqueue_compss``:
+
+    .. code-block:: bash
+
+        --jvm_workers_opts=\"-Dcompss.worker.removeWD=false\"
+
+    Please, note that the workers will store the log files into the folder
+    defined by the ``--worker_working_directory``, that can be a shared or
+    local folder.
+
+
 
 
 The following subsections show debugging examples depending on the choosen
