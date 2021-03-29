@@ -388,6 +388,28 @@ command:
   ``gpfs`` value.
 
 
+Walltime
+--------
+
+As with the ``runcompss`` command, the ``enqueue_compss`` command also provides
+the ``--wall_clock_limit`` for the users to specify the maximum execution time
+for the application (in seconds). If the time is reached, the execution is stopped.
+
+Do not confuse with ``--exec_time``, since ``exec_time`` indicates the walltime
+for the queuing system, whilst ``wall_clock_limit`` is for COMPSs.
+Consequently, if the ``exec_time`` is reached, the queuing system will arise
+an exception and the execution will be stopped suddenly (potentially causing
+loose of data).
+However, if the ``wall_clock_limit`` is reached, the COMPSs runtime stops and
+grabs all data safely.
+
+.. TIP::
+
+    It is a good practice to define the ``--wall_clock_limit`` with less time
+    than defined for ``--exec_time``, so that the COMPSs runtime can stop the
+    execution safely and ensure that no data is lost.
+
+
 PyCOMPSs within interactive jobs
 --------------------------------
 

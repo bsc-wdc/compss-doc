@@ -372,6 +372,19 @@ flag.
 
     ------------------------------------------------------------
 
+Walltime
+--------
+
+The ``runcompss`` command provides the ``--wall_clock_limit`` for the users to
+specify the maximum execution time for the application (in seconds).
+If the time is reached, the execution is stopped.
+
+.. TIP::
+
+    This flag enables to stop the execution of an application in a contolled way
+    if the execution is taking more than expected.
+
+
 Additional configurations
 -------------------------
 
