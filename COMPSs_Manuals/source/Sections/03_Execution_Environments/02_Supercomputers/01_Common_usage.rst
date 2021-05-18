@@ -41,6 +41,7 @@ supported COMPSs modules in the supercomputer. The users can also execute the
     COMPSs/2.6
     COMPSs/2.7
     COMPSs/2.8
+    COMPSs/2.9
     COMPSs/release(default)
     COMPSs/trunk
 
@@ -118,7 +119,7 @@ command:
 
     $ enqueue_compss -h
 
-    Usage: /apps/COMPSs/2.8/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
+    Usage: /apps/COMPSs/2.9/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
 
     * Options:
       General:
@@ -140,31 +141,37 @@ command:
                                                 Default: default
         --reservation=<name>                    Reservation to use when submitting the job.
                                                 Default: disabled
-        --constraints=<constraints>		          Constraints to pass to queue system.
-    					                                  Default: disabled
-        --qos=<qos>                             Quality of Service to pass to the queue system.
-                                                Default: default
+        --env_script=<path/to/script>           Script to source the required environment for the application.
+                                                Default: Empty
+        --extra_submit_flag=<flag>              Flag to pass queue system flags not supported by default command flags.
+                                                Spaces must be added as '#'
+                                                Default: Empty
         --cpus_per_task                         Number of cpus per task the queue system must allocate per task.
                                                 Note that this will be equal to the cpus_per_node in a worker node and
                                                 equal to the worker_in_master_cpus in a master node respectively.
                                                 Default: false
         --job_dependency=<jobID>                Postpone job execution until the job dependency has ended.
                                                 Default: None
+        --forward_time_limit=<true|false>       Forward the queue system time limit to the runtime.
+                                                It will stop the application in a controlled way.
+                                                Default: true
         --storage_home=<string>                 Root installation dir of the storage implementation
                                                 Default: null
         --storage_props=<string>                Absolute path of the storage properties file
                                                 Mandatory if storage_home is defined
-      Normal submission arguments:
+      Agents deployment arguments:
+        --agents=<string>                       Hierarchy of agents for the deployment. Accepted values: plain|tree
+                                                Default: tree
+        --agents                                Deploys the runtime as agents instead of the classic Master-Worker deployment.
+                                                Default: disabled
+
+      Homogeneous submission arguments:
         --num_nodes=<int>                       Number of nodes to use
                                                 Default: 2
         --num_switches=<int>                    Maximum number of different switches. Select 0 for no restrictions.
                                                 Maximum nodes per switch: 18
                                                 Only available for at least 4 nodes.
                                                 Default: 0
-        --agents=<string>                       Hierarchy of agents for the deployment. Accepted values: plain|tree
-                                                Default: tree
-        --agents                                Deploys the runtime as agents instead of the classic Master-Worker deployment.
-                                                Default: disabled
       Heterogeneous submission arguments:
         --type_cfg=<file_location>              Location of the file with the descriptions of node type requests
                                                 File should follow the following format:
@@ -182,11 +189,11 @@ command:
                                                 (Node type descriptions are provided in the --type_cfg flag)
       Launch configuration:
         --cpus_per_node=<int>                   Available CPU computing units on each node
-                                                Default: 48
+                                                Default: 32
         --gpus_per_node=<int>                   Available GPU computing units on each node
                                                 Default: 0
         --fpgas_per_node=<int>                  Available FPGA computing units on each node
-                                                Default: 0
+                                                Default:
         --io_executors=<int>                    Number of IO executors on each node
                                                 Default: 0
         --fpga_reprogram="<string>              Specify the full command that needs to be executed to reprogram the FPGA with
@@ -197,10 +204,10 @@ command:
         --node_memory=<MB>                      Maximum node memory: disabled | <int> (MB)
                                                 Default: disabled
         --node_storage_bandwidth=<MB>           Maximum node storage bandwidth: <int> (MB)
-                                                Default: 450
+                                                Default:
 
         --network=<name>                        Communication network for transfers: default | ethernet | infiniband | data.
-                                                Default: infiniband
+                                                Default: ethernet
 
         --prolog="<string>"                     Task to execute before launching COMPSs (Notice the quotes)
                                                 If the task has arguments split them by "," rather than spaces.
@@ -217,12 +224,12 @@ command:
                                                 Default: local_disk
 
         --worker_in_master_cpus=<int>           Maximum number of CPU computing units that the master node can run as worker. Cannot exceed cpus_per_node.
-                                                Default: 24
+                                                Default: 0
         --worker_in_master_memory=<int> MB      Maximum memory in master node assigned to the worker. Cannot exceed the node_memory.
                                                 Mandatory if worker_in_master_cpus is specified.
-                                                Default: 50000
-        --worker_port_range=<min>,<max>	        Port range used by the NIO adaptor at the worker side
-    					                                  Default: 43001,43005
+                                                Default: disabled
+        --worker_port_range=<min>,<max>         Port range used by the NIO adaptor at the worker side
+                                                Default: 43001,43005
         --jvm_worker_in_master_opts="<string>"  Extra options for the JVM of the COMPSs Worker in the Master Node.
                                                 Each option separed by "," and without blank spaces (Notice the quotes)
                                                 Default:
@@ -268,9 +275,9 @@ command:
         --storage_conf=<path>                   Path to the storage configuration file
                                                 Default: null
         --project=<path>                        Path to the project XML file
-                                                Default: /apps/COMPSs/2.8.pr//Runtime/configuration/xml/projects/default_project.xml
+                                                Default: /opt/COMPSs//Runtime/configuration/xml/projects/default_project.xml
         --resources=<path>                      Path to the resources XML file
-                                                Default: /apps/COMPSs/2.8.pr//Runtime/configuration/xml/resources/default_resources.xml
+                                                Default: /opt/COMPSs//Runtime/configuration/xml/resources/default_resources.xml
         --lang=<name>                           Language of the application (java/c/python)
                                                 Default: Inferred is possible. Otherwise: java
         --summary                               Displays a task execution summary at the end of the application execution
@@ -281,6 +288,8 @@ command:
 
       Advanced options:
         --extrae_config_file=<path>             Sets a custom extrae config file. Must be in a shared disk between all COMPSs workers.
+                                                Default: null
+        --extrae_config_file_python=<path>      Sets a custom extrae config file for python. Must be in a shared disk between all COMPSs workers.
                                                 Default: null
         --trace_label=<string>                  Add a label in the generated trace file. Only used in the case of tracing is activated.
                                                 Default: None
@@ -303,7 +312,7 @@ command:
                                                 Default: null
         --scheduler=<className>                 Class that implements the Scheduler for COMPSs
                                                 Supported schedulers:
-                                                      ├── es.bsc.compss.scheduler.fifodatalocation.FIFODataLoctionScheduler
+                                                      ├── es.bsc.compss.scheduler.fifodatalocation.FIFODataLocationScheduler
                                                       ├── es.bsc.compss.scheduler.fifonew.FIFOScheduler
                                                       ├── es.bsc.compss.scheduler.fifodatanew.FIFODataScheduler
                                                       ├── es.bsc.compss.scheduler.lifonew.LIFOScheduler
@@ -317,9 +326,12 @@ command:
         --classpath=<path>                      Path for the application classes / modules
                                                 Default: Working Directory
         --appdir=<path>                         Path for the application class folder.
-                                                Default: /home/group/user
+                                                Default: /home/user
         --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
-                                                Default: /home/group/user
+                                                Default: /home/user
+        --env_script=<path>                     Path to the script file where the application environment variables are defined.
+                                                COMPSs sources this script before running the application.
+                                                Default: Empty
         --base_log_dir=<path>                   Base directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location)
                                                 Default: User home
         --specific_log_dir=<path>               Use a specific directory to store COMPSs log files (no sandbox is created)
@@ -363,14 +375,21 @@ command:
                                                 Default: false
         --gen_coredump                          Enable master coredump generation
                                                 Default: false
+        --keep_workingdir                       Do not remove the worker working directory after the execution
+                                                Default: false
         --python_interpreter=<string>           Python interpreter to use (python/python2/python3).
-                                                Default: python Version: 2
+                                                Default: python Version:
         --python_propagate_virtual_environment=<true>  Propagate the master virtual environment to the workers (true/false).
                                                        Default: true
         --python_mpi_worker=<false>             Use MPI to run the python worker instead of multiprocessing. (true/false).
                                                 Default: false
         --python_memory_profile                 Generate a memory profile of the master.
                                                 Default: false
+        --python_worker_cache=<string>          Python worker cache (true/size/false).
+                                                Only for NIO without mpi worker and python >= 3.8.
+                                                Default: false
+        --wall_clock_limit=<int>                Maximum duration of the application (in seconds).
+                                                Default: 0
 
     * Application name:
         For Java applications:   Fully qualified name of the application
@@ -381,8 +400,8 @@ command:
         Command line arguments to pass to the application. Can be empty.
 
 
-.. attention::
-  Form COMPSs 2.8 version, the ``worker_working_dir`` has changed its built-in
+.. ATTENTION::
+  From COMPSs 2.8 version, the ``worker_working_dir`` has changed its built-in
   values to be more generic. The current values are: ``local_disk`` which
   substitutes the former ``scratch`` value; and ``shared_disk`` which replaces the
   ``gpfs`` value.
