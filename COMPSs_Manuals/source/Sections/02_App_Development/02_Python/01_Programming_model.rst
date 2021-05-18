@@ -220,7 +220,7 @@ Direction
    * Read-write (*INOUT*)
    * Write-only (*OUT*)
    * Concurrent (*CONCURRENT*)
-   * Conmutative (*CONMUTATIVE*)
+   * Commutative (*COMMUTATIVE*)
 
 COMPSs is able to automatically infer the parameter type for primitive
 types, strings and objects, while the user needs to specify it for
@@ -344,19 +344,19 @@ the same object/file during their executions.
   concurrently. Taking care of the access/modification of the concurrent
   objects is responsibility of the developer.
 
-Or even, the user can also define that the access to a parameter is conmutative
-with *CONMUTATIVE* (:numref:`task_conmutative_python_object`).
-The execution order of tasks that share a *CONMUTATIVE* parameter can be changed
-by the runtime following the conmutative property.
+Or even, the user can also define that the access to a parameter is commutative
+with *COMMUTATIVE* (:numref:`task_commutative_python_object`).
+The execution order of tasks that share a *COMMUTATIVE* parameter can be changed
+by the runtime following the commutative property.
 
 .. code-block:: python
-    :name: task_conmutative_python_object
-    :caption: Python task example with *CONMUTATIVE*
+    :name: task_commutative_python_object
+    :caption: Python task example with *COMMUTATIVE*
 
     from pycompss.api.task import task     # Import @task decorator
     from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
 
-    @task(obj=CONMUTATIVE)
+    @task(obj=COMMUTATIVE)
     def func(obj, i):
          ...
 
@@ -428,18 +428,18 @@ the same file during their executions.
 
 
 Or even, the user can also define that the access to a parameter is a file
-*FILE_CONMUTATIVE* (:numref:`task_conmutative_python`).
-The execution order of tasks that share a *FILE_CONMUTATIVE* parameter can be
-changed by the runtime following the conmutative property.
+*FILE_COMMUTATIVE* (:numref:`task_commutative_python`).
+The execution order of tasks that share a *FILE_COMMUTATIVE* parameter can be
+changed by the runtime following the commutative property.
 
 .. code-block:: python
-    :name: task_conmutative_python
-    :caption: Python task example with *FILE_CONMUTATIVE*
+    :name: task_commutative_python
+    :caption: Python task example with *FILE_COMMUTATIVE*
 
     from pycompss.api.task import task     # Import @task decorator
     from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
 
-    @task(f=FILE_CONMUTATIVE)
+    @task(f=FILE_COMMUTATIVE)
     def func(f, i):
          ...
 
@@ -909,7 +909,7 @@ Task Parameters Summary
     |                     +-----------------------+--------------------------------------------------------------------------------------------+
     |                     | CONCURRENT            | Concurrent read-write parameter, all types except file (primitives, strings, objects).     |
     |                     +-----------------------+--------------------------------------------------------------------------------------------+
-    |                     | CONMUTATIVE           | Conmutative read-write parameter, all types except file (primitives, strings, objects).    |
+    |                     | COMMUTATIVE           | Commutative read-write parameter, all types except file (primitives, strings, objects).    |
     |                     +-----------------------+--------------------------------------------------------------------------------------------+
     |                     | FILE(_IN)             | Read-only file parameter.                                                                  |
     |                     +-----------------------+--------------------------------------------------------------------------------------------+
@@ -919,7 +919,7 @@ Task Parameters Summary
     |                     +-----------------------+--------------------------------------------------------------------------------------------+
     |                     | FILE_CONCURRENT       | Concurrent read-write file parameter.                                                      |
     |                     +-----------------------+--------------------------------------------------------------------------------------------+
-    |                     | FILE_CONMUTATIVE      | Conmutative read-write file parameter.                                                     |
+    |                     | FILE_COMMUTATIVE      | Commutative read-write file parameter.                                                     |
     |                     +-----------------------+--------------------------------------------------------------------------------------------+
     |                     | DIRECTORY(_IN)        | The parameter is a read-only directory.                                                    |
     |                     +-----------------------+--------------------------------------------------------------------------------------------+
@@ -1587,13 +1587,13 @@ the shorcut.
     +-----------------------------+---------------------------------------------------------+
     | **FILE_CONCURRENT_STDERR**  | Type: File, Direction: CONCURRENT, StdIOStream: STDERR  |
     +-----------------------------+---------------------------------------------------------+
-    | **FILE_CONMUTATIVE**        | Type: File, Direction: CONMUTATIVE                      |
+    | **FILE_COMMUTATIVE**        | Type: File, Direction: COMMUTATIVE                      |
     +-----------------------------+---------------------------------------------------------+
-    | **FILE_CONMUTATIVE_STDIN**  | Type: File, Direction: CONMUTATIVE, StdIOStream: STDIN  |
+    | **FILE_COMMUTATIVE_STDIN**  | Type: File, Direction: COMMUTATIVE, StdIOStream: STDIN  |
     +-----------------------------+---------------------------------------------------------+
-    | **FILE_CONMUTATIVE_STDOUT** | Type: File, Direction: CONMUTATIVE, StdIOStream: STDOUT |
+    | **FILE_COMMUTATIVE_STDOUT** | Type: File, Direction: COMMUTATIVE, StdIOStream: STDOUT |
     +-----------------------------+---------------------------------------------------------+
-    | **FILE_CONMUTATIVE_STDERR** | Type: File, Direction: CONMUTATIVE, StdIOStream: STDERR |
+    | **FILE_COMMUTATIVE_STDERR** | Type: File, Direction: COMMUTATIVE, StdIOStream: STDERR |
     +-----------------------------+---------------------------------------------------------+
 
 These parameter keys, as well as the shortcuts, can be imported from the
