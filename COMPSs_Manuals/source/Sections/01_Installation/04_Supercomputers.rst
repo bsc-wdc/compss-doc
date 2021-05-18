@@ -378,7 +378,7 @@ Users can check the available options by running:
 
     $ enqueue_compss -h
 
-    Usage: /apps/COMPSs/2.8/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
+    Usage: /apps/COMPSs/2.9/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
 
     * Options:
       General:
@@ -528,9 +528,9 @@ Users can check the available options by running:
         --storage_conf=<path>                   Path to the storage configuration file
                                                 Default: null
         --project=<path>                        Path to the project XML file
-                                                Default: /apps/COMPSs/2.8.pr//Runtime/configuration/xml/projects/default_project.xml
+                                                Default: /apps/COMPSs/2.9//Runtime/configuration/xml/projects/default_project.xml
         --resources=<path>                      Path to the resources XML file
-                                                Default: /apps/COMPSs/2.8.pr//Runtime/configuration/xml/resources/default_resources.xml
+                                                Default: /apps/COMPSs/2.9//Runtime/configuration/xml/resources/default_resources.xml
         --lang=<name>                           Language of the application (java/c/python)
                                                 Default: Inferred is possible. Otherwise: java
         --summary                               Displays a task execution summary at the end of the application execution
