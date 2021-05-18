@@ -54,6 +54,17 @@ library (:numref:`task_import_python`).
     def func():
          ...
 
+.. TIP::
+
+    The PyCOMPSs task api also provides the *@task* decorator in camelcase
+    (*@Task*) with the same functionality.
+
+    The rationale of providing both *@task* and *@task* relies on following the
+    PEP8 naming convention. Decorators are usually defined using lowercase, but
+    since the task decorator is implemented following the class pattern, its
+    name is also available as camelcase.
+
+
 Function parameters
 ^^^^^^^^^^^^^^^^^^^
 
@@ -1114,7 +1125,7 @@ The following subparagraphs describe their usage.
 Binary decorator
 ^^^^^^^^^^^^^^^^
 
-The *@binary* decorator shall be used to define that a task is
+The *@binary* (or @Binary) decorator shall be used to define that a task is
 going to invoke a binary executable.
 
 In this context, the *@task* decorator parameters will be used
@@ -1251,7 +1262,7 @@ necessary decissions based on this value.
 OmpSs decorator
 ^^^^^^^^^^^^^^^
 
-The *@ompss* decorator shall be used to define that a task is
+The *@ompss* (or @OmpSs) decorator shall be used to define that a task is
 going to invoke a OmpSs executable (:numref:`ompss_task_python`).
 
 .. code-block:: python
@@ -1273,7 +1284,7 @@ check :ref:`Sections/02_App_Development/02_Python/01_Programming_model:Binary de
 MPI decorator
 ^^^^^^^^^^^^^
 
-The *@mpi* decorator shall be used to define that a task is
+The *@mpi* (or @Mpi) decorator shall be used to define that a task is
 going to invoke a MPI executable (:numref:`mpi_task_python`).
 
 .. code-block:: python
@@ -1345,7 +1356,7 @@ element between the starting block points (``stride``).
 COMPSs decorator
 ^^^^^^^^^^^^^^^^
 
-The *@compss* decorator shall be used to define that a task is
+The *@compss* (or @COMPSs) decorator shall be used to define that a task is
 going to be a COMPSs application (:numref:`compss_task_python`).
 It enables to have nested PyCOMPSs/COMPSs applications.
 
@@ -1368,7 +1379,7 @@ for more details about the supported flags.
 Multinode decorator
 ^^^^^^^^^^^^^^^^^^^
 
-The *@multinode* decorator shall be used to define that a task
+The *@multinode* (or @Multinode) decorator shall be used to define that a task
 is going to use multiple nodes (e.g. using internal parallelism) (:numref:`multinode_task_python`).
 
 .. code-block:: python
@@ -1393,7 +1404,7 @@ execution.
 Reduction decorator
 ^^^^^^^^^^^^^^^^^^^
 
-The *@reduction* decorator shall be used to define that a task
+The *@reduction* (or @Reduction) decorator shall be used to define that a task
 is going to be subdivided into smaller tasks that take as input
 a subset of the input data. (:numref:`reduction_task_python`).
 
@@ -1416,7 +1427,7 @@ of the set size.
 Container decorator
 ^^^^^^^^^^^^^^^^^^^
 
-The *@container* decorator shall be used to define that a task is
+The *@container* (or @Container) decorator shall be used to define that a task is
 going to be executed within a container (:numref:`container_task_python`).
 
 .. code-block:: python
@@ -1608,7 +1619,7 @@ Task Constraints
 ~~~~~~~~~~~~~~~~
 
 It is possible to define constraints for each task.
-To this end, the decorator *@constraint* followed
+To this end, the *@constraint* (or @Constraint) decorator followed
 by the desired constraints needs to be placed ON TOP of the @task
 decorator (:numref:`constraint_task_python`).
 
@@ -1687,7 +1698,7 @@ As in Java COMPSs applications, it is possible to define multiple
 implementations for each task. In particular, a programmer can define a
 task for a particular purpose, and multiple implementations for that
 task with the same objective, but with different constraints (e.g.
-specific libraries, hardware, etc). To this end, the *@implement*
+specific libraries, hardware, etc). To this end, the *@implement* (or @Implement)
 decorator followed with the specific implementations constraints (with
 the *@constraint* decorator, see Section [subsubsec:constraints]) needs
 to be placed ON TOP of the @task decorator. Although the user only
