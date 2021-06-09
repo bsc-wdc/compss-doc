@@ -9,6 +9,11 @@ folder. The *cfgs* folder contains all the basic views, the *python*
 folder contains the configurations for Python events, and finally the
 *comm* folder contains the configurations related to communications.
 
+Additionaly it can be shown the data transfers and the tasks dependencies. 
+To see them it is needed to show communication lines in the paraver windows,
+in order to only see the task dependencies is needed to put in Filter > Communnications 
+> Comm size, the size equal to 0. Some of the dependencies between tasks may be lost.
+
 .. table:: General paraver configurations for COMPSs Applications
     :name: paraver_configs_general
 
@@ -25,6 +30,8 @@ folder contains the configurations for Python events, and finally the
     +-----------------------------------+------------------------------------------------------------------------+
     | compss_cpu_constraints.cfg        | Shows tasks cpu constraints                                            |
     +-----------------------------------+------------------------------------------------------------------------+
+    | compss_executors.cfg              | Shows the number of executor threads in each node                      |
+    +-----------------------------------+------------------------------------------------------------------------+
     | compss_runtime.cfg                | Shows COMPSs Runtime events (master and workers)                       |
     +-----------------------------------+------------------------------------------------------------------------+
     | compss_runtime_master.cfg         | Shows COMPSs Runtime master events                                     |
@@ -35,13 +42,15 @@ folder contains the configurations for Python events, and finally the
     +-----------------------------------+------------------------------------------------------------------------+
     | compss_tasks_and_runtime.cfg      | Shows COMPSs Runtime events (master and workers) and tasks execution   |
     +-----------------------------------+------------------------------------------------------------------------+
-    | compss_tasks.cfg                  | Shows tasks execution                                                  |
+    | compss_tasks.cfg                  | Shows tasks execution, and tasks instantiation in master nodes         |
     +-----------------------------------+------------------------------------------------------------------------+
     | compss_tasks_cpu_affinity.cfg     | Shows tasks CPU affinity                                               |
     +-----------------------------------+------------------------------------------------------------------------+
     | compss_tasks_gpu_affinity.cfg     | Shows tasks GPU affinity                                               |
     +-----------------------------------+------------------------------------------------------------------------+
     | compss_tasks_id.cfg               | Shows tasks execution by task id                                       |
+    +-----------------------------------+------------------------------------------------------------------------+
+    | compss_tasks_runtime_&_agents.cfg | Shows COMPSs Agent and Runtime events and tasks execution              |
     +-----------------------------------+------------------------------------------------------------------------+
     | compss_waiting_tasks.cfg          | Shows waiting tasks                                                    |
     +-----------------------------------+------------------------------------------------------------------------+
@@ -61,11 +70,17 @@ folder contains the configurations for Python events, and finally the
     +-----------------------------------+------------------------------------------------------------------------+
     | nb_executing_mem.cfg              | Number of executing memory                                             |
     +-----------------------------------+------------------------------------------------------------------------+
+    | nb_tasks_in_graph.cfg             | Number of executing tasks                                              |
+    +-----------------------------------+------------------------------------------------------------------------+
+    | number_executors.cfg              | Number of executors                                                    |
+    +-----------------------------------+------------------------------------------------------------------------+
     | task_duration.cfg                 | Shows tasks duration                                                   |
     +-----------------------------------+------------------------------------------------------------------------+
     | thread_cpu.cfg                    | Shows the initial executing CPU                                        |
     +-----------------------------------+------------------------------------------------------------------------+
-    | time_betw_tasks.cfg               | Shows the time between tasks                                           |
+    | thread_identifiers.cfg            | Shows the type of each thread                                          |
+    +-----------------------------------+------------------------------------------------------------------------+
+    | time_btw_tasks.cfg                | Shows the time between tasks                                           |
     +-----------------------------------+------------------------------------------------------------------------+
     | user_events.cfg                   | Shows the user events (type ``9000000``)                               |
     +-----------------------------------+------------------------------------------------------------------------+
@@ -78,9 +93,25 @@ folder contains the configurations for Python events, and finally the
     +======================================+===============================================================================================================+
     | 3dh_events_inside_task.cfg           | 3D Histogram of python events                                                                                 |
     +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
+    | 3dh_tasks_phase.cfg                  | 3D Histogram of execution functions                                                                           |
+    +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
+    | deserialization_object_number.cfg    | Shows the numbers of the objects that are being deserialized                                                  |
+    +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
+    | deserialization_size.cfg             | Shows the size of the objects that are being deserialized (Bytes)                                             |
+    +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
     | events_inside_tasks.cfg              | Events showing python information such as user function execution time, modules imports, or serializations    |
     +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
     | events_in_workers.cfg                | Events showing python binding information in worker                                                           |
+    +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
+    | nb_user_code_executing.cfg           | Number of user code executing                                                                                 |
+    +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
+    | serdes_bw.cfg                        | Serialization and deserializations bandwidth (MB/s)                                                           |
+    +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
+    | serdes_cahce_bw.cfg                  | Serialization and deserializations to cache bandwidth (MB/s)                                                  |
+    +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
+    | serialization_object_number.cfg      | Shows the numbers of the objects that are being serialized                                                    |
+    +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
+    | serialization_size.cfg               | Shows the size of the objects that are being serialized (Bytes)                                               |
     +--------------------------------------+---------------------------------------------------------------------------------------------------------------+
     | nb_user_code_executing.cfg           | Number of user code executing                                                                                 |
     +--------------------------------------+---------------------------------------------------------------------------------------------------------------+

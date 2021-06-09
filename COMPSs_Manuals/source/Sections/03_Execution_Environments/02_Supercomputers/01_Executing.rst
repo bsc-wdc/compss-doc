@@ -1,5 +1,5 @@
-Common usage
-============
+Executing COMPSs applications
+=============================
 
 Loading the COMPSs Environment
 ------------------------------
@@ -399,6 +399,9 @@ command:
     * Application arguments:
         Command line arguments to pass to the application. Can be empty.
 
+.. TIP::
+    For further information about applications scheduling
+    :ref:`Sections/03_Execution_Environments/06_Schedulers:Schedulers`.
 
 .. ATTENTION::
   From COMPSs 2.8 version, the ``worker_working_dir`` has changed its built-in

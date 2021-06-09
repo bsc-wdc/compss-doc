@@ -13,3 +13,4 @@ This section is intended to show how to execute the COMPSs applications.
     03_Execution_Environments/03_Docker
     03_Execution_Environments/04_Chameleon
     03_Execution_Environments/05_Dynamic_infrastructures
+    03_Execution_Environments/06_Schedulers
