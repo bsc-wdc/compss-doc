@@ -8,7 +8,6 @@ brief overview on how to execute it.
 .. toctree::
     :maxdepth: 4
     :caption: Table of Contents
-    :numbered:
 
     02_Python/01_Programming_model
     02_Python/02_Application_execution

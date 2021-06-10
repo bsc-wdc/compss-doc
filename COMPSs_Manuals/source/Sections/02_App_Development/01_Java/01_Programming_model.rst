@@ -1,5 +1,6 @@
 Programming Model
 -----------------
+
 This section shows how the COMPSs programming model is used to develop
 a Java task-based parallel application for distributed computing. First,
 We introduce the structure of a COMPSs Java application and with a simple
