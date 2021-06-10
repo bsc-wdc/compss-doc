@@ -215,7 +215,7 @@ one unit using a task. For further details about the codes please refer
 to :ref:`Sections/07_Sample_Applications:Sample Applications`.
 
 .. TIP::
-    For further information about applications scheduling
+    For further information about applications scheduling refer to 
     :ref:`Sections/03_Execution_Environments/06_Schedulers:Schedulers`.
 
 Running Java applications

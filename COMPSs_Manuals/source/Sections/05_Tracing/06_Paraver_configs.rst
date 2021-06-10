@@ -9,9 +9,9 @@ folder. The *cfgs* folder contains all the basic views, the *python*
 folder contains the configurations for Python events, and finally the
 *comm* folder contains the configurations related to communications.
 
-Additionaly it can be shown the data transfers and the tasks dependencies. 
+Additionally, it can be shown the data transfers and the task dependencies. 
 To see them it is needed to show communication lines in the paraver windows,
-in order to only see the task dependencies is needed to put in Filter > Communnications 
+to only see the task dependencies are needed to put in Filter > Communications 
 > Comm size, the size equal to 0. Some of the dependencies between tasks may be lost.
 
 .. table:: General paraver configurations for COMPSs Applications
@@ -42,7 +42,7 @@ in order to only see the task dependencies is needed to put in Filter > Communni
     +-----------------------------------+------------------------------------------------------------------------+
     | compss_tasks_and_runtime.cfg      | Shows COMPSs Runtime events (master and workers) and tasks execution   |
     +-----------------------------------+------------------------------------------------------------------------+
-    | compss_tasks.cfg                  | Shows tasks execution, and tasks instantiation in master nodes         |
+    | compss_tasks.cfg                  | Shows tasks execution and tasks instantiation in master nodes          |
     +-----------------------------------+------------------------------------------------------------------------+
     | compss_tasks_cpu_affinity.cfg     | Shows tasks CPU affinity                                               |
     +-----------------------------------+------------------------------------------------------------------------+
@@ -137,9 +137,9 @@ in order to only see the task dependencies is needed to put in Filter > Communni
     +--------------------------------------------+-----------------------------------------------------------------------------+
     | process_bandwith.cfg                       | Send/Receive bandwith table for each node                                   |
     +--------------------------------------------+-----------------------------------------------------------------------------+
-    | receive_bandwith.cfg                       | Receive bandwith view for each node                                         |
+    | receive_bandwith.cfg                       | Receive bandwidth view for each node                                        |
     +--------------------------------------------+-----------------------------------------------------------------------------+
-    | send_bandwith.cfg                          | Send bandwith view for each node                                            |
+    | send_bandwith.cfg                          | Send bandwidth view for each node                                           |
     +--------------------------------------------+-----------------------------------------------------------------------------+
     | sr_bandwith.cfg                            | Send/Receive bandwith view for each node                                    |
     +--------------------------------------------+-----------------------------------------------------------------------------+

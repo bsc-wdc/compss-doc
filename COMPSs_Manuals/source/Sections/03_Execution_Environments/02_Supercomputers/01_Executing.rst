@@ -400,7 +400,7 @@ command:
         Command line arguments to pass to the application. Can be empty.
 
 .. TIP::
-    For further information about applications scheduling
+    For further information about applications scheduling refer to 
     :ref:`Sections/03_Execution_Environments/06_Schedulers:Schedulers`.
 
 .. ATTENTION::
