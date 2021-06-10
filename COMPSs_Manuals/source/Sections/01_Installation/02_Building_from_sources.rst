@@ -90,6 +90,10 @@ Finally you just need to run the installation script. You have two options:
               --no-kafka, -K              Disable Kafka module installation
                                           Default: true
 
+              --jacoco, -j                Enable Jacoco module installation
+              --no-jacoco, -J             Disable Jacoco module installation
+                                          Default: true
+
               --nothing, -N               Disable all previous options
                                           Default: unused
 
