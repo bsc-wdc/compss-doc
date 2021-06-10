@@ -13,6 +13,7 @@ previously compiled by using the *buildapp* command.
 For further information about how to develop COMPSs applications please
 refer to :ref:`Sections/02_App_Development:Application development`.
 
+
 Runcompss command
 -----------------
 
@@ -212,6 +213,10 @@ COMPSs Virtual Machine or at https://compss.bsc.es/projects/bar webpage.
 This application takes an integer as input parameter and increases it by
 one unit using a task. For further details about the codes please refer
 to :ref:`Sections/07_Sample_Applications:Sample Applications`.
+
+.. TIP::
+    For further information about applications scheduling refer to 
+    :ref:`Sections/03_Execution_Environments/06_Schedulers:Schedulers`.
 
 Running Java applications
 ~~~~~~~~~~~~~~~~~~~~~~~~~

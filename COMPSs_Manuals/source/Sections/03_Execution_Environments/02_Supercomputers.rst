@@ -8,7 +8,7 @@ This section is intended to walk you through the COMPSs usage in Supercomputers.
     :maxdepth: 2
     :caption: Table of Contents
 
-    02_Supercomputers/01_Common_usage
+    02_Supercomputers/01_Executing
     02_Supercomputers/02_Marenostrum4
     02_Supercomputers/03_Minotauro
     02_Supercomputers/04_Nord3
