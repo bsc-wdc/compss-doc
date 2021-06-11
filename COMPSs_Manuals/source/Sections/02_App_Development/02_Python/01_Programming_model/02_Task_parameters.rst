@@ -84,10 +84,10 @@ automatically inferred by COMPSs.
 
 .. code-block:: python
     :name: task_example_python_object
-    :caption: Python task example with input output object (*INOUT*)
+    :caption: Python task example with input output object (*INOUT*) and input object (*IN*)
 
-    from pycompss.api.task import task     # Import @task decorator
-    from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task
+    from pycompss.api.parameter import INOUT, IN
 
     @task(obj=INOUT, i=IN)
     def func(obj, i):
@@ -100,8 +100,8 @@ for objects (:numref:`task_example_python_object_simplified`):
     :name: task_example_python_object_simplified
     :caption: Python task example with input output object (*INOUT*) simplified
 
-    from pycompss.api.task import task     # Import @task decorator
-    from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task
+    from pycompss.api.parameter import INOUT
 
     @task(obj=INOUT)
     def func(obj, i):
@@ -131,8 +131,8 @@ the same object/file during their executions.
     :name: task_concurrent_python_object
     :caption: Python task example with *CONCURRENT*
 
-    from pycompss.api.task import task     # Import @task decorator
-    from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task
+    from pycompss.api.parameter import CONCURRENT
 
     @task(obj=CONCURRENT)
     def func(obj, i):
@@ -153,8 +153,8 @@ by the runtime following the commutative property.
     :name: task_commutative_python_object
     :caption: Python task example with *COMMUTATIVE*
 
-    from pycompss.api.task import task     # Import @task decorator
-    from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task
+    from pycompss.api.parameter import COMMUTATIVE
 
     @task(obj=COMMUTATIVE)
     def func(obj, i):
@@ -184,23 +184,60 @@ It is possible to define that a parameter is a file (*FILE*), and its direction:
 
 
 Continuing with the example, in :numref:`task_example_python` the decorator
-specifies that *func* has a parameter called *f*, of type *FILE* and
-*INOUT* direction.
+specifies that ``func`` has a parameter called ``f``, of type ``FILE`` and
+``INOUT`` direction (``FILE_INOUT``).
 
 .. code-block:: python
     :name: task_example_python
     :caption: Python task example with input output file (*FILE_INOUT*)
 
-    from pycompss.api.task import task     # Import @task decorator
-    from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task
+    from pycompss.api.parameter import FILE_INOUT
 
     @task(f=FILE_INOUT)
     def func(f):
-         fd = open(f, 'a+')
-         ...
-         # append something to fd
-         ...
-         fd.close()
+        fd = open(f, 'a+')
+        ...
+        # append something to fd
+        ...
+        fd.close()
+
+    def main():
+        f = "/path/to/file.extension"
+        # Populate f
+        func(f)
+
+.. TIP::
+
+    The value for a FILE (e.g. ``f``) is a string pointing to the file
+    to be used at ``func`` task. However, it can also be ``None`` if it is
+    optional. Consequently, the user can define task that can receive a FILE
+    or not, and act accordingly. For example (:numref:`task_example_python_optional`):
+
+    .. code-block:: python
+        :name: task_example_python_optional
+        :caption: Python task example with optional input file (*FILE_IN*)
+
+        from pycompss.api.task import task
+        from pycompss.api.parameter import FILE_IN
+
+        @task(f=FILE_IN)
+        def func(f):
+            if f:
+                # Do something with the file
+                with open(f, 'r') as fd:
+                    num_lines = len(rd.readlines())
+                return num_lines
+            else:
+                # Do something when there is no input file
+                return -1
+
+        def main():
+            f = "/path/to/file.extension"
+            # Populate f
+            num_lines_f = func(f)  # num_lines_f == actual number of lines of file.extension
+            g = None
+            num_lines_g = func(g)  # num_lines_g == -1
 
 The user can also define that the access to file parameter is concurrent
 with *FILE_CONCURRENT* (:numref:`task_concurrent_python`).
@@ -213,8 +250,8 @@ the same file during their executions.
     :name: task_concurrent_python
     :caption: Python task example with *FILE_CONCURRENT*
 
-    from pycompss.api.task import task     # Import @task decorator
-    from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task
+    from pycompss.api.parameter import FILE_CONCURRENT
 
     @task(f=FILE_CONCURRENT)
     def func(f, i):
@@ -236,8 +273,8 @@ changed by the runtime following the commutative property.
     :name: task_commutative_python
     :caption: Python task example with *FILE_COMMUTATIVE*
 
-    from pycompss.api.task import task     # Import @task decorator
-    from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task
+    from pycompss.api.parameter import FILE_COMMUTATIVE
 
     @task(f=FILE_COMMUTATIVE)
     def func(f, i):
@@ -271,8 +308,8 @@ has a parameter called *d*, of type *DIRECTORY* and *INOUT* direction.
     :name: task_example_python_directory
     :caption: Python task example with input output directory (*DIRECTORY_INOUT*)
 
-    from pycompss.api.task import task     # Import @task decorator
-    from pycompss.api.parameter import *   # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task
+    from pycompss.api.parameter import DIRECTORY_INOUT
 
     @task(d=DIRECTORY_INOUT)
     def func(d):
@@ -307,8 +344,8 @@ dependences between the collections and the individual elements.
     :name: task_collection_python
     :caption: Python task example with *COLLECTION* (*IN*)
 
-    from pycompss.api.task import task             # Import @task decorator
-    from pycompss.api.parameter import COLLECTION  # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task
+    from pycompss.api.parameter import COLLECTION
 
     @task(my_collection=COLLECTION)
     def func(my_collection):
@@ -325,8 +362,8 @@ the depth of the sub-objects can be limited through the use of the
     :name: task_collection_depth_python
     :caption: Python task example with *COLLECTION_IN* and *Depth*
 
-    from pycompss.api.task import task                # Import @task decorator
-    from pycompss.api.parameter import COLLECTION_IN  # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task
+    from pycompss.api.parameter import COLLECTION_IN
 
     @task(my_collection={Type:COLLECTION_IN, Depth:2})
     def func(my_collection):
@@ -370,8 +407,8 @@ dependences between the collections and the individual elements.
     :name: task_collection_file_python
     :caption: Python task example with *COLLECTION_FILE* (*IN*)
 
-    from pycompss.api.task import task                  # Import @task decorator
-    from pycompss.api.parameter import COLLECTION_FILE  # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task
+    from pycompss.api.parameter import COLLECTION_FILE
 
     @task(my_collection=COLLECTION_FILE)
     def func(my_collection):
@@ -411,8 +448,8 @@ whose sub-objects will be handled automatically by the runtime.
     :name: task_dictionary_python
     :caption: Python task example with *DICTIONARY* (*IN*)
 
-    from pycompss.api.task import task             # Import @task decorator
-    from pycompss.api.parameter import DICTIONARY  # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task
+    from pycompss.api.parameter import DICTIONARY
 
     @task(my_dictionary=DICTIONARY)
     def func(my_dictionary):
@@ -430,8 +467,8 @@ limited through the use of the *depth* parameter
     :name: task_dictionary_depth_python
     :caption: Python task example with *DICTIONARY_IN* and *Depth*
 
-    from pycompss.api.task import task                # Import @task decorator
-    from pycompss.api.parameter import DICTIONARY_IN  # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task
+    from pycompss.api.parameter import DICTIONARY_IN
 
     @task(my_dictionary={Type:DICTIONARY_IN, Depth:2})
     def func(my_dictionary):
@@ -470,9 +507,9 @@ This parameters enable to mix a task-driven workflow with a data-driven workflow
     :name: task_streams
     :caption: Python task example with *STREAM_IN* and *STREAM_OUT*
 
-    from pycompss.api.task import task             # Import @task decorator
-    from pycompss.api.parameter import STREAM_IN   # Import parameter metadata for the @task decorator
-    from pycompss.api.parameter import STREAM_OUT  # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task
+    from pycompss.api.parameter import STREAM_IN
+    from pycompss.api.parameter import STREAM_OUT
 
     @task(ods=STREAM_OUT)
     def write_objects(ods):
@@ -508,9 +545,9 @@ The stream parameter also supports Files (:numref:`task_streams_files`).
     :name: task_streams_files
     :caption: Python task example with *STREAM_IN* and *STREAM_OUT* for files
 
-    from pycompss.api.task import task             # Import @task decorator
-    from pycompss.api.parameter import STREAM_IN   # Import parameter metadata for the @task decorator
-    from pycompss.api.parameter import STREAM_OUT  # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task
+    from pycompss.api.parameter import STREAM_IN
+    from pycompss.api.parameter import STREAM_OUT
 
     @task(fds=STREAM_OUT)
     def write_files(fds):
@@ -550,9 +587,9 @@ In addition, the stream parameter can also be defined for binary tasks
     :name: task_streams_binary
     :caption: Python task example with *STREAM_OUT* for binaries
 
-    from pycompss.api.task import task             # Import @task decorator
-    from pycompss.api.binary import binary         # Import @task decorator
-    from pycompss.api.parameter import STREAM_OUT  # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task
+    from pycompss.api.binary import binary
+    from pycompss.api.parameter import STREAM_OUT
 
     @binary(binary="file_generator.sh")
     @task(fds=STREAM_OUT)
@@ -593,9 +630,9 @@ in the standard output, and the task takes that output and stores it into `fds`.
     :name: task_streams_binary_std
     :caption: Python task example with *STDOUT* for binaries
 
-    from pycompss.api.task import task             # Import @task decorator
-    from pycompss.api.binary import binary         # Import @task decorator
-    from pycompss.api.parameter import STDOUT  # Import parameter metadata for the @task decorator
+    from pycompss.api.task import task
+    from pycompss.api.binary import binary
+    from pycompss.api.parameter import STDOUT
 
     @binary(binary="output_generator.sh")
     @task(fds=STDOUT)
