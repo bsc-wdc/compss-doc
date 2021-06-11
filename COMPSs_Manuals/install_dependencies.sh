@@ -5,5 +5,6 @@ python3 -m pip install sphinx \
                        sphinx-copybutton \
                        sphinxcontrib-spelling \
                        nbsphinx \
+                       sphinxcontrib.yt \
                        sphinxcontrib-svg2pdfconverter \
                        "sphinxcontrib-bibtex==1.0.0"

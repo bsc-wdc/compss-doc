@@ -76,6 +76,7 @@ pip3 install ipywidgets --user
 pip3 install sphinx-rtd-theme==0.5.0.rc1
 pip3 install prompt-toolkit --user
 pip3 install ipython --user
+pip3 install sphinxcontrib.yt --user
 ```
 
 * System dependencies
@@ -103,7 +104,7 @@ pip3 install ipython --user
   sudo apt-get install -y latexmk
   ````
   *For OpenSuse:
-  
+
     ```
     sudo zypper install texlive-footnotebackref texlive-datetime texlive-epigraph texlive-eso-pic texlive-lipsum texlive-footnotebackref texlive-setspace texlive-amsmath texlive-amsfonts texlive-amstex texlive-lipsum texlive-fancyhdr texlive-anyfontsize
     ```
