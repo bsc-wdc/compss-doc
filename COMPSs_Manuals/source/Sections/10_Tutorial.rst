@@ -4,7 +4,7 @@ COMPSs Tutorial
 
 This section contains all COMPSs related tutorials.
 
-It is divided into three main sections:
+It is divided into seven sections:
 
 1. **Introduction**: Introduction to COMPSs
 2. **Programming Python applications**: PyCOMPSs tutorial
