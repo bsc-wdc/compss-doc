@@ -206,6 +206,114 @@ Sample notebooks can be found in the :ref:`Sections/09_PyCOMPSs_Notebooks:PyCOMP
 Tips and Tricks
 ~~~~~~~~~~~~~~~
 
+Tasks information
+^^^^^^^^^^^^^^^^^
+
+It is possible to show task related information with ``tasks_info`` function.
+
+.. code-block:: python
+
+    # Previous user code
+
+    import pycompss.interactive as ipycompss
+    ipycompss.start(graph=True)
+
+    # User code that calls tasks
+
+    # Check the current tasks info
+    ipycompss.tasks_info()
+
+    ipycompss.stop(sync=True)
+
+    # Subsequent code
+
+.. IMPORTANT::
+
+    The tasks information will not be displayed if the ``monitor`` option at
+    ``ipycompss.start`` is not set (to a refresh value).
+
+The ``tasks_info`` function provides a widget that can be updated while running
+other cells from the notebook, and will keep updating every second until stopped.
+Alternatively, it will show a snapshot of the tasks information status if ipywidgets is
+not available.
+
+The information displayed is composed by two plots: the left plot shows the
+average time per task, while the right plot shows the amount of tasks.
+Then, a table with the specific number of number of executed tasks,
+maximum execution time, mean execution time and minimum execution time, per task
+is shown.
+
+Tasks status
+^^^^^^^^^^^^
+
+It is possible to show task status (running or completed) tasks with the
+``tasks_status`` function.
+
+.. code-block:: python
+
+    # Previous user code
+
+    import pycompss.interactive as ipycompss
+    ipycompss.start(graph=True)
+
+    # User code that calls tasks
+
+    # Check the current tasks info
+    ipycompss.tasks_status()
+
+    ipycompss.stop(sync=True)
+
+    # Subsequent code
+
+.. IMPORTANT::
+
+    The tasks information will not be displayed if the ``monitor`` option at
+    ``ipycompss.start`` is not set (to a refresh value).
+
+The ``tasks_status`` function provides a widget that can be updated while running
+other cells from the notebook, and will keep updating every second until stopped.
+Alternatively, it will show a snapshot of the tasks status if ipywidgets is
+not available.
+
+The information displayed is composed by a pie chart and a table showing
+the number of running tasks, and the number of completed tasks.
+
+Resources status
+^^^^^^^^^^^^^^^^
+
+It is possible to show resources status with the ``resources_status`` function.
+
+.. code-block:: python
+
+    # Previous user code
+
+    import pycompss.interactive as ipycompss
+    ipycompss.start(graph=True)
+
+    # User code that calls tasks
+
+    # Check the current tasks info
+    ipycompss.resources_status()
+
+    ipycompss.stop(sync=True)
+
+    # Subsequent code
+
+.. IMPORTANT::
+
+    The tasks information will not be displayed if the ``monitor`` option at
+    ``ipycompss.start`` is not set (to a refresh value).
+
+The ``resources_status`` function provides a widget that can be updated while running
+other cells from the notebook, and will keep updating every second until stopped.
+Alternatively, it will show a snapshot of the resources status if ipywidgets is
+not available.
+
+The information displayed is a table showing the number of computing units,
+gpus, fpgas, other computing units, amount of memory, amount of disk, status
+and actions.
+
+
 Current task graph
 ^^^^^^^^^^^^^^^^^^
 
