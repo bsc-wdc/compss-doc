@@ -50,6 +50,7 @@ default parameters:
 
     # Previous user code/cells
 
+    import pycompss.interactive as ipycompss
     ipycompss.start()
 
     # User code/cells that can benefit from PyCOMPSs
@@ -163,6 +164,7 @@ the *stop* function.
 
     # Previous user code
 
+    import pycompss.interactive as ipycompss
     ipycompss.start(graph=True, trace=True, monitor=2000)
 
     # User code that can benefit from PyCOMPSs
@@ -171,22 +173,154 @@ the *stop* function.
 
     # Subsequent code
 
+
+.. ATTENTION::
+
+   Once the COMPSs runtime has been stopped it, the value of the variables that
+   have not been synchronized will be lost.
+
+
 Notebook execution
 ~~~~~~~~~~~~~~~~~~
 
 The application can be executed as a common Jupyter notebook by steps or
 the whole application.
 
-.. ATTENTION::
+.. IMPORTANT::
 
-   Once the COMPSs runtime has been stopped it is **NECESSARY to restart the
-   python kernel in Jupyter before starting another COMPSs runtime**.
+   A message showing the failed task/s will pop up if an exception within them
+   happens.
 
-   To this end, click on "Kernel" and "Restart" (or "Restart & Clear Output"
-   or "Restart & Run All", depending on the need).
+   This pop up message will also allow you to continue the execution without
+   PyCOMPSs, or to restart the COMPSs runtime. Please, note that in the case
+   of COMPSs restart, the tracking of some objects may be lost (will need to be
+   recomputed).
 
 
 Notebook example
 ~~~~~~~~~~~~~~~~
 
 Sample notebooks can be found in the :ref:`Sections/09_PyCOMPSs_Notebooks:PyCOMPSs Notebooks` Section.
+
+
+Tips and Tricks
+~~~~~~~~~~~~~~~
+
+Current task graph
+^^^^^^^^^^^^^^^^^^
+
+It is possible to show the current task graph with the ``current_task_graph``
+function.
+
+.. code-block:: python
+
+    # Previous user code
+
+    import pycompss.interactive as ipycompss
+    ipycompss.start(graph=True)
+
+    # User code that calls tasks
+
+    # Check the current task graph
+    ipycompss.current_task_graph()
+
+    ipycompss.stop(sync=True)
+
+    # Subsequent code
+
+
+.. IMPORTANT::
+
+    The graph will not be displayed if the ``graph`` option at
+    ``ipycompss.start`` is not set to ``true``.
+
+In addition, the ``current_task_graph`` has some options. Specifically, its
+full signature is:
+
+.. code-block:: python
+
+     current_task_graph(fit=False, refresh_rate=1, timeout=0)
+
+Parameters:
+
+    ``fit``
+        Adjust the size to the available space in jupyter if set to true.
+        Display full size if set to false (default).
+
+    ``refresh_rate``
+        When *timeout* is set to a value different from 0, it defines the
+        number of seconds between graph refresh.
+
+    ``timeout``
+        Check the current task graph during the *timeout* value (seconds).
+        During the *timeout* value, it refresh the graph considering the
+        *refresh_rate* value.
+        It can be stopped with the stop button of Jupyter.
+        Does not update the graph if set to 0 (default).
+
+
+.. CAUTION::
+
+    The graph can be empty if all pending tasks have been completed.
+
+
+Complete task graph
+^^^^^^^^^^^^^^^^^^^
+
+It is possible to show the complete task graph with the ``complete_task_graph``
+function.
+
+.. code-block:: python
+
+    # Previous user code
+
+    import pycompss.interactive as ipycompss
+    ipycompss.start(graph=True)
+
+    # User code that calls tasks
+
+    # Check the current task graph
+    ipycompss.complete_task_graph()
+
+    ipycompss.stop(sync=True)
+
+    # Subsequent code
+
+
+.. IMPORTANT::
+
+    The graph will not be displayed if the ``graph`` option at
+    ``ipycompss.start`` is not set to ``true``.
+
+
+In addition, the ``complete_task_graph`` has some options. Specifically, its
+full signature is:
+
+.. code-block:: python
+
+     complete_task_graph(fit=False, refresh_rate=1, timeout=0)
+
+Parameters:
+
+    ``fit``
+        Adjust the size to the available space in jupyter if set to true.
+        Display full size if set to false (default).
+
+    ``refresh_rate``
+        When *timeout* is set to a value different from 0, it defines the
+        number of seconds between graph refresh.
+
+    ``timeout``
+        Check the current task graph during the *timeout* value (seconds).
+        During the *timeout* value, it refresh the graph considering the
+        *refresh_rate* value.
+        It can be stopped with the stop button of Jupyter.
+        Does not update the graph if set to 0 (default).
+
+
+.. CAUTION::
+
+    The graph may be empty or raise an exception if the graph has not been
+    updated by the runtime (may happen if there are too few tasks).
+    In this situation, stop the compss runtime (synchronizing the remaining
+    objects if intended to start the runtime afterwards) and try again.

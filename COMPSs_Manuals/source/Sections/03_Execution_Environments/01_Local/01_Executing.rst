@@ -339,8 +339,34 @@ flag for virtual environment propagation
 intended to activate the current virtual environment in the worker nodes
 when set to true.
 
+Additional features
+^^^^^^^^^^^^^^^^^^^
+
+Concurrent serialization
+""""""""""""""""""""""""
+
+It is possible to perform concurrent serialization of the objects in the master
+when using Python 3.
+To this end, just export the ``COMPSS_THREADED_SERIALIZATION`` environment
+variable with any value:
+
+.. code-block:: console
+
+    compss@bsc:~$ export COMPSS_THREADED_SERIALIZATION=1
+
+.. CAUTION::
+
+    Please, make sure that the ``COMPSS_THREADED_SERIALIZATION`` environment
+    variable is not in the environment (``env``) to avoid the concurrent
+    serialization of the objects in the master.
+
+.. TIP::
+
+    This feature can also be used within supercomputers in the same way.
+
+
 Running C/C++ applications
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To launch a COMPSs C/C++ application users have to compile the
 C/C++ application by means of the ``buildapp`` command. For

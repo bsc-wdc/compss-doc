@@ -287,7 +287,7 @@ supercomputer:
     #
     #####################################################
 
-Having the ``1aki.pdb``, ``1u3m.pdb`` and 1xyw.pdb`` proteins in the ``dataset``
+Having the ``1aki.pdb``, ``1u3m.pdb`` and ``1xyw.pdb`` proteins in the ``dataset``
 folder, the execution of this script produces the submission of the job with
 the following output:
 

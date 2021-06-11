@@ -10,7 +10,6 @@ available resources.
 .. toctree::
     :maxdepth: 4
     :caption: Table of Contents
-    :numbered:
 
     01_Java/01_Programming_model
     01_Java/02_Application_compilation

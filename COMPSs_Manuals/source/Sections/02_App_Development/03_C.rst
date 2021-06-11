@@ -8,7 +8,6 @@ parameters and the use of class methods as tasks.
 .. toctree::
     :maxdepth: 4
     :caption: Table of Contents
-    :numbered:
 
     03_C/01_Programming_model
     03_C/02_Other_programming_models
