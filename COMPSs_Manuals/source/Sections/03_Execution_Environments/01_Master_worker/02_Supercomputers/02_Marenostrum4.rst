@@ -75,7 +75,7 @@ job information. For example:
     #SBATCH -t00:15:00
     ...
 
-In order to trac the jobs state users can run the following command:
+In order to track the jobs state users can run the following command:
 
 .. code-block:: console
 

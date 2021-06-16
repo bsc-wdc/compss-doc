@@ -37,7 +37,7 @@ Choose your flavour:
 
         - Graph, tracing and monitoring facilities -> :ref:`Sections/03_Execution_Environments/01_Local/03_Tools:COMPSs Tools`
 
-        - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/02_Supercomputers:Supercomputers`
+        - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/01_Master_worker/02_Supercomputers:Supercomputers`
 
         - Performance analysis -> :ref:`Sections/05_Tracing:Tracing`
 

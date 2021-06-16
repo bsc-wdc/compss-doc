@@ -5,7 +5,7 @@ Local
 This section is intended to walk you through the COMPSs usage in local machines.
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 3
     :caption: Table of Contents
 
     01_Local/01_Executing
