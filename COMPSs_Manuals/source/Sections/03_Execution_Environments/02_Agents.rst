@@ -8,4 +8,4 @@ This section is intended to show how to execute the COMPSs applications deployin
     :maxdepth: 3
     :caption: Table of Contents
     
-    02_Agents/05_Dynamic_infrastructures
+    02_Agents/01_Dynamic_infrastructures
