@@ -401,7 +401,7 @@ command:
 
 .. TIP::
     For further information about applications scheduling refer to 
-    :ref:`Sections/03_Execution_Environments/06_Schedulers:Schedulers`.
+    :ref:`Sections/03_Execution_Environments/03_Schedulers:Schedulers`.
 
 .. ATTENTION::
   From COMPSs 2.8 version, the ``worker_working_dir`` has changed its built-in

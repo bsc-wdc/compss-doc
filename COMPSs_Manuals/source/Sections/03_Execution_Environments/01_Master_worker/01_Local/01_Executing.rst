@@ -216,7 +216,7 @@ to :ref:`Sections/07_Sample_Applications:Sample Applications`.
 
 .. TIP::
     For further information about applications scheduling refer to 
-    :ref:`Sections/03_Execution_Environments/06_Schedulers:Schedulers`.
+    :ref:`Sections/03_Execution_Environments/03_Schedulers:Schedulers`.
 
 Running Java applications
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -433,6 +433,6 @@ command. The default files are located in the
 ``/opt/COMPSs/Runtime/configuration/xml/`` path. Users can manually edit
 these files or can use the *Eclipse IDE* tool developed for COMPSs. For
 further information about the *Eclipse IDE* please refer to
-:ref:`Sections/03_Execution_Environments/01_Local/03_Tools:COMPSs IDE` Section.
+:ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/03_Tools:COMPSs IDE` Section.
 
 For further details please check the :ref:`Sections/01_Installation/06_Configuration_files:Configuration Files`.
