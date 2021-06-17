@@ -33,7 +33,7 @@ The following command raises an agent with name 192.168.1.100 and any of the pub
 
     compss@bsc:~$ compss_agent_start  --hostname=192.168.1.100 --classpath=/app/path.jar
 
-The ``compss_agent_start`` command allows users to set up the COMPSs runtime by specifyng different options in the same way as done for the ``runcompss`` command. To indicate the available resources, the device administrator can use the ``--project`` and ``--resources`` option exactly in the same way as for the ``runcompss`` command. For further details on how to dynamically modify the available resources, please, refer to section :ref:`Sections/03_Execution_Environments/02_Agents/01_Dynamic_infrastructures:Modifying the available resources`. 
+The ``compss_agent_start`` command allows users to set up the COMPSs runtime by specifying different options in the same way as done for the ``runcompss`` command. To indicate the available resources, the device administrator can use the ``--project`` and ``--resources`` option exactly in the same way as for the ``runcompss`` command. For further details on how to dynamically modify the available resources, please, refer to section :ref:`Sections/03_Execution_Environments/02_Agents/01_Dynamic_infrastructures:Modifying the available resources`. 
 
 Currently, COMPSs agents allow interaction through two interfaces: the Comm interface and the REST interface. The Comm interface leverages on a propietary protocol to submit operations and request updates on the current resource configuration of the agent. Although users and applications can use this interface, its design purpose is to enable high-performance interactions among agents rather than supporting user interaction. The REST interface takes the completely opposed approach; Users should interact with COMPSs agents through it rather than submitting tasks with the Comm interface. The COMPSs agent allows to enact both interfaces at a time; thus, users can manually submit operations using the REST interface, while other agents can use the Comm interface. However, the device owner can decide at deploy time which of the interfaces will be available on the agent and through which port the API will be exposed using the ``rest_port`` and ``comm_port`` options of the ``compss_agent_start`` command. Other agents can be configured to interact with the agent through any of the interfaces. For further details on how to configure the interaction with another agent, please, refer to section :ref:`Sections/03_Execution_Environments/02_Agents/01_Dynamic_infrastructures:Modifying the available resources`. 
 
@@ -44,67 +44,103 @@ Currently, COMPSs agents allow interaction through two interfaces: the Comm inte
     Usage: /opt/COMPSs/Runtime/scripts/user/compss_agent_start [OPTION]...
 
     COMPSs options:
-    --appdir=<path>                    Path for the application class folder.
-                                       Default: /home/flordan/git/compss/framework/builders
 
-    --classpath=<path>                 Path for the application classes / modules
-                                       Default: Working Directory
+        --appdir=<path>                         Path for the application class folder.
+                                                Default: /home/flordan/git/compss/framework/builders
 
-    --comm=<className>                 Class that implements the adaptor for communications with other nodes
-                                       Supported adaptors:
-                                            ├── es.bsc.compss.nio.master.NIOAdaptor
-                                            ├── es.bsc.compss.gat.master.GATAdaptor
-                                            ├── es.bsc.compss.agent.rest.Adaptor
-                                            └── es.bsc.compss.agent.comm.CommAgentAdaptor
-                                       Default: es.bsc.compss.agent.comm.CommAgentAdaptor
+        --classpath=<path>                      Path for the application classes / modules
+                                                Default: Working Directory
 
-    --comm_port=<int>                  Port on which the agent sets up a Comm interface. (<=0: Disabled)
+        --comm=<className>                      Class that implements the adaptor for communications with other nodes
+                                                Supported adaptors:
+                                                    ├── es.bsc.compss.nio.master.NIOAdaptor
+                                                    ├── es.bsc.compss.gat.master.GATAdaptor
+                                                    ├── es.bsc.compss.agent.rest.Adaptor
+                                                    └── es.bsc.compss.agent.comm.CommAgentAdaptor
+                                                Default: es.bsc.compss.agent.comm.CommAgentAdaptor
 
-    -d, --debug                        Enable debug. (Default: disabled)
+        --comm_port=<int>                       Port on which the agent sets up a Comm interface. (<=0: Disabled)
 
-    --hostname                         Name with which itself and other agents will identify the agent.
-    
-    --library_path=<path>              Non-standard directories to search for libraries (e.g. Java JVM library, Python library, C binding library)
-                                       Default: Working Directory
+        -d, --debug                             Enable debug. (Default: disabled)
 
-    --log_dir=<path>                   Log directory. (Default: /tmp/)
+        --hostname                              Name with which itself and other agents will identify the agent.
 
-    --log_level=<level>                Set the debug level: off | info | api | debug | trace
-                                       Default: off
+        --jvm_opts="string"                     Extra options for the COMPSs Runtime JVM. Each option separed by "," and without blank spaces (Notice the quotes)
 
-    --master_port=<int>                Port to run the COMPSs master communications. 
-                                       (Only when es.bsc.compss.nio.master.NIOAdaptor is used. The value is overriden by the comm_port value.)
-                                       Default: [43000,44000]
+        --library_path=<path>                   Non-standard directories to search for libraries (e.g. Java JVM library, Python library, C binding library)
+                                                Default: Working Directory
 
-    --pythonpath=<path>                Additional folders or paths to add to the PYTHONPATH
-                                       Default: /home/flordan/git/compss/framework/builders
+        --log_dir=<path>                        Log directory. (Default: /tmp/)
 
-    --project=<path>                   Path of the project file 
-                                       (Default: /opt/COMPSs/Runtime/configuration/xml/projects/examples/local/project.xml)
+        --log_level=<level>                     Set the debug level: off | info | api | debug | trace
+                                                Default: off
 
-    --resources=<path>                 Path of the resources file 
-                                       (Default: /opt/COMPSs/Runtime/configuration/xml/resources/examples/local/resources.xml)
+        --master_port=<int>                     Port to run the COMPSs master communications.
+                                                (Only when es.bsc.compss.nio.master.NIOAdaptor is used. The value is overriden by the comm_port value.)
+                                                Default: [43000,44000]
 
-    --rest_port=<int>                  Port on which the agent sets up a REST interface. (<=0: Disabled)
+        --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
+                                                Default: /home/flordan/git/compss/framework/builders
 
-    --scheduler=<className>            Class that implements the Scheduler for COMPSs
-                                       Supported schedulers: 
-                                            ├── es.bsc.compss.scheduler.data.DataScheduler
-                                            ├── es.bsc.compss.scheduler.fifo.FIFOScheduler
-                                            ├── es.bsc.compss.scheduler.fifodata.FIFODataScheduler
-                                            ├── es.bsc.compss.scheduler.lifo.LIFOScheduler
-                                            ├── es.bsc.compss.components.impl.TaskScheduler
-                                            └── es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
-                                       Default: es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
+        --python_interpreter=<string>           Python interpreter to use (python/python2/python3).
+                                                Default: python Version: 
 
-    --scheduler_config_file=<path>     Path to the file which contains the scheduler configuration.
-                                       Default: Empty
+        --python_propagate_virtual_environment=<true>   Propagate the master virtual environment to the workers (true/false).
+                                                        Default: true
 
-    --summary                          Displays a task execution summary at the end of the application execution
-                                       Default: false
+        --python_mpi_worker=<false>             Use MPI to run the python worker instead of multiprocessing. (true/false).
+                                                Default: false
 
-    Other options:
-    --help                    prints this message
+        --python_memory_profile                 Generate a memory profile of the master.
+                                                Default: false
+        --python_worker_cache=<string>          Python worker cache (true/size/false).
+                                                Only for NIO without mpi worker and python >= 3.8.
+                                                Default: false
+
+        --project=<path>                        Path of the project file
+                                                (Default: /opt/COMPSs/Runtime/configuration/xml/projects/examples/local/project.xml)
+
+        --resources=<path>                      Path of the resources file
+                                                (Default: /opt/COMPSs/Runtime/configuration/xml/resources/examples/local/resources.xml)
+
+        --rest_port=<int>                       Port on which the agent sets up a REST interface. (<=0: Disabled)
+
+        --reuse_resources_on_block=<boolean>    Enables/Disables reusing the resources assigned to a task when its execution stalls.
+                                                (Default:true)
+
+        --scheduler=<className>                 Class that implements the Scheduler for COMPSs
+                                                Supported schedulers:
+                                                    ├── es.bsc.compss.scheduler.fifodatalocation.FIFODataLocationScheduler
+                                                    ├── es.bsc.compss.scheduler.fifonew.FIFOScheduler
+                                                    ├── es.bsc.compss.scheduler.fifodatanew.FIFODataScheduler
+                                                    ├── es.bsc.compss.scheduler.lifonew.LIFOScheduler
+                                                    ├── es.bsc.compss.components.impl.TaskScheduler
+                                                    └── es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
+                                                Default: es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
+
+        --scheduler_config_file=<path>          Path to the file which contains the scheduler configuration.
+                                                Default: Empty
+
+        --input_profile=<path>                  Path to the file which stores the input application profile
+                                                Default: Empty
+
+        --output_profile=<path>                 Path to the file to store the application profile at the end of the execution
+                                                Default: Empty
+
+        --summary                               Displays a task execution summary at the end of the application execution
+                                                Default: false
+
+        --tracing=<level>, --tracing, -t        Set generation of traces and/or tracing level ( [ true | basic ] | advanced | scorep | arm-map | arm-ddt | false)
+                                                True and basic levels will produce the same traces.
+                                                When no value is provided it is set to 1
+                                                Default: 0
+
+        --trace_label=<string>                  Add a label in the generated trace file. Only used in the case of tracing is activated.
+                                                Default: None
+
+        Other options:
+        --help                                  prints this message
+
 
 
 Executing an operation
@@ -116,6 +152,8 @@ The **compss_agent_call_operation** commands interacts with the REST interface o
     compss@bsc:~$ compss_agent_call_operation [options] application_name application_arguments
 
 The command has two mandatory flags ``--master_node`` and ``--master_port`` to indicate the endpoint of the COMPSs Agent. By default, the command submits an execution of the ``main`` method of the Java class with the name passed in as the ``application_name`` and gathering all the application arguments in a single String[] instance. To execute Python methods, the user can use the ``--lang=PYTHON`` option and the Agent will execute the python script with the name passed in as ``application_name``. Operation invocations can be customized by using other options of the command. The ``--method_name`` option allow to execute a specific method; in the case of specifying a method, each of the parameters will be passed in as a different parameter to the function and it is necessary to indicate the ``--array`` flag to encapsulate all the parameters as an array.
+
+Additionally, the command offers two options to shutdown a whole agents deployment upon the operation completion. The flag ``--stop`` indicates that, at the end of the operation, the agent receiving the operation request will stop. For shutting down the rest of the deployment, the command offers the option ``--forward_to`` to indicate a list of IP:port pairs. Upon the completion of the operation, the agent receiving the request will forward the stop command to all the nodes specified in such option.
 
 .. code-block:: console
 
@@ -130,24 +168,33 @@ The command has two mandatory flags ``--master_node`` and ``--master_port`` to i
         --opts                                  Show available options
 
         --version, -v                           Print COMPSs version
-                                                                                                                                                                                                                    
-        --master_node=<string>                  Node where to run the COMPSs Master                                                                                                                                    
-                                                Mandatory                                                                                                                                                              
-                                                                                                                                                                                                                    
-        --master_port=<string>                  Node where to run the COMPSs Master                                                                                                                                    
-                                                Mandatory                                                                                                                                                              
-    Launch configuration:                                                                                                                                                                                            
-        --cei=<string>                          Canonical name of the interface declaring the methods                                                                                                                  
-                                                Default: No interface declared                                                                                                                                         
-                                                                                                                                                                                                                    
-        --lang=<string>                         Language implementing the operation                                                                                                                                    
-                                                Default: JAVA                                                                                                                                                          
-                                                                                                                                                                                                                    
-        --method_name=<string>                  Name of the method to invoke                                                                                                                                           
-                                                Default: main and enables array parameter                                                                                                                              
-                                                                                                                                                                                                                    
-        --parameters_array, --array             Parameters are encapsulated as an array                                                                                                                                
+
+        --master_node=<string>                  Node where to run the COMPSs Master
+                                                Mandatory
+
+        --master_port=<string>                  Node where to run the COMPSs Master
+                                                Mandatory    
+
+        --stop                                  Stops the agent after the execution
+                                                of the task.   
+
+        --forward_to=<list>                     Forwards the stop action to other
+                                                agents, the list shoud follow the
+                                                format:
+                                                <ip1>:<port1>;<ip2>:<port2>...
+    Launch configuration:
+        --cei=<string>                          Canonical name of the interface declaring the methods
+                                                Default: No interface declared
+
+        --lang=<string>                         Language implementing the operation
+                                                Default: JAVA
+
+        --method_name=<string>                  Name of the method to invoke
+                                                Default: main and enables array parameter
+
+        --parameters_array, --array             Parameters are encapsulated as an array
                                                 Default: disabled
+
 
 
 
