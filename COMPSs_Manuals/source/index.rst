@@ -64,7 +64,13 @@ This manual is divided in 9 sections:
    Sections/08_PyCOMPSs_Player
    Sections/09_PyCOMPSs_Notebooks
    Sections/04_Troubleshooting
-   Sections/10_Tutorial
+
+.. only:: html
+
+  .. toctree::
+     :maxdepth: 1
+
+     Sections/10_Tutorial
 
 
 .. Indices and tables
