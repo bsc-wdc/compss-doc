@@ -15,4 +15,5 @@ contact us at: support-compss@bsc.es .
 
     04_Troubleshooting/01_Debug
     04_Troubleshooting/02_Issues
-    04_Troubleshooting/03_Known_limitations
+    04_Troubleshooting/03_Memory_Profiling
+    04_Troubleshooting/04_Known_limitations
