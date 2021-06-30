@@ -185,7 +185,7 @@ we expected.
 Their length can be seen with the event flags (green flags), and measured
 by double clicking on the event of interest.
 
-.. figure:: ./Figures/user_events.png
+.. figure:: ./Figures/17_user_events.png
    :name: user_events
    :alt: User events trace file
    :align: center
