@@ -393,6 +393,28 @@ For further information about Extrae, please visit the following site:
 
 http://www.bsc.es/computer-science/extrae
 
+
+Trace for Agents
+----------------------
+Applications deployed as COMPSs Agents can also be traced. Unlike master-worker
+COMPSs applications, which the trace contains the events for all the nodes
+within the infrastructure, with the Agents approach, each Agent generates its 
+own trace.
+
+To activate the tracing -- either basic or advanced mode --, the ``compss_agent_start``
+command allows the ``-t``, ``--tracing`` and ``--tracing=<level>`` options with the
+same meaning as with the master-worker approach. When the Agent stops -- upon
+the completion of a submitted operation --, it generates a trace folder within the 
+log folder of the agent containing the prv, pcf and .
+
+
+
+
+MERGE
+
+
+
+
 Custom Installation and Configuration
 -------------------------------------
 
