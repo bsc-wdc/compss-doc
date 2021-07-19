@@ -397,17 +397,116 @@ http://www.bsc.es/computer-science/extrae
 Trace for Agents
 ----------------------
 Applications deployed as COMPSs Agents can also be traced. Unlike master-worker
-COMPSs applications, which the trace contains the events for all the nodes
+COMPSs applications, where the trace contains the events for all the nodes
 within the infrastructure, with the Agents approach, each Agent generates its 
 own trace.
 
 To activate the tracing -- either basic or advanced mode --, the ``compss_agent_start``
 command allows the ``-t``, ``--tracing`` and ``--tracing=<level>`` options with the
-same meaning as with the master-worker approach. When the Agent stops -- upon
-the completion of a submitted operation --, it generates a trace folder within the 
-log folder of the agent containing the prv, pcf and .
+same meaning as with the master-worker approach. For example:
+
+.. code-block:: console
+
+    $ compss_agent_start \
+        --hostname="COMPSsWorker01" \
+        --pythonpath="~/python/path" \
+        --log_dir="~/agent1/log" \
+        --rest_port="46101" \
+        --comm_port="46102" \
+        -d -t \
+        --project="~/project.xml" \
+        --resources="~/resources.xml"&
+
+Upon the completion of an operation submitted with the ``--stop`` flag, the agent stops
+and generates a trace folder within his log folder, containing the prv, pcf and row files.
+
+.. code-block:: console
+
+    $ compss_agent_call_operation" \
+      --lang="PYTHON" \
+      --master_node="127.0.0.1" \
+      --master_port="46101" \
+      --method_name="kmeans" \
+      --stop \
+      "kmeans"
 
 
+
+.. figure:: ./Figures/one_agent_trace.png
+   :name: one_agent_trace
+   :alt: Trace of one agent
+   :align: center
+   :width: 100.0%
+
+When multiple agents are involved in an application's execution, the stop command must be forwarded to all the other agents with the ``--forward`` parameter.
+
+.. code-block:: console
+
+    $ compss_agent_call_operation" \
+        --lang="PYTHON" \
+        --master_node="127.0.0.1" \
+        --master_port="46101" \
+        --method_name="kmeans" \
+        --stop \
+        --forward_to="COMPSsWorker02:46201;COMPSsWorker03:46301" \
+        "kmeans"
+
+Upon the completion of the last operation submitted and the shutdown of all involved agents, all agent will have generated their own individual trace.
+
+.. figure:: ./Figures/multiple_agent_trace_ag1.png
+   :name: multiple_agent_trace
+   :alt: Trace of 3 agents
+   :align: center
+   :width: 100.0%
+
+.. figure:: ./Figures/multiple_agent_trace_ag2.png
+   :name: multiple_agent_trace
+   :alt: Trace of 3 agents
+   :align: center
+   :width: 100.0%
+
+.. figure:: ./Figures/multiple_agent_trace_ag3.png
+   :name: multiple_agent_trace
+   :alt: Trace of 3 agents
+   :align: center
+   :width: 100.0%
+
+In order to merge this traces the script ``mergeTraceAgents.sh`` can be used.
+The script takes as parameters the folders of the log dirs of the agents with the traces to merge.
+
+.. code-block:: console
+
+    $ mergeTraceAgents.sh -h
+    /opt/COMPSs/Runtime/scripts/system/trace/mergeTraceAgents.sh <options> INPUT_DIR...
+
+    options:                
+            -h/--help                                       shows this message
+
+            --output_dir=<output_dir>                       the directory where to store the merged traces
+
+            -f/--force_override                             overrides output_dir if it already exists without asking
+
+            --result_trace_name=<result_trace_name>         the name of the generated trace
+
+Usage example:
+
+.. code-block:: console
+
+    $ mergeTraceAgents.sh \
+        --result_trace_name=merged_kmeans \
+        ~/.COMPSs/1agent_python3_01/agent1 \
+        ~/.COMPSs/1agent_python3_01/agent2 \
+        ~/.COMPSs/1agent_python3_01/agent3
+
+
+The script will put the merged trace in the specified ``output_dir`` or in the current directory inside a folder named ``agentTraceMerge`` by default
+
+
+.. figure:: ./Figures/merged_trace.png
+   :name: merged_agent_trace
+   :alt: Merged trace of 3 agents
+   :align: center
+   :width: 100.0%
 
 
 MERGE
