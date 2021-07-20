@@ -398,7 +398,7 @@ Trace for Agents
 ----------------------
 Applications deployed as COMPSs Agents can also be traced. Unlike master-worker
 COMPSs applications, where the trace contains the events for all the nodes
-within the infrastructure, with the Agents approach, each Agent generates its 
+within the infrastructure, with the Agents approach, each Agent generates its
 own trace.
 
 To activate the tracing -- either basic or advanced mode --, the ``compss_agent_start``
@@ -436,7 +436,7 @@ and generates a trace folder within his log folder, containing the prv, pcf and 
    :name: one_agent_trace
    :alt: Trace of one agent
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
 When multiple agents are involved in an application's execution, the stop command must be forwarded to all the other agents with the ``--forward`` parameter.
 
@@ -454,22 +454,22 @@ When multiple agents are involved in an application's execution, the stop comman
 Upon the completion of the last operation submitted and the shutdown of all involved agents, all agent will have generated their own individual trace.
 
 .. figure:: ./Figures/multiple_agent_trace_ag1.png
-   :name: multiple_agent_trace
+   :name: multiple_agent_trace_ag1
    :alt: Trace of 3 agents
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
 .. figure:: ./Figures/multiple_agent_trace_ag2.png
-   :name: multiple_agent_trace
+   :name: multiple_agent_trace_ag2
    :alt: Trace of 3 agents
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
 .. figure:: ./Figures/multiple_agent_trace_ag3.png
-   :name: multiple_agent_trace
+   :name: multiple_agent_trace_ag3
    :alt: Trace of 3 agents
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
 In order to merge this traces the script ``mergeTraceAgents.sh`` can be used.
 The script takes as parameters the folders of the log dirs of the agents with the traces to merge.
@@ -479,7 +479,7 @@ The script takes as parameters the folders of the log dirs of the agents with th
     $ mergeTraceAgents.sh -h
     /opt/COMPSs/Runtime/scripts/system/trace/mergeTraceAgents.sh <options> INPUT_DIR...
 
-    options:                
+    options:
             -h/--help                                       shows this message
 
             --output_dir=<output_dir>                       the directory where to store the merged traces
@@ -506,12 +506,7 @@ The script will put the merged trace in the specified ``output_dir`` or in the c
    :name: merged_agent_trace
    :alt: Merged trace of 3 agents
    :align: center
-   :width: 100.0%
-
-
-MERGE
-
-
+   :width: 60.0%
 
 
 Custom Installation and Configuration
