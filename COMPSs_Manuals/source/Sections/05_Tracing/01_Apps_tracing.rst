@@ -324,10 +324,12 @@ Worker X Master - Thread X.1.1
     appropriate configurations).
 
 Worker X File system - Thread X.1.2
-    TODO: complete this phrase
+    This thread manages the synchronous file system operations (e.g. copy
+    file) performed by the worker.
 
 Worker X Timer - Thread X.1.3
-    TODO: complete this phrase
+    This thread manages the cancellation of the tasks when the wall-clock
+    limit is reached.
 
 Worker X Executor Y - Thread X.2.Y
     Shows the actual tasks execution information and is repeated as
