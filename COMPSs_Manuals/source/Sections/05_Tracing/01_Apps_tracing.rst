@@ -553,15 +553,17 @@ Upon the completion of the last operation submitted and the shutdown of all invo
    :align: center
    :width: 60.0%
 
-In order to merge this traces the script ``mergeTraceAgents.sh`` can be used.
+In order to merge this traces the script ``compss_agent_merge_traces`` can be used.
 The script takes as parameters the folders of the log dirs of the agents with the traces to merge.
 
 .. code-block:: console
 
-    $ mergeTraceAgents.sh -h
-    /opt/COMPSs/Runtime/scripts/system/trace/mergeTraceAgents.sh <options> INPUT_DIR...
+    $ compss_agent_merge_traces -h
+    /opt/COMPSs/Runtime/scripts/user/compss_agent_merge_traces <options> <log_dir1> <log_dir2> <log_dir3> ...
 
-    options:
+    Merges the traces of the specified agents into a new trace created at the directory <output_dir>
+
+    options:                
             -h/--help                                       shows this message
 
             --output_dir=<output_dir>                       the directory where to store the merged traces
@@ -570,18 +572,19 @@ The script takes as parameters the folders of the log dirs of the agents with th
 
             --result_trace_name=<result_trace_name>         the name of the generated trace
 
+
 Usage example:
 
 .. code-block:: console
 
-    $ mergeTraceAgents.sh \
+    $ compss_agent_merge_traces \
         --result_trace_name=merged_kmeans \
         ~/.COMPSs/1agent_python3_01/agent1 \
         ~/.COMPSs/1agent_python3_01/agent2 \
         ~/.COMPSs/1agent_python3_01/agent3
 
 
-The script will put the merged trace in the specified ``output_dir`` or in the current directory inside a folder named ``agentTraceMerge`` by default
+The script will put the merged trace in the specified ``output_dir`` or in the current directory inside a folder named ``compss_agent_merge_traces`` by default
 
 
 .. figure:: ./Figures/merged_trace.png
