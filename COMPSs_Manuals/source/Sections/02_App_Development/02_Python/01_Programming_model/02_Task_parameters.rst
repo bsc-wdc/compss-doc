@@ -328,6 +328,8 @@ It is possible to specify that a parameter is a collection of elements (e.g. lis
       - DESCRIPTION
     * - *COLLECTION_IN*
       - The parameter is read-only collection.
+    * - *COLLECTION_IN_DELETE*
+      - The parameter is read-only collection for single usage (will be automatically removed after its usage).
     * - *COLLECTION_INOUT*
       - The parameter is read-write collection.
     * - *COLLECTION_OUT*
@@ -375,6 +377,14 @@ the depth of the sub-objects can be limited through the use of the
 .. TIP::
 
    A collection can contain dictionaries, and will be analyzed automatically.
+
+
+.. TIP::
+
+   If the collection is intended to be used only once with ``IN`` direction, the
+   ``COLLECTION_IN_DELETE`` type is recommended, since it automatically removes
+   the entire collection after the task. This enables to release as soon as
+   possible memory and storage.
 
 
 Collections of files
@@ -435,9 +445,10 @@ It is possible to specify that a parameter is a dictionary of elements (e.g. dic
       - DESCRIPTION
     * - *DICTIONARY_IN*
       - The parameter is read-only dictionary.
+    * - *DICTIONARY_IN_DELETE*
+      - The parameter is read-only dictionary for single usage (will be automatically removed after its usage).
     * - *DICTIONARY_INOUT*
       - The parameter is read-write dictionary.
-
 
 As with the collections, it is possible to specify that a parameter is
 a dictionary of elements (e.g. dict) and its direction (DICTIONARY_IN or
@@ -481,6 +492,13 @@ limited through the use of the *depth* parameter
 
     A dictionary can contain collections, and will be analyzed automatically.
 
+
+.. TIP::
+
+    If the dictionary is intended to be used only once with ``IN`` direction, the
+    ``DICTIONARY_IN_DELETE`` type is recommended, since it automatically removes
+    the entire dictionary after the task. This enables to release as soon as
+    possible memory and storage.
 
 Streams
 ^^^^^^^
