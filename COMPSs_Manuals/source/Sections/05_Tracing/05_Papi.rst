@@ -83,8 +83,24 @@ PAPI_L3_TCM
 PAPI_FP_INS
     Floating point instructions
 
+
+.. TIP::
+
+    To find the available PAPI counters on a given computer issue the
+    command:
+
+    .. code-block:: console
+
+        $ papi_avail -a
+
+    And for more hardware counters:
+
+    .. code-block:: console
+
+        $ papi_native_avail
+
+
 To further customize the tracked counters, modify the XML to suit your
-needs. To find the available PAPI counters on a given computer issue the
-command *papi_avail -a*. For more information about Extrae’s XML
+needs. For more information about Extrae’s XML
 configuration refer to
 https://www.bsc.es/computer-sciences/performance-tools/trace-generation/extrae/extrae-user-guide.

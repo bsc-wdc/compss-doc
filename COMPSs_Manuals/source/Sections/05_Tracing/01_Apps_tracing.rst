@@ -19,7 +19,7 @@ http://www.bsc.es/computer-sciences/performance-tools.
 For each worker node and the master, Extrae keeps track of the events in
 an intermediate format file (with *.mpit* extension). At the end of the
 execution, all intermediate files are gathered and merged with Extrae’s
-*mpi2prv* command in order to create the final tracefile, a Paraver
+``mpi2prv`` command in order to create the final tracefile, a Paraver
 format file (.prv). See the :ref:`Sections/05_Tracing/02_Visualization:Visualization`
 Section for further information about the Paraver tool.
 
@@ -61,21 +61,12 @@ following arguments to the execution command:
 
 -  ``--tracing=true``
 
-Examples given:
+Example:
 
 .. code-block:: console
 
     $ runcompss --tracing application_name application_args
 
-:numref:`basic_trace` was generated as follows:
-
-.. code-block:: console
-
-    $ runcompss \
-         --lang=java \
-         --tracing \
-         --classpath=/path/to/jar/kmeans.jar \
-         kmeans.KMeans
 
 When tracing is activated, Extrae generates additional output to help
 the user ensure that instrumentation is turned on and working without
@@ -84,45 +75,101 @@ is working correctly:
 
 .. code-block:: console
 
-    *** RUNNING JAVA APPLICATION KMEANS
-    Resolved: /path/to/jar/kmeans.jar:
 
-    ----------------- Executing kmeans.Kmeans --------------------------
+    $ runcompss --tracing kmeans.py -n 102400000 -f 8 -d 3 -c 8 -i 10
 
-    Welcome to Extrae VERSION
-    Extrae: Parsing the configuration file (/opt/COMPSs/Runtime/configuration/xml/tracing/extrae_basic.xml) begins
-    Extrae: Tracing package is located on /opt/COMPSs/Dependencies/extrae/
+    [  INFO] Inferred PYTHON language
+    [  INFO] Using default location for project file: /opt/COMPSs//Runtime/configuration/xml/projects/default_project.xml
+    [  INFO] Using default location for resources file: /opt/COMPSs//Runtime/configuration/xml/resources/default_resources.xml
+    [  INFO] Using default execution type: compss
+
+    ----------------- Executing kmeans.py --------------------------
+
+    Welcome to Extrae 3.8.3
+    Extrae: Parsing the configuration file (/opt/COMPSs//Runtime/configuration/xml/tracing/extrae_basic.xml) begins
+    Extrae: Warning! <trace> tag has no <home> property defined.
     Extrae: Generating intermediate files for Paraver traces.
-    Extrae: PAPI domain set to USER for HWC set 1
-    Extrae: HWC set 1 contains following counters < PAPI_TOT_INS (0x80000032) PAPI_TOT_CYC (0x8000003b) PAPI_LD_INS (0x80000035) PAPI_SR_INS (0x80000036) > - changing every 500000000 nanoseconds
-    Extrae: PAPI domain set to USER for HWC set 2
-    Extrae: HWC set 2 contains following counters < PAPI_TOT_INS (0x80000032) PAPI_TOT_CYC (0x8000003b) PAPI_LD_INS (0x80000035) PAPI_SR_INS (0x80000036) PAPI_L2_DCM (0x80000002) > - changing every 500000000 nanoseconds
-    WARNING: COMPSs Properties file is null. Setting default values
-    [(751)    API]  -  Deploying COMPSs Runtime v<version>
-    [(753)    API]  -  Starting COMPSs Runtime v<version>
-    [(753)    API]  -  Initializing components
-    [(1142)   API]  -  Ready to process tasks
 
-    ...
-    ...
-    ...
+    PAPI Error: Error finding event OFFCORE_RESPONSE_0:SNP_FWD, it is used in derived event PAPI_CA_ITV.
+    Extrae: PAPI domain set to ALL for HWC set 1
+    Extrae: HWC set 1 contains following counters < PAPI_TOT_INS (0x80000032) PAPI_TOT_CYC (0x8000003b) PAPI_L1_DCM (0x80000000) PAPI_L2_DCM (0x80000002) PAPI_L3_TCM (0x80000008) PAPI_BR_INS (0x80000037) PAPI_BR_MSP (0x8000002e) RESOURCE_STALLS (0x4000002f) > - never changes
+    Extrae: Tracing buffer can hold 100000 events
+    Extrae: Circular buffer disabled.
+    Extrae: Warning! <input-output> tag will be ignored. This library does not support instrumenting I/O calls.
+    Extrae: Dynamic memory instrumentation is disabled.
+    Extrae: Basic I/O memory instrumentation is disabled.
+    Extrae: System calls instrumentation is disabled.
+    Extrae: Parsing the configuration file (/opt/COMPSs//Runtime/configuration/xml/tracing/extrae_basic.xml) has ended
+    Extrae: Intermediate traces will be stored in /home/user/temp/documentation
+    Extrae: Tracing mode is set to: Detail.
+    Extrae: Error! Hardware counter PAPI_BR_INS (0x80000037) cannot be added in set 1 (task 0, thread 0)
+    Extrae: Error! Hardware counter PAPI_BR_MSP (0x8000002e) cannot be added in set 1 (task 0, thread 0)
+    Extrae: Error! Hardware counter RESOURCE_STALLS (0x4000002f) cannot be added in set 1 (task 0, thread 0)
+    Extrae: Successfully initiated with 1 tasks and 1 threads
+
+
+    PAPI Error: Error finding event OFFCORE_RESPONSE_0:SNP_FWD, it is used in derived event PAPI_CA_ITV.
+    Extrae: Error! Hardware counter PAPI_BR_INS (0x80000037) cannot be added in set 1 (task 0, thread 0)
+    Extrae: Error! Hardware counter PAPI_BR_MSP (0x8000002e) cannot be added in set 1 (task 0, thread 0)
+    Extrae: Error! Hardware counter RESOURCE_STALLS (0x4000002f) cannot be added in set 1 (task 0, thread 0)
+    pyextrae: Loading tracing library 'libseqtrace.so'
+    WARNING: COMPSs Properties file is null. Setting default values
+    Loading LoggerManager
+    [(419)    API]  -  Starting COMPSs Runtime v2.9.rc2107 (build 20210720-1547.r81bdafc6f06a7680a344ae434a467473ecbaf27e)
+    Generation/Load done
+    Starting kmeans
+    Doing iteration #1/10
+    Doing iteration #2/10
+    Doing iteration #3/10
+    Doing iteration #4/10
+    Doing iteration #5/10
+    Doing iteration #6/10
+    Doing iteration #7/10
+    Doing iteration #8/10
+    Doing iteration #9/10
+    Doing iteration #10/10
+    Ending kmeans
+    -----------------------------------------
+    -------------- RESULTS ------------------
+    -----------------------------------------
+    Initialization time: 55.369870
+    Kmeans time: 117.859757
+    Total time: 173.229627
+    -----------------------------------------
+    CENTRES:
+    [[0.69757475 0.74511351 0.48157611]
+    [0.54683653 0.20274669 0.2117475 ]
+    [0.24194863 0.74448094 0.75633981]
+    [0.21854362 0.67072938 0.23273541]
+    [0.77272546 0.68522249 0.16245965]
+    [0.22683962 0.23359743 0.67203863]
+    [0.75351606 0.73746265 0.83339847]
+    [0.75838884 0.23805883 0.71538748]]
+    -----------------------------------------
+    Extrae: Intermediate raw trace file created : /home/user/temp/documentation/set-0/TRACE@linux-2e63.0000027029000000000002.mpit
+    Extrae: Intermediate raw trace file created : /home/user/temp/documentation/set-0/TRACE@linux-2e63.0000027029000000000001.mpit
+    Extrae: Intermediate raw trace file created : /home/user/temp/documentation/set-0/TRACE@linux-2e63.0000027029000000000000.mpit
+    Extrae: Intermediate raw sym file created : /home/user/temp/documentation/set-0/TRACE@linux-2e63.0000027029000000000000.sym
+    Extrae: Deallocating memory.
+    Extrae: Application has ended. Tracing has been terminated.
     merger: Output trace format is: Paraver
-    merger: Extrae VERSION
-    mpi2prv: Assigned nodes < Marginis >
-    mpi2prv: Assigned size per processor < <1 Mbyte >
-    mpi2prv: File set-0/TRACE@Marginis.0000001904000000000000.mpit is object 1.1.1 on node Marginis assigned to processor 0
-    mpi2prv: File set-0/TRACE@Marginis.0000001904000000000001.mpit is object 1.1.2 on node Marginis assigned to processor 0
-    mpi2prv: File set-0/TRACE@Marginis.0000001904000000000002.mpit is object 1.1.3 on node Marginis assigned to processor 0
-    mpi2prv: File set-0/TRACE@Marginis.0000001980000001000000.mpit is object 1.2.1 on node Marginis assigned to processor 0
-    mpi2prv: File set-0/TRACE@Marginis.0000001980000001000001.mpit is object 1.2.2 on node Marginis assigned to processor 0
-    mpi2prv: File set-0/TRACE@Marginis.0000001980000001000002.mpit is object 1.2.3 on node Marginis assigned to processor 0
-    mpi2prv: File set-0/TRACE@Marginis.0000001980000001000003.mpit is object 1.2.4 on node Marginis assigned to processor 0
-    mpi2prv: File set-0/TRACE@Marginis.0000001980000001000004.mpit is object 1.2.5 on node Marginis assigned to processor 0
-    mpi2prv: Time synchronization has been turned off
-    mpi2prv: A total of 9 symbols were imported from TRACE.sym file
+    merger: Extrae 3.8.3
+    mpi2prv: Assigned nodes < linux-2e63 >
+    mpi2prv: Assigned size per processor < 1 Mbytes >
+    mpi2prv: File set-0/TRACE@linux-2e63.0000027148000001000000.mpit is object 1.2.1 on node linux-2e63 assigned to processor 0
+    mpi2prv: File set-0/TRACE@linux-2e63.0000027148000001000001.mpit is object 1.2.2 on node linux-2e63 assigned to processor 0
+    mpi2prv: File set-0/TRACE@linux-2e63.0000027148000001000002.mpit is object 1.2.3 on node linux-2e63 assigned to processor 0
+    mpi2prv: File set-0/TRACE@linux-2e63.0000027148000001000003.mpit is object 1.2.4 on node linux-2e63 assigned to processor 0
+    mpi2prv: File set-0/TRACE@linux-2e63.0000027148000001000004.mpit is object 1.2.5 on node linux-2e63 assigned to processor 0
+    mpi2prv: File set-0/TRACE@linux-2e63.0000027148000001000005.mpit is object 1.2.6 on node linux-2e63 assigned to processor 0
+    mpi2prv: File set-0/TRACE@linux-2e63.0000027148000001000006.mpit is object 1.2.7 on node linux-2e63 assigned to processor 0
+    mpi2prv: File set-0/TRACE@linux-2e63.0000027029000000000000.mpit is object 1.1.1 on node linux-2e63 assigned to processor 0
+    mpi2prv: File set-0/TRACE@linux-2e63.0000027029000000000001.mpit is object 1.1.2 on node linux-2e63 assigned to processor 0
+    mpi2prv: File set-0/TRACE@linux-2e63.0000027029000000000002.mpit is object 1.1.3 on node linux-2e63 assigned to processor 0
+    mpi2prv: A total of 8 symbols were imported from TRACE.sym file
     mpi2prv: 0 function symbols imported
-    mpi2prv: 9 HWC counter descriptions imported
-    mpi2prv: Checking for target directory existance... exists, ok!
+    mpi2prv: 8 HWC counter descriptions imported
+    mpi2prv: Checking for target directory existence... exists, ok!
     mpi2prv: Selected output trace format is Paraver
     mpi2prv: Stored trace format is Paraver
     mpi2prv: Searching synchronization points... done
@@ -133,35 +180,27 @@ is working correctly:
     mpi2prv: Processor 0 succeeded to translate its assigned files
     mpi2prv: Elapsed time translating files: 0 hours 0 minutes 0 seconds
     mpi2prv: Elapsed time sorting addresses: 0 hours 0 minutes 0 seconds
-    mpi2prv: Generating tracefile (intermediate buffers of 838848 events)
-             This process can take a while. Please, be patient.
+    mpi2prv: Generating tracefile (intermediate buffers of 671078 events)
+         This process can take a while. Please, be patient.
     mpi2prv: Progress 2 of 2 ... 5% 10% 15% 20% 25% 30% 35% 40% 45% 50% 55% 60% 65% 70% 75% 80% 85% 90% 95% done
-    mpi2prv: Warning! Clock accuracy seems to be in microseconds instead of nanoseconds.
     mpi2prv: Elapsed time merge step: 0 hours 0 minutes 0 seconds
-    mpi2prv: Resulting tracefile occupies 991743 bytes
-    mpi2prv: Removing temporal files... done
+    mpi2prv: Resulting tracefile occupies 664068 bytes
+    mpi2prv: Removing temporal files... mpi2prv: Warning! Clock accuracy seems to be in microseconds instead of nanoseconds.
+    done
     mpi2prv: Elapsed time removing temporal files: 0 hours 0 minutes 0 seconds
-    mpi2prv: Congratulations! ./trace/kmeans.Kmeans_compss_trace_1460456106.prv has been generated.
-    [   API]  -  Execution Finished
-    Extrae: Tracing buffer can hold 100000 events
-    Extrae: Circular buffer disabled.
-    Extrae: Warning! <dynamic-memory> tag will be ignored. This library does support instrumenting dynamic memory calls.
-    Extrae: Warning! <input-output> tag will be ignored. This library does support instrumenting I/O calls.
-    Extrae: Dynamic memory instrumentation is disabled.
-    Extrae: Basic I/O memory instrumentation is disabled.
-    Extrae: Parsing the configuration file (/opt/COMPSs/Runtime/scripts/user/../../configuration/xml/tracing/extrae_basic.xml) has ended
-    Extrae: Intermediate traces will be stored in /home/kurtz/compss/tests_local/app10
-    Extrae: Tracing mode is set to: Detail.
-    Extrae: Successfully initiated with 1 tasks and 1 threads
+    mpi2prv: Congratulations! ./trace/kmeans.py_compss.prv has been generated.
+    [(189793)    API]  -  Execution Finished
 
-It contains diverse information about the tracing, for example, Extrae
+    ------------------------------------------------------------
+
+The output contains diverse information about the tracing, for example, Extrae
 version used (``VERSION`` will be replaced by the actual number during
 executions), the XML configuration file used (``/opt/COMPSs/Runtime/configuration/xml/tracing/extrae_basic.xml``
 -- if using python, the ``extrae_python_worker.xml`` located in the same folder will be used in the workers), the
-amount of threads instrumented (objects through 1.1.1 to 1.2.5),
+amount of threads instrumented (objects through 1.1.1 to 1.2.7),
 available hardware counters (``PAPI_TOT_INS (0x80000032)`` ...
 ``PAPI_L3_TCM (0x80000008)`` ) or the name of the generated tracefile
-(``./trace/kmeans.`` ``Kmeans_compss_trace_1460456106.prv``). When using
+(``./trace/`` ``kmeans.py_compss.prv``). When using
 NIO communications adaptor with debug activated, the log of each worker
 also contains the Extrae initialization information.
 
@@ -171,6 +210,11 @@ also contains the Extrae initialization information.
 
     * ``$COMPSS_HOME/Runtime/configuration/xml/tracing/extrae_basic.xml``
     * ``$COMPSS_HOME/Runtime/configuration/xml/tracing/extrae_python_worker.xml`` (when using Python)
+
+
+.. TIP::
+
+    :numref:`basic_trace` was generated with this execution.
 
 
 .. IMPORTANT::
@@ -183,31 +227,56 @@ also contains the Extrae initialization information.
 
     .. code-block:: console
 
-        [(9788)(2016-11-15 11:22:27,687)  Tracing]    @generateTrace -  Tracing: Generating trace
-        [(9851)(2016-11-15 11:22:27,750)  Tracing]    @<init>        -  Trace's merger initialization successful
-        [(9851)(2016-11-15 11:22:27,750)  Tracing]    @merge         -  Parsing master sync events
-        [(9905)(2016-11-15 11:22:27,804)  Tracing]    @merge         -  Proceeding to merge task traces into master
-        [(9944)(2016-11-15 11:22:27,843)  Tracing]    @merge         -  Merging finished,
-        [(9944)(2016-11-15 11:22:27,843)  Tracing]    @merge         -  Temporal task folder removed.
+        [(189467)(2021-07-21 08:09:33,292)             Tracing]    @teMasterPackage  -  Tracing: generating master package: package
+        [(189468)(2021-07-21 08:09:33,293)             Tracing]    @run              -  Starting stream goobler
+        [(189469)(2021-07-21 08:09:33,294)             Tracing]    @run              -  Starting stream goobler
+        [(189501)(2021-07-21 08:09:33,326)             Tracing]    @erMasterPackage  -  Tracing: Transferring master package
+        [(189503)(2021-07-21 08:09:33,328)             Tracing]    @generateTrace    -  Tracing: Generating trace with mode gentrace
+        [(189503)(2021-07-21 08:09:33,328)             Tracing]    @run              -  Starting stream goobler
+        [(189504)(2021-07-21 08:09:33,329)             Tracing]    @run              -  Starting stream goobler
+        [(189589)(2021-07-21 08:09:33,414)             Tracing]    @<init>           -  Trace's merger initialization successful
+        [(189589)(2021-07-21 08:09:33,414)             Tracing]    @umAndSyncEvents  -  Parsing master sync events
+        [(189589)(2021-07-21 08:09:33,414)             Tracing]    @getSyncEvents    -  Getting sync events from: /home/user/.COMPSs/kmeans.py_01/trace/kmeans.py_compss.prv for worker -1
+        [(189745)(2021-07-21 08:09:33,570)             Tracing]    @umAndSyncEvents  -  Merging task traces into master which contains 1 lines.
+        [(189745)(2021-07-21 08:09:33,570)             Tracing]    @umAndSyncEvents  -  Merging worker /home/user/.COMPSs/kmeans.py_01/trace/python/1_python_trace.prv
+        [(189745)(2021-07-21 08:09:33,570)             Tracing]    @getWorkerEvents  -  Getting worker events from: /home/user/.COMPSs/kmeans.py_01/trace/python/1_python_trace.prv
+        [(189751)(2021-07-21 08:09:33,576)             Tracing]    @getSyncEvents    -  Getting sync events from: /home/user/.COMPSs/kmeans.py_01/trace/python/1_python_trace.prv for worker 2
+        [(189852)(2021-07-21 08:09:33,677)             Tracing]    @iteWorkerEvents  -  Writing 4089 lines from worker 2 with 4 threads
+        [(189872)(2021-07-21 08:09:33,697)             Tracing]    @ardwareCounters  -  Merging PCF Hardware Counters into master
+        [(189872)(2021-07-21 08:09:33,697)             Tracing]    @getHWCounters    -  Getting pcf hw counters from: /home/user/.COMPSs/kmeans.py_01/trace/kmeans.py_compss.pcf
+        [(189872)(2021-07-21 08:09:33,697)             Tracing]    @getHWCounters    -  Getting pcf hw counters from: /home/user/.COMPSs/kmeans.py_01/trace/python/1_python_trace.pcf
+        [(189873)(2021-07-21 08:09:33,698)             Tracing]    @ardwareCounters  -  Analised worker had 0 lines to be included
+        [(189873)(2021-07-21 08:09:33,698)             Tracing]    @ardwareCounters  -  No hardware counters to include in PCF.
+        [(189873)(2021-07-21 08:09:33,698)             Tracing]    @merge            -  Merging finished.
+        [(189873)(2021-07-21 08:09:33,698)             Tracing]    @updateThreads    -  Tracing: Updating thread labels
+        [(189914)(2021-07-21 08:09:33,739)             Tracing]    @latedPrvThreads  -  Tracing: Updating thread identifiers in .prv file
+        [(189959)(2021-07-21 08:09:33,784)             Tracing]    @anMasterPackage  -  Tracing: Removing tracing master package: /home/user/documentation/master_compss_trace.tar.gz
+        [(189959)(2021-07-21 08:09:33,784)             Tracing]    @anMasterPackage  -  Deleted master tracing package.
 
 Instrumented Threads in Basic Mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Basic traces instrument the following threads:
 
--  Master node (3 threads)
+- Master node (3 threads)
 
-   -  COMPSs runtime
+   - COMPSs runtime (main application thread)
 
-   -  Task Dispatcher
+   - Access Processor thread
 
-   -  Access Processor
+   - Task Dispatcher thread
 
--  Worker node (1 + Computing Units)
 
-   -  Main thread
+- Worker node (3 + Computing Units)
 
-   -  Number of threads available for computing
+   - Worker main thread
+
+   - Worker File system thread
+
+   - Worker timer thread
+
+   - Number of threads available for computing
+
 
 Information Available in Basic Traces
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -239,22 +308,30 @@ Master - Thread 1.1.1
     This timeline shows the actions performed by the main thread of
     the COMPSs application
 
-Task Dispatcher - Thread 1.1.2
-    Shows information about the state and scheduling of the tasks to
-    be executed.
-
-Access Processor - Thread 1.1.3
+Access Processor - Thread 1.1.2
     All the events related to the tasks’ parameters management, such
     as dependencies or transfers are shown in this thread.
 
-Worker X Master - Thread 1.X.1
+Task Dispatcher - Thread 1.1.3
+    Shows information about the state and scheduling of the tasks to
+    be executed.
+
+Worker X Master - Thread X.1.1
     This thread is the master of each worker and handles the computing
     resources and transfers. It is repeated for each available
     resource. All data events of the worker, such as requests,
     transfers and receives are marked on this timeline (when using the
     appropriate configurations).
 
-Worker X Computing Unit Y - Thread 1.X.Y
+Worker X File system - Thread X.1.2
+    This thread manages the synchronous file system operations (e.g. copy
+    file) performed by the worker.
+
+Worker X Timer - Thread X.1.3
+    This thread manages the cancellation of the tasks when the wall-clock
+    limit is reached.
+
+Worker X Executor Y - Thread X.2.Y
     Shows the actual tasks execution information and is repeated as
     many times as computing threads has the worker X
 
@@ -263,7 +340,7 @@ Worker X Computing Unit Y - Thread 1.X.Y
    :name: basic_trace
    :alt: Basic mode tracefile for a k-means algorithm visualized with compss_runtime.cfg
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
    Basic mode tracefile for a k-means algorithm visualized with compss_runtime.cfg
 
@@ -288,33 +365,32 @@ the execution:
 
 -  ``--tracing=advanced``
 
-Examples given:
+Example:
 
 .. code-block:: console
 
     $ runcompss --tracing=advanced application_name application_args
-
-:numref:`advanced_trace` was generated as follows:
-
-.. code-block:: console
-
-    $ runcompss \
-         --lang=java \
-         --tracing=advanced \
-         --classpath=/path/to/jar/kmeans.jar \
-         kmeans.KMeans
 
 When advanced tracing is activated, the configuration file reported on
 the output is ``$COMPSS_HOME/Runtime/configuration/xml/tracing/extrae_advanced.xml``.
 
 .. code-block:: console
 
-    *** RUNNING JAVA APPLICATION KMEANS
+    $ runcompss --tracing=advanced kmeans.py -n 102400000 -f 8 -d 3 -c 8 -i 10
+
+    [  INFO] Inferred PYTHON language
+    [  INFO] Using default location for project file: /opt/COMPSs//Runtime/configuration/xml/projects/default_project.xml
+    [  INFO] Using default location for resources file: /opt/COMPSs//Runtime/configuration/xml/resources/default_resources.xml
+    [  INFO] Using default execution type: compss
+
+    ----------------- Executing kmeans.py --------------------------
+
+    Welcome to Extrae 3.8.3
+    Extrae: Parsing the configuration file (/opt/COMPSs//Runtime/configuration/xml/tracing/extrae_advanced.xml) begins
     ...
     ...
     ...
-    Welcome to Extrae VERSION
-    Extrae: Parsing the configuration file (/opt/COMPSs/Runtime/scripts/user/../../configuration/xml/tracing/extrae_advanced.xml) begins
+
 
 This is the default file used for advanced tracing as well as
 ``extrae_python_worker.xml`` if using Python.
@@ -333,6 +409,10 @@ the execution environment).
     * ``$COMPSS_HOME/Runtime/configuration/xml/tracing/extrae_python_worker.xml`` (when using Python)
 
 
+.. TIP::
+
+    :numref:`advanced_trace` was generated with this execution.
+
 If the ``extrae_advanced.xml`` file is modified, the changes always affect the
 master, and also the workers when using NIO. Modifying the scripts which turn
 on the master and the workers is possible to achieve different
@@ -342,6 +422,7 @@ or workers crash so modify them at your discretion and risk. More
 information about instrumentation XML configurations on Extrae User
 Guide at:
 https://www.bsc.es/computer-sciences/performance-tools/trace-generation/extrae/extrae-user-guide.
+
 
 Instrumented Threads in Advanced Mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -371,10 +452,11 @@ Hardware counters
     Of the execution obtained with Performance API (see
     :ref:`Sections/05_Tracing/05_Papi:PAPI: Hardware Counters`)
 
+
 Advanced Trace Example
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Figure :numref:`advanced_trace` shows the total completed instructions for
+:numref:`advanced_trace` shows the total completed instructions for
 a sample program executed with the advanced tracing mode. Note that the
 thread - resource correspondence described on the basic trace example is
 no longer static and thus cannot be inferred. Nonetheless, they can be
@@ -383,9 +465,9 @@ found thanks to the named events shown in other configurations such as
 
 .. figure:: ./Figures/advanced.png
    :name: advanced_trace
-   :alt: Advanced mode tracefile for a testing program showing the total completed instructions
+   :alt: Advanced mode tracefile for a k-means execution showing the total completed instructions
    :align: center
-   :width: 100.0%
+   :width: 80.0%
 
    Advanced mode tracefile for a testing program showing the total completed instructions
 
@@ -398,7 +480,7 @@ Trace for Agents
 ----------------------
 Applications deployed as COMPSs Agents can also be traced. Unlike master-worker
 COMPSs applications, where the trace contains the events for all the nodes
-within the infrastructure, with the Agents approach, each Agent generates its 
+within the infrastructure, with the Agents approach, each Agent generates its
 own trace.
 
 To activate the tracing -- either basic or advanced mode --, the ``compss_agent_start``
@@ -436,7 +518,7 @@ and generates a trace folder within his log folder, containing the prv, pcf and 
    :name: one_agent_trace
    :alt: Trace of one agent
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
 When multiple agents are involved in an application's execution, the stop command must be forwarded to all the other agents with the ``--forward`` parameter.
 
@@ -454,22 +536,22 @@ When multiple agents are involved in an application's execution, the stop comman
 Upon the completion of the last operation submitted and the shutdown of all involved agents, all agent will have generated their own individual trace.
 
 .. figure:: ./Figures/multiple_agent_trace_ag1.png
-   :name: multiple_agent_trace
+   :name: multiple_agent_trace_ag1
    :alt: Trace of 3 agents
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
 .. figure:: ./Figures/multiple_agent_trace_ag2.png
-   :name: multiple_agent_trace
+   :name: multiple_agent_trace_ag2
    :alt: Trace of 3 agents
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
 .. figure:: ./Figures/multiple_agent_trace_ag3.png
-   :name: multiple_agent_trace
+   :name: multiple_agent_trace_ag3
    :alt: Trace of 3 agents
    :align: center
-   :width: 100.0%
+   :width: 60.0%
 
 In order to merge this traces the script ``mergeTraceAgents.sh`` can be used.
 The script takes as parameters the folders of the log dirs of the agents with the traces to merge.
@@ -479,7 +561,7 @@ The script takes as parameters the folders of the log dirs of the agents with th
     $ mergeTraceAgents.sh -h
     /opt/COMPSs/Runtime/scripts/system/trace/mergeTraceAgents.sh <options> INPUT_DIR...
 
-    options:                
+    options:
             -h/--help                                       shows this message
 
             --output_dir=<output_dir>                       the directory where to store the merged traces
@@ -506,12 +588,7 @@ The script will put the merged trace in the specified ``output_dir`` or in the c
    :name: merged_agent_trace
    :alt: Merged trace of 3 agents
    :align: center
-   :width: 100.0%
-
-
-MERGE
-
-
+   :width: 60.0%
 
 
 Custom Installation and Configuration
