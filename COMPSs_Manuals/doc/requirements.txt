@@ -4,7 +4,7 @@ myst-parser
 sphinxcontrib-contentui
 sphinx-copybutton
 sphinxcontrib-spelling
-nbsphinx==4.0.3
+nbsphinx
 sphinxcontrib.yt
 sphinxcontrib-svg2pdfconverter
 sphinxcontrib-bibtex==1.0.0
