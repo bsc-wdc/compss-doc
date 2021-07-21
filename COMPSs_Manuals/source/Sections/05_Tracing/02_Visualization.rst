@@ -2,7 +2,7 @@ Visualization
 =============
 
 Paraver is the BSC tool for trace visualization. Trace events are
-encoded in Paraver format (.prv) by the Extrae tool. Paraver is a
+encoded in Paraver format (``.prv``) by the Extrae tool. Paraver is a
 powerful tool and allows users to show many views of the trace data
 using different configuration files. Users can manually load, edit or
 create configuration files to obtain different tracing views.
@@ -27,62 +27,69 @@ as the argument.
 
     $ wxparaver /path/to/trace/trace.prv
 
+.. TIP::
+
+    The path where the traces are usually located is
+    ``${HOME}/.COMPSs/<APPLICATION_NAME_INFO>/trace/``.
+
+    Where <APPLICATION_NAME_INFO> represents the executed application name and
+    some information, such as the execution number or deployment information
+    (e.g. number of nodes) and the generation time.
+
 Configurations
 --------------
 
 To see the different events, counters and communications that the
 runtime generates, diverse configurations are available with the COMPSs
-installation. To open one of them, go to the “Load Configuration” option
-in the main window and select “File”. The configuration files are under
+installation. To open one of them, go to the "Load Configuration" option
+in the main window and select "File". The configuration files are under
 the following path for the default installation
-``/opt/COMPSs/Dependencies/`` ``paraver/cfgs/``. A detailed list of all
+``/opt/COMPSs/Dependencies/paraver/cfgs/``. A detailed list of all
 the available configurations can be found in
 :ref:`Sections/05_Tracing/06_Paraver_configs:Paraver: configurations`.
 
-The following guide uses the *compss_tasks.cfg* as an example to
-illustrate the basic usage of Paraver. After accepting the load of the
-configuration file, another window appears showing the view.
-:numref:`tracing_1` and :numref:`tracing_2` show an example of this process.
+The following guide uses a kmeans trace (result from executing the
+:ref:`Sections/07_Sample_Applications/02_Python/kmeans:Kmeans` sample code with
+the ``--tracing`` flag.) with the *compss_tasks.cfg* configuration file as an
+example to illustrate the basic usage of Paraver. After accepting the load of
+the configuration file, another window appears showing the view.
+:numref:`1_paraver` and :numref:`2_kmeans_trace` show an example of this
+process.
 
-.. figure:: ./Figures/1.jpeg
-   :name: tracing_1
+.. figure:: ./Figures/1_paraver.png
+   :name: 1_paraver
    :alt: Paraver menu
    :align: center
    :width: 25.0%
 
    Paraver menu
 
-.. figure:: ./Figures/2.jpeg
-   :name: tracing_2
+.. figure:: ./Figures/2_kmeans_trace.png
+   :name: 2_kmeans_trace
    :alt: Trace file
    :align: center
    :width: 60.0%
 
-   Trace file
+   Kmeans Trace file
+
+
+.. CAUTION::
+
+    In a Paraver view, a red exclamation sign may appear in the bottom-left
+    corner. This means that some event values are not being shown
+    (because they are out of the current view scope), so little adjustments
+    must be made to view the trace correctly:
+
+    -  Fit window: modifies the view scope to fit and display all the events
+       in the current window.
+
+       -  Right click on the trace window
+
+       -  Choose the option Fit Semantic Scale / Fit Both
+
 
 View Adjustment
 ---------------
-
-In a Paraver view, a red exclamation sign may appear in the bottom-left
-corner (see :numref:`tracing_2` in the previous section). This means
-that some event values are not being shown (because they are out of the
-current view scope), so little adjustments must be made to view the
-trace correctly:
-
--  Fit window: modifies the view scope to fit and display all the events
-   in the current window.
-
-   -  Right click on the trace window
-
-   -  Choose the option Fit Semantic Scale / Fit Both
-
-.. figure:: ./Figures/3.jpeg
-   :name: tracing_3
-   :alt: Paraver view adjustment: Fit window
-   :align: center
-   :width: 60.0%
-
-   Paraver view adjustment: Fit window
 
 -  View Event Flags: marks with a green flag all the emitted events.
 
@@ -90,15 +97,15 @@ trace correctly:
 
    -  Chose the option View / Event Flags
 
-.. figure:: ./Figures/4.jpeg
-   :name: tracing_4
+.. figure:: ./Figures/3_kmeans_event_flags.png
+   :name: 3_kmeans_event_flags
    :alt: Paraver view adjustment: View Event Flags
    :align: center
    :width: 60.0%
 
    Paraver view adjustment: View Event Flags
 
--  Show Info Panel: display the information panel. In the tab “Colors”
+-  Show Info Panel: display the information panel. In the tab "Colors"
    we can see the legend of the colors shown in the view.
 
    -  Right click on the trace window
@@ -107,8 +114,8 @@ trace correctly:
 
    -  Select the Colors tab in the panel
 
-.. figure:: ./Figures/5.jpeg
-   :name: tracing_5
+.. figure:: ./Figures/4_kmeans_info_panel.png
+   :name: 4_kmeans_info_panel
    :alt: Paraver view adjustment: Show info panel
    :align: center
    :width: 60.0%
@@ -124,18 +131,18 @@ trace correctly:
 
    -  The undo-zoom option is in the right click panel
 
-.. figure:: ./Figures/6.jpeg
-   :name: tracing_6
+.. figure:: ./Figures/5_kmeans_zoom_selection.png
+   :name: 5_kmeans_zoom_selection
    :alt: Paraver view adjustment: Zoom configuration
    :align: center
    :width: 60.0%
 
    Paraver view adjustment: Zoom configuration
 
-.. figure:: ./Figures/6_2.jpeg
-   :name: tracing_6_2
-   :alt: Paraver view adjustment: Zoom configuration
+.. figure:: ./Figures/6_kmeans_zoom.png
+   :name: 5_kmeans_zoom
+   :alt: Paraver view adjustment: Zoom result
    :align: center
    :width: 60.0%
 
-   Paraver view adjustment: Zoom configuration
+   Paraver view adjustment: Zoom result

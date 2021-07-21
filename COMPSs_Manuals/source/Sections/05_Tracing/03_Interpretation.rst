@@ -8,7 +8,7 @@ adjusted as described in the previous section.
    the vertical axis one line for the master at the top, and below it,
    one line for each of the workers.
 
--  In a line, the light blue color is associated with an idle state,
+-  In a line, the black color is associated with an idle state,
    i.e. there is no event at that time.
 
 -  Whenever an event starts or ends a flag is shown.
@@ -19,8 +19,8 @@ adjusted as described in the previous section.
 -  The info panel contains the legend of the assigned colors to each
    event type.
 
-.. figure:: ./Figures/7.jpeg
-   :name: tracing_7
+.. figure:: ./Figures/7_kmeans_info_panel_2.png
+   :name: 7_kmeans_info_panel_2
    :alt: Trace interpretation
    :align: center
    :width: 60.0%

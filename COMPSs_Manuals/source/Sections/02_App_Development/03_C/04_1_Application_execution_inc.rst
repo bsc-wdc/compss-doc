@@ -18,4 +18,4 @@ The ``runcompss`` script has to be used to run the application:
     $ runcompss /home/compss/tutorial_apps/c/matmul_objects/master/Matmul 3 4 2.0
 
 The complete list of options of the runcompss command is available in
-Section :ref:`Sections/03_Execution_Environments/01_Local/01_Executing:Executing COMPSs applications`.
+Section :ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications`.
