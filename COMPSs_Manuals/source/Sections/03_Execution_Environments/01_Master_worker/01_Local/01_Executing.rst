@@ -215,7 +215,7 @@ one unit using a task. For further details about the codes please refer
 to :ref:`Sections/07_Sample_Applications:Sample Applications`.
 
 .. TIP::
-    For further information about applications scheduling refer to 
+    For further information about applications scheduling refer to
     :ref:`Sections/03_Execution_Environments/03_Schedulers:Schedulers`.
 
 Running Java applications
@@ -338,6 +338,98 @@ flag for virtual environment propagation
 (``--python_propagate_virtual_environment=<bool>``). This, flag is
 intended to activate the current virtual environment in the worker nodes
 when set to true.
+
+Specific flags
+^^^^^^^^^^^^^^
+
+Some of the **runcompss** flags are only for PyCOMPSs application execution:
+
+--pythonpath=<path>
+    Additional folders or paths to add to the PYTHONPATH
+    Default: /home/user
+
+--PyObject_serialize=<bool>
+    Only for Python Binding. Enable the object serialization to string when possible (true/false).
+    Default: false
+
+--python_interpreter=<string>
+    Python interpreter to use (python/python2/python3).
+    Default: "python" version
+
+--python_propagate_virtual_environment=<true>
+    Propagate the master virtual environment to the workers (true/false).
+    Default: true
+
+--python_mpi_worker=<false>
+    Use MPI to run the python worker instead of multiprocessing. (true/false).
+    Default: false
+
+--python_memory_profile
+    Generate a memory profile of the master.
+    Default: false
+
+    See: :ref:`Sections/04_Troubleshooting/03_Memory_Profiling:Memory Profiling`
+
+--python_worker_cache=<string>
+    Python worker cache (true/true:size/false).
+    Only for NIO without mpi worker and python >= 3.8.
+    Default: false
+
+    See: :ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/01_Executing:Worker cache`
+
+
+Worker cache
+""""""""""""
+
+The ``--python_worker_cache`` is used to enable a cache between processes on
+each worker node. More specifically, this flag enables a shared memory space
+between the worker processes, so that they can share objects between processess
+in order to leverage the deserialization overhead.
+
+The possible values are:
+
+``--python_worker_cache=false``
+    Disable the cache. This is the default value.
+
+``--python_worker_cache=true``
+    Enable the cache. The default cache size is 25% of the worker node memory.
+
+``--python_worker_cache=true:<SIZE>``
+    Enable the cache with specific cache size (in bytes).
+
+During execution, each worker will try to store automatically the parameters and
+return objects, so that next tasks can make use of them without needing to
+deserialize from file.
+
+.. IMPORTANT::
+
+    The supported objects to be stored in the cache is **limited** to:
+    **python primitives** (int, float, bool, str (less than 10 Mb), bytes (less
+    than 10 Mb) and None), **lists** (composed by python primitives),
+    **tuples** (composed by python primitives) and **Numpy ndarrays**.
+
+It is important to take into account that storing the objects in cache has
+some non negligible overhead that can be representative, while getting objects
+from cache shows to be more efficient than deserialization. Consequently,
+the applications that most benefit from the cache are the ones that reuse
+many times the same objects.
+
+Avoiding to store an object into the cache is possible by setting ``Cache`` to
+``False`` into the ``@task`` decorator for the parameter. For example,
+:numref:`no_cache_parameter` shows how to avoid caching the ``value``
+parameter.
+
+.. code-block:: python
+    :name: no_cache_parameter
+    :caption: Avoid parameter caching
+
+    from pycompss.api.task import task
+    from pycompss.api.parameter import *
+
+    @task(value={Cache: False})
+    def mytask(value):
+        ....
+
 
 Additional features
 ^^^^^^^^^^^^^^^^^^^
