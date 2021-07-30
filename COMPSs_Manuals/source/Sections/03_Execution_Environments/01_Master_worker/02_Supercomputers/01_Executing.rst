@@ -107,13 +107,13 @@ COMPSs Job submission
 ---------------------
 
 COMPSs jobs can be easily submited by running the **enqueue_compss**
-command. This command allows to configure any **runcompss** option and
-some particular queue options such as the queue system, the number of
-nodes, the wallclock time, the master working directory, the workers
+command. This command allows to configure any **runcompss**
+(:ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/01_Executing:Runcompss command`)
+option and some particular queue options such as the queue system, the number
+of nodes, the wallclock time, the master working directory, the workers
 working directory and number of tasks per node.
 
-Next, we provide detailed information about the ``enqueue_compss``
-command:
+Next, we provide detailed information about the ``enqueue_compss`` command:
 
 .. code-block:: console
 
@@ -400,7 +400,7 @@ command:
         Command line arguments to pass to the application. Can be empty.
 
 .. TIP::
-    For further information about applications scheduling refer to 
+    For further information about applications scheduling refer to
     :ref:`Sections/03_Execution_Environments/03_Schedulers:Schedulers`.
 
 .. ATTENTION::
