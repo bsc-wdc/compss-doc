@@ -430,20 +430,6 @@ parameter.
     def mytask(value):
         ....
 
-Task return objects are also automatically stored into cache. To avoid caching
-return objects it is necessary to set ``cache_returns=False`` into the
-``@task`` decorator, as :numref:`no_cache_return` shows.
-
-.. code-block:: python
-    :name: no_cache_return
-    :caption: Avoid return caching
-
-    from pycompss.api.task import task
-
-    @task(returns=1, cache_returns=False)
-    def mytask():
-        return list(range(10))
-
 
 Additional features
 ^^^^^^^^^^^^^^^^^^^
