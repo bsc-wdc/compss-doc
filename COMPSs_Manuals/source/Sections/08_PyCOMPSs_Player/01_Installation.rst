@@ -6,7 +6,7 @@ Requirements
 
 - Python 3
 - `docker <https://www.docker.com>`_ >= 17.12.0-ce
-- `docker-py <https://pypi.org/project/docker-py/>`_ for python
+- `docker <https://pypi.org/project/docker/>`_ for python
 
 
 Installation
