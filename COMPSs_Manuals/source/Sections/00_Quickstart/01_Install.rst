@@ -162,7 +162,7 @@ Install COMPSs
         | - `docker <https://www.docker.com>`_ >= 17.12.0-ce
         | - Python 3
         | - pip
-        | - `docker-py <https://pypi.org/project/docker-py/>`_ for python
+        | - `docker <https://pypi.org/project/docker/>`_ for python
         |
         | Since the PyCOMPSs player package is available in Pypi (`pycompss-player <https://pypi.org/project/pycompss-player/>`_), it can be easly installed with ``pip`` as follows:
         |
