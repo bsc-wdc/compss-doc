@@ -131,6 +131,21 @@ The following list enumerates the possible task types:
       -  **priority** "true" if the service takes priority, "false"
          otherwise. This parameter is used by the COMPSs scheduler (it
          is a String not a Java boolean).
+ 
+ -  **@Http:** It specifies the HTTP task properties.
+
+      -  **serviceName** Mandatory. Name of the HTTP Service that included at least one HTTP resource in the resources file.
+
+      -  **resource** Mandatory. URL extension to be concatenated with HTTP resource's base url.
+
+      -  **request** Mandatory. Type of the HTTP request (GET, POST, etc.).
+
+      -  **produces** In case of JSON responses, produces string defines where return value(s) is (are) stored in the retrieved JSON string. Returns are meant to be defined as '{{return_0}}','{{return_1}}', etc. (see the example here).
+
+      -  **payload** Payload string of POST requests if any. Payload strings can contain any kind of a COMPSs Parameter as long as it is defined between double curly brackets as '{{parameter_name}}'. File parameters can also be used simply by including only the file parameter name (see the examples here).
+
+      -  **payloadType** Payload type of POST requests (e.g: 'application/json').
+
 
 
 Parameter-level annotations
