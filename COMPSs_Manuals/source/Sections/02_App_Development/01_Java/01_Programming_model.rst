@@ -106,7 +106,7 @@ The following list enumerates the possible task types:
          otherwise. This parameter is used by the COMPSs scheduler (it
          is a String not a Java boolean).
 
- -  **@OmpSs:** Defines the Java method as a OmpSs invokation
+-  **@OmpSs:** Defines the Java method as a OmpSs invokation
 
       -  **binary** (Mandatory) String defining the full path of the
          binary that must be executed.
@@ -118,7 +118,7 @@ The following list enumerates the possible task types:
          otherwise. This parameter is used by the COMPSs scheduler (it
          is a String not a Java boolean).
 
- -  **@Service:** It specifies the service properties.
+-  **@Service:** It specifies the service properties.
 
       -  **namespace** Mandatory. Service namespace
 
@@ -132,7 +132,7 @@ The following list enumerates the possible task types:
          otherwise. This parameter is used by the COMPSs scheduler (it
          is a String not a Java boolean).
  
- -  **@Http:** It specifies the HTTP task properties.
+-  **@Http:** It specifies the HTTP task properties.
 
       -  **serviceName** Mandatory. Name of the HTTP Service that included at least one HTTP resource in the resources file.
 
