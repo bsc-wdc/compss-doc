@@ -305,7 +305,8 @@ HTTP decorator
 
 The *@http* decorator can be used for the tasks to be executed on a remote
 Web Service via HTTP requests. In order to create HTTP tasks, it is obligatory to
-define HTTP resource(s) in ``resources`` and ``project`` files (see this example).
+define HTTP resource(s) in ``resources`` and ``project`` files (see
+:ref:`Sections/01_Installation/06_Configuration_files:HTTP configuration`).
 Following code snippet (:numref:`http_task_python_basic`) is a basic HTTP task
 with all required parameters. At the time of execution, the runtime will search
 for HTTP resource from resources file which allows execution of 'service_1' and
@@ -525,6 +526,23 @@ Next tables summarizes the parameters of these decorators.
     | **app_name**           | (Mandatory) String defining the application that must be executed.                                                                |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
     | **computing_nodes**    | Integer defining the number of computing nodes reserved for the COMPSs execution (only a single node is reserved by default).     |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+
+* @http
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+    | Parameter              | Description                                                                                                                       |
+    +========================+===================================================================================================================================+
+    | **service_name**       | (Mandatory) Name of the HTTP Service that included at least one HTTP resource in the resources file.                              |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+    | **resource**           | (Mandatory) URL extension to be concatenated with HTTP resource's base URL.                                                       |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+    | **request**            | (Mandatory) Type of the HTTP request (GET, POST, etc.).                                                                           |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+    | **produces**           | In case of JSON responses, produces string defines where the return value(s) is (are) stored in the retrieved JSON string.        |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+    | **payload**            | Payload string of POST requests if any.                                                                                           |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+    | **payload_type**       | Payload type of POST requests (e.g: 'application/json').                                                                          |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
 * @multinode
