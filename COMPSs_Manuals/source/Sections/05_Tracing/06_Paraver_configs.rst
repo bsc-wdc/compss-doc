@@ -9,9 +9,9 @@ folder. The *cfgs* folder contains all the basic views, the *python*
 folder contains the configurations for Python events, and finally the
 *comm* folder contains the configurations related to communications.
 
-Additionally, it can be shown the data transfers and the task dependencies. 
+Additionally, it can be shown the data transfers and the task dependencies.
 To see them it is needed to show communication lines in the paraver windows,
-to only see the task dependencies are needed to put in Filter > Communications 
+to only see the task dependencies are needed to put in Filter > Communications
 > Comm size, the size equal to 0. Some of the dependencies between tasks may be lost.
 
 .. table:: General paraver configurations for COMPSs Applications
@@ -82,7 +82,7 @@ to only see the task dependencies are needed to put in Filter > Communications
     +-----------------------------------+------------------------------------------------------------------------+
     | time_btw_tasks.cfg                | Shows the time between tasks                                           |
     +-----------------------------------+------------------------------------------------------------------------+
-    | user_events.cfg                   | Shows the user events (type ``9000000``)                               |
+    | user_events.cfg                   | Shows the user events (type ``9100000``)                               |
     +-----------------------------------+------------------------------------------------------------------------+
 
 .. table:: Available paraver configurations for Python events of COMPSs Applications
