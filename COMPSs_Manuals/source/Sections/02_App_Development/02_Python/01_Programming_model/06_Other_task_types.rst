@@ -374,6 +374,30 @@ Note that if the task has multiple returns, 'return_0', 'return_1', return_2, et
 all must be defined in the ``produces`` string.
 
 
+It is also possible to take advantages of INOUT python dicts within HTTP tasks. In this case, ``updates`` string can be used to update the INOUT dict:
+
+.. code-block:: python
+    :name: http_task_python_produces
+    :caption: HTTP Task with return value to be extracted from a JSON string.
+
+    @http(service_name="service_1", request="GET",
+          resource="produce_format/test",
+          produces="{'length':'{{return_0}}', 'child_json':{'depth_1':'one', 'message':'{{param}}'}}",
+          updates='{{event}}.some_key = {{param}}')
+    @task(event=INOUT)
+    def http_updates(event):
+        """
+        """
+        pass
+
+In the example above, 'some_key' key of the INOUT dict param will be updated according to the response. Please note that the ``{{param}}`` is defined inside ``produces``. In other words,
+parameters that are defined inside ``produces`` string can be used in ``updates`` to update INOUT dicts.
+
+
+.. IMPORTANT::
+
+    **Disclaimer:** Due to serialization limitations, with the current implementation, outputs of regular PyCOMPSs ``tasks`` cannot be passed as input parameters to ``http`` tasks.
+
 Reduction decorator
 ^^^^^^^^^^^^^^^^^^^
 
@@ -543,6 +567,8 @@ Next tables summarizes the parameters of these decorators.
     | **payload**            | Payload string of POST requests if any.                                                                                           |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
     | **payload_type**       | Payload type of POST requests (e.g: 'application/json').                                                                          |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+    | **updates**            | To define INOUT parameter key to be updated with a value from HTTP response.                                                                          |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
 * @multinode

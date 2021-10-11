@@ -140,11 +140,13 @@ The following list enumerates the possible task types:
 
       -  **request** Mandatory. Type of the HTTP request (GET, POST, etc.).
 
-      -  **produces** In case of JSON responses, produces string defines where return value(s) is (are) stored in the retrieved JSON string. Returns are meant to be defined as '{{return_0}}','{{return_1}}', etc.
-
       -  **payload** Payload string of POST requests if any. Payload strings can contain any kind of a COMPSs Parameter as long as it is defined between double curly brackets as '{{parameter_name}}'. File parameters can also be used simply by including only the file parameter name.
 
       -  **payloadType** Payload type of POST requests (e.g: 'application/json').
+
+      -  **produces** In case of JSON responses, produces string can be used as a template to define 2 things; the first one is where the return value(s) is (are) stored in the retrieved JSON string. Returns are meant to be defined as '{{return_0}}','{{return_1}}', etc. And the second one is for additional parameters to be used 'updates' string. The user assign a value from the JSON response to a parameter and use that param to update an INOUT dictionary.
+
+      - **updates** (PyCOMPSs only) In case of INOUT dictionaries, the user can update the INOUT dict with a value extracted from the JSON response.
 
 
 
