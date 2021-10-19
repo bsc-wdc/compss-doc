@@ -791,5 +791,60 @@ and the limit of tasks as shown in the following example:
         </Service>
     </Project>
 
+
+HTTP configuration
+~~~~~~~~~~~~~~~~~~~~~~
+
+To enable execution of HTTP tasks, *Http* resources must be included in the
+``resources`` file as shown in the following example. Please note that the *BaseUrl*
+attribute is the unique identifier of each Http resource. However, it's possible to
+assign a single resource to multiple *services* and in the same way one *service*
+can be executed on various *resources*.
+
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <ResourcesList>
+        <ComputeNode Name="localhost">
+          ...
+        </ComputeNode>
+
+        <Http BaseUrl="http://remotehost:1992/test/">
+            <ServiceName>service_1</ServiceName>
+            <ServiceName>service_2</ServiceName>
+        </Http>
+
+        <Http BaseUrl="http://remotehost:2020/print/">
+            <ServiceName>service_2</ServiceName>
+            <ServiceName>service_3</ServiceName>
+        </Http>
+
+    </ResourcesList>
+
+Configuration of the ``project`` file must have the Http worker(s) as well, in order
+to let the runtime know limit of tasks to be executed in parallel on resources.
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <Project>
+        <MasterNode/>
+        <ComputeNode Name="localhost">
+          ...
+        </ComputeNode>
+
+        <Http BaseUrl="http://remotehost:1992/test/">
+            <LimitOfTasks>1</LimitOfTasks>
+        </Http>
+
+        <Http BaseUrl="http://remotehost:2020/print/">
+            <LimitOfTasks>1</LimitOfTasks>
+        </Http>
+
+    </Project>
+
+
+
 .. [1]
    https://appdb.egi.eu/store/software/rocci.cli

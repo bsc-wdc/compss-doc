@@ -106,7 +106,7 @@ The following list enumerates the possible task types:
          otherwise. This parameter is used by the COMPSs scheduler (it
          is a String not a Java boolean).
 
- -  **@OmpSs:** Defines the Java method as a OmpSs invokation
+-  **@OmpSs:** Defines the Java method as a OmpSs invokation
 
       -  **binary** (Mandatory) String defining the full path of the
          binary that must be executed.
@@ -118,7 +118,7 @@ The following list enumerates the possible task types:
          otherwise. This parameter is used by the COMPSs scheduler (it
          is a String not a Java boolean).
 
- -  **@Service:** It specifies the service properties.
+-  **@Service:** It specifies the service properties.
 
       -  **namespace** Mandatory. Service namespace
 
@@ -131,6 +131,23 @@ The following list enumerates the possible task types:
       -  **priority** "true" if the service takes priority, "false"
          otherwise. This parameter is used by the COMPSs scheduler (it
          is a String not a Java boolean).
+ 
+-  **@Http:** It specifies the HTTP task properties.
+
+      -  **serviceName** Mandatory. Name of the HTTP Service that included at least one HTTP resource in the resources file.
+
+      -  **resource** Mandatory. URL extension to be concatenated with HTTP resource's base URL.
+
+      -  **request** Mandatory. Type of the HTTP request (GET, POST, etc.).
+
+      -  **payload** Payload string of POST requests if any. Payload strings can contain any kind of a COMPSs Parameter as long as it is defined between double curly brackets as '{{parameter_name}}'. File parameters can also be used simply by including only the file parameter name.
+
+      -  **payloadType** Payload type of POST requests (e.g: 'application/json').
+
+      -  **produces** In case of JSON responses, produces string can be used as a template to define 2 things; the first one is where the return value(s) is (are) stored in the retrieved JSON string. Returns are meant to be defined as '{{return_0}}','{{return_1}}', etc. And the second one is for additional parameters to be used 'updates' string. The user assign a value from the JSON response to a parameter and use that param to update an INOUT dictionary.
+
+      - **updates** (PyCOMPSs only) In case of INOUT dictionaries, the user can update the INOUT dict with a value extracted from the JSON response.
+
 
 
 Parameter-level annotations
