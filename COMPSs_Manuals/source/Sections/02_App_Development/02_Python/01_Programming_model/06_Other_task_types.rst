@@ -377,7 +377,7 @@ all must be defined in the ``produces`` string.
 It is also possible to take advantages of INOUT python dicts within HTTP tasks. In this case, ``updates`` string can be used to update the INOUT dict:
 
 .. code-block:: python
-    :name: http_task_python_produces
+    :name: http_task_python_updatesSections/09_PyCOMPSs_Notebooks/demos/Mandelbrot_numba.ipynb
     :caption: HTTP Task with return value to be extracted from a JSON string.
 
     @http(service_name="service_1", request="GET",
@@ -568,7 +568,7 @@ Next tables summarizes the parameters of these decorators.
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
     | **payload_type**       | Payload type of POST requests (e.g: 'application/json').                                                                          |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
-    | **updates**            | To define INOUT parameter key to be updated with a value from HTTP response.                                                                          |
+    | **updates**            | To define INOUT parameter key to be updated with a value from HTTP response.                                                      |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
 * @multinode
