@@ -398,7 +398,7 @@ parameters that are defined inside ``produces`` string can be used in ``updates`
 
     **Disclaimer:** Due to serialization limitations, with the current implementation, outputs of regular PyCOMPSs ``tasks`` cannot be passed as input parameters to ``http`` tasks.
 
-    **Disclaimer:** COLLECTION_T and DICTIONARY_T type of parameters are not supported within HTTP tasks. However, Python lists and dictionary objects can be used.
+    **Disclaimer:** COLLECTION_* and DICTIONARY_* type of parameters are not supported within HTTP tasks. However, Python lists and dictionary objects can be used.
 
 Reduction decorator
 ^^^^^^^^^^^^^^^^^^^
