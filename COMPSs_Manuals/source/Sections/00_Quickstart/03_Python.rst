@@ -20,7 +20,7 @@ Consider the following code:
 
       def main():
           values = [1, 2, 3, 4]
-          start = time.time()
+          start_time = time.time()
           for pos in range(len(values)):
               values[pos] = increment(values[pos])
           values = compss_wait_on(values)
