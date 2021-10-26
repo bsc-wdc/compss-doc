@@ -21,7 +21,7 @@ hardware counters).
     It must be used a type number higher than ``8000050`` in order to avoid type
     conflicts.
 
-    **We suggest to use** ``9000000`` since we provide the ``user_events.cfg``
+    **We suggest to use** ``9100000`` since we provide the ``user_events.cfg``
     configuration file to visualize the user events of this type in PARAVER.
 
 
@@ -44,10 +44,10 @@ import ``pyextrae.sequential``.
 
     def main():
         value = 1
-        pyextrae.eventandcounters(9000000, 2)
+        pyextrae.eventandcounters(9100000, 2)
         result = increment(value)
         result = compss_wait_on(result)
-        pyextrae.eventandcounters(9000000, 0)
+        pyextrae.eventandcounters(9100000, 0)
         print("result: " + str(result))
 
     if __name__ == "__main__":
@@ -67,11 +67,11 @@ In this case it is necessary to import ``pyextrae.multiprocessing``.
     @task()
     def compute():
         import pyextrae.multiprocessing as pyextrae
-        pyextrae.eventandcounters(9000000, 2)
+        pyextrae.eventandcounters(9100000, 2)
         ...
         # Code to wrap within event 2
         ...
-        pyextrae.eventandcounters(9000000, 0)
+        pyextrae.eventandcounters(9100000, 0)
 
 .. CAUTION::
 
@@ -89,11 +89,11 @@ In this case it is necessary to import ``pyextrae.multiprocessing``.
 
         @task(tracing_hook=True)
         def compute():
-            pyextrae.eventandcounters(9000000, 2)
+            pyextrae.eventandcounters(9100000, 2)
             ...
             # Code to wrap within event 2
             ...
-            pyextrae.eventandcounters(9000000, 0)
+            pyextrae.eventandcounters(9100000, 0)
 
     The ``tracing_hook`` is disabled by default in order to reduce the overhead
     introduced by tracing avoiding to intercept all function calls within the
@@ -133,20 +133,20 @@ the value received as parameter.)
     @task(returns=1)
     def increment(value):
         import pyextrae.multiprocessing as pyextrae
-        pyextrae.eventandcounters(9000000, 2)
+        pyextrae.eventandcounters(9100000, 2)
         time.sleep(value)  # mimic some computation
-        pyextrae.eventandcounters(9000000, 0)
+        pyextrae.eventandcounters(9100000, 0)
         return value + 1
 
     def main():
         import pyextrae.sequential as pyextrae
         elements = [1, 2, 3, 4, 5, 6, 7, 8]
         results = []
-        pyextrae.eventandcounters(9000000, 1)
+        pyextrae.eventandcounters(9100000, 1)
         for element in elements:
             results.append(increment(element))
         results = compss_wait_on(results)
-        pyextrae.eventandcounters(9000000, 0)
+        pyextrae.eventandcounters(9100000, 0)
         print("results: " + str(results))
 
     if __name__ == "__main__":
@@ -165,7 +165,7 @@ the end of the file with your favourite text editor:
 .. code-block:: text
 
     EVENT_TYPE
-    0    9000000    User events
+    0    9100000    User events
     VALUES
     0      End
     1      Main code event
