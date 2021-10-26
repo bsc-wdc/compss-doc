@@ -62,6 +62,18 @@ library (:numref:`task_import_python`).
     its name is also available as camelcase.
 
 
+.. IMPORTANT::
+
+    The file that contains tasks definitions **MUST ONLY** contain imports
+    or the ``if __name__ == "__main__"`` section at the root level.
+    For example, :numref:`task_import_python` includes only the import for the
+    task decorator, and the main code is included into the ``main`` function.
+
+    The rationale of this is due to the fact that the module is loaded from
+    PyCOMPSs. Since the code included at the root level of the file is
+    executed when the module is loaded, this causes the execution to crash.
+
+
 Function parameters
 ^^^^^^^^^^^^^^^^^^^
 
