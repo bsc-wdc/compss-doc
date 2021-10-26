@@ -6,7 +6,7 @@ Requirements
 
 - Python 3
 - `docker <https://www.docker.com>`_ >= 17.12.0-ce
-- `docker <https://pypi.org/project/docker/>`_ for python
+- `docker package <https://pypi.org/project/docker/>`_ for Python
 
 
 Installation
@@ -41,7 +41,7 @@ Installation
            $ docker --version
            $ docker ps # this should be empty as no docker processes are yet running.
 
-2. Install `docker <https://docker-py.readthedocs.io/en/stable/>`__ for python
+2. Install `docker-py <https://docker-py.readthedocs.io/en/stable/>`__ for python
    (continue with step 3 if already installed):
 
    .. code:: bash

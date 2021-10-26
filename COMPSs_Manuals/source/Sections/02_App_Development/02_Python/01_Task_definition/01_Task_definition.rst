@@ -1,4 +1,4 @@
-Task definition
+Task Definition
 ---------------
 
 The task definition is structured in the following sections:
