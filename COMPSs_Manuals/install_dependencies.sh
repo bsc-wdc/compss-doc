@@ -7,4 +7,5 @@ python3 -m pip install "sphinx==4.0.3" \
                        nbsphinx \
                        sphinxcontrib.yt \
                        sphinxcontrib-svg2pdfconverter \
-                       "sphinxcontrib-bibtex==1.0.0"
+                       "sphinxcontrib-bibtex==1.0.0" \
+                       sphinx-panels
