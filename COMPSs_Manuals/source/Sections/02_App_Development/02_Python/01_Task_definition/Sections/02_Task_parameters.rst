@@ -16,29 +16,29 @@ Types
    * *IO streams* (for binaries)
 
 Direction
-   * Read-only (*IN* - default or *IN_DELETE*)
-   * Read-write (*INOUT*)
-   * Write-only (*OUT*)
-   * Concurrent (*CONCURRENT*)
-   * Commutative (*COMMUTATIVE*)
+   * Read-only (``IN`` - default or ``IN_DELETE``)
+   * Read-write (``INOUT``)
+   * Write-only (``OUT``)
+   * Concurrent (``CONCURRENT``)
+   * Commutative (``COMMUTATIVE``)
 
 COMPSs is able to automatically infer the parameter type for primitive
 types, strings and objects, while the user needs to specify it for
-files. On the other hand, the direction is only mandatory for *INOUT*
-and *OUT* parameters.
+files. On the other hand, the direction is only mandatory for ``INOUT``, ``OUT``,
+``CONCURRENT`` and ``COMMUTATIVE`` parameters.
 
 .. NOTE::
 
-  please note that in the following cases there is no need
+  Please note that in the following cases there is no need
   to include an argument in the *@task* decorator for a given
   task parameter:
 
   -  Parameters of primitive types (integer, long, float, boolean) and
      strings: the type of these parameters can be automatically inferred
-     by COMPSs, and their direction is always *IN*.
+     by COMPSs, and their direction is always ``IN``.
 
   -  Read-only object parameters: the type of the parameter is
-     automatically inferred, and the direction defaults to *IN*.
+     automatically inferred, and the direction defaults to ``IN``.
 
 The parameter metadata is available from the *pycompss* library
 (:numref:`parameter_import_python`)
@@ -62,140 +62,140 @@ to use a specific keyword. However, it is necessary to indicate its direction
 
     * - PARAMETER
       - DESCRIPTION
-    * - *IN*
+    * - ``IN``
       - The parameter is read-only. The type will be inferred.
-    * - *IN_DELETE*
+    * - ``IN_DELETE``
       - The parameter is read-only. The type will be inferred. Will be automatically removed after its usage.
-    * - *INOUT*
+    * - ``INOUT``
       - The parameter is read-write. The type will be inferred.
-    * - *OUT*
+    * - ``OUT``
       - The parameter is write-only. The type will be inferred.
-    * - *CONCURRENT*
+    * - ``CONCURRENT``
       - The parameter is read-write with concurrent access. The type will be inferred.
-    * - *COMMUTATIVE*
+    * - ``COMMUTATIVE``
       - The parameter is read-write with commutative access. The type will be inferred.
 
 
 Continuing with the example, in :numref:`task_example_python_object` the
-decorator specifies that *func* has a parameter called *obj*, of type object and
-*INOUT* direction. Note how the second parameter, *i*, does not need to
-be specified, since its type (integer) and direction (*IN*) are
+decorator specifies that ``foo`` has a parameter called ``obj``, of type object
+and ``INOUT`` direction. Note how the second parameter, ``i``, does not need to
+be specified, since its type (integer) and direction (``IN``) are
 automatically inferred by COMPSs.
 
 .. code-block:: python
     :name: task_example_python_object
-    :caption: Python task example with input output object (*INOUT*) and input object (*IN*)
+    :caption: Python task example with input output object (``INOUT``) and input object (``IN``)
 
     from pycompss.api.task import task
     from pycompss.api.parameter import INOUT, IN
 
     @task(obj=INOUT, i=IN)
-    def func(obj, i):
+    def foo(obj, i):
          ...
 
-The previous task definition can be simplified due to the default *IN* direction
+The previous task definition can be simplified due to the default ``IN`` direction
 for objects (:numref:`task_example_python_object_simplified`):
 
 .. code-block:: python
     :name: task_example_python_object_simplified
-    :caption: Python task example with input output object (*INOUT*) simplified
+    :caption: Python task example with input output object (``INOUT``) simplified
 
     from pycompss.api.task import task
     from pycompss.api.parameter import INOUT
 
     @task(obj=INOUT)
-    def func(obj, i):
+    def foo(obj, i):
          ...
 
 .. TIP::
 
   In order to choose the apropriate direction, a good exercise is to think if
-  the function only consumes the object (*IN*), modifies the object (*INOUT*),
-  or produces an object (*OUT*).
+  the function only consumes the object (``IN``), modifies the object (``INOUT``),
+  or produces an object (``OUT``).
 
 
 .. TIP::
 
-  The *IN_DELETE* definition is intended to one use objects. Consequently,
+  The ``IN_DELETE`` definition is intended to one use objects. Consequently,
   the information related to the object will be released as soon as possible.
 
 
 The user can also define that the access to a object is concurrent
-with *CONCURRENT* (:numref:`task_concurrent_python_object`). Tasks that share
-a *CONCURRENT* parameter will be executed in parallel, if any other dependency
+with ``CONCURRENT`` (:numref:`task_concurrent_python_object`). Tasks that share
+a ``CONCURRENT`` parameter will be executed in parallel, if any other dependency
 prevents this.
-The *CONCURRENT* direction allows users to have access from multiple tasks to
+The ``CONCURRENT`` direction allows users to have access from multiple tasks to
 the same object/file during their executions.
 
 .. code-block:: python
     :name: task_concurrent_python_object
-    :caption: Python task example with *CONCURRENT*
+    :caption: Python task example with ``CONCURRENT``
 
     from pycompss.api.task import task
     from pycompss.api.parameter import CONCURRENT
 
     @task(obj=CONCURRENT)
-    def func(obj, i):
+    def foo(obj, i):
          ...
 
-.. IMPORTANT::
+.. CAUTION::
 
   COMPSs does not manage the interaction with the objects used/modified
   concurrently. Taking care of the access/modification of the concurrent
   objects is responsibility of the developer.
 
 Or even, the user can also define that the access to a parameter is commutative
-with *COMMUTATIVE* (:numref:`task_commutative_python_object`).
-The execution order of tasks that share a *COMMUTATIVE* parameter can be changed
+with ``COMMUTATIVE`` (:numref:`task_commutative_python_object`).
+The execution order of tasks that share a ``COMMUTATIVE`` parameter can be changed
 by the runtime following the commutative property.
 
 .. code-block:: python
     :name: task_commutative_python_object
-    :caption: Python task example with *COMMUTATIVE*
+    :caption: Python task example with ``COMMUTATIVE``
 
     from pycompss.api.task import task
     from pycompss.api.parameter import COMMUTATIVE
 
     @task(obj=COMMUTATIVE)
-    def func(obj, i):
+    def foo(obj, i):
          ...
 
 
 Files
 ^^^^^
 
-It is possible to define that a parameter is a file (*FILE*), and its direction:
+It is possible to define that a parameter is a file (``FILE``), and its direction:
 
 .. LIST-TABLE::
     :header-rows: 1
 
     * - PARAMETER
       - DESCRIPTION
-    * - *FILE/FILE_IN*
-      - The parameter is a file. The direction is assumed to be *IN*.
-    * - *FILE_INOUT*
+    * - ``FILE/FILE_IN``
+      - The parameter is a file. The direction is assumed to be ``IN``.
+    * - ``FILE_INOUT``
       - The parameter is a read-write file.
-    * - *FILE_OUT*
+    * - ``FILE_OUT``
       - The parameter is a write-only file.
-    * - *FILE_CONCURRENT*
+    * - ``FILE_CONCURRENT``
       - The parameter is a concurrent read-write file.
-    * - *FILE_COMMUTATIVE*
+    * - ``FILE_COMMUTATIVE``
       - The parameter is a commutative read-write file.
 
 
 Continuing with the example, in :numref:`task_example_python` the decorator
-specifies that ``func`` has a parameter called ``f``, of type ``FILE`` and
+specifies that ``foo`` has a parameter called ``f``, of type ``FILE`` and
 ``INOUT`` direction (``FILE_INOUT``).
 
 .. code-block:: python
     :name: task_example_python
-    :caption: Python task example with input output file (*FILE_INOUT*)
+    :caption: Python task example with input output file (``FILE_INOUT``)
 
     from pycompss.api.task import task
     from pycompss.api.parameter import FILE_INOUT
 
     @task(f=FILE_INOUT)
-    def func(f):
+    def foo(f):
         fd = open(f, 'a+')
         ...
         # append something to fd
@@ -205,24 +205,24 @@ specifies that ``func`` has a parameter called ``f``, of type ``FILE`` and
     def main():
         f = "/path/to/file.extension"
         # Populate f
-        func(f)
+        foo(f)
 
 .. TIP::
 
     The value for a FILE (e.g. ``f``) is a string pointing to the file
-    to be used at ``func`` task. However, it can also be ``None`` if it is
+    to be used at ``foo`` task. However, it can also be ``None`` if it is
     optional. Consequently, the user can define task that can receive a FILE
     or not, and act accordingly. For example (:numref:`task_example_python_optional`):
 
     .. code-block:: python
         :name: task_example_python_optional
-        :caption: Python task example with optional input file (*FILE_IN*)
+        :caption: Python task example with optional input file (``FILE_IN``)
 
         from pycompss.api.task import task
         from pycompss.api.parameter import FILE_IN
 
         @task(f=FILE_IN)
-        def func(f):
+        def foo(f):
             if f:
                 # Do something with the file
                 with open(f, 'r') as fd:
@@ -235,29 +235,29 @@ specifies that ``func`` has a parameter called ``f``, of type ``FILE`` and
         def main():
             f = "/path/to/file.extension"
             # Populate f
-            num_lines_f = func(f)  # num_lines_f == actual number of lines of file.extension
+            num_lines_f = foo(f)  # num_lines_f == actual number of lines of file.extension
             g = None
-            num_lines_g = func(g)  # num_lines_g == -1
+            num_lines_g = foo(g)  # num_lines_g == -1
 
 The user can also define that the access to file parameter is concurrent
-with *FILE_CONCURRENT* (:numref:`task_concurrent_python`).
-Tasks that share a *FILE_CONCURRENT* parameter will be executed in parallel,
+with ``FILE_CONCURRENT`` (:numref:`task_concurrent_python`).
+Tasks that share a ``FILE_CONCURRENT`` parameter will be executed in parallel,
 if any other dependency prevents this.
-The *CONCURRENT* direction allows users to have access from multiple tasks to
+The ``CONCURRENT`` direction allows users to have access from multiple tasks to
 the same file during their executions.
 
 .. code-block:: python
     :name: task_concurrent_python
-    :caption: Python task example with *FILE_CONCURRENT*
+    :caption: Python task example with ``FILE_CONCURRENT``
 
     from pycompss.api.task import task
     from pycompss.api.parameter import FILE_CONCURRENT
 
     @task(f=FILE_CONCURRENT)
-    def func(f, i):
+    def foo(f, i):
          ...
 
-.. IMPORTANT::
+.. CAUTION::
 
   COMPSs does not manage the interaction with the files used/modified
   concurrently. Taking care of the access/modification of
@@ -265,19 +265,19 @@ the same file during their executions.
 
 
 Or even, the user can also define that the access to a parameter is a file
-*FILE_COMMUTATIVE* (:numref:`task_commutative_python`).
-The execution order of tasks that share a *FILE_COMMUTATIVE* parameter can be
+``FILE_COMMUTATIVE`` (:numref:`task_commutative_python`).
+The execution order of tasks that share a ``FILE_COMMUTATIVE`` parameter can be
 changed by the runtime following the commutative property.
 
 .. code-block:: python
     :name: task_commutative_python
-    :caption: Python task example with *FILE_COMMUTATIVE*
+    :caption: Python task example with ``FILE_COMMUTATIVE``
 
     from pycompss.api.task import task
     from pycompss.api.parameter import FILE_COMMUTATIVE
 
     @task(f=FILE_COMMUTATIVE)
-    def func(f, i):
+    def foo(f, i):
          ...
 
 
@@ -285,34 +285,34 @@ Directories
 ^^^^^^^^^^^
 
 In addition to files, it is possible to define that a parameter is a directory
-(*DIRECTORY*), and its direction:
+(``DIRECTORY``), and its direction:
 
 .. LIST-TABLE::
     :header-rows: 1
 
     * - PARAMETER
       - DESCRIPTION
-    * - *DIRECTORY_IN*
-      - The parameter is a directory and the direction is *IN*. The directory will be compressed before any transfer amongst nodes.
-    * - *DIRECTORY_INOUT*
+    * - ``DIRECTORY_IN``
+      - The parameter is a directory and the direction is ``IN``. The directory will be compressed before any transfer amongst nodes.
+    * - ``DIRECTORY_INOUT``
       - The parameter is a read-write directory. The directory will be compressed before any transfer amongst nodes.
-    * - *DIRECTORY_OUT*
+    * - ``DIRECTORY_OUT``
       - The parameter is a write-only directory. The directory will be compressed before any transfer amongst nodes.
 
 
-The definition of a *DIRECTORY* parameter is shown in
-:numref:`task_example_python_directory`. The decorator specifies that *func*
-has a parameter called *d*, of type *DIRECTORY* and *INOUT* direction.
+The definition of a ``DIRECTORY`` parameter is shown in
+:numref:`task_example_python_directory`. The decorator specifies that ``foo``
+has a parameter called ``d``, of type ``DIRECTORY`` and ``INOUT`` direction.
 
 .. code-block:: python
     :name: task_example_python_directory
-    :caption: Python task example with input output directory (*DIRECTORY_INOUT*)
+    :caption: Python task example with input output directory (``DIRECTORY_INOUT``)
 
     from pycompss.api.task import task
     from pycompss.api.parameter import DIRECTORY_INOUT
 
     @task(d=DIRECTORY_INOUT)
-    def func(d):
+    def foo(d):
          ...
 
 
@@ -326,13 +326,13 @@ It is possible to specify that a parameter is a collection of elements (e.g. lis
 
     * - PARAMETER
       - DESCRIPTION
-    * - *COLLECTION_IN*
+    * - ``COLLECTION_IN``
       - The parameter is read-only collection.
-    * - *COLLECTION_IN_DELETE*
+    * - ``COLLECTION_IN_DELETE``
       - The parameter is read-only collection for single usage (will be automatically removed after its usage).
-    * - *COLLECTION_INOUT*
+    * - ``COLLECTION_INOUT``
       - The parameter is read-write collection.
-    * - *COLLECTION_OUT*
+    * - ``COLLECTION_OUT``
       - The parameter is write-only collection.
 
 In this case (:numref:`task_collection_python`), the list may contain
@@ -344,31 +344,41 @@ dependences between the collections and the individual elements.
 
 .. code-block:: python
     :name: task_collection_python
-    :caption: Python task example with *COLLECTION* (*IN*)
+    :caption: Python task example with ``COLLECTION`` (``IN``)
 
     from pycompss.api.task import task
     from pycompss.api.parameter import COLLECTION
 
     @task(my_collection=COLLECTION)
-    def func(my_collection):
+    def foo(my_collection):
          for element in my_collection:
              ...
+
+.. CAUTION::
+
+    The current support for collections is limited to **static number of
+    elements** lists.
+
+    Consequently, *the length of the collection must be kept* during the
+    execution, and it is *NOT possible to append or delete elements* from
+    the collection in the tasks (only to receive elements or to modify
+    the existing if they are not primitives).
 
 The sub-objects of the collection can be collections of elements (and
 recursively). In this case, the runtime also keeps track of all elements
 contained in all sub-collections. In order to improve the performance,
 the depth of the sub-objects can be limited through the use of the
-*depth* parameter (:numref:`task_collection_depth_python`)
+``depth`` parameter (:numref:`task_collection_depth_python`)
 
 .. code-block:: python
     :name: task_collection_depth_python
-    :caption: Python task example with *COLLECTION_IN* and *Depth*
+    :caption: Python task example with ``COLLECTION_IN`` and ``Depth``
 
     from pycompss.api.task import task
     from pycompss.api.parameter import COLLECTION_IN
 
     @task(my_collection={Type:COLLECTION_IN, Depth:2})
-    def func(my_collection):
+    def foo(my_collection):
          for inner_collection in my_collection:
              for element in inner_collection:
                  # The contents of element will not be tracked
@@ -398,11 +408,11 @@ files (e.g. list) and its direction.
 
     * - PARAMETER
       - DESCRIPTION
-    * - *COLLECTION_FILE/COLLECTION_FILE_IN*
+    * - ``COLLECTION_FILE/COLLECTION_FILE_IN``
       - The parameter is read-only collection of files.
-    * - *COLLECTION_FILE_INOUT*
+    * - ``COLLECTION_FILE_INOUT``
       - The parameter is read-write collection of files.
-    * - *COLLECTION_FILE_OUT*
+    * - ``COLLECTION_FILE_OUT``
       - The parameter is write-only collection of files.
 
 
@@ -415,13 +425,13 @@ dependences between the collections and the individual elements.
 
 .. code-block:: python
     :name: task_collection_file_python
-    :caption: Python task example with *COLLECTION_FILE* (*IN*)
+    :caption: Python task example with ``COLLECTION_FILE`` (``IN``)
 
     from pycompss.api.task import task
     from pycompss.api.parameter import COLLECTION_FILE
 
     @task(my_collection=COLLECTION_FILE)
-    def func(my_collection):
+    def foo(my_collection):
          for file in my_collection:
              ...
 
@@ -429,8 +439,14 @@ The file of the collection can be collections of elements (and
 recursively). In this case, the runtime also keeps track of all files
 contained in all sub-collections.
 In order to improve the performance, the depth of the sub-files can be
-limited through the use of the *depth* parameter as with objects
+limited through the use of the ``depth`` parameter as with objects
 (:numref:`task_collection_depth_python`)
+
+.. CAUTION::
+
+    The current support for collections of files is also limited to a
+    **static number of elements**, as with
+    :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/02_Task_parameters:Collections`.
 
 
 Dictionaries
@@ -443,11 +459,11 @@ It is possible to specify that a parameter is a dictionary of elements (e.g. dic
 
     * - PARAMETER
       - DESCRIPTION
-    * - *DICTIONARY_IN*
+    * - ``DICTIONARY_IN``
       - The parameter is read-only dictionary.
-    * - *DICTIONARY_IN_DELETE*
+    * - ``DICTIONARY_IN_DELETE``
       - The parameter is read-only dictionary for single usage (will be automatically removed after its usage).
-    * - *DICTIONARY_INOUT*
+    * - ``DICTIONARY_INOUT``
       - The parameter is read-write dictionary.
 
 As with the collections, it is possible to specify that a parameter is
@@ -457,32 +473,39 @@ whose sub-objects will be handled automatically by the runtime.
 
 .. code-block:: python
     :name: task_dictionary_python
-    :caption: Python task example with *DICTIONARY* (*IN*)
+    :caption: Python task example with ``DICTIONARY`` (``IN``)
 
     from pycompss.api.task import task
     from pycompss.api.parameter import DICTIONARY
 
     @task(my_dictionary=DICTIONARY)
-    def func(my_dictionary):
+    def foo(my_dictionary):
          for k, v in my_dictionary.items():
              ...
+
+.. CAUTION::
+
+   The current support for dictionaries is also limited to a
+   **static number of elements**, as with
+   :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/02_Task_parameters:Collections`.
+
 
 The sub-objects of the dictionary can be collections or dictionary of elements
 (and recursively). In this case, the runtime also keeps track of all elements
 contained in all sub-collections/sub-dictionaries.
 In order to improve the performance, the depth of the sub-objects can be
-limited through the use of the *depth* parameter
+limited through the use of the ``depth`` parameter
 (:numref:`task_dictionary_depth_python`)
 
 .. code-block:: python
     :name: task_dictionary_depth_python
-    :caption: Python task example with *DICTIONARY_IN* and *Depth*
+    :caption: Python task example with ``DICTIONARY_IN`` and ``Depth``
 
     from pycompss.api.task import task
     from pycompss.api.parameter import DICTIONARY_IN
 
     @task(my_dictionary={Type:DICTIONARY_IN, Depth:2})
-    def func(my_dictionary):
+    def foo(my_dictionary):
          for key, inner_dictionary in my_dictionary.items():
              for sub_key, sub_value in inner_dictionary.items():
                  # The contents of element will not be tracked
@@ -504,26 +527,26 @@ Streams
 ^^^^^^^
 
 It is possible to use streams as input or output of the tasks by defining
-that a parameter is *STREAM* and its direction.
+that a parameter is ``STREAM`` and its direction.
 
 .. LIST-TABLE::
     :header-rows: 1
 
     * - PARAMETER
       - DESCRIPTION
-    * - *STREAM_IN*
+    * - ``STREAM_IN``
       - The parameter is a read-only stream.
-    * - *STREAM_OUT*
+    * - ``STREAM_OUT``
       - The parameter is a write-only stream.
 
-For example, :numref:`task_streams` shows an example using *STREAM_IN* or *STREAM_OUT*
+For example, :numref:`task_streams` shows an example using ``STREAM_IN`` or ``STREAM_OUT``
 parameters
 This parameters enable to mix a task-driven workflow with a data-driven workflow.
 
 
 .. code-block:: python
     :name: task_streams
-    :caption: Python task example with *STREAM_IN* and *STREAM_OUT*
+    :caption: Python task example with ``STREAM_IN`` and ``STREAM_OUT``
 
     from pycompss.api.task import task
     from pycompss.api.parameter import STREAM_IN
@@ -561,7 +584,7 @@ The stream parameter also supports Files (:numref:`task_streams_files`).
 
 .. code-block:: python
     :name: task_streams_files
-    :caption: Python task example with *STREAM_IN* and *STREAM_OUT* for files
+    :caption: Python task example with ``STREAM_IN`` and ``STREAM_OUT`` for files
 
     from pycompss.api.task import task
     from pycompss.api.parameter import STREAM_IN
@@ -603,7 +626,7 @@ In addition, the stream parameter can also be defined for binary tasks
 
 .. code-block:: python
     :name: task_streams_binary
-    :caption: Python task example with *STREAM_OUT* for binaries
+    :caption: Python task example with ``STREAM_OUT`` for binaries
 
     from pycompss.api.task import task
     from pycompss.api.binary import binary
@@ -627,16 +650,16 @@ output, and standard error.
 
     * - PARAMETER
       - DESCRIPTION
-    * - *STDIN*
+    * - ``STDIN``
       - The parameter is a IO stream for standard input redirection.
-    * - *STDOUT*
+    * - ``STDOUT``
       - The parameter is a IO stream for standard output redirection.
-    * - *STDERR*
+    * - ``STDERR``
       - The parameter is a IO stream for standard error redirection.
 
-.. IMPORTANT::
+.. CAUTION::
 
-    *STDIN*, *STDOUT* and *STDERR* are only supported in binary tasks
+    ``STDIN``, ``STDOUT`` and ``STDERR`` are only supported in binary tasks
 
 This is particularly useful with binary tasks that consume/produce from standard
 IO streams, and the user wants to redirect the standard input/output/error to a
@@ -646,7 +669,7 @@ in the standard output, and the task takes that output and stores it into `fds`.
 
 .. code-block:: python
     :name: task_streams_binary_std
-    :caption: Python task example with *STDOUT* for binaries
+    :caption: Python task example with ``STDOUT`` for binaries
 
     from pycompss.api.task import task
     from pycompss.api.binary import binary
