@@ -100,6 +100,7 @@ This manual is divided in 10 sections:
    Sections/06_PyCOMPSs_Notebooks
    Sections/07_Troubleshooting
    Sections/08_Tutorial
+   Sections/09_Success_stories
 
 
 .. Indices and tables
