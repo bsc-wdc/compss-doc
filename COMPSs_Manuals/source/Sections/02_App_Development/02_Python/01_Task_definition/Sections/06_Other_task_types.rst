@@ -209,7 +209,7 @@ following example (:numref:`mpi_for_python`).
 
 .. code-block:: python
     :name: mpi_for_python
-    :caption: MPI task example with collections and data layout
+    :caption: Python MPI task example.
 
     from pycompss.api.mpi import mpi
 
@@ -223,6 +223,27 @@ following example (:numref:`mpi_for_python`).
 In both cases, users can also define, MPI + OpenMP tasks by using ``processes``
 property to indicate the number of MPI processes and ``computing_units`` in the
 Task Constraints to indicate the number of OpenMP threads per MPI process.
+
+Users can also limit the distribution of the MPI processes through the nodes by
+using the ``processes_per_node`` property. In the following example
+(:numref:`processes_per_node_example`) the four MPI processes defined in the task
+will be divided in two groups of two processes. And all the processes of each
+group will be allocated to the same node. It will ensure that
+the defined MPI task will use up to two nodes.
+
+.. code-block:: python
+    :name: processes_per_node_example
+    :caption: MPI task example grouping MPI processes
+
+    from pycompss.api.mpi import mpi
+
+    @mpi(processes=4, processes_per_node=2)
+    @task()
+    def layout_test_with_all():
+       from mpi4py import MPI
+       rank = MPI.COMM_WORLD.rank
+       return rank
+
 
 The *@mpi* decorator can be combined with collections to allow the process of
 a list of parameters in the same MPI execution. By the default, all parameters
@@ -251,6 +272,14 @@ MPI task with an input collection (``col``). We have also defined a data layout
 with the property ``<arg_name>_layout`` and we specify the number of blocks
 (``block_count``), the elements per block (``block_length``), and the number of
 element between the starting block points (``stride``).
+
+Users can specify the MPI runner command with the ``runner`` how ever the
+arguments passed to the ``mpirun`` command differs depending on the implementation.
+To ensure that the correct arguments are passed to the runner, users can define the
+``COMPSS_MPIRUN_TYPE`` environment variable. The current supported values are
+``impi`` for Intel MPI and `ompi` for OpenMPI. Other MPI implementation can be
+supported by adding its corresponding properties file in the folder
+``$COMPSS_HOME/Runtime/configuration/mpi``.
 
 COMPSs decorator
 ^^^^^^^^^^^^^^^^
@@ -532,13 +561,15 @@ Next tables summarizes the parameters of these decorators.
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
     | Parameter              | Description                                                                                                                       |
     +========================+===================================================================================================================================+
-    | **binary**             | (Optional) String defining the full path of the binary that must be executed. Empty indicates python MPI code.                    |
+    | **binary**             | String defining the full path of the binary that must be executed. Empty indicates python MPI code.                               |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
     | **working_dir**        | Full path of the binary working directory inside the COMPSs Worker.                                                               |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
     | **runner**             | (Mandatory) String defining the MPI runner command.                                                                               |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
-    | **processes**          | Integer defining the number of computing nodes reserved for the MPI execution (only a single node is reserved by default).        |
+    | **processes**          | Integer defining the number of MPI processes spawned by the task. (Default 1)                                                     |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+    | **processes_per_node** | Integer defining the number of co-allocated MPI processses per node. The ``processes`` value should be multiple of this value     |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
 * @compss

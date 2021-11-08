@@ -106,3 +106,6 @@ groups without retrieving data while other tasks are being executed.
 
     if __name__=='__main__':
         test_taskgroup()
+
+.. IMPORTANT::
+     To ensure the COMPSs Exception is catched, they must be always combined with TaskGroups.
