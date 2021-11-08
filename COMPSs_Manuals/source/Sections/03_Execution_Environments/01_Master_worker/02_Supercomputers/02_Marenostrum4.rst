@@ -75,6 +75,12 @@ job information. For example:
     #SBATCH -t00:15:00
     ...
 
+.. CAUTION::
+    Since MN4 has different partitions in shared disk (gpfs): ``/gpfs/scratch``,
+    ``/gpfs/projects`` and ``/gpfs/home``, it is **recommended** to set the
+    ``base_log_dir`` flag in the same partition as the ``worker_working_dir``
+    to avoid performance drop.
+
 In order to track the jobs state users can run the following command:
 
 .. code-block:: console

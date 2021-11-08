@@ -404,10 +404,17 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
     :ref:`Sections/03_Execution_Environments/03_Schedulers:Schedulers`.
 
 .. ATTENTION::
-  From COMPSs 2.8 version, the ``worker_working_dir`` has changed its built-in
-  values to be more generic. The current values are: ``local_disk`` which
-  substitutes the former ``scratch`` value; and ``shared_disk`` which replaces the
-  ``gpfs`` value.
+    From COMPSs 2.8 version, the ``worker_working_dir`` has changed its built-in
+    values to be more generic. The current values are: ``local_disk`` which
+    substitutes the former ``scratch`` value; and ``shared_disk`` which replaces the
+    ``gpfs`` value.
+
+.. CAUTION::
+    Supercomputers may have different partitions in shared disks (e.g.
+    ``/gpfs/scratch``, ``/gpfs/projects`` and ``/gpfs/home``).
+
+    Consequently, it is **recommended** to set the ``base_log_dir`` flag in the
+    same partition as the ``worker_working_dir`` to avoid performance drop.
 
 
 Walltime
