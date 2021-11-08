@@ -138,7 +138,7 @@ the same object/file during their executions.
     def foo(obj, i):
          ...
 
-.. IMPORTANT::
+.. CAUTION::
 
   COMPSs does not manage the interaction with the objects used/modified
   concurrently. Taking care of the access/modification of the concurrent
@@ -257,7 +257,7 @@ the same file during their executions.
     def foo(f, i):
          ...
 
-.. IMPORTANT::
+.. CAUTION::
 
   COMPSs does not manage the interaction with the files used/modified
   concurrently. Taking care of the access/modification of
@@ -354,6 +354,16 @@ dependences between the collections and the individual elements.
          for element in my_collection:
              ...
 
+.. CAUTION::
+
+    The current support for collections is limited to **static number of
+    elements** lists.
+
+    Consequently, *the length of the collection must be kept* during the
+    execution, and it is *NOT possible to append or delete elements* from
+    the collection in the tasks (only to receive elements or to modify
+    the existing if they are not primitives).
+
 The sub-objects of the collection can be collections of elements (and
 recursively). In this case, the runtime also keeps track of all elements
 contained in all sub-collections. In order to improve the performance,
@@ -432,6 +442,12 @@ In order to improve the performance, the depth of the sub-files can be
 limited through the use of the ``depth`` parameter as with objects
 (:numref:`task_collection_depth_python`)
 
+.. CAUTION::
+
+    The current support for collections of files is also limited to a
+    **static number of elements**, as with
+    :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/02_Task_parameters:Collections`.
+
 
 Dictionaries
 ^^^^^^^^^^^^
@@ -466,6 +482,13 @@ whose sub-objects will be handled automatically by the runtime.
     def foo(my_dictionary):
          for k, v in my_dictionary.items():
              ...
+
+.. CAUTION::
+
+   The current support for dictionaries is also limited to a
+   **static number of elements**, as with
+   :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/02_Task_parameters:Collections`.
+
 
 The sub-objects of the dictionary can be collections or dictionary of elements
 (and recursively). In this case, the runtime also keeps track of all elements
@@ -634,7 +657,7 @@ output, and standard error.
     * - ``STDERR``
       - The parameter is a IO stream for standard error redirection.
 
-.. IMPORTANT::
+.. CAUTION::
 
     ``STDIN``, ``STDOUT`` and ``STDERR`` are only supported in binary tasks
 
