@@ -8,11 +8,11 @@ For instance, there is a set of decorators that can be placed over the
 *@task* decorator in order to define the task methods as a
 **binary invocation** (with the :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:Binary decorator`), as a **OmpSs
 invocation** (with the :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:OmpSs decorator`), as a **MPI invocation**
-(with the :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:MPI decorator`), as a **COMPSs application** (with the
+(with the :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:MPI decorator`), as an **I/O invocation**
+(with the :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:I/O decorator`), as a **COMPSs application** (with the
 :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:COMPSs decorator`), as a **task that requires multiple
 nodes** (with the :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:Multinode decorator`), or as a **Reduction task** that
-can be executed in parallel having a subset of the original input data as input (with the
-:ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:Reduction decorator`). These decorators must be placed over the
+can be executed in parallel having a subset of the original input data as input (with the :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:Reduction decorator`). These decorators must be placed over the
 *@task* decorator, and under the *@constraint* decorator if defined.
 
 Consequently, the task body will be empty and the function parameters
@@ -280,6 +280,55 @@ To ensure that the correct arguments are passed to the runner, users can define 
 ``impi`` for Intel MPI and `ompi` for OpenMPI. Other MPI implementation can be
 supported by adding its corresponding properties file in the folder
 ``$COMPSS_HOME/Runtime/configuration/mpi``.
+
+I/O decorator
+^^^^^^^^^^^^^
+
+The *@IO* decorator is used to declare a task as an I/O task. I/O tasks exclusively perform I/O (i.e., reading or writing) and should not perform any computations.
+
+.. code-block:: python
+    :name: io_task_python
+    :caption: I/O task example
+
+    from pycompss.api.IO import IO
+
+    @IO()
+    @task()
+    def io_func(text):
+        fh = open("dump_file", "w")
+        fh.write(text)
+        fh.close()
+
+The execution of I/O tasks can overlap with the execution of non-IO tasks (i.e., tasks that do not use the *@IO* decorator) if there are no dependencies between them. In addition to that, the scheduling of I/O tasks does not depend on the availability of computing units. For instance, an I/O task can be still scheduled and executed on a certain node even if all the CPUs on that node are busy executing non-I/O tasks. Hence, increasing parallelism level.
+
+The *@IO* decorator can be also used on top of the *@mpi* decorator (:ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:MPI decorator`) to declare a task that performs parallel I/O. Example :numref:`mpi_io_for_python` shows a MPI-IO task that does collective I/O with a NumPy array.
+
+.. code-block:: python
+    :name: mpi_io_for_python
+    :caption: Python MPI-IO task example.
+
+    from pycompss.api.IO import IO
+    from pycompss.api.mpi import mpi
+
+    @IO()
+    @mpi(processes=4)
+    @task()
+    def mpi_io_func(text_chunks):
+       from mpi4py import MPI
+       import numpy as np
+
+       fmode = MPI.MODE_WRONLY|MPI.MODE_CREATE
+       fh = MPI.File.Open(MPI.COMM_WORLD, "dump_file", fmode)
+
+       buffer = np.empty(20, dtype=np.int)
+       buffer[:] = MPI.COMM_WORLD.Get_rank()
+
+       offset = MPI.COMM_WORLD.Get_rank() * buffer.nbytes
+       fh.Write_at_all(offset, buffer)
+
+       fh.Close()
+
+
 
 COMPSs decorator
 ^^^^^^^^^^^^^^^^
