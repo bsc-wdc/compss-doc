@@ -42,6 +42,7 @@ supported COMPSs modules in the supercomputer. The users can also execute the
     COMPSs/2.7
     COMPSs/2.8
     COMPSs/2.9
+    COMPSs/2.10
     COMPSs/release(default)
     COMPSs/trunk
 
@@ -119,7 +120,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
 
     $ enqueue_compss -h
 
-    Usage: /apps/COMPSs/2.9/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
+    Usage: /apps/COMPSs/2.10/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
 
     * Options:
       General:
@@ -146,6 +147,10 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --extra_submit_flag=<flag>              Flag to pass queue system flags not supported by default command flags.
                                                 Spaces must be added as '#'
                                                 Default: Empty
+        --constraints=<constraints>             Constraints to pass to queue system.
+                                                Default: disabled
+        --qos=<qos>                             Quality of Service to pass to the queue system.
+                                                Default: default
         --cpus_per_task                         Number of cpus per task the queue system must allocate per task.
                                                 Note that this will be equal to the cpus_per_node in a worker node and
                                                 equal to the worker_in_master_cpus in a master node respectively.
@@ -189,11 +194,11 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 (Node type descriptions are provided in the --type_cfg flag)
       Launch configuration:
         --cpus_per_node=<int>                   Available CPU computing units on each node
-                                                Default: 32
+                                                Default: 48
         --gpus_per_node=<int>                   Available GPU computing units on each node
                                                 Default: 0
         --fpgas_per_node=<int>                  Available FPGA computing units on each node
-                                                Default:
+                                                Default: 0
         --io_executors=<int>                    Number of IO executors on each node
                                                 Default: 0
         --fpga_reprogram="<string>              Specify the full command that needs to be executed to reprogram the FPGA with
@@ -204,10 +209,10 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --node_memory=<MB>                      Maximum node memory: disabled | <int> (MB)
                                                 Default: disabled
         --node_storage_bandwidth=<MB>           Maximum node storage bandwidth: <int> (MB)
-                                                Default:
+                                                Default: 450
 
         --network=<name>                        Communication network for transfers: default | ethernet | infiniband | data.
-                                                Default: ethernet
+                                                Default: infiniband
 
         --prolog="<string>"                     Task to execute before launching COMPSs (Notice the quotes)
                                                 If the task has arguments split them by "," rather than spaces.
@@ -224,10 +229,10 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Default: local_disk
 
         --worker_in_master_cpus=<int>           Maximum number of CPU computing units that the master node can run as worker. Cannot exceed cpus_per_node.
-                                                Default: 0
+                                                Default: 24
         --worker_in_master_memory=<int> MB      Maximum memory in master node assigned to the worker. Cannot exceed the node_memory.
                                                 Mandatory if worker_in_master_cpus is specified.
-                                                Default: disabled
+                                                Default: 50000
         --worker_port_range=<min>,<max>         Port range used by the NIO adaptor at the worker side
                                                 Default: 43001,43005
         --jvm_worker_in_master_opts="<string>"  Extra options for the JVM of the COMPSs Worker in the Master Node.
@@ -275,9 +280,9 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --storage_conf=<path>                   Path to the storage configuration file
                                                 Default: null
         --project=<path>                        Path to the project XML file
-                                                Default: /opt/COMPSs//Runtime/configuration/xml/projects/default_project.xml
+                                                Default: /apps/COMPSs/2.10//Runtime/configuration/xml/projects/default_project.xml
         --resources=<path>                      Path to the resources XML file
-                                                Default: /opt/COMPSs//Runtime/configuration/xml/resources/default_resources.xml
+                                                Default: /apps/COMPSs/2.10//Runtime/configuration/xml/resources/default_resources.xml
         --lang=<name>                           Language of the application (java/c/python)
                                                 Default: Inferred is possible. Otherwise: java
         --summary                               Displays a task execution summary at the end of the application execution
@@ -293,6 +298,8 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Default: null
         --trace_label=<string>                  Add a label in the generated trace file. Only used in the case of tracing is activated.
                                                 Default: None
+        --tracing_task_dependencies             Adds communication lines for the task dependencies ( [ true | false ] )
+                                                Default: false
         --comm=<ClassName>                      Class that implements the adaptor for communications
                                                 Supported adaptors:
                                                       ├── es.bsc.compss.nio.master.NIOAdaptor
@@ -326,9 +333,9 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --classpath=<path>                      Path for the application classes / modules
                                                 Default: Working Directory
         --appdir=<path>                         Path for the application class folder.
-                                                Default: /home/user
+                                                Default: /home/bscXX/bscXXYYY
         --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
-                                                Default: /home/user
+                                                Default: /home/bscXX/bscXXYYY
         --env_script=<path>                     Path to the script file where the application environment variables are defined.
                                                 COMPSs sources this script before running the application.
                                                 Default: Empty
@@ -347,7 +354,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed by "," and without blank spaces (Notice the quotes)
                                                 Default:
         --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Notice the quotes)
-                                                Default: -Xms1024m,-Xmx1024m,-Xmn400m
+                                                Default: -Xms256m,-Xmx1024m,-Xmn100m
         --cpu_affinity="<string>"               Sets the CPU affinity for the workers
                                                 Supported options: disabled, automatic, user defined map of the form "0-8/9,10,11/12-14,15,16"
                                                 Default: automatic
@@ -379,17 +386,22 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Default: false
         --python_interpreter=<string>           Python interpreter to use (python/python2/python3).
                                                 Default: python Version:
-        --python_propagate_virtual_environment=<true>  Propagate the master virtual environment to the workers (true/false).
+        --python_propagate_virtual_environment=<bool>  Propagate the master virtual environment to the workers (true/false).
                                                        Default: true
-        --python_mpi_worker=<false>             Use MPI to run the python worker instead of multiprocessing. (true/false).
+        --python_mpi_worker=<bool>              Use MPI to run the python worker instead of multiprocessing. (true/false).
                                                 Default: false
         --python_memory_profile                 Generate a memory profile of the master.
                                                 Default: false
         --python_worker_cache=<string>          Python worker cache (true/size/false).
                                                 Only for NIO without mpi worker and python >= 3.8.
                                                 Default: false
+        --python_cache_profiler=<bool>          Python cache profiler (true/false).
+                                                Only for NIO without mpi worker and python >= 3.8.
+                                                Default:
         --wall_clock_limit=<int>                Maximum duration of the application (in seconds).
                                                 Default: 0
+        --shutdown_in_node_failure=<bool>       Stop the whole execution in case of Node Failure.
+                                                Default: false
 
     * Application name:
         For Java applications:   Fully qualified name of the application
@@ -398,6 +410,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
 
     * Application arguments:
         Command line arguments to pass to the application. Can be empty.
+
 
 .. TIP::
     For further information about applications scheduling refer to
