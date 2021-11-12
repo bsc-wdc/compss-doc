@@ -90,6 +90,8 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: null
         --trace_label=<string>                  Add a label in the generated trace file. Only used in the case of tracing is activated.
                                                 Default: None
+        --tracing_task_dependencies             Adds communication lines for the task dependencies ( [ true | false ] )
+                                                Default: false
         --comm=<ClassName>                      Class that implements the adaptor for communications
                                                 Supported adaptors:
                                                       ├── es.bsc.compss.nio.master.NIOAdaptor
@@ -123,9 +125,9 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
         --classpath=<path>                      Path for the application classes / modules
                                                 Default: Working Directory
         --appdir=<path>                         Path for the application class folder.
-                                                Default: /home/user
+                                                Default: /home/user/
         --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
-                                                Default: /home/user
+                                                Default: /home/user/
         --env_script=<path>                     Path to the script file where the application environment variables are defined.
                                                 COMPSs sources this script before running the application.
                                                 Default: Empty
@@ -144,7 +146,7 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
         --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed by "," and without blank spaces (Notice the quotes)
                                                 Default:
         --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Notice the quotes)
-                                                Default: -Xms1024m,-Xmx1024m,-Xmn400m
+                                                Default: -Xms256m,-Xmx1024m,-Xmn100m
         --cpu_affinity="<string>"               Sets the CPU affinity for the workers
                                                 Supported options: disabled, automatic, user defined map of the form "0-8/9,10,11/12-14,15,16"
                                                 Default: automatic
@@ -176,17 +178,22 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: false
         --python_interpreter=<string>           Python interpreter to use (python/python2/python3).
                                                 Default: python Version:
-        --python_propagate_virtual_environment=<true>  Propagate the master virtual environment to the workers (true/false).
+        --python_propagate_virtual_environment=<bool>  Propagate the master virtual environment to the workers (true/false).
                                                        Default: true
-        --python_mpi_worker=<false>             Use MPI to run the python worker instead of multiprocessing. (true/false).
+        --python_mpi_worker=<bool>              Use MPI to run the python worker instead of multiprocessing. (true/false).
                                                 Default: false
         --python_memory_profile                 Generate a memory profile of the master.
                                                 Default: false
         --python_worker_cache=<string>          Python worker cache (true/size/false).
                                                 Only for NIO without mpi worker and python >= 3.8.
                                                 Default: false
+        --python_cache_profiler=<bool>          Python cache profiler (true/false).
+                                                Only for NIO without mpi worker and python >= 3.8.
+                                                Default: false
         --wall_clock_limit=<int>                Maximum duration of the application (in seconds).
                                                 Default: 0
+        --shutdown_in_node_failure=<bool>       Stop the whole execution in case of Node Failure.
+                                                Default: false
 
     * Application name:
         For Java applications:   Fully qualified name of the application
@@ -377,6 +384,13 @@ Some of the **runcompss** flags are only for PyCOMPSs application execution:
 
     See: :ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/01_Executing:Worker cache`
 
+--python_cache_profiler=<bool>
+    Python cache profiler (true/false).
+    Only for NIO without mpi worker and python >= 3.8.
+    Default: false
+
+    See: :ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/01_Executing:Worker cache profiling`
+
 
 Worker cache
 """"""""""""
@@ -443,6 +457,28 @@ return objects it is necessary to set ``cache_returns=False`` into the
     @task(returns=1, cache_returns=False)
     def mytask():
         return list(range(10))
+
+Worker cache profiling
+""""""""""""""""""""""
+
+In order to use the cache profiler, you need to add the following flag:
+
+``--python_cache_profiler=true``
+    Additionally, you also need to activate the cache with
+    ``--python_worker_cache=true``.
+
+When using the cache profiler, the cache parameter in ``@task`` decorator
+is going to be ignored and all elements that can be stored in the cache
+will be stored.
+
+The cache profiling file will be located in the workers' folder within the
+log folder.
+In this file, you will find a summary showing for each function and parameter
+(including the return of the function), how many times has been the parameter
+been added to the cache (*PUT*), and how many times has been this parameter
+been deserialized from the cache (*GET*).
+Furthermore, there is also a list (*USED IN*), that shows in which parameter
+of which function the added parameter has been used.
 
 
 Additional features
