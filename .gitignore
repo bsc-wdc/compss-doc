@@ -16,6 +16,10 @@
 # Ignore pdfs
 *.pdf
 
+# Ignore vscode
+.vscode
+
 # Ignore documentation builds
+_build/
 build/
 

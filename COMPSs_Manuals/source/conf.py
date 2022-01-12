@@ -46,7 +46,9 @@ extensions = ['sphinx.ext.todo',
               'sphinxcontrib.rsvgconverter',
               'sphinxcontrib.bibtex',
               'sphinxcontrib.yt',
-              'sphinx_panels']
+              'sphinx_panels',
+              'sphinx_tabs.tabs',
+              'sphinx_toolbox.collapse']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -119,6 +121,9 @@ nbsphinx_execute_arguments = [
 ]
 # Do not allow building if execution is enabled and a notebook fails
 nbsphinx_allow_errors = True
+
+# Disable tabs can be closed by selecting the open tab
+sphinx_tabs_disable_tab_closing = True
 
 # -- Options for HTML output ----------------------------------------------
 
