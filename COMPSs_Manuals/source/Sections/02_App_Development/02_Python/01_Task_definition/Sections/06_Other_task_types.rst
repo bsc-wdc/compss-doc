@@ -353,7 +353,7 @@ Moreover, output of the full MPMD MPI programs can be forwarded to an ``FILE_OUT
     def std_out(keyword, in_file_1, in_file_2, result):
         pass
 
-Other parameters of *@mpmd_mpi* decorator such as ``working_dir``, ``fail_by_exit_code``, ``processes_per_node``, have the same behaviors as in *@mpi*.
+Other parameters of *@mpmd_mpi* decorator such as ``working_dir``, ``fail_by_exit_value``, ``processes_per_node``, have the same behaviors as in *@mpi*.
 
 
 I/O decorator
@@ -773,7 +773,7 @@ Next tables summarizes the parameters of these decorators.
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
     | **processes_per_node** | Integer defining the number of co-allocated MPI processses per node. The ``processes`` value should be multiple of this value           |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-    | **fail_by_exit_code**  | If set to 'True', and ``returns`` value of the 'task' definition is 'int', exit code of the MPI command will be returned.               |
+    | **fail_by_exit_value** | If set to 'False', and ``returns`` value of the 'task' definition is 'int', exit code of the MPI command will be returned.              |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
     | **programs**           | List of single MPI program dictionaries where program specific parameters (``binary``, ``processes``, ``params``) are defined.          |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
