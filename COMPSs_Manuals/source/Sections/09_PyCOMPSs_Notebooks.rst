@@ -22,7 +22,7 @@ It is divided into three main folders:
 
 .. HINT::
 
-    These notebooks can be used within **MyBinder**, with the **PyCOMPSs Player**,
+    These notebooks can be used within **MyBinder**, with the **PyCOMPSs CLI**,
     within **Docker**, within **Virtual Machine** (recommended for Windows) provided by BSC, or locally.
 
     Prerequisites
@@ -34,9 +34,9 @@ It is divided into three main folders:
 
                 Sometimes it may take a while to deploy the COMPSs infrastructure.
 
-        * Using **PyCOMPSs Player**:
+        * Using **PyCOMPSs CLI**:
 
-            * ``pycompss-player`` (see :ref:`Sections/08_PyCOMPSs_Player/01_Installation:Requirements and Installation`)
+            * ``pycompss-cli`` (see :ref:`Sections/08_PyCOMPSs_CLI/01_Installation:Requirements and Installation`)
 
         * Using **Docker**:
 
@@ -64,9 +64,9 @@ It is divided into three main folders:
 
             Just explore the folders and run the examples (they have the same structure as this documentation).
 
-        * Using ``pycompss-player``:
+        * Using ``pycompss-cli``:
 
-            Check the ``pycompss-player`` usage instructions (see :ref:`Sections/08_PyCOMPSs_Player/02_Usage:Usage`)
+            Check the ``pycompss-cli`` usage instructions (see :ref:`Sections/08_PyCOMPSs_CLI/02_Usage:Usage`)
 
             Get the notebooks:
 

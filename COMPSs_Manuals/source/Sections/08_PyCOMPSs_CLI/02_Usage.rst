@@ -1,7 +1,7 @@
 Usage
 =====
 
-``pycompss-player`` provides the ``pycompss`` command line tool (``compss``
+``pycompss-cli`` provides the ``pycompss`` command line tool (``compss``
 and ``dislib`` are also alternatives to ``pycompss``).
 
 This command line tool enables to deploy and manage multiple COMPSs infrastructures
@@ -12,7 +12,7 @@ The supported flags are:
 .. code-block:: console
 
     $ pycompss
-    PyCOMPSs|COMPSS Player:
+    PyCOMPSs|COMPSS CLI:
 
     Usage: pycompss COMMAND  |  compss COMMAND  |  dislib COMMAND
 
@@ -121,6 +121,14 @@ Create a new COMPSs environment in your development directory
             $
             $ # Or with list of modules 
             $ pycompss init cluster -l username@mn1.bsc.es -m COMPSs/2.10 ANACONDA/5.1.0_py3
+
+        .. NOTE::
+            
+            The SSH access to the cluster should be configured to work without password.
+            If you need to set up your machine for the first time please take a look
+            at :ref:`Sections/01_Installation/05_Additional_configuration:Additional Configuration`
+            Section for a detailed description of the additional configuration.
+
 
         The parameter ``-m`` also supports passing a file containing not only modules but any kind of commands
         that you need to execute for the remote cluster environment.
@@ -466,6 +474,13 @@ Every subbmited job that didn't finish yet can be cancelled using the ``pycompss
     $ pycompss job cancel 19152612 # JOBID
         Job `19152612` cancelled
 
+You can also check the status of a particular job with the ``pycompss job status`` command.
+
+.. code-block:: console
+
+    $ pycompss job status 19152612 # JOBID
+        SUCCESS:RUNNING
+
 Also we can query the history of past jobs and we'll get the app name, the environment variables and
 the enqueue_compss arguments used to submit the job.
 
@@ -597,7 +612,7 @@ Running Jupyter notebooks
 
         .. code-block:: console
 
-            $ pycompss app deploy syntax --local_source tutorial_apps/python/notebooks/syntax/
+            $ pycompss app deploy synchronization --local_source tutorial_apps/python/notebooks/syntax/
 
         The command will be executed inside the remote directory specified at deployment.
         The path for the selected application will be automatically resolved and the jupyter server
@@ -605,7 +620,7 @@ Running Jupyter notebooks
 
         .. code-block:: console
 
-            $ pycompss jupyter -app syntax --port 9999
+            $ pycompss jupyter -app synchronization --port 9999
                 Job submitted: 19320191
                 Waiting for jupyter to start...
                 Connecting to jupyter server...
