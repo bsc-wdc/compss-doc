@@ -12,8 +12,12 @@ invocation** (with the :ref:`Sections/02_App_Development/02_Python/01_Task_defin
 (with the :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:I/O decorator`), as a **COMPSs application** (with the
 :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:COMPSs decorator`), as a **task that requires multiple
 nodes** (with the :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:Multinode decorator`), or as a **Reduction task** that
-can be executed in parallel having a subset of the original input data as input (with the :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:Reduction decorator`). These decorators must be placed over the
-*@task* decorator, and under the *@constraint* decorator if defined.
+can be executed in parallel having a subset of the original input data as input (with the :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:Reduction decorator`).
+
+.. IMPORTANT::
+
+    **NOTE:** If defined, these decorators must be placed after (below) the *@constraint* decorator, and before (on top of) the *@task* decorator.
+
 
 Consequently, the task body will be empty and the function parameters
 will be used as invocation parameters with some extra information that
