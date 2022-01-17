@@ -154,27 +154,27 @@ Install COMPSs
         |
 
     .. tab-container:: Docker
-        :title: Docker - PyCOMPSs Player
+        :title: Docker - PyCOMPSs CLI
 
         |
-        | **Requirements:**
+        | **Requirements (Optional):**
         |
         | - `docker <https://www.docker.com>`_ >= 17.12.0-ce
         | - Python 3
         | - pip
         | - `docker package for Python <https://pypi.org/project/docker/>`_
         |
-        | Since the PyCOMPSs player package is available in Pypi (`pycompss-player <https://pypi.org/project/pycompss-player/>`_), it can be easly installed with ``pip`` as follows:
+        | Since the PyCOMPSs CLI package is available in Pypi (`pycompss-cli <https://pypi.org/project/pycompss-cli/>`_), it can be easly installed with ``pip`` as follows:
         |
 
           .. code-block:: console
 
-              $ python3 -m pip install pycompss-player
+              $ python3 -m pip install pycompss-cli
 
         |
-        | A complete guide about the PyCOMPSs Player installation and usage can be found in the :ref:`Sections/08_PyCOMPSs_Player:PyCOMPSs Player` Section.
+        | A complete guide about the PyCOMPSs CLI installation and usage can be found in the :ref:`Sections/08_PyCOMPSs_CLI:PyCOMPSs CLI` Section.
         |
 
           .. TIP::
 
-              Please, check the PyCOMPSs player :ref:`Sections/08_PyCOMPSs_Player/01_Installation:Installation` Section for the further information with regard to the requirements installation and troubleshooting.
+              Please, check the PyCOMPSs CLI :ref:`Sections/08_PyCOMPSs_CLI/01_Installation:Installation` Section for the further information with regard to the requirements installation and troubleshooting.

@@ -44,7 +44,7 @@ API call.
 
 .. NOTE::
 
-    If you are using the PyCOMPSs player (`pycompss-player <https://pypi.org/project/pycompss-player/>`_),
+    If you are using the PyCOMPSs CLI (`pycompss-cli <https://pypi.org/project/pycompss-cli/>`_),
     it is time to deploy the COMPSs environment within your current folder:
 
     .. code-block:: console
@@ -66,7 +66,7 @@ Now let's execute ``increment.py``. To this end, we will use the
     $ runcompss -g increment.py
       [Output in next step]
 
-Or alternatively, the ``pycompss run`` command if using the PyCOMPSs player
+Or alternatively, the ``pycompss run`` command if using the PyCOMPSs CLI
 (which wraps the ``runcompss`` command and launches it within the COMPSs' docker
 container):
 
@@ -147,7 +147,7 @@ displayed with any dot viewer.
         $ compss_gengraph complete_graph.dot
         $ evince complete_graph.pdf  # or use any other pdf viewer you like
 
-    It is also available within the PyCOMPSs player:
+    It is also available within the PyCOMPSs CLI:
 
     .. code-block:: console
 
@@ -211,7 +211,7 @@ which can be displayed and analysed with `PARAVER <https://tools.bsc.es/paraver>
 
 .. NOTE::
 
-    In the case of using the PyCOMPSs player, the trace will be generated
+    In the case of using the PyCOMPSs CLI, the trace will be generated
     in the ``.COMPSs/<APP_NAME>_<00-99>/trace`` directory:
 
     .. code-block:: console
@@ -227,7 +227,7 @@ Once Paraver has started, lets visualize the tasks:
 
 .. NOTE::
 
-    In the case of using the PyCOMPSs player, the configuration files can be
+    In the case of using the PyCOMPSs CLI, the configuration files can be
     obtained by downloading them from the `COMPSs repositoy <https://github.com/bsc-wdc/compss/tree/stable/files/paraver/cfgs>`_.
 
 And you should see:
@@ -254,7 +254,7 @@ check the :ref:`Sections/05_Tracing:Tracing` Section.
 
 .. NOTE::
 
-    If you are using the PyCOMPSs player, it is time to stop the COMPSs environment:
+    If you are using the PyCOMPSs CLI, it is time to stop the COMPSs environment:
 
     .. code-block:: console
 

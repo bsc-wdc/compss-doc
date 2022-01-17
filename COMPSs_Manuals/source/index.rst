@@ -62,7 +62,7 @@ This manual is divided in 9 sections:
    Sections/05_Tracing
    Sections/06_Persistent_Storage
    Sections/07_Sample_Applications
-   Sections/08_PyCOMPSs_Player
+   Sections/08_PyCOMPSs_CLI
    Sections/09_PyCOMPSs_Notebooks
    Sections/04_Troubleshooting
 
