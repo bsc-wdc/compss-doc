@@ -281,6 +281,77 @@ To ensure that the correct arguments are passed to the runner, users can define 
 supported by adding its corresponding properties file in the folder
 ``$COMPSS_HOME/Runtime/configuration/mpi``.
 
+
+MPMD MPI decorator
+^^^^^^^^^^^^^
+
+The *@mpmd_mpi* decorator can be used to define Multiple Program Multiple Data (MPMD) MPI tasks as shown in the following example
+(:numref:`mpmd_mpi_task`):
+
+.. code-block:: python
+    :name: mpmd_mpi_task
+    :caption: MPMD MPI task example
+
+    from pycompss.api.mpmd_mpi import mpmd_mpi
+
+    @mpmd_mpi(runner="mpirun",
+              programs=[
+                   dict(binary="hostname", processes=2),
+                   dict(binary="date", processes=2)
+              ])
+    @task()
+    def basic():
+        pass
+
+
+The definition implies that MPMD MPI command will be run by 'mpirun', and will execute 2 processes for 'hostname', and 2 processes to show the '
+date'. It's not mandatory to specify total number of programs as long as they are added inside ``programs`` list of dictionaries argument.
+
+Each of the MPMD MPI programs must at least have ``binary``, but also can have ``processes`` and ``params`` string (:numref:`mpmd_mpi_task_params`):
+
+.. code-block:: python
+    :name: mpmd_mpi_task_params
+    :caption: MPMD MPI task example
+
+    from pycompss.api.mpmd_mpi import mpmd_mpi
+
+    @mpmd_mpi(runner="mpirun",
+              programs=[
+                   dict(binary="date", processes=2, params="-d {{first}}"),
+                   dict(binary="date", processes=4, params="-d {{second}}")
+              ])
+    @task()
+    def params(first, second):
+        pass
+
+    def print_monday_friday(self):
+        params("next monday", "next friday")
+        compss_barrier()
+
+
+When executed, this MPMD MPI program would invoke 2 MPI processes to print the date of next Monday, and 4 processes for next Friday. Params string
+replaces every parameter that is 'called' between double curly braces with their real value. This allows using multiple ``FILE_IN`` parameters for multiple MPI programs.
+Moreover, output of the full MPMD MPI programs can be forwarded to an ``FILE_OUT_STDOUT`` param:
+
+
+.. code-block:: python
+    :name: mpmd_mpi_task_file_params
+    :caption: MPMD MPI task example
+
+    from pycompss.api.mpmd_mpi import mpmd_mpi
+
+    @mpmd_mpi(runner="mpirun",
+              programs=[
+                   dict(binary="grep", params="{{keyword}} {{in_file_1}}"),
+                   dict(binary="grep", params="{{keyword}} {{in_file_2}}"),
+              ])
+    @task(in_file=FILE_IN, result={Type: FILE_OUT_STDOUT})
+    def std_out(keyword, in_file_1, in_file_2, result):
+        pass
+
+Other parameters of *@mpmd_mpi* decorator such as ``working_dir``, ``fail_by_exit_code``, ``processes_per_node``, have the same behaviors as in *@mpi*.
+
+
 I/O decorator
 ^^^^^^^^^^^^^
 
@@ -686,6 +757,21 @@ Next tables summarizes the parameters of these decorators.
     | **processes_per_node** | Integer defining the number of co-allocated MPI processses per node. The ``processes`` value should be multiple of this value           |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
     | **params**             | Params string to be added to end of the execution command of the binary. It can contain python task parameters defined in curly braces. |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+
+* @mpmd_mpi
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+    | Parameter              | Description                                                                                                                             |
+    +========================+=========================================================================================================================================+
+    | **runner**             | (Mandatory) String defining the MPMD MPI runner command.                                                                                |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+    | **working_dir**        | Defines mpi job's working directory.                                                                                                    |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+    | **processes_per_node** | Integer defining the number of co-allocated MPI processses per node. The ``processes`` value should be multiple of this value           |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+    | **fail_by_exit_code**  | If set to 'True', and ``returns`` value of the 'task' definition is 'int', exit code of the MPI command will be returned.               |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+    | **programs**           | List of single MPI program dictionaries where program specific parameters (``binary``, ``processes``, ``params``) are defined.          |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
 
 * @compss
