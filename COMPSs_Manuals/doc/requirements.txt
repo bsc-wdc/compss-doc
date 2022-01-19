@@ -10,3 +10,6 @@ sphinxcontrib.yt
 sphinxcontrib-svg2pdfconverter
 sphinxcontrib-bibtex==1.0.0
 sphinx-panels
+pandoc
+sphinx-tabs
+sphinx-toolbox
