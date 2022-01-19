@@ -105,7 +105,7 @@ numfig_format = {'figure':'Figure %s',
                  'table':'Table %s',
                  'code-block':'Code %s',
                  'section':'Section %s'}
-html_add_permalinks = ""  # Disabled permalinks
+html_permalinks = False  # Disabled permalinks
 html_logo = './Logos/COMPSs_logo_small.png'
 html_show_sourcelink = False
 html_show_copyright = True
