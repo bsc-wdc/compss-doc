@@ -27,7 +27,17 @@ The supported flags are:
         jupyter [--app_name] [PATH|FILE]:           starts jupyter-notebook in the given PATH or FILE.
                                                     --app_name parameter is only required for cluster type environment
         job:                                        submits, cancel and list remote jobs for cluster and local environments.
-        app:                                        deploy, list and remove applications for only cluster environments.  
+        app:                                        deploy, list and remove applications for only cluster environments.
+        gengraph [FILE.dot]:                        converts the .dot graph into .pdf
+        components list:                            lists COMPSs actives components.
+        components add RESOURCE:                    adds the RESOURCE to the pool of workers of the COMPSs.
+            Example given: pycompss components add worker 2 # to add 2 local workers.
+            Example given: pycompss components add worker <IP>:<CORES> # to add a remote worker
+                        Note: compss and dislib can be used instead of pycompss in both examples.
+        components remove RESOURCE:   removes the RESOURCE to the pool of workers of the COMPSs.
+            Example given: pycompss components remove worker 2 # to remove 2 local workers.
+            Example given: pycompss components remove worker <IP>:<CORES> # to remove a remote worker
+                        Note: compss and dislib can be used instead of pycompss in both examples.
 
 
 Create a new COMPSs environment in your development directory
@@ -433,6 +443,18 @@ Executing applications
                         :linenos:
 
 
+
+                **Set environment variables (-e, --env_var)**
+
+                .. code-block:: console
+
+                    $ pycompss job submit -e MYVAR1 --env MYVAR2=foo APPNAME EXECFILE ARGS
+
+                Use the -e, --env_var flags to set simple (non-array) environment variables in the cluster environment.
+                Or overwrite variables that are defined in the `init` command of the environment.
+                
+                **Submitting Jobs**
+                
                 The command will submit a job and return the Job ID.     
                 In order to run a COMPSs program on the local machine we can use the command:
 
@@ -445,6 +467,8 @@ Executing applications
             
                         We can also use a macro specific to this CLI in order to use absolute paths:
                         ``{COMPS_APP_PATH}`` will be resolved by the CLI and replaced with the /absolute/path/to/app on the remote cluster.
+
+
 
             .. tab-container:: run
                 :title: Run
@@ -577,13 +601,6 @@ Running Jupyter notebooks
         And access interactively to your notebook by opening following the
         http://127.0.0.1:8888/ URL in your web browser.
 
-        You could also add any jupyter argument to the command, like for example
-        the port number:
-
-        .. code-block:: console
-
-            $ pycompss jupyter --port 9999 ./notebooks
-
 
    .. group-tab:: Local
 
@@ -630,6 +647,62 @@ Running Jupyter notebooks
                 To force quit: CTRL + C
 
 
+Generating the task graph
+-------------------------
+
+COMPSs is able to produce the task graph showing the dependencies that
+have been respected. In order to producee it, include the ``--graph`` flag in
+the execution command:
+
+.. tabs::
+
+   .. group-tab:: Docker
+
+        .. code-block:: console
+
+            $ cd tutorial_apps/python/simple/src
+            $ pycompss init docker
+            $ pycompss run --graph simple.py 1
+
+        Once the application finishes, the graph will be stored into the
+        ``.COMPSs\app_name_XX\monitor\complete_graph.dot`` file. This dot file
+        can be converted to pdf for easier visualilzation through the use of the
+        ``gengraph`` parameter:
+
+        .. code-block:: console
+
+            $ pycompss gengraph .COMPSs/simple.py_01/monitor/complete_graph.dot
+
+        The resulting pdf file will be stored into the
+        ``.COMPSs\app_name_XX\monitor\complete_graph.pdf`` file, that is, the
+        same folder where the dot file is.
+
+
+   .. group-tab:: Local
+
+        .. code-block:: console
+
+            $ cd tutorial_apps/python/simple/src
+            $ pycompss run --graph simple.py 1
+
+        Once the application finishes, the graph will be stored into the
+        ``~\.COMPSs\app_name_XX\monitor\complete_graph.dot`` file. This dot file
+        can be converted to pdf for easier visualilzation through the use of the
+        ``gengraph`` parameter:
+
+        .. code-block:: console
+
+            $ pycompss gengraph ~/.COMPSs/simple.py_01/monitor/complete_graph.dot
+
+        The resulting pdf file will be stored into the
+        ``~\.COMPSs\app_name_XX\monitor\complete_graph.pdf`` file, that is, the
+        same folder where the dot file is.
+
+   .. group-tab:: Cluster
+
+        Not yet implemented!
+
+
 
 Tracing applications or notebooks
 ---------------------------------
@@ -648,3 +721,103 @@ If running a notebook, just add the tracing parameter into ``pycompss jupyter`` 
 Once the application finishes, the trace will be stored into the
 ``~\.COMPSs\app_name_XX\trace`` folder. It can then be analysed with
 Paraver.
+
+
+Adding more nodes
+-----------------
+
+.. tabs::
+
+   .. group-tab:: Docker
+
+        .. NOTE::
+            Adding more nodes is still in beta phase. Please report
+            issues, suggestions, or feature requests on
+            `Github <https://github.com/bsc-wdc/>`__.
+
+        To add more computing nodes, you can either let docker create more
+        workers for you or manually create and config a custom node.
+
+        For docker just issue the desired number of workers to be added. For
+        example, to add 2 docker workers:
+
+        .. code-block:: console
+
+            $ pycompss components add worker 2
+
+        You can check that both new computing nodes are up with:
+
+        .. code-block:: console
+
+            $ pycompss components list
+
+        If you want to add a custom node it needs to be reachable through ssh
+        without user. Moreover, pycompss will try to copy the ``working_dir``
+        there, so it needs write permissions for the scp.
+
+        For example, to add the local machine as a worker node:
+
+        .. code-block:: console
+
+            $ pycompss components add worker '127.0.0.1:6'
+
+        -  '127.0.0.1': is the IP used for ssh (can also be a hostname like 'localhost' as long as it can be resolved).
+        -  '6': desired number of available computing units for the new node.
+
+
+        .. IMPORTANT::
+
+            Please be aware** that ``pycompss components`` will not list your
+            custom nodes because they are not docker processes and thus it can't be
+            verified if they are up and running.
+
+
+   .. group-tab:: Local
+
+        Environment not compatible with this feature.
+
+   .. group-tab:: Cluster
+
+        Environment not compatible with this feature.
+
+
+Removing existing nodes
+-----------------------
+
+.. tabs::
+
+   .. group-tab:: Docker
+
+        .. NOTE::
+            Removing nodes is still in beta phase. Please report issues,
+            suggestions, or feature requests on
+            `Github <https://github.com/bsc-wdc/>`__.
+
+        For docker just issue the desired number of workers to be removed. For
+        example, to remove 2 docker workers:
+
+        .. code-block:: console
+
+            $ pycompss components remove worker 2
+
+        You can check that the workers have been removed with:
+
+        .. code-block:: console
+
+            $ pycompss components list
+
+        If you want to remove a custom node, you just need to specify its IP and
+        number of computing units used when defined.
+
+        .. code-block:: console
+
+            $ pycompss components remove worker '127.0.0.1:6'
+
+
+   .. group-tab:: Local
+
+        Environment not compatible with this feature.
+
+   .. group-tab:: Cluster
+
+        Environment not compatible with this feature.
