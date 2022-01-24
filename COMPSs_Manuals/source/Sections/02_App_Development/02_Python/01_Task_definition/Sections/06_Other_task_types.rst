@@ -287,7 +287,7 @@ supported by adding its corresponding properties file in the folder
 
 
 MPMD MPI decorator
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 The *@mpmd_mpi* decorator can be used to define Multiple Program Multiple Data (MPMD) MPI tasks as shown in the following example
 (:numref:`mpmd_mpi_task`):
