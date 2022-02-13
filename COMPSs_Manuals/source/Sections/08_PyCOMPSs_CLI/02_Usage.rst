@@ -460,7 +460,7 @@ Executing applications
 
                 .. code-block:: console
 
-                    $ pycompss job submit -e ComputingUnits=1 matmul --num_nodes=2 --exec_time=10 --master_working_dir={COMPS_APP_PATH} --worker_working_dir=local_disk --tracing=false --pythonpath={COMPS_APP_PATH}/src --lang=python --qos=debug {COMPS_APP_PATH}/src/matmul_files.py 4 4
+                    $ pycompss job submit -e ComputingUnits=1 -app matmul --num_nodes=2 --exec_time=10 --master_working_dir={COMPS_APP_PATH} --worker_working_dir=local_disk --tracing=false --pythonpath={COMPS_APP_PATH}/src --lang=python --qos=debug {COMPS_APP_PATH}/src/matmul_files.py 4 4
 
 
                 .. NOTE::

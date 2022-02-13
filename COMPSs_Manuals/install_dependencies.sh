@@ -9,6 +9,9 @@ python3 -m pip install --upgrade "sphinx==4.0.3" \
                        sphinxcontrib-svg2pdfconverter \
                        "sphinxcontrib-bibtex==1.0.0" \
                        sphinx-panels \
-                       pandoc \
                        git+https://github.com/executablebooks/sphinx-tabs \
                        git+https://github.com/sphinx-toolbox/sphinx-toolbox@master
+
+echo "---- NOTE ----"
+echo "Install pandoc, imagemagick, librsvg2-bin with your package manager"
+echo "--------------"
