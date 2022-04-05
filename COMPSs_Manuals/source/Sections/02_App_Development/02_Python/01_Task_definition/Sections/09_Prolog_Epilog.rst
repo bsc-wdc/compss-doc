@@ -31,9 +31,15 @@ PyCOMPSs tasks can have a *@prolog* or an *@epilog*, or both at the same time. A
         return 1
 
 Both decorators have the same syntax and have 3 parameters: ```binary``` is the only mandatory parameter where ```params``` and ```fail_by_exit_value``` are
-arbitrary. ```params``` helps the user to pass task parameters to the ```binary``` as command line arguments. In this case, the task parameter should be surrounded
-by double curly braces (*"{{"* and *"}}"*) in the 'params' string. These parameters can be products of previous tasks and PyCOMPSs will handle data dependencies
+optional. ```params``` describe the command line arguments of the binary. Users can also pass the task parameters as arguments. In this case, the task parameter
+should be surrounded by double curly braces (*"{{"* and *"}}"*) in the 'params' string. These parameters can be results of previous tasks and PyCOMPSs will handle data dependencies
 between tasks:
+
+
+.. IMPORTANT::
+
+    Task parameters used in params strings can be type of primitive types such as int, float, string, and boolean.
+
 
 .. code-block:: python
     :name: prolog_task_with_param
@@ -53,8 +59,10 @@ between tasks:
     task_1("/home/dir_to_be_created_before_task_exec")
 
 
-If the user doesn't want the 'task' to be executed in case of ```prolog``` failure, they can set the ```fail_by_exit_value``` to *True*. If set to *False*, failure of the prolog
-will be ignored and task execution will start as usual. The same rule applies for the ```epilog``` as well:
+```fail_by_exit_value``` is used to indicate the behaviour when the prolog or epilog returns an exit value different from zero.
+Users can set the ```fail_by_exit_value``` to *True*, if they want to consider the exit value as a task failure. If set to *False*, failure of the prolog
+will be ignored and task execution will start as usual. The same rule applies for the ```epilog``` as well. Default value of 'fail_by_exit_value' is *True* for Prolog
+and *False* for Epilog:
 
 
 .. code-block:: python
