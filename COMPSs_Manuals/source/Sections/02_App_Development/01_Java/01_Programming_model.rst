@@ -250,11 +250,11 @@ Prolog & Epilog annotations
 
    -  **@Prolog:** Defines a binary to be run right before the task execution.
 
-         -  **binary** the binary to be executed.
+         -  **binary**: the binary to be executed.
 
-         -  **params** describe the command line arguments of the binary.
+         -  **params**: describe the command line arguments of the binary.
 
-         -  **failByExitValue** is used to indicate the behaviour when the prolog or epilog
+         -  **failByExitValue**: is used to indicate the behaviour when the prolog or epilog
             returns an exit value different than zero. Users can set the ```failByExitValue``` to
             *True*, if they want to consider the exit value as a task failure.
 
