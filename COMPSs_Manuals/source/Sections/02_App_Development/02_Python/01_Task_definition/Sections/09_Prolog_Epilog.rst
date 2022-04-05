@@ -38,7 +38,7 @@ between tasks:
 
 .. IMPORTANT::
 
-    Task parameters used in params strings can be type of primitive types such as int, float, string, and boolean.
+    Task parameters used in 'params' strings can be type of primitive types such as int, float, string, and boolean.
 
 
 .. code-block:: python
@@ -59,7 +59,7 @@ between tasks:
     task_1("/home/dir_to_be_created_before_task_exec")
 
 
-```fail_by_exit_value``` is used to indicate the behaviour when the prolog or epilog returns an exit value different from zero.
+```fail_by_exit_value``` is used to indicate the behaviour when the prolog or epilog returns an exit value different than zero.
 Users can set the ```fail_by_exit_value``` to *True*, if they want to consider the exit value as a task failure. If set to *False*, failure of the prolog
 will be ignored and task execution will start as usual. The same rule applies for the ```epilog``` as well. Default value of 'fail_by_exit_value' is *True* for Prolog
 and *False* for Epilog:

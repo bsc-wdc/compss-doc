@@ -33,8 +33,11 @@ three different types:
    given resource must fulfill to execute the task, such as the number of
    processors or main memory size.
 
+#. The Prolog/Epilog annotations are definitions of binaries to be run
+   before/after the task execution.
+
 #. Scheduler hint annotation provides information about how to deal with
-   tasks of this type at scheduling and execution
+   tasks of this type at scheduling and execution.
 
 A complete and detailed explanation of the usage of the metadata
 includes:
@@ -241,6 +244,24 @@ Constraints annotations
       cloud execution the COMPSs runtime creates a VM that fulfils the
       specified requirements in order to perform the execution. A full
       description of the supported constraints can be found in :numref:`supported_constraints`.
+
+Prolog & Epilog annotations
+***************************
+
+   -  **@Prolog:** Defines a binary to be run right before the task execution.
+
+         -  **binary** the binary to be executed.
+
+         -  **params** describe the command line arguments of the binary.
+
+         -  **failByExitValue** is used to indicate the behaviour when the prolog or epilog
+            returns an exit value different than zero. Users can set the ```failByExitValue``` to
+            *True*, if they want to consider the exit value as a task failure.
+
+   -  **@Epilog:** Defines a binary to be run right after the task execution finishes.
+
+         -  **binary** , **params**, **failByExitValue** with the same behaviours as Prolog.
+
 
 Scheduler annotations
 *********************
