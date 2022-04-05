@@ -2,7 +2,7 @@ Prolog & Epilog
 ~~~~~~~~~~~~~~~
 
 The *@prolog* and *@epilog* decorators are definitions of binaries to be executed before / after ```task``` execution on the worker. All kind of
-PyCOMPSs tasks can have a *@prolog* or an *@epilog*, or both at the same time. A basic usage is shown in the example below (:numref:`prolog_epilog_basic`):
+PyCOMPSs tasks can have a *@prolog* or an *@epilog*, or both at the same time. A basic usage is shown in the example below:
 
 
 .. IMPORTANT::
@@ -31,7 +31,7 @@ PyCOMPSs tasks can have a *@prolog* or an *@epilog*, or both at the same time. A
         return 1
 
 Both decorators have the same syntax and have 3 parameters: ```binary``` is the only mandatory parameter where ```params``` and ```fail_by_exit_value``` are
-arbitrary. ```params``` helps the user to pass task parameters to the ```binary``` as command line arguments. In this case the task parameter should be surrounded
+arbitrary. ```params``` helps the user to pass task parameters to the ```binary``` as command line arguments. In this case, the task parameter should be surrounded
 by double curly braces (*"{{"* and *"}}"*) in the 'params' string. These parameters can be products of previous tasks and PyCOMPSs will handle data dependencies
 between tasks:
 
@@ -62,6 +62,7 @@ will be ignored and task execution will start as usual. The same rule applies fo
     :caption: Prolog & Epilog with 'fail_by_exit_value'.
 
 
+    from pycompss.api.epilog import epilog
     from pycompss.api.prolog import prolog
     from pycompss.api.task import task
 
@@ -76,5 +77,5 @@ will be ignored and task execution will start as usual. The same rule applies fo
     task_2("/tmp/my_task_sandbox")
 
 
-In the example above, if creation of the 'sandbox_path' fails, the task execution won't start at all and task will be considered failed. However, if removing the sandbox is not
+In the example above, if creation of the 'sandbox_path' fails, the task execution won't start at all and task will be considered as failed. However, if removing the sandbox is not
 crucial and can be ignored, ```fail_by_exit_value``` in the Epilog can be set to *False*.
