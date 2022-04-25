@@ -105,13 +105,45 @@ The invocation of the *grepper* task would be equivalent to:
 
 Please note that the *keyword* parameter is a string, and it is
 respected as is in the invocation call.
+Another way of passing task parameters to binary execution command
+is to use ```params``` parameter in the binary definition. In this case, task parameters should be defined
+between curly braces and the full string with parameter replacements will be added to the command. In the
+following example, value of 'param_1' is added to the execution command after '-d' arg:
+
+.. code-block:: python
+    :name: binary_task_python_print_date
+    :caption: Binary task example 3
+
+    from pycompss.api.task import task
+    from pycompss.api.binary import binary
+    from pycompss.api.parameter import *
+
+
+    @binary(binary="date", params= "-d {{param_1}}")
+    @task()
+    def print_date(param_1):
+         pass
+
+    if __name__=='__main__':
+        print_date("next Monday")
+
+
+
+The invocation of the *print_date* task would be equivalent to:
+
+.. code-block:: console
+
+    $ # date -d param_1
+    $ date -d "next Monday"
+
+
 
 Thus, PyCOMPSs can also deal with prefixes for the given parameters. :numref:`complex2_binary_task_python`
 performs a system call (ls) with specific prefixes:
 
 .. code-block:: python
     :name: complex2_binary_task_python
-    :caption: Binary task example 3
+    :caption: Binary task example 4
 
     from pycompss.api.task import task
     from pycompss.api.binary import binary
@@ -724,7 +756,8 @@ If we wanted to combine @constraint and @mpi decorators together, the JSON file 
 Other task types summary
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Next tables summarizes the parameters of these decorators.
+Next tables summarizes the parameters of these decorators. Please note that 'working_dir' and 'params' ae the only decorator properties that can contain task parameters
+defined in curly braces.
 
 * @binary
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
