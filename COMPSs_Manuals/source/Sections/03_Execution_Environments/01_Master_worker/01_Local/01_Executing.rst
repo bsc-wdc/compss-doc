@@ -573,8 +573,6 @@ specify their custom configurations by using, respectively, the
 ``--project=<absolute_path_to_project.xml>`` in the ``runcompss``
 command. The default files are located in the
 ``/opt/COMPSs/Runtime/configuration/xml/`` path. Users can manually edit
-these files or can use the *Eclipse IDE* tool developed for COMPSs. For
-further information about the *Eclipse IDE* please refer to
-:ref:`Sections/05_Tools/03_IDE:IDE` Section.
+these files or can use the *Eclipse IDE* tool developed for COMPSs.
 
 For further details please check the :ref:`Sections/01_Installation/06_Configuration_files:Configuration Files`.

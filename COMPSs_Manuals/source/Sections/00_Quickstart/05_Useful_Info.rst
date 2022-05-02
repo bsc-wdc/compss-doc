@@ -18,7 +18,7 @@ Choose your flavour:
 
         - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/01_Master_worker/02_Supercomputers:Supercomputers`
 
-        - Performance analysis -> :ref:`Sections/05_Tools/04_Tracing:Tracing`
+        - Performance analysis -> :ref:`Sections/05_Tools/03_Tracing:Tracing`
 
         - Troubleshooting -> :ref:`Sections/04_Troubleshooting:Troubleshooting`
 
@@ -39,7 +39,7 @@ Choose your flavour:
 
         - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/01_Master_worker/02_Supercomputers:Supercomputers`
 
-        - Performance analysis -> :ref:`Sections/05_Tools/04_Tracing:Tracing`
+        - Performance analysis -> :ref:`Sections/05_Tools/03_Tracing:Tracing`
 
         - Troubleshooting -> :ref:`Sections/04_Troubleshooting:Troubleshooting`
 
@@ -60,7 +60,7 @@ Choose your flavour:
 
         - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/01_Master_worker/02_Supercomputers:Supercomputers`
 
-        - Performance analysis -> :ref:`Sections/05_Tools/04_Tracing:Tracing`
+        - Performance analysis -> :ref:`Sections/05_Tools/03_Tracing:Tracing`
 
         - Troubleshooting -> :ref:`Sections/04_Troubleshooting:Troubleshooting`
 
