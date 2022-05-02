@@ -10,4 +10,3 @@ This section is intended to walk you through the COMPSs usage in local machines.
 
     01_Local/01_Executing
     01_Local/02_Results_and_logs
-    01_Local/03_Tools

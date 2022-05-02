@@ -14,11 +14,11 @@ Choose your flavour:
 
         - Execution details -> :ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications`
 
-        - Graph, tracing and monitoring facilities -> :ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/03_Tools:COMPSs Tools`
+        - Graph, tracing and monitoring facilities -> :ref:`Sections/05_Tools:Tools`
 
         - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/01_Master_worker/02_Supercomputers:Supercomputers`
 
-        - Performance analysis -> :ref:`Sections/05_Tracing:Tracing`
+        - Performance analysis -> :ref:`Sections/05_Tools/03_Tracing:Tracing`
 
         - Troubleshooting -> :ref:`Sections/04_Troubleshooting:Troubleshooting`
 
@@ -35,11 +35,11 @@ Choose your flavour:
 
         - Execution details -> :ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications`
 
-        - Graph, tracing and monitoring facilities -> :ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/03_Tools:COMPSs Tools`
+        - Graph, tracing and monitoring facilities -> :ref:`Sections/05_Tools:Tools`
 
         - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/01_Master_worker/02_Supercomputers:Supercomputers`
 
-        - Performance analysis -> :ref:`Sections/05_Tracing:Tracing`
+        - Performance analysis -> :ref:`Sections/05_Tools/03_Tracing:Tracing`
 
         - Troubleshooting -> :ref:`Sections/04_Troubleshooting:Troubleshooting`
 
@@ -56,11 +56,11 @@ Choose your flavour:
 
         - Execution details -> :ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications`
 
-        - Graph, tracing and monitoring facilities -> :ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/03_Tools:COMPSs Tools`
+        - Graph, tracing and monitoring facilities -> :ref:`Sections/05_Tools:Tools`
 
         - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/01_Master_worker/02_Supercomputers:Supercomputers`
 
-        - Performance analysis -> :ref:`Sections/05_Tracing:Tracing`
+        - Performance analysis -> :ref:`Sections/05_Tools/03_Tracing:Tracing`
 
         - Troubleshooting -> :ref:`Sections/04_Troubleshooting:Troubleshooting`
 
