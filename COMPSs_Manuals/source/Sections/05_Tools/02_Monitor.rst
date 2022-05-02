@@ -11,6 +11,10 @@ following commands:
     compss@bsc:~$ /etc/init.d/compss-monitor usage
     Usage: compss-monitor {start | stop | reload | restart | try-restart | force-reload | status}
 
+.. WARNING::
+
+    The monitor is **not supported using agents**.
+
 Service configuration
 ---------------------
 
@@ -40,6 +44,12 @@ shown in :numref:`monitor_start`.
    :align: center
 
    COMPSs Monitor start command
+
+.. TIP::
+
+    The monitor can be started and stopped in multiple environments (local,
+    docker and supercomputer) automatically using the CLI.
+    Please check: :ref:`Sections/08_PyCOMPSs_CLI/02_Usage:Running the COMPSs monitor`
 
 And use a web browser to open the specific URL:
 

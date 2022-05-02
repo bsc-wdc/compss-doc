@@ -51,30 +51,30 @@ Create a new COMPSs environment in your development directory
 
         .. code-block:: console
 
-            $ pycompss init docker -w [WORK_DIR] -i [IMAGE]      
-                
+            $ pycompss init docker -w [WORK_DIR] -i [IMAGE]
+
         The command initializes COMPSs in the current working dir or in WORK_DIR if -w is set.
         The COMPSs docker image to be used can be specified with -i (it can also be
         specified with the COMPSS_DOCKER_IMAGE environment variable).
 
-        Initialize the COMPSs infrastructure where your source code will be. 
+        Initialize the COMPSs infrastructure where your source code will be.
         This will allow docker to access your local code
         and run it inside the container.
-    
+
         .. code-block:: console
-    
+
                 $ pycompss init docker  # operates on the current directory as working directory.
-    
+
         .. NOTE::
-    
+
                 The first time needs to download the docker image from the
                 repository, and it may take a while.
-    
+
         Alternatively, you can specify the working directory, the COMPSs docker image
         to use, or both at the same time:
-    
+
         .. code-block:: console
-    
+
             $ # You can also provide a path
             $ pycompss init docker -w /home/user/replace/path/
             $
@@ -88,22 +88,22 @@ Create a new COMPSs environment in your development directory
 
         .. code-block:: console
 
-                $ pycompss init local -w [WORK_DIR] -m [MODULES ...] 
+                $ pycompss init local -w [WORK_DIR] -m [MODULES ...]
 
-        Creates a local type evironment and initializes COMPSs in the current working dir 
+        Creates a local type evironment and initializes COMPSs in the current working dir
         or in WORK_DIR if -w is set. The modules to be loaded automatically can be specified with -m.
 
         Initialize the COMPSs infrastructure where your source code will be.
-    
+
         .. code-block:: console
-    
+
                 $ pycompss init local  # operates on the current directory as working directory.
-    
-        Alternatively, you can specify the working directory, the modules to 
+
+        Alternatively, you can specify the working directory, the modules to
         automatically load or both at the same time:
-    
+
         .. code-block:: console
-    
+
             $ # You can also provide a path
             $ pycompss init local -w /home/user/replace/path/
             $
@@ -119,21 +119,21 @@ Create a new COMPSs environment in your development directory
 
             $ pycompss init cluster -l [LOGIN] -m [FILE | MODULES ...]
 
-        Creates a cluster type evironment with the credentials specified in LOGIN. 
+        Creates a cluster type evironment with the credentials specified in LOGIN.
         The modules to be loaded automatically can be specified with -m.
 
         Parameter LOGIN is necessary to connect to the remote cluster and must follow
         standard format of [user]@[hostname]:[port]. port is optional and defaults to 22 for ssh.
-    
+
         .. code-block:: console
-    
+
             $ pycompss init cluster -l username@mn1.bsc.es
             $
-            $ # Or with list of modules 
+            $ # Or with list of modules
             $ pycompss init cluster -l username@mn1.bsc.es -m COMPSs/2.10 ANACONDA/5.1.0_py3
 
         .. NOTE::
-            
+
             The SSH access to the cluster should be configured to work without password.
             If you need to set up your machine for the first time please take a look
             at :ref:`Sections/01_Installation/05_Additional_configuration:Additional Configuration`
@@ -152,7 +152,7 @@ Create a new COMPSs environment in your development directory
             module load ANACONDA/5.1.0_py3
 
         .. code-block:: console
-    
+
             $ pycompss init cluster -l username@mn1.bsc.es -m /path/to/modules.sh
 
 
@@ -160,31 +160,31 @@ Managing environments
 ---------------------
 
 Every time command ``pycompss init`` is executed, a new environment is created and becomes the active
-environment in wich the rest of the commands will be executed. 
+environment in wich the rest of the commands will be executed.
 The subcommands ``pycompss environment`` will help inspecting, removing and switching between the environments.
 
 You can list all the environments created with ``pycompss environment list`` and inspect which one is active,
 the types of each one and the ID.
 
 .. code-block:: console
-    
+
     $ pycompss environment list
                       ID           Type         Active
         -   5eeb858c2b10        cluster              *
-        -        default          local                
-        -  container-b54         docker    
+        -        default          local
+        -  container-b54         docker
 
 The ID of the environments is what you will use to switch between them.
 
 .. code-block:: console
-    
+
     $ pycompss environment change container-b54
         Environment `container-b54` is now active
 
 Every environment can also be deleted, except ``default`` environment.
 
 .. code-block:: console
-    
+
     $ pycompss environment remove container-b54
         Deleting environment `container-b54`...
     $ pycompss environment remove default
@@ -229,12 +229,12 @@ In order to show how to deploy an application, clone the PyCOMPSs' tutorial apps
 
    .. group-tab:: Docker
 
-      This is not necessary for docker environments since the working directory is set 
+      This is not necessary for docker environments since the working directory is set
       at the initialization of the environment.
 
    .. group-tab:: Local
 
-      This is not necessary for local environments since the working directory is set 
+      This is not necessary for local environments since the working directory is set
       at the initialization of the environment.
 
    .. group-tab:: Cluster
@@ -266,14 +266,14 @@ In order to show how to deploy an application, clone the PyCOMPSs' tutorial apps
 
                 $ pycompss app remove matmul
                     Deleting application `matmul`...
-                    
+
         .. CAUTION::
-            
+
                 Removing an applocation will delete the entire app directory and every valuable results generated inside.
 
 
 Executing applications
----------------------------
+----------------------
 
 .. tabs::
 
@@ -313,7 +313,7 @@ Executing applications
 
                 .. code-block:: console
 
-                    $ pycompss run python/matmul_files/src/matmul_files.py 4 4 
+                    $ pycompss run python/matmul_files/src/matmul_files.py 4 4
 
                 The log files of the execution can be found at ``$HOME/.COMPSs``.
 
@@ -386,7 +386,7 @@ Executing applications
 
                 .. IMPORTANT::
 
-                    To be able to submit a job in a local environment you must have installed 
+                    To be able to submit a job in a local environment you must have installed
                     some cluster management/job scheduling system .i.e SLURM, SGE, PBS, etc.
 
                 The ``pycompss job`` command can be used to submit, cancel and list jobs to a remote cluster environment.
@@ -407,7 +407,7 @@ Executing applications
                         :linenos:
 
 
-                The command will submit a job and return the Job ID.     
+                The command will submit a job and return the Job ID.
                 In order to run a COMPSs program on the local machine we can use the command:
 
                 .. code-block:: console
@@ -452,10 +452,10 @@ Executing applications
 
                 Use the -e, --env_var flags to set simple (non-array) environment variables in the cluster environment.
                 Or overwrite variables that are defined in the `init` command of the environment.
-                
+
                 **Submitting Jobs**
-                
-                The command will submit a job and return the Job ID.     
+
+                The command will submit a job and return the Job ID.
                 In order to run a COMPSs program on the local machine we can use the command:
 
                 .. code-block:: console
@@ -464,7 +464,7 @@ Executing applications
 
 
                 .. NOTE::
-            
+
                         We can also use a macro specific to this CLI in order to use absolute paths:
                         ``{COMPS_APP_PATH}`` will be resolved by the CLI and replaced with the /absolute/path/to/app on the remote cluster.
 
@@ -478,7 +478,7 @@ Executing applications
                 See ``Job`` tab for more information.
 
 Managing jobs
----------------
+-------------
 
 Once the job is submitted, it can be inspected using the ``pycompss job list`` command.
 
@@ -512,12 +512,12 @@ the enqueue_compss arguments used to submit the job.
 
     $ pycompss job history --job_id 19152612
         Environment Variables: ComputingUnits=1
-        Enqueue Args:   --num_nodes=2 
-                        --exec_time=10 
-                        --worker_working_dir=local_disk 
-                        --tracing=false 
-                        --lang=python 
-                        --qos=debug 
+        Enqueue Args:   --num_nodes=2
+                        --exec_time=10
+                        --worker_working_dir=local_disk
+                        --tracing=false
+                        --lang=python
+                        --qos=debug
                         matmul_files.py 4 4
 
 
@@ -613,7 +613,7 @@ Running Jupyter notebooks
             $ pycompss jupyter ./notebooks
 
         A web browser will opened automatically with the notebook.
-        
+
         You could also add any jupyter argument to the command, like for example
         the port number:
 
