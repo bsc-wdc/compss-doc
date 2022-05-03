@@ -14,3 +14,5 @@ Here you will find the hands on notebooks used in the tutorials.
     hands-on/11_Wordcount_Exercise
     hands-on/11_Wordcount_Solution
     hands-on/11_Wordcount_Solution-with-reduce
+    hands-on/12_Integral_PI_iterative.ipynb
+    hands-on/12_Integral_PI_reduction.ipynb
