@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Project>
+    <MasterNode>
+        <Processor Name="MainProcessor">
+            <ComputingUnits>4</ComputingUnits>   <!-- Available number of CPU cores -->
+            <Architecture>x86_64</Architecture>
+            <Speed>3.0</Speed>
+        </Processor>
+        <Processor Name="GPU">
+            <Type>GPU</Type>
+            <ComputingUnits>1</ComputingUnits>   <!-- Available number of GPUs -->
+            <Architecture>turing</Architecture>
+            <Speed>2.6</Speed>
+        </Processor>
+        <Memory>
+            <Size>12</Size>  <!-- Available Main memory (Gigabytes)-->
+        </Memory>
+        <Storage>
+            <Size>20.0</Size>  <!-- Available Storage (Gigabytes) -->
+        </Storage>
+    </MasterNode>
+</Project>

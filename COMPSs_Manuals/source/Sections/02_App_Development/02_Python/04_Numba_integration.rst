@@ -168,7 +168,7 @@ the ``copy_to_host`` function and the task result is returned.
 
             return (bottom - top) * 1020 * 4000
 
-.. IMPORTANT::
+.. CAUTION::
 
     The function compiled with Numba for GPU can not be a task since the
     step to transfer the data to the GPU and backwards needs to be explicitly
@@ -179,6 +179,18 @@ the ``copy_to_host`` function and the task result is returned.
     the function compiled with Numba for GPU.
 
     The main application can then invoke the task.
+
+
+.. IMPORTANT::
+
+    In order to run with GPUs in local machine, you need to define the available
+    GPUs in the ``project.xml`` file.
+
+    As example, the following ``project.xml`` and ``resources.xml`` shall be
+    used with the ``--project`` and ``--resources`` correspondingly:
+
+    * :download:`project.xml <Resources/project.xml>`
+    * :download:`resources.xml <Resources/resources.xml>`
 
 
 More details about Numba and the specification of the signature, declaration
