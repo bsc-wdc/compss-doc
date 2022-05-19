@@ -109,6 +109,7 @@ html_logo = './Logos/COMPSs_logo_small.png'
 html_show_sourcelink = False
 html_show_copyright = True
 html_show_sphinx = True
+html_favicon = './Logos/COMPSs_logo.ico'
 nitpicky = True
 latex_logo = './Logos/COMPSs_logo.png'
 
