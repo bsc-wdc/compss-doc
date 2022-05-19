@@ -6,13 +6,13 @@ decorators for other purposes.
 
 For instance, there is a set of decorators that can be placed over the
 *@task* decorator in order to define the task methods as a
-**binary invocation** (with the :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:Binary decorator`), as a **OmpSs
-invocation** (with the :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:OmpSs decorator`), as a **MPI invocation**
-(with the :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:MPI decorator`), as an **I/O invocation**
-(with the :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:I/O decorator`), as a **COMPSs application** (with the
-:ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:COMPSs decorator`), as a **task that requires multiple
-nodes** (with the :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:Multinode decorator`), or as a **Reduction task** that
-can be executed in parallel having a subset of the original input data as input (with the :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:Reduction decorator`).
+**binary invocation** (with the :ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types:Binary decorator`), as a **OmpSs
+invocation** (with the :ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types:OmpSs decorator`), as a **MPI invocation**
+(with the :ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types:MPI decorator`), as an **I/O invocation**
+(with the :ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types:I/O decorator`), as a **COMPSs application** (with the
+:ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types:COMPSs decorator`), as a **task that requires multiple
+nodes** (with the :ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types:Multinode decorator`), or as a **Reduction task** that
+can be executed in parallel having a subset of the original input data as input (with the :ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types:Reduction decorator`).
 
 .. IMPORTANT::
 
@@ -214,7 +214,7 @@ going to invoke a OmpSs executable (:numref:`ompss_task_python`).
 The OmpSs executable invocation can also be enriched with parameters,
 files and prefixes as with the *@binary* decorator through the
 function parameters and *@task* decorator information. Please,
-check :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:Binary decorator` for more details.
+check :ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types:Binary decorator` for more details.
 
 MPI decorator
 ^^^^^^^^^^^^^
@@ -236,7 +236,7 @@ going to invoke a MPI executable (:numref:`mpi_task_python`).
 The MPI executable invocation can also be enriched with parameters,
 files and prefixes as with the *@binary* decorator through the
 function parameters and *@task* decorator information. Please,
-check :ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:Binary decorator` for more details.
+check :ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types:Binary decorator` for more details.
 
 The *@mpi* decorator can be also used to execute a MPI for python (mpi4py) code.
 To indicate it, developers only need to remove the binary field and include
@@ -408,7 +408,7 @@ The *@IO* decorator is used to declare a task as an I/O task. I/O tasks exclusiv
 
 The execution of I/O tasks can overlap with the execution of non-IO tasks (i.e., tasks that do not use the *@IO* decorator) if there are no dependencies between them. In addition to that, the scheduling of I/O tasks does not depend on the availability of computing units. For instance, an I/O task can be still scheduled and executed on a certain node even if all the CPUs on that node are busy executing non-I/O tasks. Hence, increasing parallelism level.
 
-The *@IO* decorator can be also used on top of the *@mpi* decorator (:ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:MPI decorator`) to declare a task that performs parallel I/O. Example :numref:`mpi_io_for_python` shows a MPI-IO task that does collective I/O with a NumPy array.
+The *@IO* decorator can be also used on top of the *@mpi* decorator (:ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types:MPI decorator`) to declare a task that performs parallel I/O. Example :numref:`mpi_io_for_python` shows a MPI-IO task that does collective I/O with a NumPy array.
 
 .. code-block:: python
     :name: mpi_io_for_python
@@ -664,7 +664,7 @@ dependencies are met.
 In addition, the *@container* decorator can be placed on top of the
 *@binary*, *@ompss* or *@mpi* decorators. :numref:`container_task_python_binary`
 shows how to execute the same example described in the
-:ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:Binary decorator`
+:ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types:Binary decorator`
 section, but within the ``compss/compss`` container using docker.
 This will execute the binary/ompss/mpi binary within the container.
 
