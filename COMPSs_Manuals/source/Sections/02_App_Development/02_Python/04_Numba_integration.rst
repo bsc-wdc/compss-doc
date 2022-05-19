@@ -114,13 +114,16 @@ Using Numba with GPUs
 ^^^^^^^^^^^^^^^^^^^^^
 
 In addition, Numba is also able to optimize python code for GPUs that can be
-used within PyCOMPSs' tasks. :ref:`numba_gpus` shows an example where the
-``calculate_wight`` task has a constraint of one CPU and one GPU. This task
+used within PyCOMPSs' tasks. :ref:`numba_gpus` shows an example of a task
+that performsa matrix multiplication in GPU (code from
+`Numba documentation <https://numba.pydata.org/numba-doc/dev/cuda/examples.html>`_).
+
+The ``main`` function creates the input and output matrices, and invokes
+the ``do_matmul`` task which has a constraint of one CPU and one GPU. This task
 first transfers the necessary data to the GPU using Numba's ``cuda`` module,
-then invokes the ``calculate_weight_cuda`` function (that is decorated with
-the Numba's ``@vectorize`` decorator defining its signature and the target
-specifically for GPU). When the execution in the GPU of the
-``calculate_weight_cuda`` finishes, the result is transfered to the cpu with
+then invokes the ``matmul`` function (that is decorated with
+the Numba's ``@cuda.jit`). When the execution in the GPU of the
+``matmul`` finishes, the result is transfered to the cpu with
 the ``copy_to_host`` function and the task result is returned.
 
 
@@ -128,47 +131,64 @@ the ``copy_to_host`` function and the task result is returned.
     :name: numba_gpus
     :caption: Task using Numba and a GPU
 
-    from pycompss.api.constraint import constraint
+    import math
+    from numba import cuda, float64
+    import numpy as np
     from pycompss.api.task import task
-    from pycompss.api.parameter import *
-    from numba import vectorize
-    from numba import cuda
+    from pycompss.api.api import compss_wait_on
+    from pycompss.api.constraint import constraint
+
+    TPB = 16
+
+    @cuda.jit
+    def matmul(A, B, C):
+        """Perform square matrix multiplication of C = A * B
+        """
+        i, j = cuda.grid(2)
+        if i < C.shape[0] and j < C.shape[1]:
+            tmp = 0.
+            for k in range(A.shape[1]):
+                tmp += A[i, k] * B[k, j]
+            C[i, j] = tmp
 
     @constraint(processors=[{'ProcessorType':'CPU', 'ComputingUnits':'1'},
                             {'ProcessorType':'GPU', 'ComputingUnits':'1'}])
     @task(returns=1)
-    def calculate_weight(min_depth, max_depth, e3t, depth, mask):
-        # Transfer data to the GPU
-        gpu_mask = cuda.to_device(mask.data.astype(np.float32))
-        gpu_e3t = cuda.to_device(e3t.data.astype(np.float32))
-        gpu_depth = cuda.to_device(depth.data.astype(np.float32))
-        # Invoke function compiled with Numba for GPU
-        weight = calculate_weight_cuda(min_depth, max_depth,
-                                       gpu_e3t, gpu_depth, gpu_mask)
-        # Tranfer result from GPU
-        local_weight = weight.copy_to_host()
-        return local_weight
+    def do_matmul(a, b, c):
+        gpu_a = cuda.to_device(a)
+        gpu_b = cuda.to_device(b)
+        gpu_c = cuda.to_device(c)
 
-    @vectorize(['float32(int32, int32, float32, float32, float32)'], target='cuda')
-    def calculate_weight_cuda(min_depth, max_depth, e3t, depth, mask):
-        """
-        This code is compiled with Numba for GPU (cuda)
-        """
-        if not mask:
-            return 0
-        top = depth
-        bottom = top + e3t
-        if bottom < min_depth or top > max_depth:
-            return 0
-        else:
-            if top < min_depth:
-                top = min_depth
-            if bottom > max_depth:
-                bottom = max_depth
+        threadsperblock = (TPB, TPB)
+        blockspergrid_x = math.ceil(gpu_c.shape[0] / threadsperblock[0])
+        blockspergrid_y = math.ceil(gpu_c.shape[1] / threadsperblock[1])
+        blockspergrid = (blockspergrid_x, blockspergrid_y)
 
-            return (bottom - top) * 1020 * 4000
+        matmul[blockspergrid, threadsperblock](gpu_a, gpu_b, gpu_c)
+        c = gpu_c.copy_to_host()
+        return c
 
-.. IMPORTANT::
+    def main():
+        a = np.random.uniform(1, 2, (4, 4))
+        b = np.random.uniform(1, 2, (4, 4))
+        c = np.zeros((4, 4))
+
+        result = do_matmul(a, b, c)
+        result = compss_wait_on(result)
+
+        print("a: \n %s" % str(a))
+        print("b: \n %s" % str(b))
+        print("Result: \n %s" % str(result))
+
+        print("Verification result: ")
+        print(a @ b)
+
+
+    if __name__=="__main__":
+        main()
+
+
+.. CAUTION::
 
     The function compiled with Numba for GPU can not be a task since the
     step to transfer the data to the GPU and backwards needs to be explicitly
@@ -179,6 +199,18 @@ the ``copy_to_host`` function and the task result is returned.
     the function compiled with Numba for GPU.
 
     The main application can then invoke the task.
+
+
+.. IMPORTANT::
+
+    In order to run with GPUs in local machine, you need to define the available
+    GPUs in the ``project.xml`` file.
+
+    As example, the following ``project.xml`` and ``resources.xml`` shall be
+    used with the ``--project`` and ``--resources`` correspondingly:
+
+    * :download:`project.xml <Resources/project.xml>`
+    * :download:`resources.xml <Resources/resources.xml>`
 
 
 More details about Numba and the specification of the signature, declaration
