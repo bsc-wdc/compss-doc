@@ -109,6 +109,7 @@ html_logo = './Logos/COMPSs_logo_small.png'
 html_show_sourcelink = False
 html_show_copyright = True
 html_show_sphinx = True
+html_favicon = './Logos/COMPSs_logo.ico'
 nitpicky = True
 latex_logo = './Logos/COMPSs_logo.png'
 
@@ -141,8 +142,8 @@ html_theme_options = {'logo_only': True,
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-# html_static_path = ['_static']
-#
+html_static_path = ['_static']
+
 # html_context = {
 #     'css_files': ['_static/_theme_overrides.css',  # override wide tables in RTD theme
 #                  ],
