@@ -54,7 +54,7 @@ dependencies are met.
 In addition, the *@container* decorator can be placed on top of the
 *@binary*, *@ompss* or *@mpi* decorators. :numref:`container_task_python_binary`
 shows how to execute the same example described in the
-:ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types:Binary decorator`
+:ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types/01_Binary_decorator:Binary decorator`
 section, but within the ``compss/compss`` container using docker.
 This will execute the binary/ompss/mpi binary within the container.
 
