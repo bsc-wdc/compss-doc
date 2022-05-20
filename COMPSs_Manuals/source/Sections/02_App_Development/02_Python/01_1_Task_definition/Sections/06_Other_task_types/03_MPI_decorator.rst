@@ -18,7 +18,7 @@ going to invoke a MPI executable (:numref:`mpi_task_python`).
 The MPI executable invocation can also be enriched with parameters,
 files and prefixes as with the *@binary* decorator through the
 function parameters and *@task* decorator information. Please,
-check :ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types:Binary decorator` for more details.
+check :ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types/01_Binary_decorator:Binary decorator` for more details.
 
 The *@mpi* decorator can be also used to execute a MPI for python (mpi4py) code.
 To indicate it, developers only need to remove the binary field and include

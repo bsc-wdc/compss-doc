@@ -20,7 +20,7 @@ For each worker node and the master, Extrae keeps track of the events in
 an intermediate format file (with *.mpit* extension). At the end of the
 execution, all intermediate files are gathered and merged with Extrae’s
 ``mpi2prv`` command in order to create the final tracefile, a Paraver
-format file (.prv). See the :ref:`Sections/05_Tools/04_Tracing/02_Visualization:Visualization`
+format file (.prv). See the :ref:`Sections/05_Tools/03_Tracing/02_Visualization:Visualization`
 Section for further information about the Paraver tool.
 
 When instrumentation is activated, Extrae outputs several messages
@@ -45,7 +45,7 @@ Basic Mode
 This mode is aimed at COMPSs’ apps users and developers. It instruments
 computing threads and some management resources providing information
 about tasks’ executions, data transfers, and hardware counters if PAPI
-is available (see :ref:`Sections/05_Tools/04_Tracing/05_Papi:PAPI: Hardware Counters` for more info).
+is available (see :ref:`Sections/05_Tools/03_Tracing/05_Papi:PAPI: Hardware Counters` for more info).
 
 Basic Mode Usage
 ~~~~~~~~~~~~~~~~
@@ -293,7 +293,7 @@ Communications
 
 Hardware counters
     Of the execution obtained with Performance API (see
-    :ref:`Sections/05_Tools/04_Tracing/05_Papi:PAPI: Hardware Counters`)
+    :ref:`Sections/05_Tools/03_Tracing/05_Papi:PAPI: Hardware Counters`)
 
 Basic Trace Example
 ~~~~~~~~~~~~~~~~~~~
@@ -450,7 +450,7 @@ Communications
 
 Hardware counters
     Of the execution obtained with Performance API (see
-    :ref:`Sections/05_Tools/04_Tracing/05_Papi:PAPI: Hardware Counters`)
+    :ref:`Sections/05_Tools/03_Tracing/05_Papi:PAPI: Hardware Counters`)
 
 
 Advanced Trace Example

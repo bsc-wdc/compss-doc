@@ -36,7 +36,7 @@ to the user (:numref:`implements_python`).
 
 Please, note that if the implementation is used to define a binary,
 OmpSs, MPI, COMPSs, multinode or reduction task invocation (see
-:ref:`Sections/02_App_Development/02_Python/01_Task_definition/Sections/06_Other_task_types:Other task types`),
+:ref:`Sections/02_App_Development/02_Python/01_1_Task_definition/Sections/06_Other_task_types:Other task types`),
 the @implement decorator must be always on top of the decorators stack,
 followed by the @constraint decorator, then the
 @binary/\ @ompss/\ @mpi/\ @compss/\ @multinode

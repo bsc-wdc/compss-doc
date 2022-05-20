@@ -43,7 +43,7 @@ compss_barrier_group(group_name)
    to the given group submitted before the *compss_barrier_group()* is called.
    When all group tasks submitted before the *compss_barrier_group()* have
    finished, the execution continues.
-   See :ref:`Sections/02_App_Development/02_Python/02_Synchronization/01_API:Task Groups`
+   See :ref:`Sections/02_App_Development/02_Python/01_2_Synchronization/01_API:Task Groups`
    for more information about task groups.
 
 compss_wait_on(\*obj, mode="r" | "rw")
