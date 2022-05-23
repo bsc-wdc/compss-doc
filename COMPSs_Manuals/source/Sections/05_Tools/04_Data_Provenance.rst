@@ -1,7 +1,7 @@
 Data Provenance
 ===============
 
-In order to achieve *Reproducibility* and *Replicability* with your experiments
+In order to achieve **Reproducibility** and **Replicability** with your experiments
 using COMPSs, the runtime includes the capacity of recording details of the
 application's execution, also known as *Data Provenance*. This is currently
 only supported for Python applications, while in the meantime we are working
@@ -9,12 +9,15 @@ to extend it to Java and C/C++, which are programming languages also supported b
 
 When the provenance option is activated, the runtime records every access
 to a file or directory in the application, as well as its direction (IN, 
-OUT, INOUT). This information is later used to record the Data Provenance
+OUT, INOUT). In addition to this, other information such as the parameters passed as inputs in the command line
+that submitted the application, its source files, workflow image and profiling statistics, authors and
+their institutions, ... are also stored.
+All this information is later used to record the Data Provenance
 of your workflow using the `RO-Crate standard <https://www.researchobject.org/ro-crate/1.1/>`_, and with the assistance of
 the `ro-crate-py library <https://github.com/ResearchObject/ro-crate-py>`_. RO-Crate is based on
 JSON-LD (JavaScript Object Notation for Linked Data), is
 much simpler than other standards and tools created to record Provenance, and
-that is why it has become a de-facto standard in a number of communities. Using RO-Crate
+that is why it has been adopted in a number of communities. Using RO-Crate
 to register the execution's information ensures
 not only to register correctly the Provenance of a COMPSs application run, but
 also compatibility with some existing portals that already embrace
@@ -40,7 +43,7 @@ If you do not manage the target machine, you can install the library in your own
 
     compss@bsc:~$ pip install rocrate --user
 
-This would typically install the library in ``~/.local/`` . Another option is to specify the target directory with:
+This would typically install the library in ``~/.local/``. Another option is to specify the target directory with:
 
 .. code-block:: console
 
@@ -55,7 +58,7 @@ Previous needed information
 There are certain pieces of information which must be included when registering the provenance of a workflow that
 the COMPSs runtime cannot automatically infer, such as the authors of an application. For specifying all these
 fields that are needed to generate an RO-Crate but cannot be automatically obtained, we have created a simple YAML
-structure where the user can specify them. The user needs to provide a YAML file named
+structure where the user can specify them. They need to provide a YAML file named
 ``ro-crate-info.yaml`` that follows the next template structure:
 
 .. code-block:: yaml
@@ -78,7 +81,7 @@ structure where the user can specify them. The user needs to provide a YAML file
         organisation_name: Institution_2 name
         ror: https://ror.org/YYYYYYYYY # Find them in ror.org
 
-.. TIP::
+.. WARNING::
 
     If no YAML file is provided, the runtime will fail to generate provenance, and will automatically generate an
     ``ro-crate-info_TEMPLATE.yaml`` file that the user can edit to add their details.
@@ -95,7 +98,7 @@ More specifically, in the **COMPSs Workflow Information** section:
   the application must be provided.
 
 - The ``license`` field is preferred by providing an URL to the license, but a set of
-  predefined strings is also supported, and can be found here:
+  predefined strings are also supported, and can be found here:
   https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
 
 - ``files`` is a list of all the source files of the application (typically all ``.py`` files). The files' order
@@ -104,7 +107,7 @@ More specifically, in the **COMPSs Workflow Information** section:
 And in the **Authors** section:
 
 - ``name``, ``e-mail`` and ``organisation_name`` are strings corresponding to the author's name, e-mail and their
-  institution. This is free text, but the ``e-mail`` field must follow the ``user@domain.top`` format.
+  institution. They are free text, but the ``e-mail`` field must follow the ``user@domain.top`` format.
 
 - ``orcid`` refers to the ORCID identifier of the author. The IDs can be found and created at https://orcid.org/
 
@@ -167,7 +170,7 @@ As shown in the help option:
 
 .. WARNING::
 
-    As stated in the help, provenance automatically activates both ``-graph`` and ``-output_profile`` options.
+    As stated in the help, provenance automatically activates both ``--graph`` and ``--output_profile`` options.
     Take into account that the graph image generation can take some extra seconds at the end of the execution of your
     application, therefore, adjust the ``--exec_time`` accordingly.
 
@@ -175,7 +178,7 @@ As shown in the help option:
 Result
 ------
 
-Once the application has finished, a new sub-folder under the Working Directory
+Once the application has finished, a new sub-folder under the application's Working Directory
 will be created with the name ``COMPSs_RO-Crate_[uuid]/``, which is also known as *crate*. The contents of the
 folder include all the elements needed to reproduce a COMPSs execution, and
 are:
@@ -185,20 +188,20 @@ are:
   the main source file and all auxiliary files that the application needs (e.g.: ``.py``).
 
 - **complete_graph.pdf:** The image of the workflow generated by the COMPSs runtime,
-  as generated with the ``runcompss -g`` option.
+  as generated with the ``runcompss -g`` or ``--graph`` option.
 
 - **App_Profile.json:** A set of statistics of the application run recorded by the
   COMPSs runtime, as if the ``runcompss --output_profile=<path>`` option was enabled.
   It includes, for each resource and method executed: number of executions of the
-  specific method, and maximum, average and minimum run time.
+  specific method, as well as maximum, average and minimum run time.
 
 - **compss_command_line_arguments.txt:** Stores the options passed by the command
-  line when the application was submitted. This is very important for a COMPSs
-  application, since it could potentially change the resulting workflow generated
+  line when the application was submitted. This is very important for reproducing a COMPSs
+  application, since input parameters could potentially change the resulting workflow generated
   by the COMPSs runtime.
 
 - **ro-crate-metadata.json:** The RO-Crate JSON main file describing the contents of
-  this directory (crate) in the RO-Crate standard. You can find an example at the end of this Section.
+  this directory (crate) in the RO-Crate standard format. You can find an example at the end of this Section.
 
 .. WARNING::
 
@@ -206,7 +209,7 @@ are:
     are automatically used to generate new files when using the ``-p`` or ``--provenance`` option.
     Avoid using these file names among
     your own files to avoid unwanted overwritings. You can change the resulting ``App_Profile.json`` name by using
-    the ``--output_profile=/path.to/file`` flag.
+    the ``--output_profile=/path_to/file`` flag.
 
 
 ro-crate-metadata.json example
@@ -216,9 +219,9 @@ In the RO-Crate specification, the root file containing the metadata referring t
 ``ro-crate-metadata.json``. In these lines we provide an example of an ro-crate-metadata.json file resulting from
 a COMPSs application execution, specifically an out-of-core matrix multiplication example that includes matrices
 ``A`` and ``B`` as inputs in an ``inputs/`` sub-directory, and matrix ``C`` as the result of their multiplication.
-For all the details on the fields provided in the JSON file, please refer to the
+For all the specific details on the fields provided in the JSON file, please refer to the
 `RO-Crate standard Website <https://www.researchobject.org/ro-crate/1.1/>`_. Intuitively, if you search through
-the JSON file you can find several fields:
+the JSON file you can find several interesting fields:
 
 - **creator:** List of authors, identified by their ORCID.
 
