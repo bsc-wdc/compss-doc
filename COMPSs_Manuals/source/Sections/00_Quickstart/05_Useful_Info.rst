@@ -11,11 +11,11 @@ Choose your flavour:
 
         - Constraint definition -> :ref:`Sections/02_App_Development/04_Constraints:Constraints`
 
-        - Execution details -> :ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications`
+        - Execution details -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications`
 
         - Graph, tracing and monitoring facilities -> :ref:`Sections/05_Tools:Tools`
 
-        - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/01_Master_worker/02_Supercomputers:Supercomputers`
+        - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/02_Supercomputers:Supercomputers`
 
         - Performance analysis -> :ref:`Sections/05_Tools/03_Tracing:Tracing`
 
@@ -31,11 +31,11 @@ Choose your flavour:
 
         - Constraint definition -> :ref:`Sections/02_App_Development/04_Constraints:Constraints`
 
-        - Execution details -> :ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications`
+        - Execution details -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications`
 
         - Graph, tracing and monitoring facilities -> :ref:`Sections/05_Tools:Tools`
 
-        - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/01_Master_worker/02_Supercomputers:Supercomputers`
+        - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/02_Supercomputers:Supercomputers`
 
         - Performance analysis -> :ref:`Sections/05_Tools/03_Tracing:Tracing`
 
@@ -51,11 +51,11 @@ Choose your flavour:
 
         - Constraint definition -> :ref:`Sections/02_App_Development/04_Constraints:Constraints`
 
-        - Execution details -> :ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications`
+        - Execution details -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications`
 
         - Graph, tracing and monitoring facilities -> :ref:`Sections/05_Tools:Tools`
 
-        - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/01_Master_worker/02_Supercomputers:Supercomputers`
+        - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/02_Supercomputers:Supercomputers`
 
         - Performance analysis -> :ref:`Sections/05_Tools/03_Tracing:Tracing`
 

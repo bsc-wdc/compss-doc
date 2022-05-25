@@ -248,7 +248,7 @@ to :ref:`Sections/07_Sample_Applications:Sample Applications`.
 
 .. TIP::
     For further information about applications scheduling refer to
-    :ref:`Sections/03_Execution_Environments/03_Schedulers:Schedulers`.
+    :ref:`Sections/03_Execution_Environments/01_Scheduling:Schedulers`.
 
 Running Java applications
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -407,14 +407,14 @@ Some of the **runcompss** flags are only for PyCOMPSs application execution:
     Only for NIO without mpi worker and python >= 3.8.
     Default: false
 
-    See: :ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/01_Executing:Worker cache`
+    See: :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Worker cache`
 
 --python_cache_profiler=<bool>
     Python cache profiler (true/false).
     Only for NIO without mpi worker and python >= 3.8.
     Default: false
 
-    See: :ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/01_Executing:Worker cache profiling`
+    See: :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Worker cache profiling`
 
 .. WARNING::
 

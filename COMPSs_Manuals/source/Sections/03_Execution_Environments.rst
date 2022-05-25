@@ -8,7 +8,8 @@ This section is intended to show how to execute the COMPSs applications.
     :maxdepth: 3
     :caption: Table of Contents
     
-    03_Execution_Environments/01_Master_worker
-    03_Execution_Environments/02_Agents
-    03_Execution_Environments/03_Schedulers
+    03_Execution_Environments/01_Scheduling
+    03_Execution_Environments/02_Task_Checkpointing
+    03_Execution_Environments/03_Deployments
+
     
