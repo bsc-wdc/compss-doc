@@ -79,3 +79,41 @@ Under the ``@task`` decorator:
 
 Over a non task function:
   Will display the memory usage of the function in the master (through standard output).
+
+By default, the ``@profile`` decorator reports the memory usage line by line:
+
+.. code-block:: text
+
+   Line #    Mem usage    Increment  Occurrences   Line Contents
+   =============================================================
+        7     53.3 MiB     53.3 MiB           1   @task(returns=1)
+        8                                         @profile()
+        9                                         def increment(value):
+       10     61.0 MiB      7.7 MiB           1       a = [1] * (10 ** 6)
+       11     83.7 MiB     22.7 MiB           1       b = [2] * (value * 10 ** 6)
+       12    312.6 MiB    228.9 MiB           1       c = [3] * (value * 10 ** 7)
+       13    289.9 MiB    -22.7 MiB           1       del b
+       14    289.9 MiB      0.0 MiB           1       return value + 1
+
+But this information can be reduce to show only the peak memory usage of
+each task by setting ``full_report=False`` in the ``@profile`` decorator
+(``@profile(full_report=False)``). More specifically, the profiling information
+reported will be a one-liner per task showing: the file that contains the task,
+the task name and the peak memory usage.
+
+.. code-block:: text
+
+    /path/to/increment.py increment 312.6 MiB
+
+.. TIP::
+
+    It is possible to redirect the profiling output to a single file by
+    exporting the ``COMPSS_PROFILING_FILE`` environment variable with the
+    path to the destination file.
+
+    Please, remind that this variable needs to be available in the worker
+    if the ``@profile`` decorator is used to report the memory usage of the
+    tasks. Consequently, consider the usage of the ``--env_script`` flag
+    in the ``runcompss`` command defining a script that exports the
+    ``COMPSS_PROFILING_FILE`` in order to make it available in the workers
+    in local executions.
