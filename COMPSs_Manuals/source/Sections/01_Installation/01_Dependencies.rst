@@ -24,6 +24,12 @@ section at your package manager (apt, yum, zypper, etc.).
     | COMPSs Tracing          | libxml2 (>= 2.5), libxml2-dev (>= 2.5), gfortran, papi                                                                                       |
     +-------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
 
+.. TIP::
+
+    For macOS, we strongly recommend to use the `Homebrew package manager <https://brew.sh/>`_, since it includes
+    the majority of dependencies needed. In other package managers, such as MacPorts, quite some dependencies
+    may be missing as packages, which will force you to have to install them from their source codes.
+
 As an example for some distributions:
 
 .. content-tabs::
@@ -307,6 +313,34 @@ As an example for some distributions:
                 $ echo 'export JAVA_HOME=/usr/lib64/jvm/java-openjdk/' >> ~/.bashrc
                 $ export JAVA_HOME=/usr/lib64/jvm/java-openjdk/
 
+    .. tab-container:: macOS_Monterey
+        :title: macOS Monterey
+
+        **macOS Monterey** dependencies installation commands:
+
+        Although many packages can be installed with Homebrew, some of them will have to be installed manually
+        from their source files. It is also important to mention that, some package names may be slightly different
+        in Homebrew, compared to Linux distributions, thus, some previous search for equivalences may be required.
+        Our tested installation sequence was:
+
+        .. code-block:: console
+
+            $ brew install openjdk@8 graphviz libxslt xmlto libtool automake coreutils util-linux boost
+            $ sudo ln -sfn /usr/local/opt/openjdk@8/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-8.jdk
+
+        And xdg-utils had to be installed by hand (after installing libxslt and xmlto):
+
+        .. code-block:: console
+
+            $ export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
+            $ git clone git://anongit.freedesktop.org/xdg/xdg-utils
+            $ cd xdg-utils
+            $ ./configure --prefix=/usr/local
+            $ make ; make install
+
+        .. WARNING::
+            Neither Autoparallel nor Tracing are yet available for macOS, therefore, their dependencies do not need
+            to be installed.
 
 .. ATTENTION::
 
