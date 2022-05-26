@@ -15,14 +15,14 @@ They are generated in the same folder where the execution has been launched.
 
 .. IMPORTANT::
 
-    The ``memory-profiler`` package is mandatory in order to use the
-    ``--python_memory_profile`` flag.
+    The ``memory-profiler`` and ``psutil`` packages are mandatory in order to
+    use the ``--python_memory_profile`` flag.
 
     It can be easily installed with pip:
 
     .. code-block:: console
 
-        $ python -m pip install memory-profiler --user
+        $ python -m pip install psutil memory-profiler --user
 
 
 .. TIP::
@@ -94,16 +94,29 @@ By default, the ``@profile`` decorator reports the memory usage line by line:
        12    312.6 MiB    228.9 MiB           1       c = [3] * (value * 10 ** 7)
        13    289.9 MiB    -22.7 MiB           1       del b
        14    289.9 MiB      0.0 MiB           1       return value + 1
+   Job name: job10_NEW
+   Task start time: 1653572135.1119144
+   Elapsed time: 0.10722756385803223
+   Initial memory: 8150122496
+   Final memory: 7759843328
 
 But this information can be reduce to show only the peak memory usage of
 each task by setting ``full_report=False`` in the ``@profile`` decorator
 (``@profile(full_report=False)``). More specifically, the profiling information
-reported will be a one-liner per task showing: the file that contains the task,
-the task name and the peak memory usage.
+reported will be a one-liner per task showing:
+
+  1. The task start time
+  2. The task job name
+  3. The file that contains the task
+  4. The task name
+  5. The task elapsed time
+  6. The amount of memory used before executing the task
+  7. The amount of memory used after executing the task
+  8. The peak memory usage
 
 .. code-block:: text
 
-    /path/to/increment.py increment 312.6 MiB
+    1653572135.1119144 job10_NEW /path/to/increment.py increment 0.10722756385803223 8150122496 7759843328 312.6 MiB
 
 .. TIP::
 
