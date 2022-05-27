@@ -12,4 +12,3 @@ brief overview on how to execute it.
     02_Python/01_Programming_model
     02_Python/02_Application_execution
     02_Python/03_Jupyter_integration
-    02_Python/04_Numba_integration
