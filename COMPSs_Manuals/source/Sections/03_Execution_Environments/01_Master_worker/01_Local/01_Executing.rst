@@ -8,7 +8,7 @@ Prerequisites vary depending on the application’s code language: for
 Java applications the users need to have a **jar archive** containing
 all the application classes, for Python applications there are no
 requirements and for C/C++ applications the code must have been
-previously compiled by using the *buildapp* command.
+previously compiled by using the *compss_build_app* command.
 
 For further information about how to develop COMPSs applications please
 refer to :ref:`Sections/02_App_Development:Application development`.
@@ -194,6 +194,8 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: 0
         --shutdown_in_node_failure=<bool>       Stop the whole execution in case of Node Failure.
                                                 Default: false
+        --provenance, -p                        Generate COMPSs workflow provenance data in RO-Crate format from YAML file. Automatically activates -graph and -output_profile.
+                                                Default: false
 
     * Application name:
         For Java applications:   Fully qualified name of the application
@@ -203,6 +205,10 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
     * Application arguments:
         Command line arguments to pass to the application. Can be empty.
 
+.. WARNING::
+
+    The ``cpu_affinity`` feature is not available in macOS distributions. Then, for all macOS executions the flag
+    ``--cpu_affinity=disabled`` must be specified, no matter if they are Java, Python or C/C++.
 
 Running a COMPSs application
 ----------------------------
@@ -391,6 +397,19 @@ Some of the **runcompss** flags are only for PyCOMPSs application execution:
 
     See: :ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/01_Executing:Worker cache profiling`
 
+.. WARNING::
+
+    For macOS systems, the flag ``--python_propagate_virtual_environment`` must be set to ``true`` to ensure the
+    same Python version is used both in master and worker parts of the application (the application will crash
+    otherwise). We recommend to use `pyenv <https://github.com/pyenv/pyenv>`_ to manage the macOS installed
+    Python versions. Also, be careful with ``Xcode`` updates, since they can modify the Python system version.
+
+.. WARNING::
+
+    The PyCOMPSs current working directory must be passed with the ``--pythonpath`` flag to ensure a correct
+    execution in macOS environments. The Python's ``site-packages`` directory must be provided as well. An
+    example of such a flag including both options would be:
+    ``--pythonpath=$(pwd):/Users/user_name/.pyenv/versions/3.8.9/lib/python3.8/site-packages``
 
 Worker cache
 """"""""""""
@@ -511,7 +530,7 @@ Running C/C++ applications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To launch a COMPSs C/C++ application users have to compile the
-C/C++ application by means of the ``buildapp`` command. For
+C/C++ application by means of the ``compss_build_app`` command. For
 further information please refer to :ref:`Sections/02_App_Development/03_C:C/C++ Binding`. Once
 complied, the ``--lang=c`` option must be provided to the runcompss
 command. If the main file is a C/C++ binary the *runcompss* command
