@@ -17,6 +17,17 @@ Then, you need to download the embedded dependencies from the git submodules.
     $ compss> ./submodules_get.sh
     $ compss> ./submodules_patch.sh
 
+.. WARNING::
+
+        Before running the installation script in macOS distributions, some previous definitions need to be done:
+
+        .. code-block:: console
+
+            $ alias readlink=/usr/local/bin/greadlink
+            $ export LIBTOOL=`which glibtool`
+            $ export LIBTOOLIZE=`which glibtoolize`
+            $ export JAVA_HOME=/usr/local/cellar/openjdk@8/1.8.0+282/libexec/openjdk.jdk/Contents/Home
+
 Finally you just need to run the installation script. You have two options:
 
 .. content-tabs::
@@ -47,11 +58,16 @@ Finally you just need to run the installation script. You have two options:
             $ builders> INSTALL_DIR=$HOME/opt/COMPSs/
             $ builders> ./buildlocal ${INSTALL_DIR}
 
+.. WARNING::
+
+        In macOS distributions, the System Integrity Protection (SIP) does not allow to modify the ``/System`` folder
+        even with root permissions. This means the installation building from sources can only be installed for the
+        current user.
 
 .. TIP::
 
     The ``buildlocal`` script allows to disable the installation of
-    components. The options can be foun in the command help:
+    components. The options can be found in the command help:
 
     .. code-block:: console
 
@@ -59,54 +75,60 @@ Finally you just need to run the installation script. You have two options:
         $ builders> ./buildlocal -h
 
           Usage: ./buildlocal [options] targetDir
-          * Options:
-              --help, -h                  Print this help message
+            * Options:
+                --help, -h                  Print this help message
 
-              --opts                      Show available options
+                --opts                      Show available options
 
-              --version, -v               Print COMPSs version
+                --version, -v               Print COMPSs version
 
-              --monitor, -m               Enable Monitor installation
-              --no-monitor, -M            Disable Monitor installation
-                                          Default: true
+                --monitor, -m               Enable Monitor installation
+                --no-monitor, -M            Disable Monitor installation
+                                            Default: true
 
-              --bindings, -b              Enable bindings installation
-              --no-bindings, -B           Disable bindings installation
-                                          Default: true
+                --bindings, -b              Enable bindings installation
+                --no-bindings, -B           Disable bindings installation
+                                            Default: true
 
-              --pycompss, -p              Enable PyCOMPSs installation
-              --no-pycompss, -P           Disable PyCOMPSs installation
-                                          Default: true
+                --pycompss, -p              Enable PyCOMPSs installation
+                --no-pycompss, -P           Disable PyCOMPSs installation
+                                            Default: true
 
-              --tracing, -t               Enable tracing system installation
-              --no-tracing, -T            Disable tracing system installation
-                                          Default: true
+                --tracing, -t               Enable tracing system installation
+                --no-tracing, -T            Disable tracing system installation
+                                            Default: true
 
-              --autoparallel, -a          Enable autoparallel module installation
-              --no-autoparallel, -A       Disable autoparallel module installation
-                                          Default: true
+                --kafka, -k                 Enable Kafka module installation
+                --no-kafka, -K              Disable Kafka module installation
+                                            Default: true
 
-              --kafka, -k                 Enable Kafka module installation
-              --no-kafka, -K              Disable Kafka module installation
-                                          Default: true
+                --jacoco, -j                Enable Jacoco module installation
+                --no-jacoco, -J             Disable Jacoco module installation
+                                            Default: true
 
-              --jacoco, -j                Enable Jacoco module installation
-              --no-jacoco, -J             Disable Jacoco module installation
-                                          Default: true
+                --cli, -c                   Enable Command Line Interface module installation
+                --no-cli, -C                Disable Command Line Interface module installation
+                                            Default: true
 
-              --nothing, -N               Disable all previous options
-                                          Default: unused
+                --nothing, -N               Disable all previous options
+                                            Default: unused
 
-              --user-exec=<str>           Enables a specific user execution for maven compilation
-                                          When used the maven install is not cleaned.
-                                          Default: false
+                --user-exec=<str>           Enables a specific user execution for maven compilation
+                                            When used the maven install is not cleaned.
+                                            Default: false
 
-              --skip-tests                Disables MVN unit tests
-                                          Default:
+                --skip-tests                Disables MVN unit tests
+                                            Default:
 
-          * Parameters:
-              targetDir                   COMPSs installation directory
-                                          Default: /opt/COMPSs
+            * Parameters:
+                targetDir                   COMPSs installation directory
+                                            Default: /opt/COMPSs
+
+
+    .. WARNING::
+
+        Components Monitor, Tracing, Kafka and Jacoco cannot be installed in macOS distributions. Therefore,
+        at least options ``-M -T -K -J`` must be used when invoking ``buildlocal``
 
 
 Post installation

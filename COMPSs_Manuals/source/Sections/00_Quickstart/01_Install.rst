@@ -178,3 +178,10 @@ Install COMPSs
           .. TIP::
 
               Please, check the PyCOMPSs CLI :ref:`Sections/08_PyCOMPSs_CLI/01_Installation:Installation` Section for the further information with regard to the requirements installation and troubleshooting.
+
+.. WARNING::
+
+    For macOS distributions, only installations **local to the user** are supported (both with pip and building
+    from sources). This is due to the System Integrity Protection (SIP) implemented in the newest versions of
+    macOS, that does not allow modifications in the ``/System`` directory, even when having root permissions in the
+    machine.
