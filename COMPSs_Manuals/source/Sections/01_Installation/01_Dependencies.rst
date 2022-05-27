@@ -15,11 +15,9 @@ section at your package manager (apt, yum, zypper, etc.).
     +=========================+==============================================================================================================================================+
     | **COMPSs Runtime**      | **openjdk-8-jre, graphviz, xdg-utils, openssh-server**                                                                                       |
     +-------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
-    | COMPSs Python Binding   | libtool, automake, build-essential, python (>= 2.7 \| >=3.5), python-dev \| python3-dev, python-setuptools\|python3-setuptools, libpython2.7 |
+    | COMPSs Python Binding   | libtool, automake, build-essential, python (>=3.6), python3-dev, python3-setuptools                                                          |
     +-------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
     | COMPSs C/C++ Binding    | libtool, automake, build-essential, libboost-all-dev, libxml2-dev                                                                            |
-    +-------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
-    | COMPSs Autoparallel     | libgmp3-dev, flex, bison, libbison-dev, texinfo, libffi-dev, astor, sympy, enum34, islpy                                                     |
     +-------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
     | COMPSs Tracing          | libxml2 (>= 2.5), libxml2-dev (>= 2.5), gfortran, papi                                                                                       |
     +-------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
@@ -30,12 +28,15 @@ section at your package manager (apt, yum, zypper, etc.).
     the majority of dependencies needed. In other package managers, such as MacPorts, quite some dependencies
     may be missing as packages, which will force you to have to install them from their source codes.
 
-As an example for some distributions:
+As an example for some distributions and versions:
 
-.. content-tabs::
+.. tabs::
 
-    .. tab-container:: Ubuntu_20_04
-        :title: Ubuntu 20.04
+  .. tab:: Ubuntu
+
+    .. tabs::
+
+      .. tab:: 20.04
 
         **Ubuntu 20.04** dependencies installation commands:
 
@@ -59,8 +60,7 @@ As an example for some distributions:
                 $ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 
 
-    .. tab-container:: Ubuntu_18_04
-        :title: Ubuntu 18.04
+      .. tab:: 18.04
 
         **Ubuntu 18.04** dependencies installation commands:
 
@@ -83,8 +83,7 @@ As an example for some distributions:
                 $ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 
 
-    .. tab-container:: Ubuntu_16_04
-        :title: Ubuntu 16.04
+      .. tab:: 16.04
 
         **Ubuntu 16.04** dependencies installation commands:
 
@@ -107,8 +106,11 @@ As an example for some distributions:
                 $ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 
 
-    .. tab-container:: OpenSuse_Tumbleweed
-        :title: OpenSuse Tumbleweed
+  .. tab:: OpenSuse
+
+    .. tabs::
+
+      .. tab:: Tumbleweed
 
         **OpenSuse Tumbleweed** dependencies installation commands:
 
@@ -132,8 +134,7 @@ As an example for some distributions:
                 $ export JAVA_HOME=/usr/lib64/jvm/java-1.8.0-openjdk/
 
 
-    .. tab-container:: OpenSuse_Leap_15_1
-        :title: OpenSuse Leap 15.1
+      .. tab:: Leap 15.1
 
         **OpenSuse Leap 15.1** dependencies installation commands:
 
@@ -157,8 +158,7 @@ As an example for some distributions:
                 $ export JAVA_HOME=/usr/lib64/jvm/java-1.8.0-openjdk/
 
 
-    .. tab-container:: OpenSuse_42_2
-        :title: OpenSuse 42.2
+      .. tab:: 42.2
 
         **OpenSuse 42.2** dependencies installation commands:
 
@@ -191,8 +191,11 @@ As an example for some distributions:
                 $ export JAVA_HOME=/usr/lib64/jvm/java-1.8.0-openjdk/
 
 
-    .. tab-container:: Fedora_32
-        :title: Fedora 32
+  .. tab:: Fedora
+
+    .. tabs::
+
+      .. tab:: 32
 
         **Fedora 32** dependencies installation commands:
 
@@ -218,8 +221,7 @@ As an example for some distributions:
                 $ export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/
 
 
-    .. tab-container:: Fedora_25
-        :title: Fedora 25
+      .. tab:: 25
 
         **Fedora 25** dependencies installation commands:
 
@@ -245,8 +247,11 @@ As an example for some distributions:
                 $ export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/
 
 
-    .. tab-container:: Debian_8
-        :title: Debian 8
+  .. tab:: Debian
+
+    .. tabs::
+
+      .. tab:: 8
 
         **Debian 8** dependencies installation commands:
 
@@ -282,8 +287,11 @@ As an example for some distributions:
                 $ export JAVA_HOME=/usr/lib64/jvm/java-openjdk/
 
 
-    .. tab-container:: CentOS_7
-        :title: CentOS 7
+  .. tab:: CentOS
+
+    .. tabs::
+
+      .. tab:: 7
 
         **CentOS 7** dependencies installation commands:
 

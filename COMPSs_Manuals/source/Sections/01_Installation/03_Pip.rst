@@ -18,10 +18,9 @@ Depending on the machine, the installation command may vary. Some of the
 possible scenarios and their proper installation command are:
 
 
-.. content-tabs::
+.. tabs::
 
-    .. tab-container:: pip_systemwide
-        :title: Install systemwide
+    .. tab:: Install systemwide
 
         Install systemwide:
 
@@ -41,8 +40,7 @@ possible scenarios and their proper installation command are:
 
             $ source /etc/profile.d/compss.sh
 
-    .. tab-container:: pip_local
-        :title: Install in user local folder
+    .. tab:: Install in user local folder
 
         Install in user home folder (.local):
 
@@ -58,8 +56,7 @@ possible scenarios and their proper installation command are:
 
             $ source ~/.bashrc
 
-    .. tab-container:: pip_venv
-        :title: Within a virtual environment
+    .. tab:: Within a virtual environment
 
         Within a Python virtual environment:
 
