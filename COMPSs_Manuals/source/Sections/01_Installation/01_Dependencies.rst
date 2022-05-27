@@ -339,7 +339,7 @@ As an example for some distributions:
             $ make ; make install
 
         .. WARNING::
-            Neither Autoparallel nor Tracing are yet available for macOS, therefore, their dependencies do not need
+            Tracing is not yet available for macOS, therefore, its dependencies do not need
             to be installed.
 
 .. ATTENTION::
