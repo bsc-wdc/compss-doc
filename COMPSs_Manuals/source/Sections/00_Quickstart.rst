@@ -8,20 +8,17 @@ Write your first app
 
 Choose your flavour:
 
-.. content-tabs::
+.. tabs::
 
-    .. tab-container:: Java
-        :title: Java
+    .. group-tab:: Java
 
         .. INCLUDE:: ./00_Quickstart/02_Java.rst
 
-    .. tab-container:: Python
-        :title: Python
+    .. group-tab:: Python
 
         .. INCLUDE:: ./00_Quickstart/03_Python.rst
 
-    .. tab-container:: C
-        :title: C/C++
+    .. group-tab:: C/C++
 
         .. INCLUDE:: ./00_Quickstart/04_C.rst
 
