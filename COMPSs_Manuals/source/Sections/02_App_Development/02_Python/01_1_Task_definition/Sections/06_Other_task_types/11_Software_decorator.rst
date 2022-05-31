@@ -60,6 +60,34 @@ If we wanted to combine @constraint and @mpi decorators together, the JSON file 
         }
     }
 
+It's also possible to add @prolog and @epilog definitions in the configuration files:
+
+.. code-block:: json
+    :name: software_prolog_epilog
+    :caption: Prolog and Epilog definitions in configuration files.
+
+    {
+        "type":"mpi",
+        "properties":{
+            "runner":"mpirun",
+            "processes": 2,
+            "binary":"app_mpi.bin",
+     		"params": "-d {{a}} {{b}}"
+        },
+        "constraints":{
+            "computing_units": 2
+        },
+        "prolog":{
+            "binary":"echo",
+            "params":"greetings from prolog."
+        },
+        "epilog":{
+            "binary":"echo",
+            "params":"execution finished."
+        },
+    }
+
+
 Next table provides more detailed information about JSON configuration files:
 
     +------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
