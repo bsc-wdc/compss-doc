@@ -1,5 +1,5 @@
-Kmeans with Persistent Storage
-------------------------------
+Kmeans with dataClay
+--------------------
 
 KMeans is machine-learning algorithm (NP-hard), popularly employed for cluster
 analysis in data mining, and interesting for benchmarking and performance evaluation.
