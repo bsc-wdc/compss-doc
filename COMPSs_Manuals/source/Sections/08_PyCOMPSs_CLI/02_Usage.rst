@@ -108,10 +108,10 @@ Create a new COMPSs environment in your development directory
             $ pycompss init local -w /home/user/replace/path/
             $
             $ # Or a list of modules to load automatically before every command
-            $ pycompss init local -m COMPSs/2.10 ANACONDA/5.1.0_py3
+            $ pycompss init local -m COMPSs/3.0 ANACONDA/5.1.0_py3
             $
             $ # Or both
-            $ pycompss init local -w /home/user/replace/path/ -m COMPSs/2.10 ANACONDA/5.1.0_py3
+            $ pycompss init local -w /home/user/replace/path/ -m COMPSs/3.0 ANACONDA/5.1.0_py3
 
    .. group-tab:: Cluster
 
@@ -130,7 +130,7 @@ Create a new COMPSs environment in your development directory
             $ pycompss init cluster -l username@mn1.bsc.es
             $
             $ # Or with list of modules
-            $ pycompss init cluster -l username@mn1.bsc.es -m COMPSs/2.10 ANACONDA/5.1.0_py3
+            $ pycompss init cluster -l username@mn1.bsc.es -m COMPSs/3.0 ANACONDA/5.1.0_py3
 
         .. NOTE::
 
@@ -148,7 +148,7 @@ Create a new COMPSs environment in your development directory
 
             export ComputingUnits=1
             export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-            module load COMPSs/2.10
+            module load COMPSs/3.0
             module load ANACONDA/5.1.0_py3
 
         .. code-block:: console
