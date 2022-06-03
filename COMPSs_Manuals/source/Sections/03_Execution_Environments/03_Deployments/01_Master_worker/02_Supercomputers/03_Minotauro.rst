@@ -1,10 +1,10 @@
-MareNostrum 4
-=============
+MinoTauro
+=========
 
 Basic queue commands
 --------------------
 
-The MareNostrum supercomputer uses the SLURM (Simple Linux Utility for
+The MinoTauro supercomputer uses the SLURM (Simple Linux Utility for
 Resource Management) workload manager. The basic commands to manage jobs
 are listed below:
 
@@ -49,7 +49,7 @@ job information. For example:
     Storage Properties:        null
     Other:
             --sc_cfg=default.cfg
-            --cpus_per_node=48
+            --cpus_per_node=16
             --master_working_dir=.
             --worker_working_dir=shared_disk
             --lang=python
@@ -70,25 +70,19 @@ job information. For example:
     #SBATCH -o compss-%J.out
     #SBATCH -e compss-%J.err
     #SBATCH -N 3
-    #SBATCH -n 144
+    #SBATCH -n 48
     #SBATCH --exclusive
     #SBATCH -t00:15:00
     ...
 
-.. CAUTION::
-    Since MN4 has different partitions in shared disk (gpfs): ``/gpfs/scratch``,
-    ``/gpfs/projects`` and ``/gpfs/home``, it is **recommended** to set the
-    ``base_log_dir`` flag in the same partition as the ``worker_working_dir``
-    to avoid performance drop.
-
-In order to track the jobs state users can run the following command:
+In order to trac the jobs state users can run the following command:
 
 .. code-block:: console
 
     $ squeue
-    JOBID   PARTITION  NAME    USER  TIME_LEFT  TIME_LIMIT   START_TIME  ST NODES  CPUS  NODELIST
-    474130    main    COMPSs    XX    0:15:00    0:15:00        N/A      PD    3   144   -
+    JOBID  PARTITION   NAME    USER  ST  TIME    NODES  NODELIST (REASON)
+    XXXX   projects    COMPSs   XX   R   00:02       3  nvb[6-8]
 
 The specific COMPSs logs are stored under the ``~/.COMPSs/`` folder;
 saved as a local *runcompss* execution. For further details please check the
-:ref:`Sections/03_Execution_Environments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications` Section.
+:ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications` Section.

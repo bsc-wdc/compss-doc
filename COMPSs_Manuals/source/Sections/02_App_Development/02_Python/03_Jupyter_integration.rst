@@ -197,7 +197,7 @@ the whole application.
    recomputed).
 
 More information on the Notebook execution can be found in the Execution
-Environments :ref:`Sections/03_Execution_Environments/01_Master_worker/05_Jupyter_notebook:Jupyter notebook` Section.
+Environments :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/05_Jupyter_notebook:Jupyter notebook` Section.
 
 Notebook example
 ~~~~~~~~~~~~~~~~
