@@ -53,10 +53,8 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
         --graph=<bool>, --graph, -g             Generation of the complete graph (true/false)
                                                 When no value is provided it is set to true
                                                 Default: false
-        --tracing=<level>, --tracing, -t        Set generation of traces and/or tracing level ( [ true | basic ] | advanced | scorep | arm-map | arm-ddt | false)
-                                                True and basic levels will produce the same traces.
-                                                When no value is provided it is set to 1
-                                                Default: 0
+        --tracing=<bool>, --tracing, -t         Set generation of traces.
+                                                Default: false
         --monitoring=<int>, --monitoring, -m    Period between monitoring samples (milliseconds)
                                                 When no value is provided it is set to 2000
                                                 Default: 0
@@ -85,13 +83,20 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
 
       Advanced options:
         --extrae_config_file=<path>             Sets a custom extrae config file. Must be in a shared disk between all COMPSs workers.
-                                                Default: null
+                                                Default: /opt/COMPSs//Runtime/configuration/xml/tracing/extrae_basic.xml
         --extrae_config_file_python=<path>      Sets a custom extrae config file for python. Must be in a shared disk between all COMPSs workers.
                                                 Default: null
         --trace_label=<string>                  Add a label in the generated trace file. Only used in the case of tracing is activated.
                                                 Default: None
-        --tracing_task_dependencies             Adds communication lines for the task dependencies ( [ true | false ] )
+        --tracing_task_dependencies=<bool>      Adds communication lines for the task dependencies (true/false)
                                                 Default: false
+        --generate_trace=<bool>                 Converts the events register into a trace file. Only used in the case of activated tracing.
+                                                Default: true
+        --delete_trace_packages=<bool>          If true, deletes the tracing packages created by the run.
+                                                Default: true. Automatically, disabled if the trace is not generated.
+        --custom_threads=<bool>                 Threads in the trace file are re-ordered and customized to indicate the function of the thread.
+                                                Only used when the tracing is activated and a trace file generated.
+                                                Default: true
         --comm=<ClassName>                      Class that implements the adaptor for communications
                                                 Supported adaptors:
                                                       ├── es.bsc.compss.nio.master.NIOAdaptor
@@ -111,26 +116,40 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: null
         --scheduler=<className>                 Class that implements the Scheduler for COMPSs
                                                 Supported schedulers:
-                                                      ├── es.bsc.compss.scheduler.fifodatalocation.FIFODataLocationScheduler
-                                                      ├── es.bsc.compss.scheduler.fifonew.FIFOScheduler
-                                                      ├── es.bsc.compss.scheduler.fifodatanew.FIFODataScheduler
-                                                      ├── es.bsc.compss.scheduler.lifonew.LIFOScheduler
                                                       ├── es.bsc.compss.components.impl.TaskScheduler
-                                                      └── es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
-                                                Default: es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
+                                                      ├── es.bsc.compss.scheduler.orderstrict.fifo.FifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.fifo.FifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.lifo.LifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.locality.LocalityTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.successors.constraintsfifo.ConstraintsFifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.mt.successors.constraintsfifo.ConstraintsFifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.successors.fifolocality.FifoLocalityTS
+                                                      └── es.bsc.compss.scheduler.lookahead.mt.successors.fifolocality.FifoLocalityTS
+                                                Default: es.bsc.compss.scheduler.lookahead.locality.LocalityTS
         --scheduler_config_file=<path>          Path to the file which contains the scheduler configuration.
                                                 Default: Empty
+        --checkpoint=<className>                Class that implements the Checkpoint Management policy
+                                                Supported checkpoint policies:
+                                                      ├── es.bsc.compss.checkpoint.policies.CheckpointPolicyInstantiatedGroup
+                                                      ├── es.bsc.compss.checkpoint.policies.CheckpointPolicyPeriodicTime
+                                                      ├── es.bsc.compss.checkpoint.policies.CheckpointPolicyFinishedTasks
+                                                      └── es.bsc.compss.checkpoint.policies.NoCheckpoint
+                                                Default: es.bsc.compss.checkpoint.policies.NoCheckpoint
+        --checkpoint_params=<string>            Checkpoint configuration parameter.
+                                                Default: Empty
+        --checkpoint_folder=<path>              Checkpoint folder.
+                                                Default: Mandatory parameter
         --library_path=<path>                   Non-standard directories to search for libraries (e.g. Java JVM library, Python library, C binding library)
                                                 Default: Working Directory
         --classpath=<path>                      Path for the application classes / modules
                                                 Default: Working Directory
         --appdir=<path>                         Path for the application class folder.
-                                                Default: /home/user/
+                                                Default: /home/user
         --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
-                                                Default: /home/user/
+                                                Default: /home/user
         --env_script=<path>                     Path to the script file where the application environment variables are defined.
-                                                COMPSs sources this script before running the application.
-                                                Default: Empty
+                                                    COMPSs sources this script before running the application.
+                                                    Default: Empty
         --base_log_dir=<path>                   Base directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location)
                                                 Default: User home
         --specific_log_dir=<path>               Use a specific directory to store COMPSs log files (no sandbox is created)
@@ -176,8 +195,8 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: false
         --keep_workingdir                       Do not remove the worker working directory after the execution
                                                 Default: false
-        --python_interpreter=<string>           Python interpreter to use (python/python2/python3).
-                                                Default: python Version:
+        --python_interpreter=<string>           Python interpreter to use (python/python3).
+                                                Default: python3 Version:
         --python_propagate_virtual_environment=<bool>  Propagate the master virtual environment to the workers (true/false).
                                                        Default: true
         --python_mpi_worker=<bool>              Use MPI to run the python worker instead of multiprocessing. (true/false).
@@ -189,7 +208,7 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: false
         --python_cache_profiler=<bool>          Python cache profiler (true/false).
                                                 Only for NIO without mpi worker and python >= 3.8.
-                                                Default: false
+                                                Default:
         --wall_clock_limit=<int>                Maximum duration of the application (in seconds).
                                                 Default: 0
         --shutdown_in_node_failure=<bool>       Stop the whole execution in case of Node Failure.
