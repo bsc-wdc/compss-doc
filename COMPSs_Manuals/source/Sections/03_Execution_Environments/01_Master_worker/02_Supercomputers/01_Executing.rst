@@ -43,6 +43,7 @@ supported COMPSs modules in the supercomputer. The users can also execute the
     COMPSs/2.8
     COMPSs/2.9
     COMPSs/2.10
+    COMPSs/3.0
     COMPSs/release(default)
     COMPSs/trunk
 
@@ -51,7 +52,7 @@ supported COMPSs modules in the supercomputer. The users can also execute the
     load java/1.8.0u66 (PATH, MANPATH, JAVA_HOME, JAVA_ROOT, JAVA_BINDIR,
                         SDK_HOME, JDK_HOME, JRE_HOME)
     load MKL/11.0.1 (LD_LIBRARY_PATH)
-    load PYTHON/2.7.3 (PATH, MANPATH, LD_LIBRARY_PATH, C_INCLUDE_PATH)
+    load PYTHON/3.7.4 (PATH, MANPATH, LD_LIBRARY_PATH, C_INCLUDE_PATH)
     load COMPSs/release (PATH, MANPATH, COMPSS_HOME)
 
 The following command can be run to check if the correct COMPSs version
@@ -120,7 +121,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
 
     $ enqueue_compss -h
 
-    Usage: /apps/COMPSs/2.10/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
+    Usage: /apps/COMPSs/3.0/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
 
     * Options:
       General:
@@ -147,10 +148,6 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --extra_submit_flag=<flag>              Flag to pass queue system flags not supported by default command flags.
                                                 Spaces must be added as '#'
                                                 Default: Empty
-        --constraints=<constraints>             Constraints to pass to queue system.
-                                                Default: disabled
-        --qos=<qos>                             Quality of Service to pass to the queue system.
-                                                Default: default
         --cpus_per_task                         Number of cpus per task the queue system must allocate per task.
                                                 Note that this will be equal to the cpus_per_node in a worker node and
                                                 equal to the worker_in_master_cpus in a master node respectively.
@@ -160,7 +157,8 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --forward_time_limit=<true|false>       Forward the queue system time limit to the runtime.
                                                 It will stop the application in a controlled way.
                                                 Default: true
-        --storage_home=<string>                 Root installation dir of the storage implementation
+        --storage_home=<string>                 Root installation dir of the storage implementation.
+                                                Can be defined with the STORAGE_HOME environment variable.
                                                 Default: null
         --storage_props=<string>                Absolute path of the storage properties file
                                                 Mandatory if storage_home is defined
@@ -261,10 +259,8 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --graph=<bool>, --graph, -g             Generation of the complete graph (true/false)
                                                 When no value is provided it is set to true
                                                 Default: false
-        --tracing=<level>, --tracing, -t        Set generation of traces and/or tracing level ( [ true | basic ] | advanced | scorep | arm-map | arm-ddt | false)
-                                                True and basic levels will produce the same traces.
-                                                When no value is provided it is set to 1
-                                                Default: 0
+        --tracing=<bool>, --tracing, -t         Set generation of traces.
+                                                Default: false
         --monitoring=<int>, --monitoring, -m    Period between monitoring samples (milliseconds)
                                                 When no value is provided it is set to 2000
                                                 Default: 0
@@ -280,9 +276,9 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --storage_conf=<path>                   Path to the storage configuration file
                                                 Default: null
         --project=<path>                        Path to the project XML file
-                                                Default: /apps/COMPSs/2.10//Runtime/configuration/xml/projects/default_project.xml
+                                                Default: /apps/COMPSs/3.0//Runtime/configuration/xml/projects/default_project.xml
         --resources=<path>                      Path to the resources XML file
-                                                Default: /apps/COMPSs/2.10//Runtime/configuration/xml/resources/default_resources.xml
+                                                Default: /apps/COMPSs/3.0//Runtime/configuration/xml/projects/default_resources.xml
         --lang=<name>                           Language of the application (java/c/python)
                                                 Default: Inferred is possible. Otherwise: java
         --summary                               Displays a task execution summary at the end of the application execution
@@ -293,13 +289,20 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
 
       Advanced options:
         --extrae_config_file=<path>             Sets a custom extrae config file. Must be in a shared disk between all COMPSs workers.
-                                                Default: null
+                                                Default: /opt/COMPSs//Runtime/configuration/xml/tracing/extrae_basic.xml
         --extrae_config_file_python=<path>      Sets a custom extrae config file for python. Must be in a shared disk between all COMPSs workers.
                                                 Default: null
         --trace_label=<string>                  Add a label in the generated trace file. Only used in the case of tracing is activated.
                                                 Default: None
-        --tracing_task_dependencies             Adds communication lines for the task dependencies ( [ true | false ] )
+        --tracing_task_dependencies=<bool>      Adds communication lines for the task dependencies (true/false)
                                                 Default: false
+        --generate_trace=<bool>                 Converts the events register into a trace file. Only used in the case of activated tracing.
+                                                Default: false
+        --delete_trace_packages=<bool>          If true, deletes the tracing packages created by the run.
+                                                Default: false. Automatically, disabled if the trace is not generated.
+        --custom_threads=<bool>                 Threads in the trace file are re-ordered and customized to indicate the function of the thread.
+                                                Only used when the tracing is activated and a trace file generated.
+                                                Default: true
         --comm=<ClassName>                      Class that implements the adaptor for communications
                                                 Supported adaptors:
                                                       ├── es.bsc.compss.nio.master.NIOAdaptor
@@ -319,15 +322,29 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Default: null
         --scheduler=<className>                 Class that implements the Scheduler for COMPSs
                                                 Supported schedulers:
-                                                      ├── es.bsc.compss.scheduler.fifodatalocation.FIFODataLocationScheduler
-                                                      ├── es.bsc.compss.scheduler.fifonew.FIFOScheduler
-                                                      ├── es.bsc.compss.scheduler.fifodatanew.FIFODataScheduler
-                                                      ├── es.bsc.compss.scheduler.lifonew.LIFOScheduler
                                                       ├── es.bsc.compss.components.impl.TaskScheduler
-                                                      └── es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
-                                                Default: es.bsc.compss.scheduler.loadbalancing.LoadBalancingScheduler
+                                                      ├── es.bsc.compss.scheduler.orderstrict.fifo.FifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.fifo.FifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.lifo.LifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.locality.LocalityTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.successors.constraintsfifo.ConstraintsFifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.mt.successors.constraintsfifo.ConstraintsFifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.successors.fifolocality.FifoLocalityTS
+                                                      └── es.bsc.compss.scheduler.lookahead.mt.successors.fifolocality.FifoLocalityTS
+                                                Default: es.bsc.compss.scheduler.lookahead.locality.LocalityTS
         --scheduler_config_file=<path>          Path to the file which contains the scheduler configuration.
                                                 Default: Empty
+        --checkpoint=<className>                Class that implements the Checkpoint Management policy
+                                                Supported checkpoint policies:
+                                                      ├── es.bsc.compss.checkpoint.policies.CheckpointPolicyInstantiatedGroup
+                                                      ├── es.bsc.compss.checkpoint.policies.CheckpointPolicyPeriodicTime
+                                                      ├── es.bsc.compss.checkpoint.policies.CheckpointPolicyFinishedTasks
+                                                      └── es.bsc.compss.checkpoint.policies.NoCheckpoint
+                                                Default: es.bsc.compss.checkpoint.policies.NoCheckpoint
+        --checkpoint_params=<string>            Checkpoint configuration parameter.
+                                                Default: Empty
+        --checkpoint_folder=<path>              Checkpoint folder.
+                                                Default: Mandatory parameter
         --library_path=<path>                   Non-standard directories to search for libraries (e.g. Java JVM library, Python library, C binding library)
                                                 Default: Working Directory
         --classpath=<path>                      Path for the application classes / modules
@@ -384,8 +401,8 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Default: false
         --keep_workingdir                       Do not remove the worker working directory after the execution
                                                 Default: false
-        --python_interpreter=<string>           Python interpreter to use (python/python2/python3).
-                                                Default: python Version:
+        --python_interpreter=<string>           Python interpreter to use (python/python3).
+                                                Default: python3 Version:
         --python_propagate_virtual_environment=<bool>  Propagate the master virtual environment to the workers (true/false).
                                                        Default: true
         --python_mpi_worker=<bool>              Use MPI to run the python worker instead of multiprocessing. (true/false).
@@ -401,6 +418,8 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --wall_clock_limit=<int>                Maximum duration of the application (in seconds).
                                                 Default: 0
         --shutdown_in_node_failure=<bool>       Stop the whole execution in case of Node Failure.
+                                                Default: false
+        --provenance, -p                        Generate COMPSs workflow provenance data in RO-Crate format from YAML file. Automatically activates -graph and -output_profile.
                                                 Default: false
 
     * Application name:

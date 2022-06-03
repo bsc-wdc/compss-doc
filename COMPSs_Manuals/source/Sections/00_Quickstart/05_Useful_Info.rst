@@ -3,10 +3,9 @@ Useful information
 
 Choose your flavour:
 
-.. content-tabs::
+.. tabs::
 
-    .. tab-container:: Java
-        :title: Java
+    .. group-tab:: Java
 
         - Syntax detailed information -> :ref:`Sections/02_App_Development/01_Java:Java`
 
@@ -26,8 +25,7 @@ Choose your flavour:
 
         - Using COMPSs with persistent storage frameworks (e.g. dataClay, Hecuba) -> :ref:`Sections/06_Persistent_Storage:Persistent Storage`
 
-    .. tab-container:: Python
-        :title: Python
+    .. group-tab:: Python
 
         - Syntax detailed information -> :ref:`Sections/02_App_Development/02_Python:Python Binding`
 
@@ -47,8 +45,7 @@ Choose your flavour:
 
         - Using COMPSs with persistent storage frameworks (e.g. dataClay, Hecuba) -> :ref:`Sections/06_Persistent_Storage:Persistent Storage`
 
-    .. tab-container:: C
-        :title: C/C++
+    .. group-tab:: C/C++
 
         - Syntax detailed information -> :ref:`Sections/02_App_Development/03_C:C/C++ Binding`
 

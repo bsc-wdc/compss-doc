@@ -279,10 +279,9 @@ Executing applications
 
    .. group-tab:: Docker
 
-        .. content-tabs::
+        .. tabs::
 
-            .. tab-container:: run
-                :title: Run
+            .. tab:: Run application
 
                 .. code-block:: console
 
@@ -326,18 +325,17 @@ Executing applications
                     $ pycompss init docker -w python/matmul_files/src
                     $ pycompss run matmul_files.py 4 4
 
-            .. tab-container:: job
-                :title: Job
+            .. tab:: Submit application execution (job) to queuing system
 
-                Not available.
+                **Not available**
+
                 Submitting jobs for applications is only possible for cluster and local environments.
 
    .. group-tab:: Local
 
-        .. content-tabs::
+        .. tabs::
 
-            .. tab-container:: run
-                :title: Run
+            .. tab:: Run application
 
                 .. code-block:: console
 
@@ -381,8 +379,7 @@ Executing applications
                     $ pycompss init local -w python/matmul_files/src
                     $ pycompss run matmul_files.py 4 4
 
-            .. tab-container:: job
-                :title: Job
+            .. tab:: Submit application execution (job) to queuing system
 
                 .. IMPORTANT::
 
@@ -419,10 +416,9 @@ Executing applications
    .. group-tab:: Cluster
 
 
-        .. content-tabs::
+        .. tabs::
 
-            .. tab-container:: job
-                :title: Job
+            .. tab:: Submit application execution (job) to queuing system
 
                 The ``pycompss job`` command can be used to submit, cancel and list jobs to a remote cluster environment.
                 It is only available for cluster and local environments.
@@ -469,11 +465,10 @@ Executing applications
                         ``{COMPS_APP_PATH}`` will be resolved by the CLI and replaced with the /absolute/path/to/app on the remote cluster.
 
 
+            .. tab:: Run application
 
-            .. tab-container:: run
-                :title: Run
+                **Not available**
 
-                Not available.
                 A cluster type environment only accepts submitting jobs for deployed applications.
                 See ``Job`` tab for more information.
 

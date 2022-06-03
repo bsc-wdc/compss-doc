@@ -30,10 +30,9 @@ Then, you need to download the embedded dependencies from the git submodules.
 
 Finally you just need to run the installation script. You have two options:
 
-.. content-tabs::
+.. tabs::
 
-    .. tab-container:: For_all_users
-        :title: For all users
+    .. tab:: For all users
 
         For installing COMPSs for all users run the following command:
 
@@ -47,8 +46,7 @@ Finally you just need to run the installation script. You have two options:
 
             Root access is required.
 
-    .. tab-container:: For_current_user
-        :title: For the current user
+    .. tab:: For the current user
 
         For installing COMPSs for the current user run the following commands:
 
