@@ -106,6 +106,10 @@ Finally you just need to run the installation script. You have two options:
                 --no-jacoco, -J             Disable Jacoco module installation
                                             Default: true
 
+                --dlb, -d                   Enable dlb module installation
+                --no-dlb, -D                Disable dlb module installation
+                                            Default: true
+
                 --cli, -c                   Enable Command Line Interface module installation
                 --no-cli, -C                Disable Command Line Interface module installation
                                             Default: true
@@ -124,11 +128,10 @@ Finally you just need to run the installation script. You have two options:
                 targetDir                   COMPSs installation directory
                                             Default: /opt/COMPSs
 
-
     .. WARNING::
 
-        Components Monitor, Tracing, Kafka and Jacoco cannot be installed in macOS distributions. Therefore,
-        at least options ``-M -T -K -J`` must be used when invoking ``buildlocal``
+        Components Tracing, Kafka, Jacoco and DLB cannot be installed in macOS distributions. Therefore,
+        at least options ``-T -K -J -D`` must be used when invoking ``buildlocal``
 
 
 Post installation
