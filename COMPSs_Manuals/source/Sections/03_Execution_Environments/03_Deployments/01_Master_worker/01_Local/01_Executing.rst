@@ -167,7 +167,7 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
         --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Notice the quotes)
                                                 Default: -Xms256m,-Xmx1024m,-Xmn100m
         --cpu_affinity="<string>"               Sets the CPU affinity for the workers
-                                                Supported options: disabled, automatic, user defined map of the form "0-8/9,10,11/12-14,15,16"
+                                                Supported options: disabled, automatic, dlb or user defined map of the form "0-8/9,10,11/12-14,15,16"
                                                 Default: automatic
         --gpu_affinity="<string>"               Sets the GPU affinity for the workers
                                                 Supported options: disabled, automatic, user defined map of the form "0-8/9,10,11/12-14,15,16"
@@ -223,6 +223,7 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
 
     * Application arguments:
         Command line arguments to pass to the application. Can be empty.
+
 
 .. WARNING::
 
