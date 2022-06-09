@@ -138,8 +138,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Default: 10
         --job_name=<name>                       Job name
                                                 Default: COMPSs
-        --queue=<name>                          Queue name to submit the job. Depends on the queue system.
-                                                For example (MN3): bsc_cs | bsc_debug | debug | interactive
+        --queue=<name>                          Queue/partition name to submit the job. Depends on the queue system.
                                                 Default: default
         --reservation=<name>                    Reservation to use when submitting the job.
                                                 Default: disabled
@@ -148,9 +147,9 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --extra_submit_flag=<flag>              Flag to pass queue system flags not supported by default command flags.
                                                 Spaces must be added as '#'
                                                 Default: Empty
-        --cpus_per_task                         Number of cpus per task the queue system must allocate per task.
-                                                Note that this will be equal to the cpus_per_node in a worker node and
-                                                equal to the worker_in_master_cpus in a master node respectively.
+        --forward_cpus_per_node=<true|false>    Flag to indicate if number to cpus per node must be forwarded to the worker process.
+                                                The number of forwarded cpus will be equal to the cpus_per_node in a worker node and
+                                                equal to the worker_in_master_cpus in a master node.
                                                 Default: false
         --job_dependency=<jobID>                Postpone job execution until the job dependency has ended.
                                                 Default: None
@@ -373,7 +372,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Notice the quotes)
                                                 Default: -Xms256m,-Xmx1024m,-Xmn100m
         --cpu_affinity="<string>"               Sets the CPU affinity for the workers
-                                                Supported options: disabled, automatic, user defined map of the form "0-8/9,10,11/12-14,15,16"
+                                                Supported options: disabled, automatic, dlb or user defined map of the form "0-8/9,10,11/12-14,15,16"
                                                 Default: automatic
         --gpu_affinity="<string>"               Sets the GPU affinity for the workers
                                                 Supported options: disabled, automatic, user defined map of the form "0-8/9,10,11/12-14,15,16"

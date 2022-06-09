@@ -49,7 +49,7 @@ following **characteristics**:
   be used on the COMPSs applications.
 
 
-This manual is divided in 9 sections:
+This manual is divided in 12 sections:
 
 .. toctree::
    :maxdepth: 1
