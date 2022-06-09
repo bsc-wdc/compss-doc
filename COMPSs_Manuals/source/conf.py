@@ -171,7 +171,7 @@ html_scaled_image_link = False
 
 # -- Options for LaTeX output ---------------------------------------------
 latex_engine = 'pdflatex'
-latex_additional_files = ['./Logos/bsc_logo.jpg']
+latex_additional_files = ['./_static/bsc_logo.jpg']
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     #
