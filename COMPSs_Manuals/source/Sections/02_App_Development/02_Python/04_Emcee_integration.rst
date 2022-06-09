@@ -102,7 +102,7 @@ The execution output is:
 
     WARNING: COMPSs Properties file is null. Setting default values
     [(647)    API]  -  Starting COMPSs Runtime v2.10.rc2205 (build 20220527-0842.r791bf7461bad1a1fab8f45853be7ba1c28b7bf93)
-    100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.51s/it]
+    100%|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX| 10/10 [00:25<00:00,  2.51s/it]
     PyCOMPSs took 31.8 seconds
     [(34243)    API]  -  Execution Finished
 
