@@ -641,6 +641,118 @@ Running Jupyter notebooks
                 Ready to work!
                 To force quit: CTRL + C
 
+        .. dropdown:: How to use Jupyter in MN4 from local machine with PyCOMPSs CLI?
+          :container: + shadow
+          :title: bg-primary text-white text-center font-weight-bold
+          :body: bg-light font-italic
+
+          .. dropdown:: **1st Step (to be done in your laptop)**
+              :open:
+
+              Create the MN4 environment in the PyCOMPSs CLI:
+
+              .. code-block:: console
+
+                  pycompss init -n mn4 cluster -l <MN4_USER>@mn1.bsc.es
+
+
+              By default, ``pycompss`` creates the local environment, and since the objective
+              is to run in MN4, this command will create the MN4 environment and set it by
+              default.
+
+              .. IMPORTANT::
+
+                  This environment will use the ``mn1.bsc.es`` login node to submit the
+                  job, and the notebook will be started within a MN4 compute node.
+
+
+          .. dropdown:: **2nd Step (to be done in your laptop)**
+              :open:
+
+              Go to the folder where your notebook is in your local machine.
+
+              .. code-block:: console
+
+                  cd /path/to/notebook/
+
+
+          .. dropdown:: **3rd Step (to be done in your laptop)**
+              :open:
+
+              Deploy the current folder to MN4 with the following command:
+
+              .. code-block:: console
+
+                  pycompss app deploy mynotebook
+
+              This command will copy the whole current folder into your ``$HOME/.COMPSsApps/``
+              folder, and will be used from jupyter notebook.
+
+              It will register ``mynotebook`` name (choose the name that you want), so
+              that it can be used in the next step.
+
+
+          .. dropdown:: **4th Step (to be done in your laptop)**
+              :open:
+
+              Launch a jupyter job into MN4 using the deployed folder with name
+              ``mynotebook`` (or the name defined in previous step):
+
+              .. code-block:: console
+
+                  pycompss jupyter -app mynotebook --qos=debug --exec_time=20
+
+              A job will be submitted to MN4 queueing system within the ``debug`` queue and
+              with a ``20 minutes`` walltime. **Please, wait for it to start**.
+              It can be checked with ``squeue`` from MN4 while waiting, and its expected
+              start time with ``squeue --start`` command.
+
+              This job **will deploy the PyCOMPSs infrastructure** in the given nodes.
+
+              Once started, the URL to open jupyter from your web browser will automatically
+              appear a few seconds after the job started. Output example:
+
+              .. code-block:: console
+
+                  Job submitted: 20480430
+                  Waiting for jupyter to start...
+                  Jupyter started
+                  Connecting to jupyter server...
+                  Connection established. Please use the following URL to connect to the job.
+                  http://localhost:8888/?token=c653b02a899265ad6c9cf075d4882f91d9d372b06132d1fe
+                  Ready to work!
+                  To force quit: CTRL + C
+
+
+          .. dropdown:: **5th Step (to be done in your laptop)**
+              :open:
+
+              Open the given URL (*in some consoles with CTRL + left click*) in your local web
+              browser and you can start working with the notebook.
+
+              Inside the notebook, PyCOMPSs must be imported, its runtime started, tasks
+              defined, etc.
+
+              **Please, check the documentation to get help and examples:**
+
+                - `PyCOMPSs programming model <https://pycompss.readthedocs.io/en/stable/Sections/02_App_Development/02_Python/01_Programming_model.html>`_
+                - `Jupyter API (pycompss start, stop, etc.) <https://pycompss.readthedocs.io/en/stable/Sections/02_App_Development/02_Python/03_Jupyter_integration.html>`_
+                - `Sample notebooks <https://pycompss.readthedocs.io/en/stable/Sections/09_PyCOMPSs_Notebooks.html>`_
+                - `Tutorial <https://pycompss.readthedocs.io/en/stable/Sections/10_Tutorial/02_PyCOMPSs.html>`_
+
+              .. CAUTION::
+
+                  If the walltime of the job is reached, the job will be killed by the
+                  queuing system and the notebook will stop working.
+
+
+          .. dropdown:: **6th Step (to be done in your laptop)**
+              :open:
+
+              Once finished working with the notebook, press ``CTRL+C`` in the console where you
+              launched the ``pycompss jupyter`` command. This will trigger the job
+              cancellation.
+
 
 Generating the task graph
 -------------------------
