@@ -121,20 +121,6 @@ The following list enumerates the possible task types:
          otherwise. This parameter is used by the COMPSs scheduler (it
          is a String not a Java boolean).
 
--  **@Service:** It specifies the service properties.
-
-      -  **namespace** Mandatory. Service namespace
-
-      -  **name** Mandatory. Service name.
-
-      -  **port** Mandatory. Service port.
-
-      -  **operation** Operation type.
-
-      -  **priority** "true" if the service takes priority, "false"
-         otherwise. This parameter is used by the COMPSs scheduler (it
-         is a String not a Java boolean).
- 
 -  **@Http:** It specifies the HTTP task properties.
 
       -  **serviceName** Mandatory. Name of the HTTP Service that included at least one HTTP resource in the resources file.
@@ -150,6 +136,20 @@ The following list enumerates the possible task types:
       -  **produces** In case of JSON responses, produces string can be used as a template to define 2 things; the first one is where the return value(s) is (are) stored in the retrieved JSON string. Returns are meant to be defined as '{{return_0}}','{{return_1}}', etc. And the second one is for additional parameters to be used 'updates' string. The user assign a value from the JSON response to a parameter and use that param to update an INOUT dictionary.
 
       - **updates** (PyCOMPSs only) In case of INOUT dictionaries, the user can update the INOUT dict with a value extracted from the JSON response.
+
+For task which are not methods, a representative method has to be defined in an specific class depending on the task type (binary.BINARY in the case of binary tasks, mpi.MPI for mpi tasks, ...). This is required just for compilation and to enable the invocation of the task from the main code, the runtime will substitute this code by the real execution of the defined task. An example of this representative method can be found in :numref:`MPI_task_dummy_java`
+
+.. code-block:: java
+    :name: MPI_task_dummy_java
+    :caption: Representative method for an MPI task
+
+    package mpi;
+
+    public class MPI {
+      public static int mpiExecution(int i, String outFile) {
+        // Nothing to do
+        return 0
+      }
 
 
 
@@ -509,4 +509,25 @@ groups without retrieving data while other tasks are being executed.
             System.out.println("Exception caught in barrier!!");
             Test.otherTask(FILE_NAME);
         }
+    }
+
+.. ATTENTION::
+
+   Method tasks are executed on top of Java threads, to perform a secure cancellation of a running task in a thread when using the time *timeout* property and *COMPSsExceptions, you have to use the *COMPSsWorker.cancellationPoint* method to indicate the points where it is secure to cancel a task. When the task code reaches this method, it will check if the current task must be cancelled and perform a save cancellation, otherwise it will continue with this. An example about how to use the cancellation point is shown in :numref:`cancellation_point_java`
+
+   .. code-block:: java
+    :name: cancellation_point_java
+    :caption: COMPSs Exception example
+
+    import es.bsc.compss.worker.COMPSsWorker;
+
+    public class TasksImpl {
+
+      public static void cancellableTask(String fileName) throws Exception {
+        boolean condition = treu
+        while (condition) {
+            COMPSsWorker.cancellationPoint();
+            condition = computeIteration(...);
+        }
+      }
     }
