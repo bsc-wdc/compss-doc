@@ -28,7 +28,6 @@ This decorator enables the user to set the particular constraints for
 each task, such as the amount of Cores required explicitly.
 Alternatively, it is also possible to indicate that the value of a
 constraint is specified in a environment variable (:numref:`constraint_env_var_task_python`).
-A full description of the supported constraints can be found in :numref:`supported_constraints`.
 
 For example:
 
@@ -73,3 +72,36 @@ order to use the GPU.
 Please, take into account that in order to respect the constraints,
 the peculiarities of the infrastructure must be defined in the
 *resources.xml* file.
+
+Supported constraints
+^^^^^^^^^^^^^^^^^^^^^
+
+A full description of the supported constraints can be found in :numref:`supported_constraints`.
+
+Special constraints
+^^^^^^^^^^^^^^^^^^^
+
+There is a special constraint when **considering the COMPSs agents deployment**
+(:ref:`sections/03_Execution_Environments/03_Deployments/02_Agents:Agents Deployments`)
+to specify that the task MUST be executed in the node that received the task.
+This constraint is indicated in the *@constraint* decorator with the
+``is_local`` argument equal a boolean (``True`` or ``False``) (:numref:`is_local_task_python`)
+in addition to other constraints.
+
+.. code-block:: python
+    :name: is_local_task_python
+    :caption: is_local task example
+
+    from pycompss.api.task import task
+    from pycompss.api.constraint import constraint
+
+    @constraint(is_local=True)
+    @task(c=INOUT)
+    def func(a, b, c):
+         c += a * b
+
+.. IMPORTANT::
+
+     The ``is_local`` constraint has NO effect with the default COMPSs deployment
+     (master-workers)
+     (:ref:`sections/03_Execution_Environments/03_Deployments/01_Master_worker:Master-Worker Deployments`).
