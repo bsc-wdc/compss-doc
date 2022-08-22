@@ -15,7 +15,6 @@ Then, you need to download the embedded dependencies from the git submodules.
 .. code-block:: console
 
     $ compss> ./submodules_get.sh
-    $ compss> ./submodules_patch.sh
 
 .. WARNING::
 

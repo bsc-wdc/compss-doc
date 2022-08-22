@@ -134,9 +134,9 @@ As an example for some distributions and versions:
                 $ export JAVA_HOME=/usr/lib64/jvm/java-1.8.0-openjdk/
 
 
-      .. tab:: Leap 15.1
+      .. tab:: Leap 15.X
 
-        **OpenSuse Leap 15.1** dependencies installation commands:
+        **OpenSuse Leap 15.X** dependencies installation commands:
 
         .. code-block:: console
 
@@ -363,6 +363,13 @@ As an example for some distributions and versions:
         $ export PATH=/opt/gradle-5.4.1/bin:$PATH
 
 
+.. IMPORTANT::
+
+    Python version 3.8 or higher is recommended since some of the Python
+    binding features are only supported in these Python versions (e.g.
+    worker cache)
+
+
 Build Dependencies
 ------------------
 
@@ -374,11 +381,15 @@ To install with Pip, ``pip`` for the target Python version is required.
 Optional Dependencies
 ---------------------
 
-For the Python binding it is recommended to have ``dill`` (`dill project <https://pypi.org/project/dill/>`_) and
-``guppy`` (`guppy project <https://pypi.org/project/guppy/>`_)/``guppy3`` (`guppy3 project <https://pypi.org/project/guppy3/>`_) installed.
-The ``dill`` package increases the variety of serializable objects by Python
-(for example: lambda functions), and the ``guppy``/``guppy3`` package is needed to use the
-``@local`` decorator. Both packages can be found in pyPI and can be installed via ``pip``.
+For the Python binding it is recommended to have ``dill`` (`dill project <https://pypi.org/project/dill/>`_),
+``guppy3`` (`guppy3 project <https://pypi.org/project/guppy3/>`_) and
+``numpy`` (`numpy` project <https://pypi.org/project/numpy/>) installed:
+
+* The ``dill`` package increases the variety of serializable objects by Python (for example: lambda functions)
+* The ``guppy3`` package is needed to use the ``@local`` decorator.
+* The ``numpy`` package is useful to improve the serialization/deserialization performance since its internal mechanisms are used by the Python binding.
+
+These packages can be found in PyPI and can be installed via ``pip``.
 
 Since it is possible to execute python applications using workers spawning
 MPI processes instead of multiprocessing, it is necessary to have ``openmpi``,

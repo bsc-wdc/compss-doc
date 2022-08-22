@@ -95,7 +95,6 @@ Install COMPSs
                $ git clone https://github.com/bsc-wdc/compss.git
                $ cd compss
                $ ./submodules_get.sh
-               $ ./submodules_patch.sh
                $ cd builders/
                $ export INSTALL_DIR=$HOME/COMPSs/
                $ ./buildlocal ${INSTALL_DIR}
@@ -125,7 +124,6 @@ Install COMPSs
                $ git clone https://github.com/bsc-wdc/compss.git
                $ cd compss
                $ ./submodules_get.sh
-               $ ./submodules_patch.sh
                $ cd builders/
                $ export INSTALL_DIR=/opt/COMPSs/
                $ sudo -E ./buildlocal ${INSTALL_DIR}
