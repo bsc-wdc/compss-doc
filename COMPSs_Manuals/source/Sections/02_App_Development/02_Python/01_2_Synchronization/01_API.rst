@@ -179,7 +179,6 @@ each parameter.
     from pycompss.api.parameter import INOUT
     from pycompss.api.local import local
 
-    @task(returns=list)
     @task(v=INOUT)
     def append_three_ones(v):
         v += [1, 1, 1]
