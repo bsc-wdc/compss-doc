@@ -20,26 +20,62 @@ decorator:
         return "hola"
 
 
-Configuration files can contain different key-values depending on the user's needs. If the user
-wants to define an MPI task, then "mpi" value should be set for the "type" key. Moreover, arguments
-of @mpi decorator can be added inside the "properties". A basic configuration file for an MPI task
-would look like in the example below:
+Configuration files can contain different key-values depending on the user's needs. Details of the configuration of the software
+execution can be defined in the value of the "execution" key. There the user can define the "type" of the execution and other
+necessary configuration parameters the *software* requires. Moreover, parameters of the PyCOMPSs *@task* can be added in the "parameters".
+
+For example, If we wanted to move the *@task@* definition from the example above, inside the software the code and config file it would look
+like as follows:
+
+.. code-block:: python
+    :name: software_basic_task
+    :caption: Example: task definition is inside the config file.
+
+    from pycompss.api.task import task
+    from pycompss.api.software import software
+
+    @software(config_file="example.json")
+    def example():
+        return "hola"
+
+
 
 .. code-block:: json
-    :name: software_basic_json
+    :name: software_basic_task_json
+    :caption: Task definition inside a software config file.
+
+    {
+      "execution" : {
+        "type":"task"
+      },
+      "parameters" : {
+        "returns" : 1
+      }
+    }
+
+
+If the user wants to define an MPI task, then "mpi" value should be set for the "type" key. Moreover, arguments of PyCOMPSs' *@mpi* decorator
+can be added. A basic configuration file for an MPI task would look like in the example below:
+
+
+.. code-block:: json
+    :name: software_mpi_json
     :caption: JSON configuration file of an MPI definition.
 
     {
+      "execution" : {
         "type":"mpi",
-        "properties":{
-            "runner":"mpirun",
-            "processes": 2,
-            "binary":"~/app_mpi.bin"
-        }
+        "runner": "mpirun",
+        "binary":"date",
+        "working_dir": "/tmp"
+        },
+      "parameters" : {
+        "returns" : 1
+      }
     }
 
 As we see "runner", "processes", and "binary" are the regular parameters of @mpi decorator, and are
-added to the "properties" of the @software.
+added as part of the execution configuration. However, parameters of the *@task* definition is are in the "parameters" key.
 
 If we wanted to combine @constraint and @mpi decorators together, the JSON file would have been extended:
 
@@ -48,12 +84,15 @@ If we wanted to combine @constraint and @mpi decorators together, the JSON file 
     :caption: JSON configuration file of an MPI definition.
 
     {
-        "type":"mpi",
-        "properties":{
+        "execution": {
+            "type":"mpi",
             "runner":"mpirun",
             "processes": 2,
             "binary":"~/app_mpi.bin",
-     		"params": "-d {{a}} {{b}}"
+     		"args": "-d {{a}} {{b}}"
+        },
+        "parameters" : {
+            "returns" : 1
         },
         "constraints":{
             "computing_units": 2
@@ -67,23 +106,26 @@ It's also possible to add @prolog and @epilog definitions in the configuration f
     :caption: Prolog and Epilog definitions in configuration files.
 
     {
-        "type":"mpi",
-        "properties":{
+        "execution": {
+            "type":"mpi",
             "runner":"mpirun",
             "processes": 2,
             "binary":"app_mpi.bin",
-     		"params": "-d {{a}} {{b}}"
+     		"args": "-d {{a}} {{b}}"
+        },
+        "parameters" : {
+            "returns" : 1
         },
         "constraints":{
             "computing_units": 2
         },
         "prolog":{
             "binary":"echo",
-            "params":"greetings from prolog."
+            "args":"greetings from prolog."
         },
         "epilog":{
             "binary":"echo",
-            "params":"execution finished."
+            "args":"execution finished."
         },
     }
 
@@ -93,9 +135,11 @@ Next table provides more detailed information about JSON configuration files:
     +------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     | Key                    | Description                                                                                                                                                        |
     +========================+====================================================================================================================================================================+
-    | **type**               | (Mandatory) Type of the software invocation. Supported values are 'mpi', 'binary', 'mpmd_mpi', 'multinode', 'http', and 'compss'.                                  |
+    | **execution**          | (Mandatory) Contains all the software execution details such as "type" and arguments of the type's decorator.                                                      |
     +------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-    | **properties**         | (Mandatory) A dictionary containing parameters of the "type" decorator.                                                                                            |
+    | **execution.type**     | (Mandatory) Type of the software invocation. Supported values are 'task', 'workflow', 'mpi', 'binary', 'mpmd_mpi', 'multinode', 'http', and 'compss'.              |
+    +------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | **parameters**         | A dictionary containing parameters regarding the "@task" definition.                                                                                               |
     +------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     | **prolog**             | Replaces the @prolog definition and expects @prolog parameters in a dictionary.                                                                                    |
     +------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+

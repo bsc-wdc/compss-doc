@@ -79,7 +79,7 @@ The invocation of the *grepper* task would be equivalent to:
 Please note that the *keyword* parameter is a string, and it is
 respected as is in the invocation call.
 Another way of passing task parameters to binary execution command
-is to use ```params``` parameter in the binary definition. In this case, task parameters should be defined
+is to use ```args``` parameter in the binary definition. In this case, task parameters should be defined
 between curly braces and the full string with parameter replacements will be added to the command. In the
 following example, value of 'param_1' is added to the execution command after '-d' arg:
 
@@ -92,7 +92,7 @@ following example, value of 'param_1' is added to the execution command after '-
     from pycompss.api.parameter import *
 
 
-    @binary(binary="date", params= "-d {{param_1}}")
+    @binary(binary="date", args= "-d {{param_1}}")
     @task()
     def print_date(param_1):
          pass

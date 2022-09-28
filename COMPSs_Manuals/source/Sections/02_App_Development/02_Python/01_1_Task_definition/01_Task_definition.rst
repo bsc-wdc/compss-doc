@@ -16,3 +16,4 @@ The task definition is structured in the following sections:
     Sections/07_Task_constraints
     Sections/08_Multiple_task_implementations
     Sections/09_Prolog_Epilog
+    Sections/10_Data_Transformation
