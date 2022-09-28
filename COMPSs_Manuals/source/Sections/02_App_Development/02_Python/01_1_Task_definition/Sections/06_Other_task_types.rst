@@ -30,7 +30,7 @@ The following subparagraphs describe their usage.
 Other task types summary
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Next tables summarizes the parameters of these decorators. Please note that 'working_dir' and 'params' ae the only decorator properties that can contain task parameters
+Next tables summarizes the parameters of these decorators. Please note that 'working_dir' and 'args' ae the only decorator properties that can contain task parameters
 defined in curly braces.
 
 * :ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types/01_Binary_decorator:Binary decorator` (@binary)
@@ -41,7 +41,7 @@ defined in curly braces.
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
     | **working_dir**        | Full path of the binary working directory inside the COMPSs Worker.                                                                     |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-    | **params**             | Params string to be added to end of the execution command of the binary. It can contain python task parameters defined in curly braces. |
+    | **args**               | Args string to be added to end of the execution command of the binary. It can contain python task parameters defined in curly braces.   |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
 
 * :ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types/02_OmpSs_decorator:OmpSs decorator` (@ompss)
@@ -67,7 +67,7 @@ defined in curly braces.
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
     | **processes_per_node** | Integer defining the number of co-allocated MPI processses per node. The ``processes`` value should be multiple of this value           |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-    | **params**             | Params string to be added to end of the execution command of the binary. It can contain python task parameters defined in curly braces. |
+    | **args**               | Args string to be added to end of the execution command of the binary. It can contain python task parameters defined in curly braces.   |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
 
 * :ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types/04_MPMD_MPI_decorator:MPMD MPI decorator` (@mpmd_mpi)
@@ -82,7 +82,7 @@ defined in curly braces.
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
     | **fail_by_exit_value** | If set to 'False', and ``returns`` value of the 'task' definition is 'int', exit code of the MPI command will be returned.              |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-    | **programs**           | List of single MPI program dictionaries where program specific parameters (``binary``, ``processes``, ``params``) are defined.          |
+    | **programs**           | List of single MPI program dictionaries where program specific parameters (``binary``, ``processes``, ``args``) are defined.            |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
 
 * :ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types/05_IO_decorator:I/O decorator` (@io)

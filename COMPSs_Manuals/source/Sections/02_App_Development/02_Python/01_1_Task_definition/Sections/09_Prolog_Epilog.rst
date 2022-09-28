@@ -30,15 +30,15 @@ PyCOMPSs tasks can have a *@prolog* or an *@epilog*, or both at the same time. A
         ...
         return 1
 
-Both decorators have the same syntax and have 3 parameters: ```binary``` is the only mandatory parameter where ```params``` and ```fail_by_exit_value``` are
-optional. ```params``` describe the command line arguments of the binary. Users can also pass the task parameters as arguments. In this case, the task parameter
-should be surrounded by double curly braces (*"{{"* and *"}}"*) in the 'params' string. These parameters can be results of previous tasks and PyCOMPSs will handle data dependencies
+Both decorators have the same syntax and have 3 parameters: ```binary``` is the only mandatory parameter where ```args``` and ```fail_by_exit_value``` are
+optional. ```args``` describe the command line arguments of the binary. Users can also pass the task parameters as arguments. In this case, the task parameter
+should be surrounded by double curly braces (*"{{"* and *"}}"*) in the 'args' string. These parameters can be results of previous tasks and PyCOMPSs will handle data dependencies
 between tasks:
 
 
 .. IMPORTANT::
 
-    Task parameters used in 'params' strings can be type of primitive types such as int, float, string, and boolean.
+    Task parameters used in 'args' strings can be type of primitive types such as int, float, string, and boolean.
 
 
 .. code-block:: python
@@ -49,7 +49,7 @@ between tasks:
     from pycompss.api.prolog import prolog
     from pycompss.api.task import task
 
-    @prolog(binary="mkdir", params="{{param_1}}")
+    @prolog(binary="mkdir", args="{{param_1}}")
     @task()
     def task_1(param_1):
         ...
@@ -74,8 +74,8 @@ and *False* for Epilog:
     from pycompss.api.prolog import prolog
     from pycompss.api.task import task
 
-    @prolog(binary="mkdir", params="-p {{sandbox_path}}", fail_by_exit_value=True)
-    @epilog(binary="rm", params="-r {{sandbox_path}}", fail_by_exit_value=False)
+    @prolog(binary="mkdir", args="-p {{sandbox_path}}", fail_by_exit_value=True)
+    @epilog(binary="rm", args="-r {{sandbox_path}}", fail_by_exit_value=False)
     @task()
     def task_2(sandbox_path):
         ...
