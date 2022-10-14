@@ -25,6 +25,7 @@ The following subparagraphs describe their usage.
     06_Other_task_types/09_Reduction_decorator
     06_Other_task_types/10_Container_decorator
     06_Other_task_types/11_Software_decorator
+    06_Other_task_types/12_Julia_decorator
 
 
 Other task types summary
@@ -148,6 +149,23 @@ defined in curly braces.
     +========================+===================================================================================================================================+
     | **config_file**        |  Path to the JSON configuration file.                                                                                             |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+
+* :ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types/12_Julia_decorator:Julia decorator` (@julia)
+    +------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+
+    | Parameter              | Description                                                                                                                                 |
+    +========================+=============================================================================================================================================+
+    | **executor**           | String defining the julia binary executor (default: `julia`).                                                                               |
+    +------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+
+    | **script**             | (Mandatory) String defining the full path of the Julia script that must be executed.                                                        |
+    +------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+
+    | **fail_by_exit_value** | If set to 'False', and ``returns`` value of the 'task' definition is 'int', exit code of the Julia script execution will be returned.       |
+    +------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+
+    | **working_dir**        | Full path of the julia script working directory inside the COMPSs Worker.                                                                   |
+    +------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+
+    | **computing_nodes**    | Integer defining the number of computing nodes reserved for the task execution (default: "1" - overrides `@multinode` decorator).           |
+    +------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+
+    | **args**               | Args string to be added to end of the execution command of the Julia script. It can contain python task parameters defined in curly braces. |
+    +------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+
 
 
 In addition to the parameters that can be used within the
