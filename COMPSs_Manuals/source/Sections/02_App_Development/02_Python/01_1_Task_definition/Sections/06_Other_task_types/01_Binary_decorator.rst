@@ -25,7 +25,7 @@ without/with constraints (without parameters); please note that @constraint deco
     def binary_func():
          pass
 
-    @constraint(computingUnits="2")
+    @constraint(computing_units="2")
     @binary(binary="otherbinary.bin")
     @task()
     def binary_func2():
