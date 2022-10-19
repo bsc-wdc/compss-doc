@@ -419,17 +419,11 @@ Some of the **runcompss** flags are only for PyCOMPSs application execution:
 
 .. WARNING::
 
-    For macOS systems, the flag ``--python_propagate_virtual_environment`` must be set to ``true`` to ensure the
+    For macOS systems, the flag ``--python_interpreter=/path_to/python`` must be passed to ensure the
     same Python version is used both in master and worker parts of the application (the application will crash
     otherwise). We recommend to use `pyenv <https://github.com/pyenv/pyenv>`_ to manage the macOS installed
-    Python versions. Also, be careful with ``Xcode`` updates, since they can modify the Python system version.
-
-.. WARNING::
-
-    The PyCOMPSs current working directory must be passed with the ``--pythonpath`` flag to ensure a correct
-    execution in macOS environments. The Python's ``site-packages`` directory must be provided as well. An
-    example of such a flag including both options would be:
-    ``--pythonpath=$(pwd):/Users/user_name/.pyenv/versions/3.8.9/lib/python3.8/site-packages``
+    Python versions. An example using pyenv would be: ``--python_interpreter=/Users/username/.pyenv/shims/python3``
+    In addition, be careful with ``Xcode`` updates, since they can modify the Python system version.
 
 Worker cache
 """"""""""""
