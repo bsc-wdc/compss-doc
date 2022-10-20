@@ -5,7 +5,7 @@ Usage
 and ``dislib`` are also alternatives to ``pycompss``).
 
 This command line tool enables to deploy and manage multiple COMPSs infrastructures
-from a single place and for 3 different types of environments (``docker``, ``local`` and ``cluster``)
+from a single place and for 3 different types of environments (``docker``, ``local`` and ``remote``)
 
 The supported flags are:
 
@@ -22,12 +22,12 @@ The supported flags are:
         environment:                                lists, switch a remove COMPSs environments.
         exec CMD:                                   executes the CMD within the current COMPSs environment.
         run [--app_name] [OPTIONS] FILE [PARAMS]:   runs FILE with COMPSs, where OPTIONS are COMPSs options and PARAMS are application parameters.
-                                                    --app_name parameter is only required for cluster type environment
+                                                    --app_name parameter is only required for remote environments
         monitor [start|stop]:                       starts or stops the COMPSs monitoring.
         jupyter [--app_name] [PATH|FILE]:           starts jupyter-notebook in the given PATH or FILE.
-                                                    --app_name parameter is only required for cluster type environment
-        job:                                        submits, cancel and list remote jobs for cluster and local environments.
-        app:                                        deploy, list and remove applications for only cluster environments.
+                                                    --app_name parameter is only required for remote environments
+        job:                                        submits, cancel and list jobs on remote and local environments.
+        app:                                        deploy, list and remove applications on remote and local environments.
         gengraph [FILE.dot]:                        converts the .dot graph into .pdf
         components list:                            lists COMPSs actives components.
         components add RESOURCE:                    adds the RESOURCE to the pool of workers of the COMPSs.
@@ -79,10 +79,10 @@ Create a new COMPSs environment in your development directory
             $ pycompss init docker -w /home/user/replace/path/
             $
             $ # Or the COMPSs docker image to use
-            $ pycompss init docker -i compss/compss-tutorial:2.7
+            $ pycompss init docker -i compss/compss-tutorial:3.0
             $
             $ # Or both
-            $ pycompss init docker -w /home/user/replace/path/ -i compss/compss-tutorial:2.7
+            $ pycompss init docker -w /home/user/replace/path/ -i compss/compss-tutorial:3.0
 
    .. group-tab:: Local
 
@@ -113,35 +113,35 @@ Create a new COMPSs environment in your development directory
             $ # Or both
             $ pycompss init local -w /home/user/replace/path/ -m COMPSs/3.0 ANACONDA/5.1.0_py3
 
-   .. group-tab:: Cluster
+   .. group-tab:: Remote
 
         .. code-block:: console
 
-            $ pycompss init cluster -l [LOGIN] -m [FILE | MODULES ...]
+            $ pycompss init remote -l [LOGIN] -m [FILE | MODULES ...]
 
-        Creates a cluster type evironment with the credentials specified in LOGIN.
+        Creates a remote type evironment with the credentials specified in LOGIN. 
         The modules to be loaded automatically can be specified with -m.
 
-        Parameter LOGIN is necessary to connect to the remote cluster and must follow
-        standard format of [user]@[hostname]:[port]. port is optional and defaults to 22 for ssh.
-
+        Parameter LOGIN is necessary to connect to the remote host and must follow
+        standard format i.e. [user]@[hostname]:[port]. ``port`` is optional and defaults to 22 for ssh.
+    
         .. code-block:: console
-
-            $ pycompss init cluster -l username@mn1.bsc.es
+    
+            $ pycompss init remote -l username@mn1.bsc.es
             $
-            $ # Or with list of modules
-            $ pycompss init cluster -l username@mn1.bsc.es -m COMPSs/3.0 ANACONDA/5.1.0_py3
+            $ # Or with list of modules 
+            $ pycompss init remote -l username@mn1.bsc.es -m COMPSs/3.0 ANACONDA/5.1.0_py3
 
         .. NOTE::
-
-            The SSH access to the cluster should be configured to work without password.
+            
+            The SSH access to the remote should be configured to work without password.
             If you need to set up your machine for the first time please take a look
             at :ref:`Sections/01_Installation/05_Additional_configuration:Additional Configuration`
             Section for a detailed description of the additional configuration.
 
 
         The parameter ``-m`` also supports passing a file containing not only modules but any kind of commands
-        that you need to execute for the remote cluster environment.
+        that you need to execute for the remote environment.
         Suppose we have a file ``modules.sh`` with the following content:
 
         .. code-block:: text
@@ -152,8 +152,8 @@ Create a new COMPSs environment in your development directory
             module load ANACONDA/5.1.0_py3
 
         .. code-block:: console
-
-            $ pycompss init cluster -l username@mn1.bsc.es -m /path/to/modules.sh
+    
+            $ pycompss init remote -l username@mn1.bsc.es -m /path/to/modules.sh
 
 
 Managing environments
@@ -170,9 +170,9 @@ the types of each one and the ID.
 
     $ pycompss environment list
                       ID           Type         Active
-        -   5eeb858c2b10        cluster              *
-        -        default          local
-        -  container-b54         docker
+        -   5eeb858c2b10         remote            *
+        -        default          local                
+        -  container-b54         docker    
 
 The ID of the environments is what you will use to switch between them.
 
@@ -190,12 +190,12 @@ Every environment can also be deleted, except ``default`` environment.
     $ pycompss environment remove default
         ERROR: `default` environment is required and cannot be deleted.
 
-Also every cluster type environment can have multiple applications deployed in remote.
+Also every remote environment can have multiple applications deployed in remote.
 So if you want to delete the environment all the data associated with them will be aslo deleted.
 
 .. code-block:: console
 
-    $ pycompss environment remove 5eeb858c2b10     # deleting a cluster env with 2 apps deployed
+    $ pycompss environment remove 5eeb858c2b10     # deleting a remote env with 2 apps deployed
         WARNING: There are still applications binded to this environment
         Do you want to delete this environment and all the applications? (y/N) y   # default is no
         Deleting app1...
@@ -206,17 +206,17 @@ So if you want to delete the environment all the data associated with them will 
 Deploying applications
 ----------------------
 
-For a cluster type environment is necessary to deploying any application before executing it.
+For a remote environment is required to deploy any application before executing it.
 
 .. code-block:: console
 
-        $ pycompss app deploy [APP_NAME] --local_source [LOCAL_SOURCE] --remote_dir [REMOTE_DIR]
+        $ pycompss app deploy [APP_NAME] --source_dir [SOURCE_DIR] --destination_dir [DESTINATION_DIR]
 
-APP_NAME is obligatory and must be unique.
-LOCAL_SOURCE and REMOTE_DIR are optional
-the command copies the application from the current directory or from LOCAL_SOURCE if --local_source is set
-to the remote directory specified with REMOTE_DIR.
-if REMOTE_DIR is not set, the application will be deployed in ``$HOME/.COMPSsApps``
+APP_NAME is required and must be unique.
+SOURCE_DIR and DESTINATION_DIR are optional
+the command copies the application from the current directory or from SOURCE_DIR if --source_dir is set
+to the remote directory specified with DESTINATION_DIR.
+if DESTINATION_DIR is not set, the application will be deployed in ``$HOME/.COMPSsApps``
 
 In order to show how to deploy an application, clone the PyCOMPSs' tutorial apps repository:
 
@@ -234,24 +234,57 @@ In order to show how to deploy an application, clone the PyCOMPSs' tutorial apps
 
    .. group-tab:: Local
 
-      This is not necessary for local environments since the working directory is set
-      at the initialization of the environment.
+        On ``local`` environment deploying an application wil just copy the ``--source_dir`` directory to another location.
+        Let's deploy the matrix multiplication tutorial application.
 
-   .. group-tab:: Cluster
+        .. code-block:: console
+
+            $ pycompss app deploy matmul --source_dir tutorial_apps/python/matmul_files
+
+        Also you could specify the path where to copy the files.
+
+        .. code-block:: console
+
+            $ pycompss app deploy matmul --source_dir tutorial_apps/python/matmul_files/src/ --destination_dir /home/user/matmul_copy
+
+        If the parameter ``--destination_dir`` is missing then the files will be copied to ``~/.COMPSsApps/%env_name%/%app_name%/``
+
+        Each deployed application  can be listed using the command:
+
+        .. code-block:: console
+
+                $ pycompss app list
+                    Name          Source                                                           Destination
+                    ------------  ------------------------------------------------------------     ---------------------------------------
+                    matmul        /home/user/tutorial_apps/python/matmul_files                     /home/user/.COMPSsApps/default/matmul
+                    test_jenkins  /jenkins/tests_execution_sandbox/apps/app009/.COMPSsWorker       /tmp/test_jenkins
+
+        Also every app can be deleted using the command:
+
+        .. code-block:: console
+
+                $ pycompss app remove matmul
+                    Deleting application `matmul`...
+                    
+        .. CAUTION::
+            
+                Removing an applocation will delete the copied app directory and every valuable results generated inside.
+
+   .. group-tab:: Remote
 
         Let's deploy the matrix multiplication tutorial application.
 
         .. code-block:: console
 
-            $ pycompss app deploy matmul --local_source tutorial_apps/python/matmul_files
+            $ pycompss app deploy matmul --source_dir tutorial_apps/python/matmul_files
 
-        Also you could specify the path where to copy the files on the remote cluster.
+        Also you could specify the path where to copy the files on the remote host.
 
         .. code-block:: console
 
-            $ pycompss app deploy matmul --local_source tutorial_apps/python/matmul_files/src/ --remote_dir /path/cluster/my_app
+            $ pycompss app deploy matmul --source_dir tutorial_apps/python/matmul_files/src/ --destination_dir /path/cluster/my_app
 
-        Each application deployed within a cluster environment can be listed using the command:
+        Each deployed application within a remote environment can be listed using the command:
 
         .. code-block:: console
 
@@ -287,7 +320,7 @@ Executing applications
 
                         $ pycompss run [COMPSS_ARGS] APP_FILE [APP_ARGS]
 
-                APP_FILE is obligatory and must be a valid python file.
+                APP_FILE is required and must be a valid python file.
                 APP_ARGS is optional and can be used to pass any argument to the application.
 
                 .. collapse:: COMPSS_ARGS is optional and can accept the following arguments
@@ -329,7 +362,8 @@ Executing applications
 
                 **Not available**
 
-                Submitting jobs for applications is only possible for cluster and local environments.
+                Not available.
+                Submitting jobs for applications is only possible for remote and local environments.
 
    .. group-tab:: Local
 
@@ -341,7 +375,7 @@ Executing applications
 
                         $ pycompss run [COMPSS_ARGS] APP_FILE [APP_ARGS]
 
-                APP_FILE is obligatory and must be a valid python file.
+                APP_FILE is required and must be a valid python file.
                 APP_ARGS is optional and can be used to pass any argument to the application.
 
                 .. collapse:: COMPSS_ARGS is optional and can accept the following arguments
@@ -386,15 +420,15 @@ Executing applications
                     To be able to submit a job in a local environment you must have installed
                     some cluster management/job scheduling system .i.e SLURM, SGE, PBS, etc.
 
-                The ``pycompss job`` command can be used to submit, cancel and list jobs to a remote cluster environment.
-                It is only available for cluster and local environments.
+                The ``pycompss job`` command can be used to submit, cancel and list jobs to a remote environment.
+                It is only available for local and remote environments.
 
                 .. code-block:: console
 
                     $ pycompss job submit -e [ENV_VAR...] [COMPSS_ARGS] APP_FILE [APP_ARGS]
 
                 ENV_VAR is optional and can be used to pass any environment variable to the application.
-                APP_FILE is obligatory and must be a valid python file inside app directory.
+                APP_FILE is required and must be a valid python file inside app directory.
                 APP_ARGS is optional and can be used to pass any argument to the application.
 
                 .. collapse:: COMPSS_ARGS is optional and can accept the following arguments
@@ -413,23 +447,23 @@ Executing applications
                     $ pycompss job submit -e ComputingUnits=1 --num_nodes=2 --exec_time=10 --worker_working_dir=local_disk --tracing=false --lang=python --qos=debug matmul_files.py 4 4
 
 
-   .. group-tab:: Cluster
+   .. group-tab:: Remote
 
 
         .. tabs::
 
             .. tab:: Submit application execution (job) to queuing system
 
-                The ``pycompss job`` command can be used to submit, cancel and list jobs to a remote cluster environment.
-                It is only available for cluster and local environments.
+                The ``pycompss job`` command can be used to submit, cancel and list jobs to a remote environment.
+                It is only available for local and remote environments.
 
                 .. code-block:: console
 
                     $ pycompss job submit -e [ENV_VAR...] -app APP_NAME [COMPSS_ARGS] APP_FILE [APP_ARGS]
 
                 ENV_VAR is optional and can be used to pass any environment variable to the application.
-                APP_NAME is obligatory and must be a valid application name previously deployed.
-                APP_FILE is obligatory and must be a valid python file inside app directory.
+                APP_NAME is required and must be a valid application name previously deployed.
+                APP_FILE is required and must be a valid python file inside app directory.
                 APP_ARGS is optional and can be used to pass any argument to the application.
 
                 .. collapse:: COMPSS_ARGS is optional and can accept the following arguments
@@ -446,7 +480,7 @@ Executing applications
 
                     $ pycompss job submit -e MYVAR1 --env MYVAR2=foo APPNAME EXECFILE ARGS
 
-                Use the -e, --env_var flags to set simple (non-array) environment variables in the cluster environment.
+                Use the -e, --env_var flags to set simple (non-array) environment variables in the remote environment.
                 Or overwrite variables that are defined in the `init` command of the environment.
 
                 **Submitting Jobs**
@@ -469,7 +503,8 @@ Executing applications
 
                 **Not available**
 
-                A cluster type environment only accepts submitting jobs for deployed applications.
+                Not available.
+                A remote type environment only accepts submitting jobs for deployed applications.
                 See ``Job`` tab for more information.
 
 Managing jobs
@@ -537,7 +572,7 @@ Running the COMPSs monitor
         .. code-block:: console
 
             $ pycompss monitor start
-            $ pycompss run --monitoring=1000 -g matmul_files.py 4 4
+            $ pycompss run --monitor=1000 -g matmul_files.py 4 4
             $ # During the execution, go to the URL in your web browser
             $ pycompss monitor stop
 
@@ -572,9 +607,9 @@ Running the COMPSs monitor
         Once finished, it is possible to stop the monitoring facility by using
         the ``pycompss monitor stop`` command.
 
-   .. group-tab:: Cluster
+   .. group-tab:: Remote
 
-        Not yet implemented.
+        Not implemented yet.
 
 
 
@@ -616,15 +651,15 @@ Running Jupyter notebooks
 
             $ pycompss jupyter --port 9999 ./notebooks
 
-   .. group-tab:: Cluster
+   .. group-tab:: Remote
 
-        In order to run a jupyter notebook in the cluster, it must be bound to an already deployed app
+        In order to run a jupyter notebook in remote, it must be bound to an already deployed app
 
         Let's deploy another application that contains jupyter notebooks:
 
         .. code-block:: console
 
-            $ pycompss app deploy synchronization --local_source tutorial_apps/python/notebooks/syntax/
+            $ pycompss app deploy synchronization --source_dir tutorial_apps/python/notebooks/syntax/
 
         The command will be executed inside the remote directory specified at deployment.
         The path for the selected application will be automatically resolved and the jupyter server
@@ -805,9 +840,9 @@ the execution command:
         ``~\.COMPSs\app_name_XX\monitor\complete_graph.pdf`` file, that is, the
         same folder where the dot file is.
 
-   .. group-tab:: Cluster
+   .. group-tab:: Remote
 
-        Not yet implemented!
+        Not implemented yet!
 
 
 
@@ -883,7 +918,7 @@ Adding more nodes
 
         Environment not compatible with this feature.
 
-   .. group-tab:: Cluster
+   .. group-tab:: Remote
 
         Environment not compatible with this feature.
 
@@ -925,6 +960,6 @@ Removing existing nodes
 
         Environment not compatible with this feature.
 
-   .. group-tab:: Cluster
+   .. group-tab:: Remote
 
         Environment not compatible with this feature.
