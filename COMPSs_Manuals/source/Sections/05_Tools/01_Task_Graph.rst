@@ -32,7 +32,7 @@ the ``--base_log_dir=<BASE_LOG_DIR>`` flag is specified).
    The dependency graph of the SparseLU application
 
 When only the ``dot`` file is passed as a parameter, ``compss_gengraph`` creates a PDF image file by default,
-named ``complete_graph.pdf``. However, an different image format can be selected by specifying any other format
+named ``complete_graph.pdf``. However, a different image format can be selected by specifying any other format
 supported by GraphViz. Check the list of supported formats `here <https://graphviz.org/docs/outputs/>`_, and verify
 also that they are supported in your system, since not all formats are available for all systems. An example on how
 to specify the format would be:

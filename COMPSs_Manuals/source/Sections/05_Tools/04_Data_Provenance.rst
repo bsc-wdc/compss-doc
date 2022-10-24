@@ -3,9 +3,8 @@ Data Provenance
 
 In order to achieve **Reproducibility** and **Replicability** with your experiments
 using COMPSs, the runtime includes the capacity of recording details of the
-application's execution, also known as *Data Provenance*. This is currently
-only supported for Python applications, while in the meantime we are working
-to extend it to Java and C/C++, which are programming languages also supported by COMPSs.
+application's execution, also known as *Data Provenance*. This is supported for both Python
+and Java applications.
 
 When the provenance option is activated, the runtime records every access
 to a file or directory in the application, as well as its direction (IN, 
@@ -13,7 +12,7 @@ OUT, INOUT). In addition to this, other information such as the parameters passe
 that submitted the application, its source files, workflow image and profiling statistics, authors and
 their institutions, ... are also stored.
 All this information is later used to record the Data Provenance
-of your workflow using the `RO-Crate standard <https://www.researchobject.org/ro-crate/1.1/>`_, and with the assistance of
+of your workflow using the `RO-Crate specification <https://www.researchobject.org/ro-crate/1.1/>`_, and with the assistance of
 the `ro-crate-py library <https://github.com/ResearchObject/ro-crate-py>`_. RO-Crate is based on
 JSON-LD (JavaScript Object Notation for Linked Data), is
 much simpler than other standards and tools created to record Provenance, and
@@ -49,7 +48,7 @@ This would typically install the library in ``~/.local/``. Another option is to 
 
     compss@bsc:~$ pip install -t install_path rocrate
 
-Our implementation has been tested with ``ro-crate-py`` version ``0.6.1`` and earlier.
+Our implementation has been tested with ``ro-crate-py`` version ``0.7.0`` and earlier.
 
 
 Previous needed information
@@ -58,8 +57,8 @@ Previous needed information
 There are certain pieces of information which must be included when registering the provenance of a workflow that
 the COMPSs runtime cannot automatically infer, such as the authors of an application. For specifying all these
 fields that are needed to generate an RO-Crate but cannot be automatically obtained, we have created a simple YAML
-structure where the user can specify them. They need to provide a YAML file named
-``ro-crate-info.yaml`` that follows the next template structure:
+structure where the user can specify them. They need to provide in their working directory (i.e., where the application
+is going to be run) a YAML file named ``ro-crate-info.yaml`` that follows the next template structure:
 
 .. code-block:: yaml
 
@@ -68,7 +67,12 @@ structure where the user can specify them. They need to provide a YAML file name
       description: Detailed description of your COMPSs application
       license: Apache-2.0 #Provide better a URL, but these strings are accepted:
                       # https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
+      sources_dir: [path_to/dir_1, path_to/dir_2]  # Optional: List of directories containing the application source files.
+            # Relative or absolute paths can be used
+      sources_main_file: my_main_file.py  # Optional: Name of the main file of the application, located in one of the
+            # sources_dir. Relative paths from a sources_dir entry, or absolute paths can be used
       files: [main_file.py, aux_file_1.py, aux_file_2.py] # List of application files
+            # Relative or absolute paths can be used
     Authors:
       - name: Author_1 Name
         e-mail: author_1@email.com
@@ -101,8 +105,31 @@ More specifically, in the **COMPSs Workflow Information** section:
   predefined strings are also supported, and can be found here:
   https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
 
-- ``files`` is a list of all the source files of the application (typically all ``.py`` files). The files' order
-  is not important, since the runtime will obtain the name of the main file from the application execution.
+- ``sources_dir`` can be a single path, or a list of paths where application source files can be found. Our script
+  will add ALL files (i.e., not only source files, but any file found) and sub-directories inside each of the paths
+  specified. The sub-directories structure is respected
+  when the files are added in the crate (in a sub-directory ``application_sources``).
+
+- ``sources_main_file`` is the name of the main source file of the application, and may be used if the user wants to specify
+  a particular file as such. The COMPSs runtime detects automatically the main source of an application, therefore this is a way
+  to override the detected file. The file can be specified with only its name or a relative path inside one of the
+  directories listed in ``sources_dir``. An absolute path can also be used.
+
+- ``files`` is a single or a list of all the source files of the application (typically all ``.py`` files for Python
+  applications, or ``.java``, ``.class``, ``.jar`` files for Java ones). Both relative and absolute paths can be used.
+  All files specified here will be added in the root of the sub-directory ``application_sources`` from the resulting
+  crate. If the script is unable to automatically
+  identify the main source file of the application, the first file of this list may be considered as such.
+
+The ``sources_dir`` and ``files`` terms are complementary to each other. An ``ro-crate-info.yaml`` could use the term
+``files`` alone or ``sources_dir`` alone, but also both, if the user is willing to add a number of sub-directories
+with source files, but also several files by hand.
+
+.. WARNING::
+
+    The term ``sources_main_file`` can only be used when ``sources_dir`` is defined. While the runtime is able to detect
+    automatically the main file from application execution, this would enable to modify that automatic selection in case
+    of need.
 
 And in the **Authors** section:
 
@@ -116,11 +143,12 @@ And in the **Authors** section:
 
 .. TIP::
 
-    It is very important that the list of ``files``, ``orcid`` and ``ror`` terms are correctly defined, since the
-    runtime will only register information for the list of ``files`` defined, and the ``orcid`` and ``ror`` are
-    used as unique identifiers in RO-Crate.
+    It is very important that the list of source files (defined with ``sources_dir`` or ``files``), ``orcid`` and
+    ``ror`` terms are correctly defined, since the
+    runtime will only register information for the list of source files defined, and the ``orcid`` and ``ror`` are
+    used as unique identifiers in the RO-Crate specification.
 
-In the following lines, we provide a YAML example for an out-of-core Matrix Multiplication COMPSs application,
+In the following lines, we provide a YAML example for an out-of-core Matrix Multiplication PyCOMPSs application,
 distributed with license Apache v2.0, with 2 source files, and authored by 3 persons from two different
 institutions.
 
@@ -150,6 +178,26 @@ institutions.
         organisation_name: IRB Barcelona
         ror: https://ror.org/01z1gye03
 
+Also, another example of a COMPSs Java K-means application, where the usage of the ``sources_dir`` term can be seen.
+We add to the crate the sub-directories that contain the ``.jar`` and ``.java`` files correspondingly.
+
+.. code-block:: yaml
+
+    COMPSs Workflow Information:
+      name: COMPSs K-means
+      description: K-means clustering is a method of cluster analysis that aims to partition ''n'' points into ''k''
+        clusters in which each point belongs to the cluster with the nearest mean. It follows an iterative refinement
+        strategy to find the centers of natural clusters in the data.
+      license: https://opensource.org/licenses/Apache-2.0 #Provide better a URL, but these strings are accepted:
+                        # https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
+      sources_dir: [jar, src]
+
+    Authors:
+      - name: Raül Sirvent
+        e-mail: Raul.Sirvent@bsc.es
+        orcid: https://orcid.org/0000-0003-0606-2512
+        organisation_name: Barcelona Supercomputing Center
+        ror: https://ror.org/05sd8tv96
 
 Usage
 -----
@@ -174,6 +222,33 @@ As shown in the help option:
     Take into account that the graph image generation can take some extra seconds at the end of the execution of your
     application, therefore, adjust the ``--exec_time`` accordingly.
 
+In the case of extremely large workflows (e.g., a workflow
+with tenths of thousands of task nodes, or tenths of thousands of files used as inputs or outputs), the extra time
+needed to generate the data provenance with RO-Crate may be a problem in systems with strict run time constraints.
+In these cases, the workflow execution may end correctly, but the extra processing to generate the provenance may be killed
+by the system if it exceeds a certain limit, and the provenance will not be created correctly.
+
+For this or any other similar situation, our data provenance generation script can be triggered offline at any moment
+after the workflow has executed correctly, thanks to our design. From the working directory of the application, the
+following commands may be used:
+
+.. code-block:: console
+
+    compss@bsc:~$ $COMPSS_HOME/Runtime/scripts/utils/compss_gengraph svg $BASE_LOG_DIR/monitor/complete_graph.dot
+
+    compss@bsc:~$ python $COMPSS_HOME/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py ro-crate-info.yaml $BASE_LOG_DIR/dataprovenance.log
+
+In these commands, ``COMPSS_HOME`` is where your COMPSs installation is located, and ``BASE_LOG_DIR`` points to the path where the
+application run logs are stored (see Section :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/02_Results_and_logs:Logs`
+for more details on where to locate these logs). ``compss_gengraph``
+generates the workflow image to be added to the crate, but if its generation time is a concern, or the user does not
+want it to be included in the crate, the command can be skipped. The second command runs the
+``generate_COMPSs_RO-Crate.py`` Python script, that uses the information provided by the user in ``ro-crate-info.yaml``
+combined with the file accesses information registered by the COMPSs runtime in the ``dataprovenance.log`` file. The
+result is a sub-directory ``COMPSs_RO-Crate_[uuid]/`` that contains the data provenance of the run (see next sub-section
+for a detailed description).
+
+# More details can be obtained in the WORKS 22 paper...
 
 Result
 ------
@@ -184,10 +259,14 @@ folder include all the elements needed to reproduce a COMPSs execution, and
 are:
 
 - **Application Source Files:** As detailed by the user in the ``ro-crate-info.yaml`` file
-  with the term ``files``,
-  the main source file and all auxiliary files that the application needs (e.g.: ``.py``).
+  with the terms ``sources_dir`` and/or ``files``. They have to include
+  the main source file and all auxiliary files that the application needs (e.g.: ``.py``, .``.java``, ``.class``
+  or ``.jar``). Optionally, the term ``sources_main_file`` can be used to manually select the main source file of
+  the application. All application files are added to a sub-folder in the crate named ``application_sources``, where
+  the ``sources_dir`` locations are included with their same folder tree structure. The files included with the
+  ``files`` term are added to the root of the ``application_sources`` sub-folder in the crate.
 
-- **complete_graph.pdf:** The image of the workflow generated by the COMPSs runtime,
+- **complete_graph.svg:** The image of the workflow generated by the COMPSs runtime,
   as generated with the ``runcompss -g`` or ``--graph`` option.
 
 - **App_Profile.json:** A set of statistics of the application run recorded by the
@@ -201,11 +280,11 @@ are:
   by the COMPSs runtime.
 
 - **ro-crate-metadata.json:** The RO-Crate JSON main file describing the contents of
-  this directory (crate) in the RO-Crate standard format. You can find an example at the end of this Section.
+  this directory (crate) in the RO-Crate specification format. You can find an example at the end of this Section.
 
 .. WARNING::
 
-    All previous file names (``complete_graph.pdf``, ``App_Profile.json`` and ``compss_command_line_arguments.txt``)
+    All previous file names (``complete_graph.svg``, ``App_Profile.json`` and ``compss_command_line_arguments.txt``)
     are automatically used to generate new files when using the ``-p`` or ``--provenance`` option.
     Avoid using these file names among
     your own files to avoid unwanted overwritings. You can change the resulting ``App_Profile.json`` name by using
@@ -220,7 +299,7 @@ In the RO-Crate specification, the root file containing the metadata referring t
 a COMPSs application execution, specifically an out-of-core matrix multiplication example that includes matrices
 ``A`` and ``B`` as inputs in an ``inputs/`` sub-directory, and matrix ``C`` as the result of their multiplication.
 For all the specific details on the fields provided in the JSON file, please refer to the
-`RO-Crate standard Website <https://www.researchobject.org/ro-crate/1.1/>`_. Intuitively, if you search through
+`RO-Crate specification Website <https://www.researchobject.org/ro-crate/1.1/>`_. Intuitively, if you search through
 the JSON file you can find several interesting fields:
 
 - **creator:** List of authors, identified by their ORCID.
@@ -649,20 +728,5 @@ contents. Many of the fields are easily and directly understandable.
                 "name": "C.1.1",
                 "sdDatePublished": "2022-05-16T08:59:20+00:00"
             },
-            {
-                "@id": "#history-01",
-                "@type": "CreateAction",
-                "actionStatus": {
-                    "@id": "http://schema.org/CompletedActionStatus"
-                },
-                "agent": {
-                    "@id": "https://orcid.org/0000-0003-0606-2512"
-                },
-                "endTime": "2021-03-22",
-                "name": "COMPSs RO-Crate automatically generated for Python applications",
-                "object": {
-                    "@id": "./"
-                }
-            }
         ]
     }
