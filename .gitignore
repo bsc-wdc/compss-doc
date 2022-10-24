@@ -18,6 +18,8 @@
 
 # Ignore vscode
 .vscode
+# Ignore .idea
+.idea/
 
 # Ignore documentation builds
 _build/
