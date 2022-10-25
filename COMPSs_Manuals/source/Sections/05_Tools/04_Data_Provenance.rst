@@ -4,10 +4,10 @@ Data Provenance
 In order to achieve **Reproducibility** and **Replicability** with your experiments
 using COMPSs, the runtime includes the capacity of recording details of the
 application's execution, also known as *Data Provenance*. This is supported for both Python
-and Java applications.
+and Java COMPSs applications.
 
 When the provenance option is activated, the runtime records every access
-to a file or directory in the application, as well as its direction (IN, 
+to a file or directory specified in the application, as well as its direction (IN,
 OUT, INOUT). In addition to this, other information such as the parameters passed as inputs in the command line
 that submitted the application, its source files, workflow image and profiling statistics, authors and
 their institutions, ... are also stored.
@@ -34,19 +34,19 @@ If the installation is in a laptop or machine you manage, you can use the comman
 
 .. code-block:: console
 
-    compss@bsc:~$ pip install rocrate
+    $ pip install rocrate
 
 If you do not manage the target machine, you can install the library in your own user space using:
 
 .. code-block:: console
 
-    compss@bsc:~$ pip install rocrate --user
+    $ pip install rocrate --user
 
 This would typically install the library in ``~/.local/``. Another option is to specify the target directory with:
 
 .. code-block:: console
 
-    compss@bsc:~$ pip install -t install_path rocrate
+    $ pip install -t install_path rocrate
 
 Our implementation has been tested with ``ro-crate-py`` version ``0.7.0`` and earlier.
 
@@ -101,18 +101,18 @@ More specifically, in the **COMPSs Workflow Information** section:
 - The ``name`` and ``description`` fields are free text, where a long name and description of
   the application must be provided.
 
-- The ``license`` field is preferred by providing an URL to the license, but a set of
+- The ``license`` field is preferred to be specified by providing an URL to the license, but a set of
   predefined strings are also supported, and can be found here:
   https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
 
 - ``sources_dir`` can be a single path, or a list of paths where application source files can be found. Our script
   will add ALL files (i.e., not only source files, but any file found) and sub-directories inside each of the paths
   specified. The sub-directories structure is respected
-  when the files are added in the crate (in a sub-directory ``application_sources``).
+  when the files are added in the crate (inside a sub-directory ``application_sources``).
 
-- ``sources_main_file`` is the name of the main source file of the application, and may be used if the user wants to specify
+- ``sources_main_file`` is the name of the main source file of the application, and may be specified if the user wants to select
   a particular file as such. The COMPSs runtime detects automatically the main source of an application, therefore this is a way
-  to override the detected file. The file can be specified with only its name or a relative path inside one of the
+  to override the detected file. The file can be specified with a relative path inside one of the
   directories listed in ``sources_dir``. An absolute path can also be used.
 
 - ``files`` is a single or a list of all the source files of the application (typically all ``.py`` files for Python
@@ -190,7 +190,7 @@ We add to the crate the sub-directories that contain the ``.jar`` and ``.java`` 
         strategy to find the centers of natural clusters in the data.
       license: https://opensource.org/licenses/Apache-2.0 #Provide better a URL, but these strings are accepted:
                         # https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
-      sources_dir: [jar, src]
+      sources_dir: [jar/, src/]
 
     Authors:
       - name: Raül Sirvent
@@ -204,12 +204,12 @@ Usage
 
 The way of activating the recording of Data Provenance with COMPSs is very simple.
 One must only enable the ``-p`` or ``--provenance`` flag when using ``runcomps`` or
-``enqueue_compss`` to run or submit a COMPSs application respectively.
+``enqueue_compss`` to run or submit a COMPSs application, respectively.
 As shown in the help option:
  
 .. code-block:: console
 
-    compss@bsc:~$ runcompss -h
+    $ runcompss -h
 
     (...)
     --provenance, -p    Generate COMPSs workflow provenance data in RO-Crate format from YAML file. Automatically
@@ -219,7 +219,7 @@ As shown in the help option:
 .. WARNING::
 
     As stated in the help, provenance automatically activates both ``--graph`` and ``--output_profile`` options.
-    Take into account that the graph image generation can take some extra seconds at the end of the execution of your
+    Consider that the graph image generation can take some extra seconds at the end of the execution of your
     application, therefore, adjust the ``--exec_time`` accordingly.
 
 In the case of extremely large workflows (e.g., a workflow
@@ -234,9 +234,9 @@ following commands may be used:
 
 .. code-block:: console
 
-    compss@bsc:~$ $COMPSS_HOME/Runtime/scripts/utils/compss_gengraph svg $BASE_LOG_DIR/monitor/complete_graph.dot
+    $ $COMPSS_HOME/Runtime/scripts/utils/compss_gengraph svg $BASE_LOG_DIR/monitor/complete_graph.dot
 
-    compss@bsc:~$ python $COMPSS_HOME/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py ro-crate-info.yaml $BASE_LOG_DIR/dataprovenance.log
+    $ python $COMPSS_HOME/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py ro-crate-info.yaml $BASE_LOG_DIR/dataprovenance.log
 
 In these commands, ``COMPSS_HOME`` is where your COMPSs installation is located, and ``BASE_LOG_DIR`` points to the path where the
 application run logs are stored (see Section :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/02_Results_and_logs:Logs`
@@ -270,7 +270,8 @@ are:
 - **App_Profile.json:** A set of statistics of the application run recorded by the
   COMPSs runtime, as if the ``runcompss --output_profile=<path>`` option was enabled.
   It includes, for each resource and method executed: number of executions of the
-  specific method, as well as maximum, average and minimum run time.
+  specific method, as well as maximum, average and minimum run time. The name of the file can be customized
+  using the ``--output_profile=<path>`` option.
 
 - **compss_command_line_arguments.txt:** Stores the options passed by the command
   line when the application was submitted. This is very important for reproducing a COMPSs
@@ -288,6 +289,58 @@ are:
     your own files to avoid unwanted overwritings. You can change the resulting ``App_Profile.json`` name by using
     the ``--output_profile=/path_to/file`` flag.
 
+
+Log and time statistics
+-----------------------
+
+When the provenance generation is activated, and after the application has finished, the data provenance generation
+script will be automatically triggered. A number of log messages related to provenance can bee seen, which return
+interesting information regarding the provenance generation process. They can all be filtered by doing a ``grep`` in
+the output log of the application using the ``PROVENANCE`` expression.
+
+.. code-block:: console
+
+    PROVENANCE | GENERATING GRAPH FOR DATA PROVENANCE
+    Output file: /Users/rsirvent/.COMPSs/matmul_directory.py_07//monitor/complete_graph.svg
+    INFO: Generating Graph with legend
+    DONE
+    PROVENANCE | ENDED GENERATING GRAPH FOR DATA PROVENANCE. TIME: 0
+
+This first block indicates that the workflow image in SVG format is being generated. When this part finishes, the time
+in seconds will be reported. As mentioned earlier, complex workflows can lead to large graph generation times.
+
+.. code-block:: console
+
+    PROVENANCE | RUNNING DATA PROVENANCE SCRIPT
+    PROVENANCE | Number of source files detected: 2
+    PROVENANCE | COMPSs version: 3.0.rc2210, main_entity is: /Users/rsirvent/COMPSs-DP/matmul_directory/matmul_directory.py, out_profile is: App_Profile.json
+
+This second block details how many source files have been detected from the ``sources_dir`` and ``files`` terms defined
+in the ``ro-crate-py.yaml`` file. It also shows the COMPSs version detected, the mainEntity detected (i.e., the
+source file that contains the main method from the COMPSs application), and the name of the file containing the
+execution profile of the application.
+
+.. code-block:: console
+
+    PROVENANCE | RO-CRATE data_provenance.log processing TIME (process_accessed_files): 0.00011706352233886719 s
+    PROVENANCE | RO-CRATE adding physical files TIME (add_file_to_crate): 0.001096963882446289 s
+    PROVENANCE | RO-CRATE adding input files' references TIME (add_file_not_in_crate): 0.001238107681274414 s
+    PROVENANCE | RO-CRATE adding output files' references TIME (add_file_not_in_crate): 0.00026798248291015625 s
+
+The third block provides a set of times to understand if any overhead is caused by the script. The first time is the
+time taken to process the data_provenance.log. The second is the time taken to add the files that are included
+physically in the crate (this is, source files, workflow image, ...). And the third and the fourth are the times
+spent by the script to add all input and output files of the workflow as references in the RO-Crate, respectively.
+
+.. code-block:: console
+
+    PROVENANCE | COMPSs RO-Crate created successfully in subfolder COMPSs_RO-Crate_aaf0cb82-a500-4c28-bbc8-439c37c2e210/
+    PROVENANCE | RO-CRATE dump TIME: 0.004969120025634766 s
+    PROVENANCE | RO-CRATE GENERATION TOTAL EXECUTION TIME: 0.014089107513427734 s
+    PROVENANCE | ENDED DATA PROVENANCE SCRIPT
+
+The fourth and final block details the name of the sub-folder where the RO-Crate has been generated, while stating
+the time to record the ``ro-crate-metadata.json`` file to disk, and the total time execution of the whole script.
 
 ro-crate-metadata.json PyCOMPSs example (Laptop)
 ------------------------------------------------
@@ -753,7 +806,7 @@ for out-of-core sparse matrices implemented with COMPSs and using the Java progr
 matrix ``A`` is both input and output of the workflow, since the factorization overwrites the original value of ``A``.
 In addition, we have used a 4x4 blocks hyper-matrix (i.e., the matrix is divided in 16 blocks, that contain 16
 elements each) and, if a block is all 0s, the corresponding file will not be
-created in the file system (in the example, this happens for files ``A.0.3``, ``A.1.3``, ``A.3.0`` and ``A.3.1``).
+created in the file system (in the example, this happens for blocks ``A.0.3``, ``A.1.3``, ``A.3.0`` and ``A.3.1``).
 
 Apart from the terms already mentioned in the previous example (``creator``, ``publisher``, ``hasPart``,
 ``ComputationalWorkflow``, ``version``), if we first observe the ``ro-crate-info.yaml`` file:
@@ -778,7 +831,9 @@ Apart from the terms already mentioned in the previous example (``creator``, ``p
 We can see that we have specified several directories to be added as source files: the ``src`` folder that contains the
 ``.java`` and ``.class`` files, the ``jar`` folder with the ``sparseLU.jar`` file, and the ``xml`` folder with extra
 xml configuration files. Besides, we also add the ``Readme``, ``pom.xml``, and the ``ro-crate-info.yaml`` file itself,
-so they are packed in the resulting crate.
+so they are packed in the resulting crate. This example also shows that the script is able to select the correct
+``SparseLU.java`` main file from the ones specified as ``sources_dir``, although three files use the same file name (i.e.,
+they implement 3 versions of the same algorithm: using files, arrays or objects).
 
 It is also interesting to note the differences in the URIs used to reference input and output files when provenance is
 run in a supercomputer, instead of a laptop (as shown in the previous example). Since we do not add explicitly the input
