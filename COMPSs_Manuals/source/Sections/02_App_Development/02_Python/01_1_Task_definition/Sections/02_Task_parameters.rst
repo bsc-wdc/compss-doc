@@ -638,6 +638,55 @@ In addition, the stream parameter can also be defined for binary tasks
         # Equivalent to: ./file_generator.sh > fds
         pass
 
+:numref:`task_streams_main` shows an example of how streams are used in the main code.
+In this code snippet we can see how the object representing the data stream is
+created how the a producer task is invoqued and how the stream data generated
+at tasks can be poll from the main code.
+
+.. code-block:: python
+    :name: task_streams_main
+    :caption: Python task example using streams in the main code
+
+    from pycompss.api.task import task
+    from pycompss.api.parameter import STREAM_OUT
+    from pycompss.streams.distro_stream import ObjectDistroStream
+
+    @task(ods=STREAM_OUT)
+    def write_objects(ods):
+        ...
+        for i in range(NUM_OBJECTS):
+            # Build object
+            obj = MyObject()
+            # Publish object
+            ods.publish(obj)
+            ...
+        ...
+        # Mark the stream for closure
+        ods.close()
+
+    @task()
+    def process_object(obj):
+        ...
+        # Do something with obj
+        ...
+
+    if __name__=='__main__':
+
+        ods = ObjectDistroStream()
+
+        # Create producers
+        for _ in range(num_producers):
+            write_objects(ods, producer_sleep)
+
+        # Process stream
+        while not ods.is_closed():
+            # Poll new objects
+            new_objects = ods.poll()
+
+            # Process received objects
+            for obj in new_objects:
+                res = process_object(obj)
+        ...
 
 Standard Streams
 ^^^^^^^^^^^^^^^^
