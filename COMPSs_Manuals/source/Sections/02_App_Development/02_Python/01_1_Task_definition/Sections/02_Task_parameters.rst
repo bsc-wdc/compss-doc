@@ -638,7 +638,10 @@ In addition, the stream parameter can also be defined for binary tasks
         # Equivalent to: ./file_generator.sh > fds
         pass
 
-:numref:`task_streams_main` shows an example of how streams are used in the main code. In this code snippet we can see how the object representing the data stream is created how the a producer task is invoqued and how the stream data generated at tasks can be poll from the main code.
+:numref:`task_streams_main` shows an example of how streams are used in the main code.
+In this code snippet we can see how the object representing the data stream is
+created how the a producer task is invoqued and how the stream data generated
+at tasks can be poll from the main code.
 
 .. code-block:: python
     :name: task_streams_main
@@ -651,9 +654,20 @@ In addition, the stream parameter can also be defined for binary tasks
     @task(ods=STREAM_OUT)
     def write_objects(ods):
         ...
+        for i in range(NUM_OBJECTS):
+            # Build object
+            obj = MyObject()
+            # Publish object
+            ods.publish(obj)
+            ...
+        ...
+        # Mark the stream for closure
+        ods.close()
 
     @task()
     def process_object(obj):
+        ...
+        # Do something with obj
         ...
 
     if __name__=='__main__':
