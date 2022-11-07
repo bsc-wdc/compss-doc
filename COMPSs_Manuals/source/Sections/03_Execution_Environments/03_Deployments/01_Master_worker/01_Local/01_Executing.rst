@@ -87,7 +87,7 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
         --extrae_config_file_python=<path>      Sets a custom extrae config file for python. Must be in a shared disk between all COMPSs workers.
                                                 Default: null
         --trace_label=<string>                  Add a label in the generated trace file. Only used in the case of tracing is activated.
-                                                Default: None
+                                                Default: Applicacion name
         --tracing_task_dependencies=<bool>      Adds communication lines for the task dependencies (true/false)
                                                 Default: false
         --generate_trace=<bool>                 Converts the events register into a trace file. Only used in the case of activated tracing.
@@ -111,9 +111,9 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Supported types: FILES, OBJECTS, PSCOS, ALL, NONE
                                                 Default: NONE
         --streaming_master_name=<str>           Use an specific streaming master node name.
-                                                Default: null
+                                                Default: Empty
         --streaming_master_port=<int>           Use an specific port for the streaming master.
-                                                Default: null
+                                                Default: Empty
         --scheduler=<className>                 Class that implements the Scheduler for COMPSs
                                                 Supported schedulers:
                                                       ├── es.bsc.compss.components.impl.TaskScheduler
@@ -123,8 +123,12 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                       ├── es.bsc.compss.scheduler.lookahead.locality.LocalityTS
                                                       ├── es.bsc.compss.scheduler.lookahead.successors.constraintsfifo.ConstraintsFifoTS
                                                       ├── es.bsc.compss.scheduler.lookahead.mt.successors.constraintsfifo.ConstraintsFifoTS
-                                                      ├── es.bsc.compss.scheduler.lookahead.successors.fifolocality.FifoLocalityTS
-                                                      └── es.bsc.compss.scheduler.lookahead.mt.successors.fifolocality.FifoLocalityTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.successors.fifo.FifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.mt.successors.fifo.FifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.successors.lifo.LifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.mt.successors.lifo.LifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.successors.locality.LocalityTS
+                                                      └── es.bsc.compss.scheduler.lookahead.mt.successors.locality.LocalityTS
                                                 Default: es.bsc.compss.scheduler.lookahead.locality.LocalityTS
         --scheduler_config_file=<path>          Path to the file which contains the scheduler configuration.
                                                 Default: Empty
@@ -148,22 +152,21 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
         --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
                                                 Default: /home/user
         --env_script=<path>                     Path to the script file where the application environment variables are defined.
-                                                    COMPSs sources this script before running the application.
-                                                    Default: Empty
-        --base_log_dir=<path>                   Base directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location)
+                                                COMPSs sources this script before running the application.
+                                                Default: Empty
+        --log_dir=<path>                        Directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location)
                                                 Default: User home
-        --specific_log_dir=<path>               Use a specific directory to store COMPSs log files (no sandbox is created)
-                                                Warning: Overwrites --base_log_dir option
-                                                Default: Disabled
+        --master_working_dir=<path>             Use a specific directory to store COMPSs temporary files in master
+                                                Default: <log_dir>/.COMPSs/<app_name>/tmpFiles
         --uuid=<int>                            Preset an application UUID
                                                 Default: Automatic random generation
         --master_name=<string>                  Hostname of the node to run the COMPSs master
-                                                Default:
+                                                Default: Empty
         --master_port=<int>                     Port to run the COMPSs master communications.
                                                 Only for NIO adaptor
                                                 Default: [43000,44000]
         --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed by "," and without blank spaces (Notice the quotes)
-                                                Default:
+                                                Default: Empty
         --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Notice the quotes)
                                                 Default: -Xms256m,-Xmx1024m,-Xmn100m
         --cpu_affinity="<string>"               Sets the CPU affinity for the workers
@@ -176,7 +179,7 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Supported options: disabled, automatic, user defined map of the form "0-8/9,10,11/12-14,15,16"
                                                 Default: automatic
         --fpga_reprogram="<string>"             Specify the full command that needs to be executed to reprogram the FPGA with the desired bitstream. The location must be an absolute path.
-                                                Default:
+                                                Default: Empty
         --io_executors=<int>                    IO Executors per worker
                                                 Default: 0
         --task_count=<int>                      Only for C/Python Bindings. Maximum number of different functions/methods, invoked from the application, that have been selected as tasks
@@ -208,7 +211,7 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: false
         --python_cache_profiler=<bool>          Python cache profiler (true/false).
                                                 Only for NIO without mpi worker and python >= 3.8.
-                                                Default:
+                                                Default: false
         --wall_clock_limit=<int>                Maximum duration of the application (in seconds).
                                                 Default: 0
         --shutdown_in_node_failure=<bool>       Stop the whole execution in case of Node Failure.

@@ -44,16 +44,16 @@ supported COMPSs modules in the supercomputer. The users can also execute the
     COMPSs/2.9
     COMPSs/2.10
     COMPSs/3.0
+    COMPSs/3.1
     COMPSs/release(default)
     COMPSs/trunk
 
 
     $ module load COMPSs/release
-    load java/1.8.0u66 (PATH, MANPATH, JAVA_HOME, JAVA_ROOT, JAVA_BINDIR,
-                        SDK_HOME, JDK_HOME, JRE_HOME)
-    load MKL/11.0.1 (LD_LIBRARY_PATH)
-    load PYTHON/3.7.4 (PATH, MANPATH, LD_LIBRARY_PATH, C_INCLUDE_PATH)
-    load COMPSs/release (PATH, MANPATH, COMPSS_HOME)
+    load java/8u131 (PATH, MANPATH, JAVA_HOME, JAVA_ROOT, JAVA_BINDIR, SDK_HOME, JDK_HOME, JRE_HOME)
+    load papi/5.5.1 (PATH, LD_LIBRARY_PATH, C_INCLUDE_PATH)
+    load PYTHON/3.7.4 (PATH, MANPATH, LD_LIBRARY_PATH, LIBRARY_PATH, PKG_CONFIG_PATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, PYTHONHOME, PYTHONPATH)
+    load COMPSs/release (PATH, CLASSPATH, MANPATH, GAT_LOCATION, COMPSS_HOME, JAVA_TOOL_OPTIONS, LDFLAGS, CPPFLAGS)
 
 The following command can be run to check if the correct COMPSs version
 has been loaded:
@@ -91,25 +91,26 @@ well loaded COMPSs installation.
 
     $ exit
     $ ssh USER@SC
-    load java/1.8.0u66 (PATH, MANPATH, JAVA_HOME, JAVA_ROOT, JAVA_BINDIR,
-                        SDK_HOME, JDK_HOME, JRE_HOME)
-    load MKL/11.0.1 (LD_LIBRARY_PATH)
-    load PYTHON/2.7.3 (PATH, MANPATH, LD_LIBRARY_PATH, C_INCLUDE_PATH)
-    load COMPSs/release (PATH, MANPATH, COMPSS_HOME)
+    load java/8u131 (PATH, MANPATH, JAVA_HOME, JAVA_ROOT, JAVA_BINDIR, SDK_HOME, JDK_HOME, JRE_HOME)
+    load papi/5.5.1 (PATH, LD_LIBRARY_PATH, C_INCLUDE_PATH)
+    load PYTHON/3.7.4 (PATH, MANPATH, LD_LIBRARY_PATH, LIBRARY_PATH, PKG_CONFIG_PATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, PYTHONHOME, PYTHONPATH)
+    load COMPSs/release (PATH, CLASSPATH, MANPATH, GAT_LOCATION, COMPSS_HOME, JAVA_TOOL_OPTIONS, LDFLAGS, CPPFLAGS)
 
     USER@SC$ enqueue_compss --version
     COMPSs version <version>
 
 .. important::
-   Please remember that PyCOMPSs uses Python 2.7 by default. In order to
-   use Python 3, the Python 2.7 module **must** be unloaded after loading
-   COMPSs module, and then load the Python 3 module.
+   Please remember that PyCOMPSs uses Python 3.7.4 by default. In order to
+   use another Python version, the requested Python version must be loaded
+   before loading COMPSs, or the environment variable ``COMPSS_PYTHON_VERSION``
+   exported with the requested Python version (available to be loaded from
+   a module).
 
 COMPSs Job submission
 ---------------------
 
-COMPSs jobs can be easily submited by running the **enqueue_compss**
-command. This command allows to configure any **runcompss**
+COMPSs jobs can be easily submited by running the ``enqueue_compss``
+command. This command allows to configure any ``runcompss``
 (:ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Runcompss command`)
 option and some particular queue options such as the queue system, the number
 of nodes, the wallclock time, the master working directory, the workers
@@ -121,7 +122,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
 
     $ enqueue_compss -h
 
-    Usage: /apps/COMPSs/3.0/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
+    Usage: /apps/COMPSs/3.1/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
 
     * Options:
       General:
@@ -147,6 +148,10 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --extra_submit_flag=<flag>              Flag to pass queue system flags not supported by default command flags.
                                                 Spaces must be added as '#'
                                                 Default: Empty
+        --constraints=<constraints>             Constraints to pass to queue system.
+                                                Default: disabled
+        --qos=<qos>                             Quality of Service to pass to the queue system.
+                                                Default: default
         --forward_cpus_per_node=<true|false>    Flag to indicate if number to cpus per node must be forwarded to the worker process.
                                                 The number of forwarded cpus will be equal to the cpus_per_node in a worker node and
                                                 equal to the worker_in_master_cpus in a master node.
@@ -220,8 +225,8 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 This argument can appear multiple times for more than one epilog action
                                                 Default: Empty
 
-        --master_working_dir=<path>             Working directory of the application
-                                                Default: .
+        --master_working_dir=<name | path>      Working directory of the application local_disk | shared_disk | <path>
+                                                Default:
         --worker_working_dir=<name | path>      Worker directory. Use: local_disk | shared_disk | <path>
                                                 Default: local_disk
 
@@ -275,9 +280,9 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --storage_conf=<path>                   Path to the storage configuration file
                                                 Default: null
         --project=<path>                        Path to the project XML file
-                                                Default: /apps/COMPSs/3.0//Runtime/configuration/xml/projects/default_project.xml
+                                                Default: /apps/COMPSs/3.1//Runtime/configuration/xml/projects/default_project.xml
         --resources=<path>                      Path to the resources XML file
-                                                Default: /apps/COMPSs/3.0//Runtime/configuration/xml/resources/default_resources.xml
+                                                Default: /apps/COMPSs/3.1//Runtime/configuration/xml/resources/default_resources.xml
         --lang=<name>                           Language of the application (java/c/python)
                                                 Default: Inferred is possible. Otherwise: java
         --summary                               Displays a task execution summary at the end of the application execution
@@ -288,7 +293,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
 
       Advanced options:
         --extrae_config_file=<path>             Sets a custom extrae config file. Must be in a shared disk between all COMPSs workers.
-                                                Default: /opt/COMPSs//Runtime/configuration/xml/tracing/extrae_basic.xml
+                                                Default: /apps/COMPSs/3.1//Runtime/configuration/xml/tracing/extrae_basic.xml
         --extrae_config_file_python=<path>      Sets a custom extrae config file for python. Must be in a shared disk between all COMPSs workers.
                                                 Default: null
         --trace_label=<string>                  Add a label in the generated trace file. Only used in the case of tracing is activated.
@@ -328,8 +333,12 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                       ├── es.bsc.compss.scheduler.lookahead.locality.LocalityTS
                                                       ├── es.bsc.compss.scheduler.lookahead.successors.constraintsfifo.ConstraintsFifoTS
                                                       ├── es.bsc.compss.scheduler.lookahead.mt.successors.constraintsfifo.ConstraintsFifoTS
-                                                      ├── es.bsc.compss.scheduler.lookahead.successors.fifolocality.FifoLocalityTS
-                                                      └── es.bsc.compss.scheduler.lookahead.mt.successors.fifolocality.FifoLocalityTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.successors.fifo.FifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.mt.successors.fifo.FifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.successors.lifo.LifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.mt.successors.lifo.LifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.successors.locality.LocalityTS
+                                                      └── es.bsc.compss.scheduler.lookahead.mt.successors.locality.LocalityTS
                                                 Default: es.bsc.compss.scheduler.lookahead.locality.LocalityTS
         --scheduler_config_file=<path>          Path to the file which contains the scheduler configuration.
                                                 Default: Empty
@@ -355,11 +364,10 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --env_script=<path>                     Path to the script file where the application environment variables are defined.
                                                 COMPSs sources this script before running the application.
                                                 Default: Empty
-        --base_log_dir=<path>                   Base directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location)
+        --log_dir=<path>                        Directory to store COMPSs log files (a .COMPSs/ folder will be created inside this location)
                                                 Default: User home
-        --specific_log_dir=<path>               Use a specific directory to store COMPSs log files (no sandbox is created)
-                                                Warning: Overwrites --base_log_dir option
-                                                Default: Disabled
+        --master_working_dir=<path>             Use a specific directory to store COMPSs temporary files in master
+                                                Default: <log_dir>/.COMPSs/<app_name>/tmpFiles
         --uuid=<int>                            Preset an application UUID
                                                 Default: Automatic random generation
         --master_name=<string>                  Hostname of the node to run the COMPSs master
@@ -430,6 +438,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         Command line arguments to pass to the application. Can be empty.
 
 
+
 .. TIP::
     For further information about applications scheduling refer to
     :ref:`Sections/03_Execution_Environments/01_Scheduling:Schedulers`.
@@ -440,12 +449,21 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
     substitutes the former ``scratch`` value; and ``shared_disk`` which replaces the
     ``gpfs`` value.
 
+.. ATTENTION::
+    From COMPSs 3.1 version:
+
+    * the ``base_log_dir`` has been renamed to ``log_dir``.
+    * the ``specific_log_dir`` has been removed. Instead, please use the
+      ``master_working_dir`` in order to define the master temporary files
+      directory.
+
 .. CAUTION::
     Supercomputers may have different partitions in shared disks (e.g.
     ``/gpfs/scratch``, ``/gpfs/projects`` and ``/gpfs/home``).
 
-    Consequently, it is **recommended** to set the ``base_log_dir`` flag in the
-    same partition as the ``worker_working_dir`` to avoid performance drop.
+    Consequently, it is **recommended** to set the ``log_dir`` and
+    ``master_working_dir`` flags in the same partition as the
+    ``worker_working_dir`` to avoid performance drop.
 
 
 Walltime

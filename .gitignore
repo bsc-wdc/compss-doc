@@ -25,3 +25,6 @@
 _build/
 build/
 
+# Ignore python folders
+.ipynb_checkpoints/
+__pycache__/

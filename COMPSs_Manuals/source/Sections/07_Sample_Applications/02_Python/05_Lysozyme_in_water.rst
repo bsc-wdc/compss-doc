@@ -41,12 +41,12 @@ From: Virginia Tech Department of Biochemistry
           structure=FILE_OUT,
           topology=FILE_OUT)
     def generate_topology(mode='pdb2gmx',
-                             protein_flag='-f', protein=None,
-                             structure_flag='-o', structure=None,
-                             topology_flag='-p', topology=None,
-                             flags='-ignh',
-                             forcefield_flag='-ff', forcefield='oplsaa',
-                             water_flag='-water', water='spce'):
+                          protein_flag='-f', protein=None,
+                          structure_flag='-o', structure=None,
+                          topology_flag='-p', topology=None,
+                          flags='-ignh',
+                          forcefield_flag='-ff', forcefield='oplsaa',
+                          water_flag='-water', water='spce'):
         # Command: gmx pdb2gmx -f protein.pdb -o structure.gro -p topology.top -ignh -ff amber03 -water tip3p
         pass
 
@@ -257,24 +257,25 @@ supercomputer:
     # Load necessary modules
     module purge
     module load intel/2017.4 impi/2017.4 mkl/2017.4 bsc/1.0
-    module load COMPSs/2.7
+    export COMPSS_PYTHON_VERSION=3
+    module load COMPSs/3.1.pr
     module load gromacs/2016.4   # exposes gmx_mpi binary
 
     export GMX_BIN=/home/user/lysozyme5.1.2/bin   # exposes gmx binary
 
     # Enqueue the application
     enqueue_compss \
-    --num_nodes=$numNodes \
-    --exec_time=$executionTime \
-    --master_working_dir=. \
-    --worker_working_dir=/gpfs/home/user/lysozyme \
-    --tracing=$tracing \
-    --graph=true \
-    -d \
-    --classpath=$appClasspath \
-    --pythonpath=$appPythonpath \
-    --lang=python \
-    $execFile $@
+        --num_nodes=$numNodes \
+        --exec_time=$executionTime \
+        --master_working_dir=/gpfs/home/user/lysozyme/tmpFiles/ \
+        --worker_working_dir=/gpfs/home/user/lysozyme/ \
+        --tracing=$tracing \
+        --graph=true \
+        -d \
+        --classpath=$appClasspath \
+        --pythonpath=$appPythonpath \
+        --lang=python \
+        $execFile $@
 
 
     ######################################################
@@ -294,7 +295,6 @@ the following output:
 .. code-block:: console
 
     $ ./launch_md.sh 2 10 false $(pwd)/config/ $(pwd)/dataset/ $(pwd)/output/
-
     remove mkl/2017.4 (LD_LIBRARY_PATH)
     remove impi/2017.4 (PATH, MANPATH, LD_LIBRARY_PATH)
     Set INTEL compilers as MPI wrappers backend
@@ -302,13 +302,10 @@ the following output:
     load mkl/2017.4 (LD_LIBRARY_PATH)
     load java/8u131 (PATH, MANPATH, JAVA_HOME, JAVA_ROOT, JAVA_BINDIR, SDK_HOME, JDK_HOME, JRE_HOME)
     load papi/5.5.1 (PATH, LD_LIBRARY_PATH, C_INCLUDE_PATH)
-    Loading default Python 2.7.13.
-    * For alternative Python versions, please set the COMPSS_PYTHON_VERSION environment variable with 2, 3, 2-jupyter or 3-jupyter before loading the COMPSs module.
-    load PYTHON/2.7.13 (PATH, MANPATH, LD_LIBRARY_PATH, LIBRARY_PATH, PKG_CONFIG_PATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, PYTHONHOME)
-    load lzo/2.10 (LD_LIBRARY_PATH,PKG_CONFIG_PATH,CFLAGS,CXXFLAGS,LDFLAGS)
-    load boost/1.64.0_py2 (LD_LIBRARY_PATH, LIBRARY_PATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, BOOST_ROOT)
-    load COMPSs/2.7 (PATH, CLASSPATH, MANPATH, GAT_LOCATION, COMPSS_HOME, JAVA_TOOL_OPTIONS, LDFLAGS, CPPFLAGS)
+    load PYTHON/3.7.4 (PATH, MANPATH, LD_LIBRARY_PATH, LIBRARY_PATH, PKG_CONFIG_PATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, PYTHONHOME, PYTHONPATH)
+    load COMPSs/3.1 (PATH, CLASSPATH, MANPATH, GAT_LOCATION, COMPSS_HOME, JAVA_TOOL_OPTIONS, LDFLAGS, CPPFLAGS)
     load gromacs/2016.4 (PATH, LD_LIBRARY_PATH)
+
     SC Configuration:          default.cfg
     JobName:                   COMPSs
     Queue:                     default
@@ -325,8 +322,8 @@ the following output:
     Other:
     			--sc_cfg=default.cfg
     			--qos=debug
-    			--master_working_dir=.
-    			--worker_working_dir=/gpfs/home/user/lysozyme
+    			--master_working_dir=/gpfs/home/user/lysozyme/tmpFiles/
+    			--worker_working_dir=/gpfs/home/user/lysozyme/
     			--tracing=false
     			--graph=true
     			--classpath=/home/user/lysozyme/./src/
@@ -350,7 +347,7 @@ standard output messages flushed during the execution:
     [  INFO] Relative Classpath resolved: /home/user/lysozyme/./src/:
 
     ----------------- Executing lysozyme_in_water.py --------------------------
-    [(590)    API]  -  Starting COMPSs Runtime v2.7 (build 20200519-1005.r6093e5ac94d67250e097a6fad9d3ec00d676fe6c)
+    [(692)    API]  -  Starting COMPSs Runtime v3.1 (build 20221107-1044.r7c414d34bd2ef4525a7146fbb80f57111e10f780)
     Starting demo
 
     # Here it takes some time to process the dataset
