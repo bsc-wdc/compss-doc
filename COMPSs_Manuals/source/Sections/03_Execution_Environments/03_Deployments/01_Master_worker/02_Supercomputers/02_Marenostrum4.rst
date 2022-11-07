@@ -30,7 +30,7 @@ job information. For example:
       --exec_time=15 \
       --num_nodes=3 \
       --cpus_per_node=16 \
-      --master_working_dir=. \
+      --master_working_dir=$(pwd) \
       --worker_working_dir=shared_disk \
       --lang=python \
       --log_level=debug \
@@ -50,7 +50,7 @@ job information. For example:
     Other:
             --sc_cfg=default.cfg
             --cpus_per_node=48
-            --master_working_dir=.
+            --master_working_dir=/path/to/app_dir
             --worker_working_dir=shared_disk
             --lang=python
             --classpath=.
@@ -78,8 +78,8 @@ job information. For example:
 .. CAUTION::
     Since MN4 has different partitions in shared disk (gpfs): ``/gpfs/scratch``,
     ``/gpfs/projects`` and ``/gpfs/home``, it is **recommended** to set the
-    ``base_log_dir`` flag in the same partition as the ``worker_working_dir``
-    to avoid performance drop.
+    ``log_dir`` and ``master_working_dir`` flags in the same partition as the
+    ``worker_working_dir`` to avoid performance drop.
 
 In order to track the jobs state users can run the following command:
 
