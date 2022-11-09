@@ -111,6 +111,56 @@ its output is sent to the next data transformation which is a *workflow*. The "w
 Only applying all these transformations to the initial value of *A*, it's passed to the "task_func" as the input. The same scenario applies for the parameter
 B.
 
+Moreover, PyCOMPSs supports inter-types data transformations which allows the conversion of the input data to another object type. For example, if the user wants to use
+a object's serialized file as an input for a task, but the task function expects the object itself, then ```@dt``` can take care of it. So far PyCOMPSs supports this kind
+of data transformations only for the ```FILE```, ```OBJECT``` and ```COLLECTION``` types.
+
+For the cases where type conversions happen, there are some mandatory parameters:
+
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+    | Parameter              | Description                                                                                                                             |
+    +========================+=========================================================================================================================================+
+    | **target**             | (Mandatory) Name of the input parameter that DT will be applied to.                                                                     |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+    | **function**           | (Mandatory) The data transformation function.                                                                                           |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+    | **type**               | (Mandatory) Type of the DT (e.g. FILE_TO_OBJECT)                                                                                        |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+    | **destination**        | If the output of the DT is a file, then output file name can be specified as "destination".                                             |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+    | **size**               | (Mandatory only if the output of the DT is a COLLECTION) Size of the output COLLECTION.                                                 |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+
+Following code snippet shows how the **@dt** decorator can be used for "file to object" conversion:
+
+
+.. code-block:: python
+    :name: dt_fto
+    :caption: Data Transformation with type conversion.
+
+    from pycompss.api.data_transformation import *
+    from pycompss.api.task import task
+    from pycompss.api.api import compss_wait_on
+
+    def fto(some_file):
+        ret = None
+        # deserialize the file
+        ...
+
+        return ret
+
+    @dt(target="data", function=fto, type=FILE_TO_OBJECT)
+    @task()
+    def file_to_object(data):
+        # 'data' is deserialized object from its initial file
+        ...
+
+    def main(self):
+        in_file = "src/infile.pickle"
+        result = file_to_object(in_file)
+        result = compss_wait_on(result)
+
+
 PyCOMPSs API also provides Data Transformation Object class which gives the flexibility of the data transformation definitions. Any task function can be
 decorated with an empty **@dt** and simply by passing *DTO*\(s) as a task parameter the user can achieve the same behaviour. Same as the decorator itself, DTO
 accepts the arguments in the same order (*"<parameter_name>", "<dt_function>", "<kwargs_of_dt_function>"*). A list of DTO objects is also accepted for the same or
