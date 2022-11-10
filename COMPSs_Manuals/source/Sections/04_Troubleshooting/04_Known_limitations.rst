@@ -96,8 +96,8 @@ With Python Applications
 Python constraints in the cloud
    When using python applications with constraints in the cloud the minimum
    number of VMs must be set to 0 because the initial VM creation does not
-   respect the tasks contraints.
-   Notice that if no contraints are defined the initial VMs are still usable.
+   respect the tasks constraints.
+   Notice that if no constraints are defined the initial VMs are still usable.
 
 Intermediate files
    Some applications may generate intermediate files that are only used among
