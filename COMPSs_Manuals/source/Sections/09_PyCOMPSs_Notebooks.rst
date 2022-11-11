@@ -82,9 +82,9 @@ It is divided into three main folders:
             .. code-block:: bash
 
                 $ git clone https://github.com/bsc-wdc/notebooks.git
-                $ docker pull compss/compss:2.7
+                $ docker pull compss/compss:3.1
                 $ # Update the path to the notebooks path in the next command before running it
-                $ docker run --name mycompss -p 8888:8888 -p 8080:8080 -v /PATH/TO/notebooks:/home/notebooks -itd compss/compss:2.7
+                $ docker run --name mycompss -p 8888:8888 -p 8080:8080 -v /PATH/TO/notebooks:/home/notebooks -itd compss/compss:3.1
                 $ docker exec -it mycompss /bin/bash
 
             Now that docker is running and you are connected:
@@ -176,7 +176,7 @@ It is divided into three main folders:
                 $ docker stop mycompss
                 $ docker rm mycompss
                 $ # Pay attention and UPDATE: /PATH/TO in the next command
-                $ docker run --name mycompss -p 8888:8888 -p 8080:8080 -v /PATH/TO/notebooks:/home/notebooks -itd compss/compss-tutorial:2.7
+                $ docker run --name mycompss -p 8888:8888 -p 8080:8080 -v /PATH/TO/notebooks:/home/notebooks -itd compss/compss:3.1
                 $ # Continue as normal
 
 
