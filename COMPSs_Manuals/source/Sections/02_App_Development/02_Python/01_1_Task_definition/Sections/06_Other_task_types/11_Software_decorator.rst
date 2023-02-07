@@ -161,4 +161,6 @@ Configuration file ("container_config.json"):
     }
 
 
- Please check :ref:`Sections/02_App_Development/02_Python/01_1_Task_definition/Sections/06_Other_task_types:Other task types summary` for the full list of the parameters for each decorator.
+
+
+Please check :ref:`Sections/02_App_Development/02_Python/01_1_Task_definition/Sections/06_Other_task_types:Other task types summary` for the full list of the parameters for each decorator.
