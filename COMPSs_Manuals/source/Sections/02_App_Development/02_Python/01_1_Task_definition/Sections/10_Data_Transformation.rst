@@ -36,29 +36,27 @@ to the given input and the output is sent to the *original* task as the input. F
 
     import numpy as np
     from pycompss.api.data_transformation import dt
-    from pycompss.api.task import task
+    from pycompss.api.software import software
     from pycompss.api.api import compss_wait_on
 
 
-    @task(returns=1)
-    def some_task():
-        a = np.arange(1000)
+    @software(config_file="simulation.json")
+    def simulation():
         ...
         return a
 
-    def dt_function(A, new_x, new_y):
-        A = A.reshape((new_x, new_y))
-        ...
-        return A
+    def reshape(A, new_x, new_y):
+        return A.reshape((new_x, new_y))
 
-    @dt("A", dt_function, new_x=10, new_y=100)
-    @software("example.json")
-    def dt_example(A):
+    @dt("input_data", reshape, new_x=10, new_y=100)
+    @software("data_analysis.json")
+    def data_analysis(input_data):
         ...
+        return result
 
     def main():
-        A = some_task()
-        result = dt_example(A)
+        A = simulation()
+        result = data_analysis(A)
         result = compss_wait_on(result)
         print(result)
 

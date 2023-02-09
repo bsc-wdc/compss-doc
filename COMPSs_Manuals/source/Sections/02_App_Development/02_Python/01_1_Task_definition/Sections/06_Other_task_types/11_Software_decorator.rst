@@ -44,12 +44,12 @@ decorator on top of the function, and provide a 'config_file' parameter where th
     from pycompss.api.software import software
     from pycompss.api.task import task
 
-    @software(config_file="mpi_config.json")
-    def task_python_mpi():
+    @software(config_file="simulation.json")
+    def run_simulation():
          pass
 
     def main():
-        task_python_mpi()
+        run_simulation()
 
 
 And inside the configuration file the type of execution (mpi), and its properties are set. For example, if the user wants to run an MPI job with two processes using
@@ -83,17 +83,17 @@ Task definition:
     from pycompss.api.software import software
     from pycompss.api.task import task
 
-    @software(config_file="mpi_w_args.json")
-    def task_mpi_w_args(work_dir, param_d, out_tgz):
+    @software(config_file="mpi.json")
+    def execute(work_dir, param_d, out_tgz):
          pass
 
     def main():
     working_dir = "/tmp/mpi_working_dir/"
     arg_value = 1001
-    task_mpi_w_args(working_dir, ar_value)
+    execute(working_dir, ar_value)
 
 
-Configuration file ("mpi_w_args.json"):
+Configuration file ("mpi.json"):
 
 .. code-block:: JSON
 
@@ -134,11 +134,11 @@ Task definition:
     from pycompss.api.task import task
 
     @software(config_file="container_config.json")
-    def task_container(in_directory, expression):
+    def run_in_container(in_directory, expression):
          pass
 
     def main():
-       task_container('/tmp/my_logs/', 'Error')
+       run_in_container('/tmp/my_logs/', 'Error')
 
 
 Configuration file ("container_config.json"):

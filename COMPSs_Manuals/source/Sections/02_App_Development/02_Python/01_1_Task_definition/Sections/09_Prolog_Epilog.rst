@@ -50,12 +50,12 @@ between tasks:
     @epilog(binary="mkdir", args="/tmp/{{working_dir}}")
     @prolog(binary="tar", args="zcvf {{out_tgz}} /tmp/{{working_dir}}")
     @task(returns=1)
-    def some_task(working_dir, out_tgz):
+    def run_simulation(working_dir, out_tgz):
         ...
 
     def main():
         # call to the task function
-        some_task("my_logs", "my_logs_compressed")
+        run_simulation("my_logs", "my_logs_compressed")
 
 
 ```fail_by_exit_value``` is used to indicate the behaviour when the prolog or epilog returns an exit value different than zero.
@@ -76,12 +76,12 @@ and *False* for Epilog:
     @prolog(binary="mkdir", args="-p {{sandbox_path}}", fail_by_exit_value=True)
     @epilog(binary="rm", args="-r {{sandbox_path}}", fail_by_exit_value=False)
     @task()
-    def task_2(sandbox_path):
+    def run_simulation(sandbox_path):
         ...
         return 1
 
     # call to the task function
-    task_2("/tmp/my_task_sandbox")
+    run_simulation("/tmp/my_task_sandbox")
 
 
 In the example above, if creation of the 'sandbox_path' fails, the task execution won't start at all and task will be considered as failed. However, if removing the sandbox is not
