@@ -18,17 +18,15 @@ PyCOMPSs tasks can have a *@prolog* or an *@epilog*, or both at the same time. A
     from pycompss.api.task import task
 
 
-    @prolog(binary="start_some_service.bin")
+    @prolog(binary="/my_service/start.bin")
+    @epilog(binary="/my_service/stop.bin")
     @task()
-    def basic():
+    def run_simulation():
         ...
-        return 1
 
-    @epilog(binary="shut_down.bin")
-    @task()
-    def basic():
-        ...
-        return 1
+    def main():
+        run_simulation()
+
 
 Both decorators have the same syntax and have 3 parameters: ```binary``` is the only mandatory parameter where ```args``` and ```fail_by_exit_value``` are
 optional. ```args``` describe the command line arguments of the binary. Users can also pass the task parameters as arguments. In this case, the task parameter
@@ -49,14 +47,15 @@ between tasks:
     from pycompss.api.prolog import prolog
     from pycompss.api.task import task
 
-    @prolog(binary="mkdir", args="{{param_1}}")
-    @task()
-    def task_1(param_1):
+    @epilog(binary="mkdir", args="/tmp/{{working_dir}}")
+    @prolog(binary="tar", args="zcvf {{out_tgz}} /tmp/{{working_dir}}")
+    @task(returns=1)
+    def run_simulation(working_dir, out_tgz):
         ...
-        return 1
 
-    # call to the task function
-    task_1("/home/dir_to_be_created_before_task_exec")
+    def main():
+        # call to the task function
+        run_simulation("my_logs", "my_logs_compressed")
 
 
 ```fail_by_exit_value``` is used to indicate the behaviour when the prolog or epilog returns an exit value different than zero.
@@ -77,12 +76,12 @@ and *False* for Epilog:
     @prolog(binary="mkdir", args="-p {{sandbox_path}}", fail_by_exit_value=True)
     @epilog(binary="rm", args="-r {{sandbox_path}}", fail_by_exit_value=False)
     @task()
-    def task_2(sandbox_path):
+    def run_simulation(sandbox_path):
         ...
         return 1
 
     # call to the task function
-    task_2("/tmp/my_task_sandbox")
+    run_simulation("/tmp/my_task_sandbox")
 
 
 In the example above, if creation of the 'sandbox_path' fails, the task execution won't start at all and task will be considered as failed. However, if removing the sandbox is not
