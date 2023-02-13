@@ -76,8 +76,8 @@ an ``FILE_OUT_STDOUT`` param:
 
     def main():
         kw = "error"
-        file_1 = "~/logs/1.txt"
-        file_2 = "~/logs/2.txt"
+        file_1 = "/logs/1.txt"
+        file_2 = "/logs/2.txt"
         grep_multiple(kw, file_1, file_2, "errors.txt")
 
 Other parameters of *@mpmd_mpi* decorator such as ``working_dir``, ``fail_by_exit_value``, ``processes_per_node``, have the same behaviors as in *@mpi*.

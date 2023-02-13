@@ -18,8 +18,8 @@ PyCOMPSs tasks can have a *@prolog* or an *@epilog*, or both at the same time. A
     from pycompss.api.task import task
 
 
-    @prolog(binary="~/my_service/start.bin")
-    @epilog(binary="~/my_service/stop.bin")
+    @prolog(binary="/my_service/start.bin")
+    @epilog(binary="/my_service/stop.bin")
     @task()
     def run_simulation():
         ...
