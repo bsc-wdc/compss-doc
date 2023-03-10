@@ -200,6 +200,7 @@ customizable.
 --FileCFG
     | To further customize the supercomputers cfg files contains a set of variables to indicate the queue system used by a supercomputer, paths where the shared disk is mounted, the default values that COMPSs will set in the project and resources files when they are not set by the user and flags to indicate if a functionality     is available or not in a supercomputer. This file must have either a corresponding cfg file in  ``<installation_dir>/Runtime/scripts/queues/supercomputers/`` folder or an absolute path to a file. For more information, please read this section (:ref:`Sections/01_Installation/04_Supercomputers:Configuration Files`).
     | *Optional*
+
     .. important::
         Inside this file, you can specify which queue system is going to be used.
 
@@ -276,7 +277,7 @@ inside the ``simple`` directory we only have the file ``simple.jar``. And in the
 The **first step** will be making sure that all the files are available in remote, we will also get the remote
 ``InstallDir``, for this example it will be ´´/apps/COMPSs/3.2´´:
 
-.. code-block:: shell
+.. code-block:: bash
 
     #local machine
     $ scp -r janeSmith@remote:/home/users/janeSmith/simple /home/jane/simple/
@@ -354,5 +355,5 @@ The **third step** is launching the application.
 
     $ runcompss  --project=/home/jane/simple/project.xml \
                  --resources=/home/jane/simple/resources.xml \
-                 --classpath=/home/jane/simple/simple.jar
+                 --classpath=/home/jane/simple/simple.jar \
                  simple
