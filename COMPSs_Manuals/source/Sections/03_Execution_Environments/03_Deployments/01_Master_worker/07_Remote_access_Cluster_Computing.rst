@@ -1,12 +1,7 @@
-Remote access to Cluster computing
-==================================
+Remote Access to Computing Servers and Clusters
+=============================================
 
-What is remote access?
-----------------------
-
-COMPSs supports access to cluster computing using the SSH (Secure Shell) protocol which involves establishing a secure,
-encrypted connection between a client computer and a remote server within a cluster. This type of execution permits
-using various supercomputers from a single lightweight client to execute a COMPSs application.
+This COMPSs execution environment allow users to execute a COMPSs application usign several remote machines and computing clusters.This access to remote resources is done through the SSH (Secure Shell) and SCP (Secure Copy) protocols which are the most used protocols to establishing a secure, encrypted connection between a client computer and a remote server within a cluster. 
 
 Although, this feature has been designed to work with resources that have a job submission queue. It can also be used
 to work with any other type of machine that can be accessed by an SSH connection.
@@ -14,16 +9,17 @@ to work with any other type of machine that can be accessed by an SSH connection
 Requirements
 ------------
 
-In order to use COMPSs with the ssh adaptor, some requirements must be fulfilled:
+In order to use COMPSs with remote clusters some requirements must be fulfilled:
 
--  Have a **public-private key pair** shared with the any resource that will be used, as
-   detail in the section (:ref:`Sections/01_Installation/05_Additional_configuration:Configure SSH passwordless`).
+-  Generate a **public-private key pair** and authorize it in any Cluster that will be used. (More details in section :ref:`Sections/01_Installation/05_Additional_configuration:Configure SSH passwordless`).
 -  Have this remote resources in the **known hosts** file situated in **~/.ssh/known_hosts**.
--  **COMPSs** must be installed in both in the master and all the remote resources.
+-  **COMPSs** must be installed in both in the master and all the remote Clusters.
 
 .. important::
-    Both, the client and the remote computing resource should have the same version of **COMPSs**, which
+    Both, the client and the remote computing resource should have the same or a compatible version of **COMPSs**, which
     must be 3.2 or higher.
+
+
 
 
 Execution
@@ -31,8 +27,8 @@ Execution
 
 The execution of an application using this method **consists of 3 steps**:
 
-Execution step 1: Make sure that remote resources can execute the application
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step 1: Deployment
+~~~~~~~~~~~~~~~~~~
 
 The very first step to execute a COMPSs application in remote is copy all the necessary files to the remote resources.
 If the application uses **JAVA** or **C** the compiled files must be also transferred, or compiled in the remote machine.
@@ -49,17 +45,15 @@ If the application is updated this step might be also necessary again.
 
 .. IMPORTANT::
 
-    Be sure to write down the absolute context-directory and the absolute classpath (the absolute path to the executable
-    jar). You will need it to fulfill the next step.
+    Be sure to write down the absolute path of directory where the application has been installed and other absolute path for classes (classpath) or libraries (library_path). You will need it to fulfill the next step.
 
 
-Execution step 2: Create the XML files
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step 2: Configuration
+~~~~~~~~~~~~~~~~~~~~~
 
-To correctly run the application, COMPSs needs some information. This information must be provided in the xml files
-for :ref:`Sections/01_Installation/06_Configuration_files:resources file` and :ref:`Sections/01_Installation/06_Configuration_files:project file`.
+To correctly run the application, COMPSs needs the descriptions of the Clusters used for the execution. This information must be provided in the XML files. (More details in :ref:`Sections/01_Installation/06_Configuration_files:resources file` and :ref:`Sections/01_Installation/06_Configuration_files:project file`) The resources file, has to include the description of the avialable clusters, and the project file has to provide the access information (user, keys) and the location where COMPSs and the application is installed in every cluster. 
 
-An example for the resources XML file:
+The following code provides an example for the resources XML file.
 
 .. code-block:: xml
 
@@ -74,17 +68,18 @@ An example for the resources XML file:
                 <BrokerAdaptor>sshtrilead</BrokerAdaptor>
             </Adaptor>
         </Adaptors>
-        <ClusterNode Name="compute_node1">
-            <MaxNumNodes>1</MaxNumNodes>
+        <ClusterNode Name="compute_node_type1">
+            <MaxNumNodes>10</MaxNumNodes>
             <Processor Name="P1">
                 <ComputingUnits>8</ComputingUnits>
                 <Type>CPU</Type>
             </Processor>
+            ...
         </ClusterNode>
     </ComputingCluster>
     </ResourcesList>
 
-An example for the project XML file:
+The following code provide an example for the project XML file.
 
 .. code-block:: xml
 
@@ -111,7 +106,7 @@ An example for the project XML file:
     </Project>
 
 The ``Name`` given to the Computing cluster equals the host of the remote cluster and the ``User`` tag is the
-user for that host. For example, if we want to access the remote machine with ``myUser@remoteMachine`` the xml should be
+user for that host. For example, if we want to access the remote machine with ``myUser@remoteMachine`` the xml should be indicated as follows
 
 .. code-block:: xml
 
@@ -123,8 +118,8 @@ user for that host. For example, if we want to access the remote machine with ``
 .. caution::
    If an user is not provided, the current user in the client will be used as default one.
 
-As shown before, the ``InstallDir`` tag is necessary and must be the absolute path to the folder that COMPSs is installed
-in the remote resources. If this information is not known, it can be obtain by executing the following command in the remote
+As shown before, the ``InstallDir`` tag is necessary and must be the absolute path to the folder where COMPSs is installed
+in the remote cluster. If this information is not known, it can be obtain by executing the following command in the remote
 machine.
 
 .. code-block:: console
@@ -132,8 +127,8 @@ machine.
    $ echo $(builtin cd $(dirname $(which runcompss))/../../..; pwd)
 
 
-Execution step 3: Run the application
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step 3: Run the application
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For further details of the ``runcompss`` command check its dedicated section
 (:ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Runcompss command`).
@@ -158,7 +153,7 @@ This adaptor supports two different forms for submitting the tasks generated by 
 Interactive Mode
 ~~~~~~~~~~~~~~~~
 
-This mode directly launches the execution of the tasks, and should be used if we have direct access to the computing
+This mode directly launches the execution of tasks to remote machines, and should be used if we have direct access to the computing
 hardware.
 
 Example of setting the interactive mode, this code must go in resources.xml:
@@ -170,19 +165,13 @@ Example of setting the interactive mode, this code must go in resources.xml:
             <SubmissionSystem>
                 <Interactive/>
             </SubmissionSystem>
-            <BrokerAdaptor>sshtrilead</BrokerAdaptor>
         </Adaptor>
     </Adaptors>
 
 Batch Mode
 ~~~~~~~~~~
 
-Usually, the user doesn't have direct access two the computing hardware and must ask for resources from the
-job submission system of the corresponding cluster. This mode handles that aspect and constantly checks the status of
-those jobs to ensure a fast execution.
-
-To correctly performs the aforementioned features and to offer some configuration to the user, some aspects are
-customizable.
+Computing clusters are usally shared by different users and to enable a propor sharing of resources the computations are spawn using a job submission system. The Batch Mode option handles that aspect and manages the execution of the application tasks as jobs in the cluster. To perform this feature, the user has to provide the following configuration in the XML files .
 
 --Port
     | The port used for SSH Communication.
@@ -250,11 +239,10 @@ customizable.
 Execution results
 -----------------
 
-The execution result follows the same pattern that the execution as Local does (see further details
+The execution result follows the same pattern as other execution envionments (see further details
 in its section, :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/02_Results_and_logs:results`).
 
-It additionally adds a compressed folder with the generated logs that were created in the remote execution that do
-not correspond to any task.
+Regarding debugging logs, at the end of each task, out and err logs are stored in the corresponding jobs folder and, at the end of the execution, a compressed folder with other generated logs are copied to the master node.
 
 .. caution::
     In case of an error that prevents bringing the execution logs, for example, a lose of connection with the remote resources.
@@ -264,36 +252,36 @@ not correspond to any task.
 
 
 
-Execution examples
-------------------
+Execution example
+-----------------
 
-Next we will use the *Simple* application as an example of a Java application running with COMPSs in **batch mode**.
+In this section, we show how to execute the *Simple* Java COMPSs application in **batch mode**.
 
-Imagine we have in our local machine, our Simple application in ``/home/jane/simple`` and
-inside the ``simple`` directory we only have the file ``simple.jar``. And in the remote machine ``remote``, we have the user
-``janeSmith``. So we can access this machine with ``ssh janeSmith@remote``.
+In this scenario, we have in our local machine, the Simple application in ``/home/jane/simple`` and
+inside the ``simple`` directory we only have the file ``simple.jar``. And in the remote machine is called``remote.bsc.es``, we have the user
+``janeSmith``. So we can access this machine with ``ssh janeSmith@remote.bsc.es``.
 
 
-The **first step** will be making sure that all the files are available in remote, we will also get the remote
-``InstallDir``, for this example it will be ´´/apps/COMPSs/3.2´´:
+In the **first step**, we have to be sure that COMPSs and all the application files are available in ``remote.bsc.es``. For this example, we assume that the application will be deployed in ``/home/users/janeSmith/simple`` and COMPSs is installed in ``/apps/COMPSs/3.2``. The following command are used to deploy the application and check the COMPSs installation.
 
 .. code-block:: bash
 
-    #local machine
-    $ scp -r janeSmith@remote:/home/users/janeSmith/simple /home/jane/simple/
-    $ ssh janeSmith@remote
-    $ #inside the remote machine
+    # In the local machine, copy the application data
+    $ scp -r /home/jane/simple/janeSmith@remote.bsc.es:/home/users/janeSmith/simple 
+    $ ssh janeSmith@remote.bsc.es
+    # Inside the remote machine, check where COMPSs is installed
     $ echo $(builtin cd $(dirname $(which runcompss))/../../..; pwd)
+    /apps/COMPSs/3.2
     $ exit
 
-The **second step** will be correctly creating the xml files, this files will be stored in ``/home/jane/simple``:
+In the **second step**, we create the required xml files and they will be stored in ``/home/jane/simple``. Next lines show the XML files for this example.
 
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <Project>
         <MasterNode/>
-        <ComputingCluster Name="remote">
+        <ComputingCluster Name="remote.bsc.es">
             <Adaptors>
                 <Adaptor Name="es.bsc.compss.gos.master.GOSAdaptor">
                     <SubmissionSystem>
@@ -308,8 +296,6 @@ The **second step** will be correctly creating the xml files, this files will be
                             </BatchProperties>
                         </Batch>
                     </SubmissionSystem>
-                    <BrokerAdaptor>sshtrilead</BrokerAdaptor>
-                </Adaptor>
             </Adaptors>
             <InstallDir>/apps/COMPSs/3.2/</InstallDir>
             <WorkingDir>/tmp/COMPSsWorkerTMP/</WorkingDir>
@@ -318,7 +304,7 @@ The **second step** will be correctly creating the xml files, this files will be
                 <Classpath>/home/users/janeSmith/simple/simple.jar</Classpath>
                 <EnvironmentScript>/home/users/janeSmith/env.sh</EnvironmentScript>
             </Application>
-            <ClusterNode Name="compute_node1">
+            <ClusterNode Name="compute_node_type">
                 <NumberOfNodes>2</NumberOfNodes>
             </ClusterNode>
         </ComputingCluster>
@@ -328,7 +314,7 @@ The **second step** will be correctly creating the xml files, this files will be
 
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <ResourcesList>
-    <ComputingCluster Name="remote">
+    <ComputingCluster Name="remote.bsc.es">
         <Adaptors>
             <Adaptor Name="es.bsc.compss.gos.master.GOSAdaptor">
                 <SubmissionSystem>
@@ -336,10 +322,9 @@ The **second step** will be correctly creating the xml files, this files will be
                         <Queue>slurm</Queue>
                     </Batch>
                 </SubmissionSystem>
-                <BrokerAdaptor>sshtrilead</BrokerAdaptor>
             </Adaptor>
         </Adaptors>
-        <ClusterNode Name="compute_node1">
+        <ClusterNode Name="compute_node_type">
             <MaxNumNodes>4</MaxNumNodes>
             <Processor Name="P1">
                 <ComputingUnits>8</ComputingUnits>
@@ -349,7 +334,7 @@ The **second step** will be correctly creating the xml files, this files will be
     </ComputingCluster>
     </ResourcesList>
 
-The **third step** is launching the application.
+Finally, in the **third step** we have to launch the application. It must be done using the following command:
 
 .. code-block:: console
 
