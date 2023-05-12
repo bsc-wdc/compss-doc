@@ -59,6 +59,17 @@ As an example for some distributions and versions:
                 $ echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/' >> ~/.bashrc
                 $ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 
+        .. ATTENTION:
+
+            Before installing it is important to have MPI headers exported into the
+            ``EXTRAE_MPI_HEADERS`` in order to compile EXTRAE successfully.
+            So, please, export this variable pointing to your MPI headers folder,
+            like for example:
+
+            .. code-block:: console
+
+                $ export EXTRAE_MPI_HEADERS=/usr/include/x86_64-linux-gnu/mpi
+
       .. tab:: 20.04
 
         **Ubuntu 20.04** dependencies installation commands:
@@ -82,6 +93,16 @@ As an example for some distributions and versions:
                 $ echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/' >> ~/.bashrc
                 $ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 
+        .. ATTENTION:
+
+            Before installing it is important to have MPI headers exported into the
+            ``EXTRAE_MPI_HEADERS`` in order to compile EXTRAE successfully.
+            So, please, export this variable pointing to your MPI headers folder,
+            like for example:
+
+            .. code-block:: console
+
+                $ export EXTRAE_MPI_HEADERS=/usr/include/x86_64-linux-gnu/mpi
 
       .. tab:: 18.04
 
