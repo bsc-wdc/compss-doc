@@ -8,7 +8,7 @@ task is going to be executed within a container (:numref:`container_task_python`
     :name: container_task_python
     :caption: Container task example
 
-    from pycompss.api.compss import container
+    from pycompss.api.container import container
     from pycompss.api.task import task
     from pycompss.api.parameter import *
     from pycompss.api.api import compss_wait_on
@@ -63,7 +63,7 @@ This will execute the binary/ompss/mpi binary within the container.
     :name: container_task_python_binary
     :caption: Container binary task example
 
-    from pycompss.api.compss import container
+    from pycompss.api.container import container
     from pycompss.api.task import task
     from pycompss.api.binary import binary
     from pycompss.api.parameter import *
