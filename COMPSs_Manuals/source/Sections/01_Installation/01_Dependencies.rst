@@ -164,7 +164,7 @@ As an example for some distributions and versions:
         .. code-block:: console
 
             $ sudo zypper install --type pattern -y devel_basis
-            $ sudo zypper install -y java-1_8_0-openjdk-headless java-1_8_0-openjdk java-1_8_0-openjdk-devel graphviz xdg-utils python python-devel python-decorator python3 python3-devel python3-decorator libtool automake libboost_headers1_66_0-devel libboost_serialization1_66_0 libboost_iostreams1_66_0  libxml2-2 libxml2-devel tcsh gcc-fortran papi libpapi gcc-c++ libpapi papi papi-devel gmp-devel
+            $ sudo zypper install -y java-1_8_0-openjdk-headless java-1_8_0-openjdk java-1_8_0-openjdk-devel graphviz xdg-utils python3 python3-devel python3-decorator libtool automake libboost_headers1_66_0-devel libboost_serialization1_66_0 libboost_iostreams1_66_0  libxml2-2 libxml2-devel tcsh gcc-fortran papi libpapi gcc-c++ libpapi papi papi-devel gmp-devel lam lam-devel link
             $ sudo wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
             $ sudo unzip /opt/gradle-5.4.1-bin.zip -d /opt
 
@@ -188,7 +188,7 @@ As an example for some distributions and versions:
         .. code-block:: console
 
             $ sudo zypper install --type pattern -y devel_basis
-            $ sudo zypper install -y java-1_8_0-openjdk-headless java-1_8_0-openjdk java-1_8_0-openjdk-devel graphviz xdg-utils python python-devel libpython2_7-1_0 python-decorator libtool automake boost-devel libboost_serialization1_54_0 libboost_iostreams1_54_0 libxml2-2 libxml2-devel tcsh gcc-fortran python-pip papi libpapi gcc-c++ libpapi papi papi-devel gmp-devel
+            $ sudo zypper install -y java-1_8_0-openjdk-headless java-1_8_0-openjdk java-1_8_0-openjdk-devel graphviz xdg-utils python3 python3-devel python3-decorator libtool automake boost-devel libboost_serialization1_54_0 libboost_iostreams1_54_0 libxml2-2 libxml2-devel tcsh gcc-fortran python-pip papi libpapi gcc-c++ libpapi papi papi-devel gmp-devel
             $ sudo wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
             $ sudo unzip /opt/gradle-5.4.1-bin.zip -d /opt
 
@@ -224,7 +224,7 @@ As an example for some distributions and versions:
 
         .. code-block:: console
 
-             $ sudo dnf install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel graphviz xdg-utils libtool automake python27 python3 python3-devel boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools bison flex texinfo papi papi-devel gmp-devel
+             $ sudo dnf install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel graphviz xdg-utils libtool automake python3 python3-devel boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools bison flex texinfo papi papi-devel gmp-devel
              $ # If the libxml softlink is not created during the installation of libxml2, the COMPSs installation may fail.
              $ # In this case, the softlink has to be created manually with the following command:
              $ sudo ln -s /usr/include/libxml2/libxml/ /usr/include/libxml
@@ -250,7 +250,7 @@ As an example for some distributions and versions:
 
         .. code-block:: console
 
-             $ sudo dnf install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel graphviz xdg-utils libtool automake python python-libs python-pip python-devel python2-decorator boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools redhat-rpm-config papi
+             $ sudo dnf install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel graphviz xdg-utils libtool automake python3 python3-libs python3-pip python-devel python3-decorator boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools redhat-rpm-config papi
              $ # If the libxml softlink is not created during the installation of libxml2, the COMPSs installation may fail.
              $ # In this case, the softlink has to be created manually with the following command:
              $ sudo ln -s /usr/include/libxml2/libxml/ /usr/include/libxml
@@ -286,7 +286,7 @@ As an example for some distributions and versions:
               $ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
               $ apt-get update
               $ apt-get install oracle-java8-installer
-              $ apt-get install graphviz xdg-utils libtool automake build-essential python python-decorator python-pip python-dev libboost-serialization1.55.0 libboost-iostreams1.55.0 libxml2 libxml2-dev libboost-dev csh gfortran papi-tools
+              $ apt-get install graphviz xdg-utils libtool automake build-essential python3 python3-decorator python3-pip python3-dev libboost-serialization1.55.0 libboost-iostreams1.55.0 libxml2 libxml2-dev libboost-dev csh gfortran papi-tools
               $ wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
               $ unzip /opt/gradle-5.4.1-bin.zip -d /opt
 
@@ -322,7 +322,7 @@ As an example for some distributions and versions:
 
             $ sudo rpm -iUvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
             $ sudo yum -y update
-            $ sudo yum install java-1.8.0-openjdk java-1.8.0-openjdk-devel graphviz xdg-utils libtool automake python python-libs python-pip python-devel python2-decorator boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools redhat-rpm-config papi
+            $ sudo yum install java-1.8.0-openjdk java-1.8.0-openjdk-devel graphviz xdg-utils libtool automake python3 python3-libs python3-pip python3-devel python3-decorator boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools redhat-rpm-config papi
             $ sudo pip install decorator
 
         .. ATTENTION::
