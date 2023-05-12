@@ -36,13 +36,36 @@ As an example for some distributions and versions:
 
     .. tabs::
 
+      .. tab:: 22.04
+
+        **Ubuntu 22.04** dependencies installation commands:
+
+        .. code-block:: console
+
+            $ sudo apt-get install -y openjdk-8-jdk graphviz xdg-utils libtool automake build-essential pkgconf python3 python3-dev libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran libgmp3-dev flex bison texinfo python3-pip libpapi-dev
+            $ sudo wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
+            $ sudo unzip /opt/gradle-5.4.1-bin.zip -d /opt
+
+
+        .. ATTENTION::
+
+            Before installing it is important to have a proper ``JAVA_HOME`` environment
+            variable definition. This variable must contain a valid path to a Java JDK
+            (as a remark, it must point to a JDK, not JRE).
+            So, please, export this variable and include it into your ``.bashrc``:
+
+            .. code-block:: console
+
+                $ echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/' >> ~/.bashrc
+                $ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+
       .. tab:: 20.04
 
         **Ubuntu 20.04** dependencies installation commands:
 
         .. code-block:: console
 
-            $ sudo apt-get install -y openjdk-8-jdk graphviz xdg-utils libtool automake build-essential python python-dev python3 python3-dev libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran libgmp3-dev flex bison texinfo python3-pip libpapi-dev
+            $ sudo apt-get install -y openjdk-8-jdk graphviz xdg-utils libtool automake build-essential python3 python3-dev libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran libgmp3-dev flex bison texinfo python3-pip libpapi-dev
             $ sudo wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
             $ sudo unzip /opt/gradle-5.4.1-bin.zip -d /opt
 
