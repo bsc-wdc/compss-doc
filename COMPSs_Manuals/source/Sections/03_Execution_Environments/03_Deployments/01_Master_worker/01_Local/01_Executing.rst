@@ -208,6 +208,7 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: false
         --python_worker_cache=<string>          Python worker cache (true/size/false).
                                                 Only for NIO without mpi worker and python >= 3.8.
+                                                Available for GPU if cupy installed.
                                                 Default: false
         --python_cache_profiler=<bool>          Python cache profiler (true/false).
                                                 Only for NIO without mpi worker and python >= 3.8.
@@ -409,6 +410,7 @@ Some of the **runcompss** flags are only for PyCOMPSs application execution:
 --python_worker_cache=<string>
     Python worker cache (true/true:size/false).
     Only for NIO without mpi worker and python >= 3.8.
+    Available for GPU if cupy installed.
     Default: false
 
     See: :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Worker cache`
@@ -435,17 +437,21 @@ The ``--python_worker_cache`` is used to enable a cache between processes on
 each worker node. More specifically, this flag enables a shared memory space
 between the worker processes, so that they can share objects between processess
 in order to leverage the deserialization overhead.
+If ``CUPY`` is installed the cache is enabled, the ``cupy.ndarrays`` will also 
+be cacheables in each GPU memory.
 
 The possible values are:
 
 ``--python_worker_cache=false``
-    Disable the cache. This is the default value.
+    Disable the cache (CPU/GPU). This is the default value.
 
 ``--python_worker_cache=true``
-    Enable the cache. The default cache size is 25% of the worker node memory.
+    Enable the cache (CPU/GPU). The default cache size is 25% of the worker node memory.
+    And the hard limited gpu cache size is 25% of the gpu memory.
 
 ``--python_worker_cache=true:<SIZE>``
-    Enable the cache with specific cache size (in bytes).
+    Enable the cache with specific cache size (in bytes and only for CPU).
+    Setting the gpu cache size is not yet supported.
 
 During execution, each worker will try to store automatically the parameters and
 return objects, so that next tasks can make use of them without needing to
@@ -456,7 +462,7 @@ deserialize from file.
     The supported objects to be stored in the cache is **limited** to:
     **python primitives** (int, float, bool, str (less than 10 Mb), bytes (less
     than 10 Mb) and None), **lists** (composed by python primitives),
-    **tuples** (composed by python primitives) and **Numpy ndarrays**.
+    **tuples** (composed by python primitives), **Numpy ndarrays** and **Cupy ndarrays**.
 
 It is important to take into account that storing the objects in cache has
 some non negligible overhead that can be representative, while getting objects
