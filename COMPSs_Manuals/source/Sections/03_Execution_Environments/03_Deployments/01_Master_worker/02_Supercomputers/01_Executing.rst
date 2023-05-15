@@ -45,6 +45,7 @@ supported COMPSs modules in the supercomputer. The users can also execute the
     COMPSs/2.10
     COMPSs/3.0
     COMPSs/3.1
+    COMPSs/3.2
     COMPSs/release(default)
     COMPSs/trunk
 
@@ -122,7 +123,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
 
     $ enqueue_compss -h
 
-    Usage: /apps/COMPSs/3.1/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
+    Usage: /apps/COMPSs/3.2/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
 
     * Options:
       General:
@@ -143,11 +144,20 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Default: default
         --reservation=<name>                    Reservation to use when submitting the job.
                                                 Default: disabled
+        --job_execution_dir=<path>              Path where job is executed.
+                                                Default: .
         --env_script=<path/to/script>           Script to source the required environment for the application.
                                                 Default: Empty
         --extra_submit_flag=<flag>              Flag to pass queue system flags not supported by default command flags.
                                                 Spaces must be added as '#'
                                                 Default: Empty
+        --storage_container_image=<string>      Path to the storage container image or default or false.
+                                                False indicates no container. Default uses the default container image.
+                                                Default: false
+        --storage_cpu_affinity=<string>         Sets the CPU affinity for storage framework in the workers.
+                                                Supported options: disabled or user defined map of the form "0-8/9,10,11/12-14,15,16".
+                                                Tip: set --cpu_affinity and --cpus_per_node flags accordingly.
+                                                Default:
         --constraints=<constraints>             Constraints to pass to queue system.
                                                 Default: disabled
         --qos=<qos>                             Quality of Service to pass to the queue system.
@@ -203,7 +213,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Default: 0
         --io_executors=<int>                    Number of IO executors on each node
                                                 Default: 0
-        --fpga_reprogram="<string>              Specify the full command that needs to be executed to reprogram the FPGA with
+        --fpga_reprogram="<string>"             Specify the full command that needs to be executed to reprogram the FPGA with
                                                 the desired bitstream. The location must be an absolute path.
                                                 Default:
         --max_tasks_per_node=<int>              Maximum number of simultaneous tasks running on a node
@@ -280,9 +290,9 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --storage_conf=<path>                   Path to the storage configuration file
                                                 Default: null
         --project=<path>                        Path to the project XML file
-                                                Default: /apps/COMPSs/3.1//Runtime/configuration/xml/projects/default_project.xml
+                                                Default: /apps/COMPSs/3.2//Runtime/configuration/xml/projects/default_project.xml
         --resources=<path>                      Path to the resources XML file
-                                                Default: /apps/COMPSs/3.1//Runtime/configuration/xml/resources/default_resources.xml
+                                                Default: /apps/COMPSs/3.2//Runtime/configuration/xml/resources/default_resources.xml
         --lang=<name>                           Language of the application (java/c/python)
                                                 Default: Inferred is possible. Otherwise: java
         --summary                               Displays a task execution summary at the end of the application execution
@@ -293,11 +303,11 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
 
       Advanced options:
         --extrae_config_file=<path>             Sets a custom extrae config file. Must be in a shared disk between all COMPSs workers.
-                                                Default: /apps/COMPSs/3.1//Runtime/configuration/xml/tracing/extrae_basic.xml
+                                                Default: /apps/COMPSs/3.2//Runtime/configuration/xml/tracing/extrae_basic.xml
         --extrae_config_file_python=<path>      Sets a custom extrae config file for python. Must be in a shared disk between all COMPSs workers.
                                                 Default: null
         --trace_label=<string>                  Add a label in the generated trace file. Only used in the case of tracing is activated.
-                                                Default: None
+                                                Default: Applicacion name
         --tracing_task_dependencies=<bool>      Adds communication lines for the task dependencies (true/false)
                                                 Default: false
         --generate_trace=<bool>                 Converts the events register into a trace file. Only used in the case of activated tracing.
@@ -321,9 +331,9 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Supported types: FILES, OBJECTS, PSCOS, ALL, NONE
                                                 Default: NONE
         --streaming_master_name=<str>           Use an specific streaming master node name.
-                                                Default: null
+                                                Default: Empty
         --streaming_master_port=<int>           Use an specific port for the streaming master.
-                                                Default: null
+                                                Default: Empty
         --scheduler=<className>                 Class that implements the Scheduler for COMPSs
                                                 Supported schedulers:
                                                       ├── es.bsc.compss.components.impl.TaskScheduler
@@ -371,12 +381,12 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --uuid=<int>                            Preset an application UUID
                                                 Default: Automatic random generation
         --master_name=<string>                  Hostname of the node to run the COMPSs master
-                                                Default:
+                                                Default: Empty
         --master_port=<int>                     Port to run the COMPSs master communications.
                                                 Only for NIO adaptor
                                                 Default: [43000,44000]
         --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed by "," and without blank spaces (Notice the quotes)
-                                                Default:
+                                                Default: Empty
         --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Notice the quotes)
                                                 Default: -Xms256m,-Xmx1024m,-Xmn100m
         --cpu_affinity="<string>"               Sets the CPU affinity for the workers
@@ -389,7 +399,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Supported options: disabled, automatic, user defined map of the form "0-8/9,10,11/12-14,15,16"
                                                 Default: automatic
         --fpga_reprogram="<string>"             Specify the full command that needs to be executed to reprogram the FPGA with the desired bitstream. The location must be an absolute path.
-                                                Default:
+                                                Default: Empty
         --io_executors=<int>                    IO Executors per worker
                                                 Default: 0
         --task_count=<int>                      Only for C/Python Bindings. Maximum number of different functions/methods, invoked from the application, that have been selected as tasks
@@ -421,7 +431,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Default: false
         --python_cache_profiler=<bool>          Python cache profiler (true/false).
                                                 Only for NIO without mpi worker and python >= 3.8.
-                                                Default:
+                                                Default: false
         --wall_clock_limit=<int>                Maximum duration of the application (in seconds).
                                                 Default: 0
         --shutdown_in_node_failure=<bool>       Stop the whole execution in case of Node Failure.
@@ -436,6 +446,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
 
     * Application arguments:
         Command line arguments to pass to the application. Can be empty.
+
 
 
 

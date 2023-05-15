@@ -99,13 +99,13 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: true
         --comm=<ClassName>                      Class that implements the adaptor for communications
                                                 Supported adaptors:
-                                                      ├── es.bsc.compss.nio.master.NIOAdaptor
-                                                      └── es.bsc.compss.gat.master.GATAdaptor
+                                                    ├── es.bsc.compss.nio.master.NIOAdaptor
+                                                    └── es.bsc.compss.gat.master.GATAdaptor
                                                 Default: es.bsc.compss.nio.master.NIOAdaptor
         --conn=<className>                      Class that implements the runtime connector for the cloud
                                                 Supported connectors:
-                                                      ├── es.bsc.compss.connectors.DefaultSSHConnector
-                                                      └── es.bsc.compss.connectors.DefaultNoSSHConnector
+                                                    ├── es.bsc.compss.connectors.DefaultSSHConnector
+                                                    └── es.bsc.compss.connectors.DefaultNoSSHConnector
                                                 Default: es.bsc.compss.connectors.DefaultSSHConnector
         --streaming=<type>                      Enable the streaming mode for the given type.
                                                 Supported types: FILES, OBJECTS, PSCOS, ALL, NONE
@@ -116,28 +116,28 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: Empty
         --scheduler=<className>                 Class that implements the Scheduler for COMPSs
                                                 Supported schedulers:
-                                                      ├── es.bsc.compss.components.impl.TaskScheduler
-                                                      ├── es.bsc.compss.scheduler.orderstrict.fifo.FifoTS
-                                                      ├── es.bsc.compss.scheduler.lookahead.fifo.FifoTS
-                                                      ├── es.bsc.compss.scheduler.lookahead.lifo.LifoTS
-                                                      ├── es.bsc.compss.scheduler.lookahead.locality.LocalityTS
-                                                      ├── es.bsc.compss.scheduler.lookahead.successors.constraintsfifo.ConstraintsFifoTS
-                                                      ├── es.bsc.compss.scheduler.lookahead.mt.successors.constraintsfifo.ConstraintsFifoTS
-                                                      ├── es.bsc.compss.scheduler.lookahead.successors.fifo.FifoTS
-                                                      ├── es.bsc.compss.scheduler.lookahead.mt.successors.fifo.FifoTS
-                                                      ├── es.bsc.compss.scheduler.lookahead.successors.lifo.LifoTS
-                                                      ├── es.bsc.compss.scheduler.lookahead.mt.successors.lifo.LifoTS
-                                                      ├── es.bsc.compss.scheduler.lookahead.successors.locality.LocalityTS
-                                                      └── es.bsc.compss.scheduler.lookahead.mt.successors.locality.LocalityTS
+                                                    ├── es.bsc.compss.components.impl.TaskScheduler
+                                                    ├── es.bsc.compss.scheduler.orderstrict.fifo.FifoTS
+                                                    ├── es.bsc.compss.scheduler.lookahead.fifo.FifoTS
+                                                    ├── es.bsc.compss.scheduler.lookahead.lifo.LifoTS
+                                                    ├── es.bsc.compss.scheduler.lookahead.locality.LocalityTS
+                                                    ├── es.bsc.compss.scheduler.lookahead.successors.constraintsfifo.ConstraintsFifoTS
+                                                    ├── es.bsc.compss.scheduler.lookahead.mt.successors.constraintsfifo.ConstraintsFifoTS
+                                                    ├── es.bsc.compss.scheduler.lookahead.successors.fifo.FifoTS
+                                                    ├── es.bsc.compss.scheduler.lookahead.mt.successors.fifo.FifoTS
+                                                    ├── es.bsc.compss.scheduler.lookahead.successors.lifo.LifoTS
+                                                    ├── es.bsc.compss.scheduler.lookahead.mt.successors.lifo.LifoTS
+                                                    ├── es.bsc.compss.scheduler.lookahead.successors.locality.LocalityTS
+                                                    └── es.bsc.compss.scheduler.lookahead.mt.successors.locality.LocalityTS
                                                 Default: es.bsc.compss.scheduler.lookahead.locality.LocalityTS
         --scheduler_config_file=<path>          Path to the file which contains the scheduler configuration.
                                                 Default: Empty
         --checkpoint=<className>                Class that implements the Checkpoint Management policy
                                                 Supported checkpoint policies:
-                                                      ├── es.bsc.compss.checkpoint.policies.CheckpointPolicyInstantiatedGroup
-                                                      ├── es.bsc.compss.checkpoint.policies.CheckpointPolicyPeriodicTime
-                                                      ├── es.bsc.compss.checkpoint.policies.CheckpointPolicyFinishedTasks
-                                                      └── es.bsc.compss.checkpoint.policies.NoCheckpoint
+                                                    ├── es.bsc.compss.checkpoint.policies.CheckpointPolicyInstantiatedGroup
+                                                    ├── es.bsc.compss.checkpoint.policies.CheckpointPolicyPeriodicTime
+                                                    ├── es.bsc.compss.checkpoint.policies.CheckpointPolicyFinishedTasks
+                                                    └── es.bsc.compss.checkpoint.policies.NoCheckpoint
                                                 Default: es.bsc.compss.checkpoint.policies.NoCheckpoint
         --checkpoint_params=<string>            Checkpoint configuration parameter.
                                                 Default: Empty
@@ -208,7 +208,6 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: false
         --python_worker_cache=<string>          Python worker cache (true/size/false).
                                                 Only for NIO without mpi worker and python >= 3.8.
-                                                Available for GPU if cupy installed.
                                                 Default: false
         --python_cache_profiler=<bool>          Python cache profiler (true/false).
                                                 Only for NIO without mpi worker and python >= 3.8.
@@ -227,6 +226,7 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
 
     * Application arguments:
         Command line arguments to pass to the application. Can be empty.
+
 
 
 .. WARNING::
