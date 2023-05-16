@@ -258,7 +258,7 @@ supercomputer:
     module purge
     module load intel/2017.4 impi/2017.4 mkl/2017.4 bsc/1.0
     export COMPSS_PYTHON_VERSION=3
-    module load COMPSs/3.1.pr
+    module load COMPSs/3.2
     module load gromacs/2016.4   # exposes gmx_mpi binary
 
     export GMX_BIN=/home/user/lysozyme5.1.2/bin   # exposes gmx binary
@@ -303,7 +303,7 @@ the following output:
     load java/8u131 (PATH, MANPATH, JAVA_HOME, JAVA_ROOT, JAVA_BINDIR, SDK_HOME, JDK_HOME, JRE_HOME)
     load papi/5.5.1 (PATH, LD_LIBRARY_PATH, C_INCLUDE_PATH)
     load PYTHON/3.7.4 (PATH, MANPATH, LD_LIBRARY_PATH, LIBRARY_PATH, PKG_CONFIG_PATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, PYTHONHOME, PYTHONPATH)
-    load COMPSs/3.1 (PATH, CLASSPATH, MANPATH, GAT_LOCATION, COMPSS_HOME, JAVA_TOOL_OPTIONS, LDFLAGS, CPPFLAGS)
+    load COMPSs/3.2 (PATH, CLASSPATH, MANPATH, GAT_LOCATION, COMPSS_HOME, JAVA_TOOL_OPTIONS, LDFLAGS, CPPFLAGS)
     load gromacs/2016.4 (PATH, LD_LIBRARY_PATH)
 
     SC Configuration:          default.cfg
@@ -347,7 +347,7 @@ standard output messages flushed during the execution:
     [  INFO] Relative Classpath resolved: /home/user/lysozyme/./src/:
 
     ----------------- Executing lysozyme_in_water.py --------------------------
-    [(692)    API]  -  Starting COMPSs Runtime v3.1 (build 20221107-1044.r7c414d34bd2ef4525a7146fbb80f57111e10f780)
+    [(974)    API]  -  Starting COMPSs Runtime v3.2 (build 20230511-0911.r81b30b07653a181ab311066ce7b3bf4fd45acbb1)
     Starting demo
 
     # Here it takes some time to process the dataset

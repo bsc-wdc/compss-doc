@@ -150,21 +150,23 @@ of 1024 x 1024 elements each block, which conforms matrices of 4096 x 4096 eleme
     [ INFO ] Using default location for project file: /opt/COMPSs//Runtime/configuration/xml/projects/default_project.xml
     [ INFO ] Using default location for resources file: /opt/COMPSs//Runtime/configuration/xml/resources/default_resources.xml
     [ INFO ] Using default execution type: compss
+    [RUNCOMPSS]
 
     ----------------- Executing matmul.py --------------------------
 
     WARNING: COMPSs Properties file is null. Setting default values
-    [(882)    API]  -  Starting COMPSs Runtime v3.1 (build 20221107-1044.r7c414d34bd2ef4525a7146fbb80f57111e10f780)
+    [(974)    API]  -  Starting COMPSs Runtime v3.2 (build 20230511-0911.r81b30b07653a181ab311066ce7b3bf4fd45acbb1)
     -----------------------------------------
     -------------- RESULTS ------------------
     -----------------------------------------
-    Initialization time: 5.322150
-    Multiplication time: 4.371828
-    Total time: 9.693978
+    Initialization time: 4.733022
+    Multiplication time: 6.942880
+    Total time: 11.675902
     -----------------------------------------
-    [(14620)    API]  -  Execution Finished
+    [(18001)    API]  -  Execution Finished
 
     ------------------------------------------------------------
+
 
 :numref:`matmul_python` depicts the generated task dependency graph. The dataset
 generation can be identified in the blue tasks, while the white tasks represent

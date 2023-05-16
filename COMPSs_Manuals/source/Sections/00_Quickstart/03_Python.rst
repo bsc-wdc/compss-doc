@@ -112,7 +112,7 @@ container):
       ----------------- Executing increment.py --------------------------
 
       WARNING: COMPSs Properties file is null. Setting default values
-      [(433)    API]  -  Starting COMPSs Runtime v3.1
+      [(433)    API]  -  Starting COMPSs Runtime v3.2
       [2, 3, 4, 5]
       Elapsed time: 11.5068922043
       [(4389)    API]  -  Execution Finished
@@ -189,7 +189,7 @@ Let's run it again with the tracing flag enabled:
       [... Extrae prolog ...]
 
       WARNING: COMPSs Properties file is null. Setting default values
-      [(434)    API]  -  Starting COMPSs Runtime v3.1
+      [(434)    API]  -  Starting COMPSs Runtime v3.2
       [2, 3, 4, 5]
       Elapsed time: 13.1016821861
 

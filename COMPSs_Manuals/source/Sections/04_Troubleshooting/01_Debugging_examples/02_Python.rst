@@ -40,10 +40,10 @@ When executed, it produces the following output:
     ----------------- Executing error_in_main.py --------------------------
 
     WARNING: COMPSs Properties file is null. Setting default values
-    [(377)    API]  -  Starting COMPSs Runtime v3.1
+    [(377)    API]  -  Starting COMPSs Runtime v3.2
     [ ERROR ]: An exception occurred: unsupported operand type(s) for +: 'Future' and 'int'
     Traceback (most recent call last):
-      File "/opt/COMPSs//Bindings/python/2/pycompss/runtime/launch.py", line 204, in compss_main
+      File "/opt/COMPSs//Bindings/python/3/pycompss/runtime/launch.py", line 204, in compss_main
         execfile(APP_PATH, globals())  # MAIN EXECUTION
       File "error_in_main.py", line 16, in <module>
         main()
@@ -107,7 +107,7 @@ When executed, it produces the following output:
     ----------------- Executing error_in_task.py --------------------------
 
     WARNING: COMPSs Properties file is null. Setting default values
-    [(570)    API]  -  Starting COMPSs Runtime v3.1
+    [(570)    API]  -  Starting COMPSs Runtime v3.2
     [ERRMGR]  -  WARNING: Job 1 for running task 1 on worker localhost has failed; resubmitting task to the same worker.
     [ERRMGR]  -  WARNING: Task 1 execution on worker localhost has failed; rescheduling task execution. (changing worker)
     [ERRMGR]  -  WARNING: Job 2 for running task 1 on worker localhost has failed; resubmitting task to the same worker.
