@@ -189,6 +189,14 @@ must add the following flags to the ``enqueue_compss`` command:
          script, that will be sourced afterwards. This file is cleaned inmediately
          after sourcing it.
 
+      STORAGE_CONTAINER_IMAGE
+         Storage container image identifier. Used if the storage backend is
+         deployed within a container. Default value is ``false`` to identify
+         that the storage backend is not within a container.
+
+      STORAGE_CPU_AFFINITY
+         CPU affinity for the storage backend.
+
    * ``storage_stop.sh`` is called after the application execution and it
       is intended to stop the storage framework within the nodes provided
       by the queuing system. The parameters that receives are (in order):

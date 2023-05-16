@@ -1,0 +1,28 @@
+G5K
+===
+
+What is G5K?
+------------
+
+`Grid'5000 <https://www.grid5000.fr/w/Grid5000:Home>`_ is a large-scale and flexible testbed for
+experiment-driven research in all areas of computer science, with a focus on parallel and
+distributed computing including Cloud, HPC and Big Data and AI.
+
+
+Execution in G5K
+----------------
+
+Currently, COMPSs can be executed within G5K using EC2Lab with two deployment approaches: Standalone and Docker.
+
+Detailed information can be found in the EC2Lab documentation:
+
+  Standalone
+    `Standalone deployment <https://gitlab.inria.fr/E2Clab/examples/compss/-/tree/main/standalone>`_
+
+    `Standalone tutorial <https://e2clab.gitlabpages.inria.fr/e2clab/examples/compss-standalone.html>`_
+
+  Docker
+    `Docker deployment <https://gitlab.inria.fr/E2Clab/examples/compss/-/tree/main/docker>`_
+
+    `Docker tutorial <https://e2clab.gitlabpages.inria.fr/e2clab/examples/compss-docker.html>`_
+

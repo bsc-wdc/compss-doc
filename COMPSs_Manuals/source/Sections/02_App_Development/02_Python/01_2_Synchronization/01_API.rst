@@ -210,6 +210,10 @@ compss_delete_file(\*file_name)
 compss_delete_object(\*object)
   Notifies the runtime to delete all the associated files to a given object/s.
 
+  .. WARNING::
+
+      It does not support collections.
+
 
 The following example (:numref:`api_delete_usage_python`) illustrates the use
 of the aforementioned API functions.
