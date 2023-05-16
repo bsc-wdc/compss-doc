@@ -1,7 +1,26 @@
+# .readthedocs.yaml
+# Read the Docs configuration file
+# See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
+
+# Required
 version: 2
-formats: all
+
+# Set the version of Python and other tools
+build:
+  os: ubuntu-22.04
+  tools:
+    python: "3.10"
+
+# Build documentation in the source/ directory with Sphinx
+sphinx:
+   configuration: source/conf.py
+
+# Build formats appart from html
+formats:
+  - pdf
+
+# Python details
 python:
-  version: 3
   install:
     - requirements: doc/requirements.txt
   system_packages: true
