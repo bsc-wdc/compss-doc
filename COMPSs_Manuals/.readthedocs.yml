@@ -7,7 +7,6 @@ version: 2
 
 # Set the version of Python and other tools
 build:
-  os: ubuntu-22.04
   tools:
     python: "3.10"
 
@@ -15,7 +14,7 @@ build:
 sphinx:
    configuration: source/conf.py
 
-# Build formats appart from html
+# Build formats apart from html
 formats:
   - pdf
 
