@@ -44,7 +44,7 @@ extensions = ['sphinx.ext.todo',
               'nbsphinx',
               'sphinx_copybutton',
               'sphinxcontrib.rsvgconverter',
-              'sphinxcontrib.yt',
+              'sphinxcontrib.youtube',
               'sphinx_panels',
               'sphinx_tabs.tabs',
               'sphinx_toolbox.collapse']
@@ -168,6 +168,12 @@ html_sidebars = {
 htmlhelp_basename = 'COMPSsdoc'
 
 html_scaled_image_link = False
+
+
+# -- Options for Youtube in latex output ------------------------------------------
+youtube_cmd = r"\newcommand{\sphinxcontribyoutube}[3]{\begin{figure}\sphinxincludegraphics{{#2}.jpg}\caption{\url{#1#2#3}}\end{figure}}" + "\n"
+latex_elements = {"preamble": youtube_cmd}
+
 
 # -- Options for LaTeX output ---------------------------------------------
 latex_engine = 'pdflatex'

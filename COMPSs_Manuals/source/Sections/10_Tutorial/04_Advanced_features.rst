@@ -7,4 +7,4 @@ COMPSs advanced features:
     - Failure management
     - Using Numba within your PyCOMPSs application
 
-.. youtube:: https://www.youtube.com/watch?v=xkjmY0lRjsU
+.. youtube:: xkjmY0lRjsU
