@@ -33,29 +33,58 @@ task is going to be executed within a container (:numref:`container_task_python`
         print("result: %s" % result)
 
 
-The *container_fun* task will be executed within the container defined in the
-*@container* decorator using the *docker* engine with the compss/compss *image*.
+The ``container_fun`` task will be executed within the container defined in the
+``@container`` decorator using the **DOCKER** engine with the **compss/compss** ``image``.
 This task is pure python and you can import and use any library available in
-the container
+the container. In addition, to these ``@container`` parameters, it is possible
+to use the ``options`` parameter with a string containing the desired container
+specific flags.
 
 This feature allows to use specific containers for tasks where the library
 dependencies are met.
 
 .. TIP::
 
-    Singularity is also supported, and can be selected by setting the engine to
-    SINGULARITY:
+    In addition to **Docker** container support, **Singularity** and **uDocker** are also
+    supported.
+
+    **Singularity container** can be selected by setting the engine to ``"SINGULARITY"``:
 
     .. code-block::
 
-        @container(engine=SINGULARITY)
+        @container(engine="SINGULARITY",
+                   image="compss")
+
+    Whilst **uDocker container** can be selected by setting the engine to ``"UDOCKER"``:
+
+    .. code-block::
+
+        @container(engine="UDOCKER",
+                   image="compss")
 
 
-In addition, the *@container* decorator can be placed on top of the
-*@binary*, *@ompss* or *@mpi* decorators. :numref:`container_task_python_binary`
+.. TIP::
+
+    It is possible to define options for the container engine selected by using
+    the ``options`` parameter within the ``@container`` decorator.
+    The available options depend on the the container engine selected, and can
+    be found on its specific documentation
+
+    For example, it can be used to define a specific mount point using uDocker
+    as follows:
+
+    .. code-block::
+
+        @container(engine="UDOCKER",
+                   image="compss",
+                   options="-v /home/user/mount_directory:/home/user/mount_directory")
+
+
+In addition, the ``@container`` decorator can be placed on top of the
+``@binary``, ``@ompss`` or ``@mpi`` decorators. :numref:`container_task_python_binary`
 shows how to execute the same example described in the
 :ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types/01_Binary_decorator:Binary decorator`
-section, but within the ``compss/compss`` container using docker.
+section, but within the ``compss/compss`` container using Docker.
 This will execute the binary/ompss/mpi binary within the container.
 
 
