@@ -9,7 +9,7 @@ that does not introduce overhead to the workflow execution can be found in the p
 
 - `Automatic, Efficient and Scalable Provenance Registration for FAIR HPC Workflows <http://dx.doi.org/10.1109/WORKS56498.2022.00006>`_
 
-In addition, a set of slides is available `here <https://zenodo.org/record/7701868>`_.
+Moreover, a set of slides is available `here <https://zenodo.org/record/7701868>`_.
 
 When the provenance option is activated, the runtime records every access
 to a file or directory specified in the application, as well as its direction (IN,
@@ -21,7 +21,7 @@ of your application using the `RO-Crate specification <https://www.researchobjec
 the `ro-crate-py library <https://github.com/ResearchObject/ro-crate-py>`_. RO-Crate is based on
 JSON-LD (JavaScript Object Notation for Linked Data), is
 much simpler than other standards and tools created to record Provenance, and
-that is why it has been adopted in a number of communities. Using RO-Crate
+that is why it has been adopted in a number of `communities <https://www.researchobject.org/ro-crate/in-use/>`_. Using RO-Crate
 to register the execution's information ensures
 not only to register correctly the Provenance of a COMPSs application run, but
 also compatibility with some existing portals that already embrace
@@ -64,7 +64,7 @@ Previous needed information
 There are certain pieces of information which must be included when registering the provenance of a workflow that
 the COMPSs runtime cannot automatically infer, such as the authors of an application. For specifying all these
 fields that are needed to generate an RO-Crate but cannot be automatically obtained, we have created a simple YAML
-structure where the user can specify them. They need to provide in their working directory (i.e., where the application
+structure where the user can specify them. They need to provide in their working directory (i.e. where the application
 is going to be run) a YAML file named ``ro-crate-info.yaml`` that follows the next template structure:
 
 .. code-block:: yaml
@@ -127,7 +127,7 @@ More specifically, in the **COMPSs Workflow Information** section:
   https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
 
 - ``sources_dir`` can be a single path, or a list of paths where application source files can be found. Our script
-  will add ALL files (i.e., not only source files, but any file found) and sub-directories inside each of the paths
+  will add ALL files (i.e. not only source files, but any file found) and sub-directories inside each of the paths
   specified. The sub-directories structure is respected
   when the files are added in the crate (inside a sub-directory ``application_sources``).
 
@@ -259,7 +259,7 @@ As shown in the help option:
     Consider that the graph image generation can take some extra seconds at the end of the execution of your
     application, therefore, adjust the ``--exec_time`` accordingly.
 
-In the case of extremely large workflows (e.g., a workflow
+In the case of extremely large workflows (e.g. a workflow
 with tenths of thousands of task nodes, or tenths of thousands of files used as inputs or outputs), the extra time
 needed to generate the workflow provenance with RO-Crate may be a problem in systems with strict run time constraints.
 In these cases, the workflow execution may end correctly, but the extra processing to generate the provenance may be killed
@@ -295,7 +295,7 @@ are:
 
 - **Application Source Files:** As detailed by the user in the ``ro-crate-info.yaml`` file,
   with the terms ``sources_dir`` and/or ``files``. They have to include
-  the main source file and all auxiliary files that the application needs (e.g.: ``.py``, ``.java``, ``.class``
+  the main source file and all auxiliary files that the application needs (e.g. ``.py``, ``.java``, ``.class``
   or ``.jar``). Optionally, the term ``sources_main_file`` can be used to manually select the main source file of
   the application. All application files are added to a sub-folder in the crate named ``application_sources``, where
   the ``sources_dir`` locations are included with their same folder tree structure. The files included with the
@@ -353,7 +353,7 @@ in seconds will be reported. As mentioned earlier, complex workflows can lead to
     PROVENANCE | COMPSs version: 3.1.rc2305, main_entity is: /Users/rsirvent/COMPSs-DP/matmul_directory/matmul_directory.py, out_profile is: App_Profile.json
 
 This second block details how many source files have been detected from the ``sources_dir`` and ``files`` terms defined
-in the ``ro-crate-py.yaml`` file. It also shows the COMPSs version detected, the ``mainEntity`` detected (i.e., the
+in the ``ro-crate-py.yaml`` file. It also shows the COMPSs version detected, the ``mainEntity`` detected (i.e. the
 source file that contains the main method from the COMPSs application), and the name of the file containing the
 execution profile of the application.
 
@@ -905,7 +905,7 @@ In this second ``ro-crate-metadata.json`` example, we want to illustrate the wor
 application execution in the MareNostrum 4 supercomputer. We show the execution of a matrix LU factorization
 for out-of-core sparse matrices implemented with COMPSs and using the Java programming language. In this algorithm,
 matrix ``A`` is both input and output of the workflow, since the factorization overwrites the original value of ``A``.
-In addition, we have used a 4x4 blocks hyper-matrix (i.e., the matrix is divided in 16 blocks, that contain 16
+In addition, we have used a 4x4 blocks hyper-matrix (i.e. the matrix is divided in 16 blocks, that contain 16
 elements each) and, if a block is all 0s, the corresponding file will not be
 created in the file system (in the example, this happens for blocks ``A.0.3``, ``A.1.3``, ``A.3.0`` and ``A.3.1``).
 
@@ -991,7 +991,7 @@ second case.
 
 The ``CreateAction`` term has also a richer set of information available from MareNostrum's SLURM workload manager. We
 can see that both the ``id`` and the ``description`` terms include the ``SLURM_JOB_ID``, which can be used to see more
-details and statistics on the job run from SLURM using the `UserPortal <https://userportal.bsc.es/>`_. In addition, many more
+details and statistics on the job run from SLURM using the `User Portal <https://userportal.bsc.es/>`_ tool. In addition, many more
 environment variables are captured, which provide details on how the execution has been performed (i.e.
 ``SLURM_JOB_NODE_LIST``, ``SLURM_JOB_NUM_NODES``, ``SLURM_JOB_CPUS_PER_NODE``, ``COMPSS_MASTER_NODE``,
 ``COMPSS_WORKER_NODES``, among others).
