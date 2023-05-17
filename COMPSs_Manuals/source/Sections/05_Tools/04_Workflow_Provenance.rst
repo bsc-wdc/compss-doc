@@ -72,37 +72,30 @@ is going to be run) a YAML file named ``ro-crate-info.yaml`` that follows the ne
     COMPSs Workflow Information:
       name: Name of your COMPSs application
       description: Detailed description of your COMPSs application
-      license: Apache-2.0
-        # URL preferred, but these strings are accepted: https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
-      sources_dir: [path_to/dir_1, path_to/dir_2]
-        # Optional: List of directories containing the application source files. Relative or absolute paths can be used
-      sources_main_file: my_main_file.py
-        # Optional: Name of the main file of the application, located in one of the sources_dir.
-        # Relative paths from a sources_dir entry, or absolute paths can be used
-      files: [main_file.py, aux_file_1.py, aux_file_2.py]
-        # List of application files. Relative or absolute paths can be used
+      license: Apache-2.0  # URL preferred, but these strings are accepted: https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
+      sources_dir: [path_to/dir_1, path_to/dir_2]  # Optional: List of directories containing the application source files. Relative or absolute paths can be used
+      sources_main_file: my_main_file.py  # Optional: Name of the main file of the application, located in one of the sources_dir.
+                                          # Relative paths from a sources_dir entry, or absolute paths can be used
+      files: [main_file.py, aux_file_1.py, aux_file_2.py]  # List of application files. Relative or absolute paths can be used
 
     Authors:
       - name: Author_1 Name
         e-mail: author_1@email.com
         orcid: https://orcid.org/XXXX-XXXX-XXXX-XXXX
         organisation_name: Institution_1 name
-        ror: https://ror.org/XXXXXXXXX
-          # Find them in ror.org
+        ror: https://ror.org/XXXXXXXXX  # Find them in ror.org
       - name: Author_2 Name
         e-mail: author2@email.com
         orcid: https://orcid.org/YYYY-YYYY-YYYY-YYYY
         organisation_name: Institution_2 name
-        ror: https://ror.org/YYYYYYYYY
-          # Find them in ror.org
+        ror: https://ror.org/YYYYYYYYY  # Find them in ror.org
 
     Submitter:
       name: Name
       e-mail: submitter@email.com
       orcid: https://orcid.org/XXXX-XXXX-XXXX-XXXX
       organisation_name: Submitter Institution name
-      ror: https://ror.org/XXXXXXXXX
-        # Find them in ror.org
+      ror: https://ror.org/XXXXXXXXX  # Find them in ror.org
 
 .. WARNING::
 
