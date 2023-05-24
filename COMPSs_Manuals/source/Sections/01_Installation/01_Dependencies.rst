@@ -365,8 +365,11 @@ As an example for some distributions and versions:
                 $ echo 'export JAVA_HOME=/usr/lib64/jvm/java-openjdk/' >> ~/.bashrc
                 $ export JAVA_HOME=/usr/lib64/jvm/java-openjdk/
 
-    .. tab-container:: macOS_Monterey
-        :title: macOS Monterey
+  .. tab:: macOS
+
+    .. tabs::
+
+      .. tab:: Monterey
 
         **macOS Monterey** dependencies installation commands:
 
