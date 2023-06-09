@@ -319,6 +319,15 @@ are:
     your own files to avoid unwanted overwritings. You can change the resulting ``App_Profile.json`` name by using
     the ``--output_profile=/path_to/file`` flag.
 
+Publish and cite your results in WorkflowHub
+--------------------------------------------
+
+Once the provenance metadata for your COMPSs application has been generated, you have the possibility of publishing
+your results in the `WorkflowHub <https://workflowhub.eu/>`_, the FAIR workflow registry, where a DOI can be generated,
+therefore your results can be cited in a scientific paper.
+
+
+
 
 Log and time statistics
 -----------------------
