@@ -59,7 +59,7 @@ As an example for some distributions and versions:
                 $ echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/' >> ~/.bashrc
                 $ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 
-        .. ATTENTION:
+        .. ATTENTION::
 
             Before installing it is important to have MPI headers exported into the
             ``EXTRAE_MPI_HEADERS`` in order to compile EXTRAE successfully.
@@ -93,7 +93,7 @@ As an example for some distributions and versions:
                 $ echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/' >> ~/.bashrc
                 $ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 
-        .. ATTENTION:
+        .. ATTENTION::
 
             Before installing it is important to have MPI headers exported into the
             ``EXTRAE_MPI_HEADERS`` in order to compile EXTRAE successfully.
