@@ -60,7 +60,7 @@ This would typically install the library in ``~/.local/``. Another option is to 
 
     $ pip install -t install_path rocrate
 
-Our implementation has been tested with ``ro-crate-py`` version ``0.7.0`` and earlier.
+Our implementation has been tested with ``ro-crate-py`` version ``0.8.0`` and earlier.
 
 
 Previous needed information
@@ -494,7 +494,7 @@ in seconds will be reported. As mentioned earlier, complex workflows can lead to
 
     PROVENANCE | RUNNING DATA PROVENANCE SCRIPT
     PROVENANCE | Number of source files detected: 2
-    PROVENANCE | COMPSs version: 3.1.rc2305, main_entity is: /Users/rsirvent/COMPSs-DP/matmul_directory/matmul_directory.py, out_profile is: App_Profile.json
+    PROVENANCE | COMPSs version: 3.2, main_entity is: /Users/rsirvent/COMPSs-DP/matmul_directory/matmul_directory.py, out_profile is: App_Profile.json
 
 This second block details how many source files have been detected from the ``sources_dir`` and ``files`` terms defined
 in the ``ro-crate-py.yaml`` file. It also shows the COMPSs version detected, the ``mainEntity`` detected (i.e. the
@@ -549,7 +549,7 @@ the JSON file you can find several interesting terms:
 - **ComputationalWorkflow:** Main file of the application (in the example, ``application_sources/matmul_directory.py``).
   Includes a reference to the generated workflow image in the ``image`` field.
 
-- **version:** The COMPSs specific version and build used to run this application. In the example: ``3.1.rc2305``.
+- **version:** The COMPSs specific version and build used to run this application. In the example: ``3.2``.
   This is a very important field to achieve reproducibility or replicability, since COMPSs features may vary their
   behaviour in different versions of the programming model runtime.
 
@@ -1129,14 +1129,14 @@ tree for the source files is:
 
     9 directories, 26 files
 
-Since in this second example we do not add explicitly the input and output files of a workflow (i.e.
+Since in this second example we do not add explicitly the input and output files of the workflow (i.e.
 ``data_persistence`` is set to ``False``) (in some cases, datasets could be extremely large),
-our crate only includes references to them,
-which are ment as pointers to where files can be found, rather than a publicly accessible URI reference. Therefore,
+our crate does not have a ``dataset`` subdfolder and only includes references to the files,
+which are ment as pointers to where they can be found, rather than a publicly accessible URI references. Therefore,
 in this Java COMPSs
-example, files can be found in ``s08r2b16-ib0`` hostname, which is an internal hostname of MN4. This means that, for
+example, files can be found in the ``s08r2b16-ib0`` hostname, which is an internal hostname of MN4. This means that, for
 reproducibility purposes, a new user would have to request access to the MN4 paths specified by the corresponding
-URIs.
+URIs (i.e. ``/gpfs/home/bsc19/...``).
 
 The ``CreateAction`` term has also a richer set of information available from MareNostrum's SLURM workload manager. We
 can see that both the ``id`` and the ``description`` terms include the ``SLURM_JOB_ID``, which can be used to see more
@@ -1416,7 +1416,7 @@ environment variables are captured, which provide details on how the execution h
                 "citation": "https://doi.org/10.1007/s10723-013-9272-5",
                 "name": "COMPSs Programming Model",
                 "url": "http://compss.bsc.es/",
-                "version": "3.1.rc2305"
+                "version": "3.2"
             },
             {
                 "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/92",
