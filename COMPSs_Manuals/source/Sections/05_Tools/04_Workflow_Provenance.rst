@@ -245,6 +245,7 @@ a ``submitter`` is provided which is different from the person that wrote the ap
         organisation_name: IRB Barcelona
         ror: https://ror.org/01z1gye03
 
+
 Usage
 -----
 
@@ -294,6 +295,7 @@ combined with the file accesses information registered by the COMPSs runtime in 
 result is a sub-directory ``COMPSs_RO-Crate_[uuid]/`` that contains the workflow provenance of the run (see next sub-section
 for a detailed description).
 
+
 Result
 ------
 
@@ -341,6 +343,7 @@ are:
     Avoid using these file names among
     your own files to avoid unwanted overwritings. You can change the resulting ``App_Profile.json`` name by using
     the ``--output_profile=/path_to/file`` flag.
+
 
 Publish and cite your results with WorkflowHub
 ----------------------------------------------
@@ -447,6 +450,7 @@ for your convenience. An example of the full text generated:
     in the previously provided Java and Python Matrix Multiplication examples (i.e. in their included
     ``ro-crate-info.yaml`` files).
 
+
 Re-execute a COMPSs workflow published in WorkflowHub
 -----------------------------------------------------
 
@@ -518,6 +522,7 @@ spent by the script to add all input and output files of the workflow as referen
 
 The fourth and final block details the name of the sub-folder where the RO-Crate has been generated, while stating
 the time to record the ``ro-crate-metadata.json`` file to disk, and the total time execution of the whole script.
+
 
 ro-crate-metadata.json PyCOMPSs example (Laptop)
 ------------------------------------------------
@@ -1040,6 +1045,7 @@ contents. Many of the fields are easily and directly understandable.
         ]
     }
 
+
 ro-crate-metadata.json Java COMPSs example (MN4 supercomputer)
 --------------------------------------------------------------
 
@@ -1123,15 +1129,14 @@ tree for the source files is:
 
     9 directories, 26 files
 
-It is also interesting to note the differences in the URIs used to reference input and output files when provenance is
-run in a supercomputer, instead of a laptop (as shown in the previous example). Since we do not add explicitly the input
-and output files of a workflow (because they could be extremely large), our crate only includes references to them,
+Since in this second example we do not add explicitly the input and output files of a workflow (i.e.
+``data_persistence`` is set to ``False``) (in some cases, datasets could be extremely large),
+our crate only includes references to them,
 which are ment as pointers to where files can be found, rather than a publicly accessible URI reference. Therefore,
-while in the PyCOMPSs previous example files could be found in the ``bsccs742.int.bsc.es`` laptop, in this Java COMPSs
-example files can be found in ``s08r2b16-ib0`` hostname, which is an internal hostname of MN4. This means that, for
-reproducibility purposes, a new user would have to request input and output files to ``bsccs742.int.bsc.es``
-laptop's owner in the first case, or request access to the MN4 paths specified by the corresponding URIs, in the
-second case.
+in this Java COMPSs
+example, files can be found in ``s08r2b16-ib0`` hostname, which is an internal hostname of MN4. This means that, for
+reproducibility purposes, a new user would have to request access to the MN4 paths specified by the corresponding
+URIs.
 
 The ``CreateAction`` term has also a richer set of information available from MareNostrum's SLURM workload manager. We
 can see that both the ``id`` and the ``description`` terms include the ``SLURM_JOB_ID``, which can be used to see more
