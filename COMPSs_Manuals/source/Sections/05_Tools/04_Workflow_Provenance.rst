@@ -9,7 +9,7 @@ that does not introduce overhead to the workflow execution can be found in the p
 
 - `Automatic, Efficient and Scalable Provenance Registration for FAIR HPC Workflows <http://dx.doi.org/10.1109/WORKS56498.2022.00006>`_
 
-Moreover, a set of slides is available `here <https://zenodo.org/record/7701868>`_.
+Moreover, a set of slides is available in `Zenodo <https://zenodo.org/record/7701868>`_.
 
 Another key objective of Workflow Provenance is to be able to **publish your research results** obtained with COMPSs as
 artifacts that can be cited in scientific publications with their corresponding DOI.
@@ -350,7 +350,10 @@ Publish and cite your results with WorkflowHub
 
 Once the provenance metadata for your COMPSs application has been generated, you have the possibility of publishing
 your results in `WorkflowHub <https://workflowhub.eu/>`_, the FAIR workflow registry, where a DOI can be generated,
-therefore your results can be cited in a scientific paper. The steps to achieve the publication are:
+so your results can be cited in a scientific paper. Detailed documentation on how to use the WorkflowHub web
+site can be found in their `Documentation <https://about.workflowhub.eu/docs/>`_ section.
+
+The steps to achieve the publication of a COMPSs execution are:
 
 - Pack the resulting crate subdirectory (i.e. ``COMPSs_RO-Crate_[uuid]/``) in a zip file. The ``ro-crate-metadata.json``
   file must be at the root level of this zip file.
@@ -368,7 +371,7 @@ therefore your results can be cited in a scientific paper. The steps to achieve 
 - Review that the information automatically obtained from the Workflow Provenance is correct. Select the visibility
   of your workflow in the ``Sharing`` tab (for both general public, and for your teams). Click ``Register`` again.
 
-After these steps, the main summary page of your workflow will be shown where three main tabs can be selected:
+After these steps, the main summary page of your workflow will be shown, where three main tabs can be selected:
 
 - **Overview**: Where the workflow type, workflow description, and workflow diagram are shown.
 
@@ -446,7 +449,7 @@ for your convenience. An example of the full text generated:
 
     When writing the ``description`` term of your ``ro-crate-info.yaml`` file (see Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Previous needed information`)
     you can use Markdown language to get a fancier description in WorkflowHub. You can find a Markdown language guide
-    `here <https://simplemde.com/markdown-guide>`_, and an example on how to write it in an ``ro-crate-info.yaml`` file
+    `in this site <https://simplemde.com/markdown-guide>`_, and an example on how to write it in an ``ro-crate-info.yaml`` file
     in the previously provided Java and Python Matrix Multiplication examples (i.e. in their included
     ``ro-crate-info.yaml`` files).
 
@@ -454,21 +457,98 @@ for your convenience. An example of the full text generated:
 Re-execute a COMPSs workflow published in WorkflowHub
 -----------------------------------------------------
 
+After a COMPSs workflow execution has been published in WorkflowHub, the resulting entry can be checked by other
+individuals in order to reproduce the results (i.e. submit the same workflow with the same inputs, and obtain the same
+results) or replicate the workflow execution (i.e. submit the same workflow, with different inputs, obtaining different
+results). While in this section we will mainly cover reproducibility, replicability is also easy to achieve, since
+our crate includes the source code of the application. Therefore, any reference to the input files in the application
+needs to be changed (either in the source code or in the parameters passed to the application)
+if the objective of the user is to use the same workflow but with different inputs.
 
+The steps to reproduce a COMPSs workflow vary depending if the crate package downloaded includes the datasets (i.e. it
+has a ``dataset/`` subfolder). This is achieved when ``data_persistence`` is set to ``True`` in the
+``ro-crate-info.yaml`` file. Thus, the data preparation step will change depending on the availability of the dataset
+needed for the workflow execution. In addition, any external third party software used in the application (e.g.
+simulators, auxiliary libraries and packages, ...), must be made available in the new execution environment. For
+simplicity, we will not go into the details on how to deal with this environment preparation and we will assume the
+environment has all software dependencies ready to be used.
 
+All in all, the main steps to prepare the application re-execution are:
 
+- Click the DOI link to the workflow you want to re-execute (e.g. https://doi.org/10.48546/WORKFLOWHUB.WORKFLOW.485.1).
+  You will get the Overview page of the workflow in WorkflowHub.
 
+- Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine.
 
+- Copy or move the downloaded file to the environment where you want to execute the application. Unzip the file there.
+  You will see a set of files and folders that correspond to the Workflow Provenance as generated by COMPSs
+  (see :ref:`Sections/05_Tools/04_Workflow_Provenance:Result` for details on the crate structure).
 
+- Go to the ``application_sources/`` folder.
 
+- Copy the ``dataset/`` folder input files in the ``application_sources/`` folder.
 
+- Run the application using the command specified in ``compss_command_line_arguments.txt``. Compare the newly generated
+  output results with the outputs in the ``dataset/`` folder.
 
+This set of steps should cover the majority of the cases when re-executing a COMPSs application. However, we include a
+more detailed description of the different steps to provide guidance on how to deal with different situations that may
+occur.
 
+- Preparing the **source code** of the application. It is located in the ``application_sources/`` folder of the crate. You can
+  run the code from that location (as mentioned earlier), or copy or move it to a different one. If the code is Python,
+  it is ready to run. If the code is
+  Java, you may have to create a ``.jar`` file using ``javac`` and ``jar``, or try to invoke a ``.jar`` file if it has
+  been included in the crate.
 
+    - In most of the cases, if the application uses relative paths, the ``application_sources/`` folder can be used as
+      the working directory (i.e. the folder from where you run your COMPSs application).
 
+- Preparing the **dataset** to run the application. Two different situations arise here:
 
+  - If the ``dataset/`` folder exists, ``data_persistence`` has been used, and all inputs and outputs are included in
+    the crate. Change the inputs reference path in the source code of the application. This is commonly done by changing
+    the references to the path directly in the source code, or passing the new path as a parameter to the application.
 
+    - In the majority of the cases, if the application uses relative paths, the inputs in the ``dataset/`` folder can be copied or moved to
+      the ``application_sources/`` folder to make data ready to be used without having to change any paths in the code
+      (i.e. ``cp dataset/* application_sources/``).
 
+    - Ideally, you should only move input files to the working directory. Output files included in the ``dataset/``
+      folder can be used to compare results
+      with the outputs that will be generated by the re-execution of the application.
+
+  - If the ``dataset/`` folder does not exist, the file ``ro-crate-metadata.json`` contains references to the files used
+    and generated by the workflow (e.g. ``file://s08r2b16-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.0`` ).
+    The input files are detailed in the ``CreateAction`` section, under the ``object`` term. The output files are detailed in the same
+    ``CreateAction`` section, under the ``result`` term.
+
+    - You first need to ensure you have permission to access the files referred by the URL. In the previous example, the file
+      ``A.0.0``, located in the path ``/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/`` in the
+      machine ``s08r2b16-ib0`` , which is an internal hostname of MareNostrum IV, thus, indicating the files are
+      available in that machine.
+
+    - Check that the file details in the disk match the ones included in the ``ro-crate-metadata.json`` (i.e.
+      ``contentSize`` and ``dateModified`` ) to ensure the files match the ones used when the application was originally
+      run.
+
+    - You can modify the inputs reference path in the application to use them directly (either if the path is defined
+      in the code, or passed as an input parameter to the application). Another option is to copy the files to a new
+      location, and reference it in the application, but since not including the datasets in the crate was designed to
+      avoid large data movements and duplications, we do recommend to change the references to the path, if needed.
+
+      - If the application uses internally full paths and the re-execution is happening in the same environment, no
+        changes in the code are required.
+
+- Once the application and the dataset are ready, check the content of the ``compss_command_line_arguments.txt`` file, which
+  includes the command used to run the application (e.g. ``runcompss --python_interpreter=/Users/rsirvent/.pyenv/shims/python3 --cpu_affinity=disabled -p src/matmul_files.py 8 64`` ).
+
+    - Check if the command is still valid in your system, or adapt it otherwise (e.g. use ``enqueue_compss`` if it is
+      an environment with a queuing system, check if the flags used apply to your environment, etc...).
+
+- Run the application. Once it has finished, newly generated results can be compared to the ones included in the
+  ``dataset/`` folder, or to the ones provided as references in the ``result`` term of the ``ro-crate-metadata.json``
+  file.
 
 
 Log and time statistics
