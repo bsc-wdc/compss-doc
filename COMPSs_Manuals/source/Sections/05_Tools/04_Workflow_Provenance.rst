@@ -9,7 +9,12 @@ that does not introduce overhead to the workflow execution can be found in the p
 
 - `Automatic, Efficient and Scalable Provenance Registration for FAIR HPC Workflows <http://dx.doi.org/10.1109/WORKS56498.2022.00006>`_
 
-Moreover, a set of slides is available `here <https://zenodo.org/record/7701868>`_.
+Moreover, a set of slides is available in `Zenodo <https://zenodo.org/record/7701868>`_.
+
+Another key objective of Workflow Provenance is to be able to **publish your research results** obtained with COMPSs as
+artifacts that can be cited in scientific publications with their corresponding DOI.
+See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Publish and cite your results with WorkflowHub` to learn
+precisely how to do that.
 
 When the provenance option is activated, the runtime records every access
 to a file or directory specified in the application, as well as its direction (IN,
@@ -55,7 +60,7 @@ This would typically install the library in ``~/.local/``. Another option is to 
 
     $ pip install -t install_path rocrate
 
-Our implementation has been tested with ``ro-crate-py`` version ``0.7.0`` and earlier.
+Our implementation has been tested with ``ro-crate-py`` version ``0.8.0`` and earlier.
 
 
 Previous needed information
@@ -77,6 +82,7 @@ is going to be run) a YAML file named ``ro-crate-info.yaml`` that follows the ne
       sources_main_file: my_main_file.py  # Optional: Name of the main file of the application, located in one of the sources_dir.
                                           # Relative paths from a sources_dir entry, or absolute paths can be used
       files: [main_file.py, aux_file_1.py, aux_file_2.py]  # List of application files. Relative or absolute paths can be used
+      data_persistence: False  # True to include all input and output files of the application in the resulting crate. False by default or if not set
 
     Authors:
       - name: Author_1 Name
@@ -135,6 +141,14 @@ More specifically, in the **COMPSs Workflow Information** section:
   crate. If the script is unable to automatically
   identify the main source file of the application, the first file of this list may be considered as such.
 
+- ``data_persistence`` is a boolean to indicate whether the Workflow Provenance generation should include the input
+  and output datasets needed and generated respectively in the workflow (i.e. must be set to ``True``).
+  Including the related datasets is feasible for
+  workflows where the datasets are small enough to be sent back and forth between execution environments. When datasets
+  are too large to be moved around, or if reproducibility or replicability is ment for a single execution environment,
+  this field should be set to ``False`` to avoid including the datasets in the resulting crate package. Its value is
+  ``False`` by default.
+
 The ``sources_dir`` and ``files`` terms are complementary to each other. An ``ro-crate-info.yaml`` could use the term
 ``files`` alone or ``sources_dir`` alone, but also both, if the user is willing to add a number of sub-directories
 with source files, but also several files by hand.
@@ -182,6 +196,7 @@ institutions. Since no ``submitter`` is defined, the first author is considered 
       license: Apache-2.0 #Provide better a URL, but these strings are accepted:
                         # https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
       files: [matmul_directory.py, matmul_tasks.py]
+      data_persistence: True
 
     Authors:
       - name: Raül Sirvent
@@ -214,6 +229,7 @@ a ``submitter`` is provided which is different from the person that wrote the ap
       license: https://opensource.org/licenses/Apache-2.0 #Provide better a URL, but these strings are accepted:
                         # https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
       sources_dir: [jar/, src/]
+      data_persitence: False
 
     Authors:
       - name: Raül Sirvent
@@ -228,6 +244,7 @@ a ``submitter`` is provided which is different from the person that wrote the ap
         orcid: https://orcid.org/0000-0002-8291-8071
         organisation_name: IRB Barcelona
         ror: https://ror.org/01z1gye03
+
 
 Usage
 -----
@@ -278,6 +295,7 @@ combined with the file accesses information registered by the COMPSs runtime in 
 result is a sub-directory ``COMPSs_RO-Crate_[uuid]/`` that contains the workflow provenance of the run (see next sub-section
 for a detailed description).
 
+
 Result
 ------
 
@@ -293,6 +311,13 @@ are:
   the application. All application files are added to a sub-folder in the crate named ``application_sources``, where
   the ``sources_dir`` locations are included with their same folder tree structure. The files included with the
   ``files`` term are added to the root of the ``application_sources`` sub-folder in the crate.
+
+- **Application Datasets:** When ``data_persistence`` is set to ``True`` in the ``ro-crate-info.yaml`` file, both
+  the input and output datasets of the workflow are included in the crate. The input dataset are the files that the
+  workflow needs to be run. The output dataset is formed by all the resulting files generated by the execution of the
+  COMPSs application. A subfolder ``dataset`` with all related files copied will be created, and the subdirectories
+  structure will be respected. If more than a single *root* path is detected, a structure of ``folder_i`` folders will be
+  provided inside the ``dataset`` folder.
 
 - **complete_graph.svg:** The image of the workflow generated by the COMPSs runtime,
   as generated with the ``runcompss -g`` or ``--graph`` option.
@@ -320,6 +345,212 @@ are:
     the ``--output_profile=/path_to/file`` flag.
 
 
+Publish and cite your results with WorkflowHub
+----------------------------------------------
+
+Once the provenance metadata for your COMPSs application has been generated, you have the possibility of publishing
+your results in `WorkflowHub <https://workflowhub.eu/>`_, the FAIR workflow registry, where a DOI can be generated,
+so your results can be cited in a scientific paper. Detailed documentation on how to use the WorkflowHub web
+site can be found in their `Documentation <https://about.workflowhub.eu/docs/>`_ section.
+
+The steps to achieve the publication of a COMPSs execution are:
+
+- Pack the resulting crate subdirectory (i.e. ``COMPSs_RO-Crate_[uuid]/``) in a zip file. The ``ro-crate-metadata.json``
+  file must be at the root level of this zip file.
+
+- Change the extension of the zip file to ``.crate.zip``, so WorkflowHub can process it correctly.
+
+- `Login <https://workflowhub.eu/login?return_to=%2Fsignup>`_ or `create an account <https://workflowhub.eu/signup>`_
+  in the WorfklowHub registry.
+
+- Once logged in, you will see the menu ``Create`` at the top of the web page, select ``Workflow``.
+
+- Select the ``Upload/Import Workflow RO-Crate`` tab, ``Local file``, and browse your computer to select the zip file
+  prepared previously. Click ``Register``.
+
+- Review that the information automatically obtained from the Workflow Provenance is correct. Select the visibility
+  of your workflow in the ``Sharing`` tab (for both general public, and for your teams). Click ``Register`` again.
+
+After these steps, the main summary page of your workflow will be shown, where three main tabs can be selected:
+
+- **Overview**: Where the workflow type, workflow description, and workflow diagram are shown.
+
+.. figure:: ./Figures/WH_overview.png
+   :name: Overview
+   :alt: Overview
+   :align: center
+   :width: 90.0%
+
+   Overview tab information
+
+- **Files**: Where you can browse the uploaded content of the crate. See :ref:`Sections/05_Tools/04_Workflow_Provenance:Result`
+  for details on the crate structure.
+
+.. figure:: ./Figures/WH_files.png
+   :name: Files
+   :alt: Files
+   :align: center
+   :width: 90.0%
+
+   Files tab information
+
+- **Related items**: Where ``People``, ``Spaces`` and ``Teams`` related to this workflow can be checked.
+
+If everything is correct, the next step is to **generate a DOI** for your workflow. The necessary steps to achieve
+this are:
+
+- Freeze your workflow version, either from the ``Overview`` tab, ``Citation`` box, ``Freeze version`` button, or from the
+  ``Actions`` menu, ``Freeze version``.
+
+.. figure:: ./Figures/WH_freeze.png
+   :name: Freeze
+   :alt: Freeze
+   :align: center
+   :width: 25.0%
+
+   Freeze button in the Citation box
+
+- Once frozen, a new ``Generate a DOI`` button will appear in the ``Citation`` box. This can be also found in the
+  ``Actions`` menu, ``Generate a DOI``. Select ``Mint DOI``.
+
+.. figure:: ./Figures/WH_DOI.png
+   :name: DOI
+   :alt: DOI
+   :align: center
+   :width: 25.0%
+
+   Generate a DOI button in the Citation box
+
+- The final generated DOI for the workflow results can be found in the ``Citation`` box.
+
+.. figure:: ./Figures/WH_citation.png
+   :name: Citation
+   :alt: Citation
+   :align: center
+   :width: 25.0%
+
+   Resulting text in the Citation box, to be used in bibliography
+
+You can see a couple of examples on previous published workflows:
+
+- Java COMPSs Matrix Multiplication: https://doi.org/10.48546/workflowhub.workflow.484.1
+
+- Python COMPSs Matrix Multiplication: https://doi.org/10.48546/workflowhub.workflow.485.1
+
+As partially shown above, in the ``Citation`` box of the ``Overview`` tab you will find the text that can be added as a reference in your
+scientific paper's bibliography, to properly reference your workflow execution result. There is also a ``Copy`` button
+for your convenience. An example of the full text generated:
+
+- Sirvent, R. (2023). Java COMPSs Matrix Multiplication, out-of-core, using files. WorkflowHub. https://doi.org/10.48546/WORKFLOWHUB.WORKFLOW.484.1
+
+- Sirvent, R. (2023). PyCOMPSs Matrix Multiplication, out-of-core, using files. WorkflowHub. https://doi.org/10.48546/WORKFLOWHUB.WORKFLOW.485.1
+
+.. TIP::
+
+    When writing the ``description`` term of your ``ro-crate-info.yaml`` file (see Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Previous needed information`)
+    you can use Markdown language to get a fancier description in WorkflowHub. You can find a Markdown language guide
+    `in this site <https://simplemde.com/markdown-guide>`_, and an example on how to write it in an ``ro-crate-info.yaml`` file
+    in the previously provided Java and Python Matrix Multiplication examples (i.e. in their included
+    ``ro-crate-info.yaml`` files).
+
+
+Re-execute a COMPSs workflow published in WorkflowHub
+-----------------------------------------------------
+
+After a COMPSs workflow execution has been published in WorkflowHub, the resulting entry can be checked by other
+individuals in order to reproduce the results (i.e. submit the same workflow with the same inputs, and obtain the same
+results) or replicate the workflow execution (i.e. submit the same workflow, with different inputs, obtaining different
+results). While in this section we will mainly cover reproducibility, replicability is also easy to achieve, since
+our crate includes the source code of the application. Therefore, any reference to the input files in the application
+needs to be changed (either in the source code or in the parameters passed to the application)
+if the objective of the user is to use the same workflow but with different inputs.
+
+The steps to reproduce a COMPSs workflow vary depending if the crate package downloaded includes the datasets (i.e. it
+has a ``dataset/`` subfolder). This is achieved when ``data_persistence`` is set to ``True`` in the
+``ro-crate-info.yaml`` file. Thus, the data preparation step will change depending on the availability of the dataset
+needed for the workflow execution. In addition, any external third party software used in the application (e.g.
+simulators, auxiliary libraries and packages, ...), must be made available in the new execution environment. For
+simplicity, we will not go into the details on how to deal with this environment preparation and we will assume the
+environment has all software dependencies ready to be used.
+
+All in all, the main steps to prepare the application re-execution are:
+
+- Click the DOI link to the workflow you want to re-execute (e.g. https://doi.org/10.48546/WORKFLOWHUB.WORKFLOW.485.1).
+  You will get the Overview page of the workflow in WorkflowHub.
+
+- Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine.
+
+- Copy or move the downloaded file to the environment where you want to execute the application. Unzip the file there.
+  You will see a set of files and folders that correspond to the Workflow Provenance as generated by COMPSs
+  (see :ref:`Sections/05_Tools/04_Workflow_Provenance:Result` for details on the crate structure).
+
+- Go to the ``application_sources/`` folder.
+
+- Copy the ``dataset/`` folder input files in the ``application_sources/`` folder.
+
+- Run the application using the command specified in ``compss_command_line_arguments.txt``. Compare the newly generated
+  output results with the outputs in the ``dataset/`` folder.
+
+This set of steps should cover the majority of the cases when re-executing a COMPSs application. However, we include a
+more detailed description of the different steps to provide guidance on how to deal with different situations that may
+occur.
+
+- Preparing the **source code** of the application. It is located in the ``application_sources/`` folder of the crate. You can
+  run the code from that location (as mentioned earlier), or copy or move it to a different one. If the code is Python,
+  it is ready to run. If the code is
+  Java, you may have to create a ``.jar`` file using ``javac`` and ``jar``, or try to invoke a ``.jar`` file if it has
+  been included in the crate.
+
+    - In most of the cases, if the application uses relative paths, the ``application_sources/`` folder can be used as
+      the working directory (i.e. the folder from where you run your COMPSs application).
+
+- Preparing the **dataset** to run the application. Two different situations arise here:
+
+  - If the ``dataset/`` folder exists, ``data_persistence`` has been used, and all inputs and outputs are included in
+    the crate. Change the inputs reference path in the source code of the application. This is commonly done by changing
+    the references to the path directly in the source code, or passing the new path as a parameter to the application.
+
+    - In the majority of the cases, if the application uses relative paths, the inputs in the ``dataset/`` folder can be copied or moved to
+      the ``application_sources/`` folder to make data ready to be used without having to change any paths in the code
+      (i.e. ``cp dataset/* application_sources/``).
+
+    - Ideally, you should only move input files to the working directory. Output files included in the ``dataset/``
+      folder can be used to compare results
+      with the outputs that will be generated by the re-execution of the application.
+
+  - If the ``dataset/`` folder does not exist, the file ``ro-crate-metadata.json`` contains references to the files used
+    and generated by the workflow (e.g. ``file://s08r2b16-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.0`` ).
+    The input files are detailed in the ``CreateAction`` section, under the ``object`` term. The output files are detailed in the same
+    ``CreateAction`` section, under the ``result`` term.
+
+    - You first need to ensure you have permission to access the files referred by the URL. In the previous example, the file
+      ``A.0.0``, located in the path ``/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/`` in the
+      machine ``s08r2b16-ib0`` , which is an internal hostname of MareNostrum IV, thus, indicating the files are
+      available in that machine.
+
+    - Check that the file details in the disk match the ones included in the ``ro-crate-metadata.json`` (i.e.
+      ``contentSize`` and ``dateModified`` ) to ensure the files match the ones used when the application was originally
+      run.
+
+    - You can modify the inputs reference path in the application to use them directly (either if the path is defined
+      in the code, or passed as an input parameter to the application). Another option is to copy the files to a new
+      location, and reference it in the application, but since not including the datasets in the crate was designed to
+      avoid large data movements and duplications, we do recommend to change the references to the path, if needed.
+
+      - If the application uses internally full paths and the re-execution is happening in the same environment, no
+        changes in the code are required.
+
+- Once the application and the dataset are ready, check the content of the ``compss_command_line_arguments.txt`` file, which
+  includes the command used to run the application (e.g. ``runcompss --python_interpreter=/Users/rsirvent/.pyenv/shims/python3 --cpu_affinity=disabled -p src/matmul_files.py 8 64`` ).
+
+    - Check if the command is still valid in your system, or adapt it otherwise (e.g. use ``enqueue_compss`` if it is
+      an environment with a queuing system, check if the flags used apply to your environment, etc...).
+
+- Run the application. Once it has finished, newly generated results can be compared to the ones included in the
+  ``dataset/`` folder, or to the ones provided as references in the ``result`` term of the ``ro-crate-metadata.json``
+  file.
+
+
 Log and time statistics
 -----------------------
 
@@ -343,7 +574,7 @@ in seconds will be reported. As mentioned earlier, complex workflows can lead to
 
     PROVENANCE | RUNNING DATA PROVENANCE SCRIPT
     PROVENANCE | Number of source files detected: 2
-    PROVENANCE | COMPSs version: 3.1.rc2305, main_entity is: /Users/rsirvent/COMPSs-DP/matmul_directory/matmul_directory.py, out_profile is: App_Profile.json
+    PROVENANCE | COMPSs version: 3.2, main_entity is: /Users/rsirvent/COMPSs-DP/matmul_directory/matmul_directory.py, out_profile is: App_Profile.json
 
 This second block details how many source files have been detected from the ``sources_dir`` and ``files`` terms defined
 in the ``ro-crate-py.yaml`` file. It also shows the COMPSs version detected, the ``mainEntity`` detected (i.e. the
@@ -372,6 +603,7 @@ spent by the script to add all input and output files of the workflow as referen
 The fourth and final block details the name of the sub-folder where the RO-Crate has been generated, while stating
 the time to record the ``ro-crate-metadata.json`` file to disk, and the total time execution of the whole script.
 
+
 ro-crate-metadata.json PyCOMPSs example (Laptop)
 ------------------------------------------------
 
@@ -379,7 +611,9 @@ In the RO-Crate specification, the root file containing the metadata referring t
 ``ro-crate-metadata.json``. In these lines, we provide an example of an ro-crate-metadata.json file resulting from
 a PyCOMPSs application execution in a laptop, specifically an out-of-core matrix multiplication example that includes matrices
 ``A`` and ``B`` as inputs in an ``inputs/`` sub-directory, and matrix ``C`` as the result of their multiplication
-(which in the code is also passed as input, to have a matrix initialized with 0s).
+(which in the code is also passed as input, to have a matrix initialized with 0s). We also set the ``data_persistence``
+term of the ``ro-crate-info.yaml`` file to ``True`` to indicate we want the datasets to be included in the resulting
+crate.
 For all the specific details on the fields provided in the JSON file, please refer to the
 `RO-Crate specification Website <https://www.researchobject.org/ro-crate/1.1/>`_. Intuitively, if you search through
 the JSON file you can find several interesting terms:
@@ -395,7 +629,7 @@ the JSON file you can find several interesting terms:
 - **ComputationalWorkflow:** Main file of the application (in the example, ``application_sources/matmul_directory.py``).
   Includes a reference to the generated workflow image in the ``image`` field.
 
-- **version:** The COMPSs specific version and build used to run this application. In the example: ``3.1.rc2305``.
+- **version:** The COMPSs specific version and build used to run this application. In the example: ``3.2``.
   This is a very important field to achieve reproducibility or replicability, since COMPSs features may vary their
   behaviour in different versions of the programming model runtime.
 
@@ -434,16 +668,16 @@ contents. Many of the fields are easily and directly understandable.
                 ],
                 "creator": [
                     {
-                        "@id": "https://orcid.org/0000-0002-8291-8071"
+                        "@id": "https://orcid.org/0000-0003-0606-2512"
                     },
                     {
                         "@id": "https://orcid.org/0000-0003-2941-5499"
                     },
                     {
-                        "@id": "https://orcid.org/0000-0003-0606-2512"
+                        "@id": "https://orcid.org/0000-0002-8291-8071"
                     }
                 ],
-                "datePublished": "2023-05-16T14:29:25+00:00",
+                "datePublished": "2023-06-19T15:09:14+00:00",
                 "description": "Hypermatrix size 2x2 blocks, block size 2x2 elements",
                 "hasPart": [
                     {
@@ -462,43 +696,43 @@ contents. Many of the fields are easily and directly understandable.
                         "@id": "application_sources/matmul_tasks.py"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/A/A.0.0"
+                        "@id": "dataset/inputs/A/A.0.0"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/A/A.0.1"
+                        "@id": "dataset/inputs/A/A.0.1"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/A/A.1.0"
+                        "@id": "dataset/inputs/A/A.1.0"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/A/A.1.1"
+                        "@id": "dataset/inputs/A/A.1.1"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/B/B.0.0"
+                        "@id": "dataset/inputs/B/B.0.0"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/B/B.0.1"
+                        "@id": "dataset/inputs/B/B.0.1"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/B/B.1.0"
+                        "@id": "dataset/inputs/B/B.1.0"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/B/B.1.1"
+                        "@id": "dataset/inputs/B/B.1.1"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/"
+                        "@id": "dataset/inputs/"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/C.0.0"
+                        "@id": "dataset/C.0.0"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/C.0.1"
+                        "@id": "dataset/C.0.1"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/C.1.0"
+                        "@id": "dataset/C.1.0"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/C.1.1"
+                        "@id": "dataset/C.1.1"
                     }
                 ],
                 "license": "Apache-2.0",
@@ -506,7 +740,7 @@ contents. Many of the fields are easily and directly understandable.
                     "@id": "application_sources/matmul_directory.py"
                 },
                 "mentions": {
-                    "@id": "#COMPSs_Workflow_Run_Crate_bsccs742.int.bsc.es_aff79a2b-6487-4932-9e9b-eed5f31b2666"
+                    "@id": "#COMPSs_Workflow_Run_Crate_bsccs742.int.bsc.es_ea589bf8-304d-4d0e-b708-767ba58e2d1c"
                 },
                 "name": "COMPSs Matrix Multiplication, out-of-core using files",
                 "publisher": [
@@ -625,7 +859,7 @@ contents. Many of the fields are easily and directly understandable.
                 "citation": "https://doi.org/10.1007/s10723-013-9272-5",
                 "name": "COMPSs Programming Model",
                 "url": "http://compss.bsc.es/",
-                "version": "3.1.rc2305"
+                "version": "3.2"
             },
             {
                 "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/92",
@@ -642,7 +876,7 @@ contents. Many of the fields are easily and directly understandable.
                 "about": {
                     "@id": "application_sources/matmul_directory.py"
                 },
-                "contentSize": 6163,
+                "contentSize": 6346,
                 "description": "The graph diagram of the workflow, automatically generated by COMPSs runtime",
                 "encodingFormat": [
                     [
@@ -662,7 +896,7 @@ contents. Many of the fields are easily and directly understandable.
             {
                 "@id": "App_Profile.json",
                 "@type": "File",
-                "contentSize": 357,
+                "contentSize": 244,
                 "description": "COMPSs application Tasks profile",
                 "encodingFormat": [
                     "application/json",
@@ -675,8 +909,8 @@ contents. Many of the fields are easily and directly understandable.
             {
                 "@id": "compss_command_line_arguments.txt",
                 "@type": "File",
-                "contentSize": 24,
-                "description": "COMPSs command line execution command, including parameters passed",
+                "contentSize": 119,
+                "description": "COMPSs command line execution command (runcompss), including flags and parameters passed",
                 "encodingFormat": "text/plain",
                 "name": "compss_command_line_arguments.txt"
             },
@@ -692,178 +926,178 @@ contents. Many of the fields are easily and directly understandable.
                 "name": "matmul_tasks.py"
             },
             {
-                "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/A/A.0.0",
+                "@id": "dataset/inputs/A/A.0.0",
                 "@type": "File",
                 "contentSize": 16,
-                "dateModified": "2023-05-16T14:29:04",
+                "dateModified": "2023-05-30T10:45:28",
                 "name": "A.0.0",
-                "sdDatePublished": "2023-05-16T14:29:25+00:00"
+                "sdDatePublished": "2023-06-19T15:09:14+00:00"
             },
             {
-                "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/A/A.0.1",
+                "@id": "dataset/inputs/A/A.0.1",
                 "@type": "File",
                 "contentSize": 16,
-                "dateModified": "2023-05-16T14:29:04",
+                "dateModified": "2023-05-30T10:45:28",
                 "name": "A.0.1",
-                "sdDatePublished": "2023-05-16T14:29:25+00:00"
+                "sdDatePublished": "2023-06-19T15:09:14+00:00"
             },
             {
-                "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/A/A.1.0",
+                "@id": "dataset/inputs/A/A.1.0",
                 "@type": "File",
                 "contentSize": 16,
-                "dateModified": "2023-05-16T14:29:04",
+                "dateModified": "2023-05-30T10:45:28",
                 "name": "A.1.0",
-                "sdDatePublished": "2023-05-16T14:29:25+00:00"
+                "sdDatePublished": "2023-06-19T15:09:14+00:00"
             },
             {
-                "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/A/A.1.1",
+                "@id": "dataset/inputs/A/A.1.1",
                 "@type": "File",
                 "contentSize": 16,
-                "dateModified": "2023-05-16T14:29:04",
+                "dateModified": "2023-05-30T10:45:28",
                 "name": "A.1.1",
-                "sdDatePublished": "2023-05-16T14:29:25+00:00"
+                "sdDatePublished": "2023-06-19T15:09:14+00:00"
             },
             {
-                "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/B/B.0.0",
+                "@id": "dataset/inputs/B/B.0.0",
                 "@type": "File",
                 "contentSize": 16,
-                "dateModified": "2023-05-16T14:29:04",
+                "dateModified": "2023-05-30T10:45:28",
                 "name": "B.0.0",
-                "sdDatePublished": "2023-05-16T14:29:25+00:00"
+                "sdDatePublished": "2023-06-19T15:09:14+00:00"
             },
             {
-                "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/B/B.0.1",
+                "@id": "dataset/inputs/B/B.0.1",
                 "@type": "File",
                 "contentSize": 16,
-                "dateModified": "2023-05-16T14:29:04",
+                "dateModified": "2023-05-30T10:45:28",
                 "name": "B.0.1",
-                "sdDatePublished": "2023-05-16T14:29:25+00:00"
+                "sdDatePublished": "2023-06-19T15:09:14+00:00"
             },
             {
-                "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/B/B.1.0",
+                "@id": "dataset/inputs/B/B.1.0",
                 "@type": "File",
                 "contentSize": 16,
-                "dateModified": "2023-05-16T14:29:04",
+                "dateModified": "2023-05-30T10:45:28",
                 "name": "B.1.0",
-                "sdDatePublished": "2023-05-16T14:29:25+00:00"
+                "sdDatePublished": "2023-06-19T15:09:14+00:00"
             },
             {
-                "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/B/B.1.1",
+                "@id": "dataset/inputs/B/B.1.1",
                 "@type": "File",
                 "contentSize": 16,
-                "dateModified": "2023-05-16T14:29:04",
+                "dateModified": "2023-05-30T10:45:28",
                 "name": "B.1.1",
-                "sdDatePublished": "2023-05-16T14:29:25+00:00"
+                "sdDatePublished": "2023-06-19T15:09:14+00:00"
             },
             {
-                "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/",
+                "@id": "dataset/inputs/",
                 "@type": "Dataset",
-                "dateModified": "2023-05-16T14:29:04",
+                "dateModified": "2023-05-30T10:45:28",
                 "hasPart": [
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/A/A.0.0"
+                        "@id": "dataset/inputs/A/A.0.0"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/A/A.0.1"
+                        "@id": "dataset/inputs/A/A.0.1"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/A/A.1.0"
+                        "@id": "dataset/inputs/A/A.1.0"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/A/A.1.1"
+                        "@id": "dataset/inputs/A/A.1.1"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/B/B.0.0"
+                        "@id": "dataset/inputs/B/B.0.0"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/B/B.0.1"
+                        "@id": "dataset/inputs/B/B.0.1"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/B/B.1.0"
+                        "@id": "dataset/inputs/B/B.1.0"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/B/B.1.1"
+                        "@id": "dataset/inputs/B/B.1.1"
                     }
                 ],
                 "name": "inputs",
-                "sdDatePublished": "2023-05-16T14:29:25+00:00"
+                "sdDatePublished": "2023-06-19T15:09:14+00:00"
             },
             {
-                "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/C.0.0",
+                "@id": "dataset/C.0.0",
                 "@type": "File",
                 "contentSize": 20,
-                "dateModified": "2023-05-16T14:29:16",
+                "dateModified": "2023-06-19T15:09:10",
                 "name": "C.0.0",
-                "sdDatePublished": "2023-05-16T14:29:25+00:00"
+                "sdDatePublished": "2023-06-19T15:09:14+00:00"
             },
             {
-                "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/C.0.1",
+                "@id": "dataset/C.0.1",
                 "@type": "File",
                 "contentSize": 20,
-                "dateModified": "2023-05-16T14:29:16",
+                "dateModified": "2023-06-19T15:09:10",
                 "name": "C.0.1",
-                "sdDatePublished": "2023-05-16T14:29:25+00:00"
+                "sdDatePublished": "2023-06-19T15:09:14+00:00"
             },
             {
-                "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/C.1.0",
+                "@id": "dataset/C.1.0",
                 "@type": "File",
                 "contentSize": 20,
-                "dateModified": "2023-05-16T14:29:16",
+                "dateModified": "2023-06-19T15:09:10",
                 "name": "C.1.0",
-                "sdDatePublished": "2023-05-16T14:29:25+00:00"
+                "sdDatePublished": "2023-06-19T15:09:14+00:00"
             },
             {
-                "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/C.1.1",
+                "@id": "dataset/C.1.1",
                 "@type": "File",
                 "contentSize": 20,
-                "dateModified": "2023-05-16T14:29:16",
+                "dateModified": "2023-06-19T15:09:10",
                 "name": "C.1.1",
-                "sdDatePublished": "2023-05-16T14:29:25+00:00"
+                "sdDatePublished": "2023-06-19T15:09:14+00:00"
             },
             {
-                "@id": "#COMPSs_Workflow_Run_Crate_bsccs742.int.bsc.es_aff79a2b-6487-4932-9e9b-eed5f31b2666",
+                "@id": "#COMPSs_Workflow_Run_Crate_bsccs742.int.bsc.es_ea589bf8-304d-4d0e-b708-767ba58e2d1c",
                 "@type": "CreateAction",
                 "actionStatus": {
                     "@id": "http://schema.org/CompletedActionStatus"
                 },
                 "agent": {
-                    "@id": "https://orcid.org/0000-0002-8291-8071"
+                    "@id": "https://orcid.org/0000-0003-0606-2512"
                 },
-                "description": "Darwin bsccs742.int.bsc.es 22.4.0 Darwin Kernel Version 22.4.0: Mon Mar  6 21:00:17 PST 2023; root:xnu-8796.101.5~3/RELEASE_X86_64 x86_64 COMPSS_HOME=/Users/rsirvent/opt/COMPSs/",
-                "endTime": "2023-05-16T14:29:25+00:00",
+                "description": "Darwin bsccs742.int.bsc.es 22.5.0 Darwin Kernel Version 22.5.0: Mon Apr 24 20:51:50 PDT 2023; root:xnu-8796.121.2~5/RELEASE_X86_64 x86_64 COMPSS_HOME=/Users/rsirvent/opt/COMPSs/",
+                "endTime": "2023-06-19T15:09:14+00:00",
                 "instrument": {
                     "@id": "application_sources/matmul_directory.py"
                 },
                 "name": "COMPSs matmul_directory.py execution at bsccs742.int.bsc.es",
                 "object": [
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/inputs/"
+                        "@id": "dataset/inputs/"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/C.0.0"
+                        "@id": "dataset/C.0.0"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/C.0.1"
+                        "@id": "dataset/C.0.1"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/C.1.0"
+                        "@id": "dataset/C.1.0"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/C.1.1"
+                        "@id": "dataset/C.1.1"
                     }
                 ],
                 "result": [
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/C.0.0"
+                        "@id": "dataset/C.0.0"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/C.0.1"
+                        "@id": "dataset/C.0.1"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/C.1.0"
+                        "@id": "dataset/C.1.0"
                     },
                     {
-                        "@id": "file://bsccs742.int.bsc.es/Users/rsirvent/COMPSs-DP/matmul_directory/C.1.1"
+                        "@id": "dataset/C.1.1"
                     },
                     {
                         "@id": "./"
@@ -891,6 +1125,7 @@ contents. Many of the fields are easily and directly understandable.
         ]
     }
 
+
 ro-crate-metadata.json Java COMPSs example (MN4 supercomputer)
 --------------------------------------------------------------
 
@@ -900,7 +1135,9 @@ for out-of-core sparse matrices implemented with COMPSs and using the Java progr
 matrix ``A`` is both input and output of the workflow, since the factorization overwrites the original value of ``A``.
 In addition, we have used a 4x4 blocks hyper-matrix (i.e. the matrix is divided in 16 blocks, that contain 16
 elements each) and, if a block is all 0s, the corresponding file will not be
-created in the file system (in the example, this happens for blocks ``A.0.3``, ``A.1.3``, ``A.3.0`` and ``A.3.1``).
+created in the file system (in the example, this happens for blocks ``A.0.3``, ``A.1.3``, ``A.3.0`` and ``A.3.1``). We
+do not define the ``data_persistence`` option, which means it will be false, and the datasets will not be included in
+the resulting crate (i.e. references to the location of files will be provided).
 
 Apart from the terms already mentioned in the previous example (``creator``, ``publisher``, ``hasPart``,
 ``ComputationalWorkflow``, ``version``, ``CreateAction``), if we first observe the ``ro-crate-info.yaml`` file:
@@ -972,15 +1209,14 @@ tree for the source files is:
 
     9 directories, 26 files
 
-It is also interesting to note the differences in the URIs used to reference input and output files when provenance is
-run in a supercomputer, instead of a laptop (as shown in the previous example). Since we do not add explicitly the input
-and output files of a workflow (because they could be extremely large), our crate only includes references to them,
-which are ment as pointers to where files can be found, rather than a publicly accessible URI reference. Therefore,
-while in the PyCOMPSs previous example files could be found in the ``bsccs742.int.bsc.es`` laptop, in this Java COMPSs
-example files can be found in ``s08r2b16-ib0`` hostname, which is an internal hostname of MN4. This means that, for
-reproducibility purposes, a new user would have to request input and output files to ``bsccs742.int.bsc.es``
-laptop's owner in the first case, or request access to the MN4 paths specified by the corresponding URIs, in the
-second case.
+Since in this second example we do not add explicitly the input and output files of the workflow (i.e.
+``data_persistence`` is set to ``False``) (in some cases, datasets could be extremely large),
+our crate does not have a ``dataset`` subdfolder and only includes references to the files,
+which are ment as pointers to where they can be found, rather than a publicly accessible URI references. Therefore,
+in this Java COMPSs
+example, files can be found in the ``s08r2b16-ib0`` hostname, which is an internal hostname of MN4. This means that, for
+reproducibility purposes, a new user would have to request access to the MN4 paths specified by the corresponding
+URIs (i.e. ``/gpfs/home/bsc19/...``).
 
 The ``CreateAction`` term has also a richer set of information available from MareNostrum's SLURM workload manager. We
 can see that both the ``id`` and the ``description`` terms include the ``SLURM_JOB_ID``, which can be used to see more
@@ -1260,7 +1496,7 @@ environment variables are captured, which provide details on how the execution h
                 "citation": "https://doi.org/10.1007/s10723-013-9272-5",
                 "name": "COMPSs Programming Model",
                 "url": "http://compss.bsc.es/",
-                "version": "3.1.rc2305"
+                "version": "3.2"
             },
             {
                 "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/92",
