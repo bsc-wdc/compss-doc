@@ -3,14 +3,14 @@ Building from sources
 
 This section describes the steps to install COMPSs from the sources.
 
-The first step is downloading the source code from the Git repository.
+The first step is downloading the source code from the Git repository:
 
 .. code-block:: console
 
     $ git clone https://github.com/bsc-wdc/compss.git
     $ cd compss
 
-Then, you need to download the embedded dependencies from the git submodules.
+Then, you need to download the embedded dependencies from the git submodules:
 
 .. code-block:: console
 
@@ -33,13 +33,13 @@ Finally you just need to run the installation script. You have two options:
 
     .. tab:: For all users
 
-        For installing COMPSs for all users run the following command:
+        For installing COMPSs for all users run the following commands:
 
         .. code-block:: console
 
             $ compss> cd builders/
             $ builders> export INSTALL_DIR=/opt/COMPSs/
-            $ builders> sudo -E ./buildlocal ${INSTALL_DIR}
+            $ builders> sudo -E ./buildlocal -X -S --skip-tests ${INSTALL_DIR}
 
         .. ATTENTION::
 
@@ -53,7 +53,7 @@ Finally you just need to run the installation script. You have two options:
 
             $ compss> cd builders/
             $ builders> INSTALL_DIR=$HOME/opt/COMPSs/
-            $ builders> ./buildlocal ${INSTALL_DIR}
+            $ builders> ./buildlocal -X -S --skip-tests ${INSTALL_DIR}
 
 .. WARNING::
 
@@ -72,63 +72,91 @@ Finally you just need to run the installation script. You have two options:
         $ builders> ./buildlocal -h
 
           Usage: ./buildlocal [options] targetDir
-            * Options:
-                --help, -h                  Print this help message
+          * Options:
+              --help, -h                  Print this help message
 
-                --opts                      Show available options
+              --opts                      Show available options
 
-                --version, -v               Print COMPSs version
+              --version, -v               Print COMPSs version
 
-                --monitor, -m               Enable Monitor installation
-                --no-monitor, -M            Disable Monitor installation
-                                            Default: true
+              --monitor, -m               Enable Monitor installation
+              --no-monitor, -M            Disable Monitor installation
+                                          Default: true
 
-                --bindings, -b              Enable bindings installation
-                --no-bindings, -B           Disable bindings installation
-                                            Default: true
+              --bindings, -b              Enable bindings installation
+              --no-bindings, -B           Disable bindings installation
+                                          Default: true
 
-                --pycompss, -p              Enable PyCOMPSs installation
-                --no-pycompss, -P           Disable PyCOMPSs installation
-                                            Default: true
+              --pycompss, -p              Enable PyCOMPSs installation
+              --no-pycompss, -P           Disable PyCOMPSs installation
+                                          Default: true
 
-                --tracing, -t               Enable tracing system installation
-                --no-tracing, -T            Disable tracing system installation
-                                            Default: true
+              --tracing, -t               Enable tracing system installation
+              --no-tracing, -T            Disable tracing system installation
+                                          Default: true
 
-                --kafka, -k                 Enable Kafka module installation
-                --no-kafka, -K              Disable Kafka module installation
-                                            Default: true
+              --kafka, -k                 Enable Kafka module installation
+              --no-kafka, -K              Disable Kafka module installation
+                                          Default: true
 
-                --jacoco, -j                Enable Jacoco module installation
-                --no-jacoco, -J             Disable Jacoco module installation
-                                            Default: true
+              --jacoco, -j                Enable Jacoco module installation
+              --no-jacoco, -J             Disable Jacoco module installation
+                                          Default: true
 
-                --dlb, -d                   Enable dlb module installation
-                --no-dlb, -D                Disable dlb module installation
-                                            Default: true
+              --dlb, -d                   Enable dlb module installation
+              --no-dlb, -D                Disable dlb module installation
+                                          Default: true
 
-                --cli, -c                   Enable Command Line Interface module installation
-                --no-cli, -C                Disable Command Line Interface module installation
-                                            Default: true
+              --cli, -c                   Enable Command Line Interface module installation
+              --no-cli, -C                Disable Command Line Interface module installation
+                                          Default: true
 
-                --nothing, -N               Disable all previous options
-                                            Default: unused
+              --pycompss-compile, -x      Enable PyCOMPSs compilation with MyPy check
+              --no-pycompss-compile, -X   Disable PyCOMPSs compilation with MyPy check
+                                          Default: true
 
-                --user-exec=<str>           Enables a specific user execution for maven compilation
-                                            When used the maven install is not cleaned.
-                                            Default: false
+              --python-style, -s          Enable Python style check
+              --no-python-style, -S       Disable Python style check
+                                          Default: true
 
-                --skip-tests                Disables MVN unit tests
-                                            Default:
+              --nothing, -N               Disable all previous options
+                                          Default: unused
 
-            * Parameters:
-                targetDir                   COMPSs installation directory
-                                            Default: /opt/COMPSs
+              --user-exec=<str>           Enables a specific user execution for maven compilation
+                                          When used the maven install is not cleaned.
+                                          Default: false
+
+              --skip-tests                Disables MVN and Python unit tests
+                                          Default: true
+
+          * Parameters:
+              targetDir                   COMPSs installation directory
+                                          Default: /opt/COMPSs
 
     .. WARNING::
 
         Components Tracing, Kafka, Jacoco and DLB cannot be installed in macOS distributions. Therefore,
         at least options ``-T -K -J -D`` must be used when invoking ``buildlocal``
+
+    .. CAUTION::
+
+        The Python unit tests, PyCOMPSs compilation and Python style check require extra
+        dependencies that can be installed automatically for each purpose by running the following scripts
+        (add sudo before the scripts if you want them to be installed system wide):
+
+        .. code-block:: console
+
+            $ builders> ../compss/programming_model/bindings/python/scripts/./install_testing_deps.sh
+            $ builders> ../compss/programming_model/bindings/python/scripts/./install_compilation_deps.sh
+            $ builders> ../compss/programming_model/bindings/python/scripts/./install_style_deps.sh
+
+
+        .. CAUTION::
+
+            The ``mpi4py`` package requires to have the MPI header/development package available,
+            which has to be installed with the OS package manager.
+
+            $ compss> sudo apt-get install libopenmpi-dev  # Adapt for your OS package manager
 
 
 Post installation
@@ -153,7 +181,7 @@ in again to end the installation process.
         #       *) return;;   # from the whole gnome (or restart the machine).
         # esac                #
 
-In addition, COMPSs requires **ssh passwordless access**.
+In addition, COMPSs **REQUIRES ssh passwordless access**.
 If you need to set up your machine for the first time please take a look
 at :ref:`Sections/01_Installation/05_Additional_configuration:Additional Configuration`
 Section for a detailed description of the additional configuration.
