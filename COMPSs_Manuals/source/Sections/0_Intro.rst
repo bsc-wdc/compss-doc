@@ -13,14 +13,14 @@ of applications **at execution time**.
 To improve programming productivity, the **COMPSs programming model** has
 following **characteristics**:
 
-- **Sequential programming:** COMPSs programmers do not need to deal with the
+- **Sequential programming:** COMPSs programmers do not need to deal with the
   typical duties of parallelization and distribution, such as thread creation
   and synchronization, data distribution, messaging or fault tolerance.
   Instead, the model is based on sequential programming, which makes it
   appealing to users that either lack parallel programming expertise or are
   looking for better programmability.
 
-- **Agnostic of the actual computing infrastructure:** COMPSs offers a model
+- **Agnostic of the actual computing infrastructure:** COMPSs offers a model
   that abstracts the application from the underlying distributed infrastructure.
   Hence, COMPSs programs do not include any detail that could tie them to a
   particular platform, like deployment or resource management.
@@ -32,13 +32,13 @@ following **characteristics**:
   file system is available. The runtime takes care of all the necessary data
   transfers.
 
-- **Standard programming languages:** COMPSs is based on the popular programming
+- **Standard programming languages:** COMPSs is based on the popular programming
   language Java, but also offers language bindings for Python (PyCOMPSs) and
   C/C++ applications.
   This makes it easier to learn the model since programmers can reuse most of
   their previous knowledge.
 
-- **No APIs:** In the case of COMPSs applications in Java, the model does not
+- **No APIs:** In the case of COMPSs applications in Java, the model does not
   require to use any special API call, pragma or construct in the application;
   everything is pure standard Java syntax and libraries.
   With regard the Python and C/C++ bindings, a small set of API calls should
