@@ -13,3 +13,4 @@ brief overview on how to execute it.
     02_Python/02_Application_execution
     02_Python/03_Jupyter_integration
     02_Python/04_Emcee_integration
+    02_Python/06_DDS_interface
