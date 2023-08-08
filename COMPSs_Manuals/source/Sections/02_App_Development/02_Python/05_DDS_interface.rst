@@ -26,6 +26,7 @@ user-defined functions, or send data from a DDS instance to other user defined f
 This flexibility gives the user an opportunity to use DDS methods anywhere in the code, mixing
 the data from those methods with his/her own functions without sticking to pre-defined data
 operations, as well as replace some methods with DDS ones on an existing project.
+
 How to use?
 ~~~~~~~~~~~
 
@@ -90,7 +91,7 @@ each partition contains the same amount of them. Then, the ``map_and_flatten`` m
 transformation from lines to words by parsing and spreading them inside the partitions.
 In other words, if a partition contained lines before ``map_and_flatten`` method, afterwards it
 contains all the words from its lines as elements (see different mapping functions from
-:ref:`Sections/02_App_Development/02_Python/06_DDS_interface:Available Methods` Section
+:ref:`Sections/02_App_Development/02_Python/05_DDS_interface:Available Methods` Section
 in order to have more clear idea).
 The last method called is ``count_by_value`` which retrieves a dictionary where ``keys`` are elements
 (words) of the DDS, and ``values`` are times of occurrence. The argument for this function ``True``,
@@ -789,3 +790,14 @@ All the methods provided by DDS are listed below with their arguments list, and 
           >>> x = DDS().load([("a", 1), ("b", 2), ("a", 2), ("b", 4)])
           >>> sorted(x.group_by_key().collect())
           [('a', [1, 2]), ('b', [2, 4])]
+
+Examples
+~~~~~~~~
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Table of Contents
+
+    05_DDS_examples/01_Wordcount
+    05_DDS_examples/02_Pi_estimation
+    05_DDS_examples/03_Terasort
