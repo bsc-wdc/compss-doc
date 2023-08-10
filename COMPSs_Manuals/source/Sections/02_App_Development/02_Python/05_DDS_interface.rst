@@ -801,3 +801,5 @@ Examples
     05_DDS_examples/01_Wordcount
     05_DDS_examples/02_Pi_estimation
     05_DDS_examples/03_Terasort
+    05_DDS_examples/04_Inverted_indexing
+    05_DDS_examples/05_Transitive_closure
