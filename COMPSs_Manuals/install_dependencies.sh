@@ -15,6 +15,22 @@ python3 -m pip install --upgrade \
                        ipywidgets==8.0.6 \
                        nbconvert==7.6.0 \
                        pandoc==2.3 \
+		       snowballstemmer==2.2.0 \
+		       imagesize==1.4.1 \
+		       alabaster==0.7.13 \
+		       sphinxcontrib-applehelp==1.0.4 \
+		       sphinxcontrib-devhelp==1.0.2 \
+		       sphinxcontrib-htmlhelp==2.0.1 \
+		       sphinxcontrib-serializinghtml==1.1.5 \
+		       sphinxcontrib-qthelp==1.0.3 \
+		       domdf-python-tools==3.6.1 \
+		       apeye==1.4.0 \
+		       dict2css==0.3.0 \
+		       autodocsumm==0.2.11 \
+		       html5lib==1.1 \
+		       ruamel.yaml==0.17.32 \
+		       CacheControl==0.13.1 \
+		       filelock==3.12.2 \
                        --no-deps
 
 echo "---- NOTE ----"
