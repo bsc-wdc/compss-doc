@@ -116,7 +116,7 @@ the global variable value between task calls, in order to have different constra
         func(a, b, c)
 
 It is possible to define dynamic constraints using alternative syntax
-(:ref:`sections/02_App_Development/02_Python/01_1_Task_definition/Sections/07_Task_constraints/01_Alternative_dynamic_constraints:Dynamic Constraints Alternative Definitions`)
+(:ref:`sections/02_App_Development/02_Python/01_1_Task_definition/Sections/07_Task_constraints/01_Alternative_dynamic_constraints:Alternative ways to define dynamic constraints`).
 
 .. toctree::
     :hidden:
