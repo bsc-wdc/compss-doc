@@ -42,7 +42,7 @@ access between any pair of machines:
 
 .. code-block:: text
 
-     me@localhost:~$ ssh-keygen -t id_rsa
+     me@localhost:~$ ssh-keygen -t rsa
      # Granting access localhost -> m1.bsc.es
      me@localhost:~$ scp ~/.ssh/id_rsa.pub user_m1@m1.bsc.es:./me_localhost.pub
      me@localhost:~$ ssh user_m1@m1.bsc.es "cat ./me_localhost.pub >> ~/.ssh/authorized_keys; rm ./me_localhost.pub"
@@ -51,7 +51,7 @@ access between any pair of machines:
      me@localhost:~$ ssh user_m2@m2.bsc.es "cat ./me_localhost.pub >> ~/.ssh/authorized_keys; rm ./me_localhost.pub"
 
      me@localhost:~$ ssh user_m1@m1.bsc.es
-     user_m1@m1.bsc.es:~> ssh-keygen -t id_rsa
+     user_m1@m1.bsc.es:~> ssh-keygen -t rsa
      user_m1@m1.bsc.es:~> exit
      # Granting access m1.bsc.es -> localhost
      me@localhost:~$ scp user_m1@m1.bsc.es:~/.ssh/id_rsa.pub ~/userm1_m1.pub
@@ -62,7 +62,7 @@ access between any pair of machines:
      me@localhost:~$ rm ~/userm1_m1.pub
 
      me@localhost:~$ ssh user_m2@m2.bsc.es
-     user_m2@m2.bsc.es:~> ssh-keygen -t id_rsa
+     user_m2@m2.bsc.es:~> ssh-keygen -t rsa
      user_m2@m2.bsc.es:~> exit
      # Granting access m2.bsc.es -> localhost
      me@localhost:~$ scp user_m2@m1.bsc.es:~/.ssh/id_rsa.pub ~/userm2_m2.pub
