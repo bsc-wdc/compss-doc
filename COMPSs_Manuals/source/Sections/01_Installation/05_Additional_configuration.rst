@@ -11,7 +11,7 @@ passwordless connections between them. This requires to install the
 OpenSSH package (if not present already) and follow these steps **on
 each machine**:
 
-#. Generate an SSH key pair
+#. Generate an SSH key pair. When asked for password field leave it empty.
 
    .. code-block:: console
 
