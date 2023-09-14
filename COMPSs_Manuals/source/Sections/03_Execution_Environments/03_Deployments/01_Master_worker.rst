@@ -14,3 +14,4 @@ This section is intended to show how to execute the COMPSs applications deployin
     01_Master_worker/04_Chameleon
     01_Master_worker/05_Jupyter_notebook
     01_Master_worker/06_G5K
+    01_Master_worker/07_Remote_access_Cluster_Computing
