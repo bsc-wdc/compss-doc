@@ -111,15 +111,15 @@ The following code provide an example for the ``project.xml`` file.
         </ComputingCluster>
     </Project>
 
-The ``Name`` given to the Computing cluster equals the host of the remote cluster and the ``User`` tag is the user for that host.
+The ``Name`` given to the Computing cluster equals the host name of the remote cluster and the ``User`` tag is the user for that host.
 For example, if we want to access the remote machine with ``myUser@remoteMachine`` the xml should be indicated as follows
 
 .. code-block:: xml
 
-    <ComputeNode Name="remoteMachine">
+    <ComputingCluster Name="remoteMachine">
         [... ExtraInformation ...]
         <User>myUser</User>
-    </ComputeNode>
+    </ComputingCluster>
 
 .. CAUTION::
 
