@@ -321,6 +321,7 @@ Next lines show the XML files for this example.
                             </BatchProperties>
                         </Batch>
                     </SubmissionSystem>
+                </Adaptor>
             </Adaptors>
             <InstallDir>/apps/COMPSs/3.2/</InstallDir>
             <WorkingDir>/tmp/COMPSsWorkerTMP/</WorkingDir>
