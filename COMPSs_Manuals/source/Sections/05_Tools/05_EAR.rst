@@ -18,7 +18,7 @@ for **energy consumption** measurement of your workflows.
 
     The integration is on its very first steps and may be *unstable*.
 
-    Please, report any issue that may appear so that we can improve the integration.
+    Please, report any issue that may appear to support-compss@bsc.es so that we can improve the integration.
 
 
 Software dependencies
@@ -143,8 +143,8 @@ Next, we can then give execution permission to the submission script and launch 
 This will submit the job to SLURM and we will have to wait for its completion.
 
 
-Result
-------
+Result metrics
+--------------
 
 Once the application has finished, a new folder containing the EAR metrics will be created
 in the ``${HOME}/ear_compss_metrics/kmeans/`` (defined with the ``EAR_METRICS_PATH`` environment variable).
@@ -168,3 +168,7 @@ contains 24 worker processes and the second 48 worker processes.
 
 These log files can be visualized with `Grafana <https://grafana.com/>`_ for a more convenient
 power consumption and performance analysis.
+
+.. WARNING::
+
+    **Metrics Visualization is under construction.**
