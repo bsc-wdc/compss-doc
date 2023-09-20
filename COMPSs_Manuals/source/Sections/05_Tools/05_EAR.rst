@@ -72,7 +72,7 @@ the ``kmeans.py`` application execution to SLURM with the required ``--ear`` fla
 consumption measurement:
 
 .. code-block:: bash
-    :emphasize-lines: 5,8,10,15-17,42
+    :emphasize-lines: 5,8,10,15-17,42,43
     :caption: `launch_kmeans_ear.sh script on MN4`
     :name: launch_kmeans_ear_script
 
@@ -117,7 +117,8 @@ consumption measurement:
         --graph=$tracing \
         --pythonpath=$appPythonpath \
         --lang=python \
-        --ear=\"--ear=on ${EAR_METRICS} \" \
+        --constraints=perfparanoid \
+        --ear="\"--ear=on ${EAR_METRICS} \"" \
         $execFile $@
 
 
