@@ -78,6 +78,54 @@ Supported constraints
 
 A full description of the supported constraints can be found in :numref:`supported_constraints`.
 
+Dynamic constraints
+^^^^^^^^^^^^^^^^^^^
+
+The dynamic constraints are supported for **computing units**, **memory size** and **disk size**. 
+In order to define a constraint as dynamic, instead of setting a static value or environment variable, 
+the user needs to set the name of the **global variable** desired for the constraint.
+
+.. code-block:: python
+    :name: dynamic_constraint_task_python
+    :caption: dynamic_constraint task example
+
+    from pycompss.api.task import task
+    from pycompss.api.constraint import constraint
+    MS = 1
+
+    @constraint(memory_size="MS")
+    @task()
+    def func(a, b, c):
+         c += a * b
+         ...
+
+Having the dynamic constraint defined with a global variable, the user now has the ability to change
+the global variable value between task calls, in order to have different constraint values for each call.
+
+.. code-block:: python
+    :name: dynamic_constraint_task_call_python
+    :caption: dynamic_constraint task call example
+
+    def main():
+        global MS
+        {...}
+        func(a, b, c)
+        MS = 2
+        func(a, b, c)
+        MS = a + b * c
+        func(a, b, c)
+
+It is possible to define dynamic constraints using alternative syntax
+(:ref:`sections/02_App_Development/02_Python/01_1_Task_definition/Sections/07_Task_constraints/01_Alternative_dynamic_constraints:Alternative ways to define dynamic constraints`).
+
+.. toctree::
+    :hidden:
+    :maxdepth: 2
+    :caption: Table of Contents
+
+    07_Task_constraints/01_Alternative_dynamic_constraints
+
+
 Special constraints
 ^^^^^^^^^^^^^^^^^^^
 
