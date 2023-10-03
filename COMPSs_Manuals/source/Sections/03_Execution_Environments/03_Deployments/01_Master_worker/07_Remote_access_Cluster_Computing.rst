@@ -326,6 +326,7 @@ Next lines show the XML files for this example.
             <InstallDir>/apps/COMPSs/3.2/</InstallDir>
             <WorkingDir>/tmp/COMPSsWorkerTMP/</WorkingDir>
             <User>janeSmith</User>
+            <LimitOfTasks>1000</LimitOfTasks>
             <Application>
                 <Classpath>/home/users/janeSmith/simple/simple.jar</Classpath>
                 <EnvironmentScript>/home/users/janeSmith/env.sh</EnvironmentScript>
