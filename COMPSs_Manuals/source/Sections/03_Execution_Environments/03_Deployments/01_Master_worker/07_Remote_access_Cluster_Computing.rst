@@ -276,6 +276,9 @@ a compressed folder with other generated logs are copied to the master node.
 Execution example
 -----------------
 
+Application
+~~~~~~~~~~~
+
 In this section, we show how to execute the *Simple* Java COMPSs application in **batch mode**.
 
 In this scenario, we have in our local machine, the Simple application in ``/home/jane/simple`` and
@@ -302,6 +305,8 @@ In the **second step**, we create the required xml files and they will be stored
 Next lines show the XML files for this example.
 
 .. code-block:: xml
+    :name: gos_project_xml
+    :caption: project.xml
 
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <Project>
@@ -326,6 +331,7 @@ Next lines show the XML files for this example.
             <InstallDir>/apps/COMPSs/3.2/</InstallDir>
             <WorkingDir>/tmp/COMPSsWorkerTMP/</WorkingDir>
             <User>janeSmith</User>
+            <LimitOfTasks>1000</LimitOfTasks>
             <Application>
                 <Classpath>/home/users/janeSmith/simple/simple.jar</Classpath>
                 <EnvironmentScript>/home/users/janeSmith/env.sh</EnvironmentScript>
@@ -337,6 +343,8 @@ Next lines show the XML files for this example.
     </Project>
 
 .. code-block:: xml
+    :name: gos_resources_xml
+    :caption: resources.xml
 
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <ResourcesList>
@@ -369,3 +377,41 @@ It must be done using the following command:
                  --resources=/home/jane/simple/resources.xml \
                  --classpath=/home/jane/simple/simple.jar \
                  simple
+
+.. TIP::
+
+    The same command can be used to run python applications using the GOS adaptor
+    (but take into account that the ``--classpath`` flag is not needed and the
+    application name must be the python file name).
+
+
+Jupyter notebook
+~~~~~~~~~~~~~~~~
+
+In this section, we show how to execute the a Jupyter notebook in **batch mode**.
+
+The **first step** requires to make sure that COMPSs is available in the remote machine ``remote.bsc.es``.
+For this example, we assume that COMPSs is installed in ``/apps/COMPSs/3.2``.
+
+.. IMPORTANT::
+
+    When using jupyter notebook it is not necessary to transfer the application to the
+    remote machine, since COMPSs will deal with the code automatically.
+
+In the **second step**, we create the required project and resources xml files and they will
+be stored in ``/home/jane/notebook``.
+They are the same as defined in :ref:`gos_project_xml` and :ref:`gos_resources_xml`.
+
+Finally, in the **third step** we can define in our local machine the notebook
+``/home/jane/notebook/simple.ipynb``.
+Note that the ``ipycompss.start`` call includes the project and resources parameters,
+as well as the ``GOS`` communication adaptor.
+
+.. code-block:: python
+
+    import pycompss.interactive as ipycompss
+    ipycompss.start(comm="GOS",
+                    project_xml="/home/jane/notebook/project.xml",
+                    resources_xml="/home/jane/notebook/resources.xml")
+
+    # Now define your tasks and code within the following cells
