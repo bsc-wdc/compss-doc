@@ -29,7 +29,7 @@ To develop checkpointing policies, checkpointing policy developer need to create
 
 The following snippet shows an example of a checkpoint policy implementation creating groups of N tasks subsequently instantiated.
 
-Checkpoint polocy implementation
+Checkpoint policy implementation
 :: 
 
     public class CheckpointPolicyInstantiatedGroup extends CheckpointManagerImpl {

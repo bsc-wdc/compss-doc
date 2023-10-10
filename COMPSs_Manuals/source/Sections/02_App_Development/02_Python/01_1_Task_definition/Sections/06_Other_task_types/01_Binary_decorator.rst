@@ -156,7 +156,7 @@ a string to determine the environment variable that defines the fail by
 exit value (as boolean).
 The default behaviour (``fail_by_exit_value=False``) allows users to receive
 the exit value of the binary as the task return value, and take the
-necessary decissions based on this value.
+necessary decisions based on this value.
 
 .. code-block:: python
     :name: binary_task_python_exit
