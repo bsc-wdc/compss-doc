@@ -62,6 +62,12 @@ This would typically install the library in ``~/.local/``. Another option is to 
 
 Our implementation has been tested with ``ro-crate-py`` version ``0.8.0`` and earlier.
 
+.. WARNING::
+
+    If you are using a BSC cluster (MareNostrum, CTE-POWER, ...), ro-crate-py is already installed for a number of
+    python versions at ``/apps/COMPSs/LIBRARIES/``, and COMPSs is configured to use it. Thus, you don't need
+    to install ro-crate-py.
+
 
 Previous needed information
 ---------------------------
