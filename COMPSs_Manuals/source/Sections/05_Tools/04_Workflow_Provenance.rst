@@ -83,7 +83,8 @@ is going to be run) a YAML file named ``ro-crate-info.yaml`` that follows the ne
     COMPSs Workflow Information:
       name: Name of your COMPSs application
       description: Detailed description of your COMPSs application
-      license: Apache-2.0  # URL preferred, but these strings are accepted: https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
+      license: Apache-2.0
+        # URL preferred, but these strings are accepted: https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
       sources: [/absolute_path_to/dir_1/, relative_path_to/dir_2/, main_file.py, relative_path/aux_file_1.py, /abs_path/aux_file_2.py]
         # List of application source files and directories. Relative or absolute paths can be used.
       sources_main_file: my_main_file.py
@@ -170,6 +171,15 @@ More specifically, in the **COMPSs Workflow Information** section:
 
 .. WARNING::
 
+    When ``data_persistence`` is True, application datasets will be stored in a ``dataset/`` subdirectory in the resulting
+    crate. The sub-folder structure will be build starting at the largest possible common path among files (e.g. if ``/path_1/inputs/A/A.txt``
+    and ``/path_1/inputs/B/B.txt`` are used, they will be located at ``dataset/inputs/A/A.txt`` and ``dataset/inputs/B/B.txt``
+    respectively. However, if ``/path_1/inputs/A/A.txt`` and ``/path_2/inputs/B/B.txt`` are used, the location will be
+    ``dataset/A.txt`` and ``dataset/B.txt``, since files do not share a common path and are considered to be at different
+    locations.
+
+.. WARNING::
+
     The term ``sources_main_file`` can only be used when ``sources`` is defined. While the runtime is able to detect
     automatically the main file from application execution, this would enable to modify that automatic selection in case
     of need.
@@ -198,13 +208,6 @@ person running the workflow, that can be different from the Authors.
 
     If no Submitter section is provided, the first Author will be considered by default as the submitter of the
     workflow.
-
-.. TIP::
-
-    While effectively the only mandatory field to be able to publish a workflow in WorkflowHub is ``name`` inside the **COMPSs
-    Workflow Information** section, we encourage application owners to include all the fields detailed in the YAML in
-    order to get all the benefits of recording Workflow Provenance. For instance, if no authors are included, it will
-    be not possible to generate a DOI for the workflow.
 
 In the following lines, we provide a YAML example for an out-of-core Matrix Multiplication PyCOMPSs application,
 distributed with license Apache v2.0, with 2 source files, and authored by 3 persons from two different
@@ -267,6 +270,20 @@ a ``Submitter`` is provided which is different from the person that wrote the ap
         organisation_name: IRB Barcelona
         ror: https://ror.org/01z1gye03
 
+An example of the **minimal YAML** that needs to be defined in order to publish your workflow in WorkflowHub is:
+
+.. code-block:: yaml
+
+    COMPSs Workflow Information:
+      name: COMPSs K-means
+
+.. TIP::
+
+    While effectively the only mandatory field to be able to publish a workflow in WorkflowHub is ``name`` inside the **COMPSs
+    Workflow Information** section, we encourage application owners to include all the fields detailed in the YAML in
+    order to get all the benefits of recording workflow provenance. For instance, if no authors are included, it will
+    not be possible to generate a DOI for the workflow.
+
 
 Usage
 -----
@@ -317,6 +334,18 @@ combined with the file accesses information registered by the COMPSs runtime in 
 result is a sub-directory ``COMPSs_RO-Crate_[uuid]/`` that contains the workflow provenance of the run (see next sub-section
 for a detailed description).
 
+.. TIP::
+    The workflow provenance generation script will produce in the standard output the precise commands to be used for the
+    particular case of the application in use. An example on how the message would be printed follows:
+
+    .. code-block:: console
+
+        PROVENANCE | PROVENANCE GENERATION HAS FAILED
+        PROVENANCE | Temporary files have not been erased: App_Profile.json compss_submission_command_line.txt /Users/rsirvent/.COMPSs/matmul_files.py_01//monitor/complete_graph.svg
+        PROVENANCE | Provenance generation can be triggered by hand using the following commands:
+        PROVENANCE | /Users/rsirvent/opt/COMPSs/Runtime/scripts/utils/compss_gengraph svg /Users/rsirvent/.COMPSs/matmul_files.py_01//monitor/complete_graph.dot
+        PROVENANCE | python3 /Users/rsirvent/opt/COMPSs/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py ro-crate-info.yaml /Users/rsirvent/.COMPSs/matmul_files.py_01//dataprovenance.log
+        PROVENANCE | ENDED DATA PROVENANCE SCRIPT
 
 Result
 ------
