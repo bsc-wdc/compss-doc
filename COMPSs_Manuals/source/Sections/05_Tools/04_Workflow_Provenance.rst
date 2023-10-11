@@ -84,11 +84,18 @@ is going to be run) a YAML file named ``ro-crate-info.yaml`` that follows the ne
       name: Name of your COMPSs application
       description: Detailed description of your COMPSs application
       license: Apache-2.0  # URL preferred, but these strings are accepted: https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
-      sources_dir: [path_to/dir_1, path_to/dir_2]  # Optional: List of directories containing the application source files. Relative or absolute paths can be used
-      sources_main_file: my_main_file.py  # Optional: Name of the main file of the application, located in one of the sources_dir.
-                                          # Relative paths from a sources_dir entry, or absolute paths can be used
-      files: [main_file.py, aux_file_1.py, aux_file_2.py]  # List of application files. Relative or absolute paths can be used
-      data_persistence: False  # True to include all input and output files of the application in the resulting crate. False by default or if not set
+      sources: [/absolute_path_to/dir_1/, relative_path_to/dir_2/, main_file.py, relative_path/aux_file_1.py, /abs_path/aux_file_2.py]
+        # List of application source files and directories. Relative or absolute paths can be used.
+      sources_main_file: my_main_file.py
+        # Optional: Manually specify the name of the main file of the application, located in one of the 'sources' defined.
+        # Relative paths from a 'sources' entry, or absolute paths can be used.
+      data_persistence: False
+        # If False, input and output files of the application won't be included, just referenced. False by default or if not set.
+        # True to include all input and output files of the application in the resulting crate.
+      inputs: [/abs_path_to/dir_1, rel_path_to/dir_2, file_1, rel_path/file_2]
+        # Optional: Manually specify the inputs of the workflow. Relative or absolute paths can be used.
+      outputs: [/abs_path_to/dir_1, rel_path_to/dir_2, file_1, rel_path/file_2]
+        # Optional: Manually specify the outputs of the workflow. Relative or absolute paths can be used.
 
     Authors:
       - name: Author_1 Name
@@ -131,21 +138,19 @@ More specifically, in the **COMPSs Workflow Information** section:
   predefined strings are also supported, and can be found here:
   https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
 
-- ``sources_dir`` can be a single path, or a list of paths where application source files can be found. Our script
-  will add ALL files (i.e. not only source files, but any file found) and sub-directories inside each of the paths
-  specified. The sub-directories structure is respected
-  when the files are added in the crate (inside a sub-directory ``application_sources``).
+- ``sources`` can be a single directory or file, or a list of directories or files where the whole application source
+  files can be found. Our script
+  will add ALL files (i.e. not only source files, but any file found) and sub-directories inside each of the directory
+  paths specified. The sub-directories structure is respected
+  when the files are added in the crate (inside a sub-directory ``application_sources``). Files referenced here are
+  typically all ``.py`` files for Python applications, or ``.java``, ``.class``, ``.jar`` files for Java ones. Both
+  relative and absolute paths can be used.
 
-- ``sources_main_file`` is the name of the main source file of the application, and may be specified if the user wants to select
-  a particular file as such. The COMPSs runtime detects automatically the main source of an application, therefore this is a way
+- ``sources_main_file`` (**optional**) is an advanced feature. It is the name of the main source file of the application,
+  and may be specified if the user wants to select
+  a particular file as such. The COMPSs runtime detects automatically the main source of an application, therefore, this is a way
   to override the detected file. The file can be specified with a relative path inside one of the
-  directories listed in ``sources_dir``. An absolute path can also be used.
-
-- ``files`` is a single file or a list of all the source files of the application (typically all ``.py`` files for Python
-  applications, or ``.java``, ``.class``, ``.jar`` files for Java ones). Both relative and absolute paths can be used.
-  All files specified here will be added in the root of the sub-directory ``application_sources`` from the resulting
-  crate. If the script is unable to automatically
-  identify the main source file of the application, the first file of this list may be considered as such.
+  directories listed in ``sources``. An absolute path can also be used.
 
 - ``data_persistence`` is a boolean to indicate whether the Workflow Provenance generation should include the input
   and output datasets needed and generated respectively in the workflow (i.e. must be set to ``True``).
@@ -155,13 +160,17 @@ More specifically, in the **COMPSs Workflow Information** section:
   this field should be set to ``False`` to avoid including the datasets in the resulting crate package. Its value is
   ``False`` by default.
 
-The ``sources_dir`` and ``files`` terms are complementary to each other. An ``ro-crate-info.yaml`` could use the term
-``files`` alone or ``sources_dir`` alone, but also both, if the user is willing to add a number of sub-directories
-with source files, but also several files by hand.
+- ``inputs`` (**optional**) is an advanced feature. Should be used only when automatic detection of workflow input files does not work
+  properly. Input files and directories can be specified, and will be added as overall input parameters to the workflow
+  (in addition to the ones detected).
+
+- ``outputs`` (**optional**) is an advanced feature. Should be used only when automatic detection of workflow output files does not work
+  properly. Output files and directories can be specified, and will be added as overall output parameters to the workflow
+  (in addition to the ones detected).
 
 .. WARNING::
 
-    The term ``sources_main_file`` can only be used when ``sources_dir`` is defined. While the runtime is able to detect
+    The term ``sources_main_file`` can only be used when ``sources`` is defined. While the runtime is able to detect
     automatically the main file from application execution, this would enable to modify that automatic selection in case
     of need.
 
@@ -177,7 +186,7 @@ In the **Authors** section:
 
 .. TIP::
 
-    It is very important that the list of source files (defined with ``sources_dir`` or ``files``), ``orcid`` and
+    It is very important that the list of source files (defined with ``sources``), ``orcid`` and
     ``ror`` terms are correctly defined, since the
     runtime will only register information for the list of source files defined, and the ``orcid`` and ``ror`` are
     used as unique identifiers in the RO-Crate specification.
@@ -190,6 +199,13 @@ person running the workflow, that can be different from the Authors.
     If no Submitter section is provided, the first Author will be considered by default as the submitter of the
     workflow.
 
+.. TIP::
+
+    While effectively the only mandatory field to be able to publish a workflow in WorkflowHub is ``name`` inside the **COMPSs
+    Workflow Information** section, we encourage application owners to include all the fields detailed in the YAML in
+    order to get all the benefits of recording Workflow Provenance. For instance, if no authors are included, it will
+    be not possible to generate a DOI for the workflow.
+
 In the following lines, we provide a YAML example for an out-of-core Matrix Multiplication PyCOMPSs application,
 distributed with license Apache v2.0, with 2 source files, and authored by 3 persons from two different
 institutions. Since no ``submitter`` is defined, the first author is considered as such by default.
@@ -201,7 +217,7 @@ institutions. Since no ``submitter`` is defined, the first author is considered 
       description: Hypermatrix size 2x2 blocks, block size 2x2 elements
       license: Apache-2.0 #Provide better a URL, but these strings are accepted:
                         # https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
-      files: [matmul_directory.py, matmul_tasks.py]
+      sources: [matmul_directory.py, matmul_tasks.py]
       data_persistence: True
 
     Authors:
@@ -221,9 +237,9 @@ institutions. Since no ``submitter`` is defined, the first author is considered 
         organisation_name: IRB Barcelona
         ror: https://ror.org/01z1gye03
 
-Also, another example of a COMPSs Java K-means application, where the usage of the ``sources_dir`` term can be seen.
+Also, another example of a COMPSs Java K-means application, where the usage of ``sources`` including directories can be seen.
 We add to the crate the sub-directories that contain the ``.jar`` and ``.java`` files correspondingly. In this case,
-a ``submitter`` is provided which is different from the person that wrote the application.
+a ``Submitter`` is provided which is different from the person that wrote the application.
 
 .. code-block:: yaml
 
@@ -234,8 +250,8 @@ a ``submitter`` is provided which is different from the person that wrote the ap
         strategy to find the centers of natural clusters in the data.
       license: https://opensource.org/licenses/Apache-2.0 #Provide better a URL, but these strings are accepted:
                         # https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
-      sources_dir: [jar/, src/]
-      data_persitence: False
+      sources: [jar/, src/]
+      data_persistence: False
 
     Authors:
       - name: Raül Sirvent
@@ -245,7 +261,7 @@ a ``submitter`` is provided which is different from the person that wrote the ap
         ror: https://ror.org/05sd8tv96
 
     Submitter:
-        - name: Adam Hospital
+        name: Adam Hospital
         e-mail: adam.hospital@irbbarcelona.org
         orcid: https://orcid.org/0000-0002-8291-8071
         organisation_name: IRB Barcelona
@@ -256,7 +272,7 @@ Usage
 -----
 
 The way of activating the recording of Workflow Provenance with COMPSs is very simple.
-One must only enable the ``-p`` or ``--provenance`` flag when using ``runcomps`` or
+One must only enable the ``-p`` or ``--provenance`` flag when using ``runcompss`` or
 ``enqueue_compss`` to run or submit a COMPSs application, respectively.
 As shown in the help option:
  
