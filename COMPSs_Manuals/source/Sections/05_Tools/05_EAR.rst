@@ -33,20 +33,23 @@ Usage
 
 The way of activating the energy measurement of a Workflow with COMPSs is very simple.
 One must only enable the ``--ear`` flag followed by ``true`` or the EAR parameters when
-using ``enqueue_compss`` to submit a COMPSs application. As shown in the help option:
+using ``enqueue_compss`` to submit a COMPSs application.
+As shown in the help option:
 
 .. code-block:: console
 
     $ enqueue_compss -h
 
     (...)
-    --ear=<string>                          Activate the usage of EAR for power consumption measurement.
+    --ear=<bool|string>                     Activate the usage of EAR for power consumption measurement.
                                             The value of string are the parameter to be used with EAR.
                                             Default: false
 
 
-In particular, the ``<string>`` defined for the ``--ear`` flag is passed directly to EAR.
+In addition to the boolean, this flag also accepts a ``<string>``, whose value is passed directly to EAR.
 Consequently, any EAR parameter desired by the user can be defined through the flag.
+
+The resulting metrics will be stored in ``<log_dir>/.COMPSs/<job_id>/energy`` folder.
 
 .. IMPORTANT::
 
@@ -72,7 +75,7 @@ the ``kmeans.py`` application execution to SLURM with the required ``--ear`` fla
 consumption measurement:
 
 .. code-block:: bash
-    :emphasize-lines: 5,8,10,15-17,42,43
+    :emphasize-lines: 5,7-9,28,32
     :caption: `launch_kmeans_ear.sh script on MN4`
     :name: launch_kmeans_ear_script
 
@@ -82,17 +85,9 @@ consumption measurement:
     module load COMPSs/Trunk
     module load ear/4.3-compss
 
-    # Add earld.so to LD_LIBRARY_PATH
+    # The next two lines will be included in ear/4.3-compss module file
     export LD_LIBRARY_PATH=${EAR_INSTALL_PATH}/lib/:$LD_LIBRARY_PATH
-
     export EAR_CPU_TDP=150
-    # Uncomment the next line to enable EAR verbosity
-    #export EAR_VERBOSE="--ear-verbose=1"
-    # The next lines define the path where EAR metrics will be stored
-    # (note that ends with the prefix for the metrics file name).
-    export EAR_METRICS_PATH=$HOME/ear_compss_metrics/kmeans/
-    mkdir -p $EAR_METRICS_PATH
-    export EAR_METRICS="--ear-user-db=$EAR_METRICS_PATH/kmeans"
 
     # Define script variables
     scriptDir=$(pwd)/$(dirname $0)
@@ -102,36 +97,38 @@ consumption measurement:
     # Retrieve arguments
     numNodes=$1
     executionTime=$2
-    tracing=$3
 
     # Leave application args on $@
-    shift 3
+    shift 2
 
     # Enqueue the application
     enqueue_compss \
         --qos=debug \
         --num_nodes=$numNodes \
         --exec_time=$executionTime \
+        --constraints=perfparanoid \
         --worker_working_dir=$(pwd) \
-        --tracing=$tracing \
-        --graph=$tracing \
         --pythonpath=$appPythonpath \
         --lang=python \
-        --constraints=perfparanoid \
-        --ear="\"--ear=on ${EAR_METRICS} \"" \
+        --ear=true \
         $execFile $@
 
 
     ######################################################
     # APPLICATION EXECUTION EXAMPLE
     # Call:
-    #       ./launch_kmeans_ear.sh <NUMBER_OF_NODES> <EXECUTION_TIME> <TRACING> <POINTS> <DIMENSIONS> <CENTERS> <FRAGMENTS>
+    #       ./launch_kmeans_ear.sh <NUMBER_OF_NODES> <EXECUTION_TIME> <POINTS> <DIMENSIONS> <CENTERS> <FRAGMENTS>
     #
     # Example:
-    #       ./launch_kmeans_ear.sh 2 10 false 72000 3 4 72
+    #       ./launch_kmeans_ear.sh 2 10 72000 3 4 72
     #
     #####################################################
 
+.. IMPORTANT::
+
+    The ``--constraints=perfparanoid`` is required in MN4 in order to get some of the performance metrics
+    that EAR is able to harvest during the application execution. It may not be needed in other clusters
+    or HPC machines.
 
 Next, we can then give execution permission to the submission script and launch our kmeans execution with EAR:
 
@@ -146,14 +143,14 @@ This will submit the job to SLURM and we will have to wait for its completion.
 Result metrics
 --------------
 
-Once the application has finished, a new folder containing the EAR metrics will be created
-in the ``${HOME}/ear_compss_metrics/kmeans/`` (defined with the ``EAR_METRICS_PATH`` environment variable).
+Once the application has finished, the EAR metrics will be created In the
+``${HOME}/.COMPSs/<JOB_ID>/energy/`` folder.
 Its contents will look like:
 
 .. code-block:: console
 
-    $ cd ${HOME}/ear_compss_metrics/
-    $ ear_compss_metrics> tree
+    $ cd ${HOME}/.COMPSs/123456/energy/
+    $ energy> tree
     .
     └── kmeans
         ├── kmeans.s10r2b48.time.csv
