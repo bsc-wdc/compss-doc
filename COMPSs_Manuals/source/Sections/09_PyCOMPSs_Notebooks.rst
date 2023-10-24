@@ -49,7 +49,7 @@ It is divided into three main folders:
 
         * For **local** execution:
 
-            * Python 2 or 3
+            * Python 3
             * Install COMPSs requirements described in :ref:`Sections/01_Installation/01_Dependencies:Dependencies`.
             * Install COMPSs (See :ref:`Sections/01_Installation/02_Building_from_sources:Building from sources`)
             * Jupyter (with the desired ipykernel)

@@ -2,7 +2,8 @@
 Sample Applications
 ===================
 
-This section is intended to walk you through some COMPSs applications. Source code of different sample applications are available in https://github.com/bsc-wdc/apps
+This section is intended to walk you through some COMPSs applications.
+Source code of different sample applications are available in https://github.com/bsc-wdc/apps
 
 .. toctree::
     :maxdepth: 3
