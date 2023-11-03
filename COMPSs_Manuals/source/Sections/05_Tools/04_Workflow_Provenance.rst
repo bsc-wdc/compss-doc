@@ -1,20 +1,25 @@
 Workflow Provenance
 ===================
 
-In order to achieve **Reproducibility** and **Replicability** with your experiments
-using COMPSs, the runtime includes the capacity of recording details of the
-application's execution, also known as *Workflow Provenance*. This is supported for both Python
+The COMPSs runtime includes the capacity of recording details of the
+application's execution as metadata, also known as *Workflow Provenance*. This is supported for both Python
 and Java COMPSs applications. More technical details on how Provenance is generated in COMPSs using a lightweight approach
 that does not introduce overhead to the workflow execution can be found in the paper:
 
 - `Automatic, Efficient and Scalable Provenance Registration for FAIR HPC Workflows <http://dx.doi.org/10.1109/WORKS56498.2022.00006>`_
 
-Moreover, a set of slides is available in `Zenodo <https://zenodo.org/record/7701868>`_.
+A set of slides about the paper is available in `Zenodo <https://zenodo.org/record/7701868>`_.
 
-Another key objective of Workflow Provenance is to be able to **publish your research results** obtained with COMPSs as
+Provenance information can be useful for a number of things, including **Governance, Reproducibility, Replicability, Traceability,
+or Knowledge Extraction**, among others.
+In our, we have initially targeted Workflow Provenance recording to enable users to **publish research results** obtained with COMPSs as
 artifacts that can be cited in scientific publications with their corresponding DOI.
 See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Publish and cite your results with WorkflowHub` to learn
 precisely how to do that.
+
+.. TIP::
+    A step-by-step guide on how to share your COMPSs execution results in scientific papers can be found
+    `here <https://eflows4hpc.eu/wp-content/uploads/2023/10/2023-10-25-COMPSs-Provenance-eFlows4HPC.pdf>`_.
 
 When the provenance option is activated, the runtime records every access
 to a file or directory specified in the application, as well as its direction (IN,
@@ -60,7 +65,7 @@ This would typically install the library in ``~/.local/``. Another option is to 
 
     $ pip install -t install_path rocrate
 
-Our implementation has been tested with ``ro-crate-py`` version ``0.8.0`` and earlier.
+Our implementation has been tested with ``ro-crate-py`` version ``0.9.0`` and earlier.
 
 .. WARNING::
 
@@ -91,8 +96,8 @@ is going to be run) a YAML file named ``ro-crate-info.yaml`` that follows the ne
         # Optional: Manually specify the name of the main file of the application, located in one of the 'sources' defined.
         # Relative paths from a 'sources' entry, or absolute paths can be used.
       data_persistence: False
-        # If False, input and output files of the application won't be included, just referenced. False by default or if not set.
         # True to include all input and output files of the application in the resulting crate.
+        # If False, input and output files of the application won't be included, just referenced. False by default or if not set.
       inputs: [/abs_path_to/dir_1, rel_path_to/dir_2, file_1, rel_path/file_2]
         # Optional: Manually specify the inputs of the workflow. Relative or absolute paths can be used.
       outputs: [/abs_path_to/dir_1, rel_path_to/dir_2, file_1, rel_path/file_2]
@@ -103,19 +108,22 @@ is going to be run) a YAML file named ``ro-crate-info.yaml`` that follows the ne
         e-mail: author_1@email.com
         orcid: https://orcid.org/XXXX-XXXX-XXXX-XXXX
         organisation_name: Institution_1 name
-        ror: https://ror.org/XXXXXXXXX  # Find them in ror.org
+        ror: https://ror.org/XXXXXXXXX
+          # Find them in ror.org
       - name: Author_2 Name
         e-mail: author2@email.com
         orcid: https://orcid.org/YYYY-YYYY-YYYY-YYYY
         organisation_name: Institution_2 name
-        ror: https://ror.org/YYYYYYYYY  # Find them in ror.org
+        ror: https://ror.org/YYYYYYYYY
+          # Find them in ror.org
 
     Submitter:
       name: Name
       e-mail: submitter@email.com
       orcid: https://orcid.org/XXXX-XXXX-XXXX-XXXX
       organisation_name: Submitter Institution name
-      ror: https://ror.org/XXXXXXXXX  # Find them in ror.org
+      ror: https://ror.org/XXXXXXXXX
+        # Find them in ror.org
 
 .. WARNING::
 
@@ -126,26 +134,32 @@ As you can see, there are three main blocks in the YAML:
 
 - **COMPSs Workflow Information:** Where details on the application are provided.
 
-- **Authors:** Where authors' details are given.
+- **Authors (optional):** Where authors' details are given.
 
-- **Submitter:** The person running the workflow in the computing resources.
+- **Submitter (optional):** The person running the workflow in the computing resources.
+
+You will see that most of the terms are specified as ``optional``, since they are not strictly required to generate Workflow Provenance with COMPSs.
+However, it is important to include as much information as possible in order to correctly share your application and
+results. Besides, missing information can lead to reduced features when using Workflow Provenance (e.g. if no ``Authors``
+are specified, WorkflowHub will not allow to generate a DOI for the workflow execution).
 
 More specifically, in the **COMPSs Workflow Information** section:
 
-- The ``name`` and ``description`` fields are free text, where a long name and description of
+- The ``name`` and ``description`` (**optional**) fields are free text, where a long name and description of
   the application must be provided.
 
-- The ``license`` field is preferred to be specified by providing an URL to the license, but a set of
-  predefined strings are also supported, and can be found here:
-  https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
-
-- ``sources`` can be a single directory or file, or a list of directories or files where the whole application source
+- ``sources`` (**optional**) can be a single directory or file, or a list of directories or files where the whole application source
   files can be found. Our script
   will add ALL files (i.e. not only source files, but any file found) and sub-directories inside each of the directory
   paths specified. The sub-directories structure is respected
-  when the files are added in the crate (inside a sub-directory ``application_sources``). Files referenced here are
+  when the files are added in the crate (inside a sub-directory ``application_sources/``). Files referenced here are
   typically all ``.py`` files for Python applications, or ``.java``, ``.class``, ``.jar`` files for Java ones. Both
-  relative and absolute paths can be used.
+  relative and absolute paths can be used. If the term ``sources`` is not specified, only the application's main file
+  will be added as the corresponding source code.
+
+- The ``license`` (**optional**) field is preferred to be specified by providing an URL to the license, but a set of
+  predefined strings are also supported, and can be found here:
+  https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
 
 - ``sources_main_file`` (**optional**) is an advanced feature. It is the name of the main source file of the application,
   and may be specified if the user wants to select
@@ -153,7 +167,7 @@ More specifically, in the **COMPSs Workflow Information** section:
   to override the detected file. The file can be specified with a relative path inside one of the
   directories listed in ``sources``. An absolute path can also be used.
 
-- ``data_persistence`` is a boolean to indicate whether the Workflow Provenance generation should include the input
+- ``data_persistence`` (**optional**) is a boolean to indicate whether the Workflow Provenance generation should include the input
   and output datasets needed and generated respectively in the workflow (i.e. must be set to ``True``).
   Including the related datasets is feasible for
   workflows where the datasets are small enough to be sent back and forth between execution environments. When datasets
@@ -181,7 +195,7 @@ More specifically, in the **COMPSs Workflow Information** section:
 .. WARNING::
 
     The term ``sources_main_file`` can only be used when ``sources`` is defined. While the runtime is able to detect
-    automatically the main file from application execution, this would enable to modify that automatic selection in case
+    automatically the main file from application execution, this would enable to modify the automatic selection in case
     of need.
 
 In the **Authors** section:
@@ -191,8 +205,14 @@ In the **Authors** section:
 
 - ``orcid`` refers to the ORCID identifier of the author. The IDs can be found and created at https://orcid.org/
 
+
 - ``ror`` refers to the Research Organization Registry (ROR) identifier for an institution.
   They can be found at http://ror.org/
+
+.. WARNING::
+
+    If an Author is specified, it must have at least a ``name`` and an ``orcid`` defined. If its Organisation is
+    specified, both ``organisation_name`` and ``ror`` must be provided.
 
 .. TIP::
 
@@ -211,15 +231,14 @@ person running the workflow, that can be different from the Authors.
 
 In the following lines, we provide a YAML example for an out-of-core Matrix Multiplication PyCOMPSs application,
 distributed with license Apache v2.0, with 2 source files, and authored by 3 persons from two different
-institutions. Since no ``submitter`` is defined, the first author is considered as such by default.
+institutions. Since no ``Submitter`` is defined, the first author is considered as such by default.
 
 .. code-block:: yaml
 
     COMPSs Workflow Information:
       name: COMPSs Matrix Multiplication, out-of-core using files
       description: Hypermatrix size 2x2 blocks, block size 2x2 elements
-      license: Apache-2.0 #Provide better a URL, but these strings are accepted:
-                        # https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
+      license: Apache-2.0
       sources: [matmul_directory.py, matmul_tasks.py]
       data_persistence: True
 
@@ -241,8 +260,10 @@ institutions. Since no ``submitter`` is defined, the first author is considered 
         ror: https://ror.org/01z1gye03
 
 Also, another example of a COMPSs Java K-means application, where the usage of ``sources`` including directories can be seen.
-We add to the crate the sub-directories that contain the ``.jar`` and ``.java`` files correspondingly. In this case,
-a ``Submitter`` is provided which is different from the person that wrote the application.
+We add to the crate the sub-directories that contain the ``.jar`` and ``.java`` files. In this case,
+a ``Submitter`` is provided which is different from the person that wrote the application. The term ``data_persistence``
+has been explicitly specified, but since the default value is ``False`` if not specified, it could be removed and get the
+same result.
 
 .. code-block:: yaml
 
@@ -251,8 +272,7 @@ a ``Submitter`` is provided which is different from the person that wrote the ap
       description: K-means clustering is a method of cluster analysis that aims to partition ''n'' points into ''k''
         clusters in which each point belongs to the cluster with the nearest mean. It follows an iterative refinement
         strategy to find the centers of natural clusters in the data.
-      license: https://opensource.org/licenses/Apache-2.0 #Provide better a URL, but these strings are accepted:
-                        # https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
+      license: https://opensource.org/licenses/Apache-2.0
       sources: [jar/, src/]
       data_persistence: False
 
@@ -322,7 +342,7 @@ following commands may be used:
 
     $ $COMPSS_HOME/Runtime/scripts/utils/compss_gengraph svg $BASE_LOG_DIR/monitor/complete_graph.dot
 
-    $ python $COMPSS_HOME/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py ro-crate-info.yaml $BASE_LOG_DIR/dataprovenance.log
+    $ python3 $COMPSS_HOME/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py ro-crate-info.yaml $BASE_LOG_DIR/dataprovenance.log
 
 In these commands, ``COMPSS_HOME`` is where your COMPSs installation is located, and ``BASE_LOG_DIR`` points to the path where the
 application run logs are stored (see Section :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/02_Results_and_logs:Logs`
@@ -345,7 +365,7 @@ for a detailed description).
         PROVENANCE | Provenance generation can be triggered by hand using the following commands:
         PROVENANCE | /Users/rsirvent/opt/COMPSs/Runtime/scripts/utils/compss_gengraph svg /Users/rsirvent/.COMPSs/matmul_files.py_01//monitor/complete_graph.dot
         PROVENANCE | python3 /Users/rsirvent/opt/COMPSs/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py ro-crate-info.yaml /Users/rsirvent/.COMPSs/matmul_files.py_01//dataprovenance.log
-        PROVENANCE | ENDED DATA PROVENANCE SCRIPT
+        PROVENANCE | ENDED WORKFLOW PROVENANCE SCRIPT
 
 Result
 ------
@@ -356,19 +376,19 @@ folder include all the elements needed to reproduce a COMPSs execution, and
 are:
 
 - **Application Source Files:** As detailed by the user in the ``ro-crate-info.yaml`` file,
-  with the terms ``sources_dir`` and/or ``files``. They have to include
-  the main source file and all auxiliary files that the application needs (e.g. ``.py``, ``.java``, ``.class``
-  or ``.jar``). Optionally, the term ``sources_main_file`` can be used to manually select the main source file of
-  the application. All application files are added to a sub-folder in the crate named ``application_sources``, where
-  the ``sources_dir`` locations are included with their same folder tree structure. The files included with the
-  ``files`` term are added to the root of the ``application_sources`` sub-folder in the crate.
+  with the term ``sources``.
+  The main source file and all auxiliary files that the application needs (e.g. ``.py``, ``.java``, ``.class``
+  or ``.jar``) are included by the user. Optionally, the term ``sources_main_file`` can be used to manually select the main source file of
+  the application. All application files are added to a sub-folder in the crate named ``application_sources/``, where
+  the ``sources`` directory locations are included with their same folder tree structure, while the individual files included
+  are added to the root of the ``application_sources/`` sub-folder in the crate.
 
 - **Application Datasets:** When ``data_persistence`` is set to ``True`` in the ``ro-crate-info.yaml`` file, both
   the input and output datasets of the workflow are included in the crate. The input dataset are the files that the
   workflow needs to be run. The output dataset is formed by all the resulting files generated by the execution of the
-  COMPSs application. A subfolder ``dataset`` with all related files copied will be created, and the subdirectories
-  structure will be respected. If more than a single *root* path is detected, a structure of ``folder_i`` folders will be
-  provided inside the ``dataset`` folder.
+  COMPSs application. A subfolder ``dataset/`` with all related files copied will be created, and the subdirectories
+  structure will be respected. If more than a single *root* path is detected, a set of folders will be
+  provided inside the ``dataset/`` folder.
 
 - **complete_graph.svg:** The image of the workflow generated by the COMPSs runtime,
   as generated with the ``runcompss -g`` or ``--graph`` option.
@@ -379,17 +399,18 @@ are:
   specific method, as well as maximum, average and minimum run time for the tasks.
   The name of the file can be customized using the ``--output_profile=<path>`` option.
 
-- **compss_command_line_arguments.txt:** Stores the options passed by the command
-  line when the application was submitted. This is very important for reproducing a COMPSs
-  application, since input parameters could even potentially change the resulting workflow generated
-  by the COMPSs runtime.
+- **compss_submission_command_line.txt:** Stores the exact command line that was used to submit the application
+  (i.e. ``runcompss`` or ``enqueue_compss``), including all the flags and parameters passed.
+  This is especially important for reproducing a COMPSs
+  application, since the workflow generated by the COMPSs runtime is created dynamically at run time, thus,
+  input parameters could even potentially change the resulting workflow generated by the COMPSs runtime.
 
 - **ro-crate-metadata.json:** The RO-Crate JSON main file describing the contents of
   this directory (crate) in the RO-Crate specification format. You can find examples in the following Sections.
 
 .. WARNING::
 
-    All previous file names (``complete_graph.svg``, ``App_Profile.json`` and ``compss_command_line_arguments.txt``)
+    All previous file names (``complete_graph.svg``, ``App_Profile.json`` and ``compss_submission_command_line.txt``)
     are automatically used to generate new files when using the ``-p`` or ``--provenance`` option.
     Avoid using these file names among
     your own files to avoid unwanted overwritings. You can change the resulting ``App_Profile.json`` name by using
@@ -407,20 +428,32 @@ site can be found in their `Documentation <https://about.workflowhub.eu/docs/>`_
 The steps to achieve the publication of a COMPSs execution are:
 
 - Pack the resulting crate subdirectory (i.e. ``COMPSs_RO-Crate_[uuid]/``) in a zip file. The ``ro-crate-metadata.json``
-  file must be at the root level of this zip file.
+  file must be at the root level of this zip file. For example: ``zip -r ~/Desktop/crate.zip COMPSs_RO-Crate_891540ad-18ca-4e19-aeb4-66a237193d07/``
 
-- Change the extension of the zip file to ``.crate.zip``, so WorkflowHub can process it correctly.
+# - Change the extension of the zip file to ``.crate.zip``, so WorkflowHub can process it correctly.
 
 - `Login <https://workflowhub.eu/login?return_to=%2Fsignup>`_ or `create an account <https://workflowhub.eu/signup>`_
-  in the WorfklowHub registry.
+  in the WorfklowHub registry. You can use your GitHub credentials to easily log in.
 
-- Once logged in, you will see the menu ``Create`` at the top of the web page, select ``Workflow``.
+- Before being able to contribute workflows to the registry, you need to join a WorkflowHub Team. You can either create
+  your own team, or join an existing one, as shown in the following Figure.
+
+.. figure:: ./Figures/JoinOrCreate.jpg
+   :name: Join or Create a Team at WorkflowHub
+   :alt: Join or Create
+   :align: center
+   :width: 90.0%
+
+   Join or Create a Team at WorkflowHub
+
+- Once you belong to a Team, you will be able to use the menu ``Create`` at the top of the web page, select ``Workflow``.
 
 - Select the ``Upload/Import Workflow RO-Crate`` tab, ``Local file``, and browse your computer to select the zip file
   prepared previously. Click ``Register``.
 
 - Review that the information automatically obtained from the Workflow Provenance is correct. Select the visibility
-  of your workflow in the ``Sharing`` tab (for both general public, and for your teams). Click ``Register`` again.
+  of your workflow in the ``Sharing`` tab (for both general public, and for the WorkflowHub Teams you belong to).
+  Click ``Register`` again.
 
 After these steps, the main summary page of your workflow will be shown, where three main tabs can be selected:
 
@@ -443,7 +476,7 @@ After these steps, the main summary page of your workflow will be shown, where t
    :align: center
    :width: 90.0%
 
-   Files tab information
+   Files tab information ****** UPDATE FILES FIGURE (to submission_command_line)
 
 - **Related items**: Where ``People``, ``Spaces`` and ``Teams`` related to this workflow can be checked.
 
@@ -481,6 +514,10 @@ this are:
    :width: 25.0%
 
    Resulting text in the Citation box, to be used in bibliography
+
+.. WARNING::
+
+    If no Authors are provided in the ro-crate-info.yaml file, a DOI will not be able to be generated.
 
 You can see a couple of examples on previous published workflows:
 
@@ -539,7 +576,7 @@ All in all, the main steps to prepare the application re-execution are:
 
 - Copy the ``dataset/`` folder input files in the ``application_sources/`` folder.
 
-- Run the application using the command specified in ``compss_command_line_arguments.txt``. Compare the newly generated
+- Run the application using the command specified in ``compss_submission_command_line.txt``. Compare the newly generated
   output results with the outputs in the ``dataset/`` folder.
 
 This set of steps should cover the majority of the cases when re-executing a COMPSs application. However, we include a
@@ -591,7 +628,7 @@ occur.
       - If the application uses internally full paths and the re-execution is happening in the same environment, no
         changes in the code are required.
 
-- Once the application and the dataset are ready, check the content of the ``compss_command_line_arguments.txt`` file, which
+- Once the application and the dataset are ready, check the content of the ``compss_submission_command_line.txt`` file, which
   includes the command used to run the application (e.g. ``runcompss --python_interpreter=/Users/rsirvent/.pyenv/shims/python3 --cpu_affinity=disabled -p src/matmul_files.py 8 64`` ).
 
     - Check if the command is still valid in your system, or adapt it otherwise (e.g. use ``enqueue_compss`` if it is
