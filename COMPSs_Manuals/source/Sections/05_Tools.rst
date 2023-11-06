@@ -2,8 +2,8 @@
 Tools
 =====
 
-COMPSs has a rich echosystem of tools that help on monitoring and measuring
-the perfornamce of COMPSs applications.
+COMPSs has a rich ecosystem of tools that help on monitoring and measuring
+the performance of COMPSs applications.
 
 This section is intended to walk you through the COMPSs' tools.
 
