@@ -74,4 +74,4 @@ More information:
 
 - Project website: http://compss.bsc.es
 
-- Project repostory: https://github.com/bsc-wdc/compss
+- Project repository: https://github.com/bsc-wdc/compss
