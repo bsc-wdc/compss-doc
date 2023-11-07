@@ -2,17 +2,17 @@ Workflow Provenance
 ===================
 
 The COMPSs runtime includes the capacity of recording details of the
-application's execution as metadata, also known as *Workflow Provenance*. This is supported for both Python
+application's execution as metadata, also known as *Workflow Provenance*. With workflow provenance, you are able to share
+not only your workflow application (i.e. the source code) but also your workflow run (i.e. the datasets used as inputs, and the outputs generated as
+results). This is supported for both Python
 and Java COMPSs applications. More technical details on how Provenance is generated in COMPSs using a lightweight approach
 that does not introduce overhead to the workflow execution can be found in the paper:
 
-- `Automatic, Efficient and Scalable Provenance Registration for FAIR HPC Workflows <http://dx.doi.org/10.1109/WORKS56498.2022.00006>`_
-
-A set of slides about the paper is available in `Zenodo <https://zenodo.org/record/7701868>`_.
+- `Automatic, Efficient and Scalable Provenance Registration for FAIR HPC Workflows <http://dx.doi.org/10.1109/WORKS56498.2022.00006>`_ (`Slides <https://zenodo.org/record/7701868>`_)
 
 Provenance information can be useful for a number of things, including **Governance, Reproducibility, Replicability, Traceability,
 or Knowledge Extraction**, among others.
-In our, we have initially targeted Workflow Provenance recording to enable users to **publish research results** obtained with COMPSs as
+In our case, we have initially targeted workflow provenance recording to enable users to **publish research results** obtained with COMPSs as
 artifacts that can be cited in scientific publications with their corresponding DOI.
 See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Publish and cite your results with WorkflowHub` to learn
 precisely how to do that.
@@ -26,7 +26,7 @@ to a file or directory specified in the application, as well as its direction (I
 OUT, INOUT). In addition to this, other information such as the parameters passed as inputs in the command line
 that submitted the application, its source files, workflow image and task profiling statistics, authors and
 their institutions, ... are also stored.
-All this information is later used to record the Workflow Provenance
+All this information is later used to record the workflow provenance
 of your application using the `RO-Crate specification <https://www.researchobject.org/ro-crate/1.1/>`_, and with the assistance of
 the `ro-crate-py library <https://github.com/ResearchObject/ro-crate-py>`_. RO-Crate is based on
 JSON-LD (JavaScript Object Notation for Linked Data), is
@@ -134,40 +134,29 @@ As you can see, there are three main blocks in the YAML:
 
 - **COMPSs Workflow Information:** Where details on the application are provided.
 
-- **Authors (optional):** Where authors' details are given.
+- **Authors:** Where authors' details are given.
 
-- **Submitter (optional):** The person running the workflow in the computing resources.
+- **Submitter:** The person running the workflow in the computing resources.
 
-You will see that most of the terms are specified as ``optional``, since they are not strictly required to generate Workflow Provenance with COMPSs.
-However, it is important to include as much information as possible in order to correctly share your application and
-results. Besides, missing information can lead to reduced features when using Workflow Provenance (e.g. if no ``Authors``
-are specified, WorkflowHub will not allow to generate a DOI for the workflow execution).
+More specifically, in the **COMPSs Workflow Information** section, the most commonly used terms are:
 
-More specifically, in the **COMPSs Workflow Information** section:
-
-- The ``name`` and ``description`` (**optional**) fields are free text, where a long name and description of
+- The ``name`` and ``description`` fields are free text, where a long name and description of
   the application must be provided.
 
-- ``sources`` (**optional**) can be a single directory or file, or a list of directories or files where the whole application source
+- ``sources`` can be a single directory or file, or a list of directories or files where the whole application source
   files can be found. Our script
   will add ALL files (i.e. not only source files, but any file found) and sub-directories inside each of the directory
   paths specified. The sub-directories structure is respected
   when the files are added in the crate (inside a sub-directory ``application_sources/``). Files referenced here are
   typically all ``.py`` files for Python applications, or ``.java``, ``.class``, ``.jar`` files for Java ones. Both
   relative and absolute paths can be used. If the term ``sources`` is not specified, only the application's main file
-  will be added as the corresponding source code.
+  will be added as the corresponding source code if it can be found in the current working directory.
 
-- The ``license`` (**optional**) field is preferred to be specified by providing an URL to the license, but a set of
+- The ``license`` field is preferred to be specified by providing an URL to the license, but a set of
   predefined strings are also supported, and can be found here:
   https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
 
-- ``sources_main_file`` (**optional**) is an advanced feature. It is the name of the main source file of the application,
-  and may be specified if the user wants to select
-  a particular file as such. The COMPSs runtime detects automatically the main source of an application, therefore, this is a way
-  to override the detected file. The file can be specified with a relative path inside one of the
-  directories listed in ``sources``. An absolute path can also be used.
-
-- ``data_persistence`` (**optional**) is a boolean to indicate whether the Workflow Provenance generation should include the input
+- ``data_persistence`` is a boolean to indicate whether the workflow provenance generation should include the input
   and output datasets needed and generated respectively in the workflow (i.e. must be set to ``True``).
   Including the related datasets is feasible for
   workflows where the datasets are small enough to be sent back and forth between execution environments. When datasets
@@ -175,13 +164,10 @@ More specifically, in the **COMPSs Workflow Information** section:
   this field should be set to ``False`` to avoid including the datasets in the resulting crate package. Its value is
   ``False`` by default.
 
-- ``inputs`` (**optional**) is an advanced feature. Should be used only when automatic detection of workflow input files does not work
-  properly. Input files and directories can be specified, and will be added as overall input parameters to the workflow
-  (in addition to the ones detected).
-
-- ``outputs`` (**optional**) is an advanced feature. Should be used only when automatic detection of workflow output files does not work
-  properly. Output files and directories can be specified, and will be added as overall output parameters to the workflow
-  (in addition to the ones detected).
+From all these terms, only ``name`` is  mandatory, since the rest are not strictly required to generate workflow provenance with COMPSs.
+However, it is important to include as much information as possible in order to correctly share your application and
+results. Besides, missing information can lead to reduced features when using workflow provenance (e.g. if no ``Authors``
+are specified, WorkflowHub will not allow to generate a DOI for the workflow execution).
 
 .. WARNING::
 
@@ -192,13 +178,29 @@ More specifically, in the **COMPSs Workflow Information** section:
     ``dataset/A.txt`` and ``dataset/B.txt``, since files do not share a common path and are considered to be at different
     locations.
 
+Also, some more optional terms are available, but commonly less used:
+
+- ``inputs`` is an advanced feature. Should be used only when automatic detection of workflow input files does not work
+  properly. Input files and directories can be specified, and will be added as overall input parameters to the workflow
+  (in addition to the ones detected).
+
+- ``outputs`` is an advanced feature. Should be used only when automatic detection of workflow output files does not work
+  properly. Output files and directories can be specified, and will be added as overall output parameters to the workflow
+  (in addition to the ones detected).
+
+- ``sources_main_file`` is an advanced feature. It is the name of the main source file of the application,
+  and may be specified if the user wants to select
+  a particular file as such. The COMPSs runtime detects automatically the main source of an application, therefore, this is a way
+  to override the detected file. The file can be specified with a relative path inside one of the
+  directories listed in ``sources``. An absolute path can also be used.
+
 .. WARNING::
 
     The term ``sources_main_file`` can only be used when ``sources`` is defined. While the runtime is able to detect
     automatically the main file from application execution, this would enable to modify the automatic selection in case
     of need.
 
-In the **Authors** section:
+In the **Authors** section (the whole section is optional):
 
 - ``name``, ``e-mail`` and ``organisation_name`` are strings corresponding to the author's name, e-mail and their
   institution. They are free text, but the ``e-mail`` field must follow the ``user@domain.top`` format.
@@ -222,7 +224,7 @@ In the **Authors** section:
     used as unique identifiers in the RO-Crate specification.
 
 The **Submitter** section has the same terms as the Authors section, but it specifically provides the details of the
-person running the workflow, that can be different from the Authors.
+person running the workflow, that can be different from the Authors. The whole section is optional.
 
 .. WARNING::
 
@@ -308,7 +310,7 @@ An example of the **minimal YAML** that needs to be defined in order to publish 
 Usage
 -----
 
-The way of activating the recording of Workflow Provenance with COMPSs is very simple.
+The way of activating the recording of workflow provenance with COMPSs is very simple.
 One must only enable the ``-p`` or ``--provenance`` flag when using ``runcompss`` or
 ``enqueue_compss`` to run or submit a COMPSs application, respectively.
 As shown in the help option:
@@ -332,7 +334,7 @@ In the case of extremely large workflows (e.g. a workflow
 with tenths of thousands of task nodes, or tenths of thousands of files used as inputs or outputs), the extra time
 needed to generate the workflow provenance with RO-Crate may be a problem in systems with strict run time constraints.
 In these cases, the workflow execution may end correctly, but the extra processing to generate the provenance may be killed
-by the system if it exceeds a certain limit, and the provenance will not be created correctly.
+by the system if it exceeds a certain limit, and the provenance may not be created correctly.
 
 For this or any other similar situation, our workflow provenance generation script can be triggered offline at any moment
 after the workflow has executed correctly, thanks to our design. From the working directory of the application, the
@@ -372,7 +374,8 @@ Result
 
 Once the application has finished, a new sub-folder under the application's Working Directory
 will be created with the name ``COMPSs_RO-Crate_[uuid]/``, which is also known as *crate*. The contents of the
-folder include all the elements needed to reproduce a COMPSs execution, and
+folder include all the elements needed to record a COMPSs application execution (this is, the application together with
+the datasets used for the run), and
 are:
 
 - **Application Source Files:** As detailed by the user in the ``ro-crate-info.yaml`` file,
@@ -420,7 +423,7 @@ Publish and cite your results with WorkflowHub
 ----------------------------------------------
 
 Once the provenance metadata for your COMPSs application has been generated, you have the possibility of publishing
-your results in `WorkflowHub <https://workflowhub.eu/>`_, the FAIR workflow registry, where a DOI can be generated,
+your results (i.e. both the workflow and the workflow run) in `WorkflowHub <https://workflowhub.eu/>`_, the FAIR workflow registry, where a DOI can be generated,
 so your results can be cited in a scientific paper using a permanent reference. Detailed documentation on how to use the WorkflowHub web
 site can be found in their `Documentation <https://about.workflowhub.eu/docs/>`_ section.
 
@@ -448,13 +451,14 @@ The steps to achieve the publication of a COMPSs execution are:
 - Select the ``Upload/Import Workflow RO-Crate`` tab, ``Local file``, and browse your computer to select the zip file
   prepared previously. Click ``Register``.
 
-- Review that the information automatically obtained from the Workflow Provenance is correct.
+- Review that the information automatically obtained from the workflow provenance is correct.
 
     - Select the ``Teams`` that this workflow will belong to.
     - Select the visibility and teams' permissions for your workflow in the ``Sharing`` section (for both general public, and for the WorkflowHub Teams where this workflow will be added).
     - Click ``Register`` again.
 
-After these steps, the main summary page of your workflow will be shown, where three main tabs can be selected:
+After these steps, the main summary page of your workflow will be shown, where three main tabs can be selected
+(see https://doi.org/10.48546/workflowhub.workflow.635.1 to check out an example directly at WorkflowHub):
 
 - **Overview**: Where the workflow type, workflow description, and workflow diagram are shown.
 
@@ -466,8 +470,8 @@ After these steps, the main summary page of your workflow will be shown, where t
 
    Overview tab information
 
-- **Files**: Where you can browse the uploaded content of the crate. See :ref:`Sections/05_Tools/04_Workflow_Provenance:Result`
-  for details on the crate structure.
+- **Files**: Where you can browse the uploaded content of the crate (see :ref:`Sections/05_Tools/04_Workflow_Provenance:Result`
+  for details on the crate structure).
 
 .. figure:: ./Figures/WH_files.png
    :name: Files
@@ -526,9 +530,9 @@ this are:
 
 You can see a couple of examples on previous published workflows:
 
-- Java COMPSs Matrix Multiplication: https://doi.org/10.48546/workflowhub.workflow.484.1
+- Java COMPSs Matrix Multiplication (using COMPSs 3.2): https://doi.org/10.48546/workflowhub.workflow.484.1
 
-- PyCOMPSs WordCount Example: https://doi.org/10.48546/workflowhub.workflow.635.1
+- PyCOMPSs WordCount Example (using COMPSs 3.3): https://doi.org/10.48546/workflowhub.workflow.635.1
 
 As partially shown above, in the ``Citation`` box of the ``Overview`` tab you will find the text that can be added as a reference in your
 scientific paper's bibliography, to properly reference your workflow execution result. There is also a ``Copy`` button
@@ -580,7 +584,7 @@ All in all, the main steps to prepare the application re-execution are:
 - Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine.
 
 - Copy or move the downloaded file to the environment where you want to execute the application. Unzip the file there.
-  You will see a set of files and folders that correspond to the Workflow Provenance as generated by COMPSs
+  You will see a set of files and folders that correspond to the workflow provenance as generated by COMPSs
   (see :ref:`Sections/05_Tools/04_Workflow_Provenance:Result` for details on the crate structure).
 
 - If the dataset has been included in the crate, copy the ``dataset/`` folder input files in the ``application_sources/`` folder.
