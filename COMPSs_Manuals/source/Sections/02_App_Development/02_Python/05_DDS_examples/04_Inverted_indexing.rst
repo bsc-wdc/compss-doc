@@ -73,7 +73,7 @@ a random dataset using the `lorem-text <https://pypi.org/project/lorem-text/>`_ 
     ----------------- Executing inverted_indexing.py --------------------------
 
     WARNING: COMPSs Properties file is null. Setting default values
-    [(650)    API]  -  Starting COMPSs Runtime v3.2.rc2308 (build 20230810-0858.rababfc59af07237e625a2cb93b033ae427343b5f)
+    [(671)    API]  -  Starting COMPSs Runtime v3.3 (build 20231107-1626.rfd920cb7d4a03b1e84725271049e91f5de261e8c)
     reprehenderit - ['/home/user/dataset/1.txt', '/home/user/dataset/10.txt', '/home/user/dataset/2.txt', '/home/user/dataset/3.txt', '/home/user/dataset/4.txt', '/home/user/dataset/5.txt', '/home/user/dataset/6.txt', '/home/user/dataset/7.txt', '/home/user/dataset/9.txt']
     deserunt - ['/home/user/dataset/1.txt', '/home/user/dataset/10.txt', '/home/user/dataset/3.txt', '/home/user/dataset/4.txt', '/home/user/dataset/8.txt']
     placeat - ['/home/user/dataset/1.txt', '/home/user/dataset/10.txt', '/home/user/dataset/2.txt', '/home/user/dataset/4.txt', '/home/user/dataset/7.txt']

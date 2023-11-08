@@ -159,7 +159,7 @@ generate the final graph at the end of the execution.
     ----------------- Executing incr.py --------------------------
 
     WARNING: COMPSs Properties file is null. Setting default values
-    [(693)    API]  -  Starting COMPSs Runtime v3.0.rc2210 (build 20221026-1333.r8e1717372084e4c839cba4ab821c543c080cbd10)
+    [(698)    API]  -  Starting COMPSs Runtime v3.3 (build 20231107-1626.rfd920cb7d4a03b1e84725271049e91f5de261e8c)
     Initial counter values:
     - Counter1 value is 1
     - Counter2 value is 2

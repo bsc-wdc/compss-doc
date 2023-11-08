@@ -150,20 +150,19 @@ of 1024 x 1024 elements each block, which conforms matrices of 4096 x 4096 eleme
     [ INFO ] Using default location for project file: /opt/COMPSs//Runtime/configuration/xml/projects/default_project.xml
     [ INFO ] Using default location for resources file: /opt/COMPSs//Runtime/configuration/xml/resources/default_resources.xml
     [ INFO ] Using default execution type: compss
-    [RUNCOMPSS]
 
     ----------------- Executing matmul.py --------------------------
 
     WARNING: COMPSs Properties file is null. Setting default values
-    [(974)    API]  -  Starting COMPSs Runtime v3.2 (build 20230511-0911.r81b30b07653a181ab311066ce7b3bf4fd45acbb1)
+    [(1044)    API]  -  Starting COMPSs Runtime v3.3 (build 20231107-1626.rfd920cb7d4a03b1e84725271049e91f5de261e8c)
     -----------------------------------------
     -------------- RESULTS ------------------
     -----------------------------------------
-    Initialization time: 4.733022
-    Multiplication time: 6.942880
-    Total time: 11.675902
+    Initialization time: 5.664395
+    Multiplication time: 8.406531
+    Total time: 14.070926
     -----------------------------------------
-    [(18001)    API]  -  Execution Finished
+    [(18324)    API]  -  Execution Finished
 
     ------------------------------------------------------------
 

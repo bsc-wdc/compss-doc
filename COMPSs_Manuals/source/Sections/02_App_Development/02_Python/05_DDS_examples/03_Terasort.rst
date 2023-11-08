@@ -77,12 +77,12 @@ a random dataset using the `lorem-text <https://pypi.org/project/lorem-text/>`_ 
     [ INFO ] Using default location for resources file: /opt/COMPSs//Runtime/configuration/xml/resources/default_resources.xml
     [ INFO ] Using default execution type: compss
 
-    ----------------- Executing terasort.py --------------------------
+    ----------------- Executing terasort_dds.py --------------------------
 
     WARNING: COMPSs Properties file is null. Setting default values
-    [(885)    API]  -  Starting COMPSs Runtime v3.2.rc2308 (build 20230807-0826.rababfc59af07237e625a2cb93b033ae427343b5f)
-    Elapsed Time 4.1502251625061035 (s)
-    [(8103)    API]  -  Execution Finished
+    [(671)    API]  -  Starting COMPSs Runtime v3.3 (build 20231107-1626.rfd920cb7d4a03b1e84725271049e91f5de261e8c)
+    Elapsed Time 3.814012050628662 (s)
+    [(6981)    API]  -  Execution Finished
 
     ------------------------------------------------------------
     compss@bsc:~$ tree result
