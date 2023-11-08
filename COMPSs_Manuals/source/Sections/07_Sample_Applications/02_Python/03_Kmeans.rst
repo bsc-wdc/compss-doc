@@ -295,12 +295,11 @@ number of iterations set to 10.
     [ INFO ] Using default location for project file: /opt/COMPSs//Runtime/configuration/xml/projects/default_project.xml
     [ INFO ] Using default location for resources file: /opt/COMPSs//Runtime/configuration/xml/resources/default_resources.xml
     [ INFO ] Using default execution type: compss
-    [RUNCOMPSS]
 
     ----------------- Executing kmeans.py --------------------------
 
     WARNING: COMPSs Properties file is null. Setting default values
-    [(974)    API]  -  Starting COMPSs Runtime v3.2 (build 20230511-0911.r81b30b07653a181ab311066ce7b3bf4fd45acbb1)
+    [(1027)    API]  -  Starting COMPSs Runtime v3.3 (build 20231107-1626.rfd920cb7d4a03b1e84725271049e91f5de261e8c)
     Generation/Load done
     Starting kmeans
     Doing iteration #1/10
@@ -317,23 +316,24 @@ number of iterations set to 10.
     -----------------------------------------
     -------------- RESULTS ------------------
     -----------------------------------------
-    Initialization time: 11.720157
-    Kmeans time: 21.592080
-    Total time: 33.312237
+    Initialization time: 11.350365
+    Kmeans time: 38.684046
+    Total time: 50.034411
     -----------------------------------------
     CENTRES:
     [[0.69828619 0.74530239 0.48171237]
-     [0.54765031 0.20253203 0.21191319]
-     [0.24201614 0.74466519 0.75560619]
-     [0.21853824 0.66978432 0.23275263]
-     [0.7724606  0.68585097 0.16247501]
-     [0.22674374 0.23357703 0.67253838]
-     [0.75316023 0.73748642 0.83358697]
-     [0.75816592 0.23837464 0.71580623]]
+    [0.54765031 0.20253203 0.21191319]
+    [0.24201614 0.74466519 0.75560619]
+    [0.21853824 0.66978432 0.23275263]
+    [0.7724606  0.68585097 0.16247501]
+    [0.22674374 0.23357703 0.67253838]
+    [0.75316023 0.73748642 0.83358697]
+    [0.75816592 0.23837464 0.71580623]]
     -----------------------------------------
-    [(39715)    API]  -  Execution Finished
+    [(53113)    API]  -  Execution Finished
 
     ------------------------------------------------------------
+
 
 
 :numref:`kmeans_python` depicts the generated task dependency graph. The dataset

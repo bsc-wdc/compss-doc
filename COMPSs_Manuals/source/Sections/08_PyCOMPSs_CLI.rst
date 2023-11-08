@@ -2,8 +2,8 @@
 PyCOMPSs CLI
 ===============
 
-The PyCOMPSs CLI (``pycompss-cli``) provides a standalone tool to use PyCOMPSs 
-interactively within docker environments, local machines and remote clusters. 
+The PyCOMPSs CLI (``pycompss-cli``) provides a standalone tool to use PyCOMPSs
+interactively within docker environments, local machines and remote clusters.
 This tool has been implemented on top of the `PyCOMPSs programming model <http://compss.bsc.es>`__,
 and it is being developed by the `Workflows and Distributed Computing
 group <https://github.com/bsc-wdc>`__ of the `Barcelona Supercomputing

@@ -61,16 +61,17 @@ The following lines provide an example of its execution.
     [ INFO ] Using default location for resources file: /opt/COMPSs//Runtime/configuration/xml/resources/default_resources.xml
     [ INFO ] Using default execution type: compss
 
-    ----------------- Executing pi_estimation.py --------------------------
+    ----------------- Executing pi_estimation_dds.py --------------------------
 
     WARNING: COMPSs Properties file is null. Setting default values
-    [(847)    API]  -  Starting COMPSs Runtime v3.2.rc2308 (build 20230807-0826.rababfc59af07237e625a2cb93b033ae427343b5f)
+    [(626)    API]  -  Starting COMPSs Runtime v3.3 (build 20231107-1626.rfd920cb7d4a03b1e84725271049e91f5de261e8c)
     Estimating Pi by 'throwing darts' algorithm.
     Number of tries: 100000
-    Pi is roughly 3.13608
-    [(7710)    API]  -  Execution Finished
+    Pi is roughly 3.13944
+    [(7019)    API]  -  Execution Finished
 
     ------------------------------------------------------------
+
 
 
 :numref:`pi_estimation_dds_python` depicts the generated task dependency graph.

@@ -49,7 +49,7 @@ It is divided into three main folders:
 
         * For **local** execution:
 
-            * Python 2 or 3
+            * Python 3
             * Install COMPSs requirements described in :ref:`Sections/01_Installation/01_Dependencies:Dependencies`.
             * Install COMPSs (See :ref:`Sections/01_Installation/02_Building_from_sources:Building from sources`)
             * Jupyter (with the desired ipykernel)
@@ -176,7 +176,7 @@ It is divided into three main folders:
                 $ docker stop mycompss
                 $ docker rm mycompss
                 $ # Pay attention and UPDATE: /PATH/TO in the next command
-                $ docker run --name mycompss -p 8888:8888 -p 8080:8080 -v /PATH/TO/notebooks:/home/notebooks -itd compss/compss:3.2
+                $ docker run --name mycompss -p 8888:8888 -p 8080:8080 -v /PATH/TO/notebooks:/home/notebooks -itd compss/compss:3.3
                 $ # Continue as normal
 
 

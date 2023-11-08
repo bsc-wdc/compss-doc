@@ -46,6 +46,7 @@ supported COMPSs modules in the supercomputer. The users can also execute the
     COMPSs/3.0
     COMPSs/3.1
     COMPSs/3.2
+    COMPSs/3.3
     COMPSs/release(default)
     COMPSs/trunk
 
@@ -123,7 +124,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
 
     $ enqueue_compss -h
 
-    Usage: /apps/COMPSs/3.2/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
+    Usage: /apps/COMPSs/3.3/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
 
     * Options:
       General:
@@ -146,7 +147,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Default: disabled
         --job_execution_dir=<path>              Path where job is executed.
                                                 Default: .
-        --env_script=<path/to/script>           Script to source the required environment for the application.
+        --pre_env_script=<path/to/script>       Script to source the required environment before launching the application.
                                                 Default: Empty
         --extra_submit_flag=<flag>              Flag to pass queue system flags not supported by default command flags.
                                                 Spaces must be added as '#'
@@ -213,7 +214,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Default: 0
         --io_executors=<int>                    Number of IO executors on each node
                                                 Default: 0
-        --fpga_reprogram="<string>"             Specify the full command that needs to be executed to reprogram the FPGA with
+        --fpga_reprogram="<string>              Specify the full command that needs to be executed to reprogram the FPGA with
                                                 the desired bitstream. The location must be an absolute path.
                                                 Default:
         --max_tasks_per_node=<int>              Maximum number of simultaneous tasks running on a node
@@ -264,6 +265,9 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --jupyter_notebook                      Default: false
         --ipython                               Swap the COMPSs master initialization with ipython.
                                                 Default: empty
+        --ear=<bool|string>                     Activate the usage of EAR for power consumption measurement.
+                                                The value of string are the parameter to be used with EAR.
+                                                Default: false
 
 
       Runcompss configuration:
@@ -290,9 +294,9 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --storage_conf=<path>                   Path to the storage configuration file
                                                 Default: null
         --project=<path>                        Path to the project XML file
-                                                Default: /apps/COMPSs/3.2//Runtime/configuration/xml/projects/default_project.xml
+                                                Default: /apps/COMPSs/3.3//Runtime/configuration/xml/projects/default_project.xml
         --resources=<path>                      Path to the resources XML file
-                                                Default: /apps/COMPSs/3.2//Runtime/configuration/xml/resources/default_resources.xml
+                                                Default: /apps/COMPSs/3.3//Runtime/configuration/xml/resources/default_resources.xml
         --lang=<name>                           Language of the application (java/c/python)
                                                 Default: Inferred is possible. Otherwise: java
         --summary                               Displays a task execution summary at the end of the application execution
@@ -303,7 +307,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
 
       Advanced options:
         --extrae_config_file=<path>             Sets a custom extrae config file. Must be in a shared disk between all COMPSs workers.
-                                                Default: /apps/COMPSs/3.2//Runtime/configuration/xml/tracing/extrae_basic.xml
+                                                Default: /apps/COMPSs/3.3//Runtime/configuration/xml/tracing/extrae_basic.xml
         --extrae_config_file_python=<path>      Sets a custom extrae config file for python. Must be in a shared disk between all COMPSs workers.
                                                 Default: null
         --trace_label=<string>                  Add a label in the generated trace file. Only used in the case of tracing is activated.
@@ -426,7 +430,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Default: false
         --python_memory_profile                 Generate a memory profile of the master.
                                                 Default: false
-        --python_worker_cache=<string>          Python worker cache (true/size/false).
+        --python_worker_cache=<string>          Python worker CPU and GPU cache (false/cpu:10GB/gpu:25%).
                                                 Only for NIO without mpi worker and python >= 3.8.
                                                 Default: false
         --python_cache_profiler=<bool>          Python cache profiler (true/false).
@@ -436,7 +440,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Default: 0
         --shutdown_in_node_failure=<bool>       Stop the whole execution in case of Node Failure.
                                                 Default: false
-        --provenance, -p                        Generate COMPSs workflow provenance data in RO-Crate format from YAML file. Automatically activates -graph and -output_profile.
+        --provenance, -p                        Generate COMPSs workflow provenance data in RO-Crate format from YAML file. Automatically activates --graph and --output_profile.
                                                 Default: false
 
     * Application name:
@@ -446,8 +450,6 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
 
     * Application arguments:
         Command line arguments to pass to the application. Can be empty.
-
-
 
 
 .. TIP::

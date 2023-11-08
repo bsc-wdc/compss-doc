@@ -90,7 +90,7 @@ The following line provide an example of its execution.
     ----------------- Executing transitive_closure.py --------------------------
 
     WARNING: COMPSs Properties file is null. Setting default values
-    [(661)    API]  -  Starting COMPSs Runtime v3.2.rc2308 (build 20230810-0858.rababfc59af07237e625a2cb93b033ae427343b5f)
+    [(671)    API]  -  Starting COMPSs Runtime v3.3 (build 20231107-1626.rfd920cb7d4a03b1e84725271049e91f5de261e8c)
     TC has 20 edges
     [(12610)    API]  -  Execution Finished
 

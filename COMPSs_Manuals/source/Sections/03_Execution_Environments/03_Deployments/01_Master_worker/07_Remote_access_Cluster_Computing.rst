@@ -288,7 +288,7 @@ So we can access this machine with ``ssh janeSmith@remote.bsc.es``.
 
 In the **first step**, we have to be sure that COMPSs and all the application files are available in ``remote.bsc.es``.
 For this example, we assume that the application will be deployed in ``/home/users/janeSmith/simple`` and
-COMPSs is installed in ``/apps/COMPSs/3.2``.
+COMPSs is installed in ``/apps/COMPSs/3.3``.
 The following command are used to deploy the application and check the COMPSs installation.
 
 .. code-block:: bash
@@ -298,7 +298,7 @@ The following command are used to deploy the application and check the COMPSs in
     $ ssh janeSmith@remote.bsc.es
     # Inside the remote machine, check where COMPSs is installed
     $ echo $(builtin cd $(dirname $(which runcompss))/../../..; pwd)
-    /apps/COMPSs/3.2
+    /apps/COMPSs/3.3
     $ exit
 
 In the **second step**, we create the required xml files and they will be stored in ``/home/jane/simple``.
@@ -328,7 +328,7 @@ Next lines show the XML files for this example.
                     </SubmissionSystem>
                 </Adaptor>
             </Adaptors>
-            <InstallDir>/apps/COMPSs/3.2/</InstallDir>
+            <InstallDir>/apps/COMPSs/3.3/</InstallDir>
             <WorkingDir>/tmp/COMPSsWorkerTMP/</WorkingDir>
             <User>janeSmith</User>
             <LimitOfTasks>1000</LimitOfTasks>
@@ -391,7 +391,7 @@ Jupyter notebook
 In this section, we show how to execute the a Jupyter notebook in **batch mode**.
 
 The **first step** requires to make sure that COMPSs is available in the remote machine ``remote.bsc.es``.
-For this example, we assume that COMPSs is installed in ``/apps/COMPSs/3.2``.
+For this example, we assume that COMPSs is installed in ``/apps/COMPSs/3.3``.
 
 .. IMPORTANT::
 

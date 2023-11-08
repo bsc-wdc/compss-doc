@@ -67,12 +67,11 @@ The following lines provide an example of its execution.
     [ INFO ] Using default location for project file: /opt/COMPSs//Runtime/configuration/xml/projects/default_project.xml
     [ INFO ] Using default location for resources file: /opt/COMPSs//Runtime/configuration/xml/resources/default_resources.xml
     [ INFO ] Using default execution type: compss
-    [RUNCOMPSS]
 
     ----------------- Executing simple.py --------------------------
 
     WARNING: COMPSs Properties file is null. Setting default values
-    [(974)    API]  -  Starting COMPSs Runtime v3.2 (build 20230511-0911.r81b30b07653a181ab311066ce7b3bf4fd45acbb1)
+    [(983)    API]  -  Starting COMPSs Runtime v3.3 (build 20231107-1626.rfd920cb7d4a03b1e84725271049e91f5de261e8c)
     Initial counter value is 1
     Final counter value is 2
     [(9286)    API]  -  Execution Finished
