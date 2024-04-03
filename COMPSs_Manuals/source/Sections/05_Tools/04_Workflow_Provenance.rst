@@ -15,7 +15,13 @@ or Knowledge Extraction**, among others.
 In our case, we have initially targeted workflow provenance recording to enable users to **publish research results** obtained with COMPSs as
 artifacts that can be cited in scientific publications with their corresponding DOI.
 See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Publish and cite your results with WorkflowHub` to learn
-precisely how to do that.
+precisely how to do that. We see a growing number of scientific conferences requesting these reproducible artifacts, such as:
+
+- `The Reproducibility Initiative at the International Conference for High Performance Computing, Networking, Storage, and Analysis (SC) <https://sc24.supercomputing.org/program/papers/reproducibility-initiative/>`_
+- `Call for Artifacts at the International European Conference on Parallel and Distributed Computing (EuroPar) <https://2024.euro-par.org/calls/artifacts/>`_
+- `The ACM Special Interest Group on Management of Data (SIGMOD) Reproducibility Award <https://reproducibility.sigmod.org/reports.html>`_
+- `Call for Artifacts at USENIX Conference on File and Storage Technologies (FAST) <https://www.usenix.org/conference/fast24/call-for-artifacts>`_
+- And many more...
 
 .. TIP::
     A step-by-step guide on how to share your COMPSs execution results in scientific papers can be found
@@ -65,7 +71,7 @@ This would typically install the library in ``~/.local/``. Another option is to 
 
     $ pip install -t install_path rocrate
 
-Our implementation has been tested with ``ro-crate-py`` version ``0.9.0`` and earlier.
+Our current implementation needs ``ro-crate-py`` version ``0.9.0``.
 
 .. WARNING::
 
@@ -143,12 +149,14 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
 - The ``name`` and ``description`` fields are free text, where a long name and description of
   the application must be provided.
 
-- ``sources`` can be a single directory or file, or a list of directories or files where the whole application source
-  files can be found. Our script
+- ``sources`` can be a single directory or file, or a list of directories or files where application source
+  files can be found. The 'source files' term here is used not only to describe files with source code (typically all
+  ``.py`` files for Python applications, or ``.java``, ``.class``, ``.jar`` files for Java ones), but also any
+  installation and configuration scripts, compilation scripts (Makefile, pom.xml, ...), submission scripts, readme
+  files, ... that should be included with the application package. Our script
   will add ALL files (i.e. not only source files, but any file found) and sub-directories inside each of the directory
   paths specified. The sub-directories structure is respected
-  when the files are added in the crate (inside a sub-directory ``application_sources/``). Files referenced here are
-  typically all ``.py`` files for Python applications, or ``.java``, ``.class``, ``.jar`` files for Java ones. Both
+  when the files are added in the crate (inside a sub-directory ``application_sources/``). Both
   relative and absolute paths can be used. If the term ``sources`` is not specified, only the application's main file
   will be added as the corresponding source code if it can be found in the current working directory.
 
