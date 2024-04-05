@@ -43,7 +43,7 @@ not only to register correctly the Provenance of a COMPSs application run, but
 also compatibility with some existing portals that already embrace
 RO-Crate as their core format for representing metadata, such as `WorkflowHub <https://workflowhub.eu/>`_. Our RO-Crate
 format is compliant with the `Workflow RO-Crate Profile v1.0 <https://w3id.org/workflowhub/workflow-ro-crate/1.0>`_ and the
-`Workflow Run Crate Profile v0.1 <https://w3id.org/ro/wfrun/workflow/0.1>`_.
+`Workflow Run Crate Profile v0.4 <https://w3id.org/ro/wfrun/workflow/0.4>`_.
 
 
 Software dependencies
@@ -86,8 +86,10 @@ Previous needed information
 There are certain pieces of information which must be included when registering the provenance of a workflow that
 the COMPSs runtime cannot automatically infer, such as the authors of an application. For specifying all these
 fields that are needed to generate an RO-Crate but cannot be automatically obtained, we have created a simple YAML
-structure where the user can specify them. They need to provide in their working directory (i.e. where the application
-is going to be run) a YAML file named ``ro-crate-info.yaml`` that follows the next template structure:
+structure where the user can specify them. By default, a YAML file named ``ro-crate-info.yaml`` will be expected in the
+working directory (i.e. where the application is going to be run), but a different YAML file can be used by specifying
+it with ``--provenance=my_yaml_file.yaml`` when activating Workflow Provenance generation.
+The YAML file must follow the next template structure:
 
 .. code-block:: yaml
 
@@ -123,11 +125,11 @@ is going to be run) a YAML file named ``ro-crate-info.yaml`` that follows the ne
         ror: https://ror.org/YYYYYYYYY
           # Find them in ror.org
 
-    Submitter:
+    Agent:
       name: Name
-      e-mail: submitter@email.com
+      e-mail: agent@email.com
       orcid: https://orcid.org/XXXX-XXXX-XXXX-XXXX
-      organisation_name: Submitter Institution name
+      organisation_name: Agent Institution name
       ror: https://ror.org/XXXXXXXXX
         # Find them in ror.org
 
@@ -142,7 +144,7 @@ As you can see, there are three main blocks in the YAML:
 
 - **Authors:** Where authors' details are given.
 
-- **Submitter:** The person running the workflow in the computing resources.
+- **Agent:** The person running the workflow in the computing resources.
 
 More specifically, in the **COMPSs Workflow Information** section, the most commonly used terms are:
 
@@ -231,17 +233,17 @@ In the **Authors** section (the whole section is optional):
     runtime will only register information for the list of source files defined, and the ``orcid`` and ``ror`` are
     used as unique identifiers in the RO-Crate specification.
 
-The **Submitter** section has the same terms as the Authors section, but it specifically provides the details of the
+The **Agent** section has the same terms as the Authors section, but it specifically provides the details of the
 person running the workflow, that can be different from the Authors. The whole section is optional.
 
 .. WARNING::
 
-    If no Submitter section is provided, the first Author will be considered by default as the submitter of the
+    If no Agent section is provided, the first Author will be considered by default as the agent of the
     workflow.
 
 In the following lines, we provide a YAML example for an out-of-core Matrix Multiplication PyCOMPSs application,
 distributed with license Apache v2.0, with 2 source files, and authored by 3 persons from two different
-institutions. Since no ``Submitter`` is defined, the first author is considered as such by default.
+institutions. Since no ``Agent`` is defined, the first author is considered as such by default.
 
 .. code-block:: yaml
 
@@ -259,19 +261,14 @@ institutions. Since no ``Submitter`` is defined, the first author is considered 
         organisation_name: Barcelona Supercomputing Center
         ror: https://ror.org/05sd8tv96
       - name: Rosa M. Badia
-        e-mail: Rosa.M.Badia@bsc.es
+        e-mail: Rosa.M.Badia@upc.edu
         orcid: https://orcid.org/0000-0003-2941-5499
-        organisation_name: Barcelona Supercomputing Center
-        ror: https://ror.org/05sd8tv96
-      - name: Adam Hospital
-        e-mail: adam.hospital@irbbarcelona.org
-        orcid: https://orcid.org/0000-0002-8291-8071
-        organisation_name: IRB Barcelona
-        ror: https://ror.org/01z1gye03
+        organisation_name: Universitat Politècnica de Catalunya
+        ror: https://ror.org/03mb6wj31
 
 Also, another example of a COMPSs Java K-means application, where the usage of ``sources`` including directories can be seen.
 We add to the crate the sub-directories that contain the ``.jar`` and ``.java`` files. In this case,
-a ``Submitter`` is provided which is different from the person that wrote the application. The term ``data_persistence``
+an ``Agent`` is provided which is different from the person that wrote the application. The term ``data_persistence``
 has been explicitly specified, but since the default value is ``False`` if not specified, it could be removed and get the
 same result.
 
@@ -293,12 +290,12 @@ same result.
         organisation_name: Barcelona Supercomputing Center
         ror: https://ror.org/05sd8tv96
 
-    Submitter:
-        name: Adam Hospital
-        e-mail: adam.hospital@irbbarcelona.org
-        orcid: https://orcid.org/0000-0002-8291-8071
-        organisation_name: IRB Barcelona
-        ror: https://ror.org/01z1gye03
+    Agent:
+        name: Rosa M. Badia
+        e-mail: Rosa.M.Badia@upc.edu
+        orcid: https://orcid.org/0000-0003-2941-5499
+        organisation_name: Universitat Politècnica de Catalunya
+        ror: https://ror.org/03mb6wj31
 
 An example of the **minimal YAML** that needs to be defined in order to publish your workflow in WorkflowHub is:
 
@@ -328,9 +325,10 @@ As shown in the help option:
     $ runcompss -h
 
     (...)
-    --provenance, -p    Generate COMPSs workflow provenance data in RO-Crate format from YAML file. Automatically
-                        activates -graph and -output_profile.
-                        Default: false
+    --provenance=<yaml>,
+    --provenance, -p    Generate COMPSs workflow provenance data in RO-Crate format using a YAML configuration file. Automatically activates --graph and --output_profile.
+                        Default: ro-crate-info.yaml
+
 
 .. WARNING::
 
@@ -352,14 +350,14 @@ following commands may be used:
 
     $ $COMPSS_HOME/Runtime/scripts/utils/compss_gengraph svg $BASE_LOG_DIR/monitor/complete_graph.dot
 
-    $ python3 $COMPSS_HOME/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py ro-crate-info.yaml $BASE_LOG_DIR/dataprovenance.log
+    $ python3 $COMPSS_HOME/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py my_yaml_file.yaml $BASE_LOG_DIR/dataprovenance.log
 
 In these commands, ``COMPSS_HOME`` is where your COMPSs installation is located, and ``BASE_LOG_DIR`` points to the path where the
 application run logs are stored (see Section :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/02_Results_and_logs:Logs`
 for more details on where to locate these logs). ``compss_gengraph``
 generates the workflow image to be added to the crate, but if its generation time is a concern, or the user does not
 want it to be included in the crate, the command can be skipped. The second command runs the
-``generate_COMPSs_RO-Crate.py`` Python script, that uses the information provided by the user in ``ro-crate-info.yaml``
+``generate_COMPSs_RO-Crate.py`` Python script, that uses the information provided by the user in the YAML file (``ro-crate-info.yaml`` by default)
 combined with the file accesses information registered by the COMPSs runtime in the ``dataprovenance.log`` file. The
 result is a sub-directory ``COMPSs_RO-Crate_[uuid]/`` that contains the workflow provenance of the run (see next sub-section
 for a detailed description).
@@ -734,11 +732,13 @@ so the user should double check if the decision taken is correct. Some examples 
 
     PROVENANCE | WARNING: A parent directory of a previously added sub-directory is being added. Some files will be traversed twice in: /Users/rsirvent/COMPSs-DP/matmul_files/in
     PROVENANCE | WARNING: A file addition was attempted twice: /Users/rsirvent/COMPSs-DP/matmul_files/in/A/A.0.0 in /Users/rsirvent/COMPSs-DP/matmul_files/in
-    PROVENANCE | WARNING: 'Submitter' not specified in ro-crate-info.yaml. First author selected by default.
+    PROVENANCE | WARNING: 'Agent' not specified in ro-crate-info.yaml. First author selected by default.
 
 
-ro-crate-metadata.json PyCOMPSs example (Laptop)
-------------------------------------------------
+Examples
+--------
+
+- **PyCOMPSs example (Laptop run)**
 
 In the RO-Crate specification, the root file containing the metadata referring to the crate created is named
 ``ro-crate-metadata.json``. In these lines, we provide an example of an ro-crate-metadata.json file resulting from
@@ -766,10 +766,10 @@ the JSON file you can find several interesting terms:
   This is a very important field to achieve reproducibility or replicability, since COMPSs features may vary their
   behaviour in different versions of the programming model runtime.
 
-- **CreateAction:** With the compliance to the Workflow Run Crate Profile v0.1, the details on the specific execution
+- **CreateAction:** With the compliance to the Workflow Run Crate Profile, the details on the specific execution
   of the workflow are included in the ``CreateAction`` term.
 
-  - The defined ``submitter`` is recorded as the ``agent``.
+  - The defined ``Agent`` is recorded as the ``agent``.
 
   - The ``description`` term records details on the host that ran the workflow (architecture, Operating System version and COMPSs paths defined).
 
@@ -780,508 +780,11 @@ the JSON file you can find several interesting terms:
 We encourage the reader to navigate through this ``ro-crate-metadata.json`` file example to get familiar with its
 contents. Many of the fields are easily and directly understandable.
 
-.. code-block:: json
 
-    {
-        "@context": "https://w3id.org/ro/crate/1.1/context",
-        "@graph": [
-            {
-                "@id": "./",
-                "@type": "Dataset",
-                "conformsTo": [
-                    {
-                        "@id": "https://w3id.org/ro/wfrun/process/0.1"
-                    },
-                    {
-                        "@id": "https://w3id.org/ro/wfrun/workflow/0.1"
-                    },
-                    {
-                        "@id": "https://w3id.org/workflowhub/workflow-ro-crate/1.0"
-                    }
-                ],
-                "creator": [
-                    {
-                        "@id": "https://orcid.org/0000-0003-0606-2512"
-                    },
-                    {
-                        "@id": "https://orcid.org/0000-0003-2941-5499"
-                    },
-                    {
-                        "@id": "https://orcid.org/0000-0002-8291-8071"
-                    }
-                ],
-                "datePublished": "2023-11-06T11:50:01+00:00",
-                "description": "Hypermatrix size 2x2 blocks, block size 2x2 elements",
-                "hasPart": [
-                    {
-                        "@id": "application_sources/matmul_directory.py"
-                    },
-                    {
-                        "@id": "complete_graph.svg"
-                    },
-                    {
-                        "@id": "App_Profile.json"
-                    },
-                    {
-                        "@id": "compss_submission_command_line.txt"
-                    },
-                    {
-                        "@id": "ro-crate-info.yaml"
-                    },
-                    {
-                        "@id": "application_sources/matmul_tasks.py"
-                    },
-                    {
-                        "@id": "dataset/inputs/A/A.0.0"
-                    },
-                    {
-                        "@id": "dataset/inputs/A/A.0.1"
-                    },
-                    {
-                        "@id": "dataset/inputs/A/A.1.0"
-                    },
-                    {
-                        "@id": "dataset/inputs/A/A.1.1"
-                    },
-                    {
-                        "@id": "dataset/inputs/B/B.0.0"
-                    },
-                    {
-                        "@id": "dataset/inputs/B/B.0.1"
-                    },
-                    {
-                        "@id": "dataset/inputs/B/B.1.0"
-                    },
-                    {
-                        "@id": "dataset/inputs/B/B.1.1"
-                    },
-                    {
-                        "@id": "dataset/inputs/"
-                    },
-                    {
-                        "@id": "dataset/C.0.0"
-                    },
-                    {
-                        "@id": "dataset/C.0.1"
-                    },
-                    {
-                        "@id": "dataset/C.1.0"
-                    },
-                    {
-                        "@id": "dataset/C.1.1"
-                    }
-                ],
-                "license": "Apache-2.0",
-                "mainEntity": {
-                    "@id": "application_sources/matmul_directory.py"
-                },
-                "mentions": {
-                    "@id": "#COMPSs_Workflow_Run_Crate_bsccs742.int.bsc.es_78fb0b3a-55c7-40af-ac60-35a591a39cd3"
-                },
-                "name": "COMPSs Matrix Multiplication, out-of-core using files",
-                "publisher": [
-                    {
-                        "@id": "https://ror.org/05sd8tv96"
-                    },
-                    {
-                        "@id": "https://ror.org/01z1gye03"
-                    }
-                ]
-            },
-            {
-                "@id": "ro-crate-metadata.json",
-                "@type": "CreativeWork",
-                "about": {
-                    "@id": "./"
-                },
-                "conformsTo": [
-                    {
-                        "@id": "https://w3id.org/ro/crate/1.1"
-                    },
-                    {
-                        "@id": "https://w3id.org/workflowhub/workflow-ro-crate/1.0"
-                    }
-                ]
-            },
-            {
-                "@id": "https://ror.org/05sd8tv96",
-                "@type": "Organization",
-                "name": "Barcelona Supercomputing Center"
-            },
-            {
-                "@id": "mailto:Raul.Sirvent@bsc.es",
-                "@type": "ContactPoint",
-                "contactType": "Author",
-                "email": "Raul.Sirvent@bsc.es",
-                "identifier": "Raul.Sirvent@bsc.es",
-                "url": "https://orcid.org/0000-0003-0606-2512"
-            },
-            {
-                "@id": "https://orcid.org/0000-0003-0606-2512",
-                "@type": "Person",
-                "affiliation": {
-                    "@id": "https://ror.org/05sd8tv96"
-                },
-                "contactPoint": {
-                    "@id": "mailto:Raul.Sirvent@bsc.es"
-                },
-                "name": "Ra\u00fcl Sirvent"
-            },
-            {
-                "@id": "mailto:Rosa.M.Badia@bsc.es",
-                "@type": "ContactPoint",
-                "contactType": "Author",
-                "email": "Rosa.M.Badia@bsc.es",
-                "identifier": "Rosa.M.Badia@bsc.es",
-                "url": "https://orcid.org/0000-0003-2941-5499"
-            },
-            {
-                "@id": "https://orcid.org/0000-0003-2941-5499",
-                "@type": "Person",
-                "affiliation": {
-                    "@id": "https://ror.org/05sd8tv96"
-                },
-                "contactPoint": {
-                    "@id": "mailto:Rosa.M.Badia@bsc.es"
-                },
-                "name": "Rosa M. Badia"
-            },
-            {
-                "@id": "https://ror.org/01z1gye03",
-                "@type": "Organization",
-                "name": "IRB Barcelona"
-            },
-            {
-                "@id": "mailto:adam.hospital@irbbarcelona.org",
-                "@type": "ContactPoint",
-                "contactType": "Author",
-                "email": "adam.hospital@irbbarcelona.org",
-                "identifier": "adam.hospital@irbbarcelona.org",
-                "url": "https://orcid.org/0000-0002-8291-8071"
-            },
-            {
-                "@id": "https://orcid.org/0000-0002-8291-8071",
-                "@type": "Person",
-                "affiliation": {
-                    "@id": "https://ror.org/01z1gye03"
-                },
-                "contactPoint": {
-                    "@id": "mailto:adam.hospital@irbbarcelona.org"
-                },
-                "name": "Adam Hospital"
-            },
-            {
-                "@id": "application_sources/matmul_directory.py",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode",
-                    "ComputationalWorkflow"
-                ],
-                "contentSize": 2163,
-                "description": "Main file of the COMPSs workflow source files",
-                "encodingFormat": "text/plain",
-                "image": {
-                    "@id": "complete_graph.svg"
-                },
-                "name": "matmul_directory.py",
-                "programmingLanguage": {
-                    "@id": "#compss"
-                }
-            },
-            {
-                "@id": "#compss",
-                "@type": "ComputerLanguage",
-                "alternateName": "COMPSs",
-                "citation": "https://doi.org/10.1007/s10723-013-9272-5",
-                "name": "COMPSs Programming Model",
-                "url": "http://compss.bsc.es/",
-                "version": "3.3"
-            },
-            {
-                "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/92",
-                "@type": "WebSite",
-                "name": "Scalable Vector Graphics"
-            },
-            {
-                "@id": "complete_graph.svg",
-                "@type": [
-                    "File",
-                    "ImageObject",
-                    "WorkflowSketch"
-                ],
-                "about": {
-                    "@id": "application_sources/matmul_directory.py"
-                },
-                "contentSize": 6346,
-                "description": "The graph diagram of the workflow, automatically generated by COMPSs runtime",
-                "encodingFormat": [
-                    [
-                        "image/svg+xml",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/92"
-                        }
-                    ]
-                ],
-                "name": "complete_graph.svg"
-            },
-            {
-                "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/817",
-                "@type": "WebSite",
-                "name": "JSON Data Interchange Format"
-            },
-            {
-                "@id": "App_Profile.json",
-                "@type": "File",
-                "contentSize": 244,
-                "description": "COMPSs application Tasks profile",
-                "encodingFormat": [
-                    "application/json",
-                    {
-                        "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/817"
-                    }
-                ],
-                "name": "App_Profile.json"
-            },
-            {
-                "@id": "compss_submission_command_line.txt",
-                "@type": "File",
-                "contentSize": 129,
-                "description": "COMPSs submission command line (runcompss / enqueue_compss), including flags and parameters passed to the application",
-                "encodingFormat": "text/plain",
-                "name": "compss_submission_command_line.txt"
-            },
-            {
-                "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/818",
-                "@type": "WebSite",
-                "name": "YAML"
-            },
-            {
-                "@id": "ro-crate-info.yaml",
-                "@type": "File",
-                "contentSize": 845,
-                "description": "COMPSs Workflow Provenance YAML configuration file",
-                "encodingFormat": [
-                    "YAML",
-                    {
-                        "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/818"
-                    }
-                ],
-                "name": "ro-crate-info.yaml"
-            },
-            {
-                "@id": "application_sources/matmul_tasks.py",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 1721,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "matmul_tasks.py"
-            },
-            {
-                "@id": "dataset/inputs/A/A.0.0",
-                "@type": "File",
-                "contentSize": 16,
-                "dateModified": "2023-11-06T11:49:14",
-                "name": "A.0.0",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/inputs/A/A.0.1",
-                "@type": "File",
-                "contentSize": 16,
-                "dateModified": "2023-11-06T11:49:14",
-                "name": "A.0.1",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/inputs/A/A.1.0",
-                "@type": "File",
-                "contentSize": 16,
-                "dateModified": "2023-11-06T11:49:14",
-                "name": "A.1.0",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/inputs/A/A.1.1",
-                "@type": "File",
-                "contentSize": 16,
-                "dateModified": "2023-11-06T11:49:14",
-                "name": "A.1.1",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/inputs/B/B.0.0",
-                "@type": "File",
-                "contentSize": 16,
-                "dateModified": "2023-11-06T11:49:14",
-                "name": "B.0.0",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/inputs/B/B.0.1",
-                "@type": "File",
-                "contentSize": 16,
-                "dateModified": "2023-11-06T11:49:14",
-                "name": "B.0.1",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/inputs/B/B.1.0",
-                "@type": "File",
-                "contentSize": 16,
-                "dateModified": "2023-11-06T11:49:14",
-                "name": "B.1.0",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/inputs/B/B.1.1",
-                "@type": "File",
-                "contentSize": 16,
-                "dateModified": "2023-11-06T11:49:14",
-                "name": "B.1.1",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/inputs/",
-                "@type": "Dataset",
-                "dateModified": "2023-11-06T11:49:14",
-                "hasPart": [
-                    {
-                        "@id": "dataset/inputs/A/A.0.0"
-                    },
-                    {
-                        "@id": "dataset/inputs/A/A.0.1"
-                    },
-                    {
-                        "@id": "dataset/inputs/A/A.1.0"
-                    },
-                    {
-                        "@id": "dataset/inputs/A/A.1.1"
-                    },
-                    {
-                        "@id": "dataset/inputs/B/B.0.0"
-                    },
-                    {
-                        "@id": "dataset/inputs/B/B.0.1"
-                    },
-                    {
-                        "@id": "dataset/inputs/B/B.1.0"
-                    },
-                    {
-                        "@id": "dataset/inputs/B/B.1.1"
-                    }
-                ],
-                "name": "inputs",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/C.0.0",
-                "@type": "File",
-                "contentSize": 20,
-                "dateModified": "2023-11-06T11:49:57",
-                "name": "C.0.0",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/C.0.1",
-                "@type": "File",
-                "contentSize": 20,
-                "dateModified": "2023-11-06T11:49:57",
-                "name": "C.0.1",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/C.1.0",
-                "@type": "File",
-                "contentSize": 20,
-                "dateModified": "2023-11-06T11:49:57",
-                "name": "C.1.0",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/C.1.1",
-                "@type": "File",
-                "contentSize": 20,
-                "dateModified": "2023-11-06T11:49:57",
-                "name": "C.1.1",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "#COMPSs_Workflow_Run_Crate_bsccs742.int.bsc.es_78fb0b3a-55c7-40af-ac60-35a591a39cd3",
-                "@type": "CreateAction",
-                "actionStatus": {
-                    "@id": "http://schema.org/CompletedActionStatus"
-                },
-                "agent": {
-                    "@id": "https://orcid.org/0000-0003-0606-2512"
-                },
-                "description": "Darwin bsccs742.int.bsc.es 23.1.0 Darwin Kernel Version 23.1.0: Mon Oct  9 21:27:27 PDT 2023; root:xnu-10002.41.9~6/RELEASE_X86_64 x86_64 COMPSS_HOME=/Users/rsirvent/opt/COMPSs/",
-                "endTime": "2023-11-06T11:50:01+00:00",
-                "instrument": {
-                    "@id": "application_sources/matmul_directory.py"
-                },
-                "name": "COMPSs matmul_directory.py execution at bsccs742.int.bsc.es",
-                "object": [
-                    {
-                        "@id": "dataset/inputs/"
-                    },
-                    {
-                        "@id": "dataset/C.0.0"
-                    },
-                    {
-                        "@id": "dataset/C.0.1"
-                    },
-                    {
-                        "@id": "dataset/C.1.0"
-                    },
-                    {
-                        "@id": "dataset/C.1.1"
-                    }
-                ],
-                "result": [
-                    {
-                        "@id": "dataset/C.0.0"
-                    },
-                    {
-                        "@id": "dataset/C.0.1"
-                    },
-                    {
-                        "@id": "dataset/C.1.0"
-                    },
-                    {
-                        "@id": "dataset/C.1.1"
-                    },
-                    {
-                        "@id": "./"
-                    }
-                ]
-            },
-            {
-                "@id": "https://w3id.org/ro/wfrun/process/0.1",
-                "@type": "CreativeWork",
-                "name": "Process Run Crate",
-                "version": "0.1"
-            },
-            {
-                "@id": "https://w3id.org/ro/wfrun/workflow/0.1",
-                "@type": "CreativeWork",
-                "name": "Workflow Run Crate",
-                "version": "0.1"
-            },
-            {
-                "@id": "https://w3id.org/workflowhub/workflow-ro-crate/1.0",
-                "@type": "CreativeWork",
-                "name": "Workflow RO-Crate",
-                "version": "1.0"
-            }
-        ]
-    }
+***************    PUBLISH matmul_directory at Laptop, data_persistence=True ****************
 
 
-ro-crate-metadata.json Java COMPSs example (MN4 supercomputer)
---------------------------------------------------------------
+- **Java COMPSs example (MN4 supercomputer run)**
 
 In this second ``ro-crate-metadata.json`` example, we want to illustrate the workflow provenance result of a Java COMPSs
 application execution in the MareNostrum 4 supercomputer. We show the execution of a matrix LU factorization
@@ -1317,7 +820,7 @@ xml configuration files. Besides, we also add the ``Readme`` and ``pom.xml``
 so they are packed in the resulting crate. This example also shows that the script is able to select the correct
 ``SparseLU.java`` main file as the ``ComputationalWorkflow`` in the RO-Crate, even when in the ``sources`` three
 files using the same file name exists (i.e. they implement 3 versions of the same algorithm: using files, arrays or
-objects). Finally, since no ``Submitter`` is defined, the first author will be considered as such. The resulting
+objects). Finally, since no ``Agent`` is defined, the first author will be considered as such. The resulting
 tree for the source files is:
 
 .. code-block:: console
@@ -1376,822 +879,7 @@ environment variables are captured, which provide details on how the execution h
 ``SLURM_JOB_NODE_LIST``, ``SLURM_JOB_NUM_NODES``, ``SLURM_JOB_CPUS_PER_NODE``, ``COMPSS_MASTER_NODE``,
 ``COMPSS_WORKER_NODES``, among others).
 
-.. code-block:: json
 
-    {
-        "@context": "https://w3id.org/ro/crate/1.1/context",
-        "@graph": [
-            {
-                "@id": "./",
-                "@type": "Dataset",
-                "conformsTo": [
-                    {
-                        "@id": "https://w3id.org/ro/wfrun/process/0.1"
-                    },
-                    {
-                        "@id": "https://w3id.org/ro/wfrun/workflow/0.1"
-                    },
-                    {
-                        "@id": "https://w3id.org/workflowhub/workflow-ro-crate/1.0"
-                    }
-                ],
-                "creator": [
-                    {
-                        "@id": "https://orcid.org/0000-0003-0606-2512"
-                    }
-                ],
-                "datePublished": "2023-11-06T16:15:01+00:00",
-                "description": "**Name:** SparseLU \n**Contact Person:** support-compss@bsc.es \n**Access Level:** public \n**License Agreement:** Apache2 \n**Platform:** COMPSs \n\n# Description\nThe Sparse LU application computes an LU matrix factorization on a sparse blocked matrix. The matrix size (number of blocks) and the block size are parameters of the application. \n\nAs the algorithm progresses, the area of the matrix that is accessed is smaller; concretely, at each iteration, the 0th row and column of the current matrix are discarded. On the other hand, due to the sparseness of the matrix, some of its blocks might not be allocated and, therefore, no work is generated for them.\n\nWhen executed with COMPSs, Sparse LU produces several types of task with different granularity and numerous dependencies between them.\n\n# Versions\nThere are three versions of Sparse LU, depending on the data types used to store the blocks.\n## Version 1\n''files'', where the matrix blocks are stored in files.\n## Version 2\n''objects'', where the matrix blocks are represented by objects.\n## Version 3\n''arrays'', where the matrix blocks are stored in arrays.\n\n\n# Execution instructions\nUsage:\n```\nruncompss sparseLU.files.SparseLU numberOfBlocks blockSize\nruncompss sparseLU.objects.SparseLU numberOfBlocks blockSize\nruncompss sparseLU.arrays.SparseLU numberOfBlocks blockSize\n```\n\nwhere:\n  * numberOfBlocks: Number of blocks inside each matrix\n  * blockSize: Size of each block\n\n\n# Execution Example\n```\nruncompss sparseLU.objects.SparseLU 16 4 \nruncompss sparseLU.files.SparseLU 16 4\nruncompss sparseLU.arrays.SparseLU 16 4 \n```\n\n\n# Build\n## Option 1: Native java\n```\ncd application_sources/; javac src/main/java/sparseLU/*/*.java\ncd src/main/java/; jar cf sparseLU.jar sparseLU/\ncd ../../../; mv src/main/java/sparseLU.jar jar/\n```\n\n## Option 2: Maven\n```\ncd application_sources/\nmvn clean package\n```\n",
-                "hasPart": [
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/files/Block.java"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/files/SparseLUItf.class"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/files/SparseLUImpl.java"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/files/SparseLU.java"
-                    },
-                    {
-                        "@id": "complete_graph.svg"
-                    },
-                    {
-                        "@id": "App_Profile.json"
-                    },
-                    {
-                        "@id": "compss_submission_command_line.txt"
-                    },
-                    {
-                        "@id": "ro-crate-info.yaml"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/files/Block.class"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/files/SparseLUItf.java"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/files/SparseLUImpl.class"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/files/SparseLU.class"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/objects/Block.java"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/objects/SparseLUItf.class"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/objects/SparseLU.java"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/objects/Block.class"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/objects/SparseLUItf.java"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/objects/SparseLU.class"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLUItf.class"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLUImpl.java"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLU.java"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLUItf.java"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLUImpl.class"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLU.class"
-                    },
-                    {
-                        "@id": "application_sources/jar/sparseLU.jar"
-                    },
-                    {
-                        "@id": "application_sources/xml/resources.xml"
-                    },
-                    {
-                        "@id": "application_sources/xml/project.xml"
-                    },
-                    {
-                        "@id": "application_sources/Readme"
-                    },
-                    {
-                        "@id": "application_sources/pom.xml"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.0"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.1"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.0"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.1"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.0"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.1"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.3"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.3.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.3.3"
-                    }
-                ],
-                "license": "Apache-2.0",
-                "mainEntity": {
-                    "@id": "application_sources/src/main/java/sparseLU/files/SparseLU.java"
-                },
-                "mentions": {
-                    "@id": "#COMPSs_Workflow_Run_Crate_marenostrum4_SLURM_JOB_ID_30555667"
-                },
-                "name": "Java COMPSs LU Factorization for Sparse Matrices",
-                "publisher": [
-                    {
-                        "@id": "https://ror.org/05sd8tv96"
-                    }
-                ]
-            },
-            {
-                "@id": "ro-crate-metadata.json",
-                "@type": "CreativeWork",
-                "about": {
-                    "@id": "./"
-                },
-                "conformsTo": [
-                    {
-                        "@id": "https://w3id.org/ro/crate/1.1"
-                    },
-                    {
-                        "@id": "https://w3id.org/workflowhub/workflow-ro-crate/1.0"
-                    }
-                ]
-            },
-            {
-                "@id": "https://ror.org/05sd8tv96",
-                "@type": "Organization",
-                "name": "Barcelona Supercomputing Center"
-            },
-            {
-                "@id": "mailto:Raul.Sirvent@bsc.es",
-                "@type": "ContactPoint",
-                "contactType": "Author",
-                "email": "Raul.Sirvent@bsc.es",
-                "identifier": "Raul.Sirvent@bsc.es",
-                "url": "https://orcid.org/0000-0003-0606-2512"
-            },
-            {
-                "@id": "https://orcid.org/0000-0003-0606-2512",
-                "@type": "Person",
-                "affiliation": {
-                    "@id": "https://ror.org/05sd8tv96"
-                },
-                "contactPoint": {
-                    "@id": "mailto:Raul.Sirvent@bsc.es"
-                },
-                "name": "Ra\u00fcl Sirvent"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/files/Block.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 5589,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "Block.java"
-            },
-            {
-                "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415",
-                "@type": "WebSite",
-                "name": "Java Compiled Object Code"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/files/SparseLUItf.class",
-                "@type": "File",
-                "contentSize": 904,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "SparseLUItf.class"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/files/SparseLUImpl.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 2431,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "SparseLUImpl.java"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/files/SparseLU.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode",
-                    "ComputationalWorkflow"
-                ],
-                "contentSize": 6602,
-                "description": "Main file of the COMPSs workflow source files",
-                "encodingFormat": "text/plain",
-                "image": {
-                    "@id": "complete_graph.svg"
-                },
-                "name": "SparseLU.java",
-                "programmingLanguage": {
-                    "@id": "#compss"
-                }
-            },
-            {
-                "@id": "#compss",
-                "@type": "ComputerLanguage",
-                "alternateName": "COMPSs",
-                "citation": "https://doi.org/10.1007/s10723-013-9272-5",
-                "name": "COMPSs Programming Model",
-                "url": "http://compss.bsc.es/",
-                "version": "3.3"
-            },
-            {
-                "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/92",
-                "@type": "WebSite",
-                "name": "Scalable Vector Graphics"
-            },
-            {
-                "@id": "complete_graph.svg",
-                "@type": [
-                    "File",
-                    "ImageObject",
-                    "WorkflowSketch"
-                ],
-                "about": {
-                    "@id": "application_sources/src/main/java/sparseLU/files/SparseLU.java"
-                },
-                "contentSize": 21106,
-                "description": "The graph diagram of the workflow, automatically generated by COMPSs runtime",
-                "encodingFormat": [
-                    [
-                        "image/svg+xml",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/92"
-                        }
-                    ]
-                ],
-                "name": "complete_graph.svg"
-            },
-            {
-                "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/817",
-                "@type": "WebSite",
-                "name": "JSON Data Interchange Format"
-            },
-            {
-                "@id": "App_Profile.json",
-                "@type": "File",
-                "contentSize": 967,
-                "description": "COMPSs application Tasks profile",
-                "encodingFormat": [
-                    "application/json",
-                    {
-                        "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/817"
-                    }
-                ],
-                "name": "App_Profile.json"
-            },
-            {
-                "@id": "compss_submission_command_line.txt",
-                "@type": "File",
-                "contentSize": 179,
-                "description": "COMPSs submission command line (runcompss / enqueue_compss), including flags and parameters passed to the application",
-                "encodingFormat": "text/plain",
-                "name": "compss_submission_command_line.txt"
-            },
-            {
-                "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/818",
-                "@type": "WebSite",
-                "name": "YAML"
-            },
-            {
-                "@id": "ro-crate-info.yaml",
-                "@type": "File",
-                "contentSize": 2429,
-                "description": "COMPSs Workflow Provenance YAML configuration file",
-                "encodingFormat": [
-                    "YAML",
-                    {
-                        "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/818"
-                    }
-                ],
-                "name": "ro-crate-info.yaml"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/files/Block.class",
-                "@type": "File",
-                "contentSize": 4135,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "Block.class"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/files/SparseLUItf.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 1808,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "SparseLUItf.java"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/files/SparseLUImpl.class",
-                "@type": "File",
-                "contentSize": 1310,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "SparseLUImpl.class"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/files/SparseLU.class",
-                "@type": "File",
-                "contentSize": 4682,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "SparseLU.class"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/objects/Block.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 4345,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "Block.java"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/objects/SparseLUItf.class",
-                "@type": "File",
-                "contentSize": 816,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "SparseLUItf.class"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/objects/SparseLU.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 4740,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "SparseLU.java"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/objects/Block.class",
-                "@type": "File",
-                "contentSize": 2991,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "Block.class"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/objects/SparseLUItf.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 1529,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "SparseLUItf.java"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/objects/SparseLU.class",
-                "@type": "File",
-                "contentSize": 3403,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "SparseLU.class"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLUItf.class",
-                "@type": "File",
-                "contentSize": 808,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "SparseLUItf.class"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLUImpl.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 4114,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "SparseLUImpl.java"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLU.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 4840,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "SparseLU.java"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLUItf.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 1899,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "SparseLUItf.java"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLUImpl.class",
-                "@type": "File",
-                "contentSize": 2430,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "SparseLUImpl.class"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLU.class",
-                "@type": "File",
-                "contentSize": 3304,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "SparseLU.class"
-            },
-            {
-                "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/412",
-                "@type": "WebSite",
-                "name": "Java Archive Format"
-            },
-            {
-                "@id": "application_sources/jar/sparseLU.jar",
-                "@type": "File",
-                "contentSize": 28758,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "application/java-archive",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/412"
-                        }
-                    ]
-                ],
-                "name": "sparseLU.jar"
-            },
-            {
-                "@id": "application_sources/xml/resources.xml",
-                "@type": "File",
-                "contentSize": 983,
-                "description": "Auxiliary File",
-                "name": "resources.xml"
-            },
-            {
-                "@id": "application_sources/xml/project.xml",
-                "@type": "File",
-                "contentSize": 289,
-                "description": "Auxiliary File",
-                "name": "project.xml"
-            },
-            {
-                "@id": "application_sources/Readme",
-                "@type": "File",
-                "contentSize": 1935,
-                "description": "Auxiliary File",
-                "name": "Readme"
-            },
-            {
-                "@id": "application_sources/pom.xml",
-                "@type": "File",
-                "contentSize": 4454,
-                "description": "Auxiliary File",
-                "name": "pom.xml"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.0",
-                "@type": "File",
-                "contentSize": 1234,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.0.0",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.1",
-                "@type": "File",
-                "contentSize": 1182,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.0.1",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.2",
-                "@type": "File",
-                "contentSize": 1217,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.0.2",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.0",
-                "@type": "File",
-                "contentSize": 1244,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.1.0",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.1",
-                "@type": "File",
-                "contentSize": 1238,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.1.1",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.2",
-                "@type": "File",
-                "contentSize": 1233,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.1.2",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.0",
-                "@type": "File",
-                "contentSize": 1214,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.2.0",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.1",
-                "@type": "File",
-                "contentSize": 1255,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.2.1",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.2",
-                "@type": "File",
-                "contentSize": 1251,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.2.2",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.3",
-                "@type": "File",
-                "contentSize": 1219,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.2.3",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.3.2",
-                "@type": "File",
-                "contentSize": 1290,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.3.2",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.3.3",
-                "@type": "File",
-                "contentSize": 1250,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.3.3",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "#COMPSs_Workflow_Run_Crate_marenostrum4_SLURM_JOB_ID_30555667",
-                "@type": "CreateAction",
-                "actionStatus": {
-                    "@id": "http://schema.org/CompletedActionStatus"
-                },
-                "agent": {
-                    "@id": "https://orcid.org/0000-0003-0606-2512"
-                },
-                "description": "Linux s23r2b24 4.4.59-92.20-default #1 SMP Wed May 31 14:05:24 UTC 2017 (8cd473d) x86_64 x86_64 x86_64 GNU/Linux SLURM_JOB_NAME=sparse_lu_prov COMPSS_PYTHON_VERSION=3.9.10 SLURM_JOB_QOS=debug SLURM_MEM_PER_CPU=1880 COMPSS_BINDINGS_DEBUG=1 SLURM_JOB_ID=30555667 SLURM_JOB_USER=bsc19057 COMPSS_HOME=/apps/COMPSs/3.3.pr/ SLURM_JOB_UID=2952 SLURM_SUBMIT_DIR=/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU SLURM_JOB_NODELIST=s23r2b24 SLURM_JOB_GID=2950 SLURM_JOB_CPUS_PER_NODE=48 COMPSS_MPIRUN_TYPE=impi SLURM_SUBMIT_HOST=login3 SLURM_JOB_PARTITION=sequential SLURM_JOB_ACCOUNT=bsc19 SLURM_JOB_NUM_NODES=1 COMPSS_MASTER_NODE=s23r2b24 COMPSS_WORKER_NODES=",
-                "endTime": "2023-11-06T16:15:01+00:00",
-                "instrument": {
-                    "@id": "application_sources/src/main/java/sparseLU/files/SparseLU.java"
-                },
-                "name": "COMPSs SparseLU.java execution at marenostrum4 with JOB_ID 30555667",
-                "object": [
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.0"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.1"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.0"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.1"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.0"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.1"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.3"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.3.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.3.3"
-                    }
-                ],
-                "result": [
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.0"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.1"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.0"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.1"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.0"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.1"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.3"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.3.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.3.3"
-                    },
-                    {
-                        "@id": "./"
-                    }
-                ],
-                "subjectOf": [
-                    "https://userportal.bsc.es/"
-                ]
-            },
-            {
-                "@id": "https://w3id.org/ro/wfrun/process/0.1",
-                "@type": "CreativeWork",
-                "name": "Process Run Crate",
-                "version": "0.1"
-            },
-            {
-                "@id": "https://w3id.org/ro/wfrun/workflow/0.1",
-                "@type": "CreativeWork",
-                "name": "Workflow Run Crate",
-                "version": "0.1"
-            },
-            {
-                "@id": "https://w3id.org/workflowhub/workflow-ro-crate/1.0",
-                "@type": "CreativeWork",
-                "name": "Workflow RO-Crate",
-                "version": "1.0"
-            }
-        ]
-    }
 
+
+***********  PUBLISH /home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/ at MN4, data_persistence=False ***********
