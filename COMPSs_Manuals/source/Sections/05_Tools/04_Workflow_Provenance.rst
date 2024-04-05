@@ -80,8 +80,8 @@ Our current implementation needs ``ro-crate-py`` version ``0.9.0``.
     to install ro-crate-py.
 
 
-Previous needed information (YAML configuration file)
------------------------------------------------------
+YAML configuration file
+-----------------------
 
 There are certain pieces of information which must be included when registering the provenance of a workflow that
 the COMPSs runtime cannot automatically infer, such as the authors of an application. For specifying all these
@@ -166,7 +166,8 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
 
 .. TIP::
     Large datasets (i.e. hundreds of MBs) should be uploaded to public
-    data repositories (e.g. `Zenodo <https://zenodo.org/>`_) and included as references with the ``inputs`` or ``outputs`` terms.
+    data repositories (e.g. `Zenodo <https://zenodo.org/>`_ up to 50 GB per dataset, `FigShare <https://figshare.com/>`_
+    up to 5 TB per dataset) and included as references with the ``inputs`` or ``outputs`` terms.
 
 From all these terms, only ``name`` is  mandatory, since the rest are not strictly required to generate workflow provenance with COMPSs.
 However, it is important to include as much information as possible in order to correctly share your application and
@@ -240,7 +241,7 @@ individual can be provided.
 
 .. WARNING::
 
-    If no Agent section is provided, the first Author will be considered by default as the agent of the
+    If no Agent section is provided, the first Author will be considered by default as the agent executing the
     workflow.
 
 Examples
@@ -317,13 +318,15 @@ An example of the **minimal YAML** that needs to be defined in order to publish 
     not be possible to generate a DOI for the workflow.
 
 
-Usage
------
+Recording activation
+--------------------
 
 The way of activating the recording of workflow provenance with COMPSs is very simple.
-One must only enable the ``-p`` or ``--provenance`` flag when using ``runcompss`` or
-``enqueue_compss`` to run or submit a COMPSs application, respectively.
-As shown in the help option:
+One must only enable the ``-p`` or ``--provenance`` flag when using ``runcompss``,
+``enqueue_compss``, or ``pycompss run`` to run or submit a COMPSs application. It is important to highlight that the
+``--provenance`` flag accepts a custom name for the YAML file with the application's details (see previous
+Section :ref:`Sections/05_Tools/04_Workflow_Provenance:YAML configuration file`). This is
+specified using the ``--provenance=my_yaml_file.yaml`` option, as shown in the ``runcompss`` help:
  
 .. code-block:: console
 
@@ -344,12 +347,19 @@ As shown in the help option:
 In the case of extremely large workflows (e.g. a workflow
 with tenths of thousands of task nodes, or tenths of thousands of files used as inputs or outputs), the extra time
 needed to generate the workflow provenance with RO-Crate may be a problem in systems with strict run time constraints.
+In the COMPSs specific case, workflows with a large number of edges can lead to large workflow diagram generation time
+with ``compss_gengraph``.
 In these cases, the workflow execution may end correctly, but the extra processing to generate the provenance may be killed
 by the system if it exceeds a certain limit, and the provenance may not be created correctly.
 
-For this or any other similar situation, our workflow provenance generation script can be triggered offline at any moment
+.. WARNING::
+    As a failsafe, we automatically disable workflow diagram generation for workflows with more than 6500 edges.
+    If you want to generate the diagram anyway, you can
+    trigger the diagram generation manually with ``compss_gengraph`` or ``pycompss gengraph``.
+
+For these extreme cases, our workflow provenance generation script can be triggered offline at any moment
 after the workflow has executed correctly, thanks to our design. From the working directory of the application, the
-following commands may be used:
+following commands can be used:
 
 .. code-block:: console
 
@@ -362,7 +372,7 @@ application run logs are stored (see Section :ref:`Sections/03_Execution_Environ
 for more details on where to locate these logs). ``compss_gengraph``
 generates the workflow image to be added to the crate, but if its generation time is a concern, or the user does not
 want it to be included in the crate, the command can be skipped. The second command runs the
-``generate_COMPSs_RO-Crate.py`` Python script, that uses the information provided by the user in the YAML file (``ro-crate-info.yaml`` by default)
+``generate_COMPSs_RO-Crate.py`` Python script, that uses the information provided by the user in the my_yaml_file.yaml file (or ``ro-crate-info.yaml`` by default)
 combined with the file accesses information registered by the COMPSs runtime in the ``dataprovenance.log`` file. The
 result is a sub-directory ``COMPSs_RO-Crate_[uuid]/`` that contains the workflow provenance of the run (see next sub-section
 for a detailed description).
@@ -373,15 +383,14 @@ for a detailed description).
 
     .. code-block:: console
 
-        PROVENANCE | PROVENANCE GENERATION HAS FAILED
-        PROVENANCE | Temporary files have not been erased: App_Profile.json compss_submission_command_line.txt /Users/rsirvent/.COMPSs/matmul_files.py_01//monitor/complete_graph.svg
-        PROVENANCE | Provenance generation can be triggered by hand using the following commands:
-        PROVENANCE | /Users/rsirvent/opt/COMPSs/Runtime/scripts/utils/compss_gengraph svg /Users/rsirvent/.COMPSs/matmul_files.py_01//monitor/complete_graph.dot
-        PROVENANCE | python3 /Users/rsirvent/opt/COMPSs/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py ro-crate-info.yaml /Users/rsirvent/.COMPSs/matmul_files.py_01//dataprovenance.log
-        PROVENANCE | ENDED WORKFLOW PROVENANCE SCRIPT
+        PROVENANCE | STARTING WORKFLOW PROVENANCE SCRIPT
+        PROVENANCE | If needed, Provenance generation can be triggered by hand using the following commands:
+        PROVENANCE | /Users/rsirvent/opt/COMPSs/Runtime/scripts/utils/compss_gengraph svg /Users/rsirvent/.COMPSs/matmul_files.py_52//monitor/complete_graph.dot
+        PROVENANCE | python3 /Users/rsirvent/opt/COMPSs/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py REMOTE_DATASET.yaml /Users/rsirvent/.COMPSs/matmul_files.py_52//dataprovenance.log
+        ...
 
-Result
-------
+Resulting crate
+---------------
 
 Once the application has finished, a new sub-folder under the application's Working Directory
 will be created with the name ``COMPSs_RO-Crate_[uuid]/``, which is also known as *crate*. The contents of the
@@ -389,14 +398,15 @@ folder include all the elements needed to record a COMPSs application execution 
 the datasets used for the run), and
 are:
 
-- **Application Source Files:** As detailed by the user in the ``ro-crate-info.yaml`` file,
+- **Application Source Files:** As detailed by the user in the YAML configuration file,
   with the term ``sources``.
   The main source file and all auxiliary files that the application needs (e.g. ``.py``, ``.java``, ``.class``
-  or ``.jar``) are included by the user. All application files are added to a sub-folder in the crate named ``application_sources/``, where
+  or ``.jar`` source code files, and also any installation, configuration, compilation or submission scripts, readme files, etc...) are included
+  by the user. All application files are added to a sub-folder in the crate named ``application_sources/``, where
   the ``sources`` directory locations are included with their same folder tree structure, while the individual files included
   are added to the root of the ``application_sources/`` sub-folder in the crate.
 
-- **Application Datasets:** When ``data_persistence`` is set to ``True`` in the ``ro-crate-info.yaml`` file, both
+- **Application Datasets:** When ``data_persistence`` is set to ``True`` in the YAML configuration file, both
   the input and output datasets of the workflow are included in the crate. The input dataset are the files that the
   workflow needs to be run. The output dataset is formed by all the resulting files generated by the execution of the
   COMPSs application. A sub-folder ``dataset/`` with all related files copied will be created, and the sub-directories
@@ -404,13 +414,14 @@ are:
   provided inside the ``dataset/`` folder.
 
 - **complete_graph.svg:** The image of the workflow generated by the COMPSs runtime,
-  as generated with the ``runcompss -g`` or ``--graph`` option.
+  as generated with the ``runcompss -g`` or ``--graph`` options.
 
-- **App_Profile.json:** A set of task statistics of the application run recorded by the
+- **App_Profile.json (or custom name):** A set of task statistics of the application run recorded by the
   COMPSs runtime, as if the ``runcompss --output_profile=<path>`` option was enabled.
   It includes, for each resource and method executed: number of executions of the
   specific method, as well as maximum, average and minimum run time for the tasks.
-  The name of the file can be customized using the ``--output_profile=<path>`` option.
+  The name of the file can be customized using the ``--output_profile=<path>`` option. See also Section
+  :ref:`Sections/03_Execution_Environments/01_Scheduling:Schedulers`.
 
 - **compss_submission_command_line.txt:** Stores the exact command line that was used to submit the application
   (i.e. ``runcompss`` or ``enqueue_compss``), including all the flags and parameters passed.
@@ -418,8 +429,22 @@ are:
   application, since the workflow generated by the COMPSs runtime is created dynamically at run time, thus,
   input parameters could even potentially change the resulting workflow generated by the COMPSs runtime.
 
+- **ro-crate-info.yaml (or custom name):** The YAML workflow provenance configuration file.
+
+- **compss-[job_id].out:** Only when the execution is on a cluster. The standard output log of the job execution.
+
+- **compss-[job_id].err:** Only when the execution is on a cluster. The standard error log of the job execution.
+
 - **ro-crate-metadata.json:** The RO-Crate JSON main file describing the contents of
-  this directory (crate) in the RO-Crate specification format. You can find examples in the following Sections.
+  this directory (crate) in the RO-Crate specification format. You can find examples at Section
+  :ref:`Sections/05_Tools/04_Workflow_Provenance:Metadata examples`.
+
+.. TIP::
+
+    For the basic set of files always included for every application (i.e. ``complete_graph.svg``, ``App_Profile.json``,
+    ``compss_submission_command_line.txt``, ``ro-crate-info.yaml``, ``compss-[job_id].out``, ``compss-[job_id].err``),
+    the runtime generates a file checksum using the ``sha256`` algorithm, as specified inside the metadata file
+    ``ro-crate-metadata.json``. This checksum can be used to verify the file integrity with the ``sha256sum`` command.
 
 .. WARNING::
 
@@ -506,11 +531,13 @@ so the user should double check if the decision taken is correct. Some examples 
     PROVENANCE | WARNING: 'Agent' not specified in ro-crate-info.yaml. First author selected by default.
 
 
-WorkflowHub
------------
+Using WorkflowHub
+-----------------
 
 Publish and cite your results with WorkflowHub
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+****************** EXPLAIN HOW TO ADD BIG FILES FROM ZENODO ********************************
 
 Once the provenance metadata for your COMPSs application has been generated, you have the possibility of publishing
 your results (i.e. both the workflow and the workflow run) in `WorkflowHub <https://workflowhub.eu/>`_, the FAIR workflow registry, where a DOI can be generated,
@@ -526,7 +553,8 @@ The steps to achieve the publication of a COMPSs execution are:
   in the WorfklowHub registry. You can use your GitHub credentials to easily log in.
 
 - Before being able to contribute workflows to the registry, you need to join a WorkflowHub Team. You can either create
-  your own team, or join an existing one, as shown in the following Figure.
+  your own team, or join an existing one, as shown in the following Figure. For testing purposes, you can join the
+  ``COMPSs Tutorials`` team.
 
 .. figure:: ./Figures/JoinOrCreate.jpg
    :name: Join or Create a Team at WorkflowHub
@@ -538,14 +566,19 @@ The steps to achieve the publication of a COMPSs execution are:
 
 - Once you belong to a Team, you will be able to use the menu ``Create`` at the top of the web page, select ``Workflow``.
 
-- Select the ``Upload/Import Workflow RO-Crate`` tab, ``Local file``, and browse your computer to select the zip file
+- Select the third tab ``Upload/Import Workflow RO-Crate`` tab, ``Local file``, and browse your computer to select the zip file
   prepared previously. Click ``Register``.
 
 - Review that the information automatically obtained from the workflow provenance is correct.
 
-    - Select the ``Teams`` that this workflow will belong to.
+    - Select the ``Teams`` that this workflow will belong to (mandatory).
     - Select the visibility and teams' permissions for your workflow in the ``Sharing`` section (for both general public, and for the WorkflowHub Teams where this workflow will be added).
     - Click ``Register`` again.
+
+.. TIP::
+
+    The crate (i.e. folder ``COMPSs_RO-Crate_[uuid]/``) can also be uploaded to GitHub, and then imported using the
+    second tab option ``Import Git Repository``.
 
 After these steps, the main summary page of your workflow will be shown, where three main tabs can be selected
 (see https://doi.org/10.48546/workflowhub.workflow.635.1 to check out an example directly at WorkflowHub):
@@ -560,7 +593,7 @@ After these steps, the main summary page of your workflow will be shown, where t
 
    Overview tab information
 
-- **Files**: Where you can browse the uploaded content of the crate (see :ref:`Sections/05_Tools/04_Workflow_Provenance:Result`
+- **Files**: Where you can browse the uploaded content of the crate (see :ref:`Sections/05_Tools/04_Workflow_Provenance:Resulting crate`
   for details on the crate structure).
 
 .. figure:: ./Figures/WH_files.png
@@ -603,7 +636,9 @@ this are:
 
    Generate a DOI button in the Citation box
 
-- The final generated DOI for the workflow results can be found in the ``Citation`` box.
+- The final generated DOI for the workflow results can be found in the ``Citation`` box. The format of the citation
+  can be changed from the dropdown menu inside the box, having a large number of styles available. One of the most
+  commonly used is the ``BibTeX generic citation style``.
 
 .. figure:: ./Figures/WH_citation.png
    :name: Citation
@@ -615,8 +650,8 @@ this are:
 
 .. WARNING::
 
-    If no Authors are provided in the ro-crate-info.yaml file, a DOI will not be able to be generated.
-    See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Previous needed information (YAML configuration file)`
+    If no Authors are provided in the YAML configuration file, a DOI will not be able to be generated.
+    See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:YAML configuration file`
 
 You can see a couple of examples on previous published workflows:
 
@@ -634,11 +669,10 @@ for your convenience. An example of the full text generated:
 
 .. TIP::
 
-    When writing the ``description`` term of your ``ro-crate-info.yaml`` file (see Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Previous needed information (YAML configuration file)`)
+    When writing the ``description`` term of your YAML configuration file (see Section :ref:`Sections/05_Tools/04_Workflow_Provenance:YAML configuration file`)
     you can use Markdown language to get a fancier description in WorkflowHub. You can find a Markdown language guide
-    `in this site <https://simplemde.com/markdown-guide>`_, and an example on how to write it in an ``ro-crate-info.yaml`` file
-    in the previously provided examples (i.e. in their included
-    ``ro-crate-info.yaml`` files).
+    `in this site <https://simplemde.com/markdown-guide>`_, and an example on how to write it at the YAML configuration files
+    of the previously provided examples (i.e. in their included ``ro-crate-info.yaml`` files).
 
 
 Re-execute a COMPSs workflow published in WorkflowHub
@@ -654,7 +688,7 @@ if the objective of the user is to use the same workflow but with different inpu
 
 The steps to reproduce a COMPSs workflow vary depending if the crate package downloaded includes the datasets (i.e. it
 has a ``dataset/`` sub-folder). This is achieved when ``data_persistence`` is set to ``True`` in the
-``ro-crate-info.yaml`` file. Thus, the data preparation step will change depending on the availability of the dataset
+YAML configuration file. Thus, the data preparation step will change depending on the availability of the dataset
 needed for the workflow execution. In addition, any external third party software used in the application (e.g.
 simulators, auxiliary libraries and packages, ...), must be made available in the new execution environment. For
 simplicity, we will not go into the details on how to deal with this environment preparation and we will assume the
@@ -675,7 +709,7 @@ All in all, the main steps to prepare the application re-execution are:
 
 - Copy or move the downloaded file to the environment where you want to execute the application. Unzip the file there.
   You will see a set of files and folders that correspond to the workflow provenance as generated by COMPSs
-  (see :ref:`Sections/05_Tools/04_Workflow_Provenance:Result` for details on the crate structure).
+  (see :ref:`Sections/05_Tools/04_Workflow_Provenance:Resulting crate` for details on the crate structure).
 
 - If the dataset has been included in the crate, copy the ``dataset/`` folder input files in the ``application_sources/`` folder.
 
@@ -754,7 +788,7 @@ In the RO-Crate specification, the root file containing the metadata referring t
 a PyCOMPSs application execution in a laptop, specifically an out-of-core matrix multiplication example that includes matrices
 ``A`` and ``B`` as inputs in an ``inputs/`` sub-directory, and matrix ``C`` as the result of their multiplication
 (which in the code is also passed as input, to have a matrix initialized with 0s). We also set the ``data_persistence``
-term of the ``ro-crate-info.yaml`` file to ``True`` to indicate we want the datasets to be included in the resulting
+term of the YAML configuration file to ``True`` to indicate we want the datasets to be included in the resulting
 crate.
 For all the specific details on the fields provided in the JSON file, please refer to the
 `RO-Crate specification Website <https://www.researchobject.org/ro-crate/1.1/>`_. Intuitively, if you search through
@@ -807,7 +841,7 @@ do not define the ``data_persistence`` option, which means it will be false, and
 the resulting crate (i.e. references to the location of files will be provided).
 
 Apart from the terms already mentioned in the previous example (``creator``, ``publisher``, ``hasPart``,
-``ComputationalWorkflow``, ``version``, ``CreateAction``), if we first observe the ``ro-crate-info.yaml`` file:
+``ComputationalWorkflow``, ``version``, ``CreateAction``), if we first observe the YAML configuration file:
 
 .. code-block:: yaml
 
