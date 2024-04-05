@@ -80,15 +80,15 @@ Our current implementation needs ``ro-crate-py`` version ``0.9.0``.
     to install ro-crate-py.
 
 
-Previous needed information
----------------------------
+Previous needed information (YAML configuration file)
+-----------------------------------------------------
 
 There are certain pieces of information which must be included when registering the provenance of a workflow that
 the COMPSs runtime cannot automatically infer, such as the authors of an application. For specifying all these
 fields that are needed to generate an RO-Crate but cannot be automatically obtained, we have created a simple YAML
 structure where the user can specify them. By default, a YAML file named ``ro-crate-info.yaml`` will be expected in the
 working directory (i.e. where the application is going to be run), but a different YAML file can be used by specifying
-it with ``--provenance=my_yaml_file.yaml`` when activating Workflow Provenance generation.
+it with ``--provenance=my_yaml_file.yaml`` when activating workflow provenance generation.
 The YAML file must follow the next template structure:
 
 .. code-block:: yaml
@@ -96,20 +96,12 @@ The YAML file must follow the next template structure:
     COMPSs Workflow Information:
       name: Name of your COMPSs application
       description: Detailed description of your COMPSs application
-      license: Apache-2.0
-        # URL preferred, but these strings are accepted: https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
+      license: YourLicense-1.0
       sources: [/absolute_path_to/dir_1/, relative_path_to/dir_2/, main_file.py, relative_path/aux_file_1.py, /abs_path/aux_file_2.py]
-        # List of application source files and directories. Relative or absolute paths can be used.
-      sources_main_file: my_main_file.py
-        # Optional: Manually specify the name of the main file of the application, located in one of the 'sources' defined.
-        # Relative paths from a 'sources' entry, or absolute paths can be used.
       data_persistence: False
-        # True to include all input and output files of the application in the resulting crate.
-        # If False, input and output files of the application won't be included, just referenced. False by default or if not set.
-      inputs: [/abs_path_to/dir_1, rel_path_to/dir_2, file_1, rel_path/file_2]
-        # Optional: Manually specify the inputs of the workflow. Relative or absolute paths can be used.
-      outputs: [/abs_path_to/dir_1, rel_path_to/dir_2, file_1, rel_path/file_2]
-        # Optional: Manually specify the outputs of the workflow. Relative or absolute paths can be used.
+      inputs: [/abs_path_to/dir_1, rel_path_to/dir_2, file_1, rel_path/file_2, https://domain.to/file]
+      outputs: [/abs_path_to/dir_1, rel_path_to/dir_2, file_1, rel_path/file_2, https://domain.to/file]
+      sources_main_file: my_main_file.py
 
     Authors:
       - name: Author_1 Name
@@ -117,13 +109,11 @@ The YAML file must follow the next template structure:
         orcid: https://orcid.org/XXXX-XXXX-XXXX-XXXX
         organisation_name: Institution_1 name
         ror: https://ror.org/XXXXXXXXX
-          # Find them in ror.org
       - name: Author_2 Name
         e-mail: author2@email.com
         orcid: https://orcid.org/YYYY-YYYY-YYYY-YYYY
         organisation_name: Institution_2 name
         ror: https://ror.org/YYYYYYYYY
-          # Find them in ror.org
 
     Agent:
       name: Name
@@ -131,7 +121,6 @@ The YAML file must follow the next template structure:
       orcid: https://orcid.org/XXXX-XXXX-XXXX-XXXX
       organisation_name: Agent Institution name
       ror: https://ror.org/XXXXXXXXX
-        # Find them in ror.org
 
 .. WARNING::
 
@@ -144,7 +133,10 @@ As you can see, there are three main blocks in the YAML:
 
 - **Authors:** Where authors' details are given.
 
-- **Agent:** The person running the workflow in the computing resources.
+- **Agent:** The single person running the workflow in the computing resources.
+
+COMPSs Workflow Information section
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 More specifically, in the **COMPSs Workflow Information** section, the most commonly used terms are:
 
@@ -163,16 +155,18 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
   will be added as the corresponding source code if it can be found in the current working directory.
 
 - The ``license`` field is preferred to be specified by providing an URL to the license, but a set of
-  predefined strings are also supported, and can be found here:
-  https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
+  predefined strings are also supported, and can be found at the `Workflow-RO-Crate profile page <https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses>`_.
 
-- ``data_persistence`` is a boolean to indicate whether the workflow provenance generation should include the input
-  and output datasets needed and generated respectively in the workflow (i.e. must be set to ``True``).
-  Including the related datasets is feasible for
-  workflows where the datasets are small enough to be sent back and forth between execution environments. When datasets
-  are too large to be moved around, or if reproducibility or replicability is ment for a single execution environment,
-  this field should be set to ``False`` to avoid including the datasets in the resulting crate package. Its value is
-  ``False`` by default.
+
+- ``data_persistence`` value is ``False`` by default. It is s a boolean to indicate whether the workflow provenance generation should copy the workflow's input
+  and output datasets to the crate (i.e. must be set to ``True``). Including the
+  datasets is feasible for workflows where they are small enough to be sent back and forth between
+  execution environments. When datasets are too large to be moved around (i.e. hundreds of MB), this field should be set
+  to ``False``.
+
+.. TIP::
+    Large datasets (i.e. hundreds of MBs) should be uploaded to public
+    data repositories (e.g. `Zenodo <https://zenodo.org/>`_) and included as references with the ``inputs`` or ``outputs`` terms.
 
 From all these terms, only ``name`` is  mandatory, since the rest are not strictly required to generate workflow provenance with COMPSs.
 However, it is important to include as much information as possible in order to correctly share your application and
@@ -190,16 +184,16 @@ are specified, WorkflowHub will not allow to generate a DOI for the workflow exe
 
 Also, some more optional terms are available, but commonly less used:
 
-- ``inputs`` is an advanced feature. Should be used only when automatic detection of workflow input files does not work
-  properly. Input files and directories can be specified, and will be added as overall input parameters to the workflow
-  (in addition to the ones detected).
+- ``inputs`` to manually include input parameters (files or directories) to the application, in addition to the ones
+  detected. In order to include very large files in the crate without actually copying them, files from remote
+  repositories can be referenced (e.g. ``https://zenodo.org/records/10782431/files/lysozyme_datasets.zip``)
 
-- ``outputs`` is an advanced feature. Should be used only when automatic detection of workflow output files does not work
-  properly. Output files and directories can be specified, and will be added as overall output parameters to the workflow
-  (in addition to the ones detected).
+- ``outputs`` to manually include output parameters (files or directories) to the application, in addition to the ones
+  detected. In order to include very large files in the crate without actually copying them, files from remote
+  repositories can be referenced (e.g. ``https://zenodo.org/records/10783183/files/results_2003_0521_boumardes_BS.tar.gz``)
 
-- ``sources_main_file`` is an advanced feature. It is the name of the main source file of the application,
-  and may be specified if the user wants to select
+- ``sources_main_file`` is an advanced feature very rarely used, to override the detected main file for the application.
+  It defines the name of the main source file of the application, and may be specified if the user wants to select
   a particular file as such. The COMPSs runtime detects automatically the main source of an application, therefore, this is a way
   to override the detected file. The file can be specified with a relative path inside one of the
   directories listed in ``sources``. An absolute path can also be used.
@@ -210,7 +204,11 @@ Also, some more optional terms are available, but commonly less used:
     automatically the main file from application execution, this would enable to modify the automatic selection in case
     of need.
 
-In the **Authors** section (the whole section is optional):
+Authors section
+~~~~~~~~~~~~~~~
+
+In the **Authors** section (the whole section is optional), a single author or a list of authors can be provided. For
+each Author:
 
 - ``name``, ``e-mail`` and ``organisation_name`` are strings corresponding to the author's name, e-mail and their
   institution. They are free text, but the ``e-mail`` field must follow the ``user@domain.top`` format.
@@ -223,23 +221,30 @@ In the **Authors** section (the whole section is optional):
 
 .. WARNING::
 
-    If an Author is specified, it must have at least a ``name`` and an ``orcid`` defined. If its Organisation is
-    specified, both ``organisation_name`` and ``ror`` must be provided.
+    If an Author is specified, it must have at least a ``name`` and an ``orcid`` defined. If their Organisation is also
+    specified, at least the ``ror`` must be provided.
 
 .. TIP::
 
-    It is very important that the list of source files (defined with ``sources``), ``orcid`` and
+    It is very important that the ``sources``, ``orcid`` and
     ``ror`` terms are correctly defined, since the
     runtime will only register information for the list of source files defined, and the ``orcid`` and ``ror`` are
     used as unique identifiers in the RO-Crate specification.
 
-The **Agent** section has the same terms as the Authors section, but it specifically provides the details of the
-person running the workflow, that can be different from the Authors. The whole section is optional.
+Agent section
+~~~~~~~~~~~~~
+
+The **Agent** section has the same terms as the Authors section, but it specifically provides the details of the sole
+person running the workflow, that can be different from the Authors. The whole section is optional and only a single
+individual can be provided.
 
 .. WARNING::
 
     If no Agent section is provided, the first Author will be considered by default as the agent of the
     workflow.
+
+Examples
+~~~~~~~~
 
 In the following lines, we provide a YAML example for an out-of-core Matrix Multiplication PyCOMPSs application,
 distributed with license Apache v2.0, with 2 source files, and authored by 3 persons from two different
@@ -284,18 +289,18 @@ same result.
       data_persistence: False
 
     Authors:
-      - name: Raül Sirvent
-        e-mail: Raul.Sirvent@bsc.es
-        orcid: https://orcid.org/0000-0003-0606-2512
-        organisation_name: Barcelona Supercomputing Center
-        ror: https://ror.org/05sd8tv96
+      name: Raül Sirvent
+      e-mail: Raul.Sirvent@bsc.es
+      orcid: https://orcid.org/0000-0003-0606-2512
+      organisation_name: Barcelona Supercomputing Center
+      ror: https://ror.org/05sd8tv96
 
     Agent:
-        name: Rosa M. Badia
-        e-mail: Rosa.M.Badia@upc.edu
-        orcid: https://orcid.org/0000-0003-2941-5499
-        organisation_name: Universitat Politècnica de Catalunya
-        ror: https://ror.org/03mb6wj31
+      name: Rosa M. Badia
+      e-mail: Rosa.M.Badia@upc.edu
+      orcid: https://orcid.org/0000-0003-2941-5499
+      organisation_name: Universitat Politècnica de Catalunya
+      ror: https://ror.org/03mb6wj31
 
 An example of the **minimal YAML** that needs to be defined in order to publish your workflow in WorkflowHub is:
 
@@ -431,8 +436,81 @@ are:
     trigger the diagram generation manually with ``compss_gengraph`` or ``pycompss gengraph``.
 
 
+Log and time statistics
+-----------------------
+
+When the provenance generation is activated, and after the application has finished, the workflow provenance generation
+script will be automatically triggered. A number of log messages related to provenance can bee seen, which return
+interesting information regarding the provenance generation process. They can all be filtered by doing a ``grep`` in
+the output log of the application using the ``PROVENANCE`` expression.
+
+.. code-block:: console
+
+    PROVENANCE | Generating graph for Workflow Provenance
+    Output file: /Users/rsirvent/.COMPSs/matmul_files.py_07//monitor/complete_graph.svg
+    INFO: Generating Graph with legend
+    DONE
+    PROVENANCE | Ended generating graph for Workflow Provenance. TIME: 1 s
+
+This first block indicates that the workflow image in SVG format is being generated. When this part finishes, the time
+in seconds will be reported. As mentioned earlier, complex workflows can lead to large graph generation times.
+
+.. code-block:: console
+
+    PROVENANCE | STARTING WORKFLOW PROVENANCE SCRIPT
+    PROVENANCE | COMPSs version: 3.3, out_profile: App_Profile.json, main_entity: /Users/rsirvent/COMPSs-DP/matmul_files/matmul_files.py
+    PROVENANCE | COMPSs runtime detected inputs (12)
+    PROVENANCE | COMPSs runtime detected outputs (4)
+    PROVENANCE | dataprovenance.log processing TIME: 0.00012993812561035156 s
+
+This second block shows the COMPSs version detected, the name of the file containing the execution profile of the
+application, and the ``mainEntity`` detected (i.e. the source file that contains the main method from the COMPSs
+application). Besides, it reports how many input and output data assets have been detected automatically by the COMPSs
+runtime, and the time it took to run that analysis (i.e. the dataprovenance.log processing time).
+
+.. code-block:: console
+
+    PROVENANCE | Application source files detected (10)
+    PROVENANCE | RO-Crate adding source files TIME: 0.003629922866821289 s
+    PROVENANCE | RO-Crate adding input files TIME (Persistence: True): 0.0022089481353759766 s
+    PROVENANCE | RO-Crate adding output files TIME (Persistence: True): 0.000576019287109375 s
+
+The third block first details how many source files have been detected from the ``sources`` term defined
+in the ``ro-crate-py.yaml`` file. Then, it provides a set of times to understand if any overhead is caused by the
+workflow provenance generation script. The first time is the time taken to add the files that are included
+physically in the crate (this is, application source files, workflow image, ...). And the second and third are the times
+spent by the script to add all input and output files, detailing if data persistence was established as ``True`` or ``False``.
+If ``True``, the files are physically copied to the crate. If ``False``, only references to the location of the files are
+included.
+
+.. code-block:: console
+
+    PROVENANCE | RO-Crate writing to disk TIME: 0.01987314224243164 s
+    PROVENANCE | Workflow Provenance generation TOTAL EXECUTION TIME: 0.04113888740539551 s
+    PROVENANCE | COMPSs Workflow Provenance successfully generated in sub-folder:
+        COMPSs_RO-Crate_d64966ac-fe34-463a-88fc-f97047c21a99/
+    PROVENANCE | ENDED WORKFLOW PROVENANCE SCRIPT
+
+The fourth and final block states the time taken to record the ``ro-crate-metadata.json`` file to disk, the total
+execution time of the whole workflow provenance generation script, and the final message details the name of the
+sub-folder where the RO-Crate package has been generated.
+
+During the workflow provenance generation, some messages labeled as ``WARNING`` may appear. The situations reported
+with warning messages are non-critical situations where some automatic decisions were taken by the generation script,
+so the user should double check if the decision taken is correct. Some examples follow:
+
+.. code-block:: console
+
+    PROVENANCE | WARNING: A parent directory of a previously added sub-directory is being added. Some files will be traversed twice in: /Users/rsirvent/COMPSs-DP/matmul_files/in
+    PROVENANCE | WARNING: A file addition was attempted twice: /Users/rsirvent/COMPSs-DP/matmul_files/in/A/A.0.0 in /Users/rsirvent/COMPSs-DP/matmul_files/in
+    PROVENANCE | WARNING: 'Agent' not specified in ro-crate-info.yaml. First author selected by default.
+
+
+WorkflowHub
+-----------
+
 Publish and cite your results with WorkflowHub
-----------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Once the provenance metadata for your COMPSs application has been generated, you have the possibility of publishing
 your results (i.e. both the workflow and the workflow run) in `WorkflowHub <https://workflowhub.eu/>`_, the FAIR workflow registry, where a DOI can be generated,
@@ -538,7 +616,7 @@ this are:
 .. WARNING::
 
     If no Authors are provided in the ro-crate-info.yaml file, a DOI will not be able to be generated.
-    See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Previous needed information`
+    See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Previous needed information (YAML configuration file)`
 
 You can see a couple of examples on previous published workflows:
 
@@ -556,7 +634,7 @@ for your convenience. An example of the full text generated:
 
 .. TIP::
 
-    When writing the ``description`` term of your ``ro-crate-info.yaml`` file (see Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Previous needed information`)
+    When writing the ``description`` term of your ``ro-crate-info.yaml`` file (see Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Previous needed information (YAML configuration file)`)
     you can use Markdown language to get a fancier description in WorkflowHub. You can find a Markdown language guide
     `in this site <https://simplemde.com/markdown-guide>`_, and an example on how to write it in an ``ro-crate-info.yaml`` file
     in the previously provided examples (i.e. in their included
@@ -564,7 +642,7 @@ for your convenience. An example of the full text generated:
 
 
 Re-execute a COMPSs workflow published in WorkflowHub
------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Apart from sharing workflow runs as shown in earlier sections, the workflow execution published in WorkflowHub can be also used by other
 individuals in order to **reproduce** the results (i.e. submit the same workflow with the same inputs, and obtain the same
@@ -665,80 +743,11 @@ occur.
   file.
 
 
-Log and time statistics
------------------------
+Metadata examples
+-----------------
 
-When the provenance generation is activated, and after the application has finished, the workflow provenance generation
-script will be automatically triggered. A number of log messages related to provenance can bee seen, which return
-interesting information regarding the provenance generation process. They can all be filtered by doing a ``grep`` in
-the output log of the application using the ``PROVENANCE`` expression.
-
-.. code-block:: console
-
-    PROVENANCE | Generating graph for Workflow Provenance
-    Output file: /Users/rsirvent/.COMPSs/matmul_files.py_07//monitor/complete_graph.svg
-    INFO: Generating Graph with legend
-    DONE
-    PROVENANCE | Ended generating graph for Workflow Provenance. TIME: 1 s
-
-This first block indicates that the workflow image in SVG format is being generated. When this part finishes, the time
-in seconds will be reported. As mentioned earlier, complex workflows can lead to large graph generation times.
-
-.. code-block:: console
-
-    PROVENANCE | STARTING WORKFLOW PROVENANCE SCRIPT
-    PROVENANCE | COMPSs version: 3.3, out_profile: App_Profile.json, main_entity: /Users/rsirvent/COMPSs-DP/matmul_files/matmul_files.py
-    PROVENANCE | COMPSs runtime detected inputs (12)
-    PROVENANCE | COMPSs runtime detected outputs (4)
-    PROVENANCE | dataprovenance.log processing TIME: 0.00012993812561035156 s
-
-This second block shows the COMPSs version detected, the name of the file containing the execution profile of the
-application, and the ``mainEntity`` detected (i.e. the source file that contains the main method from the COMPSs
-application). Besides, it reports how many input and output data assets have been detected automatically by the COMPSs
-runtime, and the time it took to run that analysis (i.e. the dataprovenance.log processing time).
-
-.. code-block:: console
-
-    PROVENANCE | Application source files detected (10)
-    PROVENANCE | RO-Crate adding source files TIME: 0.003629922866821289 s
-    PROVENANCE | RO-Crate adding input files TIME (Persistence: True): 0.0022089481353759766 s
-    PROVENANCE | RO-Crate adding output files TIME (Persistence: True): 0.000576019287109375 s
-
-The third block first details how many source files have been detected from the ``sources`` term defined
-in the ``ro-crate-py.yaml`` file. Then, it provides a set of times to understand if any overhead is caused by the
-workflow provenance generation script. The first time is the time taken to add the files that are included
-physically in the crate (this is, application source files, workflow image, ...). And the second and third are the times
-spent by the script to add all input and output files, detailing if data persistence was established as ``True`` or ``False``.
-If ``True``, the files are physically copied to the crate. If ``False``, only references to the location of the files are
-included.
-
-.. code-block:: console
-
-    PROVENANCE | RO-Crate writing to disk TIME: 0.01987314224243164 s
-    PROVENANCE | Workflow Provenance generation TOTAL EXECUTION TIME: 0.04113888740539551 s
-    PROVENANCE | COMPSs Workflow Provenance successfully generated in sub-folder:
-        COMPSs_RO-Crate_d64966ac-fe34-463a-88fc-f97047c21a99/
-    PROVENANCE | ENDED WORKFLOW PROVENANCE SCRIPT
-
-The fourth and final block states the time taken to record the ``ro-crate-metadata.json`` file to disk, the total
-execution time of the whole workflow provenance generation script, and the final message details the name of the
-sub-folder where the RO-Crate package has been generated.
-
-During the workflow provenance generation, some messages labeled as ``WARNING`` may appear. The situations reported
-with warning messages are non-critical situations where some automatic decisions were taken by the generation script,
-so the user should double check if the decision taken is correct. Some examples follow:
-
-.. code-block:: console
-
-    PROVENANCE | WARNING: A parent directory of a previously added sub-directory is being added. Some files will be traversed twice in: /Users/rsirvent/COMPSs-DP/matmul_files/in
-    PROVENANCE | WARNING: A file addition was attempted twice: /Users/rsirvent/COMPSs-DP/matmul_files/in/A/A.0.0 in /Users/rsirvent/COMPSs-DP/matmul_files/in
-    PROVENANCE | WARNING: 'Agent' not specified in ro-crate-info.yaml. First author selected by default.
-
-
-Examples
---------
-
-- **PyCOMPSs example (Laptop run)**
+PyCOMPSs example (laptop execution)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the RO-Crate specification, the root file containing the metadata referring to the crate created is named
 ``ro-crate-metadata.json``. In these lines, we provide an example of an ro-crate-metadata.json file resulting from
@@ -784,7 +793,8 @@ contents. Many of the fields are easily and directly understandable.
 ***************    PUBLISH matmul_directory at Laptop, data_persistence=True ****************
 
 
-- **Java COMPSs example (MN4 supercomputer run)**
+Java COMPSs example (MareNostrum supercomputer execution)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In this second ``ro-crate-metadata.json`` example, we want to illustrate the workflow provenance result of a Java COMPSs
 application execution in the MareNostrum 4 supercomputer. We show the execution of a matrix LU factorization
