@@ -537,8 +537,6 @@ Using WorkflowHub
 Publish and cite your results with WorkflowHub
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-****************** EXPLAIN HOW TO ADD BIG FILES FROM ZENODO ********************************
-
 Once the provenance metadata for your COMPSs application has been generated, you have the possibility of publishing
 your results (i.e. both the workflow and the workflow run) in `WorkflowHub <https://workflowhub.eu/>`_, the FAIR workflow registry, where a DOI can be generated,
 so your results can be cited in a scientific paper using a permanent reference. Detailed documentation on how to use the WorkflowHub web
@@ -577,8 +575,8 @@ The steps to achieve the publication of a COMPSs execution are:
 
 .. TIP::
 
-    The crate (i.e. folder ``COMPSs_RO-Crate_[uuid]/``) can also be uploaded to GitHub, and then imported using the
-    second tab option ``Import Git Repository``.
+    The crate (i.e. folder ``COMPSs_RO-Crate_[uuid]/``) can also be uploaded to GitHub, and then imported from
+    WorkflowHub using the second tab option ``Import Git Repository``.
 
 After these steps, the main summary page of your workflow will be shown, where three main tabs can be selected
 (see https://doi.org/10.48546/workflowhub.workflow.635.1 to check out an example directly at WorkflowHub):
@@ -604,7 +602,14 @@ After these steps, the main summary page of your workflow will be shown, where t
 
    Files tab information
 
-- **Related items**: Where ``People``, ``Spaces`` and ``Teams`` related to this workflow can be checked.
+- **Related items**: Where you can find any other entities related to this workflow (i.e. ``People``, ``Spaces``,
+  ``Teams``, ``Publications``, ``Presentations``, ``Collections``, ...)
+
+
+****************** EXPLAIN HOW TO ADD BIG FILES FROM ZENODO AS REMOTE FILES ********************************
+
+Examples: https://doi.org/10.48546/workflowhub.workflow.779.1 and https://doi.org/10.48546/workflowhub.workflow.781.1
+
 
 If everything is correct, the next step is to **generate a DOI** for your workflow. The necessary steps to achieve
 this are:
@@ -626,7 +631,7 @@ this are:
    Freeze button in the Citation box
 
 - Once frozen, a new ``Generate a DOI`` button will appear in the ``Citation`` box. This can be also found in the
-  ``Actions`` menu, ``Generate a DOI``. Select ``Mint DOI``.
+  ``Actions`` menu, ``Generate a DOI``. Finish the generation by clicking ``Mint DOI``.
 
 .. figure:: ./Figures/WH_DOI.png
    :name: DOI
@@ -637,7 +642,7 @@ this are:
    Generate a DOI button in the Citation box
 
 - The final generated DOI for the workflow results can be found in the ``Citation`` box. The format of the citation
-  can be changed from the dropdown menu inside the box, having a large number of styles available. One of the most
+  can be changed from the dropdown menu inside the box, which has a large number of styles available. One of the most
   commonly used is the ``BibTeX generic citation style``.
 
 .. figure:: ./Figures/WH_citation.png
@@ -659,14 +664,6 @@ You can see a couple of examples on previous published workflows:
 
 - PyCOMPSs WordCount Example (using COMPSs 3.3): https://doi.org/10.48546/workflowhub.workflow.635.1
 
-As partially shown above, in the ``Citation`` box of the ``Overview`` tab you will find the text that can be added as a reference in your
-scientific paper's bibliography, to properly reference your workflow execution result. There is also a ``Copy`` button
-for your convenience. An example of the full text generated:
-
-- Sirvent, R. (2023). Java COMPSs Matrix Multiplication, out-of-core, using files. WorkflowHub. https://doi.org/10.48546/WORKFLOWHUB.WORKFLOW.484.1
-
-- Conejero, J. (2023). PyCOMPSs Wordcount test, using files (executed at Marenostrum IV supercomputer). WorkflowHub. https://doi.org/10.48546/WORKFLOWHUB.WORKFLOW.635.1
-
 .. TIP::
 
     When writing the ``description`` term of your YAML configuration file (see Section :ref:`Sections/05_Tools/04_Workflow_Provenance:YAML configuration file`)
@@ -680,13 +677,106 @@ Re-execute a COMPSs workflow published in WorkflowHub
 
 Apart from sharing workflow runs as shown in earlier sections, the workflow execution published in WorkflowHub can be also used by other
 individuals in order to **reproduce** the results (i.e. submit the same workflow with the same inputs, and obtain the same
-results) or **replicate** the workflow execution (i.e. submit the same workflow, with different inputs, obtaining different
-results). While in this section we will mainly cover reproducibility, replicability is also easy to achieve, since
-our crate includes the source code of the application. Therefore, any reference to the input files in the application
-needs to be changed (either in the source code or in the parameters passed to the application)
-if the objective of the user is to use the same workflow but with different inputs.
+results).
 
-The steps to reproduce a COMPSs workflow vary depending if the crate package downloaded includes the datasets (i.e. it
+To illustrate this process, we will use two examples:
+
+- `PyCOMPSs: Lysozyme in Water <https://doi.org/10.48546/workflowhub.workflow.635.1>`_ NO ES POT, NECESSITA GROMACS.
+
+- `Java COMPSs: wordcount <https://doi.org/10.48546/workflowhub.workflow.684.1>`_
+
+.. tabs::
+
+  .. tab:: WITH data persistence
+
+    .. tabs::
+
+      .. tab:: PyCOMPSs application
+
+        - Click the DOI link to the workflow you want to re-execute (e.g. https://doi.org/10.48546/workflowhub.workflow.635.1).
+
+        - Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine (e.g. in ~/Downloads/).
+
+        - Copy and unzip the file in a new folder.
+
+        .. code-block:: console
+
+          $ mkdir ~/reproduced_workflow/
+          $ cp ~/Downloads/workflow-XXX-X.crate.zip ~/reproduced_workflow/
+          $ cd ~/reproduced_workflow/
+          $ unzip workflow-XXX-X.crate.zip
+
+        - Create a new_output/ folder to avoid overwriting the included outputs/.
+
+        .. code-block:: console
+
+          $ mkdir new_output/
+
+        - Re-execute the application.
+
+        .. code-block:: console
+
+          $ chmod ugo+x application_sources/launch_full.sh
+          $ ./application/sources/launch_full.sh 2 10 false dataset/lysozyme_in_water/config/ dataset/lysozyme_in_water/dataset_small/ new_output/
+
+        - Once the execution is finished, compare the new outputs generated with the outputs included in the crate.
+
+        .. code-block:: console
+
+          $ diff new_output/ dataset/lysozyme_in_water/output/
+
+      .. tab:: Java COMPSs application
+
+  .. tab:: WITHOUT data persistence
+
+    .. tabs::
+
+      .. tab:: PyCOMPSs application
+
+        - Click the DOI link to the workflow you want to re-execute (e.g. https://doi.org/10.48546/workflowhub.workflow.635.1).
+
+        - Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine (e.g. in ~/Downloads/).
+
+        - Copy and unzip the file in a new folder.
+
+        .. code-block:: console
+
+          $ mkdir ~/reproduced_workflow/
+          $ cp ~/Downloads/workflow-XXX-X.crate.zip ~/reproduced_workflow/
+          $ cd ~/reproduced_workflow/
+          $ unzip workflow-XXX-X.crate.zip
+
+        - Create a new_output/ folder to avoid overwriting the included outputs/.
+
+        .. code-block:: console
+
+          $ mkdir new_output/
+
+        - Re-execute the application.
+
+        .. code-block:: console
+
+          $ chmod ugo+x application_sources/launch_full.sh
+          $ ./application/sources/launch_full.sh 2 10 false /home/nct01/nct00XXX/lysozyme_in_water/config/ /home/nct01/nct00XXX/lysozyme_in_water/dataset_small/ new_output/
+
+        - Once the execution is finished, compare the new outputs generated with the outputs included in the crate.
+
+        .. code-block:: console
+
+          $ diff new_output/ /home/nct01/nct00XXX/lysozyme_in_water/output/
+
+      .. tab:: Java COMPSs application
+
+  .. tab:: With REMOTE datasets
+
+    .. tabs::
+
+      .. tab:: PyCOMPSs application
+
+      .. tab:: Java COMPSs application
+
+
+As seen in the example above, the steps to reproduce a COMPSs workflow vary depending if the crate package downloaded includes the datasets (i.e. it
 has a ``dataset/`` sub-folder). This is achieved when ``data_persistence`` is set to ``True`` in the
 YAML configuration file. Thus, the data preparation step will change depending on the availability of the dataset
 needed for the workflow execution. In addition, any external third party software used in the application (e.g.
@@ -699,23 +789,6 @@ workflow provenance with the COMPSs CLI (see Section :ref:`Sections/08_PyCOMPSs_
 executions in the same machine as the one in the published run (e.g. using the same supercomputer) should be quite straightforward,
 since the metadata may include references to the location of the inputs and outputs of the workflow. Therefore, the only
 requirement to reproduce a run would be to have access granted to the location where the inputs are.
-
-All in all, the main steps to prepare the application re-execution are:
-
-- Click the DOI link to the workflow you want to re-execute (e.g. https://doi.org/10.48546/workflowhub.workflow.635.1).
-  You will get the Overview page of the workflow in WorkflowHub.
-
-- Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine.
-
-- Copy or move the downloaded file to the environment where you want to execute the application. Unzip the file there.
-  You will see a set of files and folders that correspond to the workflow provenance as generated by COMPSs
-  (see :ref:`Sections/05_Tools/04_Workflow_Provenance:Resulting crate` for details on the crate structure).
-
-- If the dataset has been included in the crate, copy the ``dataset/`` folder input files in the ``application_sources/`` folder.
-
-- Go to the ``application_sources/`` folder and run the application using the command specified in ``compss_submission_command_line.txt``.
-
-- Compare the newly generated output results with the outputs in the ``dataset/`` folder.
 
 This set of steps should cover the majority of the cases when re-executing a COMPSs application. However, we include a
 more detailed description of the different steps to provide guidance on how to deal with different situations that may
