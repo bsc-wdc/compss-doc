@@ -426,6 +426,12 @@ are:
     your own files to avoid unwanted overwritings. You can change the resulting ``App_Profile.json`` name by using
     the ``--output_profile=/path_to/file`` flag.
 
+.. WARNING::
+
+    The ``complete_graph.svg`` workflow diagram will not be generated automatically if your workflow's application
+    edges are larger than 6500, to avoid large generation times. If you want to generate the diagram anyway, you can
+    trigger the diagram generation manually with ``compss_gengraph`` or ``pycompss gengraph``.
+
 
 Publish and cite your results with WorkflowHub
 ----------------------------------------------
