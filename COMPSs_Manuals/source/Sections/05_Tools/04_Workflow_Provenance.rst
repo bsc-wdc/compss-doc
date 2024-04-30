@@ -677,11 +677,9 @@ Re-execute a COMPSs workflow published in WorkflowHub
 
 Apart from sharing workflow runs as shown in earlier sections, the workflow execution published in WorkflowHub can be also used by other
 individuals in order to **reproduce** the results (i.e. submit the same workflow with the same inputs, and obtain the same
-results).
+results), therefore, other peers can verify your published results. To illustrate this process, we will use two examples:
 
-To illustrate this process, we will use two examples:
-
-- `PyCOMPSs: Lysozyme in Water <https://doi.org/10.48546/workflowhub.workflow.635.1>`_ NO ES POT, NECESSITA GROMACS.
+- `PyCOMPSs: Matrix multiplication <https://doi.org/10.48546/workflowhub.workflow.838.1>`_
 
 - `Java COMPSs: wordcount <https://doi.org/10.48546/workflowhub.workflow.684.1>`_
 
@@ -693,39 +691,41 @@ To illustrate this process, we will use two examples:
 
       .. tab:: PyCOMPSs application
 
-        - Click the DOI link to the workflow you want to re-execute (e.g. https://doi.org/10.48546/workflowhub.workflow.635.1).
+        - Click the DOI link to the workflow you want to re-execute (e.g. https://doi.org/10.48546/workflowhub.workflow.838.1).
 
         - Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine (e.g. in ~/Downloads/).
 
-        - Copy and unzip the file in a new folder.
+        - Move and unzip the file in a new folder.
 
         .. code-block:: console
 
           $ mkdir ~/reproduced_workflow/
-          $ cp ~/Downloads/workflow-XXX-X.crate.zip ~/reproduced_workflow/
+          $ mv ~/Downloads/workflow-838-1.crate.zip ~/reproduced_workflow/
           $ cd ~/reproduced_workflow/
-          $ unzip workflow-XXX-X.crate.zip
+          $ unzip workflow-838-1.crate.zip
 
-        - Create a new_output/ folder to avoid overwriting the included outputs/.
-
-        .. code-block:: console
-
-          $ mkdir new_output/
-
-        - Re-execute the application.
+        - Create a new_outputs/ folder to avoid overwriting the included dataset/outputs/.
 
         .. code-block:: console
 
-          $ chmod ugo+x application_sources/launch_full.sh
-          $ ./application/sources/launch_full.sh 2 10 false dataset/lysozyme_in_water/config/ dataset/lysozyme_in_water/dataset_small/ new_output/
+          $ mkdir new_outputs/
+
+        - Inspect the submission command, and re-execute the application adapting the parameters.
+
+        .. code-block:: console
+
+          $ cat compss_submission_command_line.txt
+            runcompss --provenance=matmul_reproducibility.yaml --python_interpreter=/Users/rsirvent/.pyenv/shims/python3 --cpu_affinity=disabled src/matmul_files.py inputs/ outputs/
+          $ runcompss application_sources/src/matmul_files.py dataset/inputs/ new_outputs/
 
         - Once the execution is finished, compare the new outputs generated with the outputs included in the crate.
 
         .. code-block:: console
 
-          $ diff new_output/ dataset/lysozyme_in_water/output/
+          $ diff new_outputs/ dataset/outputs/
 
       .. tab:: Java COMPSs application
+        - COMING SOON.
 
   .. tab:: WITHOUT data persistence
 
@@ -766,14 +766,17 @@ To illustrate this process, we will use two examples:
           $ diff new_output/ /home/nct01/nct00XXX/lysozyme_in_water/output/
 
       .. tab:: Java COMPSs application
+        - COMING SOON.
 
   .. tab:: With REMOTE datasets
 
     .. tabs::
 
       .. tab:: PyCOMPSs application
+        - COMING SOON.
 
       .. tab:: Java COMPSs application
+        - COMING SOON.
 
 
 As seen in the example above, the steps to reproduce a COMPSs workflow vary depending if the crate package downloaded includes the datasets (i.e. it
