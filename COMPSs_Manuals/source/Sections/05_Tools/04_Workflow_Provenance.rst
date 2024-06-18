@@ -373,7 +373,8 @@ application run logs are stored (see Section :ref:`Sections/03_Execution_Environ
 for more details on where to locate these logs). ``compss_gengraph``
 generates the workflow image to be added to the crate, but if its generation time is a concern, or the user does not
 want it to be included in the crate, the command can be skipped. The second command runs the
-``generate_COMPSs_RO-Crate.py`` Python script, that uses the information provided by the user in the my_yaml_file.yaml file (or ``ro-crate-info.yaml`` by default)
+``generate_COMPSs_RO-Crate.py`` Python script, that uses the information provided by the user
+in the ``my_yaml_file.yaml`` file (or ``ro-crate-info.yaml`` by default)
 combined with the file accesses information registered by the COMPSs runtime in the ``dataprovenance.log`` file. The
 result is a sub-directory ``COMPSs_RO-Crate_[uuid]/`` that contains the workflow provenance of the run (see next sub-section
 for a detailed description).
@@ -386,8 +387,9 @@ for a detailed description).
 
         PROVENANCE | STARTING WORKFLOW PROVENANCE SCRIPT
         PROVENANCE | If needed, Provenance generation can be triggered by hand using the following commands:
-        PROVENANCE | /Users/rsirvent/opt/COMPSs/Runtime/scripts/utils/compss_gengraph svg /Users/rsirvent/.COMPSs/matmul_files.py_52//monitor/complete_graph.dot
-        PROVENANCE | python3 /Users/rsirvent/opt/COMPSs/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py REMOTE_DATASET.yaml /Users/rsirvent/.COMPSs/matmul_files.py_52//dataprovenance.log
+        PROVENANCE | /apps/GPP/COMPSs/3.3.1/Runtime/scripts/utils/compss_gengraph svg /home/bsc/bsc019057/.COMPSs/3166653//monitor/complete_graph.dot
+        PROVENANCE | python3 /apps/GPP/COMPSs/3.3.1/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py ro-crate-info.yaml /home/bsc/bsc019057/.COMPSs/3166653//dataprovenance.log
+        PROVENANCE | TIP for BSC cluster users: before triggering generation by hand, run first: salloc -p interactive
         ...
 
 Resulting crate
@@ -473,21 +475,25 @@ the output log of the application using the ``PROVENANCE`` expression.
 .. code-block:: console
 
     PROVENANCE | Generating graph for Workflow Provenance
-    Output file: /Users/rsirvent/.COMPSs/matmul_files.py_07//monitor/complete_graph.svg
+    PROVENANCE | Number of edges in the graph:        8
+    Output file: /Users/rsirvent/.COMPSs/matmul_files.py_01//monitor/complete_graph.svg
     INFO: Generating Graph with legend
     DONE
     PROVENANCE | Ended generating graph for Workflow Provenance. TIME: 1 s
 
 This first block indicates that the workflow image in SVG format is being generated. When this part finishes, the time
-in seconds will be reported. As mentioned earlier, complex workflows can lead to large graph generation times.
+in seconds will be reported. As mentioned earlier, complex workflows can lead to large graph generation times, and that
+is why the number of edges in the graph is also reported. If the number is larger than 6500, the graph generation won't
+be triggered to avoid large generation times.
 
 .. code-block:: console
 
-    PROVENANCE | STARTING WORKFLOW PROVENANCE SCRIPT
-    PROVENANCE | COMPSs version: 3.3, out_profile: App_Profile.json, main_entity: /Users/rsirvent/COMPSs-DP/matmul_files/matmul_files.py
+    PROVENANCE | STARTING RO-CRATE GENERATION SCRIPT
+    PROVENANCE | COMPSs version: 3.3.rc2402, out_profile: App_Profile.json, main_entity: /Users/rsirvent/COMPSs-DP/matmul_files/matmul_files.py
     PROVENANCE | COMPSs runtime detected inputs (12)
     PROVENANCE | COMPSs runtime detected outputs (4)
-    PROVENANCE | dataprovenance.log processing TIME: 0.00012993812561035156 s
+    PROVENANCE | dataprovenance.log processing TIME: 0.0001647472381591797 s
+
 
 This second block shows the COMPSs version detected, the name of the file containing the execution profile of the
 application, and the ``mainEntity`` detected (i.e. the source file that contains the main method from the COMPSs
@@ -496,10 +502,11 @@ runtime, and the time it took to run that analysis (i.e. the dataprovenance.log 
 
 .. code-block:: console
 
-    PROVENANCE | Application source files detected (10)
-    PROVENANCE | RO-Crate adding source files TIME: 0.003629922866821289 s
-    PROVENANCE | RO-Crate adding input files TIME (Persistence: True): 0.0022089481353759766 s
-    PROVENANCE | RO-Crate adding output files TIME (Persistence: True): 0.000576019287109375 s
+    PROVENANCE | Application source files detected (11)
+    PROVENANCE | RO-Crate adding source files TIME: 0.055359840393066406 s
+    PROVENANCE | RO-Crate adding input files TIME (Persistence: True): 0.0027692317962646484 s
+    PROVENANCE | RO-Crate adding output files TIME (Persistence: True): 0.0006499290466308594 s
+
 
 The third block first details how many source files have been detected from the ``sources`` term defined
 in the ``ro-crate-py.yaml`` file. Then, it provides a set of times to understand if any overhead is caused by the
@@ -511,10 +518,10 @@ included.
 
 .. code-block:: console
 
-    PROVENANCE | RO-Crate writing to disk TIME: 0.01987314224243164 s
-    PROVENANCE | Workflow Provenance generation TOTAL EXECUTION TIME: 0.04113888740539551 s
+    PROVENANCE | RO-Crate writing to disk TIME: 0.02508401870727539 s
+    PROVENANCE | Workflow Provenance generation TOTAL EXECUTION TIME: 0.10874414443969727 s
     PROVENANCE | COMPSs Workflow Provenance successfully generated in sub-folder:
-        COMPSs_RO-Crate_d64966ac-fe34-463a-88fc-f97047c21a99/
+        COMPSs_RO-Crate_db892d40-7929-461e-b06a-1b2120008f4f/
     PROVENANCE | ENDED WORKFLOW PROVENANCE SCRIPT
 
 The fourth and final block states the time taken to record the ``ro-crate-metadata.json`` file to disk, the total
@@ -529,7 +536,7 @@ so the user should double check if the decision taken is correct. Some examples 
 
     PROVENANCE | WARNING: A parent directory of a previously added sub-directory is being added. Some files will be traversed twice in: /Users/rsirvent/COMPSs-DP/matmul_files/in
     PROVENANCE | WARNING: A file addition was attempted twice: /Users/rsirvent/COMPSs-DP/matmul_files/in/A/A.0.0 in /Users/rsirvent/COMPSs-DP/matmul_files/in
-    PROVENANCE | WARNING: 'Agent' not specified in ro-crate-info.yaml. First author selected by default.
+    PROVENANCE | WARNING: 'Agent' not specified in TEST_DUPLICATED_SOURCES.yaml. First author selected by default.
 
 
 Using WorkflowHub
@@ -659,9 +666,9 @@ this are:
 
 You can see a couple of examples on previous published workflows:
 
-- Java COMPSs Matrix Multiplication (using COMPSs 3.2): https://doi.org/10.48546/workflowhub.workflow.484.1
+- **Java COMPSs Matrix Multiplication (using COMPSs 3.2):** https://doi.org/10.48546/workflowhub.workflow.484.1
 
-- PyCOMPSs WordCount Example (using COMPSs 3.3): https://doi.org/10.48546/workflowhub.workflow.635.1
+- **PyCOMPSs WordCount Example (using COMPSs 3.3):** https://doi.org/10.48546/workflowhub.workflow.635.1
 
 .. TIP::
 
@@ -702,9 +709,9 @@ used to share large datasets are:
 
 Examples on workflows with remote datasets can be found at:
 
-- PyCOMPSs Probabilistic Tsunami Forecast (PTF) - Boumerdes-2003 earthquake and tsunami test-case: https://doi.org/10.48546/workflowhub.workflow.779.1
+- **PyCOMPSs Probabilistic Tsunami Forecast (PTF) - Boumerdes-2003 earthquake and tsunami test-case:** https://doi.org/10.48546/workflowhub.workflow.779.1
 
-- PyCOMPSs Probabilistic Tsunami Forecast (PTF) - Kos-Bodrum 2017 earthquake and tsunami test-case: https://doi.org/10.48546/workflowhub.workflow.781.1
+- **PyCOMPSs Probabilistic Tsunami Forecast (PTF) - Kos-Bodrum 2017 earthquake and tsunami test-case:** https://doi.org/10.48546/workflowhub.workflow.781.1
 
 
 Re-execute a COMPSs workflow published in WorkflowHub
@@ -714,11 +721,11 @@ Apart from sharing workflow runs as shown in earlier sections, the workflow exec
 individuals in order to **reproduce** the results (i.e. submit the same workflow with the same inputs, and obtain the same
 results), therefore, other peers can verify the results of your experiments. To illustrate this process, we will use different examples:
 
-- `PyCOMPSs: Matrix multiplication with data persistence <https://doi.org/10.48546/workflowhub.workflow.838.1>`_
+- **PyCOMPSs: Matrix multiplication with data persistence:** https://doi.org/10.48546/workflowhub.workflow.838.1
 
-- `PyCOMPSs: Matrix multiplication without data persistence <https://doi.org/10.48546/workflowhub.workflow.839.1>`_
+- **PyCOMPSs: Matrix multiplication without data persistence:** https://doi.org/10.48546/workflowhub.workflow.839.1
 
-- `Java COMPSs: wordcount <https://doi.org/10.48546/workflowhub.workflow.684.1>`_
+- Java COMPSs: wordcount:** https://doi.org/10.48546/workflowhub.workflow.684.1>
 
 .. tabs::
 
@@ -869,23 +876,29 @@ PyCOMPSs example (laptop execution)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the RO-Crate specification, the root file containing the metadata referring to the crate created is named
-``ro-crate-metadata.json``. In these lines, we provide an example of an ro-crate-metadata.json file resulting from
+``ro-crate-metadata.json``. In these lines, we show how to navigate an ``ro-crate-metadata.json``
+file resulting from
 a PyCOMPSs application execution in a laptop, specifically an out-of-core matrix multiplication example that includes matrices
 ``A`` and ``B`` as inputs in an ``inputs/`` sub-directory, and matrix ``C`` as the result of their multiplication
 (which in the code is also passed as input, to have a matrix initialized with 0s). We also set the ``data_persistence``
 term of the YAML configuration file to ``True`` to indicate we want the datasets to be included in the resulting
 crate.
 For all the specific details on the fields provided in the JSON file, please refer to the
-`RO-Crate specification Website <https://www.researchobject.org/ro-crate/1.1/>`_. Intuitively, if you search through
-the JSON file you can find several interesting terms:
+`RO-Crate specification Website <https://www.researchobject.org/ro-crate/1.1/>`_.
+
+The corresponding ``ro-crate-metadata.json`` can be found here:
+
+- **PyCOMPSs Matrix Multiplication, out-of-core using files. Example using DIRECTORY parameters executed at laptop,
+  data persistence True:** https://doi.org/10.48546/workflowhub.workflow.1046.1
+
+Intuitively, if you search through the JSON file you can find several interesting terms:
 
 - **creator:** List of authors, identified by their ORCID.
 
 - **publisher:** Organisations of the authors.
 
 - **hasPart in ./:** lists all the files and directories this workflow needs and generates, and also the ones
-  included in the crate. The URIs point to the hostname where the application has been run, thus, tells
-  the user where the inputs and outputs can be found (in this example, a BSC laptop).
+  included in the crate. They are referenced with relative paths, since they are included in the crate.
 
 - **ComputationalWorkflow:** Main file of the application (in the example, ``application_sources/matmul_directory.py``).
   Includes a reference to the generated workflow image in the ``image`` field.
@@ -913,21 +926,23 @@ We encourage the reader to navigate through this ``ro-crate-metadata.json`` file
 contents. Many of the fields are easily and directly understandable.
 
 
-***************    PUBLISH matmul_directory at Laptop, data_persistence=True ****************
-
-
 Java COMPSs example (MareNostrum supercomputer execution)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In this second ``ro-crate-metadata.json`` example, we want to illustrate the workflow provenance result of a Java COMPSs
-application execution in the MareNostrum 4 supercomputer. We show the execution of a matrix LU factorization
+application execution in the MareNostrum 5 supercomputer. We show the execution of a matrix LU factorization
 for out-of-core sparse matrices implemented with COMPSs and using the Java programming language. In this algorithm,
 matrix ``A`` is both input and output of the workflow, since the factorization overwrites the original value of ``A``.
 In addition, we have used a 4x4 blocks hyper-matrix (i.e. the matrix is divided in 16 blocks, that contain 16
 elements each) and, if a block is all 0s, the corresponding file will not be
 created in the file system (in the example, this happens for blocks ``A.0.3``, ``A.1.3``, ``A.3.0`` and ``A.3.1``). We
 do not define the ``data_persistence`` option, which means it will be false, and the datasets will not be included in
-the resulting crate (i.e. references to the location of files will be provided).
+the resulting crate (i.e. only references to the location of files will be included in the metadata).
+
+The corresponding ``ro-crate-metadata.json`` can be found here:
+
+- **Java COMPSs LU Factorization for Sparse Matrices, MareNostrum V, 3 nodes,
+  no data persistence:** https://doi.org/10.48546/workflowhub.workflow.1047.1
 
 Apart from the terms already mentioned in the previous example (``creator``, ``publisher``, ``hasPart``,
 ``ComputationalWorkflow``, ``version``, ``CreateAction``), if we first observe the YAML configuration file:
@@ -935,8 +950,9 @@ Apart from the terms already mentioned in the previous example (``creator``, ``p
 .. code-block:: yaml
 
     COMPSs Workflow Information:
-      name: COMPSs Sparse LU
-      description: The Sparse LU application computes an LU matrix factorization on a sparse blocked matrix. The matrix size (number of blocks) and the block size are parameters of the application.
+      name: Java COMPSs LU Factorization for Sparse Matrices, MareNostrum V, 3 nodes, no data persistence
+      description: |
+        ...
       license: Apache-2.0
       sources: [src, jar, xml, Readme, pom.xml]
 
@@ -947,7 +963,8 @@ Apart from the terms already mentioned in the previous example (``creator``, ``p
         organisation_name: Barcelona Supercomputing Center
         ror: https://ror.org/05sd8tv96
 
-We can see that we have specified several directories to be added as source files of the application: the ``src`` folder that contains the
+We can see that we have specified several directories to be added as source files of the application:
+the ``src`` folder that contains the
 ``.java`` and ``.class`` files, the ``jar`` folder with the ``sparseLU.jar`` file, and the ``xml`` folder with extra
 xml configuration files. Besides, we also add the ``Readme`` and ``pom.xml``
 so they are packed in the resulting crate. This example also shows that the script is able to select the correct
@@ -1001,18 +1018,15 @@ Since in this second example we do not add explicitly the input and output files
 our crate does not have a ``dataset`` sub-folder and only includes references to the files,
 which are ment as pointers to where they can be found, rather than a publicly accessible URI references. Therefore,
 in this Java COMPSs
-example, files can be found in the ``s23r2b24-ib0`` hostname, which is an internal hostname of MN4. This means that, for
-reproducibility purposes, a new user would have to request access to the MN4 paths specified by the corresponding
-URIs (i.e. ``/gpfs/home/bsc19/...``).
+example, files can be found in the ``gs05r2b06-ib0`` hostname, which is an internal hostname of MN5. This means that, for
+reproducibility purposes, a new user would have to request access to the MN5 paths specified by the corresponding
+URIs (i.e. ``/gpfs/home/bsc/bsc019057/...``).
 
 The ``CreateAction`` term has also a richer set of information available from MareNostrum's SLURM workload manager. We
 can see that both the ``id`` and the ``description`` terms include the ``SLURM_JOB_ID``, which can be used to see more
-details and statistics on the job run from SLURM using the `User Portal <https://userportal.bsc.es/>`_ tool. In addition, many more
-environment variables are captured, which provide details on how the execution has been performed (i.e.
-``SLURM_JOB_NODE_LIST``, ``SLURM_JOB_NUM_NODES``, ``SLURM_JOB_CPUS_PER_NODE``, ``COMPSS_MASTER_NODE``,
+details and statistics on the job run from SLURM using the `User Portal <https://userportal.bsc.es/>`_ tool.
+In addition, many more relevant environment variables are captured (specifically SLURM and COMPSs related),
+which provide details on how the execution has been performed (i.e.
+``SLURM_JOB_NODELIST``, ``SLURM_JOB_NUM_NODES``, ``SLURM_JOB_CPUS_PER_NODE``, ``COMPSS_MASTER_NODE``,
 ``COMPSS_WORKER_NODES``, among others).
 
-
-
-
-***********  PUBLISH /home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/ at MN5, data_persistence=False ***********
