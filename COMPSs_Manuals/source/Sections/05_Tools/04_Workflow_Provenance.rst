@@ -725,7 +725,7 @@ results), therefore, other peers can verify the results of your experiments. To 
 
 - **PyCOMPSs: Matrix multiplication without data persistence:** https://doi.org/10.48546/workflowhub.workflow.839.1
 
-- Java COMPSs: wordcount:** https://doi.org/10.48546/workflowhub.workflow.684.1>
+- **Java COMPSs: wordcount:** https://doi.org/10.48546/workflowhub.workflow.684.1
 
 .. tabs::
 
@@ -843,7 +843,8 @@ results), therefore, other peers can verify the results of your experiments. To 
 
     For large or extremely large datasets (e.g. hundreds of MBs, several GBs), the most convenient way is to upload them
     to a public dataset repository (e.g. `Zenodo <https://zenodo.org/>`_) and reference them as ``remote datasets`` related
-    to the workflow.
+    to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Adding large files as remote datasets in WorkflowHub`
+    to learn this process more in detail.
 
     .. tabs::
 
