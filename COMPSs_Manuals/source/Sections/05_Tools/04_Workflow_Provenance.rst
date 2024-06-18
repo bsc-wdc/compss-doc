@@ -72,7 +72,7 @@ This would typically install the library in ``~/.local/``. Another option is to 
 
     $ pip install -t install_path rocrate
 
-Our current implementation needs ``ro-crate-py`` version ``0.9.0``.
+Our current implementation needs ``ro-crate-py`` version ``0.9.0`` or higher.
 
 .. WARNING::
 
@@ -553,7 +553,7 @@ The steps to achieve the publication of a COMPSs execution are:
 
 - Before being able to contribute workflows to the registry, you need to join a WorkflowHub Team. You can either create
   your own team, or join an existing one, as shown in the following Figure. For testing purposes, you can join the
-  ``COMPSs Tutorials`` team.
+  `COMPSs Tutorials <https://workflowhub.eu/projects/223>`_ team.
 
 .. figure:: ./Figures/JoinOrCreate.jpg
    :name: Join or Create a Team at WorkflowHub
@@ -606,11 +606,9 @@ After these steps, the main summary page of your workflow will be shown, where t
 - **Related items**: Where you can find any other entities related to this workflow (i.e. ``People``, ``Spaces``,
   ``Teams``, ``Publications``, ``Presentations``, ``Collections``, ...)
 
-
-****************** EXPLAIN HOW TO ADD BIG FILES FROM ZENODO AS REMOTE FILES ********************************
-
-Examples: https://doi.org/10.48546/workflowhub.workflow.779.1 and https://doi.org/10.48546/workflowhub.workflow.781.1
-
+At this point, before freezing and generating a DOI for the workflow, you may consider if **remote datasets** need
+to be added to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Adding large files as remote datasets in WorkflowHub`
+for a detailed guide on how to do that.
 
 If everything is correct, the next step is to **generate a DOI** for your workflow. The necessary steps to achieve
 this are:
@@ -656,7 +654,7 @@ this are:
 
 .. WARNING::
 
-    If no Authors are provided in the YAML configuration file, a DOI will not be able to be generated.
+    If no Authors are provided in the YAML configuration file, it won't be possible to generate a DOI.
     See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:YAML configuration file`
 
 You can see a couple of examples on previous published workflows:
@@ -673,12 +671,48 @@ You can see a couple of examples on previous published workflows:
     of the previously provided examples (i.e. in their included ``ro-crate-info.yaml`` files).
 
 
+Adding large files as remote datasets in WorkflowHub
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As mentioned earlier, whenever a workflow uses or produces a very large dataset, it should not include the data as persistent
+(i.e. directly included in the crate), but reference it as a **remote dataset**. A rule of thumb is that, if the workflow
+includes less than ~100 MB of files, it can be included as a persistent dataset. However, for cases where data assets
+are hundreds of MBs or even several GBs, the remote dataset option must be used. Some external repositories commonly
+used to share large datasets are:
+
+- `Zenodo <https://zenodo.org/>`_ up to 50 GB per dataset.
+- `FigShare <https://figshare.com/>`_ up to 5 TB per dataset.
+
+.. WARNING::
+
+    The addition of remote datasets must be done before freezing the workflow version and generating the DOI for citation.
+
+- Step 1: execute your application adding manually as ``inputs`` or ``outputs`` the remote dataset reference (i.e. an
+  https URL reference such as ``https://zenodo.org/records/10782431/files/lysozyme_datasets.zip``).
+
+    - See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:YAML configuration file`.
+
+- Step 2: upload the workflow run in WorkflowHub.
+    - As described in Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Publish and cite your results with WorkflowHub`.
+
+- Step 3: add the remote file as a reference in the workflow files:
+    - ``Files`` tab -> ``Add File`` -> ``Remote URL``.
+    - Paste the remote URL (e.g. ``https://zenodo.org/records/10782431/files/lysozyme_datasets.zip``).
+    - Specify the file path in the crate (e.g. ``dataset/lysozyme_datasets.zip``).
+
+Examples on workflows with remote datasets can be found at:
+
+- PyCOMPSs Probabilistic Tsunami Forecast (PTF) - Boumerdes-2003 earthquake and tsunami test-case: https://doi.org/10.48546/workflowhub.workflow.779.1
+
+- PyCOMPSs Probabilistic Tsunami Forecast (PTF) - Kos-Bodrum 2017 earthquake and tsunami test-case: https://doi.org/10.48546/workflowhub.workflow.781.1
+
+
 Re-execute a COMPSs workflow published in WorkflowHub
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Apart from sharing workflow runs as shown in earlier sections, the workflow execution published in WorkflowHub can be also used by other
 individuals in order to **reproduce** the results (i.e. submit the same workflow with the same inputs, and obtain the same
-results), therefore, other peers can verify your published results. To illustrate this process, we will use two examples:
+results), therefore, other peers can verify the results of your experiments. To illustrate this process, we will use different examples:
 
 - `PyCOMPSs: Matrix multiplication with data persistence <https://doi.org/10.48546/workflowhub.workflow.838.1>`_
 
@@ -827,18 +861,6 @@ executions in the same machine as the one in the published run (e.g. using the s
 since the metadata may include references to the location of the inputs and outputs of the workflow. Therefore, the only
 requirement to reproduce a run would be to have access granted to the location where the inputs are.
 
-******** FOR REDOING JAVA PART ***************
-
-- Preparing the **source code** of the application. It is located in the ``application_sources/`` folder of the crate. You can
-  run the code from that location (as mentioned earlier), or copy or move it to a different one. If the code is Python,
-  it is ready to run. If the code is
-  Java, you may have to create a ``.jar`` file using ``javac`` and ``jar``, or try to invoke a ``.jar`` file if it has
-  been included in the crate.
-
-    - In most of the cases, if the application uses relative paths, the ``application_sources/`` folder can be used as
-      the working directory (i.e. the folder from where you run your COMPSs application).
-
-
 
 Metadata examples
 -----------------
@@ -877,11 +899,15 @@ the JSON file you can find several interesting terms:
 
   - The defined ``Agent`` is recorded as the ``agent``.
 
-  - The ``description`` term records details on the host that ran the workflow (architecture, Operating System version and COMPSs paths defined).
+  - The ``description`` term records details on the host that ran the workflow (architecture, Operating System version).
 
-  - The ``object`` term makes reference to the input files used by the workflow.
+  - The ``environment`` term includes references to the COMPSs related environment variables used during the run.
 
-  - The ``result`` term references the output files generated by the workflow.
+  - The ``startTime`` and ``endTime`` terms include respectively the starting and ending time of the application as UTC time.
+
+  - The ``object`` term makes reference to the input files or directories used by the workflow.
+
+  - The ``result`` term references the output files or directories generated by the workflow.
 
 We encourage the reader to navigate through this ``ro-crate-metadata.json`` file example to get familiar with its
 contents. Many of the fields are easily and directly understandable.
