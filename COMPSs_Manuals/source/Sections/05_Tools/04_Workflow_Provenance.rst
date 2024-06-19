@@ -556,7 +556,9 @@ site can be found in their `Documentation <https://about.workflowhub.eu/docs/>`_
 The steps to achieve the publication of a COMPSs execution are:
 
 - Pack the resulting crate sub-directory (i.e. ``COMPSs_RO-Crate_[uuid]/``) in a zip file. The ``ro-crate-metadata.json``
-  file must be at the root level of this zip file. For example: ``zip -r ~/Desktop/crate.zip COMPSs_RO-Crate_891540ad-18ca-4e19-aeb4-66a237193d07/``
+  file must be at the root level of this zip file.
+
+    - Command example: ``zip -r ~/Desktop/crate.zip COMPSs_RO-Crate_891540ad-18ca-4e19-aeb4-66a237193d07/``
 
 - `Login <https://workflowhub.eu/login?return_to=%2Fsignup>`_ or `create an account <https://workflowhub.eu/signup>`_
   in the WorfklowHub registry. You can use your GitHub credentials to easily log in.
@@ -573,7 +575,10 @@ The steps to achieve the publication of a COMPSs execution are:
 
    Join or Create a Team at WorkflowHub
 
-- Once you belong to a Team, you will be able to use the menu ``Create`` at the top of the web page, select ``Workflow``.
+- Once you belong to a Team, you will be able to use the big ``Contribute`` button at the WorkflowHub home page.
+
+    - Alternatively, the menu ``Create`` at the top of the web page can be used, selecting ``Workflow``.
+
 
 - Select the third tab ``Upload/Import Workflow RO-Crate`` tab, ``Local file``, and browse your computer to select the zip file
   prepared previously. Click ``Register``.
@@ -584,15 +589,20 @@ The steps to achieve the publication of a COMPSs execution are:
     - Select the visibility and teams' permissions for your workflow in the ``Sharing`` section (for both general public, and for the WorkflowHub Teams where this workflow will be added).
     - Click ``Register`` again.
 
+.. WARNING::
+
+    WorkflowHub Teams may have default sharing policies defined when they are created. Thus, when linking your
+    workflow to a team, you can select if you want to apply the Team's default policy or not.
+
 .. TIP::
 
     The crate (i.e. folder ``COMPSs_RO-Crate_[uuid]/``) can also be uploaded to GitHub, and then imported from
     WorkflowHub using the second tab option ``Import Git Repository``.
 
 After these steps, the main summary page of your workflow will be shown, where three main tabs can be selected
-(see https://doi.org/10.48546/workflowhub.workflow.635.1 to check out an example directly at WorkflowHub):
+(see https://doi.org/10.48546/workflowhub.workflow.484.1 to check out an example directly at WorkflowHub):
 
-- **Overview**: Where the workflow type, workflow description, and workflow diagram are shown.
+- **Overview**: where the workflow type, workflow description, and workflow diagram are shown.
 
 .. figure:: ./Figures/WH_overview.png
    :name: Overview
@@ -602,7 +612,7 @@ After these steps, the main summary page of your workflow will be shown, where t
 
    Overview tab information
 
-- **Files**: Where you can browse the uploaded content of the crate (see :ref:`Sections/05_Tools/04_Workflow_Provenance:Resulting crate`
+- **Files**: where you can browse the uploaded content of the crate (see :ref:`Sections/05_Tools/04_Workflow_Provenance:Resulting crate`
   for details on the crate structure).
 
 .. figure:: ./Figures/WH_files.png
@@ -613,15 +623,15 @@ After these steps, the main summary page of your workflow will be shown, where t
 
    Files tab information
 
-- **Related items**: Where you can find any other entities related to this workflow (i.e. ``People``, ``Spaces``,
+- **Related items**: where you can find any other entities related to this workflow (i.e. ``People``, ``Spaces``,
   ``Teams``, ``Publications``, ``Presentations``, ``Collections``, ...)
 
 At this point, before freezing and generating a DOI for the workflow, you may consider if **remote datasets** need
 to be added to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Adding large files as remote datasets in WorkflowHub`
 for a detailed guide on how to do that.
 
-If everything is correct, the next step is to **generate a DOI** for your workflow. The necessary steps to achieve
-this are:
+If everything is correct, the next step is to **generate a DOI** (i.e. a persistent identifier) for your workflow.
+The necessary steps to achieve this are:
 
 .. WARNING::
 
@@ -667,11 +677,14 @@ this are:
     If no Authors are provided in the YAML configuration file, it won't be possible to generate a DOI.
     See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:YAML configuration file`
 
-You can see a couple of examples on previous published workflows:
+You can see some examples on previous published workflows:
 
 - **Java COMPSs Matrix Multiplication (using COMPSs 3.2):** https://doi.org/10.48546/workflowhub.workflow.484.1
 
 - **PyCOMPSs WordCount Example (using COMPSs 3.3):** https://doi.org/10.48546/workflowhub.workflow.635.1
+
+- **PyCOMPSs Matrix Multiplication, out-of-core using files. Example using DIRECTORY parameters executed at laptop,
+  data persistence True (using COMPSs 3.3.1):** https://doi.org/10.48546/workflowhub.workflow.1046.1
 
 .. TIP::
 
@@ -858,7 +871,8 @@ results), therefore, other peers can verify the results of your experiments. To 
         - COMING SOON.
 
 
-As seen in the example above, the steps to reproduce a COMPSs workflow vary depending if the crate package downloaded includes the datasets (i.e. it
+As seen in the examples above, the steps to reproduce a COMPSs workflow vary depending if the
+crate package downloaded includes the datasets (i.e. it
 has a ``dataset/`` sub-folder). This is achieved when ``data_persistence`` is set to ``True`` in the
 YAML configuration file. Thus, the data preparation step will change depending on the availability of the dataset
 needed for the workflow execution. In addition, any external third party software used in the application (e.g.
@@ -897,28 +911,27 @@ The corresponding ``ro-crate-metadata.json`` can be found here:
 
 Intuitively, if you search through the JSON file you can find several interesting terms:
 
-- **creator:** List of authors, identified by their ORCID.
+- ``creator`` contains the list of authors, identified by their ORCID.
 
-- **publisher:** Organisations of the authors.
+- ``publisher`` lists the organisations of the authors.
 
-- **hasPart in ./:** lists all the files and directories this workflow needs and generates, and also the ones
+- ``hasPart`` in ``./`` lists all the files and directories this workflow needs and generates, and also the ones
   included in the crate. They are referenced with relative paths, since they are included in the crate.
 
-- **ComputationalWorkflow:** Main file of the application (in the example, ``application_sources/matmul_directory.py``).
+- ``ComputationalWorkflow`` is the main file of the application (in the example, ``application_sources/matmul_directory.py``).
   Includes a reference to the generated workflow diagram in the ``image`` field.
 
-- **version:** The COMPSs specific version and build used to run this application. In the example: ``3.3``.
+- ``version`` contains the COMPSs specific version and build used to run this application. In the example: ``3.3``.
   This is a very important field to achieve reproducibility or replicability, since COMPSs features may vary their
   behaviour in different versions of the programming model runtime.
 
-- **CreateAction:** With the compliance to the Workflow Run Crate Profile, the details on the specific execution
-  of the workflow are included in the ``CreateAction`` term.
+- ``CreateAction`` details the specific execution of the workflow, compliant with the Workflow Run Crate Profile.
 
   - The defined ``Agent`` is recorded as the ``agent``.
 
   - The ``description`` term records details on the host that ran the workflow (architecture, Operating System version).
 
-  - The ``environment`` term includes references to the COMPSs related environment variables used during the run.
+  - The ``environment`` term includes references to the COMPSs and / or SLURM related environment variables used during the run.
 
   - The ``startTime`` and ``endTime`` terms include respectively the starting and ending time of the application as UTC time.
 
@@ -934,13 +947,13 @@ Java COMPSs example (MareNostrum supercomputer execution)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In this second ``ro-crate-metadata.json`` example, we want to illustrate the workflow provenance result of a Java COMPSs
-application execution in the MareNostrum 5 supercomputer. We show the execution of a matrix LU factorization
+application execution in the MareNostrum V supercomputer. We show the execution of a matrix LU factorization
 for out-of-core sparse matrices implemented with COMPSs and using the Java programming language. In this algorithm,
 matrix ``A`` is both input and output of the workflow, since the factorization overwrites the original value of ``A``.
 In addition, we have used a 4x4 blocks hyper-matrix (i.e. the matrix is divided in 16 blocks, that contain 16
 elements each) and, if a block is all 0s, the corresponding file will not be
 created in the file system (in the example, this happens for blocks ``A.0.3``, ``A.1.3``, ``A.3.0`` and ``A.3.1``). We
-do not define the ``data_persistence`` option, which means it will be false, and the datasets will not be included in
+do not define the ``data_persistence`` option, which means it will be ``False``, and the datasets will not be included in
 the resulting crate (i.e. only references to the location of files will be included in the metadata).
 
 The corresponding ``ro-crate-metadata.json`` can be found here:
