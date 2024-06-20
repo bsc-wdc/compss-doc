@@ -45,7 +45,6 @@ extensions = ['sphinx.ext.todo',
               'sphinx_copybutton',
               'sphinxcontrib.rsvgconverter',
               'sphinxcontrib.youtube',
-              'sphinx_panels',
               'sphinx_tabs.tabs',
               'sphinx_toolbox.collapse']
 
