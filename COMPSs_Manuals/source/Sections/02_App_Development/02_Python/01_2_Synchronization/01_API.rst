@@ -261,9 +261,9 @@ Task Groups
 ^^^^^^^^^^^
 
 COMPSs also enables to specify task groups. To this end, COMPSs provides the
-*TaskGroup* context (:numref:`task_group`) which can be tuned with the group name, and a second parameter (boolean) to
-perform an implicit barrier for the whole group. Users can also define
-task groups within task groups.
+*TaskGroup* context (:numref:`task_group`) which can be tuned with the group name,
+and a second parameter (boolean) to perform an implicit barrier for the whole group.
+Users can also define task groups within task groups.
 
 TaskGroup(group_name, implicit_barrier=True)
    Python context to define a group of tasks. All tasks submitted within the
@@ -274,7 +274,7 @@ TaskGroup(group_name, implicit_barrier=True)
 
 .. code-block:: python
     :name: task_group
-    :caption: PyCOMPSs Task group definiton
+    :caption: PyCOMPSs Task group definition
 
     from pycompss.api.task import task
     from pycompss.api.api import TaskGroup
@@ -288,7 +288,7 @@ TaskGroup(group_name, implicit_barrier=True)
     def func2():
         ...
 
-    def test_taskgroup():
+    if __name__=='__main__':
         # Creation of group
         with TaskGroup('Group1', False):
             for i in range(NUM_TASKS):
@@ -299,8 +299,39 @@ TaskGroup(group_name, implicit_barrier=True)
         compss_barrier_group('Group1')
         ...
 
+compss_barrier_group(group_name)
+    Task Groups are commonly used to implement the exception mechanism in PyCOMPSs
+    applications (see :ref:`Sections/02_App_Development/02_Python/01_3_Failures_and_exceptions/01_Failures_and_exceptions:Failures and Exceptions`
+    section for more information about this feature.). Moreover, developers can also cancel
+    task groups using the *compss_cancel_group* API call, indicating the name of the
+    group to cancel as depicted in (:numref:`cancel_task_group`).
+
+.. code-block:: python
+    :name: cancel_task_group
+    :caption: PyCOMPSs Task group cancellation
+
+    from pycompss.api.task import task
+    from pycompss.api.api import TaskGroup
+    from pycompss.api.api import compss_cancel_group
+
+    @task()
+    def func1():
+        ...
+
+    @task()
+    def func2():
+        ...
+
     if __name__=='__main__':
-        test_taskgroup()
+        # Creation of group
+        with TaskGroup('Group1', False):
+            for i in range(NUM_TASKS):
+                func1()
+                func2()
+            ...
+        ...
+        compss_cancel_group('Group1')
+        ...
 
 
 Other
@@ -370,6 +401,8 @@ used in the main program of a COMPSs Python application.
     |                 | compss_delete_object(\*object)               | Notifies the runtime to delete the associated file to the object/s.                     |
     +-----------------+----------------------------------------------+-----------------------------------------------------------------------------------------+
     | Task Groups     | TaskGroup(group_name, implicit_barrier=True) | Context to define a group of tasks. *implicit_barrier* forces waiting on context exit.  |
+    |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+
+    |                 | compss_cancel_group(group_name)              | Cancel all the task defined in a TaskGroup                                              |
     +-----------------+----------------------------------------------+-----------------------------------------------------------------------------------------+
     | Other           | compss_file_exists(\*file_name)              | Check if a file or files exist.                                                         |
     +-----------------+----------------------------------------------+-----------------------------------------------------------------------------------------+

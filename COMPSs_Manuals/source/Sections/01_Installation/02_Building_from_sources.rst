@@ -3,13 +3,14 @@ Building from sources
 
 This section describes the steps to install COMPSs from the sources.
 
-The first step is downloading the source code from the Git repository:
+The first step is downloading the source code from the Git repository and select the version to compile:
 
 .. code-block:: console
 
     $ git clone https://github.com/bsc-wdc/compss.git
     $ git checkout 3.3.1
     $ cd compss
+    $ git checkout <version>
 
 Then, you need to download the embedded dependencies from the git submodules:
 
