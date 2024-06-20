@@ -504,12 +504,30 @@ groups without retrieving data while other tasks are being executed.
     for (int i=0; i<10; i++){
         // The group exception will be thrown from the barrier
         try {
-            COMPSs.barrierGroup("FailedGroup2");
+            COMPSs.barrierGroup(""Group" + i");
         } catch (COMPSsException e) {
             System.out.println("Exception caught in barrier!!");
             Test.otherTask(FILE_NAME);
         }
     }
+
+Finally, users can also programmatically cancel tasks associated to a task group
+using the *COMPSs.cancelGroup* funtion. :numref:`compss_cancel_group_java`
+shows an example of how to use this method.
+
+.. code-block:: java
+    :name: compss_cancel_group_java
+    :caption: Programmatic task group cancellation example
+
+    ...
+    try (COMPSsGroup a = new COMPSsGroup("Group_to_cancel", false)) {
+        for (int j = 0; j < N; j++) {
+            Test.taskWithCOMPSsException(FILE_NAME);
+        }
+    }
+    ...
+    COMPSs.barrierGroup("Group_to_cancel");
+    ...
 
 .. ATTENTION::
 

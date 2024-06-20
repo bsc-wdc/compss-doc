@@ -142,6 +142,7 @@ For further details of the ``runcompss`` command check its dedicated Section
 
     $ runcompss  --project=path/to/application/project.xml \
                  --resources=path/to/application/resources.xml \
+                 --comm="es.bsc.compss.gos.master.GOSAdaptor" \
                  [options] \
                  application_name [application_arguments]
 
