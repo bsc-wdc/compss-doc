@@ -677,9 +677,7 @@ Running Jupyter notebooks
                 To force quit: CTRL + C
 
         .. dropdown:: How to use Jupyter in MN4 from local machine with PyCOMPSs CLI?
-          :container: + shadow
-          :title: bg-primary text-white text-center font-weight-bold
-          :body: bg-light font-italic
+          :color: dark
 
           .. dropdown:: **1st Step (to be done in your laptop)**
               :open:
