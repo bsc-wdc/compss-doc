@@ -63,20 +63,7 @@ alias pip3=`python3 -m pip`
 
 * Python 3 dependencies
 ```
-pip3 install sphinx --user
-pip3 install sphinxcontrib.contentui --user
-pip3 install six --upgrade
-pip3 install nbsphinx --user
-pip3 install sphinx-copybutton --user
-pip3 install sphinxcontrib-svg2pdfconverter --user
-pip3 install rst2pdf --user
-pip3 install sphinxcontrib-bibtex --user
-pip3 install pandoc --user
-pip3 install ipywidgets --user
-pip3 install sphinx-rtd-theme==0.5.0.rc1
-pip3 install prompt-toolkit --user
-pip3 install ipython --user
-pip3 install sphinxcontrib.yt --user
+./install_dependencies.sh
 ```
 
 * System dependencies
