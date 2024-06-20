@@ -41,14 +41,15 @@ between tasks:
 
 .. code-block:: python
     :name: prolog_task_with_param
-    :caption: Task parameter in Prolog definition.
+    :caption: Task parameter in Prolog/Epilog definition.
 
 
     from pycompss.api.prolog import prolog
+    from pycompss.api.epilog import epilog
     from pycompss.api.task import task
 
-    @epilog(binary="mkdir", args="/tmp/{{working_dir}}")
-    @prolog(binary="tar", args="zcvf {{out_tgz}} /tmp/{{working_dir}}")
+    @prolog(binary="mkdir", args="/tmp/{{working_dir}}")
+    @epilog(binary="tar", args="zcvf {{out_tgz}} /tmp/{{working_dir}}")
     @task(returns=1)
     def run_simulation(working_dir, out_tgz):
         ...
