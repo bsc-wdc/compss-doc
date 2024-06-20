@@ -8,7 +8,6 @@ The first step is downloading the source code from the Git repository and select
 .. code-block:: console
 
     $ git clone https://github.com/bsc-wdc/compss.git
-    $ git checkout 3.3.1
     $ cd compss
     $ git checkout <version>
 
