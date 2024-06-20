@@ -3,8 +3,8 @@ Workflow Provenance
 
 The COMPSs runtime includes the capacity of recording details of the
 application's execution as metadata, also known as *Workflow Provenance*. With workflow provenance, you are able to share
-not only your workflow application (i.e. the source code) but also your workflow run (i.e. the datasets used as inputs, and the outputs generated as
-results). This is supported for both Python
+not only your workflow application (i.e. the source code) but also your workflow run (i.e. the datasets used as inputs, the outputs generated as
+results, and details on the environment where the application was run). This is supported for both Python
 and Java COMPSs applications. More technical details on how Provenance is generated in COMPSs using a lightweight approach
 that does not introduce overhead to the workflow execution can be found in the paper:
 
@@ -13,9 +13,16 @@ that does not introduce overhead to the workflow execution can be found in the p
 Provenance information can be useful for a number of things, including **Governance, Reproducibility, Replicability, Traceability,
 or Knowledge Extraction**, among others.
 In our case, we have initially targeted workflow provenance recording to enable users to **publish research results** obtained with COMPSs as
-artifacts that can be cited in scientific publications with their corresponding DOI.
+artifacts that can be cited in scientific publications with their corresponding DOI as a persistent identifier.
 See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Publish and cite your results with WorkflowHub` to learn
-precisely how to do that.
+precisely how to do that. We see a growing number of scientific conferences requesting these reproducible artifacts, such as:
+
+- `The Reproducibility Initiative at the International Conference for High Performance Computing, Networking, Storage, and Analysis (SC) <https://sc24.supercomputing.org/program/papers/reproducibility-initiative/>`_
+- `Reproducibility at the International Conference on Parallel Processing (ICPP) <https://icpp2024.org/index.php?option=com_content&view=article&id=4&Itemid=108>`_
+- `Call for Artifacts at the International European Conference on Parallel and Distributed Computing (EuroPar) <https://2024.euro-par.org/calls/artifacts/>`_
+- `The ACM Special Interest Group on Management of Data (SIGMOD) Reproducibility Award <https://reproducibility.sigmod.org/reports.html>`_
+- `Call for Artifacts at USENIX Conference on File and Storage Technologies (FAST) <https://www.usenix.org/conference/fast24/call-for-artifacts>`_
+- And many more...
 
 .. TIP::
     A step-by-step guide on how to share your COMPSs execution results in scientific papers can be found
@@ -24,20 +31,20 @@ precisely how to do that.
 When the provenance option is activated, the runtime records every access
 to a file or directory specified in the application, as well as its direction (IN,
 OUT, INOUT). In addition to this, other information such as the parameters passed as inputs in the command line
-that submitted the application, its source files, workflow image and task profiling statistics, authors and
+that submitted the application, its source files, workflow diagram and task profiling statistics, authors and
 their institutions, ... are also stored.
 All this information is later used to record the workflow provenance
-of your application using the `RO-Crate specification <https://www.researchobject.org/ro-crate/1.1/>`_, and with the assistance of
+of your application using the `RO-Crate specification <https://www.researchobject.org/ro-crate/>`_, and with the assistance of
 the `ro-crate-py library <https://github.com/ResearchObject/ro-crate-py>`_. RO-Crate is based on
 JSON-LD (JavaScript Object Notation for Linked Data), is
 much simpler than other standards and tools created to record Provenance, and
-that is why it has been adopted in a number of `communities <https://www.researchobject.org/ro-crate/in-use/>`_. Using RO-Crate
-to register the execution's information ensures
+that is why it has been adopted in a number of `communities <https://www.researchobject.org/ro-crate/use_cases>`_.
+Using RO-Crate to register the execution's information ensures
 not only to register correctly the Provenance of a COMPSs application run, but
 also compatibility with some existing portals that already embrace
 RO-Crate as their core format for representing metadata, such as `WorkflowHub <https://workflowhub.eu/>`_. Our RO-Crate
 format is compliant with the `Workflow RO-Crate Profile v1.0 <https://w3id.org/workflowhub/workflow-ro-crate/1.0>`_ and the
-`Workflow Run Crate Profile v0.1 <https://w3id.org/ro/wfrun/workflow/0.1>`_.
+`Workflow Run Crate Profile v0.4 <https://w3id.org/ro/wfrun/workflow/0.4>`_.
 
 
 Software dependencies
@@ -65,7 +72,7 @@ This would typically install the library in ``~/.local/``. Another option is to 
 
     $ pip install -t install_path rocrate
 
-Our implementation has been tested with ``ro-crate-py`` version ``0.9.0`` and earlier.
+Our current implementation needs ``ro-crate-py`` version ``0.9.0`` or higher.
 
 .. WARNING::
 
@@ -74,34 +81,28 @@ Our implementation has been tested with ``ro-crate-py`` version ``0.9.0`` and ea
     to install ro-crate-py.
 
 
-Previous needed information
----------------------------
+YAML configuration file
+-----------------------
 
 There are certain pieces of information which must be included when registering the provenance of a workflow that
 the COMPSs runtime cannot automatically infer, such as the authors of an application. For specifying all these
 fields that are needed to generate an RO-Crate but cannot be automatically obtained, we have created a simple YAML
-structure where the user can specify them. They need to provide in their working directory (i.e. where the application
-is going to be run) a YAML file named ``ro-crate-info.yaml`` that follows the next template structure:
+structure where the user can specify them. By default, a YAML file named ``ro-crate-info.yaml`` will be expected in the
+working directory (i.e. where the application is going to be run), but a different YAML file can be used by specifying
+it with ``--provenance=my_yaml_file.yaml`` when activating workflow provenance generation.
+The YAML file must follow the next template structure:
 
 .. code-block:: yaml
 
     COMPSs Workflow Information:
       name: Name of your COMPSs application
       description: Detailed description of your COMPSs application
-      license: Apache-2.0
-        # URL preferred, but these strings are accepted: https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
+      license: YourLicense-1.0
       sources: [/absolute_path_to/dir_1/, relative_path_to/dir_2/, main_file.py, relative_path/aux_file_1.py, /abs_path/aux_file_2.py]
-        # List of application source files and directories. Relative or absolute paths can be used.
-      sources_main_file: my_main_file.py
-        # Optional: Manually specify the name of the main file of the application, located in one of the 'sources' defined.
-        # Relative paths from a 'sources' entry, or absolute paths can be used.
       data_persistence: False
-        # True to include all input and output files of the application in the resulting crate.
-        # If False, input and output files of the application won't be included, just referenced. False by default or if not set.
-      inputs: [/abs_path_to/dir_1, rel_path_to/dir_2, file_1, rel_path/file_2]
-        # Optional: Manually specify the inputs of the workflow. Relative or absolute paths can be used.
-      outputs: [/abs_path_to/dir_1, rel_path_to/dir_2, file_1, rel_path/file_2]
-        # Optional: Manually specify the outputs of the workflow. Relative or absolute paths can be used.
+      inputs: [/abs_path_to/dir_1, rel_path_to/dir_2, file_1, rel_path/file_2, https://domain.to/file]
+      outputs: [/abs_path_to/dir_1, rel_path_to/dir_2, file_1, rel_path/file_2, https://domain.to/file]
+      sources_main_file: my_main_file.py
 
     Authors:
       - name: Author_1 Name
@@ -109,21 +110,18 @@ is going to be run) a YAML file named ``ro-crate-info.yaml`` that follows the ne
         orcid: https://orcid.org/XXXX-XXXX-XXXX-XXXX
         organisation_name: Institution_1 name
         ror: https://ror.org/XXXXXXXXX
-          # Find them in ror.org
       - name: Author_2 Name
         e-mail: author2@email.com
         orcid: https://orcid.org/YYYY-YYYY-YYYY-YYYY
         organisation_name: Institution_2 name
         ror: https://ror.org/YYYYYYYYY
-          # Find them in ror.org
 
-    Submitter:
+    Agent:
       name: Name
-      e-mail: submitter@email.com
+      e-mail: agent@email.com
       orcid: https://orcid.org/XXXX-XXXX-XXXX-XXXX
-      organisation_name: Submitter Institution name
+      organisation_name: Agent Institution name
       ror: https://ror.org/XXXXXXXXX
-        # Find them in ror.org
 
 .. WARNING::
 
@@ -132,37 +130,45 @@ is going to be run) a YAML file named ``ro-crate-info.yaml`` that follows the ne
 
 As you can see, there are three main blocks in the YAML:
 
-- **COMPSs Workflow Information:** Where details on the application are provided.
+- **COMPSs Workflow Information:** where details on the application are provided.
 
-- **Authors:** Where authors' details are given.
+- **Authors:** where authors' details are given.
 
-- **Submitter:** The person running the workflow in the computing resources.
+- **Agent:** the single person running the workflow in the computing resources.
+
+COMPSs Workflow Information section
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 More specifically, in the **COMPSs Workflow Information** section, the most commonly used terms are:
 
 - The ``name`` and ``description`` fields are free text, where a long name and description of
   the application must be provided.
 
-- ``sources`` can be a single directory or file, or a list of directories or files where the whole application source
-  files can be found. Our script
+- ``sources`` can be a single directory or file, or a list of directories or files where application source
+  files can be found. The ``sources`` term here is used not only to describe files with source code (typically all
+  ``.py`` files for Python applications, or ``.java``, ``.class``, ``.jar`` files for Java ones), but also any
+  installation and configuration scripts, compilation scripts (Makefile, pom.xml, ...), submission scripts, readme
+  files, ... that should be included with the application package. Our script
   will add ALL files (i.e. not only source files, but any file found) and sub-directories inside each of the directory
   paths specified. The sub-directories structure is respected
-  when the files are added in the crate (inside a sub-directory ``application_sources/``). Files referenced here are
-  typically all ``.py`` files for Python applications, or ``.java``, ``.class``, ``.jar`` files for Java ones. Both
+  when the files are added in the crate (inside a sub-directory ``application_sources/``). Both
   relative and absolute paths can be used. If the term ``sources`` is not specified, only the application's main file
   will be added as the corresponding source code if it can be found in the current working directory.
 
 - The ``license`` field is preferred to be specified by providing an URL to the license, but a set of
-  predefined strings are also supported, and can be found here:
-  https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses
+  predefined strings are also supported, and can be found at the `Workflow-RO-Crate profile page <https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses>`_.
 
-- ``data_persistence`` is a boolean to indicate whether the workflow provenance generation should include the input
-  and output datasets needed and generated respectively in the workflow (i.e. must be set to ``True``).
-  Including the related datasets is feasible for
-  workflows where the datasets are small enough to be sent back and forth between execution environments. When datasets
-  are too large to be moved around, or if reproducibility or replicability is ment for a single execution environment,
-  this field should be set to ``False`` to avoid including the datasets in the resulting crate package. Its value is
-  ``False`` by default.
+
+- ``data_persistence`` value is ``False`` by default. It is a boolean to indicate whether the workflow provenance
+  generation should copy the workflow's input and output datasets to the crate (i.e. must be set to ``True``).
+  Including the datasets is feasible for workflows where they are small enough to be sent back and forth between
+  execution environments. When datasets are too large to be moved around (i.e. hundreds of MB), this field should be set
+  to ``False``.
+
+.. TIP::
+    Large datasets (i.e. hundreds of MBs) should be uploaded to public
+    data repositories (e.g. `Zenodo <https://zenodo.org/>`_ up to 50 GB per dataset, `FigShare <https://figshare.com/>`_
+    up to 5 TB per dataset) and included as ``https`` references with the ``inputs`` or ``outputs`` terms.
 
 From all these terms, only ``name`` is  mandatory, since the rest are not strictly required to generate workflow provenance with COMPSs.
 However, it is important to include as much information as possible in order to correctly share your application and
@@ -178,18 +184,18 @@ are specified, WorkflowHub will not allow to generate a DOI for the workflow exe
     ``dataset/A.txt`` and ``dataset/B.txt``, since files do not share a common path and are considered to be at different
     locations.
 
-Also, some more optional terms are available, but commonly less used:
+Also, some more optional terms are available, but less commonly used:
 
-- ``inputs`` is an advanced feature. Should be used only when automatic detection of workflow input files does not work
-  properly. Input files and directories can be specified, and will be added as overall input parameters to the workflow
-  (in addition to the ones detected).
+- ``inputs`` to manually include input parameters (files or directories) to the application, in addition to the ones
+  detected. In order to include very large files in the crate without actually copying them, files from remote
+  repositories can be referenced (e.g. ``https://zenodo.org/records/10782431/files/lysozyme_datasets.zip``)
 
-- ``outputs`` is an advanced feature. Should be used only when automatic detection of workflow output files does not work
-  properly. Output files and directories can be specified, and will be added as overall output parameters to the workflow
-  (in addition to the ones detected).
+- ``outputs`` to manually include output parameters (files or directories) to the application, in addition to the ones
+  detected. In order to include very large files in the crate without actually copying them, files from remote
+  repositories can be referenced (e.g. ``https://zenodo.org/records/10783183/files/results_2003_0521_boumardes_BS.tar.gz``)
 
-- ``sources_main_file`` is an advanced feature. It is the name of the main source file of the application,
-  and may be specified if the user wants to select
+- ``sources_main_file`` is an advanced feature very rarely used, to override the detected main file for the application.
+  It defines the name of the main source file of the application, and may be specified if the user wants to select
   a particular file as such. The COMPSs runtime detects automatically the main source of an application, therefore, this is a way
   to override the detected file. The file can be specified with a relative path inside one of the
   directories listed in ``sources``. An absolute path can also be used.
@@ -200,7 +206,11 @@ Also, some more optional terms are available, but commonly less used:
     automatically the main file from application execution, this would enable to modify the automatic selection in case
     of need.
 
-In the **Authors** section (the whole section is optional):
+Authors section
+~~~~~~~~~~~~~~~
+
+In the **Authors** section (the whole section is optional), a single author or a list of authors can be provided. For
+each Author:
 
 - ``name``, ``e-mail`` and ``organisation_name`` are strings corresponding to the author's name, e-mail and their
   institution. They are free text, but the ``e-mail`` field must follow the ``user@domain.top`` format.
@@ -213,27 +223,35 @@ In the **Authors** section (the whole section is optional):
 
 .. WARNING::
 
-    If an Author is specified, it must have at least a ``name`` and an ``orcid`` defined. If its Organisation is
-    specified, both ``organisation_name`` and ``ror`` must be provided.
+    If an Author is specified, it must have at least a ``name`` and an ``orcid`` defined. If their Organisation is also
+    specified, at least the ``ror`` must be provided.
 
 .. TIP::
 
-    It is very important that the list of source files (defined with ``sources``), ``orcid`` and
+    It is very important that the ``sources``, ``orcid`` and
     ``ror`` terms are correctly defined, since the
     runtime will only register information for the list of source files defined, and the ``orcid`` and ``ror`` are
     used as unique identifiers in the RO-Crate specification.
 
-The **Submitter** section has the same terms as the Authors section, but it specifically provides the details of the
-person running the workflow, that can be different from the Authors. The whole section is optional.
+Agent section
+~~~~~~~~~~~~~
+
+The **Agent** section has the same terms as the Authors section, but it specifically provides the details of the sole
+person running the workflow, that can be different from the Authors. The whole section is optional and only a single
+individual can be provided.
 
 .. WARNING::
 
-    If no Submitter section is provided, the first Author will be considered by default as the submitter of the
+    If no Agent section is provided, the first Author will be considered by default as the agent executing the
     workflow.
 
+Examples
+~~~~~~~~
+
 In the following lines, we provide a YAML example for an out-of-core Matrix Multiplication PyCOMPSs application,
-distributed with license Apache v2.0, with 2 source files, and authored by 3 persons from two different
-institutions. Since no ``Submitter`` is defined, the first author is considered as such by default.
+distributed with license Apache v2.0, with two source files, and authored by two persons from two different
+institutions. Since no ``Agent`` is defined, the first author is considered as such by default. The ``data_persistence``
+term is set to ``True``, to indicate the datasets should be included in the resulting crate.
 
 .. code-block:: yaml
 
@@ -251,21 +269,16 @@ institutions. Since no ``Submitter`` is defined, the first author is considered 
         organisation_name: Barcelona Supercomputing Center
         ror: https://ror.org/05sd8tv96
       - name: Rosa M. Badia
-        e-mail: Rosa.M.Badia@bsc.es
+        e-mail: Rosa.M.Badia@upc.edu
         orcid: https://orcid.org/0000-0003-2941-5499
-        organisation_name: Barcelona Supercomputing Center
-        ror: https://ror.org/05sd8tv96
-      - name: Adam Hospital
-        e-mail: adam.hospital@irbbarcelona.org
-        orcid: https://orcid.org/0000-0002-8291-8071
-        organisation_name: IRB Barcelona
-        ror: https://ror.org/01z1gye03
+        organisation_name: Universitat Politècnica de Catalunya
+        ror: https://ror.org/03mb6wj31
 
 Also, another example of a COMPSs Java K-means application, where the usage of ``sources`` including directories can be seen.
 We add to the crate the sub-directories that contain the ``.jar`` and ``.java`` files. In this case,
-a ``Submitter`` is provided which is different from the person that wrote the application. The term ``data_persistence``
-has been explicitly specified, but since the default value is ``False`` if not specified, it could be removed and get the
-same result.
+an ``Agent`` is provided which is different from the person that wrote the application. The term ``data_persistence``
+has been explicitly specified, but since the default value is ``False`` if not specified, it could be removed and still
+obtain the same result.
 
 .. code-block:: yaml
 
@@ -279,18 +292,18 @@ same result.
       data_persistence: False
 
     Authors:
-      - name: Raül Sirvent
-        e-mail: Raul.Sirvent@bsc.es
-        orcid: https://orcid.org/0000-0003-0606-2512
-        organisation_name: Barcelona Supercomputing Center
-        ror: https://ror.org/05sd8tv96
+      name: Raül Sirvent
+      e-mail: Raul.Sirvent@bsc.es
+      orcid: https://orcid.org/0000-0003-0606-2512
+      organisation_name: Barcelona Supercomputing Center
+      ror: https://ror.org/05sd8tv96
 
-    Submitter:
-        name: Adam Hospital
-        e-mail: adam.hospital@irbbarcelona.org
-        orcid: https://orcid.org/0000-0002-8291-8071
-        organisation_name: IRB Barcelona
-        ror: https://ror.org/01z1gye03
+    Agent:
+      name: Rosa M. Badia
+      e-mail: Rosa.M.Badia@upc.edu
+      orcid: https://orcid.org/0000-0003-2941-5499
+      organisation_name: Universitat Politècnica de Catalunya
+      ror: https://ror.org/03mb6wj31
 
 An example of the **minimal YAML** that needs to be defined in order to publish your workflow in WorkflowHub is:
 
@@ -307,54 +320,66 @@ An example of the **minimal YAML** that needs to be defined in order to publish 
     not be possible to generate a DOI for the workflow.
 
 
-Usage
------
+Recording activation
+--------------------
 
 The way of activating the recording of workflow provenance with COMPSs is very simple.
-One must only enable the ``-p`` or ``--provenance`` flag when using ``runcompss`` or
-``enqueue_compss`` to run or submit a COMPSs application, respectively.
-As shown in the help option:
+One must only enable the ``-p`` or ``--provenance`` flag when using ``runcompss``,
+``enqueue_compss``, or ``pycompss run`` to run or submit a COMPSs application. It is important to highlight that the
+``--provenance`` flag accepts a custom name for the YAML file with the application's details (see previous
+Section :ref:`Sections/05_Tools/04_Workflow_Provenance:YAML configuration file`). This is
+specified using the ``--provenance=my_yaml_file.yaml`` option, as shown in the ``runcompss`` help:
  
 .. code-block:: console
 
     $ runcompss -h
 
     (...)
-    --provenance, -p    Generate COMPSs workflow provenance data in RO-Crate format from YAML file. Automatically
-                        activates -graph and -output_profile.
-                        Default: false
+    --provenance=<yaml>,
+    --provenance, -p    Generate COMPSs workflow provenance data in RO-Crate format using a YAML configuration file. Automatically activates --graph and --output_profile.
+                        Default: ro-crate-info.yaml
+
 
 .. WARNING::
 
     As stated in the help, provenance automatically activates both ``--graph`` and ``--output_profile`` options.
-    Consider that the graph image generation can take some extra seconds at the end of the execution of your
+    Consider that the graph diagram generation can take some extra time at the end of the execution of your
     application, therefore, adjust the ``--exec_time`` accordingly.
 
 In the case of extremely large workflows (e.g. a workflow
 with tenths of thousands of task nodes, or tenths of thousands of files used as inputs or outputs), the extra time
 needed to generate the workflow provenance with RO-Crate may be a problem in systems with strict run time constraints.
-In these cases, the workflow execution may end correctly, but the extra processing to generate the provenance may be killed
-by the system if it exceeds a certain limit, and the provenance may not be created correctly.
+Besides, in the COMPSs specific case, workflows with a large number of edges can lead to large
+workflow diagram generation time with ``compss_gengraph``.
+In these cases, the workflow execution may end correctly, but the extra processing time needed to generate the
+provenance may be larger than the specified execution time limit. This means that the process may be killed while
+generating the provenance, therefore it won't be created correctly.
 
-For this or any other similar situation, our workflow provenance generation script can be triggered offline at any moment
+.. WARNING::
+    As a failsafe, we automatically disable workflow diagram generation for workflows with more than 6500 edges.
+    If you want to generate the diagram anyway, you can
+    trigger the diagram generation manually with ``compss_gengraph`` or ``pycompss gengraph``.
+
+For these extreme cases, our workflow provenance generation script can be triggered offline at any moment
 after the workflow has executed correctly, thanks to our design. From the working directory of the application, the
-following commands may be used:
+following commands can be used:
 
 .. code-block:: console
 
     $ $COMPSS_HOME/Runtime/scripts/utils/compss_gengraph svg $BASE_LOG_DIR/monitor/complete_graph.dot
 
-    $ python3 $COMPSS_HOME/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py ro-crate-info.yaml $BASE_LOG_DIR/dataprovenance.log
+    $ python3 $COMPSS_HOME/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py my_yaml_file.yaml $BASE_LOG_DIR/dataprovenance.log
 
 In these commands, ``COMPSS_HOME`` is where your COMPSs installation is located, and ``BASE_LOG_DIR`` points to the path where the
 application run logs are stored (see Section :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/02_Results_and_logs:Logs`
 for more details on where to locate these logs). ``compss_gengraph``
-generates the workflow image to be added to the crate, but if its generation time is a concern, or the user does not
+generates the workflow diagram to be added to the crate, but if its generation time is a concern, or the user does not
 want it to be included in the crate, the command can be skipped. The second command runs the
-``generate_COMPSs_RO-Crate.py`` Python script, that uses the information provided by the user in ``ro-crate-info.yaml``
+``generate_COMPSs_RO-Crate.py`` Python script, that uses the information provided by the user
+in the ``my_yaml_file.yaml`` file (or ``ro-crate-info.yaml`` by default)
 combined with the file accesses information registered by the COMPSs runtime in the ``dataprovenance.log`` file. The
 result is a sub-directory ``COMPSs_RO-Crate_[uuid]/`` that contains the workflow provenance of the run (see next sub-section
-for a detailed description).
+for a detailed description of its content).
 
 .. TIP::
     The workflow provenance generation script will produce in the standard output the precise commands to be used for the
@@ -362,15 +387,15 @@ for a detailed description).
 
     .. code-block:: console
 
-        PROVENANCE | PROVENANCE GENERATION HAS FAILED
-        PROVENANCE | Temporary files have not been erased: App_Profile.json compss_submission_command_line.txt /Users/rsirvent/.COMPSs/matmul_files.py_01//monitor/complete_graph.svg
-        PROVENANCE | Provenance generation can be triggered by hand using the following commands:
-        PROVENANCE | /Users/rsirvent/opt/COMPSs/Runtime/scripts/utils/compss_gengraph svg /Users/rsirvent/.COMPSs/matmul_files.py_01//monitor/complete_graph.dot
-        PROVENANCE | python3 /Users/rsirvent/opt/COMPSs/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py ro-crate-info.yaml /Users/rsirvent/.COMPSs/matmul_files.py_01//dataprovenance.log
-        PROVENANCE | ENDED WORKFLOW PROVENANCE SCRIPT
+        PROVENANCE | STARTING WORKFLOW PROVENANCE SCRIPT
+        PROVENANCE | If needed, Provenance generation can be triggered by hand using the following commands:
+        PROVENANCE | /apps/GPP/COMPSs/3.3.1/Runtime/scripts/utils/compss_gengraph svg /home/bsc/bsc019057/.COMPSs/3166653//monitor/complete_graph.dot
+        PROVENANCE | python3 /apps/GPP/COMPSs/3.3.1/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py ro-crate-info.yaml /home/bsc/bsc019057/.COMPSs/3166653//dataprovenance.log
+        PROVENANCE | TIP for BSC cluster users: before triggering generation by hand, run first: salloc -p interactive
+        ...
 
-Result
-------
+Resulting crate
+---------------
 
 Once the application has finished, a new sub-folder under the application's Working Directory
 will be created with the name ``COMPSs_RO-Crate_[uuid]/``, which is also known as *crate*. The contents of the
@@ -378,37 +403,53 @@ folder include all the elements needed to record a COMPSs application execution 
 the datasets used for the run), and
 are:
 
-- **Application Source Files:** As detailed by the user in the ``ro-crate-info.yaml`` file,
+- **Application Source Files:** as detailed by the user in the YAML configuration file,
   with the term ``sources``.
   The main source file and all auxiliary files that the application needs (e.g. ``.py``, ``.java``, ``.class``
-  or ``.jar``) are included by the user. All application files are added to a sub-folder in the crate named ``application_sources/``, where
+  or ``.jar`` source code files, and also any installation, configuration, compilation or submission scripts, readme files, etc...) are included
+  by the user. All application files are added to a sub-folder in the crate named ``application_sources/``, where
   the ``sources`` directory locations are included with their same folder tree structure, while the individual files included
   are added to the root of the ``application_sources/`` sub-folder in the crate.
 
-- **Application Datasets:** When ``data_persistence`` is set to ``True`` in the ``ro-crate-info.yaml`` file, both
+- **Application Datasets:** when ``data_persistence`` is set to ``True`` in the YAML configuration file, both
   the input and output datasets of the workflow are included in the crate. The input dataset are the files that the
   workflow needs to be run. The output dataset is formed by all the resulting files generated by the execution of the
   COMPSs application. A sub-folder ``dataset/`` with all related files copied will be created, and the sub-directories
   structure will be respected. If more than a single *root* path is detected, a set of folders will be
   provided inside the ``dataset/`` folder.
 
-- **complete_graph.svg:** The image of the workflow generated by the COMPSs runtime,
-  as generated with the ``runcompss -g`` or ``--graph`` option.
+- **complete_graph.svg:** the diagram of the workflow generated by the COMPSs runtime,
+  as generated with the ``runcompss -g`` or ``--graph`` options.
 
-- **App_Profile.json:** A set of task statistics of the application run recorded by the
+- **App_Profile.json (or custom name):** a set of task statistics of the application run recorded by the
   COMPSs runtime, as if the ``runcompss --output_profile=<path>`` option was enabled.
   It includes, for each resource and method executed: number of executions of the
   specific method, as well as maximum, average and minimum run time for the tasks.
-  The name of the file can be customized using the ``--output_profile=<path>`` option.
+  The name of the file can be customized using the ``--output_profile=<path>`` option. See also Section
+  :ref:`Sections/03_Execution_Environments/01_Scheduling:Schedulers`.
 
-- **compss_submission_command_line.txt:** Stores the exact command line that was used to submit the application
+- **compss_submission_command_line.txt:** stores the exact command line that was used to submit the application
   (i.e. ``runcompss`` or ``enqueue_compss``), including all the flags and parameters passed.
   This is especially important for reproducing a COMPSs
   application, since the workflow generated by the COMPSs runtime is created dynamically at run time, thus,
   input parameters could even potentially change the resulting workflow generated by the COMPSs runtime.
 
-- **ro-crate-metadata.json:** The RO-Crate JSON main file describing the contents of
-  this directory (crate) in the RO-Crate specification format. You can find examples in the following Sections.
+- **ro-crate-info.yaml (or custom name):** the YAML workflow provenance configuration file.
+
+- **compss-[job_id].out:** only when the execution is on a cluster. The standard output log of the job execution.
+
+- **compss-[job_id].err:** only when the execution is on a cluster. The standard error log of the job execution.
+
+- **ro-crate-metadata.json:** the RO-Crate JSON main file describing the contents of
+  this directory (crate) in the RO-Crate specification format. You can find examples at Section
+  :ref:`Sections/05_Tools/04_Workflow_Provenance:Metadata examples`.
+
+.. TIP::
+
+    For the basic set of files always included for every application (i.e. ``complete_graph.svg``, ``App_Profile.json``,
+    ``compss_submission_command_line.txt``, ``ro-crate-info.yaml``, ``compss-[job_id].out``, ``compss-[job_id].err``),
+    the runtime generates a file checksum using the ``sha256`` algorithm, as specified inside the metadata file
+    ``ro-crate-metadata.json``. This checksum can be used to verify the file integrity with the ``sha256sum`` command.
 
 .. WARNING::
 
@@ -418,25 +459,113 @@ are:
     your own files to avoid unwanted overwritings. You can change the resulting ``App_Profile.json`` name by using
     the ``--output_profile=/path_to/file`` flag.
 
+.. WARNING::
+
+    The ``complete_graph.svg`` workflow diagram will not be generated automatically if your workflow's application
+    edges are larger than 6500, to avoid large generation times. If you want to generate the diagram anyway, you can
+    trigger the diagram generation manually with ``compss_gengraph`` or ``pycompss gengraph``.
+
+
+Log and time statistics
+-----------------------
+
+When provenance generation is activated, and after the application has finished, the workflow provenance generation
+script will be automatically triggered. A number of log messages related to provenance can bee seen, which return
+interesting information regarding the provenance generation process. They can all be filtered by doing a ``grep`` in
+the output log of the application using the ``PROVENANCE`` expression.
+
+.. code-block:: console
+
+    PROVENANCE | Generating graph for Workflow Provenance
+    PROVENANCE | Number of edges in the graph:        8
+    Output file: /Users/rsirvent/.COMPSs/matmul_files.py_01//monitor/complete_graph.svg
+    INFO: Generating Graph with legend
+    DONE
+    PROVENANCE | Ended generating graph for Workflow Provenance. TIME: 1 s
+
+This first block indicates that the workflow diagram in SVG format is being generated. When this part finishes, the time
+in seconds will be reported. As mentioned earlier, complex workflows can lead to large graph diagram generation times, and that
+is why the number of edges in the graph is also reported. If the number is larger than 6500, the graph diagram generation won't
+be triggered to avoid large generation times.
+
+.. code-block:: console
+
+    PROVENANCE | STARTING RO-CRATE GENERATION SCRIPT
+    PROVENANCE | COMPSs version: 3.3.rc2402, out_profile: App_Profile.json, main_entity: /Users/rsirvent/COMPSs-DP/matmul_files/matmul_files.py
+    PROVENANCE | COMPSs runtime detected inputs (12)
+    PROVENANCE | COMPSs runtime detected outputs (4)
+    PROVENANCE | dataprovenance.log processing TIME: 0.0001647472381591797 s
+
+
+This second block shows the COMPSs version detected, the name of the file containing the execution profile of the
+application, and the ``mainEntity`` detected (i.e. the source file that contains the main method from the COMPSs
+application). Besides, it reports how many input and output data assets have been detected automatically by the COMPSs
+runtime, and the time it took to run its analysis (i.e. the dataprovenance.log processing time).
+
+.. code-block:: console
+
+    PROVENANCE | Application source files detected (11)
+    PROVENANCE | RO-Crate adding source files TIME: 0.055359840393066406 s
+    PROVENANCE | RO-Crate adding input files TIME (Persistence: True): 0.0027692317962646484 s
+    PROVENANCE | RO-Crate adding output files TIME (Persistence: True): 0.0006499290466308594 s
+
+
+The third block first details how many source files have been detected from the ``sources`` term defined
+in the ``ro-crate-info.yaml`` file. Then, it provides a set of times to understand if any overhead is caused by the
+workflow provenance generation script. The first time is the time taken to add the files that are included
+physically in the crate (this is, application source files, workflow diagram, ...). And the second and third are the times
+spent by the script to add all input and output files, detailing if data persistence was established as ``True`` or ``False``.
+If ``True``, the files are physically copied to the crate. If ``False``, only references to the location of the files are
+included.
+
+.. code-block:: console
+
+    PROVENANCE | RO-Crate writing to disk TIME: 0.02508401870727539 s
+    PROVENANCE | Workflow Provenance generation TOTAL EXECUTION TIME: 0.10874414443969727 s
+    PROVENANCE | COMPSs Workflow Provenance successfully generated in sub-folder:
+        COMPSs_RO-Crate_db892d40-7929-461e-b06a-1b2120008f4f/
+    PROVENANCE | ENDED WORKFLOW PROVENANCE SCRIPT
+
+The fourth and final block states the time taken to record the ``ro-crate-metadata.json`` file to disk, the total
+execution time of the whole workflow provenance generation script, and the final message details the name of the
+sub-folder where the RO-Crate package has been generated.
+
+During the workflow provenance generation, some messages labeled as ``WARNING`` may appear. The situations reported
+with warning messages are non-critical situations where some automatic decisions were taken by the generation script,
+so the user should double check if the decision taken is correct. Some examples follow:
+
+.. code-block:: console
+
+    PROVENANCE | WARNING: A parent directory of a previously added sub-directory is being added. Some files will be traversed twice in: /Users/rsirvent/COMPSs-DP/matmul_files/in
+    PROVENANCE | WARNING: A file addition was attempted twice: /Users/rsirvent/COMPSs-DP/matmul_files/in/A/A.0.0 in /Users/rsirvent/COMPSs-DP/matmul_files/in
+    PROVENANCE | WARNING: 'Agent' not specified in TEST_DUPLICATED_SOURCES.yaml. First author selected by default.
+
+
+Using WorkflowHub
+-----------------
 
 Publish and cite your results with WorkflowHub
-----------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Once the provenance metadata for your COMPSs application has been generated, you have the possibility of publishing
-your results (i.e. both the workflow and the workflow run) in `WorkflowHub <https://workflowhub.eu/>`_, the FAIR workflow registry, where a DOI can be generated,
-so your results can be cited in a scientific paper using a permanent reference. Detailed documentation on how to use the WorkflowHub web
+your results (i.e. both the workflow and the workflow run) in `WorkflowHub <https://workflowhub.eu/>`_, the FAIR
+workflow registry, where a DOI can be generated and used as a persistent identifier to cite your experiment in a
+scientific paper. Detailed documentation on how to use the WorkflowHub web
 site can be found in their `Documentation <https://about.workflowhub.eu/docs/>`_ section.
 
 The steps to achieve the publication of a COMPSs execution are:
 
 - Pack the resulting crate sub-directory (i.e. ``COMPSs_RO-Crate_[uuid]/``) in a zip file. The ``ro-crate-metadata.json``
-  file must be at the root level of this zip file. For example: ``zip -r ~/Desktop/crate.zip COMPSs_RO-Crate_891540ad-18ca-4e19-aeb4-66a237193d07/``
+  file must be at the root level of this zip file.
+
+    - Command example: ``zip -r ~/Desktop/crate.zip COMPSs_RO-Crate_891540ad-18ca-4e19-aeb4-66a237193d07/``
 
 - `Login <https://workflowhub.eu/login?return_to=%2Fsignup>`_ or `create an account <https://workflowhub.eu/signup>`_
   in the WorfklowHub registry. You can use your GitHub credentials to easily log in.
 
 - Before being able to contribute workflows to the registry, you need to join a WorkflowHub Team. You can either create
-  your own team, or join an existing one, as shown in the following Figure.
+  your own team, or join an existing one, as shown in the following Figure. For testing purposes, you can join the
+  `COMPSs Tutorials <https://workflowhub.eu/projects/223>`_ team.
 
 .. figure:: ./Figures/JoinOrCreate.jpg
    :name: Join or Create a Team at WorkflowHub
@@ -446,21 +575,34 @@ The steps to achieve the publication of a COMPSs execution are:
 
    Join or Create a Team at WorkflowHub
 
-- Once you belong to a Team, you will be able to use the menu ``Create`` at the top of the web page, select ``Workflow``.
+- Once you belong to a Team, you will be able to use the big ``Contribute`` button at the WorkflowHub home page.
 
-- Select the ``Upload/Import Workflow RO-Crate`` tab, ``Local file``, and browse your computer to select the zip file
+    - Alternatively, the menu ``Create`` at the top of the web page can be used, selecting ``Workflow``.
+
+
+- Select the third tab ``Upload/Import Workflow RO-Crate`` tab, ``Local file``, and browse your computer to select the zip file
   prepared previously. Click ``Register``.
 
 - Review that the information automatically obtained from the workflow provenance is correct.
 
-    - Select the ``Teams`` that this workflow will belong to.
+    - Select the ``Teams`` that this workflow will belong to (mandatory).
     - Select the visibility and teams' permissions for your workflow in the ``Sharing`` section (for both general public, and for the WorkflowHub Teams where this workflow will be added).
     - Click ``Register`` again.
 
-After these steps, the main summary page of your workflow will be shown, where three main tabs can be selected
-(see https://doi.org/10.48546/workflowhub.workflow.635.1 to check out an example directly at WorkflowHub):
+.. WARNING::
 
-- **Overview**: Where the workflow type, workflow description, and workflow diagram are shown.
+    WorkflowHub Teams may have default sharing policies defined when they are created. Thus, when linking your
+    workflow to a team, you can select if you want to apply the Team's default policy or not.
+
+.. TIP::
+
+    The crate (i.e. folder ``COMPSs_RO-Crate_[uuid]/``) can also be uploaded to GitHub, and then imported from
+    WorkflowHub using the second tab option ``Import Git Repository``.
+
+After these steps, the main summary page of your workflow will be shown, where three main tabs can be selected
+(see https://doi.org/10.48546/workflowhub.workflow.484.1 to check out an example directly at WorkflowHub):
+
+- **Overview**: where the workflow type, workflow description, and workflow diagram are shown.
 
 .. figure:: ./Figures/WH_overview.png
    :name: Overview
@@ -470,7 +612,7 @@ After these steps, the main summary page of your workflow will be shown, where t
 
    Overview tab information
 
-- **Files**: Where you can browse the uploaded content of the crate (see :ref:`Sections/05_Tools/04_Workflow_Provenance:Result`
+- **Files**: where you can browse the uploaded content of the crate (see :ref:`Sections/05_Tools/04_Workflow_Provenance:Resulting crate`
   for details on the crate structure).
 
 .. figure:: ./Figures/WH_files.png
@@ -481,10 +623,15 @@ After these steps, the main summary page of your workflow will be shown, where t
 
    Files tab information
 
-- **Related items**: Where ``People``, ``Spaces`` and ``Teams`` related to this workflow can be checked.
+- **Related items**: where you can find any other entities related to this workflow (i.e. ``People``, ``Spaces``,
+  ``Teams``, ``Publications``, ``Presentations``, ``Collections``, ...)
 
-If everything is correct, the next step is to **generate a DOI** for your workflow. The necessary steps to achieve
-this are:
+At this point, before freezing and generating a DOI for the workflow, you may consider if **remote datasets** need
+to be added to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Adding large files as remote datasets in WorkflowHub`
+for a detailed guide on how to do that.
+
+If everything is correct, the next step is to **generate a DOI** (i.e. a persistent identifier) for your workflow.
+The necessary steps to achieve this are:
 
 .. WARNING::
 
@@ -503,7 +650,7 @@ this are:
    Freeze button in the Citation box
 
 - Once frozen, a new ``Generate a DOI`` button will appear in the ``Citation`` box. This can be also found in the
-  ``Actions`` menu, ``Generate a DOI``. Select ``Mint DOI``.
+  ``Actions`` menu, ``Generate a DOI``. Finish the generation by clicking ``Mint DOI``.
 
 .. figure:: ./Figures/WH_DOI.png
    :name: DOI
@@ -513,7 +660,9 @@ this are:
 
    Generate a DOI button in the Citation box
 
-- The final generated DOI for the workflow results can be found in the ``Citation`` box.
+- The final generated DOI for the workflow results can be found in the ``Citation`` box. The format of the citation
+  can be changed from the dropdown menu inside the box, which has a large number of styles available. One of the most
+  commonly used is the ``BibTeX generic citation style``.
 
 .. figure:: ./Figures/WH_citation.png
    :name: Citation
@@ -525,50 +674,211 @@ this are:
 
 .. WARNING::
 
-    If no Authors are provided in the ro-crate-info.yaml file, a DOI will not be able to be generated.
-    See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Previous needed information`
+    If no Authors are provided in the YAML configuration file, it won't be possible to generate a DOI.
+    See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:YAML configuration file`
 
-You can see a couple of examples on previous published workflows:
+You can see some examples on previous published workflows:
 
-- Java COMPSs Matrix Multiplication (using COMPSs 3.2): https://doi.org/10.48546/workflowhub.workflow.484.1
+- **Java COMPSs Matrix Multiplication (using COMPSs 3.2):** https://doi.org/10.48546/workflowhub.workflow.484.1
 
-- PyCOMPSs WordCount Example (using COMPSs 3.3): https://doi.org/10.48546/workflowhub.workflow.635.1
+- **PyCOMPSs WordCount Example (using COMPSs 3.3):** https://doi.org/10.48546/workflowhub.workflow.635.1
 
-As partially shown above, in the ``Citation`` box of the ``Overview`` tab you will find the text that can be added as a reference in your
-scientific paper's bibliography, to properly reference your workflow execution result. There is also a ``Copy`` button
-for your convenience. An example of the full text generated:
-
-- Sirvent, R. (2023). Java COMPSs Matrix Multiplication, out-of-core, using files. WorkflowHub. https://doi.org/10.48546/WORKFLOWHUB.WORKFLOW.484.1
-
-- Conejero, J. (2023). PyCOMPSs Wordcount test, using files (executed at Marenostrum IV supercomputer). WorkflowHub. https://doi.org/10.48546/WORKFLOWHUB.WORKFLOW.635.1
+- **PyCOMPSs Matrix Multiplication, out-of-core using files. Example using DIRECTORY parameters executed at laptop,
+  data persistence True (using COMPSs 3.3.1):** https://doi.org/10.48546/workflowhub.workflow.1046.1
 
 .. TIP::
 
-    When writing the ``description`` term of your ``ro-crate-info.yaml`` file (see Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Previous needed information`)
+    When writing the ``description`` term of your YAML configuration file (see Section :ref:`Sections/05_Tools/04_Workflow_Provenance:YAML configuration file`)
     you can use Markdown language to get a fancier description in WorkflowHub. You can find a Markdown language guide
-    `in this site <https://simplemde.com/markdown-guide>`_, and an example on how to write it in an ``ro-crate-info.yaml`` file
-    in the previously provided examples (i.e. in their included
-    ``ro-crate-info.yaml`` files).
+    `in this site <https://simplemde.com/markdown-guide>`_, and an example on how to write it at the YAML configuration files
+    of the previously provided examples (i.e. in their included ``ro-crate-info.yaml`` files).
+
+
+Adding large files as remote datasets in WorkflowHub
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As mentioned earlier, whenever a workflow uses or produces a very large dataset, it should not include the data as persistent
+(i.e. directly included in the crate), but reference it as a **remote dataset**. A rule of thumb is that, if the workflow
+includes less than ~100 MB of files, it can be included as a persistent dataset. However, for cases where data assets
+are hundreds of MBs or even several GBs, the remote dataset option must be used. Some external repositories commonly
+used to share large datasets are:
+
+- `Zenodo <https://zenodo.org/>`_ up to 50 GB per dataset.
+- `FigShare <https://figshare.com/>`_ up to 5 TB per dataset.
+
+.. WARNING::
+
+    The addition of remote datasets must be done before freezing the workflow version and generating the DOI for citation.
+
+- Step 1: execute your application adding manually as ``inputs`` or ``outputs`` the remote dataset reference (i.e. an
+  https URL reference such as ``https://zenodo.org/records/10782431/files/lysozyme_datasets.zip``).
+
+    - See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:YAML configuration file`.
+
+- Step 2: upload the workflow run in WorkflowHub.
+    - As described in Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Publish and cite your results with WorkflowHub`.
+
+- Step 3: add the remote file as a reference in the workflow files:
+    - ``Files`` tab -> ``Add File`` -> ``Remote URL``.
+    - Paste the remote URL (e.g. ``https://zenodo.org/records/10782431/files/lysozyme_datasets.zip``).
+    - Specify the file path in the crate (e.g. ``dataset/lysozyme_datasets.zip``).
+
+Examples on workflows with remote datasets can be found at:
+
+- **PyCOMPSs Probabilistic Tsunami Forecast (PTF) - Boumerdes-2003 earthquake and tsunami test-case:** https://doi.org/10.48546/workflowhub.workflow.779.1
+
+- **PyCOMPSs Probabilistic Tsunami Forecast (PTF) - Kos-Bodrum 2017 earthquake and tsunami test-case:** https://doi.org/10.48546/workflowhub.workflow.781.1
 
 
 Re-execute a COMPSs workflow published in WorkflowHub
------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Apart from sharing workflow runs as shown in earlier sections, the workflow execution published in WorkflowHub can be also used by other
 individuals in order to **reproduce** the results (i.e. submit the same workflow with the same inputs, and obtain the same
-results) or **replicate** the workflow execution (i.e. submit the same workflow, with different inputs, obtaining different
-results). While in this section we will mainly cover reproducibility, replicability is also easy to achieve, since
-our crate includes the source code of the application. Therefore, any reference to the input files in the application
-needs to be changed (either in the source code or in the parameters passed to the application)
-if the objective of the user is to use the same workflow but with different inputs.
+results), therefore, other peers can verify the results of your experiments. To illustrate this process, we will use different examples:
 
-The steps to reproduce a COMPSs workflow vary depending if the crate package downloaded includes the datasets (i.e. it
+- **PyCOMPSs: Matrix multiplication with data persistence:** https://doi.org/10.48546/workflowhub.workflow.838.1
+
+- **PyCOMPSs: Matrix multiplication without data persistence:** https://doi.org/10.48546/workflowhub.workflow.839.1
+
+- **Java COMPSs: wordcount:** https://doi.org/10.48546/workflowhub.workflow.684.1
+
+.. tabs::
+
+  .. tab:: WITH data persistence
+
+    When ``data_persistence`` is enabled, input and output datasets required or generated by the workflow are included in the crate.
+    This makes reproducibility easier, but it is only convenient when datasets are of a reasonable size (e.g. tenths of MBs).
+
+    .. tabs::
+
+      .. tab:: PyCOMPSs application
+
+        - Click the DOI link of the workflow you want to re-execute (e.g. https://doi.org/10.48546/workflowhub.workflow.838.1).
+
+        - Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine (e.g. in ~/Downloads/).
+
+        - Move and unzip the file in a new folder.
+
+        .. code-block:: console
+
+          $ mkdir ~/reproduced_workflow/
+          $ mv ~/Downloads/workflow-838-1.crate.zip ~/reproduced_workflow/
+          $ cd ~/reproduced_workflow/
+          $ unzip workflow-838-1.crate.zip
+
+        - Create a new_outputs/ folder to avoid overwriting the included dataset/outputs/.
+
+        .. code-block:: console
+
+          $ mkdir new_outputs/
+
+        - Inspect the submission command, and re-execute the application adapting the flags and parameters.
+
+        .. code-block:: console
+
+          $ cat compss_submission_command_line.txt
+            runcompss --provenance=matmul_reproducibility.yaml --python_interpreter=/Users/rsirvent/.pyenv/shims/python3 --cpu_affinity=disabled src/matmul_files.py inputs/ outputs/
+          $ runcompss application_sources/src/matmul_files.py dataset/inputs/ new_outputs/
+
+        - Once the execution is finished, compare the new outputs generated with the outputs included in the crate.
+
+        .. code-block:: console
+
+          $ diff new_outputs/ dataset/outputs/
+
+      .. tab:: Java COMPSs application
+        - COMING SOON.
+
+  .. tab:: WITHOUT data persistence
+
+    When ``data_persistence`` is disabled, the common use case is to re-execute the application in the exact same machine where
+    the original run was made (e.g. a supercomputer or a cluster). This may be required for reproducing applications that need
+    specific hardware to run, or to avoid moving large datasets to a different machine by using the machine where data
+    is located.
+
+    .. tabs::
+
+      .. tab:: PyCOMPSs application
+
+        - Click the DOI link of the workflow you want to re-execute (e.g. https://doi.org/10.48546/workflowhub.workflow.839.1).
+
+        - Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine (e.g. in ~/Downloads/).
+
+        - Move and unzip the file in a new folder in the target machine.
+
+        .. code-block:: console
+
+
+          $ scp ~/Downloads/workflow-839-1.crate.zip bsc019057@glogin2.bsc.es:~
+            workflow-839-1.crate.zip                            100%   19KB 333.4KB/s   00:00
+          $ ssh bsc019057@glogin2.bsc.es
+
+          $ mkdir ~/reproduced_workflow_no_persistence/
+          $ mv ~/workflow-839-1.crate.zip ~/reproduced_workflow_no_persistence/
+          $ cd ~/reproduced_workflow_no_persistence/
+          $ unzip workflow-839-1.crate.zip
+
+        - Create a new_outputs/ folder for your re-execution results.
+
+        .. code-block:: console
+
+          $ mkdir new_outputs/
+
+        - Inspect the submission command to understand the flags passed to submit the application.
+
+        .. code-block:: console
+
+          $ cat compss_submission_command_line.txt
+            enqueue_compss --provenance=matmul_reproducibility_no_persistence.yaml --project_name=bsc19 --qos=gp_debug --num_nodes=1 --job_name=matmul-DP --lang=python --log_level=debug --summary --exec_time=5 /home/bsc/bsc019057/WorkflowHub/reproducible_matmul/src/matmul_files.py inputs/ outputs/
+
+        - Inspect the ``ro-crate-metadata.json`` metadata file.
+
+            - Search for the ``CreateAction`` section, ``object`` term to see location of input files.
+            - Search for the ``CreateAction`` section, ``result`` term to see location of output files.
+            - You need to ensure you have the corresponding permissions to access the specified locations.
+            - Optionally, you can verify the ``contentSize`` and ``dateModified`` for each input file, to ensure the
+              files in the path referenced match the ones used when the application was originally run.
+
+        - Re-execute the application adapting the flags and parameters to submit the application.
+
+        .. code-block:: console
+
+          $ enqueue_compss --project_name=bsc19 --qos=gp_debug --num_nodes=1 --job_name=matmul-DP --lang=python --log_level=debug --summary --exec_time=5 $(pwd)/application_sources/src/matmul_files.py /gpfs/home/bsc/bsc019057/WorkflowHub/reproducible_matmul/inputs/ new_outputs/
+
+        - Once the execution is finished, compare the new outputs generated with the outputs included in the crate.
+
+        .. code-block:: console
+
+          $ diff new_outputs/ /gpfs/home/bsc/bsc019057/WorkflowHub/reproducible_matmul/outputs/
+
+      .. tab:: Java COMPSs application
+        - COMING SOON.
+
+  .. tab:: With REMOTE datasets
+
+    For large or extremely large datasets (e.g. hundreds of MBs, several GBs), the most convenient way is to upload them
+    to a public dataset repository (e.g. `Zenodo <https://zenodo.org/>`_) and reference them as ``remote datasets`` related
+    to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Adding large files as remote datasets in WorkflowHub`
+    to learn this process more in detail.
+
+    .. tabs::
+
+      .. tab:: PyCOMPSs application
+        - COMING SOON.
+
+      .. tab:: Java COMPSs application
+        - COMING SOON.
+
+
+As seen in the examples above, the steps to reproduce a COMPSs workflow vary depending if the
+crate package downloaded includes the datasets (i.e. it
 has a ``dataset/`` sub-folder). This is achieved when ``data_persistence`` is set to ``True`` in the
-``ro-crate-info.yaml`` file. Thus, the data preparation step will change depending on the availability of the dataset
+YAML configuration file. Thus, the data preparation step will change depending on the availability of the dataset
 needed for the workflow execution. In addition, any external third party software used in the application (e.g.
 simulators, auxiliary libraries and packages, ...), must be made available in the new execution environment. For
 simplicity, we will not go into the details on how to deal with this environment preparation and we will assume the
-environment has all software dependencies ready to be used.
+target environment has all software dependencies ready to be used.
 
 While the reproducibility process of a COMPSs workflow is quite manual at the moment, we plan to automate it using
 workflow provenance with the COMPSs CLI (see Section :ref:`Sections/08_PyCOMPSs_CLI:PyCOMPSs CLI`). Anyway, reproducing
@@ -576,717 +886,90 @@ executions in the same machine as the one in the published run (e.g. using the s
 since the metadata may include references to the location of the inputs and outputs of the workflow. Therefore, the only
 requirement to reproduce a run would be to have access granted to the location where the inputs are.
 
-All in all, the main steps to prepare the application re-execution are:
 
-- Click the DOI link to the workflow you want to re-execute (e.g. https://doi.org/10.48546/workflowhub.workflow.635.1).
-  You will get the Overview page of the workflow in WorkflowHub.
+Metadata examples
+-----------------
 
-- Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine.
-
-- Copy or move the downloaded file to the environment where you want to execute the application. Unzip the file there.
-  You will see a set of files and folders that correspond to the workflow provenance as generated by COMPSs
-  (see :ref:`Sections/05_Tools/04_Workflow_Provenance:Result` for details on the crate structure).
-
-- If the dataset has been included in the crate, copy the ``dataset/`` folder input files in the ``application_sources/`` folder.
-
-- Go to the ``application_sources/`` folder and run the application using the command specified in ``compss_submission_command_line.txt``.
-
-- Compare the newly generated output results with the outputs in the ``dataset/`` folder.
-
-This set of steps should cover the majority of the cases when re-executing a COMPSs application. However, we include a
-more detailed description of the different steps to provide guidance on how to deal with different situations that may
-occur.
-
-- Preparing the **source code** of the application. It is located in the ``application_sources/`` folder of the crate. You can
-  run the code from that location (as mentioned earlier), or copy or move it to a different one. If the code is Python,
-  it is ready to run. If the code is
-  Java, you may have to create a ``.jar`` file using ``javac`` and ``jar``, or try to invoke a ``.jar`` file if it has
-  been included in the crate.
-
-    - In most of the cases, if the application uses relative paths, the ``application_sources/`` folder can be used as
-      the working directory (i.e. the folder from where you run your COMPSs application).
-
-- Preparing the **dataset** to run the application. Two different situations arise here:
-
-  - If the ``dataset/`` folder exists, ``data_persistence`` has been used, and all inputs and outputs are included in
-    the crate. Change the inputs reference path in the source code of the application. This is commonly done by changing
-    the references to the path directly in the source code, or passing the new path as a parameter to the application.
-
-    - In the majority of the cases, if the application uses relative paths, the inputs in the ``dataset/`` folder can be copied or moved to
-      the ``application_sources/`` folder to make data ready to be used without having to change any paths in the code
-      (i.e. ``cp dataset/* application_sources/``).
-
-    - Ideally, you should only move input files to the working directory. Output files included in the ``dataset/``
-      folder can be used to compare results
-      with the outputs that will be generated by the re-execution of the application.
-
-  - If the ``dataset/`` folder does not exist, the file ``ro-crate-metadata.json`` contains references to the files used
-    and generated by the workflow (e.g. ``file://s08r2b16-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.0`` ).
-    The input files are detailed in the ``CreateAction`` section, under the ``object`` term. The output files are detailed in the same
-    ``CreateAction`` section, under the ``result`` term.
-
-    - You first need to ensure you have permission to access the files referred by the URL. In the previous example, the file
-      ``A.0.0``, located in the path ``/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/`` in the
-      machine ``s08r2b16-ib0`` , which is an internal hostname of MareNostrum IV, thus, indicating the files are
-      available in that machine.
-
-    - Check that the file details in the disk match the ones included in the ``ro-crate-metadata.json`` (i.e.
-      ``contentSize`` and ``dateModified`` ) to ensure the files match the ones used when the application was originally
-      run.
-
-    - You can modify the inputs reference path in the application to use them directly (either if the path is defined
-      in the code, or passed as an input parameter to the application). Another option is to copy the files to a new
-      location, and reference it in the application, but since not including the datasets in the crate was designed to
-      avoid large data movements and duplications, we do recommend to change the references to the path, if needed.
-
-      - If the application uses internally full paths and the re-execution is happening in the same environment, no
-        changes in the code are required.
-
-- Once the application and the dataset are ready, check the content of the ``compss_submission_command_line.txt`` file, which
-  includes the command used to run the application (e.g. ``runcompss --python_interpreter=/Users/rsirvent/.pyenv/shims/python3 --cpu_affinity=disabled -p src/matmul_files.py 8 64`` ).
-
-    - Check if the command is still valid in your system, or adapt it otherwise (e.g. use ``enqueue_compss`` if it is
-      an environment with a queuing system, check if the flags used apply to your environment, etc...).
-
-- Run the application. Once it has finished, newly generated results can be compared to the ones included in the
-  ``dataset/`` folder, or to the ones provided as references in the ``result`` term of the ``ro-crate-metadata.json``
-  file.
-
-
-Log and time statistics
------------------------
-
-When the provenance generation is activated, and after the application has finished, the workflow provenance generation
-script will be automatically triggered. A number of log messages related to provenance can bee seen, which return
-interesting information regarding the provenance generation process. They can all be filtered by doing a ``grep`` in
-the output log of the application using the ``PROVENANCE`` expression.
-
-.. code-block:: console
-
-    PROVENANCE | Generating graph for Workflow Provenance
-    Output file: /Users/rsirvent/.COMPSs/matmul_files.py_07//monitor/complete_graph.svg
-    INFO: Generating Graph with legend
-    DONE
-    PROVENANCE | Ended generating graph for Workflow Provenance. TIME: 1 s
-
-This first block indicates that the workflow image in SVG format is being generated. When this part finishes, the time
-in seconds will be reported. As mentioned earlier, complex workflows can lead to large graph generation times.
-
-.. code-block:: console
-
-    PROVENANCE | STARTING WORKFLOW PROVENANCE SCRIPT
-    PROVENANCE | COMPSs version: 3.3, out_profile: App_Profile.json, main_entity: /Users/rsirvent/COMPSs-DP/matmul_files/matmul_files.py
-    PROVENANCE | COMPSs runtime detected inputs (12)
-    PROVENANCE | COMPSs runtime detected outputs (4)
-    PROVENANCE | dataprovenance.log processing TIME: 0.00012993812561035156 s
-
-This second block shows the COMPSs version detected, the name of the file containing the execution profile of the
-application, and the ``mainEntity`` detected (i.e. the source file that contains the main method from the COMPSs
-application). Besides, it reports how many input and output data assets have been detected automatically by the COMPSs
-runtime, and the time it took to run that analysis (i.e. the dataprovenance.log processing time).
-
-.. code-block:: console
-
-    PROVENANCE | Application source files detected (10)
-    PROVENANCE | RO-Crate adding source files TIME: 0.003629922866821289 s
-    PROVENANCE | RO-Crate adding input files TIME (Persistence: True): 0.0022089481353759766 s
-    PROVENANCE | RO-Crate adding output files TIME (Persistence: True): 0.000576019287109375 s
-
-The third block first details how many source files have been detected from the ``sources`` term defined
-in the ``ro-crate-py.yaml`` file. Then, it provides a set of times to understand if any overhead is caused by the
-workflow provenance generation script. The first time is the time taken to add the files that are included
-physically in the crate (this is, application source files, workflow image, ...). And the second and third are the times
-spent by the script to add all input and output files, detailing if data persistence was established as ``True`` or ``False``.
-If ``True``, the files are physically copied to the crate. If ``False``, only references to the location of the files are
-included.
-
-.. code-block:: console
-
-    PROVENANCE | RO-Crate writing to disk TIME: 0.01987314224243164 s
-    PROVENANCE | Workflow Provenance generation TOTAL EXECUTION TIME: 0.04113888740539551 s
-    PROVENANCE | COMPSs Workflow Provenance successfully generated in sub-folder:
-        COMPSs_RO-Crate_d64966ac-fe34-463a-88fc-f97047c21a99/
-    PROVENANCE | ENDED WORKFLOW PROVENANCE SCRIPT
-
-The fourth and final block states the time taken to record the ``ro-crate-metadata.json`` file to disk, the total
-execution time of the whole workflow provenance generation script, and the final message details the name of the
-sub-folder where the RO-Crate package has been generated.
-
-During the workflow provenance generation, some messages labeled as ``WARNING`` may appear. The situations reported
-with warning messages are non-critical situations where some automatic decisions were taken by the generation script,
-so the user should double check if the decision taken is correct. Some examples follow:
-
-.. code-block:: console
-
-    PROVENANCE | WARNING: A parent directory of a previously added sub-directory is being added. Some files will be traversed twice in: /Users/rsirvent/COMPSs-DP/matmul_files/in
-    PROVENANCE | WARNING: A file addition was attempted twice: /Users/rsirvent/COMPSs-DP/matmul_files/in/A/A.0.0 in /Users/rsirvent/COMPSs-DP/matmul_files/in
-    PROVENANCE | WARNING: 'Submitter' not specified in ro-crate-info.yaml. First author selected by default.
-
-
-ro-crate-metadata.json PyCOMPSs example (Laptop)
-------------------------------------------------
+PyCOMPSs example (laptop execution)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the RO-Crate specification, the root file containing the metadata referring to the crate created is named
-``ro-crate-metadata.json``. In these lines, we provide an example of an ro-crate-metadata.json file resulting from
+``ro-crate-metadata.json``. In these lines, we show how to navigate an ``ro-crate-metadata.json``
+file resulting from
 a PyCOMPSs application execution in a laptop, specifically an out-of-core matrix multiplication example that includes matrices
 ``A`` and ``B`` as inputs in an ``inputs/`` sub-directory, and matrix ``C`` as the result of their multiplication
 (which in the code is also passed as input, to have a matrix initialized with 0s). We also set the ``data_persistence``
-term of the ``ro-crate-info.yaml`` file to ``True`` to indicate we want the datasets to be included in the resulting
+term of the YAML configuration file to ``True`` to indicate we want the datasets to be included in the resulting
 crate.
 For all the specific details on the fields provided in the JSON file, please refer to the
-`RO-Crate specification Website <https://www.researchobject.org/ro-crate/1.1/>`_. Intuitively, if you search through
-the JSON file you can find several interesting terms:
+`RO-Crate specification Website <https://www.researchobject.org/ro-crate/1.1/>`_.
 
-- **creator:** List of authors, identified by their ORCID.
+The corresponding ``ro-crate-metadata.json`` can be found here:
 
-- **publisher:** Organisations of the authors.
+- **PyCOMPSs Matrix Multiplication, out-of-core using files. Example using DIRECTORY parameters executed at laptop,
+  data persistence True:** https://doi.org/10.48546/workflowhub.workflow.1046.1
 
-- **hasPart in ./:** lists all the files and directories this workflow needs and generates, and also the ones
-  included in the crate. The URIs point to the hostname where the application has been run, thus, tells
-  the user where the inputs and outputs can be found (in this example, a BSC laptop).
+Intuitively, if you search through the JSON file you can find several interesting terms:
 
-- **ComputationalWorkflow:** Main file of the application (in the example, ``application_sources/matmul_directory.py``).
-  Includes a reference to the generated workflow image in the ``image`` field.
+- ``creator`` contains the list of authors, identified by their ORCID.
 
-- **version:** The COMPSs specific version and build used to run this application. In the example: ``3.3``.
+- ``publisher`` lists the organisations of the authors.
+
+- ``hasPart`` in ``./`` lists all the files and directories this workflow needs and generates, and also the ones
+  included in the crate. They are referenced with relative paths, since they are included in the crate.
+
+- ``ComputationalWorkflow`` is the main file of the application (in the example, ``application_sources/matmul_directory.py``).
+  Includes a reference to the generated workflow diagram in the ``image`` field.
+
+- ``version`` contains the COMPSs specific version and build used to run this application. In the example: ``3.3``.
   This is a very important field to achieve reproducibility or replicability, since COMPSs features may vary their
   behaviour in different versions of the programming model runtime.
 
-- **CreateAction:** With the compliance to the Workflow Run Crate Profile v0.1, the details on the specific execution
-  of the workflow are included in the ``CreateAction`` term.
+- ``CreateAction`` details the specific execution of the workflow, compliant with the Workflow Run Crate Profile.
 
-  - The defined ``submitter`` is recorded as the ``agent``.
+  - The defined ``Agent`` is recorded as the ``agent``.
 
-  - The ``description`` term records details on the host that ran the workflow (architecture, Operating System version and COMPSs paths defined).
+  - The ``description`` term records details on the host that ran the workflow (architecture, Operating System version).
 
-  - The ``object`` term makes reference to the input files used by the workflow.
+  - The ``environment`` term includes references to the COMPSs and / or SLURM related environment variables used during the run.
 
-  - The ``result`` term references the output files generated by the workflow.
+  - The ``startTime`` and ``endTime`` terms include respectively the starting and ending time of the application as UTC time.
+
+  - The ``object`` term makes reference to the input files or directories used by the workflow.
+
+  - The ``result`` term references the output files or directories generated by the workflow.
 
 We encourage the reader to navigate through this ``ro-crate-metadata.json`` file example to get familiar with its
 contents. Many of the fields are easily and directly understandable.
 
-.. code-block:: json
 
-    {
-        "@context": "https://w3id.org/ro/crate/1.1/context",
-        "@graph": [
-            {
-                "@id": "./",
-                "@type": "Dataset",
-                "conformsTo": [
-                    {
-                        "@id": "https://w3id.org/ro/wfrun/process/0.1"
-                    },
-                    {
-                        "@id": "https://w3id.org/ro/wfrun/workflow/0.1"
-                    },
-                    {
-                        "@id": "https://w3id.org/workflowhub/workflow-ro-crate/1.0"
-                    }
-                ],
-                "creator": [
-                    {
-                        "@id": "https://orcid.org/0000-0003-0606-2512"
-                    },
-                    {
-                        "@id": "https://orcid.org/0000-0003-2941-5499"
-                    },
-                    {
-                        "@id": "https://orcid.org/0000-0002-8291-8071"
-                    }
-                ],
-                "datePublished": "2023-11-06T11:50:01+00:00",
-                "description": "Hypermatrix size 2x2 blocks, block size 2x2 elements",
-                "hasPart": [
-                    {
-                        "@id": "application_sources/matmul_directory.py"
-                    },
-                    {
-                        "@id": "complete_graph.svg"
-                    },
-                    {
-                        "@id": "App_Profile.json"
-                    },
-                    {
-                        "@id": "compss_submission_command_line.txt"
-                    },
-                    {
-                        "@id": "ro-crate-info.yaml"
-                    },
-                    {
-                        "@id": "application_sources/matmul_tasks.py"
-                    },
-                    {
-                        "@id": "dataset/inputs/A/A.0.0"
-                    },
-                    {
-                        "@id": "dataset/inputs/A/A.0.1"
-                    },
-                    {
-                        "@id": "dataset/inputs/A/A.1.0"
-                    },
-                    {
-                        "@id": "dataset/inputs/A/A.1.1"
-                    },
-                    {
-                        "@id": "dataset/inputs/B/B.0.0"
-                    },
-                    {
-                        "@id": "dataset/inputs/B/B.0.1"
-                    },
-                    {
-                        "@id": "dataset/inputs/B/B.1.0"
-                    },
-                    {
-                        "@id": "dataset/inputs/B/B.1.1"
-                    },
-                    {
-                        "@id": "dataset/inputs/"
-                    },
-                    {
-                        "@id": "dataset/C.0.0"
-                    },
-                    {
-                        "@id": "dataset/C.0.1"
-                    },
-                    {
-                        "@id": "dataset/C.1.0"
-                    },
-                    {
-                        "@id": "dataset/C.1.1"
-                    }
-                ],
-                "license": "Apache-2.0",
-                "mainEntity": {
-                    "@id": "application_sources/matmul_directory.py"
-                },
-                "mentions": {
-                    "@id": "#COMPSs_Workflow_Run_Crate_bsccs742.int.bsc.es_78fb0b3a-55c7-40af-ac60-35a591a39cd3"
-                },
-                "name": "COMPSs Matrix Multiplication, out-of-core using files",
-                "publisher": [
-                    {
-                        "@id": "https://ror.org/05sd8tv96"
-                    },
-                    {
-                        "@id": "https://ror.org/01z1gye03"
-                    }
-                ]
-            },
-            {
-                "@id": "ro-crate-metadata.json",
-                "@type": "CreativeWork",
-                "about": {
-                    "@id": "./"
-                },
-                "conformsTo": [
-                    {
-                        "@id": "https://w3id.org/ro/crate/1.1"
-                    },
-                    {
-                        "@id": "https://w3id.org/workflowhub/workflow-ro-crate/1.0"
-                    }
-                ]
-            },
-            {
-                "@id": "https://ror.org/05sd8tv96",
-                "@type": "Organization",
-                "name": "Barcelona Supercomputing Center"
-            },
-            {
-                "@id": "mailto:Raul.Sirvent@bsc.es",
-                "@type": "ContactPoint",
-                "contactType": "Author",
-                "email": "Raul.Sirvent@bsc.es",
-                "identifier": "Raul.Sirvent@bsc.es",
-                "url": "https://orcid.org/0000-0003-0606-2512"
-            },
-            {
-                "@id": "https://orcid.org/0000-0003-0606-2512",
-                "@type": "Person",
-                "affiliation": {
-                    "@id": "https://ror.org/05sd8tv96"
-                },
-                "contactPoint": {
-                    "@id": "mailto:Raul.Sirvent@bsc.es"
-                },
-                "name": "Ra\u00fcl Sirvent"
-            },
-            {
-                "@id": "mailto:Rosa.M.Badia@bsc.es",
-                "@type": "ContactPoint",
-                "contactType": "Author",
-                "email": "Rosa.M.Badia@bsc.es",
-                "identifier": "Rosa.M.Badia@bsc.es",
-                "url": "https://orcid.org/0000-0003-2941-5499"
-            },
-            {
-                "@id": "https://orcid.org/0000-0003-2941-5499",
-                "@type": "Person",
-                "affiliation": {
-                    "@id": "https://ror.org/05sd8tv96"
-                },
-                "contactPoint": {
-                    "@id": "mailto:Rosa.M.Badia@bsc.es"
-                },
-                "name": "Rosa M. Badia"
-            },
-            {
-                "@id": "https://ror.org/01z1gye03",
-                "@type": "Organization",
-                "name": "IRB Barcelona"
-            },
-            {
-                "@id": "mailto:adam.hospital@irbbarcelona.org",
-                "@type": "ContactPoint",
-                "contactType": "Author",
-                "email": "adam.hospital@irbbarcelona.org",
-                "identifier": "adam.hospital@irbbarcelona.org",
-                "url": "https://orcid.org/0000-0002-8291-8071"
-            },
-            {
-                "@id": "https://orcid.org/0000-0002-8291-8071",
-                "@type": "Person",
-                "affiliation": {
-                    "@id": "https://ror.org/01z1gye03"
-                },
-                "contactPoint": {
-                    "@id": "mailto:adam.hospital@irbbarcelona.org"
-                },
-                "name": "Adam Hospital"
-            },
-            {
-                "@id": "application_sources/matmul_directory.py",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode",
-                    "ComputationalWorkflow"
-                ],
-                "contentSize": 2163,
-                "description": "Main file of the COMPSs workflow source files",
-                "encodingFormat": "text/plain",
-                "image": {
-                    "@id": "complete_graph.svg"
-                },
-                "name": "matmul_directory.py",
-                "programmingLanguage": {
-                    "@id": "#compss"
-                }
-            },
-            {
-                "@id": "#compss",
-                "@type": "ComputerLanguage",
-                "alternateName": "COMPSs",
-                "citation": "https://doi.org/10.1007/s10723-013-9272-5",
-                "name": "COMPSs Programming Model",
-                "url": "http://compss.bsc.es/",
-                "version": "3.3"
-            },
-            {
-                "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/92",
-                "@type": "WebSite",
-                "name": "Scalable Vector Graphics"
-            },
-            {
-                "@id": "complete_graph.svg",
-                "@type": [
-                    "File",
-                    "ImageObject",
-                    "WorkflowSketch"
-                ],
-                "about": {
-                    "@id": "application_sources/matmul_directory.py"
-                },
-                "contentSize": 6346,
-                "description": "The graph diagram of the workflow, automatically generated by COMPSs runtime",
-                "encodingFormat": [
-                    [
-                        "image/svg+xml",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/92"
-                        }
-                    ]
-                ],
-                "name": "complete_graph.svg"
-            },
-            {
-                "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/817",
-                "@type": "WebSite",
-                "name": "JSON Data Interchange Format"
-            },
-            {
-                "@id": "App_Profile.json",
-                "@type": "File",
-                "contentSize": 244,
-                "description": "COMPSs application Tasks profile",
-                "encodingFormat": [
-                    "application/json",
-                    {
-                        "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/817"
-                    }
-                ],
-                "name": "App_Profile.json"
-            },
-            {
-                "@id": "compss_submission_command_line.txt",
-                "@type": "File",
-                "contentSize": 129,
-                "description": "COMPSs submission command line (runcompss / enqueue_compss), including flags and parameters passed to the application",
-                "encodingFormat": "text/plain",
-                "name": "compss_submission_command_line.txt"
-            },
-            {
-                "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/818",
-                "@type": "WebSite",
-                "name": "YAML"
-            },
-            {
-                "@id": "ro-crate-info.yaml",
-                "@type": "File",
-                "contentSize": 845,
-                "description": "COMPSs Workflow Provenance YAML configuration file",
-                "encodingFormat": [
-                    "YAML",
-                    {
-                        "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/818"
-                    }
-                ],
-                "name": "ro-crate-info.yaml"
-            },
-            {
-                "@id": "application_sources/matmul_tasks.py",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 1721,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "matmul_tasks.py"
-            },
-            {
-                "@id": "dataset/inputs/A/A.0.0",
-                "@type": "File",
-                "contentSize": 16,
-                "dateModified": "2023-11-06T11:49:14",
-                "name": "A.0.0",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/inputs/A/A.0.1",
-                "@type": "File",
-                "contentSize": 16,
-                "dateModified": "2023-11-06T11:49:14",
-                "name": "A.0.1",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/inputs/A/A.1.0",
-                "@type": "File",
-                "contentSize": 16,
-                "dateModified": "2023-11-06T11:49:14",
-                "name": "A.1.0",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/inputs/A/A.1.1",
-                "@type": "File",
-                "contentSize": 16,
-                "dateModified": "2023-11-06T11:49:14",
-                "name": "A.1.1",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/inputs/B/B.0.0",
-                "@type": "File",
-                "contentSize": 16,
-                "dateModified": "2023-11-06T11:49:14",
-                "name": "B.0.0",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/inputs/B/B.0.1",
-                "@type": "File",
-                "contentSize": 16,
-                "dateModified": "2023-11-06T11:49:14",
-                "name": "B.0.1",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/inputs/B/B.1.0",
-                "@type": "File",
-                "contentSize": 16,
-                "dateModified": "2023-11-06T11:49:14",
-                "name": "B.1.0",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/inputs/B/B.1.1",
-                "@type": "File",
-                "contentSize": 16,
-                "dateModified": "2023-11-06T11:49:14",
-                "name": "B.1.1",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/inputs/",
-                "@type": "Dataset",
-                "dateModified": "2023-11-06T11:49:14",
-                "hasPart": [
-                    {
-                        "@id": "dataset/inputs/A/A.0.0"
-                    },
-                    {
-                        "@id": "dataset/inputs/A/A.0.1"
-                    },
-                    {
-                        "@id": "dataset/inputs/A/A.1.0"
-                    },
-                    {
-                        "@id": "dataset/inputs/A/A.1.1"
-                    },
-                    {
-                        "@id": "dataset/inputs/B/B.0.0"
-                    },
-                    {
-                        "@id": "dataset/inputs/B/B.0.1"
-                    },
-                    {
-                        "@id": "dataset/inputs/B/B.1.0"
-                    },
-                    {
-                        "@id": "dataset/inputs/B/B.1.1"
-                    }
-                ],
-                "name": "inputs",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/C.0.0",
-                "@type": "File",
-                "contentSize": 20,
-                "dateModified": "2023-11-06T11:49:57",
-                "name": "C.0.0",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/C.0.1",
-                "@type": "File",
-                "contentSize": 20,
-                "dateModified": "2023-11-06T11:49:57",
-                "name": "C.0.1",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/C.1.0",
-                "@type": "File",
-                "contentSize": 20,
-                "dateModified": "2023-11-06T11:49:57",
-                "name": "C.1.0",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "dataset/C.1.1",
-                "@type": "File",
-                "contentSize": 20,
-                "dateModified": "2023-11-06T11:49:57",
-                "name": "C.1.1",
-                "sdDatePublished": "2023-11-06T11:50:01+00:00"
-            },
-            {
-                "@id": "#COMPSs_Workflow_Run_Crate_bsccs742.int.bsc.es_78fb0b3a-55c7-40af-ac60-35a591a39cd3",
-                "@type": "CreateAction",
-                "actionStatus": {
-                    "@id": "http://schema.org/CompletedActionStatus"
-                },
-                "agent": {
-                    "@id": "https://orcid.org/0000-0003-0606-2512"
-                },
-                "description": "Darwin bsccs742.int.bsc.es 23.1.0 Darwin Kernel Version 23.1.0: Mon Oct  9 21:27:27 PDT 2023; root:xnu-10002.41.9~6/RELEASE_X86_64 x86_64 COMPSS_HOME=/Users/rsirvent/opt/COMPSs/",
-                "endTime": "2023-11-06T11:50:01+00:00",
-                "instrument": {
-                    "@id": "application_sources/matmul_directory.py"
-                },
-                "name": "COMPSs matmul_directory.py execution at bsccs742.int.bsc.es",
-                "object": [
-                    {
-                        "@id": "dataset/inputs/"
-                    },
-                    {
-                        "@id": "dataset/C.0.0"
-                    },
-                    {
-                        "@id": "dataset/C.0.1"
-                    },
-                    {
-                        "@id": "dataset/C.1.0"
-                    },
-                    {
-                        "@id": "dataset/C.1.1"
-                    }
-                ],
-                "result": [
-                    {
-                        "@id": "dataset/C.0.0"
-                    },
-                    {
-                        "@id": "dataset/C.0.1"
-                    },
-                    {
-                        "@id": "dataset/C.1.0"
-                    },
-                    {
-                        "@id": "dataset/C.1.1"
-                    },
-                    {
-                        "@id": "./"
-                    }
-                ]
-            },
-            {
-                "@id": "https://w3id.org/ro/wfrun/process/0.1",
-                "@type": "CreativeWork",
-                "name": "Process Run Crate",
-                "version": "0.1"
-            },
-            {
-                "@id": "https://w3id.org/ro/wfrun/workflow/0.1",
-                "@type": "CreativeWork",
-                "name": "Workflow Run Crate",
-                "version": "0.1"
-            },
-            {
-                "@id": "https://w3id.org/workflowhub/workflow-ro-crate/1.0",
-                "@type": "CreativeWork",
-                "name": "Workflow RO-Crate",
-                "version": "1.0"
-            }
-        ]
-    }
-
-
-ro-crate-metadata.json Java COMPSs example (MN4 supercomputer)
---------------------------------------------------------------
+Java COMPSs example (MareNostrum supercomputer execution)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In this second ``ro-crate-metadata.json`` example, we want to illustrate the workflow provenance result of a Java COMPSs
-application execution in the MareNostrum 4 supercomputer. We show the execution of a matrix LU factorization
+application execution in the MareNostrum V supercomputer. We show the execution of a matrix LU factorization
 for out-of-core sparse matrices implemented with COMPSs and using the Java programming language. In this algorithm,
 matrix ``A`` is both input and output of the workflow, since the factorization overwrites the original value of ``A``.
 In addition, we have used a 4x4 blocks hyper-matrix (i.e. the matrix is divided in 16 blocks, that contain 16
 elements each) and, if a block is all 0s, the corresponding file will not be
 created in the file system (in the example, this happens for blocks ``A.0.3``, ``A.1.3``, ``A.3.0`` and ``A.3.1``). We
-do not define the ``data_persistence`` option, which means it will be false, and the datasets will not be included in
-the resulting crate (i.e. references to the location of files will be provided).
+do not define the ``data_persistence`` option, which means it will be ``False``, and the datasets will not be included in
+the resulting crate (i.e. only references to the location of files will be included in the metadata).
+
+The corresponding ``ro-crate-metadata.json`` can be found here:
+
+- **Java COMPSs LU Factorization for Sparse Matrices, MareNostrum V, 3 nodes,
+  no data persistence:** https://doi.org/10.48546/workflowhub.workflow.1047.1
 
 Apart from the terms already mentioned in the previous example (``creator``, ``publisher``, ``hasPart``,
-``ComputationalWorkflow``, ``version``, ``CreateAction``), if we first observe the ``ro-crate-info.yaml`` file:
+``ComputationalWorkflow``, ``version``, ``CreateAction``), if we first observe the YAML configuration file:
 
 .. code-block:: yaml
 
     COMPSs Workflow Information:
-      name: COMPSs Sparse LU
-      description: The Sparse LU application computes an LU matrix factorization on a sparse blocked matrix. The matrix size (number of blocks) and the block size are parameters of the application.
+      name: Java COMPSs LU Factorization for Sparse Matrices, MareNostrum V, 3 nodes, no data persistence
+      description: |
+        ...
       license: Apache-2.0
       sources: [src, jar, xml, Readme, pom.xml]
 
@@ -1297,13 +980,14 @@ Apart from the terms already mentioned in the previous example (``creator``, ``p
         organisation_name: Barcelona Supercomputing Center
         ror: https://ror.org/05sd8tv96
 
-We can see that we have specified several directories to be added as source files of the application: the ``src`` folder that contains the
+We can see that we have specified several directories to be added as source files of the application:
+the ``src`` folder that contains the
 ``.java`` and ``.class`` files, the ``jar`` folder with the ``sparseLU.jar`` file, and the ``xml`` folder with extra
 xml configuration files. Besides, we also add the ``Readme`` and ``pom.xml``
 so they are packed in the resulting crate. This example also shows that the script is able to select the correct
 ``SparseLU.java`` main file as the ``ComputationalWorkflow`` in the RO-Crate, even when in the ``sources`` three
 files using the same file name exists (i.e. they implement 3 versions of the same algorithm: using files, arrays or
-objects). Finally, since no ``Submitter`` is defined, the first author will be considered as such. The resulting
+objects). Finally, since no ``Agent`` is defined, the first author will be considered as such. The resulting
 tree for the source files is:
 
 .. code-block:: console
@@ -1351,833 +1035,15 @@ Since in this second example we do not add explicitly the input and output files
 our crate does not have a ``dataset`` sub-folder and only includes references to the files,
 which are ment as pointers to where they can be found, rather than a publicly accessible URI references. Therefore,
 in this Java COMPSs
-example, files can be found in the ``s23r2b24-ib0`` hostname, which is an internal hostname of MN4. This means that, for
-reproducibility purposes, a new user would have to request access to the MN4 paths specified by the corresponding
-URIs (i.e. ``/gpfs/home/bsc19/...``).
+example, files can be found in the ``gs05r2b06-ib0`` hostname, which is an internal hostname of MN5. This means that, for
+reproducibility purposes, a new user would have to request access to the MN5 paths specified by the corresponding
+URIs (i.e. ``/gpfs/home/bsc/bsc019057/...``).
 
 The ``CreateAction`` term has also a richer set of information available from MareNostrum's SLURM workload manager. We
 can see that both the ``id`` and the ``description`` terms include the ``SLURM_JOB_ID``, which can be used to see more
-details and statistics on the job run from SLURM using the `User Portal <https://userportal.bsc.es/>`_ tool. In addition, many more
-environment variables are captured, which provide details on how the execution has been performed (i.e.
-``SLURM_JOB_NODE_LIST``, ``SLURM_JOB_NUM_NODES``, ``SLURM_JOB_CPUS_PER_NODE``, ``COMPSS_MASTER_NODE``,
+details and statistics on the job run from SLURM using the `User Portal <https://userportal.bsc.es/>`_ tool.
+In addition, many more relevant environment variables are captured (specifically SLURM and COMPSs related),
+which provide details on how the execution has been performed (i.e.
+``SLURM_JOB_NODELIST``, ``SLURM_JOB_NUM_NODES``, ``SLURM_JOB_CPUS_PER_NODE``, ``COMPSS_MASTER_NODE``,
 ``COMPSS_WORKER_NODES``, among others).
-
-.. code-block:: json
-
-    {
-        "@context": "https://w3id.org/ro/crate/1.1/context",
-        "@graph": [
-            {
-                "@id": "./",
-                "@type": "Dataset",
-                "conformsTo": [
-                    {
-                        "@id": "https://w3id.org/ro/wfrun/process/0.1"
-                    },
-                    {
-                        "@id": "https://w3id.org/ro/wfrun/workflow/0.1"
-                    },
-                    {
-                        "@id": "https://w3id.org/workflowhub/workflow-ro-crate/1.0"
-                    }
-                ],
-                "creator": [
-                    {
-                        "@id": "https://orcid.org/0000-0003-0606-2512"
-                    }
-                ],
-                "datePublished": "2023-11-06T16:15:01+00:00",
-                "description": "**Name:** SparseLU \n**Contact Person:** support-compss@bsc.es \n**Access Level:** public \n**License Agreement:** Apache2 \n**Platform:** COMPSs \n\n# Description\nThe Sparse LU application computes an LU matrix factorization on a sparse blocked matrix. The matrix size (number of blocks) and the block size are parameters of the application. \n\nAs the algorithm progresses, the area of the matrix that is accessed is smaller; concretely, at each iteration, the 0th row and column of the current matrix are discarded. On the other hand, due to the sparseness of the matrix, some of its blocks might not be allocated and, therefore, no work is generated for them.\n\nWhen executed with COMPSs, Sparse LU produces several types of task with different granularity and numerous dependencies between them.\n\n# Versions\nThere are three versions of Sparse LU, depending on the data types used to store the blocks.\n## Version 1\n''files'', where the matrix blocks are stored in files.\n## Version 2\n''objects'', where the matrix blocks are represented by objects.\n## Version 3\n''arrays'', where the matrix blocks are stored in arrays.\n\n\n# Execution instructions\nUsage:\n```\nruncompss sparseLU.files.SparseLU numberOfBlocks blockSize\nruncompss sparseLU.objects.SparseLU numberOfBlocks blockSize\nruncompss sparseLU.arrays.SparseLU numberOfBlocks blockSize\n```\n\nwhere:\n  * numberOfBlocks: Number of blocks inside each matrix\n  * blockSize: Size of each block\n\n\n# Execution Example\n```\nruncompss sparseLU.objects.SparseLU 16 4 \nruncompss sparseLU.files.SparseLU 16 4\nruncompss sparseLU.arrays.SparseLU 16 4 \n```\n\n\n# Build\n## Option 1: Native java\n```\ncd application_sources/; javac src/main/java/sparseLU/*/*.java\ncd src/main/java/; jar cf sparseLU.jar sparseLU/\ncd ../../../; mv src/main/java/sparseLU.jar jar/\n```\n\n## Option 2: Maven\n```\ncd application_sources/\nmvn clean package\n```\n",
-                "hasPart": [
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/files/Block.java"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/files/SparseLUItf.class"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/files/SparseLUImpl.java"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/files/SparseLU.java"
-                    },
-                    {
-                        "@id": "complete_graph.svg"
-                    },
-                    {
-                        "@id": "App_Profile.json"
-                    },
-                    {
-                        "@id": "compss_submission_command_line.txt"
-                    },
-                    {
-                        "@id": "ro-crate-info.yaml"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/files/Block.class"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/files/SparseLUItf.java"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/files/SparseLUImpl.class"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/files/SparseLU.class"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/objects/Block.java"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/objects/SparseLUItf.class"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/objects/SparseLU.java"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/objects/Block.class"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/objects/SparseLUItf.java"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/objects/SparseLU.class"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLUItf.class"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLUImpl.java"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLU.java"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLUItf.java"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLUImpl.class"
-                    },
-                    {
-                        "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLU.class"
-                    },
-                    {
-                        "@id": "application_sources/jar/sparseLU.jar"
-                    },
-                    {
-                        "@id": "application_sources/xml/resources.xml"
-                    },
-                    {
-                        "@id": "application_sources/xml/project.xml"
-                    },
-                    {
-                        "@id": "application_sources/Readme"
-                    },
-                    {
-                        "@id": "application_sources/pom.xml"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.0"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.1"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.0"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.1"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.0"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.1"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.3"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.3.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.3.3"
-                    }
-                ],
-                "license": "Apache-2.0",
-                "mainEntity": {
-                    "@id": "application_sources/src/main/java/sparseLU/files/SparseLU.java"
-                },
-                "mentions": {
-                    "@id": "#COMPSs_Workflow_Run_Crate_marenostrum4_SLURM_JOB_ID_30555667"
-                },
-                "name": "Java COMPSs LU Factorization for Sparse Matrices",
-                "publisher": [
-                    {
-                        "@id": "https://ror.org/05sd8tv96"
-                    }
-                ]
-            },
-            {
-                "@id": "ro-crate-metadata.json",
-                "@type": "CreativeWork",
-                "about": {
-                    "@id": "./"
-                },
-                "conformsTo": [
-                    {
-                        "@id": "https://w3id.org/ro/crate/1.1"
-                    },
-                    {
-                        "@id": "https://w3id.org/workflowhub/workflow-ro-crate/1.0"
-                    }
-                ]
-            },
-            {
-                "@id": "https://ror.org/05sd8tv96",
-                "@type": "Organization",
-                "name": "Barcelona Supercomputing Center"
-            },
-            {
-                "@id": "mailto:Raul.Sirvent@bsc.es",
-                "@type": "ContactPoint",
-                "contactType": "Author",
-                "email": "Raul.Sirvent@bsc.es",
-                "identifier": "Raul.Sirvent@bsc.es",
-                "url": "https://orcid.org/0000-0003-0606-2512"
-            },
-            {
-                "@id": "https://orcid.org/0000-0003-0606-2512",
-                "@type": "Person",
-                "affiliation": {
-                    "@id": "https://ror.org/05sd8tv96"
-                },
-                "contactPoint": {
-                    "@id": "mailto:Raul.Sirvent@bsc.es"
-                },
-                "name": "Ra\u00fcl Sirvent"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/files/Block.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 5589,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "Block.java"
-            },
-            {
-                "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415",
-                "@type": "WebSite",
-                "name": "Java Compiled Object Code"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/files/SparseLUItf.class",
-                "@type": "File",
-                "contentSize": 904,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "SparseLUItf.class"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/files/SparseLUImpl.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 2431,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "SparseLUImpl.java"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/files/SparseLU.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode",
-                    "ComputationalWorkflow"
-                ],
-                "contentSize": 6602,
-                "description": "Main file of the COMPSs workflow source files",
-                "encodingFormat": "text/plain",
-                "image": {
-                    "@id": "complete_graph.svg"
-                },
-                "name": "SparseLU.java",
-                "programmingLanguage": {
-                    "@id": "#compss"
-                }
-            },
-            {
-                "@id": "#compss",
-                "@type": "ComputerLanguage",
-                "alternateName": "COMPSs",
-                "citation": "https://doi.org/10.1007/s10723-013-9272-5",
-                "name": "COMPSs Programming Model",
-                "url": "http://compss.bsc.es/",
-                "version": "3.3"
-            },
-            {
-                "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/92",
-                "@type": "WebSite",
-                "name": "Scalable Vector Graphics"
-            },
-            {
-                "@id": "complete_graph.svg",
-                "@type": [
-                    "File",
-                    "ImageObject",
-                    "WorkflowSketch"
-                ],
-                "about": {
-                    "@id": "application_sources/src/main/java/sparseLU/files/SparseLU.java"
-                },
-                "contentSize": 21106,
-                "description": "The graph diagram of the workflow, automatically generated by COMPSs runtime",
-                "encodingFormat": [
-                    [
-                        "image/svg+xml",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/92"
-                        }
-                    ]
-                ],
-                "name": "complete_graph.svg"
-            },
-            {
-                "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/817",
-                "@type": "WebSite",
-                "name": "JSON Data Interchange Format"
-            },
-            {
-                "@id": "App_Profile.json",
-                "@type": "File",
-                "contentSize": 967,
-                "description": "COMPSs application Tasks profile",
-                "encodingFormat": [
-                    "application/json",
-                    {
-                        "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/817"
-                    }
-                ],
-                "name": "App_Profile.json"
-            },
-            {
-                "@id": "compss_submission_command_line.txt",
-                "@type": "File",
-                "contentSize": 179,
-                "description": "COMPSs submission command line (runcompss / enqueue_compss), including flags and parameters passed to the application",
-                "encodingFormat": "text/plain",
-                "name": "compss_submission_command_line.txt"
-            },
-            {
-                "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/818",
-                "@type": "WebSite",
-                "name": "YAML"
-            },
-            {
-                "@id": "ro-crate-info.yaml",
-                "@type": "File",
-                "contentSize": 2429,
-                "description": "COMPSs Workflow Provenance YAML configuration file",
-                "encodingFormat": [
-                    "YAML",
-                    {
-                        "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/818"
-                    }
-                ],
-                "name": "ro-crate-info.yaml"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/files/Block.class",
-                "@type": "File",
-                "contentSize": 4135,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "Block.class"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/files/SparseLUItf.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 1808,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "SparseLUItf.java"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/files/SparseLUImpl.class",
-                "@type": "File",
-                "contentSize": 1310,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "SparseLUImpl.class"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/files/SparseLU.class",
-                "@type": "File",
-                "contentSize": 4682,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "SparseLU.class"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/objects/Block.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 4345,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "Block.java"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/objects/SparseLUItf.class",
-                "@type": "File",
-                "contentSize": 816,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "SparseLUItf.class"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/objects/SparseLU.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 4740,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "SparseLU.java"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/objects/Block.class",
-                "@type": "File",
-                "contentSize": 2991,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "Block.class"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/objects/SparseLUItf.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 1529,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "SparseLUItf.java"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/objects/SparseLU.class",
-                "@type": "File",
-                "contentSize": 3403,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "SparseLU.class"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLUItf.class",
-                "@type": "File",
-                "contentSize": 808,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "SparseLUItf.class"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLUImpl.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 4114,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "SparseLUImpl.java"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLU.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 4840,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "SparseLU.java"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLUItf.java",
-                "@type": [
-                    "File",
-                    "SoftwareSourceCode"
-                ],
-                "contentSize": 1899,
-                "description": "Auxiliary File",
-                "encodingFormat": "text/plain",
-                "name": "SparseLUItf.java"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLUImpl.class",
-                "@type": "File",
-                "contentSize": 2430,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "SparseLUImpl.class"
-            },
-            {
-                "@id": "application_sources/src/main/java/sparseLU/arrays/SparseLU.class",
-                "@type": "File",
-                "contentSize": 3304,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "Java .class",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/415"
-                        }
-                    ]
-                ],
-                "name": "SparseLU.class"
-            },
-            {
-                "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/412",
-                "@type": "WebSite",
-                "name": "Java Archive Format"
-            },
-            {
-                "@id": "application_sources/jar/sparseLU.jar",
-                "@type": "File",
-                "contentSize": 28758,
-                "description": "Auxiliary File",
-                "encodingFormat": [
-                    [
-                        "application/java-archive",
-                        {
-                            "@id": "https://www.nationalarchives.gov.uk/PRONOM/x-fmt/412"
-                        }
-                    ]
-                ],
-                "name": "sparseLU.jar"
-            },
-            {
-                "@id": "application_sources/xml/resources.xml",
-                "@type": "File",
-                "contentSize": 983,
-                "description": "Auxiliary File",
-                "name": "resources.xml"
-            },
-            {
-                "@id": "application_sources/xml/project.xml",
-                "@type": "File",
-                "contentSize": 289,
-                "description": "Auxiliary File",
-                "name": "project.xml"
-            },
-            {
-                "@id": "application_sources/Readme",
-                "@type": "File",
-                "contentSize": 1935,
-                "description": "Auxiliary File",
-                "name": "Readme"
-            },
-            {
-                "@id": "application_sources/pom.xml",
-                "@type": "File",
-                "contentSize": 4454,
-                "description": "Auxiliary File",
-                "name": "pom.xml"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.0",
-                "@type": "File",
-                "contentSize": 1234,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.0.0",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.1",
-                "@type": "File",
-                "contentSize": 1182,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.0.1",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.2",
-                "@type": "File",
-                "contentSize": 1217,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.0.2",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.0",
-                "@type": "File",
-                "contentSize": 1244,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.1.0",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.1",
-                "@type": "File",
-                "contentSize": 1238,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.1.1",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.2",
-                "@type": "File",
-                "contentSize": 1233,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.1.2",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.0",
-                "@type": "File",
-                "contentSize": 1214,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.2.0",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.1",
-                "@type": "File",
-                "contentSize": 1255,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.2.1",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.2",
-                "@type": "File",
-                "contentSize": 1251,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.2.2",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.3",
-                "@type": "File",
-                "contentSize": 1219,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.2.3",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.3.2",
-                "@type": "File",
-                "contentSize": 1290,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.3.2",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.3.3",
-                "@type": "File",
-                "contentSize": 1250,
-                "dateModified": "2023-11-06T16:14:59",
-                "name": "A.3.3",
-                "sdDatePublished": "2023-11-06T16:15:01+00:00"
-            },
-            {
-                "@id": "#COMPSs_Workflow_Run_Crate_marenostrum4_SLURM_JOB_ID_30555667",
-                "@type": "CreateAction",
-                "actionStatus": {
-                    "@id": "http://schema.org/CompletedActionStatus"
-                },
-                "agent": {
-                    "@id": "https://orcid.org/0000-0003-0606-2512"
-                },
-                "description": "Linux s23r2b24 4.4.59-92.20-default #1 SMP Wed May 31 14:05:24 UTC 2017 (8cd473d) x86_64 x86_64 x86_64 GNU/Linux SLURM_JOB_NAME=sparse_lu_prov COMPSS_PYTHON_VERSION=3.9.10 SLURM_JOB_QOS=debug SLURM_MEM_PER_CPU=1880 COMPSS_BINDINGS_DEBUG=1 SLURM_JOB_ID=30555667 SLURM_JOB_USER=bsc19057 COMPSS_HOME=/apps/COMPSs/3.3.pr/ SLURM_JOB_UID=2952 SLURM_SUBMIT_DIR=/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU SLURM_JOB_NODELIST=s23r2b24 SLURM_JOB_GID=2950 SLURM_JOB_CPUS_PER_NODE=48 COMPSS_MPIRUN_TYPE=impi SLURM_SUBMIT_HOST=login3 SLURM_JOB_PARTITION=sequential SLURM_JOB_ACCOUNT=bsc19 SLURM_JOB_NUM_NODES=1 COMPSS_MASTER_NODE=s23r2b24 COMPSS_WORKER_NODES=",
-                "endTime": "2023-11-06T16:15:01+00:00",
-                "instrument": {
-                    "@id": "application_sources/src/main/java/sparseLU/files/SparseLU.java"
-                },
-                "name": "COMPSs SparseLU.java execution at marenostrum4 with JOB_ID 30555667",
-                "object": [
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.0"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.1"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.0"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.1"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.0"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.1"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.3"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.3.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.3.3"
-                    }
-                ],
-                "result": [
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.0"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.1"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.0.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.0"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.1"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.1.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.0"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.1"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.2.3"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.3.2"
-                    },
-                    {
-                        "@id": "file://s23r2b24-ib0/gpfs/home/bsc19/bsc19057/COMPSs-DP/tutorial_apps/java/sparseLU/A.3.3"
-                    },
-                    {
-                        "@id": "./"
-                    }
-                ],
-                "subjectOf": [
-                    "https://userportal.bsc.es/"
-                ]
-            },
-            {
-                "@id": "https://w3id.org/ro/wfrun/process/0.1",
-                "@type": "CreativeWork",
-                "name": "Process Run Crate",
-                "version": "0.1"
-            },
-            {
-                "@id": "https://w3id.org/ro/wfrun/workflow/0.1",
-                "@type": "CreativeWork",
-                "name": "Workflow Run Crate",
-                "version": "0.1"
-            },
-            {
-                "@id": "https://w3id.org/workflowhub/workflow-ro-crate/1.0",
-                "@type": "CreativeWork",
-                "name": "Workflow RO-Crate",
-                "version": "1.0"
-            }
-        ]
-    }
 

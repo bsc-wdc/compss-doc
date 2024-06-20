@@ -8,6 +8,7 @@ The first step is downloading the source code from the Git repository:
 .. code-block:: console
 
     $ git clone https://github.com/bsc-wdc/compss.git
+    $ git checkout 3.3.1
     $ cd compss
 
 Then, you need to download the embedded dependencies from the git submodules:
