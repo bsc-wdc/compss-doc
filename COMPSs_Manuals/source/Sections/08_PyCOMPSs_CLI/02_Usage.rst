@@ -12,32 +12,30 @@ The supported flags are:
 .. code-block:: console
 
     $ pycompss
-    PyCOMPSs|COMPSS CLI:
+    usage: pycompss [-h] [-d] [-eid ENV_ID]
+                {init,i,exec,ex,run,r,app,a,job,j,monitor,m,jupyter,jpy,gengraph,gg,gentrace,gt,components,c,environment,env,inspect,ins}
+                ...
 
-    Usage: pycompss COMMAND  |  compss COMMAND  |  dislib COMMAND
+    positional arguments:
+      {init,i,exec,ex,run,r,app,a,job,j,monitor,m,jupyter,jpy,gengraph,gg,gentrace,gt,components,c,environment,env,inspect,ins}
+        init (i)            Initialize COMPSs environment (default local).
+        exec (ex)           Execute the given command within the COMPSs' environment.
+        run (r)             Run the application (with runcompss) within the COMPSs' environment.
+        app (a)             Manage applications within remote environments.
+        job (j)             Manage jobs within remote environments.
+        monitor (m)         Start the monitor within the COMPSs' environment.
+        jupyter (jpy)       Starts Jupyter within the COMPSs' environment.
+        gengraph (gg)       Converts the given graph into pdf.
+        gentrace (gt)       Merges traces from all nodes into a Paraver trace.
+        components (c)      Manage infrastructure components.
+        environment (env)   Manage COMPSs environments.
+        inspect (ins)       Inspect an RO-Crate from a COMPSs application run.
 
-    Available commands:
-        init -n [NAME]:                             initialize COMPSs environment (default local).
-                                                    If -n is set it will initialize with NAME as name or else with a random id.
-        environment:                                lists, switch a remove COMPSs environments.
-        exec CMD:                                   executes the CMD within the current COMPSs environment.
-        run [--app_name] [OPTIONS] FILE [PARAMS]:   runs FILE with COMPSs, where OPTIONS are COMPSs options and PARAMS are application parameters.
-                                                    --app_name parameter is only required for remote environments
-        monitor [start|stop]:                       starts or stops the COMPSs monitoring.
-        jupyter [--app_name] [PATH|FILE]:           starts jupyter-notebook in the given PATH or FILE.
-                                                    --app_name parameter is only required for remote environments
-        job:                                        submits, cancel and list jobs on remote and local environments.
-        app:                                        deploy, list and remove applications on remote and local environments.
-        gengraph [FILE.dot]:                        converts the .dot graph into .pdf
-        components list:                            lists COMPSs actives components.
-        components add RESOURCE:                    adds the RESOURCE to the pool of workers of the COMPSs.
-            Example given: pycompss components add worker 2 # to add 2 local workers.
-            Example given: pycompss components add worker <IP>:<CORES> # to add a remote worker
-                        Note: compss and dislib can be used instead of pycompss in both examples.
-        components remove RESOURCE:   removes the RESOURCE to the pool of workers of the COMPSs.
-            Example given: pycompss components remove worker 2 # to remove 2 local workers.
-            Example given: pycompss components remove worker <IP>:<CORES> # to remove a remote worker
-                        Note: compss and dislib can be used instead of pycompss in both examples.
+    optional arguments:
+      -h, --help            show this help message and exit
+      -d, --debug           Enable debug mode. Overrides log_level
+      -eid ENV_ID, --env_id ENV_ID
+                            Environment ID
 
 
 Create a new COMPSs environment in your development directory
@@ -961,3 +959,38 @@ Removing existing nodes
    .. group-tab:: Remote
 
         Environment not compatible with this feature.
+
+
+Inspect Workflow Provenance
+---------------------------
+
+As explained in the :ref:`Sections/05_Tools/04_Workflow_Provenance:Workflow Provenance` Section,
+COMPSs is able to generate the workflow
+provenance of an application execution as metadata stored using the RO-Crate specification. The PyCOMPSs CLI includes
+the option ``pycompss inspect`` to read an existing COMPSs generated RO-Crate and print its content by the screen.
+The RO-Crate passed as a parameter can be either a subdirectory or a zip file with all the crate content, and which
+has the ``ro-crate-metadata.json`` file in its root.
+
+.. tabs::
+
+   .. group-tab:: Docker
+
+         Not implemented yet!
+
+   .. group-tab:: Local
+
+        .. code-block:: console
+
+            $ cd tutorial_apps/python/simple/src
+            $ pycompss run --provenance simple.py 1
+
+        Once the application finishes, the workflow provenance information will be available
+        at a ``COMPSs_RO-Crate_[uuid]/`` folder. The metadata information can be visualised using:
+
+        .. code-block:: console
+
+            $ pycompss inspect COMPSs_RO-Crate_[uuid]/
+
+   .. group-tab:: Remote
+
+        Not implemented yet!
