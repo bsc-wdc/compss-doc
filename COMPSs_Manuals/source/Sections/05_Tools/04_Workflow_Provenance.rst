@@ -1,3 +1,4 @@
+===================
 Workflow Provenance
 ===================
 
@@ -47,6 +48,7 @@ format is compliant with the `Workflow RO-Crate Profile v1.0 <https://w3id.org/w
 `Workflow Run Crate Profile v0.4 <https://w3id.org/ro/wfrun/workflow/0.4>`_.
 
 
+---------------------
 Software dependencies
 ---------------------
 
@@ -81,6 +83,7 @@ Our current implementation needs ``ro-crate-py`` version ``0.9.0`` or higher.
     to install ro-crate-py.
 
 
+-----------------------
 YAML configuration file
 -----------------------
 
@@ -90,7 +93,8 @@ fields that are needed to generate an RO-Crate but cannot be automatically obtai
 structure where the user can specify them. By default, a YAML file named ``ro-crate-info.yaml`` will be expected in the
 working directory (i.e. where the application is going to be run), but a different YAML file can be used by specifying
 it with ``--provenance=my_yaml_file.yaml`` when activating workflow provenance generation.
-The YAML file must follow the next template structure:
+The YAML file must follow the next template structure (notice later that only one term is mandatory, some other terms
+are commonly used, and the rest of terms are for special cases):
 
 .. code-block:: yaml
 
@@ -137,7 +141,7 @@ As you can see, there are three main blocks in the YAML:
 - **Agent:** the single person running the workflow in the computing resources.
 
 COMPSs Workflow Information section
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================
 
 More specifically, in the **COMPSs Workflow Information** section, the most commonly used terms are:
 
@@ -207,10 +211,10 @@ Also, some more optional terms are available, but less commonly used:
     of need.
 
 Authors section
-~~~~~~~~~~~~~~~
+===============
 
-In the **Authors** section (the whole section is optional), a single author or a list of authors can be provided. For
-each Author:
+In the **Authors** section (the whole section is optional), a single author or a list of authors can be provided. They
+describe the individuals that wrote the source code of the application. For each Author:
 
 - ``name``, ``e-mail`` and ``organisation_name`` are strings corresponding to the author's name, e-mail and their
   institution. They are free text, but the ``e-mail`` field must follow the ``user@domain.top`` format.
@@ -234,7 +238,7 @@ each Author:
     used as unique identifiers in the RO-Crate specification.
 
 Agent section
-~~~~~~~~~~~~~
+=============
 
 The **Agent** section has the same terms as the Authors section, but it specifically provides the details of the sole
 person running the workflow, that can be different from the Authors. The whole section is optional and only a single
@@ -246,7 +250,7 @@ individual can be provided.
     workflow.
 
 Examples
-~~~~~~~~
+========
 
 In the following lines, we provide a YAML example for an out-of-core Matrix Multiplication PyCOMPSs application,
 distributed with license Apache v2.0, with two source files, and authored by two persons from two different
@@ -320,6 +324,7 @@ An example of the **minimal YAML** that needs to be defined in order to publish 
     not be possible to generate a DOI for the workflow.
 
 
+--------------------
 Recording activation
 --------------------
 
@@ -368,6 +373,8 @@ following commands can be used:
 
     $ $COMPSS_HOME/Runtime/scripts/utils/compss_gengraph svg $BASE_LOG_DIR/monitor/complete_graph.dot
 
+    $ export PYTHONPATH=$COMPSS_HOME/Runtime/scripts/system/:$PYTHONPATH
+
     $ python3 $COMPSS_HOME/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py my_yaml_file.yaml $BASE_LOG_DIR/dataprovenance.log
 
 In these commands, ``COMPSS_HOME`` is where your COMPSs installation is located, and ``BASE_LOG_DIR`` points to the path where the
@@ -389,11 +396,14 @@ for a detailed description of its content).
 
         PROVENANCE | STARTING WORKFLOW PROVENANCE SCRIPT
         PROVENANCE | If needed, Provenance generation can be triggered by hand using the following commands:
-        PROVENANCE | /apps/GPP/COMPSs/3.3.1/Runtime/scripts/utils/compss_gengraph svg /home/bsc/bsc019057/.COMPSs/3166653//monitor/complete_graph.dot
-        PROVENANCE | python3 /apps/GPP/COMPSs/3.3.1/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py ro-crate-info.yaml /home/bsc/bsc019057/.COMPSs/3166653//dataprovenance.log
+            /apps/GPP/COMPSs/3.3.1/Runtime/scripts/utils/compss_gengraph svg /home/bsc/bsc019057/.COMPSs/4471214//monitor/complete_graph.dot
+            export PYTHONPATH=/apps/GPP/COMPSs/3.3.1/Runtime/scripts/system/:$PYTHONPATH
+            python3 -O /apps/GPP/COMPSs/3.3.1/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py FULL_SINGULARITY.yaml /home/bsc/bsc019057/.COMPSs/4471214//dataprovenance.log
         PROVENANCE | TIP for BSC cluster users: before triggering generation by hand, run first: salloc -p interactive
         ...
 
+
+---------------
 Resulting crate
 ---------------
 
@@ -471,6 +481,7 @@ are:
     trigger the diagram generation manually with ``compss_gengraph`` or ``pycompss gengraph``.
 
 
+------------------------------
 Time statistics, log and debug
 ------------------------------
 
@@ -550,11 +561,13 @@ so the user should double check if the decision taken is correct. Some examples 
     has been defined to enable a larger amount of provenance generation output messages in order to detect any possible issues.
     Before the execution, users must define the variable using the command ``export COMPSS_PROV_DEBUG=True``.
 
+
+-----------------
 Using WorkflowHub
 -----------------
 
 Publish and cite your results with WorkflowHub
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+==============================================
 
 Once the provenance metadata for your COMPSs application has been generated, you have the possibility of publishing
 your results (i.e. both the workflow and the workflow run) in `WorkflowHub <https://workflowhub.eu/>`_, the FAIR
@@ -565,9 +578,12 @@ site can be found in their `Documentation <https://about.workflowhub.eu/docs/>`_
 The steps to achieve the publication of a COMPSs execution are:
 
 - Pack the resulting crate sub-directory (i.e. ``COMPSs_RO-Crate_[uuid]/``) in a zip file. The ``ro-crate-metadata.json``
-  file must be at the root level of this zip file.
+  file must be at the root level of this zip file. Example:
 
-    - Command example: ``zip -r ~/Desktop/crate.zip COMPSs_RO-Crate_891540ad-18ca-4e19-aeb4-66a237193d07/``
+.. code-block:: console
+
+    $ cd COMPSs_RO-Crate_891540ad-18ca-4e19-aeb4-66a237193d07/
+    $ zip -r ~/Desktop/crate.zip *
 
 - `Login <https://workflowhub.eu/login?return_to=%2Fsignup>`_ or `create an account <https://workflowhub.eu/signup>`_
   in the WorfklowHub registry. You can use your GitHub credentials to easily log in.
@@ -587,7 +603,6 @@ The steps to achieve the publication of a COMPSs execution are:
 - Once you belong to a Team, you will be able to use the big ``Contribute`` button at the WorkflowHub home page.
 
     - Alternatively, the menu ``Create`` at the top of the web page can be used, selecting ``Workflow``.
-
 
 - Select the third tab ``Upload/Import Workflow RO-Crate`` tab, ``Local file``, and browse your computer to select the zip file
   prepared previously. Click ``Register``.
@@ -702,9 +717,36 @@ You can see some examples on previous published workflows:
     `in this site <https://simplemde.com/markdown-guide>`_, and an example on how to write it at the YAML configuration files
     of the previously provided examples (i.e. in their included ``ro-crate-info.yaml`` files).
 
+Creating a new version of a Workflow
+------------------------------------
+
+It is obvious that, as the development of a specific workflow progresses, new versions of what conceptually is the same workflow will be
+created. In addition, even if the code remains unchanged, new execution results of the application may also want to be shared
+for including them in papers as DOI references (i.e. same algorithm, using different inputs, generating different outputs).
+Therefore, a recommended practice is to use the ``New version`` feature of the WorkflowHub portal, so the same workflow
+page will contain different versions / executions of the same COMPSs application. This is achieved using:
+
+- Step 1: Update the code of your COMPSs application, or generate a new run with new results, activating workflow
+  provenance generation.
+
+- Step 2: Open the previously existing workflow at WorkflowHub.
+
+- Step 3: Select ``Actions`` -> ``New version``.
+    - If your workflow was imported from RO-Crate, select ``Upload/Import Workflow RO-Crate``.
+    - If you imported the workflow from GitHub, once you have commited your changes / results, select ``Import Git Repository``.
+      This action will import the latest commit in the repository to WorkflowHub.
+
+Once these steps are finished, the ``Overview`` tab of the workflow will show a new entry at the bottom of the page, in
+the ``Version History`` section of the page. An example can be seen here: https://workflowhub.eu/workflows/1076
+
+.. TIP::
+
+    Notice that DOIs can be generated for each of the different versions of the uploaded workflow, so all of them can
+    be properly shared.
+
 
 Adding large files as remote datasets in WorkflowHub
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------------------
 
 As mentioned earlier, whenever a workflow uses or produces a very large dataset, it should not include the data as persistent
 (i.e. directly included in the crate), but reference it as a **remote dataset**. A rule of thumb is that, if the workflow
@@ -740,7 +782,7 @@ Examples on workflows with remote datasets can be found at:
 
 
 Re-execute a COMPSs workflow published in WorkflowHub
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=====================================================
 
 Apart from sharing workflow runs as shown in earlier sections, the workflow execution published in WorkflowHub can be also used by other
 individuals in order to **reproduce** the results (i.e. submit the same workflow with the same inputs, and obtain the same
@@ -896,11 +938,12 @@ since the metadata may include references to the location of the inputs and outp
 requirement to reproduce a run would be to have access granted to the location where the inputs are.
 
 
+-----------------
 Metadata examples
 -----------------
 
 PyCOMPSs example (laptop execution)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================
 
 In the RO-Crate specification, the root file containing the metadata referring to the crate created is named
 ``ro-crate-metadata.json``. In these lines, we show how to navigate an ``ro-crate-metadata.json``
@@ -953,7 +996,7 @@ contents. Many of the fields are easily and directly understandable.
 
 
 Java COMPSs example (MareNostrum supercomputer execution)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=========================================================
 
 In this second ``ro-crate-metadata.json`` example, we want to illustrate the workflow provenance result of a Java COMPSs
 application execution in the MareNostrum V supercomputer. We show the execution of a matrix LU factorization
