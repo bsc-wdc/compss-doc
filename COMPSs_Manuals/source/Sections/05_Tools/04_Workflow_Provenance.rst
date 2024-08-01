@@ -621,7 +621,7 @@ The steps to achieve the publication of a COMPSs execution are:
 .. TIP::
 
     The crate (i.e. folder ``COMPSs_RO-Crate_[uuid]/``) can also be uploaded to GitHub, and then imported from
-    WorkflowHub using the second tab option ``Import Git Repository``.
+    WorkflowHub using the second tab option ``Import Git Repository``. See an example here: https://workflowhub.eu/workflows/1076
 
 After these steps, the main summary page of your workflow will be shown, where three main tabs can be selected
 (see https://doi.org/10.48546/workflowhub.workflow.484.1 to check out an example directly at WorkflowHub):
@@ -651,7 +651,7 @@ After these steps, the main summary page of your workflow will be shown, where t
   ``Teams``, ``Publications``, ``Presentations``, ``Collections``, ...)
 
 At this point, before freezing and generating a DOI for the workflow, you may consider if **remote datasets** need
-to be added to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Adding large files as remote datasets in WorkflowHub`
+to be added to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Adding large dataset as remote in WorkflowHub`
 for a detailed guide on how to do that.
 
 If everything is correct, the next step is to **generate a DOI** (i.e. a persistent identifier) for your workflow.
@@ -726,13 +726,13 @@ for including them in papers as DOI references (i.e. same algorithm, using diffe
 Therefore, a recommended practice is to use the ``New version`` feature of the WorkflowHub portal, so the same workflow
 page will contain different versions / executions of the same COMPSs application. This is achieved using:
 
-- Step 1: Update the code of your COMPSs application, or generate a new run with new results, activating workflow
+- Step 1: Update the code of your COMPSs application, and generate a new run with previous or new results, activating workflow
   provenance generation.
 
 - Step 2: Open the previously existing workflow at WorkflowHub.
 
 - Step 3: Select ``Actions`` -> ``New version``.
-    - If your workflow was imported from RO-Crate, select ``Upload/Import Workflow RO-Crate``.
+    - If your workflow was imported from RO-Crate, select ``Upload/Import Workflow RO-Crate`` to upload workflow provenance.
     - If you imported the workflow from GitHub, once you have commited your changes / results, select ``Import Git Repository``.
       This action will import the latest commit in the repository to WorkflowHub.
 
@@ -745,8 +745,8 @@ the ``Version History`` section of the page. An example can be seen here: https:
     be properly shared.
 
 
-Adding large files as remote datasets in WorkflowHub
-----------------------------------------------------
+Adding large dataset as remote in WorkflowHub
+---------------------------------------------
 
 As mentioned earlier, whenever a workflow uses or produces a very large dataset, it should not include the data as persistent
 (i.e. directly included in the crate), but reference it as a **remote dataset**. A rule of thumb is that, if the workflow
@@ -762,10 +762,10 @@ used to share large datasets are:
     The addition of remote datasets must be done before freezing the workflow version and generating the DOI for citation.
 
 - Step 1: execute your application adding manually as ``inputs`` or ``outputs`` the remote dataset reference (i.e. an
-  https URL reference such as ``https://zenodo.org/records/10782431/files/lysozyme_datasets.zip``).
+  https URL reference such as ``https://zenodo.org/records/10782431/files/lysozyme_datasets.zip``), and most likely with
+  ``data_persitence: False``.
 
     - See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:YAML configuration file`.
-
 - Step 2: upload the workflow run in WorkflowHub.
     - As described in Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Publish and cite your results with WorkflowHub`.
 
@@ -779,6 +779,13 @@ Examples on workflows with remote datasets can be found at:
 - **PyCOMPSs Probabilistic Tsunami Forecast (PTF) - Boumerdes-2003 earthquake and tsunami test-case:** https://doi.org/10.48546/workflowhub.workflow.779.1
 
 - **PyCOMPSs Probabilistic Tsunami Forecast (PTF) - Kos-Bodrum 2017 earthquake and tsunami test-case:** https://doi.org/10.48546/workflowhub.workflow.781.1
+
+.. TIP::
+
+    While the most common choice should be to use ``data_persistence: False`` to avoid including any datasets, a mix of
+    automatically included small datasets, and remote large datasets can be achieved when using ``data_persistence: True``.
+    In any case, if data is persisted, the content of the ``dataset/`` folder in the crate cannot be modified (i.e. remove
+    files), because that would invalidate the correctness of the metadata.
 
 
 Re-execute a COMPSs workflow published in WorkflowHub
@@ -910,7 +917,7 @@ results), therefore, other peers can verify the results of your experiments. To 
 
     For large or extremely large datasets (e.g. hundreds of MBs, several GBs), the most convenient way is to upload them
     to a public dataset repository (e.g. `Zenodo <https://zenodo.org/>`_) and reference them as ``remote datasets`` related
-    to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Adding large files as remote datasets in WorkflowHub`
+    to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Adding large dataset as remote in WorkflowHub`
     to learn this process more in detail.
 
     .. tabs::
