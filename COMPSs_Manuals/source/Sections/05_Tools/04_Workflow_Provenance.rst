@@ -156,7 +156,7 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
   will be added as the corresponding source code if it can be found in the current working directory.
 
 - The ``license`` field is preferred to be specified by providing an URL to the license, but a set of
-  predefined strings are also supported, and can be found at the `Workflow-RO-Crate profile page <https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses>`_.
+  predefined strings are also supported, and can be found at the `SPDX License list site <https://spdx.org/licenses/>`_.
 
 
 - ``data_persistence`` value is ``False`` by default. It is a boolean to indicate whether the workflow provenance
@@ -445,6 +445,11 @@ are:
   :ref:`Sections/05_Tools/04_Workflow_Provenance:Metadata examples`.
 
 .. TIP::
+    Since its version ``3.3.4``, the ``PyCOMPSs CLI`` includes the capacity of inspecting RO-Crates with the
+    ``pycompss inspect [crate_folder/ | crate.zip]`` command. Check the :ref:`Sections/08_PyCOMPSs_CLI/02_Usage:Inspect Workflow Provenance`
+    Section for more details.
+
+.. TIP::
 
     For the basic set of files always included for every application (i.e. ``complete_graph.svg``, ``App_Profile.json``,
     ``compss_submission_command_line.txt``, ``ro-crate-info.yaml``, ``compss-[job_id].out``, ``compss-[job_id].err``),
@@ -466,8 +471,8 @@ are:
     trigger the diagram generation manually with ``compss_gengraph`` or ``pycompss gengraph``.
 
 
-Log and time statistics
------------------------
+Time statistics, log and debug
+------------------------------
 
 When provenance generation is activated, and after the application has finished, the workflow provenance generation
 script will be automatically triggered. A number of log messages related to provenance can bee seen, which return
@@ -540,6 +545,10 @@ so the user should double check if the decision taken is correct. Some examples 
     PROVENANCE | WARNING: A file addition was attempted twice: /Users/rsirvent/COMPSs-DP/matmul_files/in/A/A.0.0 in /Users/rsirvent/COMPSs-DP/matmul_files/in
     PROVENANCE | WARNING: 'Agent' not specified in TEST_DUPLICATED_SOURCES.yaml. First author selected by default.
 
+.. TIP::
+    In case of need for debugging the workflow provenance generation, an environment variable called ``COMPSS_PROV_DEBUG``
+    has been defined to enable a larger amount of provenance generation output messages in order to detect any possible issues.
+    Before the execution, users must define the variable using the command ``export COMPSS_PROV_DEBUG=True``.
 
 Using WorkflowHub
 -----------------
