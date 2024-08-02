@@ -772,7 +772,7 @@ used to share large datasets are:
 - Step 3: add the remote file as a reference in the workflow files:
     - ``Files`` tab -> ``Add File`` -> ``Remote URL``.
     - Paste the remote URL (e.g. ``https://zenodo.org/records/10782431/files/lysozyme_datasets.zip``).
-    - Specify the file path in the crate (e.g. ``dataset/lysozyme_datasets.zip``).
+    - Specify the file path in the crate (e.g. ``remote_dataset/lysozyme_datasets.zip``).
 
 Examples on workflows with remote datasets can be found at:
 
@@ -799,7 +799,9 @@ results), therefore, other peers can verify the results of your experiments. To 
 
 - **PyCOMPSs: Matrix multiplication without data persistence:** https://doi.org/10.48546/workflowhub.workflow.839.1
 
-- **Java COMPSs: wordcount:** https://doi.org/10.48546/workflowhub.workflow.684.1
+- **Java COMPSs Matrix Multiplication, out-of-core using files, reproducible example, data persistence True:** https://doi.org/10.48546/workflowhub.workflow.1086.1
+
+- **Java COMPSs Matrix Multiplication, out-of-core using files, reproducible example, data persistence False, MareNostrum V:** https://doi.org/10.48546/workflowhub.workflow.1088.1
 
 .. tabs::
 
@@ -813,25 +815,23 @@ results), therefore, other peers can verify the results of your experiments. To 
       .. tab:: PyCOMPSs application
 
         - Click the DOI link of the workflow you want to re-execute (e.g. https://doi.org/10.48546/workflowhub.workflow.838.1).
-
-        - Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine (e.g. in ~/Downloads/).
-
+        - Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine (e.g. in ``~/Downloads/``).
         - Move and unzip the file in a new folder.
 
         .. code-block:: console
 
-          $ mkdir ~/reproduced_workflow/
-          $ mv ~/Downloads/workflow-838-1.crate.zip ~/reproduced_workflow/
-          $ cd ~/reproduced_workflow/
+          $ mkdir ~/workflow-838-1/
+          $ mv ~/Downloads/workflow-838-1.crate.zip ~/workflow-838-1/
+          $ cd ~/workflow-838-1/
           $ unzip workflow-838-1.crate.zip
 
-        - Create a new_outputs/ folder to avoid overwriting the included dataset/outputs/.
+        - Create a ``new_outputs/`` folder to avoid overwriting the included ``dataset/outputs/``.
 
         .. code-block:: console
 
           $ mkdir new_outputs/
 
-        - Inspect the submission command, and re-execute the application adapting the flags and parameters.
+        - Inspect the submission command, and re-execute the application adapting the flags and parameters. Avoid overwriting the original outputs of the application.
 
         .. code-block:: console
 
@@ -846,7 +846,56 @@ results), therefore, other peers can verify the results of your experiments. To 
           $ diff new_outputs/ dataset/outputs/
 
       .. tab:: Java COMPSs application
-        - COMING SOON.
+
+        - Click the DOI link of the workflow you want to re-execute (e.g. https://doi.org/10.48546/workflowhub.workflow.1086.1).
+        - Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine (e.g. in ``~/Downloads/``).
+        - Move and unzip the file in a new folder.
+
+        .. code-block:: console
+
+          $ mkdir ~/workflow-1086-1/
+          $ mv ~/Downloads/workflow-684-1.crate.zip ~/workflow-1086-1/
+          $ cd ~/workflow-1086-1/
+          $ unzip workflow-1086-1.crate.zip
+
+        - Create a ``new_outputs/`` folder to avoid overwriting the included ``dataset/outputs/``.
+
+        .. code-block:: console
+
+          $ mkdir new_outputs/
+
+        - If needed, generate a ``jar`` file from the ``.java`` source files. Either using Maven:
+
+        .. code-block:: console
+
+          $ cd application_sources/
+          $ mvn clean package
+          $ cd ..
+
+        or compiling the sources with ``javac``.
+
+        .. code-block:: console
+
+          $ cd application_sources/
+          $ find * -name "*.java" > sources.txt
+          $ javac -d bin/ @sources.txt
+          $ jar cf jar/matmul.jar bin/
+          $ cd ..
+
+        - Inspect the submission command, and re-execute the application adapting the flags and parameters. Avoid overwriting the original outputs of the application.
+
+        .. code-block:: console
+
+          $ cat compss_submission_command_line.txt
+            runcompss --python_interpreter=/Users/rsirvent/.pyenv/shims/python3 --cpu_affinity=disabled --provenance=java_matmul_reproducible.yaml --classpath=jar/matmul.jar matmul.files.Matmul inputs/ outputs/
+          $ runcompss --classpath=application_sources/jar/matmul.jar matmul.files.Matmul dataset/inputs/ new_outputs/
+
+        - Once the execution is finished, compare the new outputs generated with the outputs included in the crate.
+
+        .. code-block:: console
+
+          $ diff new_outputs/ dataset/outputs/
+
 
   .. tab:: WITHOUT data persistence
 
@@ -860,21 +909,19 @@ results), therefore, other peers can verify the results of your experiments. To 
       .. tab:: PyCOMPSs application
 
         - Click the DOI link of the workflow you want to re-execute (e.g. https://doi.org/10.48546/workflowhub.workflow.839.1).
-
-        - Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine (e.g. in ~/Downloads/).
-
-        - Move and unzip the file in a new folder in the target machine.
+        - Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine (e.g. in ``~/Downloads/``).
+        - Move and unzip the file in a new folder in the target machine (i.e. the machine where the workflow was executed
+          or where the datasets are accessible from, e.g. ``glogin2.bsc.es``).
 
         .. code-block:: console
-
 
           $ scp ~/Downloads/workflow-839-1.crate.zip bsc019057@glogin2.bsc.es:~
             workflow-839-1.crate.zip                            100%   19KB 333.4KB/s   00:00
           $ ssh bsc019057@glogin2.bsc.es
 
-          $ mkdir ~/reproduced_workflow_no_persistence/
-          $ mv ~/workflow-839-1.crate.zip ~/reproduced_workflow_no_persistence/
-          $ cd ~/reproduced_workflow_no_persistence/
+          $ mkdir ~/workflow-839-1/
+          $ mv ~/workflow-839-1.crate.zip ~/workflow-839-1/
+          $ cd ~/workflow-839-1/
           $ unzip workflow-839-1.crate.zip
 
         - Create a new_outputs/ folder for your re-execution results.
@@ -898,20 +945,86 @@ results), therefore, other peers can verify the results of your experiments. To 
             - Optionally, you can verify the ``contentSize`` and ``dateModified`` for each input file, to ensure the
               files in the path referenced match the ones used when the application was originally run.
 
-        - Re-execute the application adapting the flags and parameters to submit the application.
+        - Re-execute the application adapting the flags and parameters to submit the application. Avoid overwriting the original outputs of the application.
 
         .. code-block:: console
 
           $ enqueue_compss --project_name=bsc19 --qos=gp_debug --num_nodes=1 --job_name=matmul-DP --lang=python --log_level=debug --summary --exec_time=5 $(pwd)/application_sources/src/matmul_files.py /gpfs/home/bsc/bsc019057/WorkflowHub/reproducible_matmul/inputs/ new_outputs/
 
-        - Once the execution is finished, compare the new outputs generated with the outputs included in the crate.
+        - Once the execution is finished, compare the new outputs generated with the outputs referenced in the crate.
 
         .. code-block:: console
 
           $ diff new_outputs/ /gpfs/home/bsc/bsc019057/WorkflowHub/reproducible_matmul/outputs/
 
       .. tab:: Java COMPSs application
-        - COMING SOON.
+
+        - Click the DOI link of the workflow you want to re-execute (e.g. https://doi.org/10.48546/workflowhub.workflow.1088.1).
+        - Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine (e.g. in ``~/Downloads/``).
+        - Move and unzip the file in a new folder in the target machine (i.e. the machine where the workflow was executed
+          or where the datasets are accessible from, e.g. ``glogin2.bsc.es``).
+
+        .. code-block:: console
+
+          $ scp ~/Downloads/workflow-1088-1.crate.zip bsc019057@glogin2.bsc.es:~
+            workflow-1088-1.crate.zip                            100%   19KB 333.4KB/s   00:00
+          $ ssh bsc019057@glogin2.bsc.es
+
+          $ mkdir ~/workflow-1088-1/
+          $ mv ~/workflow-1088-1.crate.zip ~/workflow-1088-1/
+          $ cd ~/workflow-1088-1/
+          $ unzip workflow-1088-1.crate.zip
+
+        - Create a new_outputs/ folder for your re-execution results.
+
+        .. code-block:: console
+
+          $ mkdir new_outputs/
+
+        - If needed, generate a ``jar`` file from the ``.java`` source files. Either using Maven:
+
+        .. code-block:: console
+
+          $ cd application_sources/
+          $ mvn clean package
+          $ cd ..
+
+        or compiling the sources with ``javac``.
+
+        .. code-block:: console
+
+          $ cd application_sources/
+          $ find * -name "*.java" > sources.txt
+          $ javac -d bin/ @sources.txt
+          $ jar cf jar/matmul.jar bin/
+          $ cd ..
+
+        - Inspect the submission command to understand the flags passed to submit the application.
+
+        .. code-block:: console
+
+          $ cat compss_submission_command_line.txt
+            enqueue_compss --provenance=java_matmul_reproducible_mn5.yaml --project_name=bsc19 --qos=gp_debug --num_nodes=1 --job_name=matmul --summary --exec_time=5 --classpath=jar/matmul.jar matmul.files.Matmul /gpfs/projects/bsc19/bsc019057/matmul_java_datasets/inputs/ /gpfs/projects/bsc19/bsc019057/matmul_java_datasets/outputs/
+
+        - Inspect the ``ro-crate-metadata.json`` metadata file.
+
+            - Search for the ``CreateAction`` section, ``object`` term to see location of input files.
+            - Search for the ``CreateAction`` section, ``result`` term to see location of output files.
+            - You need to ensure you have the corresponding permissions to access the specified locations.
+            - Optionally, you can verify the ``contentSize`` and ``dateModified`` for each input file, to ensure the
+              files in the path referenced match the ones used when the application was originally run.
+
+        - Re-execute the application adapting the flags and parameters to submit the application. Avoid overwriting the original outputs of the application.
+
+        .. code-block:: console
+
+          $ enqueue_compss --project_name=bsc19 --qos=gp_debug --num_nodes=1 --job_name=matmul --summary --exec_time=5 --classpath=application_sources/jar/matmul.jar matmul.files.Matmul /gpfs/projects/bsc19/bsc019057/matmul_java_datasets/inputs/ new_outputs/
+
+        - Once the execution is finished, compare the new outputs generated with the outputs referenced in the crate.
+
+        .. code-block:: console
+
+          $ diff new_outputs/ /gpfs/projects/bsc19/bsc019057/matmul_java_datasets/outputs
 
   .. tab:: With REMOTE datasets
 
@@ -920,14 +1033,28 @@ results), therefore, other peers can verify the results of your experiments. To 
     to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Adding large dataset as remote in WorkflowHub`
     to learn this process more in detail.
 
-    .. tabs::
+    Remote datasets may be commonly included in applications that set ``data_persistence`` to ``False``. The idea is that the files
+    that were not originally persisted are packaged and uploaded to an external repository. However, remote files can also be added
+    manually using the WorkflowHub interface for any kind of application, thus not only applications without persisted data
+    may include remote datasets. Because of that, we will describe here the preliminary step of downloading and preparing
+    remote datasets, but the execution process will be the one described in the corresponding tab in this table (i.e. with
+    or without data persistence, using PyCOMPSs or Java COMPSs).
 
-      .. tab:: PyCOMPSs application
-        - COMING SOON.
+    - Click the DOI link of the workflow you want to re-execute (e.g. **Lysozyme in Water with REMOTE DATASET**).
+    - Download any remote dataset referenced as such:
 
-      .. tab:: Java COMPSs application
-        - COMING SOON.
+      - Browse the ``Files`` tab of the workflow in WorkflowHub.
+    - Place the datasets in your preferred location, for instance a sub-folder ``remote_dataset/`` inside the downloaded workflow
+      folder.
+    - Go to your corresponding reexecution tab, and follow the instructions. Fix any path needed with the newly
+      ``remote_dataset/`` created path.
 
+
+.. WARNING::
+
+    If the application includes hardcoded paths, they will need to be manually modified in the code. However, in most
+    of the cases, if the application has relative paths hardcoded, the ``application_sources/`` folder could be used as
+    the working directory (i.e. the folder from where you run your COMPSs application).
 
 As seen in the examples above, the steps to reproduce a COMPSs workflow vary depending if the
 crate package downloaded includes the datasets (i.e. it
