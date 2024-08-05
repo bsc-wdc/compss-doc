@@ -104,6 +104,15 @@ are commonly used, and the rest of terms are for special cases):
       license: YourLicense-1.0
       sources: [/absolute_path_to/dir_1/, relative_path_to/dir_2/, main_file.py, relative_path/aux_file_1.py, /abs_path/aux_file_2.py]
       data_persistence: False
+      software:
+        - name: Software 1 name
+          version: 1.1.1
+          url: https://software1.org/
+        - name: Software 2 name
+          version: Software version description 2.2.2
+          url: https://software2.org/
+
+      # Optional, less commonly used
       inputs: [/abs_path_to/dir_1, rel_path_to/dir_2, file_1, rel_path/file_2, https://domain.to/file]
       outputs: [/abs_path_to/dir_1, rel_path_to/dir_2, file_1, rel_path/file_2, https://domain.to/file]
       sources_main_file: my_main_file.py
@@ -162,22 +171,32 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
 - The ``license`` field is preferred to be specified by providing an URL to the license, but a set of
   predefined strings are also supported, and can be found at the `SPDX License list site <https://spdx.org/licenses/>`_.
 
-
 - ``data_persistence`` value is ``False`` by default. It is a boolean to indicate whether the workflow provenance
   generation should copy the workflow's input and output datasets to the crate (i.e. must be set to ``True``).
   Including the datasets is feasible for workflows where they are small enough to be sent back and forth between
   execution environments. When datasets are too large to be moved around (i.e. hundreds of MB), this field should be set
   to ``False``.
 
-.. TIP::
-    Large datasets (i.e. hundreds of MBs) should be uploaded to public
-    data repositories (e.g. `Zenodo <https://zenodo.org/>`_ up to 50 GB per dataset, `FigShare <https://figshare.com/>`_
-    up to 5 TB per dataset) and included as ``https`` references with the ``inputs`` or ``outputs`` terms.
+- ``software`` is used to manually describe the list of software dependencies (i.e. ``softwareRequirements`` in RO-Crate
+  specification) this application
+  has in order to be executed correctly. If external packages / libraries / binaries are used, they should be declared
+  in this section. This will enable consumers of the metadata to install automatically this dependencies whenever a
+  re-execution of the application is intended.
+
+      - ``name`` is the full name of the external software used.
+      - ``version`` can be a canonical version only (i.e. ``3.2.1``), or a much larger description (it is a string type).
+        This should commonly include the output of ``tool --version`` command.
+      - ``url`` where the software can be found.
 
 From all these terms, only ``name`` is  mandatory, since the rest are not strictly required to generate workflow provenance with COMPSs.
 However, it is important to include as much information as possible in order to correctly share your application and
 results. Besides, missing information can lead to reduced features when using workflow provenance (e.g. if no ``Authors``
 are specified, WorkflowHub will not allow to generate a DOI for the workflow execution).
+
+.. TIP::
+    Large datasets (i.e. hundreds of MBs) should be uploaded to public
+    data repositories (e.g. `Zenodo <https://zenodo.org/>`_ up to 50 GB per dataset, `FigShare <https://figshare.com/>`_
+    up to 5 TB per dataset) and included as ``https`` references with the ``inputs`` or ``outputs`` terms.
 
 .. WARNING::
 
