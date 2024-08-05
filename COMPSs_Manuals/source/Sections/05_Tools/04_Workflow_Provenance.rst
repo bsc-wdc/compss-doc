@@ -179,12 +179,12 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
 
 - ``software`` is used to manually describe the list of software dependencies (i.e. ``softwareRequirements`` in RO-Crate
   specification) this application
-  has in order to be executed correctly. If external packages / libraries / binaries are used, they should be declared
-  in this section. This will enable consumers of the metadata to install automatically this dependencies whenever a
-  re-execution of the application is intended.
+  has in order to be executed correctly. If the application requires certain packages / libraries / tools, they should be declared
+  in this section. With this information recorded, metadata consumers will be able to react and install automatically
+  these dependencies whenever a re-execution of the application is intended.
 
       - ``name`` is the full name of the external software used.
-      - ``version`` can be a canonical version only (i.e. ``3.2.1``), or a much larger description (it is a string type).
+      - ``version`` can be a canonical version only (i.e. ``3.2.1``), or a much larger description (text).
         This should commonly include the output of ``tool --version`` command.
       - ``url`` where the software can be found.
 
