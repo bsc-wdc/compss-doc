@@ -43,8 +43,8 @@ As an example for some distributions and versions:
         .. code-block:: console
 
             $ sudo apt-get install -y openjdk-8-jdk graphviz xdg-utils libtool automake build-essential pkgconf python3 python3-dev libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran libgmp3-dev flex bison texinfo python3-pip libpapi-dev
-            $ sudo wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
-            $ sudo unzip /opt/gradle-5.4.1-bin.zip -d /opt
+            $ sudo wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip
+            $ sudo unzip /opt/gradle-8.7-bin.zip -d /opt
 
 
         .. ATTENTION::
@@ -77,8 +77,8 @@ As an example for some distributions and versions:
         .. code-block:: console
 
             $ sudo apt-get install -y openjdk-8-jdk graphviz xdg-utils libtool automake build-essential python3 python3-dev libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran libgmp3-dev flex bison texinfo python3-pip libpapi-dev
-            $ sudo wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
-            $ sudo unzip /opt/gradle-5.4.1-bin.zip -d /opt
+            $ sudo wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip
+            $ sudo unzip /opt/gradle-8.7-bin.zip -d /opt
 
 
         .. ATTENTION::
@@ -111,8 +111,8 @@ As an example for some distributions and versions:
         .. code-block:: console
 
             $ sudo apt-get install -y openjdk-8-jdk graphviz xdg-utils libtool automake build-essential python python-dev python3 python3-dev libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran libgmp3-dev flex bison texinfo python3-pip libpapi-dev
-            $ sudo wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
-            $ sudo unzip /opt/gradle-5.4.1-bin.zip -d /opt
+            $ sudo wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip
+            $ sudo unzip /opt/gradle-8.7-bin.zip -d /opt
 
         .. ATTENTION::
 
@@ -134,8 +134,8 @@ As an example for some distributions and versions:
         .. code-block:: console
 
              $ sudo apt-get install -y openjdk-8-jdk graphviz xdg-utils libtool automake build-essential libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran python-pip libpapi-dev
-             $ sudo wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
-             $ sudo unzip /opt/gradle-5.4.1-bin.zip -d /opt
+             $ sudo wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip
+             $ sudo unzip /opt/gradle-8.7-bin.zip -d /opt
 
         .. ATTENTION::
 
@@ -162,8 +162,8 @@ As an example for some distributions and versions:
 
             $ sudo zypper install --type pattern -y devel_basis
             $ sudo zypper install -y java-1_8_0-openjdk-headless java-1_8_0-openjdk java-1_8_0-openjdk-devel graphviz xdg-utils python python-devel python3 python3-devel python3-decorator libtool automake libboost_headers1_71_0-devel libboost_serialization1_71_0 libboost_iostreams1_71_0  libxml2-2 libxml2-devel tcsh gcc-fortran papi libpapi gcc-c++ libpapi papi papi-devel gmp-devel
-            $ sudo wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
-            $ sudo unzip /opt/gradle-5.4.1-bin.zip -d /opt
+            $ sudo wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip
+            $ sudo unzip /opt/gradle-8.7-bin.zip -d /opt
 
         .. ATTENTION::
 
@@ -186,8 +186,8 @@ As an example for some distributions and versions:
 
             $ sudo zypper install --type pattern -y devel_basis
             $ sudo zypper install -y java-1_8_0-openjdk-headless java-1_8_0-openjdk java-1_8_0-openjdk-devel graphviz xdg-utils python3 python3-devel python3-decorator libtool automake libboost_headers1_66_0-devel libboost_serialization1_66_0 libboost_iostreams1_66_0  libxml2-2 libxml2-devel tcsh gcc-fortran papi libpapi gcc-c++ libpapi papi papi-devel gmp-devel lam lam-devel link
-            $ sudo wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
-            $ sudo unzip /opt/gradle-5.4.1-bin.zip -d /opt
+            $ sudo wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip
+            $ sudo unzip /opt/gradle-8.7-bin.zip -d /opt
 
         .. ATTENTION::
 
@@ -210,8 +210,8 @@ As an example for some distributions and versions:
 
             $ sudo zypper install --type pattern -y devel_basis
             $ sudo zypper install -y java-1_8_0-openjdk-headless java-1_8_0-openjdk java-1_8_0-openjdk-devel graphviz xdg-utils python3 python3-devel python3-decorator libtool automake boost-devel libboost_serialization1_54_0 libboost_iostreams1_54_0 libxml2-2 libxml2-devel tcsh gcc-fortran python-pip papi libpapi gcc-c++ libpapi papi papi-devel gmp-devel
-            $ sudo wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
-            $ sudo unzip /opt/gradle-5.4.1-bin.zip -d /opt
+            $ sudo wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip
+            $ sudo unzip /opt/gradle-8.7-bin.zip -d /opt
 
         .. WARNING::
 
@@ -249,8 +249,8 @@ As an example for some distributions and versions:
              $ # If the libxml softlink is not created during the installation of libxml2, the COMPSs installation may fail.
              $ # In this case, the softlink has to be created manually with the following command:
              $ sudo ln -s /usr/include/libxml2/libxml/ /usr/include/libxml
-             $ sudo wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
-             $ sudo unzip /opt/gradle-5.4.1-bin.zip -d /opt
+             $ sudo wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip
+             $ sudo unzip /opt/gradle-8.7-bin.zip -d /opt
 
         .. ATTENTION::
 
@@ -275,8 +275,8 @@ As an example for some distributions and versions:
              $ # If the libxml softlink is not created during the installation of libxml2, the COMPSs installation may fail.
              $ # In this case, the softlink has to be created manually with the following command:
              $ sudo ln -s /usr/include/libxml2/libxml/ /usr/include/libxml
-             $ sudo wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
-             $ sudo unzip /opt/gradle-5.4.1-bin.zip -d /opt
+             $ sudo wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip
+             $ sudo unzip /opt/gradle-8.7-bin.zip -d /opt
 
         .. ATTENTION::
 
@@ -308,8 +308,8 @@ As an example for some distributions and versions:
               $ apt-get update
               $ apt-get install oracle-java8-installer
               $ apt-get install graphviz xdg-utils libtool automake build-essential python3 python3-decorator python3-pip python3-dev libboost-serialization1.55.0 libboost-iostreams1.55.0 libxml2 libxml2-dev libboost-dev csh gfortran papi-tools
-              $ wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip -O /opt/gradle-5.4.1-bin.zip
-              $ unzip /opt/gradle-5.4.1-bin.zip -d /opt
+              $ wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip
+              $ unzip /opt/gradle-8.7-bin.zip -d /opt
 
         .. ATTENTION::
 
@@ -404,10 +404,10 @@ As an example for some distributions and versions:
 
     .. code-block:: console
 
-        $ echo 'export GRADLE_HOME=/opt/gradle-5.4.1' >> ~/.bashrc
-        $ export GRADLE_HOME=/opt/gradle-5.4.1
-        $ echo 'export PATH=/opt/gradle-5.4.1/bin:$PATH' >> ~/.bashrc
-        $ export PATH=/opt/gradle-5.4.1/bin:$PATH
+        $ echo 'export GRADLE_HOME=/opt/gradle-8.7' >> ~/.bashrc
+        $ export GRADLE_HOME=/opt/gradle-8.7
+        $ echo 'export PATH=/opt/gradle-8.7/bin:$PATH' >> ~/.bashrc
+        $ export PATH=/opt/gradle-8.7/bin:$PATH
 
 
 .. IMPORTANT::
