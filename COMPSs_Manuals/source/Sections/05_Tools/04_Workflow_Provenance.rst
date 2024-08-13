@@ -194,6 +194,11 @@ results. Besides, missing information can lead to reduced features when using wo
 are specified, WorkflowHub will not allow to generate a DOI for the workflow execution).
 
 .. TIP::
+
+    It is very important that the ``sources`` term is correctly defined, since the
+    runtime will only register information for the list of source files defined under this term.
+
+.. TIP::
     Large datasets (i.e. hundreds of MBs) should be uploaded to public
     data repositories (e.g. `Zenodo <https://zenodo.org/>`_ up to 50 GB per dataset, `FigShare <https://figshare.com/>`_
     up to 5 TB per dataset) and included as ``https`` references with the ``inputs`` or ``outputs`` terms.
@@ -240,21 +245,54 @@ describe the individuals that wrote the source code of the application. For each
 
 - ``orcid`` refers to the ORCID identifier of the author. The IDs can be found and created at https://orcid.org/
 
-
 - ``ror`` refers to the Research Organization Registry (ROR) identifier for an institution.
   They can be found at http://ror.org/
 
+.. TIP::
+
+    If the machine where workflow provenance is generated has internet connectivity, by only providing the ``name`` or
+    the ``orcid``, the generation script will search online for the rest of details of that Author (including details
+    on its institution and e-mail if available). The information not found online can be manually added.
+    An example follows.
+
+.. code-block:: yaml
+
+    COMPSs Workflow Information:
+      name: COMPSs Matrix Multiplication, out-of-core using files
+      description: Hypermatrix size 2x2 blocks, block size 2x2 elements
+      license: Apache-2.0
+      sources: [matmul_directory.py, matmul_tasks.py]
+      data_persistence: True
+
+    Authors:
+      - name: Raül Sirvent
+        e-mail: Raul.Sirvent@bsc.es
+      - name: Nicolò Giacomini
+      - name: Fernando Vazquez Novoa
+        organisation_name: Barcelona Supercomputing Center
+      - name: Cristian Cătălin Tatu
+      - orcid: https://orcid.org/0000-0001-6401-6229
+      - orcid: https://orcid.org/0000-0001-5081-7244
+        organisation_name: Barcelona Supercomputing Center
+      - name: Francesc Lordan
+        ror: https://ror.org/05sd8tv96
+      - name: Rocío Carratalá-Sáez
+
+    Agent:
+      name: Rosa M Badia
+      e-mail: Rosa.M.Badia@upc.edu
+      ror: https://ror.org/03mb6wj31
+
 .. WARNING::
 
-    If an Author is specified, it must have at least a ``name`` and an ``orcid`` defined. If their Organisation is also
-    specified, at least the ``ror`` must be provided.
+    If no ``orcid`` is found online or specified for an Author, they will not be listed as such. Their corresponding
+    Organisation information will only be included if the Organisation's ``ror`` is found online or specified directly
+    in the YAML configuration file.
 
 .. TIP::
 
-    It is very important that the ``sources``, ``orcid`` and
-    ``ror`` terms are correctly defined, since the
-    runtime will only register information for the list of source files defined, and the ``orcid`` and ``ror`` are
-    used as unique identifiers in the RO-Crate specification.
+    It is very important that the ``orcid`` and ``ror`` terms are correctly defined, since they are
+    used as unique identifiers for Persons and Organisations in the RO-Crate specification.
 
 Agent section
 =============
