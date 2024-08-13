@@ -250,10 +250,10 @@ describe the individuals that wrote the source code of the application. For each
 
 .. TIP::
 
-    If the machine where workflow provenance is generated has internet connectivity, by only providing the ``name`` or
-    the ``orcid``, the generation script will search online for the rest of details of that Author (including details
-    on its institution and e-mail if available). The information not found online can be manually added.
-    An example follows.
+    If the machine where workflow provenance is generated has internet connectivity, the generation script will search
+    online for the rest of details of an Author (including details on its institution and e-mail, if available) by only
+    providing the ``name`` or the ``orcid`` of the Author. The information not found online (either because the machine
+    does not have connectivity, or because it is not available) can be manually added. An example follows.
 
 .. code-block:: yaml
 
@@ -292,7 +292,8 @@ describe the individuals that wrote the source code of the application. For each
 .. TIP::
 
     It is very important that the ``orcid`` and ``ror`` terms are correctly defined, since they are
-    used as unique identifiers for Persons and Organisations in the RO-Crate specification.
+    used as unique identifiers for Persons and Organisations in the RO-Crate specification. The ``orcid`` id is the
+    minimum information needed to be able to add a person as an Author.
 
 Agent section
 =============
