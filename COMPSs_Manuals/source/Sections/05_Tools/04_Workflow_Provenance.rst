@@ -1,3 +1,4 @@
+===================
 Workflow Provenance
 ===================
 
@@ -47,6 +48,7 @@ format is compliant with the `Workflow RO-Crate Profile v1.0 <https://w3id.org/w
 `Workflow Run Crate Profile v0.4 <https://w3id.org/ro/wfrun/workflow/0.4>`_.
 
 
+---------------------
 Software dependencies
 ---------------------
 
@@ -81,6 +83,7 @@ Our current implementation needs ``ro-crate-py`` version ``0.9.0`` or higher.
     to install ro-crate-py.
 
 
+-----------------------
 YAML configuration file
 -----------------------
 
@@ -90,7 +93,8 @@ fields that are needed to generate an RO-Crate but cannot be automatically obtai
 structure where the user can specify them. By default, a YAML file named ``ro-crate-info.yaml`` will be expected in the
 working directory (i.e. where the application is going to be run), but a different YAML file can be used by specifying
 it with ``--provenance=my_yaml_file.yaml`` when activating workflow provenance generation.
-The YAML file must follow the next template structure:
+The YAML file must follow the next template structure (notice later that only one term is mandatory, some other terms
+are commonly used, and the rest of terms are for special cases):
 
 .. code-block:: yaml
 
@@ -100,6 +104,15 @@ The YAML file must follow the next template structure:
       license: YourLicense-1.0
       sources: [/absolute_path_to/dir_1/, relative_path_to/dir_2/, main_file.py, relative_path/aux_file_1.py, /abs_path/aux_file_2.py]
       data_persistence: False
+      software:
+        - name: Software 1 name
+          version: 1.1.1
+          url: https://software1.org/
+        - name: Software 2 name
+          version: Software version description 2.2.2
+          url: https://software2.org/
+
+      # Optional, less commonly used
       inputs: [/abs_path_to/dir_1, rel_path_to/dir_2, file_1, rel_path/file_2, https://domain.to/file]
       outputs: [/abs_path_to/dir_1, rel_path_to/dir_2, file_1, rel_path/file_2, https://domain.to/file]
       sources_main_file: my_main_file.py
@@ -137,7 +150,7 @@ As you can see, there are three main blocks in the YAML:
 - **Agent:** the single person running the workflow in the computing resources.
 
 COMPSs Workflow Information section
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================
 
 More specifically, in the **COMPSs Workflow Information** section, the most commonly used terms are:
 
@@ -156,8 +169,7 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
   will be added as the corresponding source code if it can be found in the current working directory.
 
 - The ``license`` field is preferred to be specified by providing an URL to the license, but a set of
-  predefined strings are also supported, and can be found at the `Workflow-RO-Crate profile page <https://about.workflowhub.eu/Workflow-RO-Crate/#supported-licenses>`_.
-
+  predefined strings are also supported, and can be found at the `SPDX License list site <https://spdx.org/licenses/>`_.
 
 - ``data_persistence`` value is ``False`` by default. It is a boolean to indicate whether the workflow provenance
   generation should copy the workflow's input and output datasets to the crate (i.e. must be set to ``True``).
@@ -165,15 +177,31 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
   execution environments. When datasets are too large to be moved around (i.e. hundreds of MB), this field should be set
   to ``False``.
 
-.. TIP::
-    Large datasets (i.e. hundreds of MBs) should be uploaded to public
-    data repositories (e.g. `Zenodo <https://zenodo.org/>`_ up to 50 GB per dataset, `FigShare <https://figshare.com/>`_
-    up to 5 TB per dataset) and included as ``https`` references with the ``inputs`` or ``outputs`` terms.
+- ``software`` is used to manually describe the list of software dependencies (i.e. ``softwareRequirements`` in RO-Crate
+  specification) this application
+  has in order to be executed correctly. If the application requires certain packages / libraries / tools, they should be declared
+  in this section. With this information recorded, metadata consumers will be able to react and install automatically
+  these dependencies whenever a re-execution of the application is intended.
+
+      - ``name`` is the full name of the external software used.
+      - ``version`` can be a canonical version only (i.e. ``3.2.1``), or a much larger description (text).
+        This should commonly include the output of ``tool --version`` command.
+      - ``url`` where the software can be found.
 
 From all these terms, only ``name`` is  mandatory, since the rest are not strictly required to generate workflow provenance with COMPSs.
 However, it is important to include as much information as possible in order to correctly share your application and
 results. Besides, missing information can lead to reduced features when using workflow provenance (e.g. if no ``Authors``
 are specified, WorkflowHub will not allow to generate a DOI for the workflow execution).
+
+.. TIP::
+
+    It is very important that the ``sources`` term is correctly defined, since the
+    runtime will only register information for the list of source files defined under this term.
+
+.. TIP::
+    Large datasets (i.e. hundreds of MBs) should be uploaded to public
+    data repositories (e.g. `Zenodo <https://zenodo.org/>`_ up to 50 GB per dataset, `FigShare <https://figshare.com/>`_
+    up to 5 TB per dataset) and included as ``https`` references with the ``inputs`` or ``outputs`` terms.
 
 .. WARNING::
 
@@ -207,34 +235,68 @@ Also, some more optional terms are available, but less commonly used:
     of need.
 
 Authors section
-~~~~~~~~~~~~~~~
+===============
 
-In the **Authors** section (the whole section is optional), a single author or a list of authors can be provided. For
-each Author:
+In the **Authors** section (the whole section is optional), a single author or a list of authors can be provided. They
+describe the individuals that wrote the source code of the application. For each Author:
 
 - ``name``, ``e-mail`` and ``organisation_name`` are strings corresponding to the author's name, e-mail and their
   institution. They are free text, but the ``e-mail`` field must follow the ``user@domain.top`` format.
 
 - ``orcid`` refers to the ORCID identifier of the author. The IDs can be found and created at https://orcid.org/
 
-
 - ``ror`` refers to the Research Organization Registry (ROR) identifier for an institution.
   They can be found at http://ror.org/
 
+.. TIP::
+
+    If the machine where workflow provenance is generated has internet connectivity, the generation script will search
+    online for the rest of details of an Author (including details on its institution and e-mail, if available) by only
+    providing the ``name`` or the ``orcid`` of the Author. The information not found online (either because the machine
+    does not have connectivity, or because it is not available) can be manually added. An example follows.
+
+.. code-block:: yaml
+
+    COMPSs Workflow Information:
+      name: COMPSs Matrix Multiplication, out-of-core using files
+      description: Hypermatrix size 2x2 blocks, block size 2x2 elements
+      license: Apache-2.0
+      sources: [matmul_directory.py, matmul_tasks.py]
+      data_persistence: True
+
+    Authors:
+      - name: Raül Sirvent
+        e-mail: Raul.Sirvent@bsc.es
+      - name: Nicolò Giacomini
+      - name: Fernando Vazquez Novoa
+        organisation_name: Barcelona Supercomputing Center
+      - name: Cristian Cătălin Tatu
+      - orcid: https://orcid.org/0000-0001-6401-6229
+      - orcid: https://orcid.org/0000-0001-5081-7244
+        organisation_name: Barcelona Supercomputing Center
+      - name: Francesc Lordan
+        ror: https://ror.org/05sd8tv96
+      - name: Rocío Carratalá-Sáez
+
+    Agent:
+      name: Rosa M Badia
+      e-mail: Rosa.M.Badia@upc.edu
+      ror: https://ror.org/03mb6wj31
+
 .. WARNING::
 
-    If an Author is specified, it must have at least a ``name`` and an ``orcid`` defined. If their Organisation is also
-    specified, at least the ``ror`` must be provided.
+    If no ``orcid`` is found online or specified for an Author, they will not be listed as such. Their corresponding
+    Organisation information will only be included if the Organisation's ``ror`` is found online or specified directly
+    in the YAML configuration file.
 
 .. TIP::
 
-    It is very important that the ``sources``, ``orcid`` and
-    ``ror`` terms are correctly defined, since the
-    runtime will only register information for the list of source files defined, and the ``orcid`` and ``ror`` are
-    used as unique identifiers in the RO-Crate specification.
+    It is very important that the ``orcid`` and ``ror`` terms are correctly defined, since they are
+    used as unique identifiers for Persons and Organisations in the RO-Crate specification. The ``orcid`` id is the
+    minimum information needed to be able to add a person as an Author.
 
 Agent section
-~~~~~~~~~~~~~
+=============
 
 The **Agent** section has the same terms as the Authors section, but it specifically provides the details of the sole
 person running the workflow, that can be different from the Authors. The whole section is optional and only a single
@@ -246,7 +308,7 @@ individual can be provided.
     workflow.
 
 Examples
-~~~~~~~~
+========
 
 In the following lines, we provide a YAML example for an out-of-core Matrix Multiplication PyCOMPSs application,
 distributed with license Apache v2.0, with two source files, and authored by two persons from two different
@@ -320,6 +382,7 @@ An example of the **minimal YAML** that needs to be defined in order to publish 
     not be possible to generate a DOI for the workflow.
 
 
+--------------------
 Recording activation
 --------------------
 
@@ -368,6 +431,8 @@ following commands can be used:
 
     $ $COMPSS_HOME/Runtime/scripts/utils/compss_gengraph svg $BASE_LOG_DIR/monitor/complete_graph.dot
 
+    $ export PYTHONPATH=$COMPSS_HOME/Runtime/scripts/system/:$PYTHONPATH
+
     $ python3 $COMPSS_HOME/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py my_yaml_file.yaml $BASE_LOG_DIR/dataprovenance.log
 
 In these commands, ``COMPSS_HOME`` is where your COMPSs installation is located, and ``BASE_LOG_DIR`` points to the path where the
@@ -389,11 +454,14 @@ for a detailed description of its content).
 
         PROVENANCE | STARTING WORKFLOW PROVENANCE SCRIPT
         PROVENANCE | If needed, Provenance generation can be triggered by hand using the following commands:
-        PROVENANCE | /apps/GPP/COMPSs/3.3.1/Runtime/scripts/utils/compss_gengraph svg /home/bsc/bsc019057/.COMPSs/3166653//monitor/complete_graph.dot
-        PROVENANCE | python3 /apps/GPP/COMPSs/3.3.1/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py ro-crate-info.yaml /home/bsc/bsc019057/.COMPSs/3166653//dataprovenance.log
+            /apps/GPP/COMPSs/3.3.1/Runtime/scripts/utils/compss_gengraph svg /home/bsc/bsc019057/.COMPSs/4471214//monitor/complete_graph.dot
+            export PYTHONPATH=/apps/GPP/COMPSs/3.3.1/Runtime/scripts/system/:$PYTHONPATH
+            python3 -O /apps/GPP/COMPSs/3.3.1/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py FULL_SINGULARITY.yaml /home/bsc/bsc019057/.COMPSs/4471214//dataprovenance.log
         PROVENANCE | TIP for BSC cluster users: before triggering generation by hand, run first: salloc -p interactive
         ...
 
+
+---------------
 Resulting crate
 ---------------
 
@@ -445,6 +513,11 @@ are:
   :ref:`Sections/05_Tools/04_Workflow_Provenance:Metadata examples`.
 
 .. TIP::
+    Since its version ``3.3.4``, the ``PyCOMPSs CLI`` includes the capacity of inspecting RO-Crates with the
+    ``pycompss inspect [crate_folder/ | crate.zip]`` command. Check the :ref:`Sections/08_PyCOMPSs_CLI/02_Usage:Inspect Workflow Provenance`
+    Section for more details.
+
+.. TIP::
 
     For the basic set of files always included for every application (i.e. ``complete_graph.svg``, ``App_Profile.json``,
     ``compss_submission_command_line.txt``, ``ro-crate-info.yaml``, ``compss-[job_id].out``, ``compss-[job_id].err``),
@@ -466,8 +539,9 @@ are:
     trigger the diagram generation manually with ``compss_gengraph`` or ``pycompss gengraph``.
 
 
-Log and time statistics
------------------------
+------------------------------
+Time statistics, log and debug
+------------------------------
 
 When provenance generation is activated, and after the application has finished, the workflow provenance generation
 script will be automatically triggered. A number of log messages related to provenance can bee seen, which return
@@ -540,12 +614,18 @@ so the user should double check if the decision taken is correct. Some examples 
     PROVENANCE | WARNING: A file addition was attempted twice: /Users/rsirvent/COMPSs-DP/matmul_files/in/A/A.0.0 in /Users/rsirvent/COMPSs-DP/matmul_files/in
     PROVENANCE | WARNING: 'Agent' not specified in TEST_DUPLICATED_SOURCES.yaml. First author selected by default.
 
+.. TIP::
+    In case of need for debugging the workflow provenance generation, an environment variable called ``COMPSS_PROV_DEBUG``
+    has been defined to enable a larger amount of provenance generation output messages in order to detect any possible issues.
+    Before the execution, users must define the variable using the command ``export COMPSS_PROV_DEBUG=True``.
 
+
+-----------------
 Using WorkflowHub
 -----------------
 
 Publish and cite your results with WorkflowHub
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+==============================================
 
 Once the provenance metadata for your COMPSs application has been generated, you have the possibility of publishing
 your results (i.e. both the workflow and the workflow run) in `WorkflowHub <https://workflowhub.eu/>`_, the FAIR
@@ -556,9 +636,12 @@ site can be found in their `Documentation <https://about.workflowhub.eu/docs/>`_
 The steps to achieve the publication of a COMPSs execution are:
 
 - Pack the resulting crate sub-directory (i.e. ``COMPSs_RO-Crate_[uuid]/``) in a zip file. The ``ro-crate-metadata.json``
-  file must be at the root level of this zip file.
+  file must be at the root level of this zip file. Example:
 
-    - Command example: ``zip -r ~/Desktop/crate.zip COMPSs_RO-Crate_891540ad-18ca-4e19-aeb4-66a237193d07/``
+.. code-block:: console
+
+    $ cd COMPSs_RO-Crate_891540ad-18ca-4e19-aeb4-66a237193d07/
+    $ zip -r ~/Desktop/crate.zip *
 
 - `Login <https://workflowhub.eu/login?return_to=%2Fsignup>`_ or `create an account <https://workflowhub.eu/signup>`_
   in the WorfklowHub registry. You can use your GitHub credentials to easily log in.
@@ -579,7 +662,6 @@ The steps to achieve the publication of a COMPSs execution are:
 
     - Alternatively, the menu ``Create`` at the top of the web page can be used, selecting ``Workflow``.
 
-
 - Select the third tab ``Upload/Import Workflow RO-Crate`` tab, ``Local file``, and browse your computer to select the zip file
   prepared previously. Click ``Register``.
 
@@ -597,7 +679,7 @@ The steps to achieve the publication of a COMPSs execution are:
 .. TIP::
 
     The crate (i.e. folder ``COMPSs_RO-Crate_[uuid]/``) can also be uploaded to GitHub, and then imported from
-    WorkflowHub using the second tab option ``Import Git Repository``.
+    WorkflowHub using the second tab option ``Import Git Repository``. See an example here: https://workflowhub.eu/workflows/1076
 
 After these steps, the main summary page of your workflow will be shown, where three main tabs can be selected
 (see https://doi.org/10.48546/workflowhub.workflow.484.1 to check out an example directly at WorkflowHub):
@@ -627,7 +709,7 @@ After these steps, the main summary page of your workflow will be shown, where t
   ``Teams``, ``Publications``, ``Presentations``, ``Collections``, ...)
 
 At this point, before freezing and generating a DOI for the workflow, you may consider if **remote datasets** need
-to be added to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Adding large files as remote datasets in WorkflowHub`
+to be added to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Adding large dataset as remote in WorkflowHub`
 for a detailed guide on how to do that.
 
 If everything is correct, the next step is to **generate a DOI** (i.e. a persistent identifier) for your workflow.
@@ -693,9 +775,36 @@ You can see some examples on previous published workflows:
     `in this site <https://simplemde.com/markdown-guide>`_, and an example on how to write it at the YAML configuration files
     of the previously provided examples (i.e. in their included ``ro-crate-info.yaml`` files).
 
+Creating a new version of a Workflow
+------------------------------------
 
-Adding large files as remote datasets in WorkflowHub
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+It is obvious that, as the development of a specific workflow progresses, new versions of what conceptually is the same workflow will be
+created. In addition, even if the code remains unchanged, new execution results of the application may also want to be shared
+for including them in papers as DOI references (i.e. same algorithm, using different inputs, generating different outputs).
+Therefore, a recommended practice is to use the ``New version`` feature of the WorkflowHub portal, so the same workflow
+page will contain different versions / executions of the same COMPSs application. This is achieved using:
+
+- Step 1: Update the code of your COMPSs application, and generate a new run with previous or new results, activating workflow
+  provenance generation.
+
+- Step 2: Open the previously existing workflow at WorkflowHub.
+
+- Step 3: Select ``Actions`` -> ``New version``.
+    - If your workflow was imported from RO-Crate, select ``Upload/Import Workflow RO-Crate`` to upload workflow provenance.
+    - If you imported the workflow from GitHub, once you have commited your changes / results, select ``Import Git Repository``.
+      This action will import the latest commit in the repository to WorkflowHub.
+
+Once these steps are finished, the ``Overview`` tab of the workflow will show a new entry at the bottom of the page, in
+the ``Version History`` section of the page. An example can be seen here: https://workflowhub.eu/workflows/1076
+
+.. TIP::
+
+    Notice that DOIs can be generated for each of the different versions of the uploaded workflow, so all of them can
+    be properly shared.
+
+
+Adding large dataset as remote in WorkflowHub
+---------------------------------------------
 
 As mentioned earlier, whenever a workflow uses or produces a very large dataset, it should not include the data as persistent
 (i.e. directly included in the crate), but reference it as a **remote dataset**. A rule of thumb is that, if the workflow
@@ -711,17 +820,17 @@ used to share large datasets are:
     The addition of remote datasets must be done before freezing the workflow version and generating the DOI for citation.
 
 - Step 1: execute your application adding manually as ``inputs`` or ``outputs`` the remote dataset reference (i.e. an
-  https URL reference such as ``https://zenodo.org/records/10782431/files/lysozyme_datasets.zip``).
+  https URL reference such as ``https://zenodo.org/records/10782431/files/lysozyme_datasets.zip``), and most likely with
+  ``data_persitence: False``.
 
     - See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:YAML configuration file`.
-
 - Step 2: upload the workflow run in WorkflowHub.
     - As described in Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Publish and cite your results with WorkflowHub`.
 
 - Step 3: add the remote file as a reference in the workflow files:
     - ``Files`` tab -> ``Add File`` -> ``Remote URL``.
     - Paste the remote URL (e.g. ``https://zenodo.org/records/10782431/files/lysozyme_datasets.zip``).
-    - Specify the file path in the crate (e.g. ``dataset/lysozyme_datasets.zip``).
+    - Specify the file path in the crate (e.g. ``remote_dataset/lysozyme_datasets.zip``).
 
 Examples on workflows with remote datasets can be found at:
 
@@ -729,9 +838,16 @@ Examples on workflows with remote datasets can be found at:
 
 - **PyCOMPSs Probabilistic Tsunami Forecast (PTF) - Kos-Bodrum 2017 earthquake and tsunami test-case:** https://doi.org/10.48546/workflowhub.workflow.781.1
 
+.. TIP::
+
+    While the most common choice should be to use ``data_persistence: False`` to avoid including any datasets, a mix of
+    automatically included small datasets, and remote large datasets can be achieved when using ``data_persistence: True``.
+    In any case, if data is persisted, the content of the ``dataset/`` folder in the crate cannot be modified (i.e. remove
+    files), because that would invalidate the correctness of the metadata.
+
 
 Re-execute a COMPSs workflow published in WorkflowHub
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=====================================================
 
 Apart from sharing workflow runs as shown in earlier sections, the workflow execution published in WorkflowHub can be also used by other
 individuals in order to **reproduce** the results (i.e. submit the same workflow with the same inputs, and obtain the same
@@ -741,7 +857,9 @@ results), therefore, other peers can verify the results of your experiments. To 
 
 - **PyCOMPSs: Matrix multiplication without data persistence:** https://doi.org/10.48546/workflowhub.workflow.839.1
 
-- **Java COMPSs: wordcount:** https://doi.org/10.48546/workflowhub.workflow.684.1
+- **Java COMPSs Matrix Multiplication, out-of-core using files, reproducible example, data persistence True:** https://doi.org/10.48546/workflowhub.workflow.1086.1
+
+- **Java COMPSs Matrix Multiplication, out-of-core using files, reproducible example, data persistence False, MareNostrum V:** https://doi.org/10.48546/workflowhub.workflow.1088.1
 
 .. tabs::
 
@@ -755,25 +873,23 @@ results), therefore, other peers can verify the results of your experiments. To 
       .. tab:: PyCOMPSs application
 
         - Click the DOI link of the workflow you want to re-execute (e.g. https://doi.org/10.48546/workflowhub.workflow.838.1).
-
-        - Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine (e.g. in ~/Downloads/).
-
+        - Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine (e.g. in ``~/Downloads/``).
         - Move and unzip the file in a new folder.
 
         .. code-block:: console
 
-          $ mkdir ~/reproduced_workflow/
-          $ mv ~/Downloads/workflow-838-1.crate.zip ~/reproduced_workflow/
-          $ cd ~/reproduced_workflow/
+          $ mkdir ~/workflow-838-1/
+          $ mv ~/Downloads/workflow-838-1.crate.zip ~/workflow-838-1/
+          $ cd ~/workflow-838-1/
           $ unzip workflow-838-1.crate.zip
 
-        - Create a new_outputs/ folder to avoid overwriting the included dataset/outputs/.
+        - Create a ``new_outputs/`` folder to avoid overwriting the included ``dataset/outputs/``.
 
         .. code-block:: console
 
           $ mkdir new_outputs/
 
-        - Inspect the submission command, and re-execute the application adapting the flags and parameters.
+        - Inspect the submission command, and re-execute the application adapting the flags and parameters. Avoid overwriting the original outputs of the application.
 
         .. code-block:: console
 
@@ -788,7 +904,56 @@ results), therefore, other peers can verify the results of your experiments. To 
           $ diff new_outputs/ dataset/outputs/
 
       .. tab:: Java COMPSs application
-        - COMING SOON.
+
+        - Click the DOI link of the workflow you want to re-execute (e.g. https://doi.org/10.48546/workflowhub.workflow.1086.1).
+        - Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine (e.g. in ``~/Downloads/``).
+        - Move and unzip the file in a new folder.
+
+        .. code-block:: console
+
+          $ mkdir ~/workflow-1086-1/
+          $ mv ~/Downloads/workflow-684-1.crate.zip ~/workflow-1086-1/
+          $ cd ~/workflow-1086-1/
+          $ unzip workflow-1086-1.crate.zip
+
+        - Create a ``new_outputs/`` folder to avoid overwriting the included ``dataset/outputs/``.
+
+        .. code-block:: console
+
+          $ mkdir new_outputs/
+
+        - If needed, generate a ``jar`` file from the ``.java`` source files. Either using Maven:
+
+        .. code-block:: console
+
+          $ cd application_sources/
+          $ mvn clean package
+          $ cd ..
+
+        or compiling the sources with ``javac``.
+
+        .. code-block:: console
+
+          $ cd application_sources/
+          $ find * -name "*.java" > sources.txt
+          $ javac -d bin/ @sources.txt
+          $ jar cf jar/matmul.jar bin/
+          $ cd ..
+
+        - Inspect the submission command, and re-execute the application adapting the flags and parameters. Avoid overwriting the original outputs of the application.
+
+        .. code-block:: console
+
+          $ cat compss_submission_command_line.txt
+            runcompss --python_interpreter=/Users/rsirvent/.pyenv/shims/python3 --cpu_affinity=disabled --provenance=java_matmul_reproducible.yaml --classpath=jar/matmul.jar matmul.files.Matmul inputs/ outputs/
+          $ runcompss --classpath=application_sources/jar/matmul.jar matmul.files.Matmul dataset/inputs/ new_outputs/
+
+        - Once the execution is finished, compare the new outputs generated with the outputs included in the crate.
+
+        .. code-block:: console
+
+          $ diff new_outputs/ dataset/outputs/
+
 
   .. tab:: WITHOUT data persistence
 
@@ -802,21 +967,19 @@ results), therefore, other peers can verify the results of your experiments. To 
       .. tab:: PyCOMPSs application
 
         - Click the DOI link of the workflow you want to re-execute (e.g. https://doi.org/10.48546/workflowhub.workflow.839.1).
-
-        - Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine (e.g. in ~/Downloads/).
-
-        - Move and unzip the file in a new folder in the target machine.
+        - Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine (e.g. in ``~/Downloads/``).
+        - Move and unzip the file in a new folder in the target machine (i.e. the machine where the workflow was executed
+          or where the datasets are accessible from, e.g. ``glogin2.bsc.es``).
 
         .. code-block:: console
-
 
           $ scp ~/Downloads/workflow-839-1.crate.zip bsc019057@glogin2.bsc.es:~
             workflow-839-1.crate.zip                            100%   19KB 333.4KB/s   00:00
           $ ssh bsc019057@glogin2.bsc.es
 
-          $ mkdir ~/reproduced_workflow_no_persistence/
-          $ mv ~/workflow-839-1.crate.zip ~/reproduced_workflow_no_persistence/
-          $ cd ~/reproduced_workflow_no_persistence/
+          $ mkdir ~/workflow-839-1/
+          $ mv ~/workflow-839-1.crate.zip ~/workflow-839-1/
+          $ cd ~/workflow-839-1/
           $ unzip workflow-839-1.crate.zip
 
         - Create a new_outputs/ folder for your re-execution results.
@@ -840,36 +1003,116 @@ results), therefore, other peers can verify the results of your experiments. To 
             - Optionally, you can verify the ``contentSize`` and ``dateModified`` for each input file, to ensure the
               files in the path referenced match the ones used when the application was originally run.
 
-        - Re-execute the application adapting the flags and parameters to submit the application.
+        - Re-execute the application adapting the flags and parameters to submit the application. Avoid overwriting the original outputs of the application.
 
         .. code-block:: console
 
           $ enqueue_compss --project_name=bsc19 --qos=gp_debug --num_nodes=1 --job_name=matmul-DP --lang=python --log_level=debug --summary --exec_time=5 $(pwd)/application_sources/src/matmul_files.py /gpfs/home/bsc/bsc019057/WorkflowHub/reproducible_matmul/inputs/ new_outputs/
 
-        - Once the execution is finished, compare the new outputs generated with the outputs included in the crate.
+        - Once the execution is finished, compare the new outputs generated with the outputs referenced in the crate.
 
         .. code-block:: console
 
           $ diff new_outputs/ /gpfs/home/bsc/bsc019057/WorkflowHub/reproducible_matmul/outputs/
 
       .. tab:: Java COMPSs application
-        - COMING SOON.
+
+        - Click the DOI link of the workflow you want to re-execute (e.g. https://doi.org/10.48546/workflowhub.workflow.1088.1).
+        - Click on ``Download RO-Crate``. The crate of the corresponding workflow will be downloaded to your machine (e.g. in ``~/Downloads/``).
+        - Move and unzip the file in a new folder in the target machine (i.e. the machine where the workflow was executed
+          or where the datasets are accessible from, e.g. ``glogin2.bsc.es``).
+
+        .. code-block:: console
+
+          $ scp ~/Downloads/workflow-1088-1.crate.zip bsc019057@glogin2.bsc.es:~
+            workflow-1088-1.crate.zip                            100%   19KB 333.4KB/s   00:00
+          $ ssh bsc019057@glogin2.bsc.es
+
+          $ mkdir ~/workflow-1088-1/
+          $ mv ~/workflow-1088-1.crate.zip ~/workflow-1088-1/
+          $ cd ~/workflow-1088-1/
+          $ unzip workflow-1088-1.crate.zip
+
+        - Create a new_outputs/ folder for your re-execution results.
+
+        .. code-block:: console
+
+          $ mkdir new_outputs/
+
+        - If needed, generate a ``jar`` file from the ``.java`` source files. Either using Maven:
+
+        .. code-block:: console
+
+          $ cd application_sources/
+          $ mvn clean package
+          $ cd ..
+
+        or compiling the sources with ``javac``.
+
+        .. code-block:: console
+
+          $ cd application_sources/
+          $ find * -name "*.java" > sources.txt
+          $ javac -d bin/ @sources.txt
+          $ jar cf jar/matmul.jar bin/
+          $ cd ..
+
+        - Inspect the submission command to understand the flags passed to submit the application.
+
+        .. code-block:: console
+
+          $ cat compss_submission_command_line.txt
+            enqueue_compss --provenance=java_matmul_reproducible_mn5.yaml --project_name=bsc19 --qos=gp_debug --num_nodes=1 --job_name=matmul --summary --exec_time=5 --classpath=jar/matmul.jar matmul.files.Matmul /gpfs/projects/bsc19/bsc019057/matmul_java_datasets/inputs/ /gpfs/projects/bsc19/bsc019057/matmul_java_datasets/outputs/
+
+        - Inspect the ``ro-crate-metadata.json`` metadata file.
+
+            - Search for the ``CreateAction`` section, ``object`` term to see location of input files.
+            - Search for the ``CreateAction`` section, ``result`` term to see location of output files.
+            - You need to ensure you have the corresponding permissions to access the specified locations.
+            - Optionally, you can verify the ``contentSize`` and ``dateModified`` for each input file, to ensure the
+              files in the path referenced match the ones used when the application was originally run.
+
+        - Re-execute the application adapting the flags and parameters to submit the application. Avoid overwriting the original outputs of the application.
+
+        .. code-block:: console
+
+          $ enqueue_compss --project_name=bsc19 --qos=gp_debug --num_nodes=1 --job_name=matmul --summary --exec_time=5 --classpath=application_sources/jar/matmul.jar matmul.files.Matmul /gpfs/projects/bsc19/bsc019057/matmul_java_datasets/inputs/ new_outputs/
+
+        - Once the execution is finished, compare the new outputs generated with the outputs referenced in the crate.
+
+        .. code-block:: console
+
+          $ diff new_outputs/ /gpfs/projects/bsc19/bsc019057/matmul_java_datasets/outputs
 
   .. tab:: With REMOTE datasets
 
     For large or extremely large datasets (e.g. hundreds of MBs, several GBs), the most convenient way is to upload them
     to a public dataset repository (e.g. `Zenodo <https://zenodo.org/>`_) and reference them as ``remote datasets`` related
-    to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Adding large files as remote datasets in WorkflowHub`
+    to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance:Adding large dataset as remote in WorkflowHub`
     to learn this process more in detail.
 
-    .. tabs::
+    Remote datasets may be commonly included in applications that set ``data_persistence`` to ``False``. The idea is that the files
+    that were not originally persisted are packaged and uploaded to an external repository. However, remote files can also be added
+    manually using the WorkflowHub interface for any kind of application, thus not only applications without persisted data
+    may include remote datasets. Because of that, we will describe here the preliminary step of downloading and preparing
+    remote datasets, but the execution process will be the one described in the corresponding tab in this table (i.e. with
+    or without data persistence, using PyCOMPSs or Java COMPSs).
 
-      .. tab:: PyCOMPSs application
-        - COMING SOON.
+    - Click the DOI link of the workflow you want to re-execute (e.g. **Lysozyme in Water with REMOTE DATASET**).
+    - Download any remote dataset referenced as such:
 
-      .. tab:: Java COMPSs application
-        - COMING SOON.
+      - Browse the ``Files`` tab of the workflow in WorkflowHub.
+    - Place the datasets in your preferred location, for instance a sub-folder ``remote_dataset/`` inside the downloaded workflow
+      folder.
+    - Go to your corresponding reexecution tab, and follow the instructions. Fix any path needed with the newly
+      ``remote_dataset/`` created path.
 
+
+.. WARNING::
+
+    If the application includes hardcoded paths, they will need to be manually modified in the code. However, in most
+    of the cases, if the application has relative paths hardcoded, the ``application_sources/`` folder could be used as
+    the working directory (i.e. the folder from where you run your COMPSs application).
 
 As seen in the examples above, the steps to reproduce a COMPSs workflow vary depending if the
 crate package downloaded includes the datasets (i.e. it
@@ -887,11 +1130,12 @@ since the metadata may include references to the location of the inputs and outp
 requirement to reproduce a run would be to have access granted to the location where the inputs are.
 
 
+-----------------
 Metadata examples
 -----------------
 
 PyCOMPSs example (laptop execution)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================
 
 In the RO-Crate specification, the root file containing the metadata referring to the crate created is named
 ``ro-crate-metadata.json``. In these lines, we show how to navigate an ``ro-crate-metadata.json``
@@ -944,7 +1188,7 @@ contents. Many of the fields are easily and directly understandable.
 
 
 Java COMPSs example (MareNostrum supercomputer execution)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=========================================================
 
 In this second ``ro-crate-metadata.json`` example, we want to illustrate the workflow provenance result of a Java COMPSs
 application execution in the MareNostrum V supercomputer. We show the execution of a matrix LU factorization

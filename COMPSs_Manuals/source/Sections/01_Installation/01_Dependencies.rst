@@ -369,9 +369,9 @@ As an example for some distributions and versions:
 
     .. tabs::
 
-      .. tab:: Monterey
+      .. tab:: Sonoma 14.6
 
-        **macOS Monterey** dependencies installation commands:
+        **macOS Sonoma** dependencies installation commands:
 
         Although many packages can be installed with Homebrew, some of them will have to be installed manually
         from their source files. It is also important to mention that, some package names may be slightly different
@@ -380,8 +380,8 @@ As an example for some distributions and versions:
 
         .. code-block:: console
 
-            $ brew install openjdk@8 graphviz libxslt xmlto libtool automake coreutils util-linux boost
-            $ sudo ln -sfn /usr/local/opt/openjdk@8/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-8.jdk
+            $ brew install openjdk@11 graphviz libxslt xmlto libtool automake coreutils util-linux boost gradle
+            $ sudo ln -sfn /usr/local/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
 
         And xdg-utils had to be installed by hand (after installing libxslt and xmlto):
 
@@ -430,7 +430,7 @@ Optional Dependencies
 
 For the Python binding it is recommended to have ``dill`` (`dill project <https://pypi.org/project/dill/>`_),
 ``guppy3`` (`guppy3 project <https://pypi.org/project/guppy3/>`_) and
-``numpy`` (`numpy` project <https://pypi.org/project/numpy/>) installed:
+``numpy`` (`numpy project <https://pypi.org/project/numpy/>`_) installed:
 
 * The ``dill`` package increases the variety of serializable objects by Python (for example: lambda functions)
 * The ``guppy3`` package is needed to use the ``@local`` decorator.
