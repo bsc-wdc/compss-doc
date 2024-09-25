@@ -41,7 +41,9 @@ extensions = ['sphinx.ext.todo',
               'sphinx.ext.autosectionlabel',
               'sphinx.ext.mathjax',
               'sphinxcontrib.contentui',
+              #'sphinx_simplepdf',  # Potential replacement for pdf generation
               'nbsphinx',
+              #'myst_nb',  # Alternative to nbsphinx
               'sphinx_design',
               'sphinx_copybutton',
               'sphinxcontrib.rsvgconverter',
@@ -57,6 +59,10 @@ templates_path = ['_templates']
 #
 # source_suffix = ['.rst', '.md']
 source_suffix = '.rst'
+#source_suffix = {'.rst': 'restructuredtext',
+#                 '.ipynb': 'myst-nb',
+#                 '.myst': 'myst-nb',
+#}
 
 # The master toctree document.
 master_doc = 'index'
@@ -113,7 +119,9 @@ html_favicon = './Logos/COMPSs_logo.ico'
 nitpicky = True
 latex_logo = './Logos/COMPSs_logo.png'
 
-# Disabe notebooks Building
+# Disable notebooks Building
+nb_execution_mode = 'off'
+
 nbsphinx_execute = 'never'
 nbsphinx_execute_arguments = [
     "--InlineBackend.figure_formats={'svg', 'pdf'}",
@@ -121,6 +129,7 @@ nbsphinx_execute_arguments = [
 ]
 # Do not allow building if execution is enabled and a notebook fails
 nbsphinx_allow_errors = True
+nbsphinx_requirejs_path = ''
 
 # Disable tabs can be closed by selecting the open tab
 sphinx_tabs_disable_tab_closing = True
@@ -349,7 +358,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'COMPSs.tex', 'COMPSs Documentation',
-     'Workflows and Distributed Computing Group (WDC)', 'manual'),
+    'Workflows and Distributed Computing Group (WDC)', 'manual'),
 ]
 
 

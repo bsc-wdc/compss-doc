@@ -28,3 +28,6 @@ build/
 # Ignore python folders
 .ipynb_checkpoints/
 __pycache__/
+
+# Ignore building virtual environment
+documentation-builder/

@@ -57,7 +57,7 @@ library (:numref:`task_import_python`).
          ...
 
 
-.. dropdown:: :opticon:`star` See complete example
+.. dropdown:: See complete example
 
     .. code-block:: python
         :name: code_python_complete
@@ -251,7 +251,7 @@ Note that there is no need to use the ``target_direction`` flag within the
            main()
 
 
-   .. dropdown:: :opticon:`star` See complete example
+   .. dropdown:: See complete example
 
       .. code-block:: python
          :name: utils_py_example
