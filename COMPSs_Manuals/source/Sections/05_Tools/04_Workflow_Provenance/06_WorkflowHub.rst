@@ -28,7 +28,7 @@ The steps to achieve the publication of a COMPSs execution are:
   your own team, or join an existing one, as shown in the following Figure. For testing purposes, you can join the
   `COMPSs Tutorials <https://workflowhub.eu/projects/223>`_ team.
 
-.. figure:: ../Figures/JoinOrCreate.jpg
+.. figure:: ./Figures/JoinOrCreate.jpg
    :name: Join or Create a Team at WorkflowHub
    :alt: Join or Create
    :align: center
@@ -64,7 +64,7 @@ After these steps, the main summary page of your workflow will be shown, where t
 
 - **Overview**: where the workflow type, workflow description, and workflow diagram are shown.
 
-.. figure:: ../Figures/WH_overview.png
+.. figure:: ./Figures/WH_overview.png
    :name: Overview
    :alt: Overview
    :align: center
@@ -75,7 +75,7 @@ After these steps, the main summary page of your workflow will be shown, where t
 - **Files**: where you can browse the uploaded content of the crate (see :ref:`Sections/05_Tools/04_Workflow_Provenance/04_Result:Resulting crate`
   for details on the crate structure).
 
-.. figure:: ../Figures/WH_files.png
+.. figure:: ./Figures/WH_files.png
    :name: Files
    :alt: Files
    :align: center
@@ -101,7 +101,7 @@ The necessary steps to achieve this are:
 - Freeze your workflow version, either from the ``Overview`` tab, ``Citation`` box, ``Freeze version`` button, or from the
   ``Actions`` menu, ``Freeze version``.
 
-.. figure:: ../Figures/WH_freeze.png
+.. figure:: ./Figures/WH_freeze.png
    :name: Freeze
    :alt: Freeze
    :align: center
@@ -112,7 +112,7 @@ The necessary steps to achieve this are:
 - Once frozen, a new ``Generate a DOI`` button will appear in the ``Citation`` box. This can be also found in the
   ``Actions`` menu, ``Generate a DOI``. Finish the generation by clicking ``Mint DOI``.
 
-.. figure:: ../Figures/WH_DOI.png
+.. figure:: ./Figures/WH_DOI.png
    :name: DOI
    :alt: DOI
    :align: center
@@ -124,7 +124,7 @@ The necessary steps to achieve this are:
   can be changed from the dropdown menu inside the box, which has a large number of styles available. One of the most
   commonly used is the ``BibTeX generic citation style``.
 
-.. figure:: ../Figures/WH_citation.png
+.. figure:: ./Figures/WH_citation.png
    :name: Citation
    :alt: Citation
    :align: center
