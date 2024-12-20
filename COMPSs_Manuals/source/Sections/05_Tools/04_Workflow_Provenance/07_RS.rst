@@ -2,9 +2,12 @@
 Reproducibility Service
 -----------------------
 
-.. image:: ./Figures/RS_logo.png
-   :align: center
-   :alt: Logo
+.. figure:: ./Figures/RS_logo.png
+    :name: Reproducibility Service welcome message
+    :align: center
+    :alt: Logo
+
+    Reproducibility Service welcome message
 
 This is an automatic reproducibility service designed to help reproduce COMPSs workflows on your local machine or on a cluster. Below are the prerequisites and instructions for proper functioning.
 
@@ -36,10 +39,12 @@ This is an automatic reproducibility service designed to help reproduce COMPSs w
 
 4. **File Verification**: The service verifies file integrity against metadata such as file size or modification date. It generates a status table displaying the results of the verification.
 
-   .. image:: ./Figures/RS_status_table.png
-      :align: center
-      :alt: Status Table
-      :width: 90%
+.. figure:: ./Figures/RS_status_table.png
+    :name: Reproducibility Service file status table
+    :align: center
+    :alt: Status Table
+
+    Reproducibility Service file status table
 
 5. **Sub-directory Feature**: The service execution occurs in a separate subdirectory named ``reproducibility_service_{timestamp}/``, ensuring that it does not interfere with the current working directory (cwd).
 
