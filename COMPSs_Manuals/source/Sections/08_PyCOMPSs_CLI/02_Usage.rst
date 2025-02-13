@@ -157,8 +157,8 @@ Create a new COMPSs environment in your development directory
 Managing environments
 ---------------------
 
-Every time command ``pycompss init`` is executed, a new environment is created and becomes the active
-environment in wich the rest of the commands will be executed.
+Every time command ``pycompss init`` is executed, a new environment is created but doesn not become the active 
+environment. For that it is mandatory to execute ``pycompss env change [env_name]```.
 The subcommands ``pycompss environment`` will help inspecting, removing and switching between the environments.
 
 You can list all the environments created with ``pycompss environment list`` and inspect which one is active,
@@ -674,7 +674,7 @@ Running Jupyter notebooks
                 Ready to work!
                 To force quit: CTRL + C
 
-        .. dropdown:: How to use Jupyter in MN4 from local machine with PyCOMPSs CLI?
+        .. dropdown:: How to use Jupyter in MN5 from local machine with PyCOMPSs CLI?
           :color: dark
 
           .. dropdown:: **1st Step (to be done in your laptop)**
@@ -684,17 +684,19 @@ Running Jupyter notebooks
 
               .. code-block:: console
 
-                  pycompss init -n mn4 cluster -l <MN4_USER>@mn1.bsc.es
+                  pycompss init -n mn5 cluster -l <MN5_USER>@glogin1.bsc.es
 
 
-              By default, ``pycompss`` creates the local environment, and since the objective
-              is to run in MN4, this command will create the MN4 environment and set it by
-              default.
+              Now change to the recently created ``mn5`` environment:
+
+              .. code-block:: console
+
+                  pycompss env change mn5
 
               .. IMPORTANT::
 
-                  This environment will use the ``mn1.bsc.es`` login node to submit the
-                  job, and the notebook will be started within a MN4 compute node.
+                  This environment will use the ``glogin1.bsc.es`` login node to submit the
+                  job, and the notebook will be started within a MN5 compute node.
 
 
           .. dropdown:: **2nd Step (to be done in your laptop)**
@@ -710,7 +712,7 @@ Running Jupyter notebooks
           .. dropdown:: **3rd Step (to be done in your laptop)**
               :open:
 
-              Deploy the current folder to MN4 with the following command:
+              Deploy the current folder to MN5 with the following command:
 
               .. code-block:: console
 
@@ -726,16 +728,16 @@ Running Jupyter notebooks
           .. dropdown:: **4th Step (to be done in your laptop)**
               :open:
 
-              Launch a jupyter job into MN4 using the deployed folder with name
+              Launch a jupyter job into MN5 using the deployed folder with name
               ``mynotebook`` (or the name defined in previous step):
 
               .. code-block:: console
 
-                  pycompss jupyter -app mynotebook --qos=debug --exec_time=20
+                  pycompss jupyter -app mynotebook --qos=gp_debug --exec_time=20
 
-              A job will be submitted to MN4 queueing system within the ``debug`` queue and
+              A job will be submitted to MN5 queueing system within the ``gp_debug`` queue and
               with a ``20 minutes`` walltime. **Please, wait for it to start**.
-              It can be checked with ``squeue`` from MN4 while waiting, and its expected
+              It can be checked with ``squeue`` from MN5 while waiting, and its expected
               start time with ``squeue --start`` command.
 
               This job **will deploy the PyCOMPSs infrastructure** in the given nodes.
