@@ -801,7 +801,7 @@ Generating the task graph
 -------------------------
 
 COMPSs is able to produce the task graph showing the dependencies that
-have been respected. In order to producee it, include the ``--graph`` flag in
+have been respected. In order to produce it, include the ``--graph`` flag in
 the execution command:
 
 .. tabs::

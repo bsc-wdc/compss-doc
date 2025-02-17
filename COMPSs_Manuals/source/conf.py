@@ -49,7 +49,8 @@ extensions = ['sphinx.ext.todo',
               'sphinxcontrib.rsvgconverter',
               'sphinxcontrib.youtube',
               'sphinx_tabs.tabs',
-              'sphinx_toolbox.collapse']
+              'sphinx_toolbox.collapse',
+              'sphinxcontrib.spelling']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -134,6 +135,25 @@ nbsphinx_requirejs_path = ''
 # Disable tabs can be closed by selecting the open tab
 sphinx_tabs_disable_tab_closing = True
 
+# Spelling configuration
+spelling_lang='en'
+tokenizer_lang='en'
+spelling_word_list_filename='spelling_wordlist.txt'
+spelling_exclude_patterns=['ignored_*']
+spelling_show_suggestions=True
+spelling_suggestion_limit=0
+spelling_show_whole_line=True
+spelling_warning=True
+spelling_verbose=True
+spelling_ignore_pypi_package_names=True
+spelling_ignore_wiki_words=True
+spelling_ignore_acronyms=True
+spelling_ignore_python_builtins=True
+spelling_ignore_importable_modules=True
+spelling_ignore_contributor_names=True
+spelling_filters=[]
+
+
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -216,7 +236,7 @@ latex_elements = {
         %%% Load packages
         \usepackage{amsmath,amsfonts,amssymb,amsthm}
         \usepackage{graphicx}
-        \usepackage[strings]{underscore}
+        % \usepackage[strings]{underscore}
 
         %%% Reduce spaces for Table of contents, figures and tables-
         %%% It is used "\addtocontents{toc}{\vskip -1.2cm}" etc. in the document

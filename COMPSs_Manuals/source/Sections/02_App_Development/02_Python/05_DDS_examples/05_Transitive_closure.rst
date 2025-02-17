@@ -104,6 +104,6 @@ The following line provide an example of its execution.
    :name: transitive_closure_dds_python
    :alt: Python transitive closure using DDS interface tasks graph
    :align: center
-   :width: 100.0%
+   :width: 80.0%
 
    Python transitive closure using DDS interface tasks graph
