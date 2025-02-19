@@ -171,7 +171,7 @@ methods can be found in :numref:`storage_obj_methods`.
    the interaction between the object and the storage, so the runtime cannot
    know if it is necessary to call ``makePersistent`` after having used an
    INOUT or not (other storage approaches do live modifications to its storage
-   objects). The followingexample illustrates this situation:
+   objects). The following example illustrates this situation:
 
    .. code-block:: java
 
@@ -329,8 +329,8 @@ Some parameters can be tuned by the user via a
 .. code-block:: bash
 
       REDIS_HOME=some_path
-      REDIS_NODE_TIMEOUT=some_nonnegative_integer_value
-      REDIS_REPLICAS=some_nonnegative_integer_value
+      REDIS_NODE_TIMEOUT=some_non-negative_integer_value
+      REDIS_REPLICAS=some_non-negative_integer_value
 
 
 There are some observations regarding to this configuration file:
@@ -341,13 +341,13 @@ REDIS_HOME
    sandboxes for the instances will be created.
 
 REDIS_NODE_TIMEOUT
-   Must be a nonnegative integer number that
+   Must be a non-negative integer number that
    represents the amount of milliseconds that must pass before Redis
    declares the cluster broken in the case that some instance is not
    available.
 
 REDIS_REPLICAS
-   Must be equal to a nonnegative integer. This value
+   Must be equal to a non-negative integer. This value
    will represent the amount of replicas that a given shard will have.
    If possible, Redis will ensure that all replicas of a given shard
    will be on different nodes.

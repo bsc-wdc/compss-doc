@@ -4,10 +4,10 @@ Execution example
 Application
 ~~~~~~~~~~~
 
-In this section, we show how to execute the :ref:`Sections/07_Sample_Applications/02_Python/03_Kmeans:Kmeans`
+In this section, we show how to execute the :ref:`Sections/07_Sample_Applications/02_Python/03_KMeans:KMeans`
 Python COMPSs application in **batch mode** using MareNostrum 5 supercomputer.
 
-In this scenario, we have in our local machine, the Kmeans application in
+In this scenario, we have in our local machine, the KMeans application in
 ``/home/user/kmeans`` and inside the ``kmeans`` directory we only have the
 file ``kmeans.py``. And in the remote machine (``glogin1.bsc.es``),
 we have the user ``bsc12345``. So we can access this machine with

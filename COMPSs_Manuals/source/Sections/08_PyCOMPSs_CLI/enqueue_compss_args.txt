@@ -103,7 +103,7 @@ Launch configuration:
     --worker_port_range=<min>,<max>         Port range used by the NIO adaptor at the worker side
                                             Default: 43001,43005
     --jvm_worker_in_master_opts="<string>"  Extra options for the JVM of the COMPSs Worker in the Master Node.
-                                            Each option separed by "," and without blank spaces (Notice the quotes)
+                                            Each option separated by "," and without blank spaces (Notice the quotes)
                                             Default: 
     --container_image=<path>                Runs the application by means of a container engine image
                                             Default: Empty
@@ -218,9 +218,9 @@ Advanced options:
     --master_port=<int>                     Port to run the COMPSs master communications.
                                             Only for NIO adaptor
                                             Default: [43000,44000]
-    --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed by "," and without blank spaces (Notice the quotes)
+    --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separated by "," and without blank spaces (Notice the quotes)
                                             Default: 
-    --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Notice the quotes)
+    --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separated by "," and without blank spaces (Notice the quotes)
                                             Default: -Xms1024m,-Xmx1024m,-Xmn400m
     --cpu_affinity="<string>"               Sets the CPU affinity for the workers
                                             Supported options: disabled, automatic, user defined map of the form "0-8/9,10,11/12-14,15,16"

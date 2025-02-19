@@ -109,7 +109,7 @@ for objects (:numref:`task_example_python_object_simplified`):
 
 .. TIP::
 
-  In order to choose the apropriate direction, a good exercise is to think if
+  In order to choose the appropriate direction, a good exercise is to think if
   the function only consumes the object (``IN``), modifies the object (``INOUT``),
   or produces an object (``OUT``).
 
@@ -293,11 +293,11 @@ In addition to files, it is possible to define that a parameter is a directory
     * - PARAMETER
       - DESCRIPTION
     * - ``DIRECTORY_IN``
-      - The parameter is a directory and the direction is ``IN``. The directory will be compressed before any transfer amongst nodes.
+      - The parameter is a directory and the direction is ``IN``. The directory will be compressed before any transfer among nodes.
     * - ``DIRECTORY_INOUT``
-      - The parameter is a read-write directory. The directory will be compressed before any transfer amongst nodes.
+      - The parameter is a read-write directory. The directory will be compressed before any transfer among nodes.
     * - ``DIRECTORY_OUT``
-      - The parameter is a write-only directory. The directory will be compressed before any transfer amongst nodes.
+      - The parameter is a write-only directory. The directory will be compressed before any transfer among nodes.
 
 
 The definition of a ``DIRECTORY`` parameter is shown in
@@ -340,7 +340,7 @@ sub-objects that will be handled automatically by the runtime.
 It is important to annotate data structures as collections if in other tasks
 there are accesses to individual elements of these collections as parameters.
 Without this annotation, the runtime will not be able to identify data
-dependences between the collections and the individual elements.
+dependencies between the collections and the individual elements.
 
 .. code-block:: python
     :name: task_collection_python
@@ -421,7 +421,7 @@ may contain files that will be handled automatically by the runtime.
 It is important to annotate data structures as collections if in other tasks
 there are accesses to individual elements of these collections as parameters.
 Without this annotation, the runtime will not be able to identify data
-dependences between the collections and the individual elements.
+dependencies between the collections and the individual elements.
 
 .. code-block:: python
     :name: task_collection_file_python
@@ -640,7 +640,7 @@ In addition, the stream parameter can also be defined for binary tasks
 
 :numref:`task_streams_main` shows an example of how streams are used in the main code.
 In this code snippet we can see how the object representing the data stream is
-created how the a producer task is invoqued and how the stream data generated
+created how the a producer task is invoked and how the stream data generated
 at tasks can be poll from the main code.
 
 .. code-block:: python

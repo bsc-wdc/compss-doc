@@ -45,7 +45,7 @@ Create a new COMPSs environment in your development directory
 
    .. group-tab:: Docker
 
-        Creates a docker type evironment and deploy a COMPSs container
+        Creates a docker type environment and deploy a COMPSs container
 
         .. code-block:: console
 
@@ -59,8 +59,8 @@ Create a new COMPSs environment in your development directory
 
             ``docker`` pip package is required for using docker environments in pycompss-cli.
             For Mac users:
-            If command ``pycompss init docker`` is giving this error:  
-                "ERROR: Docker service is not running. Please, start docker service and try again"  
+            If command ``pycompss init docker`` is giving this error:
+                "ERROR: Docker service is not running. Please, start docker service and try again"
             Despite having docker running fine could be caused by pycompss-cli not being able to find docker socket in the default path.
             Open **Docker Desktop** > **Settings** > **In the left panel scroll down to Advanced** > **Enable default Docker socket**
 
@@ -98,7 +98,7 @@ Create a new COMPSs environment in your development directory
 
                 $ pycompss init local -w [WORK_DIR] -m [MODULES ...]
 
-        Creates a local type evironment and initializes COMPSs in the current working dir
+        Creates a local type environment and initializes COMPSs in the current working dir
         or in WORK_DIR if -w is set. The modules to be loaded automatically can be specified with -m.
 
         Initialize the COMPSs infrastructure where your source code will be.
@@ -127,21 +127,21 @@ Create a new COMPSs environment in your development directory
 
             $ pycompss init remote -l [LOGIN] -m [FILE | MODULES ...]
 
-        Creates a remote type evironment with the credentials specified in LOGIN. 
+        Creates a remote type environment with the credentials specified in LOGIN.
         The modules to be loaded automatically can be specified with -m.
 
         Parameter LOGIN is necessary to connect to the remote host and must follow
         standard format i.e. [user]@[hostname]:[port]. ``port`` is optional and defaults to 22 for ssh.
-    
+
         .. code-block:: console
-    
+
             $ pycompss init remote -l username@mn1.bsc.es
             $
-            $ # Or with list of modules 
+            $ # Or with list of modules
             $ pycompss init remote -l username@mn1.bsc.es -m COMPSs/3.0 ANACONDA/5.1.0_py3
 
         .. NOTE::
-            
+
             The SSH access to the remote should be configured to work without password.
             If you need to set up your machine for the first time please take a look
             at :ref:`Sections/01_Installation/05_Additional_configuration:Additional Configuration`
@@ -160,15 +160,15 @@ Create a new COMPSs environment in your development directory
             module load ANACONDA/5.1.0_py3
 
         .. code-block:: console
-    
+
             $ pycompss init remote -l username@mn1.bsc.es -m /path/to/modules.sh
 
 
 Managing environments
 ---------------------
 
-Every time command ``pycompss init`` is executed, a new environment is created but doesn not become the active 
-environment. For that it is mandatory to execute ``pycompss env change [env_name]```.
+Every time command ``pycompss init`` is executed, a new environment is created but does not become the active
+environment. For that it is mandatory to execute ``pycompss env change [env_name]``.
 The subcommands ``pycompss environment`` will help inspecting, removing and switching between the environments.
 
 You can list all the environments created with ``pycompss environment list`` and inspect which one is active,
@@ -179,8 +179,8 @@ the types of each one and the ID.
     $ pycompss environment list
                       ID           Type         Active
         -   5eeb858c2b10         remote            *
-        -        default          local                
-        -  container-b54         docker    
+        -        default          local
+        -  container-b54         docker
 
 The ID of the environments is what you will use to switch between them.
 
@@ -199,7 +199,7 @@ Every environment can also be deleted, except ``default`` environment.
         ERROR: `default` environment is required and cannot be deleted.
 
 Also every remote environment can have multiple applications deployed in remote.
-So if you want to delete the environment all the data associated with them will be aslo deleted.
+So if you want to delete the environment all the data associated with them will be also deleted.
 
 .. code-block:: console
 
@@ -273,9 +273,9 @@ In order to show how to deploy an application, clone the PyCOMPSs' tutorial apps
 
                 $ pycompss app remove matmul
                     Deleting application `matmul`...
-                    
+
         .. CAUTION::
-            
+
                 Removing an applocation will delete the copied app directory and every valuable results generated inside.
 
    .. group-tab:: Remote
@@ -521,7 +521,7 @@ Managing jobs
 Once the job is submitted, it can be inspected using the ``pycompss job list`` command.
 
 
-The command will list all pending/running jobs subbmited in this environment.
+The command will list all pending/running jobs submitted in this environment.
 
 .. code-block:: console
 
@@ -529,12 +529,12 @@ The command will list all pending/running jobs subbmited in this environment.
             SUCCESS
             19152612        - RUNNING       - COMPSs
 
-Every subbmited job that didn't finish yet can be cancelled using the ``pycompss job cancel`` command.
+Every submitted job that didn't finish yet can be canceled using the ``pycompss job cancel`` command.
 
 .. code-block:: console
 
     $ pycompss job cancel 19152612 # JOBID
-        Job `19152612` cancelled
+        Job `19152612` canceled
 
 You can also check the status of a particular job with the ``pycompss job status`` command.
 
@@ -671,7 +671,7 @@ Running Jupyter notebooks
 
         The command will be executed inside the remote directory specified at deployment.
         The path for the selected application will be automatically resolved and the jupyter server
-        will be started and you'll be promted with the URL of the jupyter web page.
+        will be started and you'll be prompted with the URL of the jupyter web page.
 
         .. code-block:: console
 
@@ -816,7 +816,7 @@ the execution command:
 
         Once the application finishes, the graph will be stored into the
         ``.COMPSs\app_name_XX\monitor\complete_graph.dot`` file. This dot file
-        can be converted to pdf for easier visualilzation through the use of the
+        can be converted to pdf for easier visualization through the use of the
         ``gengraph`` parameter:
 
         .. code-block:: console
@@ -837,7 +837,7 @@ the execution command:
 
         Once the application finishes, the graph will be stored into the
         ``~\.COMPSs\app_name_XX\monitor\complete_graph.dot`` file. This dot file
-        can be converted to pdf for easier visualilzation through the use of the
+        can be converted to pdf for easier visualization through the use of the
         ``gengraph`` parameter:
 
         .. code-block:: console
@@ -869,7 +869,7 @@ flag in the execution command:
 If running a notebook, just add the tracing parameter into ``pycompss jupyter`` call.
 
 Once the application finishes, the trace will be stored into the
-``~\.COMPSs\app_name_XX\trace`` folder. It can then be analysed with
+``~\.COMPSs\app_name_XX\trace`` folder. It can then be analyzed with
 Paraver.
 
 
@@ -997,7 +997,7 @@ has the ``ro-crate-metadata.json`` file in its root.
             $ pycompss run --provenance simple.py 1
 
         Once the application finishes, the workflow provenance information will be available
-        at a ``COMPSs_RO-Crate_[uuid]/`` folder. The metadata information can be visualised using:
+        at a ``COMPSs_RO-Crate_[uuid]/`` folder. The metadata information can be visualized using:
 
         .. code-block:: console
 

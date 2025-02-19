@@ -8,7 +8,7 @@ This tool has been implemented on top of the `PyCOMPSs programming model <http:/
 and it is being developed by the `Workflows and Distributed Computing
 group <https://github.com/bsc-wdc>`__ of the `Barcelona Supercomputing
 Center <https://www.bsc.es/>`__, and can be easily downloaded and installed
-from the Pypi repository.
+from the PyPI repository.
 
 .. toctree::
     :maxdepth: 2

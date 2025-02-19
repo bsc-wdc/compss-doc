@@ -18,7 +18,7 @@ Installation
 
 1. Install `pycompss-cli <https://pypi.org/project/pycompss-cli/>`_:
 
-   Since the PyCOMPSs CLI package is available in Pypi, it can be easly installed with ``pip`` as follows:
+   Since the PyCOMPSs CLI package is available in PyPI, it can be easily installed with ``pip`` as follows:
 
    .. code-block:: console
 
@@ -29,7 +29,7 @@ Installation
 
    In order to check that it is correctly installed, check that the
    pycompss-cli executables (``pycompss``, ``compss`` and ``dislib``,
-   which can be used indiferently) are available from your command line.
+   which can be used indifferently) are available from your command line.
 
    .. code-block:: console
 

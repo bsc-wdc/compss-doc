@@ -173,13 +173,13 @@ describe the individuals that wrote the source code of the application. For each
 .. WARNING::
 
     If no ``orcid`` is found online or specified for an Author, they will not be listed as such. Their corresponding
-    Organisation information will only be included if the Organisation's ``ror`` is found online or specified directly
+    Organization information will only be included if the Organization's ``ror`` is found online or specified directly
     in the YAML configuration file.
 
 .. TIP::
 
     It is very important that the ``orcid`` and ``ror`` terms are correctly defined, since they are
-    used as unique identifiers for Persons and Organisations in the RO-Crate specification. The ``orcid`` id is the
+    used as unique identifiers for Persons and Organizations in the RO-Crate specification. The ``orcid`` id is the
     minimum information needed to be able to add a person as an Author.
 
 Agent section

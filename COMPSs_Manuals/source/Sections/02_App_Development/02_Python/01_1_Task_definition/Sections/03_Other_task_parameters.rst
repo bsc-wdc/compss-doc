@@ -59,15 +59,15 @@ main application. The default value for these parameters is False.
     def func2():
         ...
 
-On failure task behaviour
+On failure task behavior
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In case a task fails, the whole application behaviour can be defined
+In case a task fails, the whole application behavior can be defined
 using the *@on_failure* decorator on top of the *@task* decorator
 (:numref:`task_on_failure_python`).
 It has four possible values that can be defined with the **management**
 parameter: **'RETRY'**, **’CANCEL_SUCCESSORS’**, **’FAIL’** and **’IGNORE’**.
-*’RETRY’* is the default behaviour, making the task to be executed again (on
+*’RETRY’* is the default behavior, making the task to be executed again (on
 the same worker or in another worker if the failure remains).
 *’CANCEL_SUCCESSORS’* ignores the failed task and cancels the execution of the
 successor tasks, *’FAIL’* stops the whole execution once a task fails and

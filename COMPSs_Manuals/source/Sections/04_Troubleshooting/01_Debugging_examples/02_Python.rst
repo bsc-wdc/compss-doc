@@ -50,13 +50,13 @@ When executed, it produces the following output:
       File "error_in_main.py", line 11, in main
         result = result + 1  # Try to use result without synchronizing it: Error
     TypeError: unsupported operand type(s) for +: 'Future' and 'int'
-    [ERRMGR]  -  WARNING: Task 1(Action: 1) with name error_in_main.increment has been cancelled.
+    [ERRMGR]  -  WARNING: Task 1(Action: 1) with name error_in_main.increment has been canceled.
     [ERRMGR]  -  WARNING: Task canceled: [[Task id: 1], [Status: CANCELED], [Core id: 0], [Priority: false], [NumNodes: 1], [MustReplicate: false], [MustDistribute: false], [error_in_main.increment(INT_T)]]
     [(3609)    API]  -  Execution Finished
 
     Error running application
 
-It can be identified the complete trackeback pointing where the error is, and
+It can be identified the complete traceback pointing where the error is, and
 the reason. In this example, the reason is
 ``TypeError: unsupported operand type(s) for +: 'Future' and 'int'``
 since we are trying to use an object that has not been synchronized.
@@ -64,7 +64,7 @@ since we are trying to use an object that has not been synchronized.
 .. TIP::
 
     Any exception raised from the main code will appear in the same way,
-    showing the traceback helping to idenftiy the line which produced the
+    showing the traceback helping to identify the line which produced the
     exception and its reason.
 
 
@@ -128,7 +128,7 @@ When executed, it produces the following output:
     Error running application
 
 The output describes that there has been an issue with the task number 1. Since
-the default behaviour of the runtime is to resubmit the failed task, task
+the default behavior of the runtime is to resubmit the failed task, task
 2 also fails.
 
 In this case, the runtime suggests to check the log files of the tasks:

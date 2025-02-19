@@ -3,7 +3,7 @@ Simple
 
 The Simple application is a Python application that increases a counter
 by means of a task. The counter is stored inside a file that is
-transfered to the worker when the task is executed. Next, we provide the
+transferred to the worker when the task is executed. Next, we provide the
 main code and the task declaration:
 
 .. code-block:: python

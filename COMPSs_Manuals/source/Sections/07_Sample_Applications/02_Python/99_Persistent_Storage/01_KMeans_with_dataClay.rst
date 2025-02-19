@@ -1,10 +1,10 @@
-Kmeans with dataClay
+KMeans with dataClay
 --------------------
 
 KMeans is machine-learning algorithm (NP-hard), popularly employed for cluster
 analysis in data mining, and interesting for benchmarking and performance evaluation.
 
-The objective of the Kmeans algorithm to group a set of multidimensional points
+The objective of the KMeans algorithm to group a set of multidimensional points
 into a predefined number of clusters, in which each point belongs to the closest
 cluster (with the nearest mean distance), in an iterative process.
 
@@ -198,7 +198,7 @@ Now we can focus in the main kmeans application (``kmeans.py``):
         parser.add_argument('-i', '--iterations', type=int, default=20,
                             help='Maximum number of iterations')
         parser.add_argument('-e', '--epsilon', type=float, default=1e-9,
-                            help='Epsilon. Kmeans will stop when:' +
+                            help='Epsilon. KMeans will stop when:' +
                                  ' |old - new| < epsilon.')
         parser.add_argument('-a', '--arity', type=int, default=50,
                             help='Arity of the reduction carried out during \
@@ -281,7 +281,7 @@ Now we can focus in the main kmeans application (``kmeans.py``):
         print("-------------- RESULTS ------------------")
         print("-----------------------------------------")
         print("Initialization time: %f" % (initialization_time - start_time))
-        print("Kmeans time: %f" % (kmeans_time - initialization_time))
+        print("KMeans time: %f" % (kmeans_time - initialization_time))
         print("Total time: %f" % (kmeans_time - start_time))
         print("-----------------------------------------")
         centres = compss_wait_on(centres)

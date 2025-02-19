@@ -10,7 +10,7 @@ Basic usage
 ~~~~~~~~~~~
 
 PyCOMPSs’ tasks can be decorated with Numba’s ``@jit``/\ ``@njit`` decorator
-(with the appropiate parameters) just below the @task decorator in order to
+(with the appropriate parameters) just below the @task decorator in order to
 apply Numba to the task.
 
 .. code-block:: python
@@ -31,11 +31,11 @@ to be recompiled in subsequent invocations).
 Advanced usage
 ~~~~~~~~~~~~~~
 
-PyCOMPSs can be also used in conjuntion with the Numba’s
+PyCOMPSs can be also used in conjunction with the Numba’s
 ``@vectorize``, ``@guvectorize``, ``@stencil`` and ``@cfunc``.
 But since these decorators do not preserve the original argument specification
 of the original function, their usage is done through the *numba* parameter
-withih the ``@task`` decorator.
+within the ``@task`` decorator.
 The *numba* parameter accepts:
 
 - **Boolean**:
@@ -115,7 +115,7 @@ Using Numba with GPUs
 
 In addition, Numba is also able to optimize python code for GPUs that can be
 used within PyCOMPSs' tasks. :ref:`numba_gpus` shows an example of a task
-that performsa matrix multiplication in GPU (code from
+that performs a matrix multiplication in GPU (code from
 `Numba documentation <https://numba.pydata.org/numba-doc/dev/cuda/examples.html>`_).
 
 The ``main`` function creates the input and output matrices, and invokes
@@ -123,7 +123,7 @@ the ``do_matmul`` task which has a constraint of one CPU and one GPU. This task
 first transfers the necessary data to the GPU using Numba's ``cuda`` module,
 then invokes the ``matmul`` function (that is decorated with
 the Numba's ``@cuda.jit`). When the execution in the GPU of the
-``matmul`` finishes, the result is transfered to the cpu with
+``matmul`` finishes, the result is transferred to the cpu with
 the ``copy_to_host`` function and the task result is returned.
 
 
@@ -194,7 +194,7 @@ the ``copy_to_host`` function and the task result is returned.
     step to transfer the data to the GPU and backwards needs to be explicitly
     performed by the user.
 
-    For this reason, the appropiate structure is composed by a task that
+    For this reason, the appropriate structure is composed by a task that
     has the necessary constraints, deals with the data movements and invokes
     the function compiled with Numba for GPU.
 

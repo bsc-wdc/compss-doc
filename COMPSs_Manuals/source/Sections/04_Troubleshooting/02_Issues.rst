@@ -140,7 +140,7 @@ All these errors are raised because the ``compss-engine.jar`` is not
 listed in the CLASSPATH. The default COMPSs installation automatically
 inserts this package into the CLASSPATH but it may have been overwritten
 or deleted. Please check that your environment variable CLASSPATH
-containts the ``compss-engine.jar`` location by running the following
+contains the ``compss-engine.jar`` location by running the following
 command:
 
 .. code-block:: console

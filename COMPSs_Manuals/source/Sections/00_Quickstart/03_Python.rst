@@ -131,7 +131,7 @@ COMPSs has extracted and taken advantage of.
 
 .. rubric:: Task dependency graph
 
-COMPSs stores the generated task dependecy graph within the
+COMPSs stores the generated task dependency graph within the
 ``$HOME/.COMPSs/<APP_NAME>_<00-99>/monitor`` directory in dot format. |qpybr|
 The generated graph is ``complete_graph.dot`` file, which can be
 displayed with any dot viewer.
@@ -202,7 +202,7 @@ Let's run it again with the tracing flag enabled:
 
 The execution has finished successfully and the trace has been generated
 in the ``$HOME/.COMPSs/<APP_NAME>_<00-99>/trace`` directory in prv format,
-which can be displayed and analysed with `PARAVER <https://tools.bsc.es/paraver>`_.
+which can be displayed and analyzed with `PARAVER <https://tools.bsc.es/paraver>`_.
 
 .. code-block:: console
 

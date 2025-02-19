@@ -12,7 +12,7 @@ COMPSs Agents are deployed using the **compss_agent_start** command:
     
 There is one mandatory parameter ``--hostname`` that indicates the name that other agents and itself use to refer to the agent. Bear in mind that agents are not able to dynamically modify its classpath; therefore, the ``--classpath`` parameter becomes important to indicate the application available on the agent. Any public method available on the classpath is an execution request candidate. 
 
-The following command raises an agent with name 192.168.1.100 and any of the public methods of the classes encapsulated in the jarfile ``/app/path.jar`` can be executed.
+The following command raises an agent with name 192.168.1.100 and any of the public methods of the classes encapsulated in the jar file ``/app/path.jar`` can be executed.
 
 .. code-block:: console
 
@@ -20,7 +20,7 @@ The following command raises an agent with name 192.168.1.100 and any of the pub
 
 The ``compss_agent_start`` command allows users to set up the COMPSs runtime by specifying different options in the same way as done for the ``runcompss`` command. To indicate the available resources, the device administrator can use the ``--project`` and ``--resources`` option exactly in the same way as for the ``runcompss`` command. For further details on how to dynamically modify the available resources, please, refer to section :ref:`Sections/03_Execution_Environments/03_Deployments/02_Agents/01_Local:Modifying the available resources`. 
 
-Currently, COMPSs agents allow interaction through two interfaces: the Comm interface and the REST interface. The Comm interface leverages on a propietary protocol to submit operations and request updates on the current resource configuration of the agent. Although users and applications can use this interface, its design purpose is to enable high-performance interactions among agents rather than supporting user interaction. The REST interface takes the completely opposed approach; Users should interact with COMPSs agents through it rather than submitting tasks with the Comm interface. The COMPSs agent allows to enact both interfaces at a time; thus, users can manually submit operations using the REST interface, while other agents can use the Comm interface. However, the device owner can decide at deploy time which of the interfaces will be available on the agent and through which port the API will be exposed using the ``rest_port`` and ``comm_port`` options of the ``compss_agent_start`` command. Other agents can be configured to interact with the agent through any of the interfaces. For further details on how to configure the interaction with another agent, please, refer to section :ref:`Sections/03_Execution_Environments/03_Deployments/02_Agents/01_Local:Modifying the available resources`. 
+Currently, COMPSs agents allow interaction through two interfaces: the Comm interface and the REST interface. The Comm interface leverages on a proprietary protocol to submit operations and request updates on the current resource configuration of the agent. Although users and applications can use this interface, its design purpose is to enable high-performance interactions among agents rather than supporting user interaction. The REST interface takes the completely opposed approach; Users should interact with COMPSs agents through it rather than submitting tasks with the Comm interface. The COMPSs agent allows to enact both interfaces at a time; thus, users can manually submit operations using the REST interface, while other agents can use the Comm interface. However, the device owner can decide at deploy time which of the interfaces will be available on the agent and through which port the API will be exposed using the ``rest_port`` and ``comm_port`` options of the ``compss_agent_start`` command. Other agents can be configured to interact with the agent through any of the interfaces. For further details on how to configure the interaction with another agent, please, refer to section :ref:`Sections/03_Execution_Environments/03_Deployments/02_Agents/01_Local:Modifying the available resources`. 
 
 .. code-block:: console
 
@@ -50,7 +50,7 @@ Currently, COMPSs agents allow interaction through two interfaces: the Comm inte
 
         --hostname                              Name with which itself and other agents will identify the agent.
 
-        --jvm_opts="string"                     Extra options for the COMPSs Runtime JVM. Each option separed by "," and without blank spaces (Notice the quotes)
+        --jvm_opts="string"                     Extra options for the COMPSs Runtime JVM. Each option separated by "," and without blank spaces (Notice the quotes)
 
         --library_path=<path>                   Non-standard directories to search for libraries (e.g. Java JVM library, Python library, C binding library)
                                                 Default: Working Directory
@@ -201,7 +201,7 @@ The **compss_agent_add_resources** commands interacts with the REST interface of
 
     compss@bsc.es:~$ compss_agent_add_resources [options] resource_name [<adaptor_property_name=adaptor_property_value>]
 
-By default, the command modifies the resource pool of the agent deployed on the node running the command listenning on port 46101; however, this can be modified by using the options ``--agent_node`` and ``--agent_port`` to indicate the endpoint of the COMPSs Agent. The other options passed in to the command modify the characteristics of the resources to attach; by default, it adds one single CPU core. However, it also allows to modify the amount of GPU cores, FPGAs, memory type and size and OS details. 
+By default, the command modifies the resource pool of the agent deployed on the node running the command listening on port 46101; however, this can be modified by using the options ``--agent_node`` and ``--agent_port`` to indicate the endpoint of the COMPSs Agent. The other options passed in to the command modify the characteristics of the resources to attach; by default, it adds one single CPU core. However, it also allows to modify the amount of GPU cores, FPGAs, memory type and size and OS details. 
 
 .. code-block:: console
 
@@ -312,4 +312,4 @@ Finally, the last command to control the pool of resources configured, ``compss_
 
     compss@bsc.es:~$ compss_agent_lost_resources [options] resource_name 
 
-In this case, the only available options are those used for identifying the endpoint of the agent:``--agent_node`` and ``--agent_port``. As with the previous commands, by default, the request is submitted to the agent deployed on the IP address 127.0.0.1 and listenning on port 46101.
+In this case, the only available options are those used for identifying the endpoint of the agent:``--agent_node`` and ``--agent_port``. As with the previous commands, by default, the request is submitted to the agent deployed on the IP address 127.0.0.1 and listening on port 46101.

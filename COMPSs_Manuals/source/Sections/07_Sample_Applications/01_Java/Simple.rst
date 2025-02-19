@@ -3,7 +3,7 @@ Simple
 
 The Simple application is a Java application that increases a counter by
 means of a task. The counter is stored inside a file that is transferred
-to the worker when the task is executed. Thus, the tasks inferface is
+to the worker when the task is executed. Thus, the tasks interface is
 defined as follows:
 
 .. code-block:: java

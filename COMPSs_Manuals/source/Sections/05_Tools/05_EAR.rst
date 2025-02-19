@@ -75,10 +75,10 @@ Example
 -------
 
 This section illustrates how to measure the power consumption of a sample application
-(:ref:`Sections/07_Sample_Applications/02_Python/03_Kmeans:Kmeans`) in MareNostrum V.
+(:ref:`Sections/07_Sample_Applications/02_Python/03_KMeans:KMeans`) in MareNostrum V.
 
 The first step is to connect to MareNostrum V and create a ``kmeans.py`` file containing the
-the Kmeans application shown in :ref:`Sections/07_Sample_Applications/02_Python/03_Kmeans:Kmeans`
+the KMeans application shown in :ref:`Sections/07_Sample_Applications/02_Python/03_KMeans:KMeans`
 example.
 
 The second step is to create a submission script, for example ``launch_kmeans_ear.sh``.
@@ -228,7 +228,7 @@ script that converts them automatically. For example, in MareNostrum V:
       accumulated_energy.png  ear.gs23r3b48.time.csv        ear.gs23r3b54.time.csv        loops.csv  loops.prv  out_jobs.loops.csv
       average_power.png       ear.gs23r3b48.time.loops.csv  ear.gs23r3b54.time.loops.csv  loops.pcf  loops.row
 
-As a result, the ``loops.prv`` file is created and ready to be analysed.
+As a result, the ``loops.prv`` file is created and ready to be analyzed.
 This trace contains the EAR pre-defined structure and EAR provides a set of
 configuration files for their analysis. These configuration files are also
 available in the COMPSs installation directory:
@@ -247,7 +247,7 @@ Both EAR and Trace
 The most interesting visualization analysis can be performed if we merge
 the generated trace with the EAR trace. Consequently, it is possible to
 visualize the tasks/runtime/communications concurrently with
-the EAR monitoring metrics, and see their behaviour over time.
+the EAR monitoring metrics, and see their behavior over time.
 
 To this end, we provide a tool that does all work in a single command:
 ``compss_gentrace_full`` as an extension of ``compss_gentrace``.
@@ -269,7 +269,7 @@ trace, and finally merges and synchronizes the events.
 
 
 This trace can be analyzed with both EAR cfgs and COMPSs cfgs files in Paraver.
-However, in order to improve the correlation between tasks and energy behaviour,
+However, in order to improve the correlation between tasks and energy behavior,
 we provide specific Paraver cfg files:
 
 .. code-block:: console

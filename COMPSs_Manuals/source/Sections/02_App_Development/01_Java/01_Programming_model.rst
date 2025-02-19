@@ -63,15 +63,15 @@ The following list enumerates the possible task types:
          otherwise. This parameter is used by the COMPSs scheduler (it
          is a String not a Java boolean).
 
-      -  **onFailure** Expected behaviour if the task fails.
+      -  **onFailure** Expected behavior if the task fails.
          *OnFailure.RETRY* (default value) makes the task be executed
          again, *OnFailure.CANCEL_SUCCESSORS* ignores the failure and
-         cancels the succesor tasks, *OnFailure.FAIL* stops the whole
+         cancels the successor tasks, *OnFailure.FAIL* stops the whole
          application in a save mode once a task fails or
          *OnFailure.IGNORE* ignores the failure and continues with
          normal runtime execution.
 
--  **@Binary:** Defines the Java method as a binary invokation
+-  **@Binary:** Defines the Java method as a binary invocation
 
       -  **binary** (Mandatory) String defining the full path of the
          binary that must be executed.
@@ -83,7 +83,7 @@ The following list enumerates the possible task types:
          otherwise. This parameter is used by the COMPSs scheduler (it
          is a String not a Java boolean).
 
--  **@MPI:** Defines the Java method as a MPI invokation
+-  **@MPI:** Defines the Java method as a MPI invocation
 
       -  **mpiRunner** (Mandatory) String defining the mpi runner
          command.
@@ -109,7 +109,7 @@ The following list enumerates the possible task types:
          otherwise. This parameter is used by the COMPSs scheduler (it
          is a String not a Java boolean).
 
--  **@OmpSs:** Defines the Java method as a OmpSs invokation
+-  **@OmpSs:** Defines the Java method as a OmpSs invocation
 
       -  **binary** (Mandatory) String defining the full path of the
          binary that must be executed.
@@ -181,7 +181,7 @@ must include a **@Parameter** annotation. The properties
       COMPSs supports the following types for task parameters:
 
       -  **Basic types:** To indicate a parameter is a Java primitive type
-         use the follwing types: *Type.BOOLEAN, Type.CHAR, Type.BYTE,
+         use the following types: *Type.BOOLEAN, Type.CHAR, Type.BYTE,
          Type.SHORT, Type.INT, Type.LONG, Type.FLOAT, Type.DOUBLE*. They
          can only have **IN** direction, since primitive types in Java
          are always passed by value.
@@ -227,7 +227,7 @@ must include a **@Parameter** annotation. The properties
 
    -  **Weight:** Provides a hint of the size of this parameter compared to
       a default one. For instance, if a parameters is 3 times larger than the
-      others, set the weigh property of this paramenter to 3.0. (Default is 1.0).
+      others, set the weigh property of this parameter to 3.0. (Default is 1.0).
 
    -  **keepRename:** Runtime rename files to avoid some data dependencies.
       It is transparent to the final user because we rename back the filename
@@ -241,7 +241,7 @@ Constraints annotations
 
    -  **@Constraints:** The user can specify the capabilities that a
       resource must have in order to run a method. For example, in a
-      cloud execution the COMPSs runtime creates a VM that fulfils the
+      cloud execution the COMPSs runtime creates a VM that fulfills the
       specified requirements in order to perform the execution. A full
       description of the supported constraints can be found in :numref:`supported_constraints`.
 
@@ -254,13 +254,13 @@ Prolog & Epilog annotations
 
          -  **params**: describe the command line arguments of the binary.
 
-         -  **failByExitValue**: is used to indicate the behaviour when the prolog or epilog
+         -  **failByExitValue**: is used to indicate the behavior when the prolog or epilog
             returns an exit value different than zero. Users can set the ```failByExitValue``` to
             *True*, if they want to consider the exit value as a task failure.
 
    -  **@Epilog:** Defines a binary to be run right after the task execution finishes.
 
-         -  **binary** , **params**, **failByExitValue** with the same behaviours as Prolog.
+         -  **binary** , **params**, **failByExitValue** with the same behaviors as Prolog.
 
 
 Scheduler annotations
@@ -465,7 +465,7 @@ If a task of the group raises a *COMPSsException*, it will be captured by the
 runtime which reacts to it by canceling the running and pending tasks of the
 group and forwarding the COMPSsException to enable the execution
 except clause.
-Consequenty, the *COMPSsException* must be combined with task groups.
+Consequently, the *COMPSsException* must be combined with task groups.
 
 .. code-block:: java
     :name: compss_exception_java
@@ -481,7 +481,7 @@ Consequenty, the *COMPSsException* must be combined with task groups.
         }
     ...
 
-It is possible to use a non-blocking task group for asynchronous behaviour
+It is possible to use a non-blocking task group for asynchronous behavior
 (see :numref:`compss_exception_java_async`).
 In this case, the try/catch can be defined later in the code surrounding
 the *COMPSs.barrierGroup*, enabling to check exception from the defined
@@ -512,7 +512,7 @@ groups without retrieving data while other tasks are being executed.
     }
 
 Finally, users can also programmatically cancel tasks associated to a task group
-using the *COMPSs.cancelGroup* funtion. :numref:`compss_cancel_group_java`
+using the *COMPSs.cancelGroup* function. :numref:`compss_cancel_group_java`
 shows an example of how to use this method.
 
 .. code-block:: java
@@ -531,7 +531,7 @@ shows an example of how to use this method.
 
 .. ATTENTION::
 
-   Method tasks are executed on top of Java threads, to perform a secure cancellation of a running task in a thread when using the time *timeout* property and *COMPSsExceptions, you have to use the *COMPSsWorker.cancellationPoint* method to indicate the points where it is secure to cancel a task. When the task code reaches this method, it will check if the current task must be cancelled and perform a save cancellation, otherwise it will continue with this. An example about how to use the cancellation point is shown in :numref:`cancellation_point_java`
+   Method tasks are executed on top of Java threads, to perform a secure cancellation of a running task in a thread when using the time *timeout* property and *COMPSsExceptions, you have to use the *COMPSsWorker.cancellationPoint* method to indicate the points where it is secure to cancel a task. When the task code reaches this method, it will check if the current task must be canceled and perform a save cancellation, otherwise it will continue with this. An example about how to use the cancellation point is shown in :numref:`cancellation_point_java`
 
    .. code-block:: java
     :name: cancellation_point_java

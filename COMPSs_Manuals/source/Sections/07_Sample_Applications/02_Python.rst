@@ -25,7 +25,7 @@ under the ``/home/compss/tutorial_apps/python/`` folder.
 
     02_Python/01_Simple
     02_Python/02_Increment
-    02_Python/03_Kmeans
+    02_Python/03_KMeans
     02_Python/04_Matmul
     02_Python/05_Lysozyme_in_water
     02_Python/99_Persistent_Storage

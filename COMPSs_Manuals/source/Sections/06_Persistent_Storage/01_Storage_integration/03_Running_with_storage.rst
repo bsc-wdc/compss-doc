@@ -46,20 +46,20 @@ running persistent storage backend are:
 
 --classpath
     ``--classpath=${path_to_storage_interface.jar}`` As with the ``runcompss``
-    command, the JAR with the storage API must be specified. It is usally
+    command, the JAR with the storage API must be specified. It is usually
     available in a environment variable (check the persistent storage framework).
 
 --pythonpath
     If you are running a Python application, also add the
     ``--pythonpath=${path_to_the_storage_api}/python`` flag.
-    It is usally available in a environment variable (check the persistent
+    It is usually available in a environment variable (check the persistent
     storage framework).
 
 --storage-home
     ``--storage-home=${path_to_the_storage_api}`` This must point to
     the root of the storage folder. This folder must contain a ``scripts``
     folder where the scripts to start and stop the persistent framework are.
-    It is usally available in a environment variable (check the persistent
+    It is usually available in a environment variable (check the persistent
     storage framework).
 
 --storage-props

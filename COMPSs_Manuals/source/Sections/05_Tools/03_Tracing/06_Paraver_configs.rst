@@ -109,9 +109,9 @@ to only see the task dependencies are needed to put in Filter > Communications
     +-----------------------------------------+---------------------------------------------------------------------------------------------------------------+----------------+
     | nb_user_code_executing.cfg              | Number of user code executing                                                                                 | Python Binding |
     +-----------------------------------------+---------------------------------------------------------------------------------------------------------------+----------------+
-    | serdes_bw.cfg                           | Serialization and deserializations bandwidth (MB/s)                                                           | Python Binding |
+    | serdes_bw.cfg                           | Serialization and deserialization bandwidth (MB/s)                                                            | Python Binding |
     +-----------------------------------------+---------------------------------------------------------------------------------------------------------------+----------------+
-    | serdes_cache_bw.cfg                     | Serialization and deserializations to cache bandwidth (MB/s)                                                  | Python Binding |
+    | serdes_cache_bw.cfg                     | Serialization and deserialization to cache bandwidth (MB/s)                                                   | Python Binding |
     +-----------------------------------------+---------------------------------------------------------------------------------------------------------------+----------------+
     | serialization_object_number.cfg         | Shows the numbers of the objects that are being serialized                                                    | Python Binding |
     +-----------------------------------------+---------------------------------------------------------------------------------------------------------------+----------------+
@@ -137,11 +137,11 @@ to only see the task dependencies are needed to put in Filter > Communications
     +--------------------------------------------+-----------------------------------------------------------------------------+------------------------+
     | compss_tasksID_transfers.cfg               | Task’s transfers request for each task (task with its IDs are also shown)   | Runtime Communications |
     +--------------------------------------------+-----------------------------------------------------------------------------+------------------------+
-    | process_bandwith.cfg                       | Send/Receive bandwith table for each node                                   | Runtime Communications |
+    | process_bandwidth.cfg                      | Send/Receive bandwidth table for each node                                  | Runtime Communications |
     +--------------------------------------------+-----------------------------------------------------------------------------+------------------------+
-    | receive_bandwith.cfg                       | Receive bandwidth view for each node                                        | Runtime Communications |
+    | receive_bandwidth.cfg                      | Receive bandwidth view for each node                                        | Runtime Communications |
     +--------------------------------------------+-----------------------------------------------------------------------------+------------------------+
-    | send_bandwith.cfg                          | Send bandwidth view for each node                                           | Runtime Communications |
+    | send_bandwidth.cfg                         | Send bandwidth view for each node                                           | Runtime Communications |
     +--------------------------------------------+-----------------------------------------------------------------------------+------------------------+
-    | sr_bandwith.cfg                            | Send/Receive bandwith view for each node                                    | Runtime Communications |
+    | sr_bandwidth.cfg                           | Send/Receive bandwidth view for each node                                   | Runtime Communications |
     +--------------------------------------------+-----------------------------------------------------------------------------+------------------------+

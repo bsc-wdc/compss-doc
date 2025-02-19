@@ -169,7 +169,7 @@ page will contain different versions / executions of the same COMPSs application
 
 - Step 3: Select ``Actions`` -> ``New version``.
     - If your workflow was imported from RO-Crate, select ``Upload/Import Workflow RO-Crate`` to upload workflow provenance.
-    - If you imported the workflow from GitHub, once you have commited your changes / results, select ``Import Git Repository``.
+    - If you imported the workflow from GitHub, once you have committed your changes / results, select ``Import Git Repository``.
       This action will import the latest commit in the repository to WorkflowHub.
 
 Once these steps are finished, the ``Overview`` tab of the workflow will show a new entry at the bottom of the page, in

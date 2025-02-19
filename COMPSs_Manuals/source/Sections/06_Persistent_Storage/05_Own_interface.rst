@@ -134,7 +134,7 @@ Using ``runcompss``
 The first consideration is to deploy the storage framework, and then follow the next
 steps:
 
-#. Create a ``storage_conf.cfg`` file with the configuation required by
+#. Create a ``storage_conf.cfg`` file with the configuration required by
    the ``init`` SRIs functions.
 
 #. Add the flag ``--classpath=${path_to_SRI.jar}`` to the ``runcompss`` command.
@@ -186,7 +186,7 @@ must add the following flags to the ``enqueue_compss`` command:
       VARIABLES_TO_BE_SOURCED
          If environment variables for the Storage framework need to be defined
          COMPSs provides an empty file to be filled by the ``storage_init.sh``
-         script, that will be sourced afterwards. This file is cleaned inmediately
+         script, that will be sourced afterwards. This file is cleaned immediately
          after sourcing it.
 
       STORAGE_CONTAINER_IMAGE

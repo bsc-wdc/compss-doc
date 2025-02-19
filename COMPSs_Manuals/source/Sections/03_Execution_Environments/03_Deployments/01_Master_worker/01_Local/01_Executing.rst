@@ -165,9 +165,9 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
         --master_port=<int>                     Port to run the COMPSs master communications.
                                                 Only for NIO adaptor
                                                 Default: [43000,44000]
-        --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed by "," and without blank spaces (Notice the quotes)
+        --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separated by "," and without blank spaces (Notice the quotes)
                                                 Default: Empty
-        --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Notice the quotes)
+        --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separated by "," and without blank spaces (Notice the quotes)
                                                 Default: -Xms256m,-Xmx1024m,-Xmn100m
         --cpu_affinity="<string>"               Sets the CPU affinity for the workers
                                                 Supported options: disabled, automatic, dlb or user defined map of the form "0-8/9,10,11/12-14,15,16"
@@ -435,7 +435,7 @@ Worker cache
 
 The ``--python_worker_cache`` is used to enable a cache between processes on
 each worker node. More specifically, this flag enables a shared memory space
-between the worker processes, so that they can share objects between processess
+between the worker processes, so that they can share objects between processes
 in order to leverage the deserialization overhead.
 If ``CUPY`` is installed the cache is enabled, the ``cupy.ndarrays`` will also 
 be cacheables in each GPU memory.
@@ -598,7 +598,7 @@ If the time is reached, the execution is stopped.
 
 .. TIP::
 
-    This flag enables to stop the execution of an application in a contolled way
+    This flag enables to stop the execution of an application in a controlled way
     if the execution is taking more than expected.
 
 

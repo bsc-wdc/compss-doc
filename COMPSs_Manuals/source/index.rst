@@ -32,7 +32,7 @@ following **characteristics**:
   characteristics.
 
 - **Single memory and storage space:** the memory and file system space is also
-  abtracted in COMPSs, giving the illusion that a single memory space and single
+  abstracted in COMPSs, giving the illusion that a single memory space and single
   file system is available. The runtime takes care of all the necessary data
   transfers.
 

@@ -139,7 +139,7 @@ features available through the graphical interface:
 -  **Current tasks graph** Shows the tasks dependency graph currently
    stored into the COMPSs Runtime
 
--  **Complete tasks graph** Shows the complete tasks dependecy graph of
+-  **Complete tasks graph** Shows the complete tasks dependency graph of
    the application
 
 -  **Load chart** Shows different dynamic charts representing the

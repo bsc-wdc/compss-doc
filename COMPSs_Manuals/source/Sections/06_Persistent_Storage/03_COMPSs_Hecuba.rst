@@ -67,7 +67,7 @@ This way no data sending or serialization is needed.
 
 The following code shows an example of PyCOMPSs task. The input parameter of
 the task could be an object resulting from splitting a StorageDict
-(``partition`` can be an object intance of ``MyClass`` that can be persistent).
+(``partition`` can be an object instance of ``MyClass`` that can be persistent).
 In this example the return of the task is a Python dictionary.
 
 .. code-block:: python

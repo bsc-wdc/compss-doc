@@ -57,7 +57,7 @@ These files can be displayed with the ``mprof`` tool:
 Advanced profiling
 ------------------
 
-For a more fine grained memory profiling and analysing the **workers** memory
+For a more fine grained memory profiling and analyzing the **workers** memory
 usage, PyCOMPSs provides the ``@profile`` decorator. This decorator is able
 to display the memory usage per line of the code.
 It can be imported from the PyCOMPSs functions module:

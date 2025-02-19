@@ -47,7 +47,7 @@ compss_barrier_group(group_name)
    for more information about task groups.
 
 compss_wait_on(\*obj, mode="r" | "rw")
-   Synchronizes for the last version of object/s specifed by *obj* and returns
+   Synchronizes for the last version of object/s specified by *obj* and returns
    the synchronized object.
    It can have an optional string parameter *mode*, which defaults to
    *rw*, that indicates whether the main program will modify the

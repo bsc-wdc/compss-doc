@@ -66,7 +66,7 @@ are:
     All previous file names (``complete_graph.svg``, ``App_Profile.json`` and ``compss_submission_command_line.txt``)
     are automatically used to generate new files when using the ``-p`` or ``--provenance`` option.
     Avoid using these file names among
-    your own files to avoid unwanted overwritings. You can change the resulting ``App_Profile.json`` name by using
+    your own files to avoid unwanted overwriting. You can change the resulting ``App_Profile.json`` name by using
     the ``--output_profile=/path_to/file`` flag.
 
 .. WARNING::

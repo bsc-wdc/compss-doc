@@ -77,7 +77,7 @@ In this case it is necessary to import ``pyextrae.multiprocessing``.
 
     Please, note that the ``import pyextrae.multiprocessing as pyextrae`` is
     performed within the task. If the user needs to add more events to tasks
-    within the same module (excluding the applicatin main module) and wants to
+    within the same module (excluding the application main module) and wants to
     put this import in the top of the module making ``pyextrae`` available for
     all of them, it is necessary to enable the tracing hook on the tasks that
     emit events:
@@ -106,7 +106,7 @@ The events will appear automatically on the generated trace.
 In order to visualize them, just load the ``user_events.cfg`` configuration file
 in PARAVER.
 
-If a different type value is choosen, take the same ``user_events.cfg`` and go
+If a different type value is chosen, take the same ``user_events.cfg`` and go
 to ``Window Properties -> Filter -> Events`` ``-> Event Type`` and change
 the value labeled *Types* for your custom events type.
 
@@ -159,8 +159,8 @@ generated into the logs folder:
 
     * ``$HOME/.COMPSs/<JOB_ID>/trace`` if using ``enqueue_compss``.
 
-Now it is time to modify the ``.pcf`` file including the folling text at
-the end of the file with your favourite text editor:
+Now it is time to modify the ``.pcf`` file including the following text at
+the end of the file with your favorite text editor:
 
 .. code-block:: text
 

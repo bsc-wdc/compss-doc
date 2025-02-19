@@ -1,10 +1,10 @@
-Kmeans
+KMeans
 ------
 
 KMeans is machine-learning algorithm (NP-hard), popularly employed for cluster
 analysis in data mining, and interesting for benchmarking and performance evaluation.
 
-The objective of the Kmeans algorithm to group a set of multidimensional points
+The objective of the KMeans algorithm to group a set of multidimensional points
 into a predefined number of clusters, in which each point belongs to the closest
 cluster (with the nearest mean distance), in an iterative process.
 
@@ -160,7 +160,7 @@ cluster (with the nearest mean distance), in an iterative process.
             "--epsilon",
             type=float,
             default=1e-9,
-            help="Epsilon. Kmeans will stop when:" + " |old - new| < epsilon.",
+            help="Epsilon. KMeans will stop when:" + " |old - new| < epsilon.",
         )
         parser.add_argument(
             "-a",
@@ -267,7 +267,7 @@ cluster (with the nearest mean distance), in an iterative process.
         print("-------------- RESULTS ------------------")
         print("-----------------------------------------")
         print("Initialization time: %f" % (initialization_time - start_time))
-        print("Kmeans time: %f" % (kmeans_time - initialization_time))
+        print("KMeans time: %f" % (kmeans_time - initialization_time))
         print("Total time: %f" % (kmeans_time - start_time))
         print("-----------------------------------------")
         centres = compss_wait_on(centres)
@@ -283,7 +283,7 @@ cluster (with the nearest mean distance), in an iterative process.
 
 The kmeans application can be executed by invoking the ``runcompss`` command
 with the desired parameters (in this case we use ``-g`` to generate the
-task depedency graph) and application.
+task dependency graph) and application.
 The following lines provide an example of its execution considering 10M points,
 of 3 dimensions, divided into 8 fragments, looking for 8 clusters and a maximum
 number of iterations set to 10.
@@ -317,7 +317,7 @@ number of iterations set to 10.
     -------------- RESULTS ------------------
     -----------------------------------------
     Initialization time: 11.350365
-    Kmeans time: 38.684046
+    KMeans time: 38.684046
     Total time: 50.034411
     -----------------------------------------
     CENTRES:

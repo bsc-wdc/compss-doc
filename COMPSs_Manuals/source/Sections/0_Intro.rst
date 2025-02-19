@@ -28,7 +28,7 @@ following **characteristics**:
   characteristics.
 
 - **Single memory and storage space:** the memory and file system space is also
-  abtracted in COMPSs, giving the illusion that a single memory space and single
+  abstracted in COMPSs, giving the illusion that a single memory space and single
   file system is available. The runtime takes care of all the necessary data
   transfers.
 
@@ -48,7 +48,7 @@ PyCOMPSs/COMPSs can be seen as a **programming environment for the development
 of complex workflows**. For example, in the case of PyCOMPSs, while the
 task-orchestration code needs to be written in Python, it supports different
 types of tasks, such as Python methods, external binaries, multi-threaded
-(internally parallelised with alternative programming models such as OpenMP
+(internally parallelized with alternative programming models such as OpenMP
 or pthreads), or multi-node (MPI applications).
 Thanks to the use of Python as programming language, PyCOMPSs naturally
 integrates well with data analytics and machine learning libraries, most of
@@ -57,15 +57,15 @@ PyCOMPSs also supports reading/writing streamed data.
 
 At a lower level, the COMPSs runtime manages the execution of the workflow
 components implemented with the PyCOMPSs programming model.
-At runtime, it generates a **task-dependency graph** by analysing the existing
+At runtime, it generates a **task-dependency graph** by analyzing the existing
 data dependencies between the tasks defined in the Python code.
 The task-graph **encodes the existing parallelism of the workflow**, which is
 then scheduled and executed by the COMPSs runtime in the computing resources.
 
 The COMPSs runtime is also able to **react to tasks failures and to exceptions**
-in order to adapt the behaviour accordingly.
+in order to adapt the behavior accordingly.
 These functionalities, offer the possibility of designing a **new category of
-workflows with very dynamic behaviour**, that can change their configuration
+workflows with very dynamic behavior**, that can change their configuration
 at execution time upon the occurrence of given events.
 
 -----------------

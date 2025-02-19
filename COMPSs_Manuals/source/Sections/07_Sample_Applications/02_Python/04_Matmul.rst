@@ -139,7 +139,7 @@ The matmul performs the matrix multiplication of two matrices.
 
 The matrix multiplication application can be executed by invoking the
 ``runcompss`` command with the desired parameters (in this case we use ``-g``
-to generate the task depedency graph) and application.
+to generate the task dependency graph) and application.
 The following lines provide an example of its execution considering 4 x 4 Blocks
 of 1024 x 1024 elements each block, which conforms matrices of 4096 x 4096 elements.
 

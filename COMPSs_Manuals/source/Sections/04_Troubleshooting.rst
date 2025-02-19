@@ -5,7 +5,7 @@ Troubleshooting
 This section provides answers for the most common issues of the
 execution of COMPSs applications and its known limitations.
 
-For specific issues not covered inthis section, please do not hesitate to
+For specific issues not covered in this section, please do not hesitate to
 contact us at: support-compss@bsc.es .
 
 
