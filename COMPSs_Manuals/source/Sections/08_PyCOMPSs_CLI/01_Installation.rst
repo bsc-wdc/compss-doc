@@ -9,7 +9,7 @@ Requirements
 Optional Requirements
 ^^^^^^^^^^^^^^^^^^^^^
 
-- `docker <https://www.docker.com>`_ >= 17.12.0-ce
+- `docker <https://www.docker.com>`_
 - `docker package <https://pypi.org/project/docker/>`_ for Python
 
 
@@ -79,7 +79,7 @@ environments.
 
                  $ python3 -m pip install docker
 
-          
+
              .. TIP::
 
                  Some Linux distributions do not include the ``$HOME/.local/bin`` folder
@@ -113,4 +113,4 @@ environments.
 
              .. code:: bash
 
-                 $  conda install -c conda-forge/label/cf201901 docker-py 
+                 $  conda install -c conda-forge/label/cf201901 docker-py

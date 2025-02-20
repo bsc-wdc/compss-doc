@@ -222,11 +222,14 @@ For a remote environment is required to deploy any application before executing 
 
 APP_NAME is required and must be unique.
 SOURCE_DIR and DESTINATION_DIR are optional
-the command copies the application from the current directory or from SOURCE_DIR if --source_dir is set
-to the remote directory specified with DESTINATION_DIR.
-if DESTINATION_DIR is not set, the application will be deployed in ``$HOME/.COMPSsApps``
+the command copies the application from the current directory or from SOURCE_DIR
+if ``--source_dir`` is set to the remote directory specified with
+DESTINATION_DIR.
+If DESTINATION_DIR is not set, the application will be deployed in
+``$HOME/.COMPSsApps``
 
-In order to show how to deploy an application, clone the PyCOMPSs' tutorial apps repository:
+In order to show how to deploy an application, clone the PyCOMPSs' tutorial apps
+repository:
 
 .. code-block:: console
 
@@ -242,7 +245,7 @@ In order to show how to deploy an application, clone the PyCOMPSs' tutorial apps
 
    .. group-tab:: Local
 
-        On ``local`` environment deploying an application wil just copy the ``--source_dir`` directory to another location.
+        On ``local`` environment deploying an application will just copy the ``--source_dir`` directory to another location.
         Let's deploy the matrix multiplication tutorial application.
 
         .. code-block:: console
@@ -276,7 +279,7 @@ In order to show how to deploy an application, clone the PyCOMPSs' tutorial apps
 
         .. CAUTION::
 
-                Removing an applocation will delete the copied app directory and every valuable results generated inside.
+                Removing an application will delete the copied app directory and every valuable results generated inside.
 
    .. group-tab:: Remote
 
@@ -310,7 +313,7 @@ In order to show how to deploy an application, clone the PyCOMPSs' tutorial apps
 
         .. CAUTION::
 
-                Removing an applocation will delete the entire app directory and every valuable results generated inside.
+                Removing an application will delete the entire app directory and every valuable results generated inside.
 
 
 Executing applications
@@ -488,7 +491,7 @@ Executing applications
 
                     $ pycompss job submit -e MYVAR1 --env MYVAR2=foo APPNAME EXECFILE ARGS
 
-                Use the -e, --env_var flags to set simple (non-array) environment variables in the remote environment.
+                Use the `-e`, `--env_var` flags to set simple (non-array) environment variables in the remote environment.
                 Or overwrite variables that are defined in the `init` command of the environment.
 
                 **Submitting Jobs**
@@ -529,7 +532,7 @@ The command will list all pending/running jobs submitted in this environment.
             SUCCESS
             19152612        - RUNNING       - COMPSs
 
-Every submitted job that didn't finish yet can be canceled using the ``pycompss job cancel`` command.
+Every submitted job that has not finished yet can be canceled using the ``pycompss job cancel`` command.
 
 .. code-block:: console
 

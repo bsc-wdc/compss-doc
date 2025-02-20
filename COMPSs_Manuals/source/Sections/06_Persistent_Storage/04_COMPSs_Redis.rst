@@ -59,7 +59,7 @@ Redis Cluster script
 
 Redis needs an additional script to form a cluster from various Redis
 instances. This script is called ``redis-trib.rb`` and can be found in
-the same tar.gz file that contains the sources to compile
+the same ``tar.gz`` file that contains the sources to compile
 ``redis-server`` in ``src/redis-trib.rb``. Two things must be done to
 make this script work:
 

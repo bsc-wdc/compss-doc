@@ -171,14 +171,14 @@ must add the following flags to the ``enqueue_compss`` command:
          The name of the master node considered by COMPSs.
 
       STORAGE_MASTER_NODE
-         The name of the node to be considere the master for the Storage framework.
+         The name of the node to be considered the master for the Storage framework.
 
       WORKER_NODES
          The set of nodes provided by the queuing system that will be considered
          as worker nodes by COMPSs.
 
       NETWORK
-         Network interface (e.g. ib0)
+         Network interface (e.g. ``ib0``)
 
       STORAGE_PROPS
          Storage properties file path (defined as ``enqueue_compss`` flag).
@@ -208,14 +208,14 @@ must add the following flags to the ``enqueue_compss`` command:
          The name of the master node considered by COMPSs.
 
       STORAGE_MASTER_NODE
-         The name of the node to be considere the master for the Storage framework.
+         The name of the node to be considered the master for the Storage framework.
 
       WORKER_NODES
          The set of nodes provided by the queuing system that will be considered
          as worker nodes by COMPSs.
 
       NETWORK
-         Network interface (e.g. ib0)
+         Network interface (e.g. ``ib0``)
 
       STORAGE_PROPS
          Storage properties file path (defined as ``enqueue_compss`` flag).

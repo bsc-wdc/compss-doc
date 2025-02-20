@@ -61,6 +61,7 @@ armhf
 fopen
 Makefile
 ompss
+OmpSs
 openjdk
 jvm
 JVM
@@ -286,3 +287,8 @@ enqueues
 jl
 vm
 dev
+xmlto
+Prerequisites
+enqueued
+conf
+unmount

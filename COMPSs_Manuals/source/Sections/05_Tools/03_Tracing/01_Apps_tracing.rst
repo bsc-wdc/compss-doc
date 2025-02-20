@@ -521,7 +521,7 @@ COMPSs uses the environment variable ``EXTRAE_HOME`` to get the
 reference to its installation directory (by default:
 ``/opt/COMPSs/Dependencies/extrae`` ). However, if the variable is
 already defined once the runtime is started, COMPSs will not override
-it. User can take advantage of this fact in order to use custom extrae
+it. User can take advantage of this fact in order to use custom Extrae
 installations. Just set the ``EXTRAE_HOME`` environment variable to
 the directory where your custom package is, and make sure that it is
 also set for the worker’s environment.
@@ -531,14 +531,14 @@ and executions so you may change it at your own risk.
 Custom Configuration file
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-COMPSs offers the possibility to specify an extrae custom configuration
+COMPSs offers the possibility to specify an Extrae custom configuration
 file in order to harness all the tracing capabilities further tailoring
 which information about the execution is displayed (except for Python workers).
 To do so just indicate the file as an execution parameter as follows:
 
 ``--extrae_config_file=/path/to/config/file.xml``
 
-In addition, there is also the possibility to specify an extrae custom
+In addition, there is also the possibility to specify an Extrae custom
 configuration file for the Python workers as follows:
 
 ``--extrae_config_file_python=/path/to/config/file_python.xml``
@@ -558,7 +558,7 @@ path to that file.
 
 Two aspects that configuration files allow to customize are the directories
 that Extrae will use as working directory and where it leaves the final mpit
-files. By default, COMPSs configures extrae to leave the traces within the
+files. By default, COMPSs configures Extrae to leave the traces within the
 trace sub-directory within the execution log directory. to replicate this
 behavior, custom configuration files can use the ``{{TRACE_OUTPUT_DIR}}``
 term on the temporal-directory and final-directory attributes of the

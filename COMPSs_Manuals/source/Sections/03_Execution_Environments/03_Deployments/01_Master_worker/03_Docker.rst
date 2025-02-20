@@ -1,3 +1,8 @@
+.. spelling:word-list::
+
+   dir
+
+
 Docker
 ======
 
@@ -23,8 +28,8 @@ In order to use COMPSs with Docker, some requirements must be fulfilled:
 -  Have **Docker** and **Docker-Compose** installed in your local
    machine.
 
--  Have an available **Docker Swarm cluster** and its Swarm manager ip
-   and port to access it remotely.
+-  Have an available **Docker Swarm cluster** and its Swarm manager IP
+   and Port to access it remotely.
 
 -  A **Docker Hub account**. Docker Hub is an online repository for Docker
    images. We don’t currently support another sharing method besides
@@ -112,7 +117,7 @@ The **compss_docker_gen_image** script receives 2 parameters:
 .. IMPORTANT::
 
    After creating the image, be sure to write down the absolute
-   context-directory and the absolute classpath (the absolute path to the
+   context-directory and the absolute CLASSPATH (the absolute path to the
    executable jar). You will need it to run the application using
    ``runcompss-docker``. In addition, if you plan on distributing the
    application, you can use the Docker Hub image’s information tab to
@@ -128,7 +133,7 @@ To execute COMPSs in a Docker Swarm cluster, you must use the
 The command ``runcompss-docker`` has some **additional arguments**
 that will be needed by COMPSs to run your application in a distributed
 Docker Swarm cluster environment. The rest of typical arguments
-(classpath for example) will be delegated to runcompss command.
+(CLASSPATH for example) will be delegated to runcompss command.
 
 These additional arguments must go before the typical runcompss
 arguments. The runcompss-docker additional arguments are:
@@ -142,7 +147,7 @@ arguments. The runcompss-docker additional arguments are:
     For example: ``--worker-containers=3``
 
 --s, --swarm-manager
-    Specifies the Swarm manager ip and port (format: ip:port).
+    Specifies the Swarm manager IP and Port (format: IP:Port).
     For example: ``--swarm-manager=’129.114.108.8:4000’``
 
 --i, --image-name
@@ -277,7 +282,7 @@ The first step will be creating the image:
                               --image-name='john123/matmul-example'
 
 Now, we write down the context-dir (``/home/john/matmul``) and the
-classpath (``/home/john/matmul/matmul.jar``). We do this because they will be
+CLASSPATH (``/home/john/matmul/matmul.jar``). We do this because they will be
 needed for future executions.
 Since the image is created and uploaded, we won’t need to do this step
 anymore.
@@ -298,7 +303,7 @@ Take as assumptions:
 
 In addition, we know from the former step that the image name is
 ``john123/matmul-example``, the **context directory** is
-``/home/john/matmul``, and the classpath is
+``/home/john/matmul``, and the CLASSPATH is
 ``/home/john/matmul/matmul.jar``. And this is how you would run
 ``runcompss-docker``:
 

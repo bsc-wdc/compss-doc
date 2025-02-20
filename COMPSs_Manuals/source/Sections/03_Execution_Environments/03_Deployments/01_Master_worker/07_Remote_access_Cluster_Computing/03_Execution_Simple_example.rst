@@ -1,3 +1,8 @@
+.. spelling:word-list::
+
+   env
+   mn
+
 Execution example
 -----------------
 

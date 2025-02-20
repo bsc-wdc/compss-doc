@@ -229,7 +229,7 @@ script that converts them automatically. For example, in MareNostrum V:
       average_power.png       ear.gs23r3b48.time.loops.csv  ear.gs23r3b54.time.loops.csv  loops.pcf  loops.row
 
 As a result, the ``loops.prv`` file is created and ready to be analyzed.
-This trace contains the EAR pre-defined structure and EAR provides a set of
+This trace contains the EAR predefined structure and EAR provides a set of
 configuration files for their analysis. These configuration files are also
 available in the COMPSs installation directory:
 

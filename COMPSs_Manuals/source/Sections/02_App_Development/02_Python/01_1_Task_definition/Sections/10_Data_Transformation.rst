@@ -1,3 +1,7 @@
+.. spelling:word-list::
+
+    dt
+
 Data Transformation
 ~~~~~~~~~~~~~~~~~~~
 
@@ -210,4 +214,3 @@ various parameters:
         # send DT Objects to the task function as input
         result = run_simulation(A, B, dt=[dt_1, dt_2]))
         result = cwo(result)
-

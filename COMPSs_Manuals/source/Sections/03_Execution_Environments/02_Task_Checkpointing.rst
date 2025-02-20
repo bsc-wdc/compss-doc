@@ -1,24 +1,24 @@
 Checkpointing
 =============
 
-COMPSs and PyCOMPSs allow for task-level checkpointing. This feature allows the user to combine different checkpointing mechanisms to save the progress of an application execution (i.e., completed tasks and their output values) to recover it in the case of a failure. This section provides information on how to use the checkpointing recovery system. 
+COMPSs and PyCOMPSs allow for task-level checkpointing. This feature allows the user to combine different checkpointing mechanisms to save the progress of an application execution (i.e., completed tasks and their output values) to recover it in the case of a failure. This section provides information on how to use the checkpointing recovery system.
 
 Application developers can request the COMPSs runtime to checkpoint the application progress with the snapshot method of the API. When this method is invoked, the final version of each data value produced by any task of the application will be checkpointed. Upcoming executions will be able to resume the execution from that point with no additional development effort.
 
 Java example:
-:: 
+::
 
     import es.bsc.compss.api.COMPSs;
 
     COMPSs.snapshot();
 
 Python example:
-:: 
+::
 
     from pycompss.api.api import compss_snapshot
 
     compss_snapshot()
-    
+
 
 In addition, the COMPSs runtime system provides three mechanisms to perform an automatic checkpointing of the application:
 * Periodic checkpointing: periodically saves the application progress in configurable intervals of ``n`` hours, minutes, or seconds.
@@ -30,11 +30,11 @@ To develop checkpointing policies, checkpointing policy developer need to create
 The following snippet shows an example of a checkpoint policy implementation creating groups of N tasks subsequently instantiated.
 
 Checkpoint policy implementation
-:: 
+::
 
     public class CheckpointPolicyInstantiatedGroup extends CheckpointManagerImpl {
 
-        private int currentGroup = 0; 
+        private int currentGroup = 0;
         private int groupSize = 3;
         public CheckpointPolicyInstantiatedGroup(HashMap<String, String> config, AccessProcessor ap) {
             super(config, 0, 0, ap);
@@ -55,11 +55,11 @@ Checkpoint policy implementation
 
 
 
-COMPSs release contains three pre-defined policies, each leveraging on only one of these mechanisms:
+COMPSs release contains three predefined policies, each leveraging on only one of these mechanisms:
 
 .. table:: Checkpointing
     :name: checkpointing description
-    
+
     +-----------------------------------+------------------------------------------------------------------------------------+-------------------------+------------------------------------------+
     | **Policy name**                   | **Class name**                                                                     | **Params**              | **Description**                          |
     +===================================+====================================================================================+=========================+==========================================+
@@ -75,11 +75,11 @@ In order to use checkpointing it is needed to specify three flags in the ``enque
 * ``--checkpoint_params``: This parameter lets you choose the checkpointing span, depending on the policy the user has to choose the corresponding param from the table (in the time case the user has to define the time in either s (seconds), m (minutes) or h (hours), and other options that will be explained later on.
 * ``--checkpoint_folder``: This parameter defines the folder where the checkpoints will be saved.
 
-As an additional feature the user can avoid checkpointing a specific task, that may have a big overhead on the filesystem by passing the list of signature names in the ``checkpoint_params`` flag using the following parameter ``avoid.checkpoint`` 
+As an additional feature the user can avoid checkpointing a specific task, that may have a big overhead on the filesystem by passing the list of signature names in the ``checkpoint_params`` flag using the following parameter ``avoid.checkpoint``
 
 An example of usage would be the following:
 
-:: 
+::
 
     --checkpoint_params=period.time:s,avoid.checkpoint:[checkpoint_file_test.increment] \
     --checkpoint=es.bsc.compss.checkpoint.policies.CheckpointPolicyPeriodicTime \

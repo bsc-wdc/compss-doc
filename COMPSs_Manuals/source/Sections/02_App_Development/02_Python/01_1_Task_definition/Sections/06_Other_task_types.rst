@@ -1,3 +1,7 @@
+.. spelling:word-list::
+
+    io
+
 Other task types
 ~~~~~~~~~~~~~~~~
 
@@ -31,7 +35,7 @@ The following subparagraphs describe their usage.
 Other task types summary
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Next tables summarizes the parameters of these decorators. Please note that 'working_dir' and 'args' ae the only decorator properties that can contain task parameters
+Next tables summarizes the parameters of these decorators. Please note that ``working_dir`` and ``args`` are the only decorator properties that can contain task parameters
 defined in curly braces.
 
 * :ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types/01_Binary_decorator:Binary decorator` (@binary)

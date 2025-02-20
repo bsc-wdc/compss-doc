@@ -8,7 +8,7 @@ COMPSs installation.
 
 However, if the administrators are not willing to install COMPSs through
 the packaging system, we also provide a **COMPSs zipped file**
-containing a pre-build script to easily install COMPSs. Next subsections
+containing a :spelling:ignore:`pre`-build script to easily install COMPSs. Next subsections
 provide further information about this process.
 
 Prerequisites
@@ -88,7 +88,7 @@ Configuration
 -------------
 
 To maintain the portability between different environments, COMPSs has a
-pre-built structure of scripts to execute applications in Supercomputers.
+:spelling:ignore:`pre`-built structure of scripts to execute applications in Supercomputers.
 For this purpose, users must use the ``enqueue_compss`` script provided in the
 COMPSs installation and specify the supercomputer configuration with
 ``--sc_cfg`` flag.
@@ -642,7 +642,7 @@ Users can check the available options by running:
 
 
 
-If none of the pre-build queue configurations adapts to your
+If none of the :spelling:ignore:`pre`-build queue configurations adapts to your
 infrastructure (lsf, pbs, slurm, etc.) please contact the COMPSs team at
 support-compss@bsc.es to find out a solution.
 

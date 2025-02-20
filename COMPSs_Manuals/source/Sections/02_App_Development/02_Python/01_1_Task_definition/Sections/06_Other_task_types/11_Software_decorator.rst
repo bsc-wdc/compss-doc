@@ -71,9 +71,9 @@ And inside the configuration file the type of execution (mpi), and its propertie
     }
 
 
-It is also possible to refer to task parameters from the configuration file. Properties such as `working_dir` and `args` ('args' strings are command
-line arguments to be passed to the 'binary') can contain this kind of references. In this case, the task parameters should be surrounded by curly braces. For example, in the
-following example, 'work_dir' and 'param_d' parameters of the python task are used in the 'working_dir' and 'args' strings respectively. Moreover, epilog and prolog definitions, as well as
+It is also possible to refer to task parameters from the configuration file. Properties such as ``working_dir`` and ``args`` (``args`` strings are command
+line arguments to be passed to the ``binary``) can contain this kind of references. In this case, the task parameters should be surrounded by curly braces. For example, in the
+following example, ``work_dir`` and ``param_d`` parameters of the python task are used in the ``working_dir`` and ``args`` strings respectively. Moreover, epilog and prolog definitions, as well as
 the number of computing units is added as a constraint, to indicate that every MPI process will have this requirement (run with 2 threads):
 
 Task definition:

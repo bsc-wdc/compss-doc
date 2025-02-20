@@ -148,7 +148,7 @@ Install COMPSs
 
       **Requirements (Optional):**
 
-      - `docker <https://www.docker.com>`_ >= 17.12.0-ce
+      - `docker <https://www.docker.com>`_
       - Python 3
       - pip
       - `docker package for Python <https://pypi.org/project/docker/>`_

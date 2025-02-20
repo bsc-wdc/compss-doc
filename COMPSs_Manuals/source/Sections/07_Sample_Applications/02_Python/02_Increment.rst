@@ -133,16 +133,16 @@ Next we provide the main code of this application. The code inside the
 
 As shown in the main code, this application has 4 parameters that stand for:
 
-num_iterations
+``num_iterations``
     Number of times to increase a counter
 
-counter1
+``counter1``
     Initial value for counter 1
 
-counter2
+``counter2``
     Initial value for counter 2
 
-counter3
+``counter3``
     Initial value for counter 3
 
 Next we run the Increment application with the ``-g`` option to be able to
