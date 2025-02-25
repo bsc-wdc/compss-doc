@@ -9,7 +9,7 @@ structure where the user can specify them. By default, a YAML file named ``ro-cr
 working directory (i.e. where the application is going to be run), but a different YAML file can be used by specifying
 it with ``--provenance=my_yaml_file.yaml`` when activating workflow provenance generation.
 The YAML file must follow the next template structure (notice later that only one term is mandatory, some other terms
-are commonly used, and the rest of terms are for special cases):
+are commonly used, and the rest of terms are for special cases only):
 
 .. code-block:: yaml
 
@@ -19,6 +19,7 @@ are commonly used, and the rest of terms are for special cases):
       license: YourLicense-1.0
       sources: [/absolute_path_to/dir_1/, relative_path_to/dir_2/, main_file.py, relative_path/aux_file_1.py, /abs_path/aux_file_2.py]
       data_persistence: False
+      trace_persistence: False
       software:
         - name: Software 1 name
           version: 1.1.1
@@ -69,8 +70,8 @@ COMPSs Workflow Information section
 
 More specifically, in the **COMPSs Workflow Information** section, the most commonly used terms are:
 
-- The ``name`` and ``description`` fields are free text, where a long name and description of
-  the application must be provided.
+- The ``name`` and ``description`` fields are free text, where a long name and long description of
+  the application can be provided.
 
 - ``sources`` can be a single directory or file, or a list of directories or files where application source
   files can be found. The ``sources`` term here is used not only to describe files with source code (typically all
@@ -92,10 +93,16 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
   execution environments. When datasets are too large to be moved around (i.e. hundreds of MB), this field should be set
   to ``False``.
 
+- ``trace_persistence`` value is ``False`` by default. Whenever a Paraver trace is generated when running an experiment
+  (see Section :ref:`Sections/05_Tools/03_Tracing/01_Apps_tracing:Activate Tracing`), the metadata of the resulting trace will be automatically
+  added to the crate. As with datasets, the user can decide if the trace files themselves must be physically added, or
+  include only references to where they can be located. If trace files are included, a directory named ``trace/`` will
+  be available from the root path of the crate.
+
 - ``software`` is used to manually describe the list of software dependencies (i.e. ``softwareRequirements`` in RO-Crate
   specification) this application
   has in order to be executed correctly. If the application requires certain packages / libraries / tools, they should be declared
-  in this section. With this information recorded, metadata consumers will be able to react and install automatically
+  in this section. With this information recorded, metadata consumers will be able to react and install / load automatically
   these dependencies whenever a re-execution of the application is intended.
 
       - ``name`` is the full name of the external software used.
@@ -103,7 +110,7 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
         This should commonly include the output of ``tool --version`` command.
       - ``url`` where the software can be found.
 
-From all these terms, only ``name`` is  mandatory, since the rest are not strictly required to generate workflow provenance with COMPSs.
+From all these terms described, only ``name`` is  mandatory, since the rest are not strictly required to generate workflow provenance with COMPSs.
 However, it is important to include as much information as possible in order to correctly share your application and
 results. Besides, missing information can lead to reduced features when using workflow provenance (e.g. if no ``Authors``
 are specified, WorkflowHub will not allow to generate a DOI for the workflow execution).
@@ -163,41 +170,6 @@ describe the individuals that wrote the source code of the application. For each
 - ``ror`` refers to the Research Organization Registry (ROR) identifier for an institution.
   They can be found at http://ror.org/
 
-.. TIP::
-
-    If the machine where workflow provenance is generated has internet connectivity, the generation script will search
-    online for the rest of details of an Author (including details on its institution and e-mail, if available) by only
-    providing the ``name`` or the ``orcid`` of the Author. The information not found online (either because the machine
-    does not have connectivity, or because it is not available) can be manually added. An example follows.
-
-.. code-block:: yaml
-
-    COMPSs Workflow Information:
-      name: COMPSs Matrix Multiplication, out-of-core using files
-      description: Hypermatrix size 2x2 blocks, block size 2x2 elements
-      license: Apache-2.0
-      sources: [matmul_directory.py, matmul_tasks.py]
-      data_persistence: True
-
-    Authors:
-      - name: Raül Sirvent
-        e-mail: Raul.Sirvent@bsc.es
-      - name: Nicolò Giacomini
-      - name: Fernando Vazquez Novoa
-        organisation_name: Barcelona Supercomputing Center
-      - name: Cristian Cătălin Tatu
-      - orcid: https://orcid.org/0000-0001-6401-6229
-      - orcid: https://orcid.org/0000-0001-5081-7244
-        organisation_name: Barcelona Supercomputing Center
-      - name: Francesc Lordan
-        ror: https://ror.org/05sd8tv96
-      - name: Rocío Carratalá-Sáez
-
-    Agent:
-      name: Rosa M Badia
-      e-mail: Rosa.M.Badia@upc.edu
-      ror: https://ror.org/03mb6wj31
-
 .. WARNING::
 
     If no ``orcid`` is found online or specified for an Author, they will not be listed as such. Their corresponding
@@ -221,6 +193,172 @@ individual can be provided.
 
     If no Agent section is provided, the first Author will be considered by default as the agent executing the
     workflow.
+
+Automatic search of Authors and Agent
+=====================================
+
+When applications have a large list of authors, having to search for all the details of each one of them can be a
+tedious task. For such cases, we have implemented an automatic search of details of **Authors** and **Agent** through the
+ORCID and ROR public APIs. The main requirement of this feature is that the machine from which you run the experiment
+must have the possibility of opening external connections (i.e. this can be an issue at some clusters, that restrict
+their outbound communications for security reasons).
+
+The following example shows that at least the ``name`` or ``orcid`` of the person needs to be provided so the search
+can be triggered and the missing pieces of information will be looked for. Any extra information provided by the user
+will override the information found online, as will be shown in the following example.
+
+.. code-block:: yaml
+
+    COMPSs Workflow Information:
+      name: COMPSs Matrix Multiplication, out-of-core using files
+      description: Hypermatrix size 2x2 blocks, block size 2x2 elements
+      license: CC-BY-NC-ND-4.0
+      sources: [matmul_files.py, matmul_tasks.py]
+
+    Authors:
+      - name: Raül Sirvent
+        e-mail: Raul.Sirvent@bsc.es
+        organisation_name: Universitat Politècnica de Catalunya
+      - name: Nicolò Giacomini
+      - name: Fernando Vázquez Novoa
+        organisation_name: Barcelona Supercomputing Center
+      - name: Cristian Cătălin Tatu
+      - orcid: https://orcid.org/0000-0001-5081-7244
+        organisation_name: Barcelona Supercomputing Center
+      - orcid: https://orcid.org/0000-0001-6401-6229
+        ror: https://ror.org/05r78ng12
+      - name: Francesc Lordan
+        ror: https://ror.org/05sd8tv96
+
+    Agent:
+      name: Rosa M Badia
+      e-mail: Rosa.M.Badia@upc.edu
+      ror: https://ror.org/03mb6wj31
+
+Analysing the example, we can see that at least the ``name`` or the ``orcid`` is provided in all the cases. Besides,
+we can complete or override any details found online. For ``Raül Sirvent``, the automatic search will return ``Barcelona
+Supercomputing Center`` as organisation, but since the term ``organisation_name`` is specified, it overrides the search
+result with ``Universitat Politècnica de Catalunya``. For ``Francesc Lordan`` we override his organisation using the ROR.
+Finally, in ``Raül Sirvent`` and ``Rosa M Badia`` we complete the ``e-mail`` information, that cannot be obtained online.
+
+The provenance generation will print in the standard output the searches, and the results of each search, as shown in
+the following lines:
+
+.. code-block:: console
+
+    PROVENANCE | STARTING RO-CRATE GENERATION SCRIPT
+    PROVENANCE | PERSON 'Raül Sirvent': Searching ORCID, Organisation and e-Mail
+    PROVENANCE | Fetched data. Given name(s): Raül, Family name(s): Sirvent, ORCID: https://orcid.org/0000-0003-0606-2512, Organisation: Barcelona Supercomputing Center, e-Mail: None
+    PROVENANCE | ORGANISATION 'Universitat Politècnica de Catalunya': Searching ROR and URL
+    PROVENANCE | Fetched data. Organisation: Universitat Politècnica de Catalunya, ROR: https://ror.org/03mb6wj31, URL: https://www.upc.edu
+    PROVENANCE | PERSON 'Nicolò Giacomini': Searching ORCID, Organisation and e-Mail
+    PROVENANCE | Fetched data. Given name(s): Nicolò, Family name(s): Giacomini, ORCID: https://orcid.org/0009-0005-2797-8177, Organisation: Barcelona Supercomputing Center, e-Mail: None
+    PROVENANCE | ORGANISATION 'Barcelona Supercomputing Center': Searching ROR and URL
+    PROVENANCE | Fetched data. Organisation: Barcelona Supercomputing Center, ROR: https://ror.org/05sd8tv96, URL: https://www.bsc.es/
+    PROVENANCE | PERSON 'Fernando Vázquez Novoa': Searching ORCID, Organisation and e-Mail
+    PROVENANCE | Fetched data. Given name(s): Fernando, Family name(s): Vázquez Novoa, ORCID: https://orcid.org/0000-0001-5634-509X, Organisation: None, e-Mail: None
+    PROVENANCE | ORGANISATION 'Barcelona Supercomputing Center': Searching ROR and URL
+    PROVENANCE | Fetched data. Organisation: Barcelona Supercomputing Center, ROR: https://ror.org/05sd8tv96, URL: https://www.bsc.es/
+    PROVENANCE | PERSON 'Cristian Cătălin Tatu': Searching ORCID, Organisation and e-Mail
+    PROVENANCE | Fetched data. Given name(s): Cristian Cătălin, Family name(s): Tatu, ORCID: https://orcid.org/0009-0003-8848-9436, Organisation: Barcelona Supercomputing Center, e-Mail: None
+    PROVENANCE | ORGANISATION 'Barcelona Supercomputing Center': Searching ROR and URL
+    PROVENANCE | Fetched data. Organisation: Barcelona Supercomputing Center, ROR: https://ror.org/05sd8tv96, URL: https://www.bsc.es/
+    PROVENANCE | PERSON 'https://orcid.org/0000-0001-5081-7244': Searching Name, Organisation and e-Mail
+    PROVENANCE | Fetched data. Given name(s): Daniele, Family name(s): Lezzi, Organisation: Barcelona Global, e-Mail: None
+    PROVENANCE | ORGANISATION 'Barcelona Supercomputing Center': Searching ROR and URL
+    PROVENANCE | Fetched data. Organisation: Barcelona Supercomputing Center, ROR: https://ror.org/05sd8tv96, URL: https://www.bsc.es/
+    PROVENANCE | PERSON 'https://orcid.org/0000-0001-6401-6229': Searching Name, Organisation and e-Mail
+    PROVENANCE | Fetched data. Given name(s): Javier, Family name(s): Conejero, Organisation: Barcelona Supercomputing Center, e-Mail: francisco.conejero@bsc.es
+    PROVENANCE | ORGANISATION 'https://ror.org/05r78ng12': Searching for Name and URL
+    PROVENANCE | Fetched data. Organisation: University of Castilla-La Mancha, ROR: https://ror.org/05r78ng12, URL: https://www.uclm.es
+    PROVENANCE | PERSON 'Francesc Lordan': Searching ORCID, Organisation and e-Mail
+    PROVENANCE | Fetched data. Given name(s): Francesc, Family name(s): Lordan, ORCID: https://orcid.org/0000-0002-9845-8890, Organisation: Universitat Politècnica de Catalunya, e-Mail: francesc.lordan@bsc.es
+    PROVENANCE | ORGANISATION 'https://ror.org/05sd8tv96': Searching for Name and URL
+    PROVENANCE | Fetched data. Organisation: Barcelona Supercomputing Center, ROR: https://ror.org/05sd8tv96, URL: https://www.bsc.es/
+    ...
+    PROVENANCE | PERSON 'Rosa M Badia': Searching ORCID, Organisation and e-Mail
+    PROVENANCE | Fetched data. Given name(s): Rosa M, Family name(s): Badia, ORCID: https://orcid.org/0000-0003-2941-5499, Organisation: Barcelona Supercomputing Center, e-Mail: None
+    PROVENANCE | ORGANISATION 'https://ror.org/03mb6wj31': Searching for Name and URL
+    PROVENANCE | Fetched data. Organisation: Universitat Politècnica de Catalunya, ROR: https://ror.org/03mb6wj31, URL: https://www.upc.edu
+
+When the search is successful, and some update happens in any of the persons referenced (i.e. when a non-existing field
+is added), a new ``GENERATED_[your_YAML].yaml`` file is produced. This newly generated file can be used in future runs
+of the experiment, either to avoid searching again for all the details of the Authors and Agent, or because the
+machine does not have outbound connectivity, so all details need to be added in advance. An example of an automatically
+generated file follows:
+
+.. code-block:: yaml
+
+    Agent:
+      Updated: true
+      e-mail: Rosa.M.Badia@upc.edu
+      familyName: Badia
+      givenName: Rosa M
+      name: Rosa M Badia
+      orcid: https://orcid.org/0000-0003-2941-5499
+      organisation_name: "Universitat Polit\xE8cnica de Catalunya"
+      ror: https://ror.org/03mb6wj31
+    Authors:
+    - Updated: true
+      e-mail: Raul.Sirvent@bsc.es
+      familyName: Sirvent
+      givenName: "Ra\xFCl"
+      name: "Ra\xFCl Sirvent"
+      orcid: https://orcid.org/0000-0003-0606-2512
+      organisation_name: "Universitat Polit\xE8cnica de Catalunya"
+      ror: https://ror.org/03mb6wj31
+    - Updated: true
+      familyName: Giacomini
+      givenName: "Nicol\xF2"
+      name: "Nicol\xF2 Giacomini"
+      orcid: https://orcid.org/0009-0005-2797-8177
+      organisation_name: Barcelona Supercomputing Center
+      ror: https://ror.org/05sd8tv96
+    - Updated: true
+      familyName: "V\xE1zquez Novoa"
+      givenName: Fernando
+      name: "Fernando V\xE1zquez Novoa"
+      orcid: https://orcid.org/0000-0001-5634-509X
+      organisation_name: Barcelona Supercomputing Center
+      ror: https://ror.org/05sd8tv96
+    - Updated: true
+      familyName: Tatu
+      givenName: "Cristian C\u0103t\u0103lin"
+      name: "Cristian C\u0103t\u0103lin Tatu"
+      orcid: https://orcid.org/0009-0003-8848-9436
+      organisation_name: Barcelona Supercomputing Center
+      ror: https://ror.org/05sd8tv96
+    - Updated: true
+      familyName: Lezzi
+      givenName: Daniele
+      name: Daniele Lezzi
+      orcid: https://orcid.org/0000-0001-5081-7244
+      organisation_name: Barcelona Supercomputing Center
+      ror: https://ror.org/05sd8tv96
+    - Updated: true
+      e-mail: francisco.conejero@bsc.es
+      familyName: Conejero
+      givenName: Javier
+      name: Javier Conejero
+      orcid: https://orcid.org/0000-0001-6401-6229
+      organisation_name: University of Castilla-La Mancha
+      ror: https://ror.org/05r78ng12
+    - Updated: true
+      e-mail: francesc.lordan@bsc.es
+      familyName: Lordan
+      givenName: Francesc
+      name: Francesc Lordan
+      orcid: https://orcid.org/0000-0002-9845-8890
+      organisation_name: Barcelona Supercomputing Center
+      ror: https://ror.org/05sd8tv96
+    COMPSs Workflow Information:
+      data_persistence: true
+      description: Hypermatrix size 2x2 blocks, block size 2x2 elements
+      license: CC-BY-NC-ND-4.0
+      name: COMPSs Matrix Multiplication, out-of-core using files
+      sources:
+      - matmul_files.py
+      - matmul_tasks.py
 
 Examples
 ========
@@ -255,7 +393,8 @@ Also, another example of a COMPSs Java K-means application, where the usage of `
 We add to the crate the sub-directories that contain the ``.jar`` and ``.java`` files. In this case,
 an ``Agent`` is provided which is different from the person that wrote the application. The term ``data_persistence``
 has been explicitly specified, but since the default value is ``False`` if not specified, it could be removed and still
-obtain the same result.
+obtain the same result. Finally, the ``trace_persistence`` term is set to True, indicating that, if traces are generated
+when running this experiment, they will be included in the crate.
 
 .. code-block:: yaml
 
@@ -267,6 +406,7 @@ obtain the same result.
       license: https://opensource.org/licenses/Apache-2.0
       sources: [jar/, src/]
       data_persistence: False
+      trace_persistence: True
 
     Authors:
       name: Raül Sirvent
