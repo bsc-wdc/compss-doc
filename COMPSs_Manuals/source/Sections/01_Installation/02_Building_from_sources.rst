@@ -53,7 +53,7 @@ Finally you just need to run the installation script. You have two options:
         .. code-block:: console
 
             $ compss> cd builders/
-            $ builders> INSTALL_DIR=$HOME/opt/COMPSs/
+            $ builders> export INSTALL_DIR=$HOME/opt/COMPSs/
             $ builders> ./buildlocal -X -S --skip-tests ${INSTALL_DIR}
 
 .. WARNING::
