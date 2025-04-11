@@ -22,7 +22,7 @@ correct installation and environment of the following software:
 
 -  BOOST
 
--  Java 8 JRE
+-  Java 11 JRE
 
 The following environment variables must be defined:
 

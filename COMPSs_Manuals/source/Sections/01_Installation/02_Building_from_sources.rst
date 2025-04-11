@@ -11,11 +11,11 @@ The first step is downloading the source code from the Git repository and select
     $ cd compss
     $ git checkout <version>
 
-Then, you need to download the embedded dependencies from the git submodules:
+Then, you need to download the embedded dependencies from the git submodules (from the ``compss/`` folder):
 
 .. code-block:: console
 
-    compss/ $ ./submodules_get.sh
+    $ ./submodules_get.sh
 
 .. WARNING::
 
@@ -23,10 +23,11 @@ Then, you need to download the embedded dependencies from the git submodules:
 
         .. code-block:: console
 
-            $ alias readlink=/usr/local/bin/greadlink
+            $ alias readlink=/opt/homebrew/bin/greadlink
             $ export LIBTOOL=`which glibtool`
             $ export LIBTOOLIZE=`which glibtoolize`
-            $ export JAVA_HOME=/usr/local/cellar/openjdk@8/1.8.0+282/libexec/openjdk.jdk/Contents/Home
+            $ export JAVA_HOME=/opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk/Contents/Home
+
 
 Finally you just need to run the installation script. You have two options:
 
@@ -34,13 +35,13 @@ Finally you just need to run the installation script. You have two options:
 
     .. tab:: For all users
 
-        For installing COMPSs for all users run the following commands:
+        For installing COMPSs for all users run the following commands (from the ``compss/`` folder):
 
         .. code-block:: console
 
-            compss/ $ cd builders/
-            builders/ $ export INSTALL_DIR=/opt/COMPSs/
-            builders/ $ sudo -E ./buildlocal -X -S --skip-tests ${INSTALL_DIR}
+            $ cd builders/
+            $ export INSTALL_DIR=/opt/COMPSs/
+            $ sudo -E ./buildlocal -X -S --skip-tests ${INSTALL_DIR}
 
         .. ATTENTION::
 
@@ -48,13 +49,13 @@ Finally you just need to run the installation script. You have two options:
 
     .. tab:: For the current user
 
-        For installing COMPSs for the current user run the following commands:
+        For installing COMPSs for the current user run the following commands (from the ``compss/`` folder):
 
         .. code-block:: console
 
-            compss/ $ cd builders/
-            builders/ $ export INSTALL_DIR=$HOME/opt/COMPSs/
-            builders/ $ ./buildlocal -X -S --skip-tests ${INSTALL_DIR}
+            $ cd builders/
+            $ export INSTALL_DIR=$HOME/opt/COMPSs/
+            $ ./buildlocal -X -S --skip-tests ${INSTALL_DIR}
 
 .. WARNING::
 
@@ -69,8 +70,8 @@ Finally you just need to run the installation script. You have two options:
 
     .. code-block:: console
 
-        compss/ $ cd builders/
-        builders/ $ ./buildlocal -h
+        $ cd builders/
+        $ ./buildlocal -h
 
           Usage: ./buildlocal [options] targetDir
           * Options:
@@ -143,21 +144,21 @@ Finally you just need to run the installation script. You have two options:
 
         The Python unit tests, PyCOMPSs compilation and Python style check require extra
         dependencies that can be installed automatically for each purpose by running the following scripts
-        (add sudo before the scripts if you want them to be installed system wide):
+        (add sudo before the scripts if you want them to be installed system wide). From the ``builders/`` folder:
 
         .. code-block:: console
 
-            builders/ $ ../compss/programming_model/bindings/python/scripts/./install_testing_deps.sh
-            builders/ $ ../compss/programming_model/bindings/python/scripts/./install_compilation_deps.sh
-            builders/ $ ../compss/programming_model/bindings/python/scripts/./install_style_deps.sh
+            $ ../compss/programming_model/bindings/python/scripts/./install_testing_deps.sh
+            $ ../compss/programming_model/bindings/python/scripts/./install_compilation_deps.sh
+            $ ../compss/programming_model/bindings/python/scripts/./install_style_deps.sh
 
 
         .. CAUTION::
 
             The ``mpi4py`` package requires to have the MPI header/development package available,
-            which has to be installed with the OS package manager.
+            which has to be installed with the OS package manager. From the ``compss/`` folder:
 
-            compss/ $ sudo apt-get install libopenmpi-dev  # Adapt for your OS package manager
+            $ sudo apt-get install libopenmpi-dev  # Adapt for your OS package manager
 
 
 Post installation
