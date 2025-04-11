@@ -452,3 +452,14 @@ These packages can be found in PyPI and can be installed via ``pip``.
 Since it is possible to execute python applications using workers spawning
 MPI processes instead of multiprocessing, it is necessary to have ``openmpi``,
 ``openmpi-devel`` and ``openmpi-libs`` system packages installed and ``mpi4py`` with pip.
+
+.. CAUTION::
+
+    The ``mpi4py`` package requires to have the MPI header/development package available,
+    which has to be installed with the OS package manager. From the ``compss/`` folder:
+
+    .. code-block:: console
+
+        $ sudo apt-get install libopenmpi-dev  # Adapt for your OS package manager
+
+        
