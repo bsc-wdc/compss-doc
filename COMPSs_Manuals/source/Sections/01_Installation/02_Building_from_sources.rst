@@ -15,7 +15,7 @@ Then, you need to download the embedded dependencies from the git submodules:
 
 .. code-block:: console
 
-    $ compss> ./submodules_get.sh
+    compss/ $ ./submodules_get.sh
 
 .. WARNING::
 
@@ -38,9 +38,9 @@ Finally you just need to run the installation script. You have two options:
 
         .. code-block:: console
 
-            $ compss> cd builders/
-            $ builders> export INSTALL_DIR=/opt/COMPSs/
-            $ builders> sudo -E ./buildlocal -X -S --skip-tests ${INSTALL_DIR}
+            compss/ $ cd builders/
+            builders/ $ export INSTALL_DIR=/opt/COMPSs/
+            builders/ $ sudo -E ./buildlocal -X -S --skip-tests ${INSTALL_DIR}
 
         .. ATTENTION::
 
@@ -52,9 +52,9 @@ Finally you just need to run the installation script. You have two options:
 
         .. code-block:: console
 
-            $ compss> cd builders/
-            $ builders> export INSTALL_DIR=$HOME/opt/COMPSs/
-            $ builders> ./buildlocal -X -S --skip-tests ${INSTALL_DIR}
+            compss/ $ cd builders/
+            builders/ $ export INSTALL_DIR=$HOME/opt/COMPSs/
+            builders/ $ ./buildlocal -X -S --skip-tests ${INSTALL_DIR}
 
 .. WARNING::
 
@@ -69,8 +69,8 @@ Finally you just need to run the installation script. You have two options:
 
     .. code-block:: console
 
-        $ compss> cd builders/
-        $ builders> ./buildlocal -h
+        compss/ $ cd builders/
+        builders/ $ ./buildlocal -h
 
           Usage: ./buildlocal [options] targetDir
           * Options:
@@ -147,9 +147,9 @@ Finally you just need to run the installation script. You have two options:
 
         .. code-block:: console
 
-            $ builders> ../compss/programming_model/bindings/python/scripts/./install_testing_deps.sh
-            $ builders> ../compss/programming_model/bindings/python/scripts/./install_compilation_deps.sh
-            $ builders> ../compss/programming_model/bindings/python/scripts/./install_style_deps.sh
+            builders/ $ ../compss/programming_model/bindings/python/scripts/./install_testing_deps.sh
+            builders/ $ ../compss/programming_model/bindings/python/scripts/./install_compilation_deps.sh
+            builders/ $ ../compss/programming_model/bindings/python/scripts/./install_style_deps.sh
 
 
         .. CAUTION::
@@ -157,7 +157,7 @@ Finally you just need to run the installation script. You have two options:
             The ``mpi4py`` package requires to have the MPI header/development package available,
             which has to be installed with the OS package manager.
 
-            $ compss> sudo apt-get install libopenmpi-dev  # Adapt for your OS package manager
+            compss/ $ sudo apt-get install libopenmpi-dev  # Adapt for your OS package manager
 
 
 Post installation
