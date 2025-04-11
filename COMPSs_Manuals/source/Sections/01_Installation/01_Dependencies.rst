@@ -369,26 +369,37 @@ As an example for some distributions and versions:
 
     .. tabs::
 
-      .. tab:: Sonoma 14.6
+      .. tab:: Sequoia 15.4
 
-        **macOS Sonoma** dependencies installation commands:
+        **macOS Sequoia** dependencies installation commands:
 
         Although many packages can be installed with Homebrew, some of them will have to be installed manually
         from their source files. It is also important to mention that, some package names may be slightly different
         in Homebrew, compared to Linux distributions, thus, some previous search for equivalences may be required.
-        Our tested installation sequence was:
+        Our tested installation sequence was as follows. Please install each package INDIVIDUALLY, since some can 
+        have post-installation instructions that require adding environment variables to your shell profile.
 
         .. code-block:: console
 
-            $ brew install openjdk@11 graphviz libxslt xmlto libtool automake coreutils util-linux boost gradle
-            $ sudo ln -sfn /usr/local/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
+            $ brew install openjdk@11
+            $ sudo ln -sfn /opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
+            $ brew install graphviz
+            $ brew install libxslt
+            $ brew install xmlto
+            $ brew install libtool
+            $ brew install automake
+            $ brew install coreutils
+            $ brew install util-linux
+            $ brew install boost
+            $ brew install gradle
+            
 
-        And xdg-utils had to be installed by hand (after installing libxslt and xmlto):
+        The packabe xdg-utils has to be installed by hand (after installing libxslt and xmlto):
 
         .. code-block:: console
 
             $ export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
-            $ git clone git://anongit.freedesktop.org/xdg/xdg-utils
+            $ git clone https://gitlab.freedesktop.org/xdg/xdg-utils.git
             $ cd xdg-utils
             $ ./configure --prefix=/usr/local
             $ make ; make install
