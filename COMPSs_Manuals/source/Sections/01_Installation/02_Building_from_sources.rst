@@ -153,14 +153,6 @@ Finally you just need to run the installation script. You have two options:
             $ ../compss/programming_model/bindings/python/scripts/./install_style_deps.sh
 
 
-        .. CAUTION::
-
-            The ``mpi4py`` package requires to have the MPI header/development package available,
-            which has to be installed with the OS package manager. From the ``compss/`` folder:
-
-            $ sudo apt-get install libopenmpi-dev  # Adapt for your OS package manager
-
-
 Post installation
 -----------------
 
