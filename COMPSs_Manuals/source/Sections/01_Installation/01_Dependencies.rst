@@ -13,9 +13,9 @@ section at your package manager (apt, yum, zypper, etc.).
     +-------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
     | Module                  | Dependencies                                                                                                                                 |
     +=========================+==============================================================================================================================================+
-    | **COMPSs Runtime**      | **openjdk-8-jre, graphviz, xdg-utils, openssh-server**                                                                                       |
+    | **COMPSs Runtime**      | **openjdk-11-jre, graphviz, xdg-utils, openssh-server**                                                                                       |
     +-------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
-    | COMPSs Python Binding   | libtool, automake, build-essential, python (>=3.6), python3-dev, python3-setuptools                                                          |
+    | COMPSs Python Binding   | libtool, automake, build-essential, python (>=3.7), python3-dev, python3-setuptools                                                          |
     +-------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
     | COMPSs C/C++ Binding    | libtool, automake, build-essential, libboost-all-dev, libxml2-dev                                                                            |
     +-------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
@@ -42,7 +42,7 @@ As an example for some distributions and versions:
 
         .. code-block:: console
 
-            $ sudo apt-get install -y openjdk-8-jdk graphviz xdg-utils libtool automake build-essential pkgconf python3 python3-dev libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran libgmp3-dev flex bison texinfo python3-pip libpapi-dev
+            $ sudo apt-get install -y openjdk-11-jdk graphviz xdg-utils libtool automake build-essential pkgconf python3 python3-dev libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran libgmp3-dev flex bison texinfo python3-pip libpapi-dev
             $ sudo wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip
             $ sudo unzip /opt/gradle-8.7-bin.zip -d /opt
 
@@ -56,8 +56,8 @@ As an example for some distributions and versions:
 
             .. code-block:: console
 
-                $ echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/' >> ~/.bashrc
-                $ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+                $ echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/' >> ~/.bashrc
+                $ export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
 
         .. ATTENTION::
 
@@ -76,7 +76,7 @@ As an example for some distributions and versions:
 
         .. code-block:: console
 
-            $ sudo apt-get install -y openjdk-8-jdk graphviz xdg-utils libtool automake build-essential python3 python3-dev libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran libgmp3-dev flex bison texinfo python3-pip libpapi-dev
+            $ sudo apt-get install -y openjdk-11-jdk graphviz xdg-utils libtool automake build-essential python3 python3-dev libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran libgmp3-dev flex bison texinfo python3-pip libpapi-dev
             $ sudo wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip
             $ sudo unzip /opt/gradle-8.7-bin.zip -d /opt
 
@@ -90,8 +90,8 @@ As an example for some distributions and versions:
 
             .. code-block:: console
 
-                $ echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/' >> ~/.bashrc
-                $ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+                $ echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/' >> ~/.bashrc
+                $ export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
 
         .. ATTENTION::
 
@@ -110,7 +110,7 @@ As an example for some distributions and versions:
 
         .. code-block:: console
 
-            $ sudo apt-get install -y openjdk-8-jdk graphviz xdg-utils libtool automake build-essential python python-dev python3 python3-dev libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran libgmp3-dev flex bison texinfo python3-pip libpapi-dev
+            $ sudo apt-get install -y openjdk-11-jdk graphviz xdg-utils libtool automake build-essential python python-dev python3 python3-dev libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran libgmp3-dev flex bison texinfo python3-pip libpapi-dev
             $ sudo wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip
             $ sudo unzip /opt/gradle-8.7-bin.zip -d /opt
 
@@ -123,8 +123,8 @@ As an example for some distributions and versions:
 
             .. code-block:: console
 
-                $ echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/' >> ~/.bashrc
-                $ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+                $ echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/' >> ~/.bashrc
+                $ export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
 
 
       .. tab:: 16.04
@@ -133,7 +133,7 @@ As an example for some distributions and versions:
 
         .. code-block:: console
 
-             $ sudo apt-get install -y openjdk-8-jdk graphviz xdg-utils libtool automake build-essential libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran python-pip libpapi-dev
+             $ sudo apt-get install -y openjdk-11-jdk graphviz xdg-utils libtool automake build-essential libboost-serialization-dev libboost-iostreams-dev  libxml2 libxml2-dev csh gfortran python-pip libpapi-dev
              $ sudo wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip
              $ sudo unzip /opt/gradle-8.7-bin.zip -d /opt
 
@@ -146,8 +146,8 @@ As an example for some distributions and versions:
 
             .. code-block:: console
 
-                $ echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/' >> ~/.bashrc
-                $ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+                $ echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/' >> ~/.bashrc
+                $ export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
 
 
   .. tab:: OpenSuse
@@ -161,7 +161,7 @@ As an example for some distributions and versions:
         .. code-block:: console
 
             $ sudo zypper install --type pattern -y devel_basis
-            $ sudo zypper install -y java-1_8_0-openjdk-headless java-1_8_0-openjdk java-1_8_0-openjdk-devel graphviz xdg-utils python python-devel python3 python3-devel python3-decorator libtool automake libboost_headers1_71_0-devel libboost_serialization1_71_0 libboost_iostreams1_71_0  libxml2-2 libxml2-devel tcsh gcc-fortran papi libpapi gcc-c++ libpapi papi papi-devel gmp-devel
+            $ sudo zypper install -y java-1_11_0-openjdk-headless java-1_11_0-openjdk java-1_11_0-openjdk-devel graphviz xdg-utils python python-devel python3 python3-devel python3-decorator libtool automake libboost_headers1_71_0-devel libboost_serialization1_71_0 libboost_iostreams1_71_0  libxml2-2 libxml2-devel tcsh gcc-fortran papi libpapi gcc-c++ libpapi papi papi-devel gmp-devel
             $ sudo wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip
             $ sudo unzip /opt/gradle-8.7-bin.zip -d /opt
 
@@ -174,8 +174,8 @@ As an example for some distributions and versions:
 
             .. code-block:: console
 
-                $ echo 'export JAVA_HOME=/usr/lib64/jvm/java-1.8.0-openjdk/' >> ~/.bashrc
-                $ export JAVA_HOME=/usr/lib64/jvm/java-1.8.0-openjdk/
+                $ echo 'export JAVA_HOME=/usr/lib64/jvm/java-1.11.0-openjdk/' >> ~/.bashrc
+                $ export JAVA_HOME=/usr/lib64/jvm/java-1.11.0-openjdk/
 
 
       .. tab:: Leap 15.X
@@ -185,7 +185,7 @@ As an example for some distributions and versions:
         .. code-block:: console
 
             $ sudo zypper install --type pattern -y devel_basis
-            $ sudo zypper install -y java-1_8_0-openjdk-headless java-1_8_0-openjdk java-1_8_0-openjdk-devel graphviz xdg-utils python3 python3-devel python3-decorator libtool automake libboost_headers1_66_0-devel libboost_serialization1_66_0 libboost_iostreams1_66_0  libxml2-2 libxml2-devel tcsh gcc-fortran papi libpapi gcc-c++ libpapi papi papi-devel gmp-devel lam lam-devel link
+            $ sudo zypper install -y java-1_11_0-openjdk-headless java-1_11_0-openjdk java-1_11_0-openjdk-devel graphviz xdg-utils python3 python3-devel python3-decorator libtool automake libboost_headers1_66_0-devel libboost_serialization1_66_0 libboost_iostreams1_66_0  libxml2-2 libxml2-devel tcsh gcc-fortran papi libpapi gcc-c++ libpapi papi papi-devel gmp-devel lam lam-devel link
             $ sudo wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip
             $ sudo unzip /opt/gradle-8.7-bin.zip -d /opt
 
@@ -198,8 +198,8 @@ As an example for some distributions and versions:
 
             .. code-block:: console
 
-                $ echo 'export JAVA_HOME=/usr/lib64/jvm/java-1.8.0-openjdk/' >> ~/.bashrc
-                $ export JAVA_HOME=/usr/lib64/jvm/java-1.8.0-openjdk/
+                $ echo 'export JAVA_HOME=/usr/lib64/jvm/java-1.11.0-openjdk/' >> ~/.bashrc
+                $ export JAVA_HOME=/usr/lib64/jvm/java-1.11.0-openjdk/
 
 
       .. tab:: 42.2
@@ -209,7 +209,7 @@ As an example for some distributions and versions:
         .. code-block:: console
 
             $ sudo zypper install --type pattern -y devel_basis
-            $ sudo zypper install -y java-1_8_0-openjdk-headless java-1_8_0-openjdk java-1_8_0-openjdk-devel graphviz xdg-utils python3 python3-devel python3-decorator libtool automake boost-devel libboost_serialization1_54_0 libboost_iostreams1_54_0 libxml2-2 libxml2-devel tcsh gcc-fortran python-pip papi libpapi gcc-c++ libpapi papi papi-devel gmp-devel
+            $ sudo zypper install -y java-1_11_0-openjdk-headless java-1_11_0-openjdk java-1_11_0-openjdk-devel graphviz xdg-utils python3 python3-devel python3-decorator libtool automake boost-devel libboost_serialization1_54_0 libboost_iostreams1_54_0 libxml2-2 libxml2-devel tcsh gcc-fortran python-pip papi libpapi gcc-c++ libpapi papi papi-devel gmp-devel
             $ sudo wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip
             $ sudo unzip /opt/gradle-8.7-bin.zip -d /opt
 
@@ -231,8 +231,8 @@ As an example for some distributions and versions:
 
             .. code-block:: console
 
-                $ echo 'export JAVA_HOME=/usr/lib64/jvm/java-1.8.0-openjdk/' >> ~/.bashrc
-                $ export JAVA_HOME=/usr/lib64/jvm/java-1.8.0-openjdk/
+                $ echo 'export JAVA_HOME=/usr/lib64/jvm/java-1.11.0-openjdk/' >> ~/.bashrc
+                $ export JAVA_HOME=/usr/lib64/jvm/java-1.11.0-openjdk/
 
 
   .. tab:: Fedora
@@ -245,7 +245,7 @@ As an example for some distributions and versions:
 
         .. code-block:: console
 
-             $ sudo dnf install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel graphviz xdg-utils libtool automake python3 python3-devel boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools bison flex texinfo papi papi-devel gmp-devel
+             $ sudo dnf install -y java-1.11.0-openjdk java-1.11.0-openjdk-devel graphviz xdg-utils libtool automake python3 python3-devel boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools bison flex texinfo papi papi-devel gmp-devel
              $ # If the libxml softlink is not created during the installation of libxml2, the COMPSs installation may fail.
              $ # In this case, the softlink has to be created manually with the following command:
              $ sudo ln -s /usr/include/libxml2/libxml/ /usr/include/libxml
@@ -261,8 +261,8 @@ As an example for some distributions and versions:
 
             .. code-block:: console
 
-                $ echo 'export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/' >> ~/.bashrc
-                $ export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/
+                $ echo 'export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk/' >> ~/.bashrc
+                $ export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk/
 
 
       .. tab:: 25
@@ -271,7 +271,7 @@ As an example for some distributions and versions:
 
         .. code-block:: console
 
-             $ sudo dnf install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel graphviz xdg-utils libtool automake python3 python3-libs python3-pip python-devel python3-decorator boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools redhat-rpm-config papi
+             $ sudo dnf install -y java-1.11.0-openjdk java-1.11.0-openjdk-devel graphviz xdg-utils libtool automake python3 python3-libs python3-pip python-devel python3-decorator boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools redhat-rpm-config papi
              $ # If the libxml softlink is not created during the installation of libxml2, the COMPSs installation may fail.
              $ # In this case, the softlink has to be created manually with the following command:
              $ sudo ln -s /usr/include/libxml2/libxml/ /usr/include/libxml
@@ -287,8 +287,8 @@ As an example for some distributions and versions:
 
             .. code-block:: console
 
-                $ echo 'export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/' >> ~/.bashrc
-                $ export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/
+                $ echo 'export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk/' >> ~/.bashrc
+                $ export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk/
 
 
   .. tab:: Debian
@@ -302,11 +302,11 @@ As an example for some distributions and versions:
         .. code-block:: console
 
               $ su -
-              $ echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | tee /etc/apt/sources.list.d/webupd8team-java.list
-              $ echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list
+              $ echo "deb http://ppa.launchpad.net/webupd11team/java/ubuntu xenial main" | tee /etc/apt/sources.list.d/webupd11team-java.list
+              $ echo "deb-src http://ppa.launchpad.net/webupd11team/java/ubuntu xenial main" | tee -a /etc/apt/sources.list.d/webupd11team-java.list
               $ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
               $ apt-get update
-              $ apt-get install oracle-java8-installer
+              $ apt-get install oracle-java11-installer
               $ apt-get install graphviz xdg-utils libtool automake build-essential python3 python3-decorator python3-pip python3-dev libboost-serialization1.55.0 libboost-iostreams1.55.0 libxml2 libxml2-dev libboost-dev csh gfortran papi-tools
               $ wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip
               $ unzip /opt/gradle-8.7-bin.zip -d /opt
@@ -343,7 +343,7 @@ As an example for some distributions and versions:
 
             $ sudo rpm -iUvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
             $ sudo yum -y update
-            $ sudo yum install java-1.8.0-openjdk java-1.8.0-openjdk-devel graphviz xdg-utils libtool automake python3 python3-libs python3-pip python3-devel python3-decorator boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools redhat-rpm-config papi
+            $ sudo yum install java-1.11.0-openjdk java-1.11.0-openjdk-devel graphviz xdg-utils libtool automake python3 python3-libs python3-pip python3-devel python3-decorator boost-devel boost-serialization boost-iostreams libxml2 libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools redhat-rpm-config papi
             $ sudo pip install decorator
 
         .. ATTENTION::
@@ -376,7 +376,7 @@ As an example for some distributions and versions:
         Although many packages can be installed with Homebrew, some of them will have to be installed manually
         from their source files. It is also important to mention that, some package names may be slightly different
         in Homebrew, compared to Linux distributions, thus, some previous search for equivalences may be required.
-        Our tested installation sequence was as follows. Please install each package INDIVIDUALLY, since some can 
+        Our tested installation sequence was as follows. Please install each package **INDIVIDUALLY**, since some can 
         have post-installation instructions that require adding environment variables to your shell profile.
 
         .. code-block:: console
