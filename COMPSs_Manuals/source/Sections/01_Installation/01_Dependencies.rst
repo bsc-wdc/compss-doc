@@ -394,7 +394,7 @@ As an example for some distributions and versions:
             $ brew install gradle
             
 
-        The packabe xdg-utils has to be installed by hand (after installing libxslt and xmlto):
+        The package ``xdg-utils`` has to be installed by hand (after installing ``libxslt`` and ``xmlto``):
 
         .. code-block:: console
 
@@ -456,7 +456,7 @@ MPI processes instead of multiprocessing, it is necessary to have ``openmpi``,
 .. CAUTION::
 
     The ``mpi4py`` package requires to have the MPI header/development package available,
-    which has to be installed with the OS package manager. From the ``compss/`` folder:
+    which has to be installed with the OS package manager.
 
     .. code-block:: console
 
