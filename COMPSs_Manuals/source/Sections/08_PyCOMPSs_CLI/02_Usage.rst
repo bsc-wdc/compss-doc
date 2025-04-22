@@ -49,13 +49,24 @@ Create a new COMPSs environment in your development directory
 
         .. code-block:: console
 
-            $ pycompss init docker -w [WORK_DIR] -i [IMAGE]
+            $ pycompss init -n my_docker_env docker -w [WORK_DIR] -i [IMAGE]
 
         The command initializes COMPSs in the current working dir or in WORK_DIR if -w is set.
         The COMPSs docker image to be used can be specified with -i (it can also be
         specified with the COMPSS_DOCKER_IMAGE environment variable).
 
-        Initialize the COMPSs infrastructure where your source code will be.
+        .. IMPORTANT::
+
+            ``docker`` pip package is required for using docker environments in pycompss-cli.
+
+            .. collapse:: For Mac users:
+                If command ``pycompss init docker`` is giving this error:  
+                    "ERROR: Docker service is not running. Please, start docker service and try again"  
+                Despite having docker running fine could be caused by pycompss-cli not being able to find docker socket in the default path.
+                Open **Docker Desktop** > **Settings** > **In the left panel scroll down to Advanced** > **Enable default Docker socket**
+
+
+        Initialize the COMPSs infrastructure where your source code is.
         This will allow docker to access your local code
         and run it inside the container.
 
