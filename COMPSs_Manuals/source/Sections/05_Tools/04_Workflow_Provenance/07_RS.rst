@@ -18,7 +18,7 @@ This is an automatic reproducibility service designed to help reproduce COMPSs w
 
 **How to Use**
 
-- Take the remote URL to a downloadable workflow RO-Crate (i.e., from WorkflowHub) or the local path to the RO-Crate (a folder or a zip file) and pass it as the first argument to the service:
+- Take the remote URL to a downloadable RO-Crate zip file (e.g., copy the link from WorkflowHub on the "Download RO-Crate" button) or the local path to the RO-Crate (a folder or a zip file) and pass it as the first argument to the service:
 
   .. code-block:: console
 
