@@ -58,7 +58,6 @@ Create a new COMPSs environment in your development directory
         .. IMPORTANT::
 
             ``docker`` pip package is required for using docker environments in pycompss-cli.
-
             For Mac users:
             If command ``pycompss init docker`` is giving this error:  
                 "ERROR: Docker service is not running. Please, start docker service and try again"  
