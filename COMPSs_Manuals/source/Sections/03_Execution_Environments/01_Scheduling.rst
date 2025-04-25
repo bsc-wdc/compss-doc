@@ -79,7 +79,7 @@ Lookahead schedulers also assign priorities to tasks as they become dependency-f
     * Locality-Enhanced Successors:
          * Prioritizes the successors of a completed task, then considers data locality, and finally the task generation order.
          * If there are no weights defined for the parameters, it takes into account the number of parameters in each node.
-         * This scheduler doesn't take into account the size of the data nor the transfer speed.
+         * This scheduler does not take into account the size of the data nor the transfer speed.
          * Flag: ``--scheduler=es.bsc.compss.scheduler.lookahead.successors.locality.LocalityTS``
          * *Typically used for local disk executions on supercomputers (SCs).*
     * FIFO/LIFO Successors:
