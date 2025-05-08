@@ -643,7 +643,7 @@ Users can check the available options by running:
 
 
 If none of the :spelling:ignore:`pre`-build queue configurations adapts to your
-infrastructure (lsf, pbs, slurm, etc.) please contact the COMPSs team at
+infrastructure (LSF, PBS, SLURM, etc.) please contact the COMPSs team at
 support-compss@bsc.es to find out a solution.
 
 If you are willing to test the COMPSs Framework installation you can
