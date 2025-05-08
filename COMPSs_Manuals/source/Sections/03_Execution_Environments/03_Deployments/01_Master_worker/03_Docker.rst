@@ -1,3 +1,8 @@
+.. spelling:word-list::
+
+   dir
+
+
 Docker
 ======
 
@@ -23,12 +28,12 @@ In order to use COMPSs with Docker, some requirements must be fulfilled:
 -  Have **Docker** and **Docker-Compose** installed in your local
    machine.
 
--  Have an available **Docker Swarm cluster** and its Swarm manager ip
-   and port to access it remotely.
+-  Have an available **Docker Swarm cluster** and its Swarm manager IP
+   and Port to access it remotely.
 
--  A **Dockerhub account**. Dockerhub is an online repository for Docker
+-  A **Docker Hub account**. Docker Hub is an online repository for Docker
    images. We don’t currently support another sharing method besides
-   uploading to Dockerhub, so you will need to create a personal
+   uploading to Docker Hub, so you will need to create a personal
    account. This has the advantage that it takes very little time either
    upload or download the needed images, since it will reuse the
    existing layers of previous images (for example the COMPSs base
@@ -66,10 +71,10 @@ the updated image.
 In order to do this, you must use the **compss_docker_gen_image**
 tool, which is available in the standard COMPSs application. This tool
 is the responsible of taking your application, create the needed
-image, and upload it to Dockerhub to share it.
+image, and upload it to Docker Hub to share it.
 
 The image is created injecting your application into a COMPSs base
-image. This base image is available in Dockerhub. In case you need it,
+image. This base image is available in Docker Hub. In case you need it,
 you can pull it using the following command:
 
 .. code-block:: console
@@ -96,11 +101,11 @@ The **compss_docker_gen_image** script receives 2 parameters:
    Specifies a name for the created image. It **MUST** have this format:
    ’DOCKERHUB-USERNAME/image-name’.
    The *DOCKERHUB_USERNAME* must be the username of your personal
-   Dockerhub account.
+   Docker Hub account.
    The *image_name* can be whatever you want, and will be used as the
-   identifier for the image in Dockerhub. This name will be the one
+   identifier for the image in Docker Hub. This name will be the one
    you will use to execute the application in Docker.
-   For example, if my Dockerhub username is john123 and I want my
+   For example, if my Docker Hub username is john123 and I want my
    image to be named “my-image-app”:
    ``--image-name=“john123/my-image-app”``.
 
@@ -112,10 +117,10 @@ The **compss_docker_gen_image** script receives 2 parameters:
 .. IMPORTANT::
 
    After creating the image, be sure to write down the absolute
-   context-directory and the absolute classpath (the absolute path to the
+   context-directory and the absolute CLASSPATH (the absolute path to the
    executable jar). You will need it to run the application using
    ``runcompss-docker``. In addition, if you plan on distributing the
-   application, you can use the Dockerhub image’s information tab to
+   application, you can use the Docker Hub image’s information tab to
    write them, so the application users can retrieve them.
 
 
@@ -128,7 +133,7 @@ To execute COMPSs in a Docker Swarm cluster, you must use the
 The command ``runcompss-docker`` has some **additional arguments**
 that will be needed by COMPSs to run your application in a distributed
 Docker Swarm cluster environment. The rest of typical arguments
-(classpath for example) will be delegated to runcompss command.
+(CLASSPATH for example) will be delegated to runcompss command.
 
 These additional arguments must go before the typical runcompss
 arguments. The runcompss-docker additional arguments are:
@@ -142,11 +147,11 @@ arguments. The runcompss-docker additional arguments are:
     For example: ``--worker-containers=3``
 
 --s, --swarm-manager
-    Specifies the Swarm manager ip and port (format: ip:port).
+    Specifies the Swarm manager IP and Port (format: IP:Port).
     For example: ``--swarm-manager=’129.114.108.8:4000’``
 
 --i, --image-name
-    Specify the image name of the application image in Dockerhub.
+    Specify the image name of the application image in Docker Hub.
     Remember you must generate this with compss_docker_gen_image
     Remember as well that the format must be:
     ’DOCKERHUB_USERNAME/APP_IMAGE_NAME:TAG’ (the :TAG is optional).
@@ -267,7 +272,7 @@ application running with COMPSs and Docker.
 Imagine we have our Matmul application in ``/home/john/matmul`` and
 inside the ``matmul`` directory we only have the file ``matmul.jar``.
 
-We have created a Dockerhub account with username ’john123’.
+We have created a Docker Hub account with username ’john123’.
 
 The first step will be creating the image:
 
@@ -277,7 +282,7 @@ The first step will be creating the image:
                               --image-name='john123/matmul-example'
 
 Now, we write down the context-dir (``/home/john/matmul``) and the
-classpath (``/home/john/matmul/matmul.jar``). We do this because they will be
+CLASSPATH (``/home/john/matmul/matmul.jar``). We do this because they will be
 needed for future executions.
 Since the image is created and uploaded, we won’t need to do this step
 anymore.
@@ -298,7 +303,7 @@ Take as assumptions:
 
 In addition, we know from the former step that the image name is
 ``john123/matmul-example``, the **context directory** is
-``/home/john/matmul``, and the classpath is
+``/home/john/matmul``, and the CLASSPATH is
 ``/home/john/matmul/matmul.jar``. And this is how you would run
 ``runcompss-docker``:
 

@@ -59,7 +59,7 @@ between tasks:
         run_simulation("my_logs", "my_logs_compressed")
 
 
-```fail_by_exit_value``` is used to indicate the behaviour when the prolog or epilog returns an exit value different than zero.
+```fail_by_exit_value``` is used to indicate the behavior when the prolog or epilog returns an exit value different than zero.
 Users can set the ```fail_by_exit_value``` to *True*, if they want to consider the exit value as a task failure. If set to *False*, failure of the prolog
 will be ignored and task execution will start as usual. The same rule applies for the ```epilog``` as well. Default value of 'fail_by_exit_value' is *True* for Prolog
 and *False* for Epilog:

@@ -99,7 +99,7 @@ and ``JOB<TASK_NUMBER>_NEW.err`` files when a task fails.
         --gen_coredump
 
 
-The following subsections show debugging examples depending on the choosen
+The following subsections show debugging examples depending on the chosen
 flavour (Java, Python or C/C++).
 
 .. toctree::

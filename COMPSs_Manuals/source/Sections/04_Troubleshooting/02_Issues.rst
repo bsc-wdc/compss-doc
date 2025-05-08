@@ -140,7 +140,7 @@ All these errors are raised because the ``compss-engine.jar`` is not
 listed in the CLASSPATH. The default COMPSs installation automatically
 inserts this package into the CLASSPATH but it may have been overwritten
 or deleted. Please check that your environment variable CLASSPATH
-containts the ``compss-engine.jar`` location by running the following
+contains the ``compss-engine.jar`` location by running the following
 command:
 
 .. code-block:: console
@@ -148,7 +148,7 @@ command:
     $ echo $CLASSPATH | grep compss-engine
 
 If the result of the previous command is empty it means that you are
-missing the ``compss-engine.jar`` package in your classpath.
+missing the ``compss-engine.jar`` package in your CLASSPATH.
 
 The easiest solution is to manually export the CLASSPATH variable into
 the user session:
@@ -261,7 +261,7 @@ Ubuntu you can install the following packets to get MPI support:
 
     $ sudo apt-get install libcr-dev mpich2 mpich2-doc
 
-Please note that extrae is never compiled with MPI support when building
+Please note that Extrae is never compiled with MPI support when building
 it locally (with buildlocal command).
 
 To check if COMPSs was deployed with MPI support, you can check the

@@ -70,7 +70,7 @@ Configuration Notes
 
 The COMPSs module contains **all** the COMPSs dependencies, including
 Java, Python and MKL. Modifying any of these dependencies can cause
-execution failures and thus, we **do not** recomend to change them.
+execution failures and thus, we **do not** recommend to change them.
 Before running any COMPSs job please check your environment and, if
 needed, comment out any line inside the ``.bashrc`` file that loads
 custom COMPSs, Java, Python and/or MKL modules.
@@ -111,7 +111,7 @@ well loaded COMPSs installation.
 COMPSs Job submission
 ---------------------
 
-COMPSs jobs can be easily submited by running the ``enqueue_compss``
+COMPSs jobs can be easily submitted by running the ``enqueue_compss``
 command. This command allows to configure any ``runcompss``
 (:ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Runcompss command`)
 option and some particular queue options such as the queue system, the number
@@ -249,7 +249,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --worker_port_range=<min>,<max>         Port range used by the NIO adaptor at the worker side
                                                 Default: 43001,43005
         --jvm_worker_in_master_opts="<string>"  Extra options for the JVM of the COMPSs Worker in the Master Node.
-                                                Each option separed by "," and without blank spaces (Notice the quotes)
+                                                Each option separated by "," and without blank spaces (Notice the quotes)
                                                 Default:
         --container_image=<path>                Runs the application by means of a container engine image
                                                 Default: Empty
@@ -389,9 +389,9 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --master_port=<int>                     Port to run the COMPSs master communications.
                                                 Only for NIO adaptor
                                                 Default: [43000,44000]
-        --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed by "," and without blank spaces (Notice the quotes)
+        --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separated by "," and without blank spaces (Notice the quotes)
                                                 Default: Empty
-        --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Notice the quotes)
+        --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separated by "," and without blank spaces (Notice the quotes)
                                                 Default: -Xms256m,-Xmx1024m,-Xmn100m
         --cpu_affinity="<string>"               Sets the CPU affinity for the workers
                                                 Supported options: disabled, automatic, dlb or user defined map of the form "0-8/9,10,11/12-14,15,16"

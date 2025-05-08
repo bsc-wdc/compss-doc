@@ -165,9 +165,9 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
         --master_port=<int>                     Port to run the COMPSs master communications.
                                                 Only for NIO adaptor
                                                 Default: [43000,44000]
-        --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed by "," and without blank spaces (Notice the quotes)
+        --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separated by "," and without blank spaces (Notice the quotes)
                                                 Default: Empty
-        --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Notice the quotes)
+        --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separated by "," and without blank spaces (Notice the quotes)
                                                 Default: -Xms256m,-Xmx1024m,-Xmn100m
         --cpu_affinity="<string>"               Sets the CPU affinity for the workers
                                                 Supported options: disabled, automatic, dlb or user defined map of the form "0-8/9,10,11/12-14,15,16"
@@ -239,7 +239,7 @@ Running a COMPSs application
 
 Before running COMPSs applications the application files **must** be in
 the **CLASSPATH**. Thus, when launching a COMPSs application, users can
-manually pre-set the **CLASSPATH** environment variable or can add the
+manually set the **CLASSPATH** environment variable or can add the
 ``--classpath`` option to the ``runcompss`` command.
 
 The next three sections provide specific information for launching
@@ -284,7 +284,7 @@ A Java COMPSs application can be launched through the following command:
     ------------------------------------------------------------
 
 In this first execution we use the default value of the ``--classpath``
-option to automatically add the jar file to the classpath (by executing
+option to automatically add the jar file to the CLASSPATH (by executing
 runcompss in the directory which contains the jar file). However, we can
 explicitly do this by exporting the **CLASSPATH** variable or by
 providing the ``--classpath`` value. Next, we provide two more ways to
@@ -435,9 +435,9 @@ Worker cache
 
 The ``--python_worker_cache`` is used to enable a cache between processes on
 each worker node. More specifically, this flag enables a shared memory space
-between the worker processes, so that they can share objects between processess
+between the worker processes, so that they can share objects between processes
 in order to leverage the deserialization overhead.
-If ``CUPY`` is installed the cache is enabled, the ``cupy.ndarrays`` will also 
+If ``CUPY`` is installed the cache is enabled, the ``cupy.ndarrays`` will also
 be cacheables in each GPU memory.
 
 The possible values are:
@@ -598,7 +598,7 @@ If the time is reached, the execution is stopped.
 
 .. TIP::
 
-    This flag enables to stop the execution of an application in a contolled way
+    This flag enables to stop the execution of an application in a controlled way
     if the execution is taking more than expected.
 
 

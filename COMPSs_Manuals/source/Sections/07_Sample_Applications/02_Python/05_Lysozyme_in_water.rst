@@ -229,12 +229,12 @@ This application can be executed by invoking the ``runcompss`` command defining
 the ``config_path``, ``dataset_path`` and ``output_path`` where the application
 inputs and outputs are. For the sake of completeness, we show how to execute
 this application in a Supercomputer. In this case, the execution will be
-enqueued in the supercomputer queuing system (e.g. SLURM) through the use
+enqueued in the Supercomputer queuing system (e.g. SLURM) through the use
 of the ``enqueue_compss`` command, where all parameters used in runcompss
 must appear, as well as some parameters required for the queuing system (e.g. walltime).
 
 The following code shows a bash script to submit the execution in MareNostrum IV
-supercomputer:
+Supercomputer:
 
 .. code-block:: bash
 

@@ -16,7 +16,7 @@ triangular matrix and an upper one.
 The matrix is divided into N x N blocks on where 4 types of operations
 will be applied modifying the blocks: **lu0**, **fwd**, **bdiv** and
 **bmod**. These four operations are implemented in four methods that are
-selecetd as the tasks that will be executed remotely. In order to run
+selected as the tasks that will be executed remotely. In order to run
 the application the matrix dimension has to be provided.
 
 As the previous application, the sparseLU is provided in three different

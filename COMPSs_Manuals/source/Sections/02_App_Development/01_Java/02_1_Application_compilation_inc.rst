@@ -46,7 +46,7 @@ check that your environment variable CLASSPATH contains the
     $ echo $CLASSPATH | grep compss-engine
 
 If the result of the previous command is empty it means that you are
-missing the *compss-engine.jar* package in your classpath. We recommend
+missing the *compss-engine.jar* package in your CLASSPATH. We recommend
 to automatically load the variable by editing the *.bashrc* file:
 
 .. code-block:: console

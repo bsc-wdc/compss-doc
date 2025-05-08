@@ -1,3 +1,7 @@
+.. spelling:word-list::
+
+    io
+
 Other task types
 ~~~~~~~~~~~~~~~~
 
@@ -31,7 +35,7 @@ The following subparagraphs describe their usage.
 Other task types summary
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Next tables summarizes the parameters of these decorators. Please note that 'working_dir' and 'args' ae the only decorator properties that can contain task parameters
+Next tables summarizes the parameters of these decorators. Please note that ``working_dir`` and ``args`` are the only decorator properties that can contain task parameters
 defined in curly braces.
 
 * :ref:`sections/02_app_development/02_python/01_1_task_definition/sections/06_Other_task_types/01_Binary_decorator:Binary decorator` (@binary)
@@ -66,7 +70,7 @@ defined in curly braces.
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
     | **processes**          | Integer defining the number of MPI processes spawned by the task. (Default 1)                                                           |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-    | **processes_per_node** | Integer defining the number of co-allocated MPI processses per node. The ``processes`` value should be multiple of this value           |
+    | **processes_per_node** | Integer defining the number of co-allocated MPI processes per node. The ``processes`` value should be multiple of this value            |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
     | **args**               | Args string to be added to end of the execution command of the binary. It can contain python task parameters defined in curly braces.   |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
@@ -79,7 +83,7 @@ defined in curly braces.
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
     | **working_dir**        | Defines mpi job's working directory.                                                                                                    |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-    | **processes_per_node** | Integer defining the number of co-allocated MPI processses per node. The ``processes`` value should be multiple of this value           |
+    | **processes_per_node** | Integer defining the number of co-allocated MPI processes per node. The ``processes`` value should be multiple of this value            |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
     | **fail_by_exit_value** | If set to 'False', and ``returns`` value of the 'task' definition is 'int', exit code of the MPI command will be returned.              |
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
@@ -193,10 +197,10 @@ is going to be considered as a *FILE* but as a stream (e.g. :math:`>`,
     | **STDERR**             | Standard error.   |
     +------------------------+-------------------+
 
-Moreover, there are some shorcuts that can be used for files type
+Moreover, there are some shortcuts that can be used for files type
 definition as parameters within the *@task* decorator (:numref:`file_parameter_definition`).
 It is not necessary to indicate the *Direction* nor the *StdIOStream* since it may be already be indicated with
-the shorcut.
+the shortcut.
 
 .. table:: File parameters definition shortcuts
     :name: file_parameter_definition

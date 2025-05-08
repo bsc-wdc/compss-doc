@@ -49,7 +49,7 @@ the available configurations can be found in
 :ref:`Sections/05_Tools/03_Tracing/06_Paraver_configs:Paraver: configurations`.
 
 The following guide uses a kmeans trace (result from executing the
-:ref:`Sections/07_Sample_Applications/02_Python/03_kmeans:Kmeans` sample code with
+:ref:`Sections/07_Sample_Applications/02_Python/03_kmeans:KMeans` sample code with
 the ``--tracing`` flag.) with the *compss_tasks.cfg* configuration file as an
 example to illustrate the basic usage of Paraver. After accepting the load of
 the configuration file, another window appears showing the view.
@@ -70,7 +70,7 @@ process.
    :align: center
    :width: 60.0%
 
-   Kmeans Trace file
+   KMeans Trace file
 
 
 .. CAUTION::

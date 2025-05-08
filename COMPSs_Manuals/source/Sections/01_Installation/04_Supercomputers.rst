@@ -8,7 +8,7 @@ COMPSs installation.
 
 However, if the administrators are not willing to install COMPSs through
 the packaging system, we also provide a **COMPSs zipped file**
-containing a pre-build script to easily install COMPSs. Next subsections
+containing a :spelling:ignore:`pre`-build script to easily install COMPSs. Next subsections
 provide further information about this process.
 
 Prerequisites
@@ -32,7 +32,7 @@ The following environment variables must be defined:
 
 The tracing system can be enhanced with:
 
--  PAPI, which provides support for harware counters
+-  PAPI, which provides support for hardware counters
 
 -  MPI, which speeds up the tracing merge (and enables it for huge
    traces)
@@ -88,7 +88,7 @@ Configuration
 -------------
 
 To maintain the portability between different environments, COMPSs has a
-pre-built structure of scripts to execute applications in Supercomputers.
+:spelling:ignore:`pre`-built structure of scripts to execute applications in Supercomputers.
 For this purpose, users must use the ``enqueue_compss`` script provided in the
 COMPSs installation and specify the supercomputer configuration with
 ``--sc_cfg`` flag.
@@ -99,7 +99,7 @@ This document gives and overview about how to modify the configuration files
 in order to customize the enqueue_compss for a specific queue system and
 supercomputer.
 As overview, the easier way to proceed when creating a new configuration is to
-modify one of the configurations provided by COMPSs. System sdministrators can
+modify one of the configurations provided by COMPSs. System administrators can
 find configurations for **LSF**, **SLURM**, **PBS** and **SGE** as well as
 several examples for Supercomputer configurations in
 ``<installation_dir>/Runtime/scripts/queues``.
@@ -125,12 +125,12 @@ are located in ``queues/supercomputers``.
 
 .. figure:: ./Figures/queue_scripts_structure.png
    :name: queue_structure
-   :alt: Structure of COMPSs queue scripts. In Blue user scripts, in Green queue scripts and in Orange system dependant scripts
+   :alt: Structure of COMPSs queue scripts. In Blue user scripts, in Green queue scripts and in Orange system dependent scripts
    :align: center
    :width: 30.0%
 
    Structure of COMPSs queue scripts. In Blue user scripts, in Green
-   queue scripts and in Orange system dependant scripts
+   queue scripts and in Orange system dependent scripts
 
 Configuration Files
 ~~~~~~~~~~~~~~~~~~~
@@ -370,7 +370,7 @@ run:
      COMPSs version <version>
 
 For queue system executions, COMPSs provides several prebuild queue
-scripts than can be accessible throgh the *enqueue\_compss* command.
+scripts than can be accessible through the *enqueue\_compss* command.
 Users can check the available options by running:
 
 
@@ -484,7 +484,7 @@ Users can check the available options by running:
         --worker_port_range=<min>,<max>	        Port range used by the NIO adaptor at the worker side
     					                                  Default: 43001,43005
         --jvm_worker_in_master_opts="<string>"  Extra options for the JVM of the COMPSs Worker in the Master Node.
-                                                Each option separed by "," and without blank spaces (Notice the quotes)
+                                                Each option separated by "," and without blank spaces (Notice the quotes)
                                                 Default:
         --container_image=<path>                Runs the application by means of a container engine image
                                                 Default: Empty
@@ -592,9 +592,9 @@ Users can check the available options by running:
         --master_port=<int>                     Port to run the COMPSs master communications.
                                                 Only for NIO adaptor
                                                 Default: [43000,44000]
-        --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed by "," and without blank spaces (Notice the quotes)
+        --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separated by "," and without blank spaces (Notice the quotes)
                                                 Default:
-        --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Notice the quotes)
+        --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separated by "," and without blank spaces (Notice the quotes)
                                                 Default: -Xms1024m,-Xmx1024m,-Xmn400m
         --cpu_affinity="<string>"               Sets the CPU affinity for the workers
                                                 Supported options: disabled, automatic, user defined map of the form "0-8/9,10,11/12-14,15,16"
@@ -642,8 +642,8 @@ Users can check the available options by running:
 
 
 
-If none of the pre-build queue configurations adapts to your
-infrastructure (lsf, pbs, slurm, etc.) please contact the COMPSs team at
+If none of the :spelling:ignore:`pre`-build queue configurations adapts to your
+infrastructure (LSF, PBS, SLURM, etc.) please contact the COMPSs team at
 support-compss@bsc.es to find out a solution.
 
 If you are willing to test the COMPSs Framework installation you can

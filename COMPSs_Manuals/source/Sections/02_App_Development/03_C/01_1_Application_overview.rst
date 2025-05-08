@@ -1,10 +1,10 @@
 
 As in Java, the application code is divided in 3 parts: the Task definition
 interface, the main code and task implementations. These files must have the
-following notation,: <app_ame>.idl, for the interface file, <app_name>.cc for
+following notation,: <app_name>.idl, for the interface file, <app_name>.cc for
 the main code and <app_name>-functions.cc for task implementations. Next
 paragraphs provide an example of how to define this files for matrix
-multiplication parallelised by blocks.
+multiplication parallelized by blocks.
 
 
 .. rubric:: Task Definition Interface

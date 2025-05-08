@@ -24,7 +24,7 @@ Moreover, it is also possible to create a new DDS with a ``list`` of *Future Obj
 user-defined functions, or send data from a DDS instance to other user defined functions as
 *Future Objects* without retrieving it on the master node.
 This flexibility gives the user an opportunity to use DDS methods anywhere in the code, mixing
-the data from those methods with his/her own functions without sticking to pre-defined data
+the data from those methods with his/her own functions without sticking to predefined data
 operations, as well as replace some methods with DDS ones on an existing project.
 
 How to use?

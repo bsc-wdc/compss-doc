@@ -59,5 +59,5 @@ Then, the ``compss_wait_on`` retrieves the final result and it is printed.
 .. CAUTION::
 
     The task decorated with ``@reduction`` can have multiple parameters, but
-    **ONLY ONE** ``COLLECTION_IN`` **parameter**, which will be splitted into
+    **ONLY ONE** ``COLLECTION_IN`` **parameter**, which will be split into
     chunks to perform the reduction.

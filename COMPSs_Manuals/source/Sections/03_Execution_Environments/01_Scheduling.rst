@@ -2,8 +2,8 @@ Schedulers
 ===========
 
 This documentation provides an in-depth overview of the COMPSs scheduling system.
-It explains how tasks are managed and scheduled within the runtime. Additionally, COMPSs 
-offers a variety of scheduling strategies—each designed with a specific function and purpose—that 
+It explains how tasks are managed and scheduled within the runtime. Additionally, COMPSs
+offers a variety of scheduling strategies—each designed with a specific function and purpose—that
 will be described in detail in later sections.
 
 Purpose and objectives
@@ -20,7 +20,7 @@ Scheduling Architecture Overview
 
 The COMPSs scheduling architecture is based on a two-level model that separates global task orchestration from local resource management:
 
-* TaskScheduler: 
+* TaskScheduler:
     * Receiving new tasks (referred to as allocatable actions).
     * Determining the best candidate resources based on multiple scoring metrics (e.g., task priority, resource availability, data locality).
     * Coordinating with resource schedulers to ensure that tasks are executed when their dependencies are satisfied.
@@ -79,7 +79,7 @@ Lookahead schedulers also assign priorities to tasks as they become dependency-f
     * Locality-Enhanced Successors:
          * Prioritizes the successors of a completed task, then considers data locality, and finally the task generation order.
          * If there are no weights defined for the parameters, it takes into account the number of parameters in each node.
-         * This scheduler doesn't take into account the size of the data nor the transfer speed.
+         * This scheduler does not take into account the size of the data nor the transfer speed.
          * Flag: ``--scheduler=es.bsc.compss.scheduler.lookahead.successors.locality.LocalityTS``
          * *Typically used for local disk executions on supercomputers (SCs).*
     * FIFO/LIFO Successors:

@@ -1,3 +1,7 @@
+.. spelling:word-list::
+
+    dt
+
 Data Transformation
 ~~~~~~~~~~~~~~~~~~~
 
@@ -171,7 +175,7 @@ cases each data transformation with "is_workflow=False" will take place in a dif
 
 
 PyCOMPSs API also provides Data Transformation Object class which gives the flexibility of the data transformation definitions. Any task function can be
-decorated with an empty **@dt** and simply by passing *DTO*\(s) as a task parameter the user can achieve the same behaviour. Same as the decorator itself, DTO
+decorated with an empty **@dt** and simply by passing *DTO*\(s) as a task parameter the user can achieve the same behavior. Same as the decorator itself, DTO
 accepts the arguments in the same order (*"<parameter_name>", "<dt_function>", "<kwargs_of_dt_function>"*). A list of DTO objects is also accepted for the same or
 various parameters:
 
@@ -210,4 +214,3 @@ various parameters:
         # send DT Objects to the task function as input
         result = run_simulation(A, B, dt=[dt_1, dt_2]))
         result = cwo(result)
-

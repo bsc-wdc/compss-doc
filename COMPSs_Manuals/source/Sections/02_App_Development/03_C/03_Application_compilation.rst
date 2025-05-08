@@ -56,7 +56,7 @@ cross-compile the application. It enables the use of
 **--cross-compile-prefix** flag to define the prefix for the
 cross-compiler. Setting $CROSS_COMPILE environment variable will also
 work (in case you use the environment variable, the prefix passed by
-arguments is overrided with the variable value). This prefix is added to
+arguments is overridden with the variable value). This prefix is added to
 *$CC* and *$CXX* to be used by the user *Makefile* and lastly by the
 *GNU toolchain* . Regarding java and boost, **--java_home** and
 **--boostlib** flags are used respectively. In this case, users can

@@ -1,7 +1,7 @@
 Hello World
 -----------
 
-The Hello Wolrd is a Java application that creates a task and prints a
+The Hello World is a Java application that creates a task and prints a
 Hello World! message. Its purpose is to clarify that the COMPSs tasks
 output is redirected to the job files and it is **not** available at the
 standard output.

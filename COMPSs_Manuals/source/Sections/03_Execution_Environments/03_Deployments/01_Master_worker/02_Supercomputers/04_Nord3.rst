@@ -76,7 +76,7 @@ job information. For example:
     #BSUB -W 00:15
     ...
 
-In order to trac the jobs state users can run the following command:
+Users can run the following command in order to track of the jobs state:
 
 .. code-block:: console
 

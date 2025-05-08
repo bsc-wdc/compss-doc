@@ -15,7 +15,7 @@ Use of file paths
    The persistent workers implementation has a
    unique *Working Directory* per worker. That means that tasks should
    not use hardcoded file names to avoid file collisions and tasks
-   misbehaviours. We recommend to use files declared as task parameters,
+   misbehavior. We recommend to use files declared as task parameters,
    or to manually create a sandbox inside each task execution and/or to
    generate temporary random file names.
 

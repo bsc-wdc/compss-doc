@@ -25,7 +25,7 @@ Intuitively, if you search through the JSON file you can find several interestin
 
 - ``creator`` contains the list of authors, identified by their ORCID.
 
-- ``publisher`` lists the organisations of the authors.
+- ``publisher`` lists the organizations of the authors.
 
 - ``hasPart`` in ``./`` lists all the files and directories this workflow needs and generates, and also the ones
   included in the crate. They are referenced with relative paths, since they are included in the crate.
@@ -35,7 +35,7 @@ Intuitively, if you search through the JSON file you can find several interestin
 
 - ``version`` contains the COMPSs specific version and build used to run this application. In the example: ``3.3``.
   This is a very important field to achieve reproducibility or replicability, since COMPSs features may vary their
-  behaviour in different versions of the programming model runtime.
+  behavior in different versions of the programming model runtime.
 
 - ``CreateAction`` details the specific execution of the workflow, compliant with the Workflow Run Crate Profile.
 

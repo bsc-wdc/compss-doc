@@ -33,7 +33,7 @@ Install COMPSs
                   $ source ~/.bashrc  # or alternatively reboot the machine
 
                If installed within a virtual environment, deactivate and activate
-               it to ensure that the environment is propperly updated.
+               it to ensure that the environment is properly updated.
 
                .. WARNING::
 
@@ -148,12 +148,12 @@ Install COMPSs
 
       **Requirements (Optional):**
 
-      - `docker <https://www.docker.com>`_ >= 17.12.0-ce
+      - `docker <https://www.docker.com>`_
       - Python 3
       - pip
       - `docker package for Python <https://pypi.org/project/docker/>`_
 
-      Since the PyCOMPSs CLI package is available in Pypi (`pycompss-cli <https://pypi.org/project/pycompss-cli/>`_), it can be easly installed with ``pip`` as follows:
+      Since the PyCOMPSs CLI package is available in PyPI (`pycompss-cli <https://pypi.org/project/pycompss-cli/>`_), it can be easily installed with ``pip`` as follows:
 
         .. code-block:: console
 

@@ -14,11 +14,11 @@ this means, the duration of computational bursts.
 
 .. figure:: ./Figures/7_kmeans_info_panel_2.png
    :name: 7_kmeans_info_panel_2_
-   :alt: Basic trace view of a Kmeans execution.
+   :alt: Basic trace view of a KMeans execution.
    :align: center
    :width: 60.0%
 
-   Basic trace view of a Kmeans execution.
+   Basic trace view of a KMeans execution.
 
 In the previous trace view, all the tasks of type "generate_fragment" in
 dark blue appear to be well distributed among the four workers, each worker
@@ -38,33 +38,33 @@ This task can be better displayed thanks to zoom.
 
 .. figure:: ./Figures/8_kmeans_graph.png
    :name: 8_kmeans_graph
-   :alt: Data dependencies graph of a Kmeans execution.
+   :alt: Data dependencies graph of a KMeans execution.
    :align: center
    :width: 60.0%
 
-   Data dependencies graph of a Kmeans execution.
+   Data dependencies graph of a KMeans execution.
 
 .. figure:: ./Figures/9_kmeans_zoom_selection_2.png
    :name: 9_kmeans_zoom_selection_2
-   :alt: Zoomed in view of a Kmeans execution (first iteration).
+   :alt: Zoomed in view of a KMeans execution (first iteration).
    :align: center
    :width: 60.0%
 
-   Zoomed in view of a Kmeans execution (first iteration).
+   Zoomed in view of a KMeans execution (first iteration).
 
 
 Numerical Analysis
 ------------------
 
-Here we analize the Kmeans trace numerically.
+Here we analyze the KMeans trace numerically.
 
 .. figure:: ./Figures/3_kmeans_event_flags.png
    :name: 3_kmeans_event_flags_
-   :alt: Original sample trace of a Kmeans execution to be analyzed
+   :alt: Original sample trace of a KMeans execution to be analyzed
    :align: center
    :width: 60.0%
 
-   Original sample trace of a Kmeans execution to be analyzed
+   Original sample trace of a KMeans execution to be analyzed
 
 Paraver offers the possibility of having different histograms of the
 trace events. Click the "New Histogram" button in the main window and
@@ -91,17 +91,17 @@ appear.
 After that, the following table is shown. In this case for each worker,
 the time spent executing each type of task is shown in gradient from light green
 for lower values to dark-blue for higher ones.
-The values coresponding to the colours and task names can be shown by clicking
+The values corresponding to the colours and task names can be shown by clicking
 in the gray magnifying glass button. And the task corresponding to each task
-column can also be shown by clicking in the colur bars button.
+column can also be shown by clicking in the color bars button.
 
 .. figure:: ./Figures/12_kmeans_histogram_conf.png
    :name: 12_kmeans_histogram_conf
-   :alt: Kmeans histogram corresponding to previous trace
+   :alt: KMeans histogram corresponding to previous trace
    :align: center
    :width: 40.0%
 
-   Kmeans histogram corresponding to previous trace
+   KMeans histogram corresponding to previous trace
 
 The time spent executing each type of task is shown, and task names appear
 in the same color than in the trace view. The color of the cells in a row
@@ -109,11 +109,11 @@ is kept, conforming a color based histogram.
 
 .. figure:: ./Figures/13_kmeans_histogram.png
    :name: 13_kmeans_histogram
-   :alt: Kmeans numerical histogram corresponding to previous trace
+   :alt: KMeans numerical histogram corresponding to previous trace
    :align: center
    :width: 40.0%
 
-   Kmeans numerical histogram corresponding to previous trace
+   KMeans numerical histogram corresponding to previous trace
 
 The previous table also gives, at the end of each column, some extra
 statistical information for each type of tasks (as the total, average,
@@ -147,8 +147,8 @@ dark-blue changes with the new values.
 
 .. figure:: ./Figures/16_kmeans_histogram_bursts.png
    :name: 16_kmeans_histogram_bursts
-   :alt: Kmeans histogram with the number of bursts
+   :alt: KMeans histogram with the number of bursts
    :align: center
    :width: 40.0%
 
-   Kmeans histogram with the number of bursts
+   KMeans histogram with the number of bursts

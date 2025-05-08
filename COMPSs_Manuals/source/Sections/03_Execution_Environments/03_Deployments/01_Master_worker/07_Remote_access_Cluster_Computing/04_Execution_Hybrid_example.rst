@@ -1,3 +1,7 @@
+.. spelling:word-list::
+
+   env
+
 Hybrid execution example
 ------------------------
 
@@ -52,7 +56,7 @@ The application that we are going to use is:
 
 This application has two tasks defined (``increment`` and ``multiply``) with
 different requirements. Since one of the MN5 partitions has GPUs, this example
-ilustrates how COMPSs is able to deal with two different clusters executing
+illustrates how COMPSs is able to deal with two different clusters executing
 the tasks respecting their constraints. The ``increment`` task is represents a
 function with a high internal parallelism, requiring 100 CPU cores, and the
 ``multiply`` function represents a function with less internal parallelism, but
@@ -60,7 +64,7 @@ requiring one GPU. Consequently, the ``increment`` tasks can only be executed
 in the GPP partition (the ACC partition CPUs have only 80 GPU cores), while
 the ``multiply`` tasks can only be executed in the ACC partition (the GPP
 partition although it has enough CPU cores, does not have GPUs).
-The main function loops over two iterations invocating two times the
+The main function loops over two iterations invoking two times the
 ``increment`` and ``multiply`` tasks. Notice that there is a data dependency
 between the tasks.
 

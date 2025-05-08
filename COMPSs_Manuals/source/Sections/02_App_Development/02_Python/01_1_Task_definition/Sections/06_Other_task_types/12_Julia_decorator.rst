@@ -231,10 +231,10 @@ The invocation of the *julia_task* task would be equivalent to:
     $ julia my_julia_app.jl -l --hide=fileToHide.txt --sort=time
 
 This particular case is intended to show all the power of the
-*@julia* decorator in conjuntion with the *@task*
+*@julia* decorator in conjunction with the *@task*
 decorator. Please note that although the *hide* parameter is used as a
 prefix for the julia invocation, the *fileToHide.txt* would also be
-transfered to the worker (if necessary) since its type is defined as
+transferred to the worker (if necessary) since its type is defined as
 `FILE_IN`. This feature enables to build more complex julia invocations.
 
 In addition, the ``@julia`` decorator also supports the ``fail_by_exit_value``
@@ -244,9 +244,9 @@ It accepts a boolean (``True`` to consider the task failed if the exit value is
 not 0, or ``False`` to ignore the failure by the exit value (**default**)), or
 a string to determine the environment variable that defines the fail by
 exit value (as boolean).
-The default behaviour (``fail_by_exit_value=False``) allows users to receive
+The default behavior (``fail_by_exit_value=False``) allows users to receive
 the exit value of the julia as the task return value, and take the
-necessary decissions based on this value.
+necessary decisions based on this value.
 
 .. code-block:: python
     :name: julia_task_python_exit

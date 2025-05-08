@@ -1,8 +1,8 @@
 Pip
 ===
 
-Pre-requisites
---------------
+Prerequisites
+-------------
 
 In order to be able to install COMPSs and PyCOMPSs with Pip, the
 dependencies (excluding the COMPSs packages) mentioned
@@ -22,7 +22,7 @@ possible scenarios and their proper installation command are:
 
     .. tab:: Install systemwide
 
-        Install systemwide:
+        Install system-wide:
 
         .. code-block:: console
 

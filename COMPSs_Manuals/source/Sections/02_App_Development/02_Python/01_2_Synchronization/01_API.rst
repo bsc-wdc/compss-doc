@@ -1,3 +1,7 @@
+.. spelling:word-list::
+
+    rw
+
 API
 ~~~
 
@@ -25,7 +29,8 @@ compss_wait_on_file(\*file_name)
    Returns True if success (False otherwise).
 
 compss_wait_on_directory(\*directory_name)
-   Synchronizes for the last version of the directory/ies specified by *directory_name*.
+   Synchronizes for the last version of the directory or directories specified
+   by *directory_name*
    Returns True if success (False otherwise).
 
 compss_barrier(no_more_tasks=False)
@@ -47,7 +52,7 @@ compss_barrier_group(group_name)
    for more information about task groups.
 
 compss_wait_on(\*obj, mode="r" | "rw")
-   Synchronizes for the last version of object/s specifed by *obj* and returns
+   Synchronizes for the last version of object/s specified by *obj* and returns
    the synchronized object.
    It can have an optional string parameter *mode*, which defaults to
    *rw*, that indicates whether the main program will modify the
@@ -388,7 +393,7 @@ used in the main program of a COMPSs Python application.
     |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+
     |                 | compss_wait_on_file(\*file_name)             | Synchronizes for the last version of the specified file/s.                              |
     |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+
-    |                 | compss_wait_on_directory(\*directory_name)   | Synchronizes for the last version of the specified directory/ies.                       |
+    |                 | compss_wait_on_directory(\*directory_name)   | Synchronizes for the last version of the specified directory or directories.            |
     |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+
     |                 | compss_barrier(no_more_tasks=False)          | Wait for all tasks submitted before the barrier.                                        |
     |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+

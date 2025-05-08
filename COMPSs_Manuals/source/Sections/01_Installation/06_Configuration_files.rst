@@ -284,13 +284,13 @@ users must:
 
 #. Define the shared disk and its capabilities
 
-#. Add the shared disk and its mountpoint to each worker
+#. Add the shared disk and its mount-point to each worker
 
-#. Add the shared disk and its mountpoint to the master node
+#. Add the shared disk and its mount-point to the master node
 
 Next example illustrates steps 1 and 2. The ``<SharedDisk>`` tag adds a
 new shared disk named ``sharedDisk0`` and the ``<AttachedDisk>`` tag
-adds the mountpoint of a named shared disk to a specific worker.
+adds the mount-point of a named shared disk to a specific worker.
 
 .. code-block:: xml
 
@@ -337,7 +337,7 @@ attach the previous ``sharedDisk0`` to the master node:
 Notice that the ``resources.xml`` file can have multiple ``SharedDisk``
 definitions and that the ``SharedDisks`` tag (either in the
 ``resources.xml`` or in the ``project.xml`` files) can have multiple
-``AttachedDisk`` childrens to mount several shared disks on the same
+``AttachedDisk`` children to mount several shared disks on the same
 worker or master.
 
  
@@ -686,7 +686,7 @@ This connector uses a Java API client from
 https://github.com/docker-java/docker-java, version *3.0.3*. It has not
 additional options. Make sure that the image/s you want to load are
 pulled before running COMPSs with ``docker pull IMAGE``. Otherwise, the
-connectorn will throw an exception.
+connector will throw an exception.
 
 Cloud connectors: Mesos
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -708,7 +708,7 @@ available from connector is shown in :numref:`Mesos_options`.
     +========================================+================================================================+
     | mesos-framework-name                   | Framework name to show in Mesos.                               |
     +----------------------------------------+----------------------------------------------------------------+
-    | mesos-woker-name                       | Worker names to show in Mesos.                                 |
+    | mesos-worker-name                       | Worker names to show in Mesos.                                |
     +----------------------------------------+----------------------------------------------------------------+
     | mesos-framework-hostname               | Framework hostname to show in Mesos.                           |
     +----------------------------------------+----------------------------------------------------------------+
@@ -747,7 +747,7 @@ available from connector is shown in :numref:`Mesos_options`.
     | mesos-docker-volume-container-path     | Container path to mount volume.                                |
     +----------------------------------------+----------------------------------------------------------------+
 
-TimeUnit avialable values: ``DAYS``, ``HOURS``, ``MICROSECONDS``,
+TimeUnit available values: ``DAYS``, ``HOURS``, ``MICROSECONDS``,
 ``MILLISECONDS``, ``MINUTES``, ``NANOSECONDS``, ``SECONDS``.
 
 Services configuration

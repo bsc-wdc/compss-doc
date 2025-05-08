@@ -173,13 +173,13 @@ describe the individuals that wrote the source code of the application. For each
 .. WARNING::
 
     If no ``orcid`` is found online or specified for an Author, they will not be listed as such. Their corresponding
-    Organisation information will only be included if the Organisation's ``ror`` is found online or specified directly
+    Organization information will only be included if the Organization's ``ror`` is found online or specified directly
     in the YAML configuration file.
 
 .. TIP::
 
     It is very important that the ``orcid`` and ``ror`` terms are correctly defined, since they are
-    used as unique identifiers for Persons and Organisations in the RO-Crate specification. The ``orcid`` id is the
+    used as unique identifiers for Persons and Organizations in the RO-Crate specification. The ``orcid`` id is the
     minimum information needed to be able to add a person as an Author.
 
 Agent section
@@ -235,10 +235,10 @@ will override the information found online, as will be shown in the following ex
       e-mail: Rosa.M.Badia@upc.edu
       ror: https://ror.org/03mb6wj31
 
-Analysing the example, we can see that at least the ``name`` or the ``orcid`` is provided in all the cases. Besides,
+Analyzing the example, we can see that at least the ``name`` or the ``orcid`` is provided in all the cases. Besides,
 we can complete or override any details found online. For ``Raül Sirvent``, the automatic search will return ``Barcelona
-Supercomputing Center`` as organisation, but since the term ``organisation_name`` is specified, it overrides the search
-result with ``Universitat Politècnica de Catalunya``. For ``Francesc Lordan`` we override his organisation using the ROR.
+Supercomputing Center`` as organization, but since the term ``organisation_name`` is specified, it overrides the search
+result with ``Universitat Politècnica de Catalunya``. For ``Francesc Lordan`` we override his organization using the ROR.
 Finally, in ``Raül Sirvent`` and ``Rosa M Badia`` we complete the ``e-mail`` information, that cannot be obtained online.
 
 The provenance generation will print in the standard output the searches, and the results of each search, as shown in
@@ -435,4 +435,3 @@ An example of the **minimal YAML** that needs to be defined in order to publish 
     Workflow Information** section, we encourage application owners to include all the fields detailed in the YAML in
     order to get all the benefits of recording workflow provenance. For instance, if no authors are included, it will
     not be possible to generate a DOI for the workflow.
-
