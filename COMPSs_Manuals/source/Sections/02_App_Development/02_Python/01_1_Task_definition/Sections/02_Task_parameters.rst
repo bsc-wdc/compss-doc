@@ -2,7 +2,7 @@ Task Parameters
 ~~~~~~~~~~~~~~~
 
 The metadata corresponding to a parameter is specified as an argument of
-the ``@task`` decorator, whose name is the formal parameter’s name and whose
+the ``@task`` decorator, whose name is the formal parameter's name and whose
 value defines the type and direction of the parameter. The parameter types and
 directions can be:
 

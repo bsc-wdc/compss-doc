@@ -19,7 +19,7 @@ into the ``resources.xml`` and ``project.xml`` files.
 Jobs fail
 ---------
 
-If all the application’s tasks fail because all the submitted jobs fail,
+If all the application's tasks fail because all the submitted jobs fail,
 it is probably due to the fact that there is a resource
 miss-configuration. In most of the cases, the resource that the
 application is trying to access has no passwordless access through the
@@ -315,7 +315,7 @@ present and that MPI path is correct and exists. Sample output:
 
 .. IMPORTANT::
 
-    **Disclaimer:** the parallel merge with MPI will not bypass the system’s
+    **Disclaimer:** the parallel merge with MPI will not bypass the system's
     maximum number of open files, just distribute the files among the
     resources. If all resources belong to the same machine, the merge will
     fail anyways.

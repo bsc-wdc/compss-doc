@@ -8,9 +8,9 @@ user can choose the task behavior using the *on_failure* argument within the
 
 The possible values are:
   - **'RETRY'** (Default): The task is executed twice in the same worker and a different worker.
-  - **’CANCEL_SUCCESSORS’**: All successors of this task are canceled.
-  - **’FAIL’**: The task failure produces a failure of the whole application.
-  - **’IGNORE’**: The task failure is ignored and the output parameters are set with empty values.
+  - **'CANCEL_SUCCESSORS'**: All successors of this task are canceled.
+  - **'FAIL'**: The task failure produces a failure of the whole application.
+  - **'IGNORE'**: The task failure is ignored and the output parameters are set with empty values.
 
 A part from failures, COMPSs can also manage blocked tasks executions. Users can
 use the *time_out* property in the task definition to indicate the maximum duration

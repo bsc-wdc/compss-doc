@@ -1,8 +1,8 @@
 Application Compilation
 -----------------------
 
-To compile user’s applications with the C/C++ binding two commands are
-used: The "\ **compss_build_app**\ ’ command allows to compile
+To compile user's applications with the C/C++ binding two commands are
+used: The "\ **compss_build_app**\ ' command allows to compile
 applications for a single architecture, and the
 "**compss_build_app_multi_arch**" command for multiple
 architectures. Both commands must be executed in the directory of the
@@ -25,8 +25,8 @@ in the builders README.
 
 .. code-block:: console
 
-    $~/matmul_objects> compss_build_app --cross-compile --cross-compile-prefix=arm-linux-gnueabihf- --java_home=/usr/lib/jvm/java-1.8.0-openjdk-armhf Matmul
-    [ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-1.8.0-openjdk-armhf/jre/lib/arm/server
+    $~/matmul_objects> compss_build_app --cross-compile --cross-compile-prefix=arm-linux-gnueabihf- --java_home=/usr/lib/jvm/java-11-openjdk-armhf Matmul
+    [ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-11-openjdk-armhf/jre/lib/arm/server
     [ INFO ] Boost libraries are searched in the directory: /usr/lib/
     [ INFO ] You enabled cross-compile and the prefix to be used is: arm-linux-gnueabihf-
 
@@ -85,7 +85,7 @@ architecture command is done in the following way.
     $~/matmul_objects> compss_build_app_multi_arch --master=x86_64-linux-gnu --worker=arm-linux-gnueabihf,x86_64-linux-gnu Matmul
 
     [ INFO ] Using default configuration file: /opt/COMPSs/Bindings/c/cfgs/compssrc.
-    [ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/amd64/server
+    [ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-11.0-openjdk-amd64/jre/lib/amd64/server
     [ INFO ] Boost libraries are searched in the directory: /usr/lib/
 
     ...
@@ -107,7 +107,7 @@ architecture command is done in the following way.
 
     ...
 
-    [ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-1.8.0-openjdk-armhf/jre/lib/arm/server
+    [ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-11-openjdk-armhf/jre/lib/arm/server
     [ INFO ] Boost libraries are searched in the directory: /opt/install-arm/libboost
 
     ...
@@ -129,7 +129,7 @@ architecture command is done in the following way.
 
     ...
 
-    [ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/amd64/server
+    [ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-11-openjdk-amd64/jre/lib/amd64/server
     [ INFO ] Boost libraries are searched in the directory: /usr/lib/
 
     ...
@@ -147,7 +147,7 @@ architecture command is done in the following way.
 
     ...
 
-    Command successful. # The worker for x86_64-linux-gnu compiled successfuly
+    Command successful. # The worker for x86_64-linux-gnu compiled successfully
 
 *[The previous output has been cut for simplicity]*
 

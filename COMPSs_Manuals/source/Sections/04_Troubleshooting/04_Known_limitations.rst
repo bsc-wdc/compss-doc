@@ -101,11 +101,11 @@ Python constraints in the cloud
 
 Intermediate files
    Some applications may generate intermediate files that are only used among
-   tasks and are never needed inside the master’s code.
+   tasks and are never needed inside the master's code.
    However, COMPSs will transfer back these files to the master node at the
    end of the execution.
    Currently, the only way to avoid transferring these intermediate files is
-   to manually erase them at the end of the master’s code.
+   to manually erase them at the end of the master's code.
    Users must take into account that this only applies for files declared as
    task parameters and **not** for files created and/or erased inside a task.
 
@@ -167,7 +167,7 @@ Python global variables
    previous one. PyCOMPSs does not guarantee that applications that
    create or modify global variables while worker code is executed will
    work. In particular, this issue (and the previous one) is due to
-   Python’s Global Interpreter Lock (GIL).
+   Python's Global Interpreter Lock (GIL).
 
 Python application directory as a module
    If the Python application root folder is a python module (i.e: it contains

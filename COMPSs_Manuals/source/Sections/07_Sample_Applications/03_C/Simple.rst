@@ -14,7 +14,7 @@ defined as follows:
       };
 
 Next we also provide the invocation of the task from the main code and
-the increment’s method code.
+the increment's method code.
 
 .. code-block:: C
 

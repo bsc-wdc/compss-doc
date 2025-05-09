@@ -5,7 +5,7 @@ Users can emit custom events inside their python **tasks**. Thanks to
 the fact that python is not a compiled language, users can emit events
 inside their own tasks using the available EXTRAE instrumentation object
 because it is already loaded and available in the PYTHONPATH when
-running with tracing enabled.  
+running with tracing enabled. 
 
 To emit an event first import pyextrae:
 

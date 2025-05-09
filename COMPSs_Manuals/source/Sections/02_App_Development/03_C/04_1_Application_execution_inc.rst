@@ -2,7 +2,7 @@ The following environment variables must be defined before executing a
 COMPSs C/C++ application:
 
 JAVA_HOME
-   Java JDK installation directory (e.g. /usr/lib/jvm/java-8-openjdk/)
+   Java JDK installation directory (e.g. /usr/lib/jvm/java-11-openjdk/)
 
 After compiling the application, two directories, master and worker, are
 generated. The master directory contains a binary called as the main

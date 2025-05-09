@@ -32,7 +32,7 @@ In order to use COMPSs with Docker, some requirements must be fulfilled:
    and Port to access it remotely.
 
 -  A **Docker Hub account**. Docker Hub is an online repository for Docker
-   images. We don’t currently support another sharing method besides
+   images. We don't currently support another sharing method besides
    uploading to Docker Hub, so you will need to create a personal
    account. This has the advantage that it takes very little time either
    upload or download the needed images, since it will reuse the
@@ -91,15 +91,15 @@ The **compss_docker_gen_image** script receives 2 parameters:
    the executable file (a .jar for example). Keep the
    context-directory as lightest as possible.
 
-   For example: **--context-dir=’/home/compss-user/my-app-dir’** (where
-   ’my-app-dir’ contains ’app.jar’, ’data1.dat’ and ’data2.csv’). For
+   For example: **--context-dir='/home/compss-user/my-app-dir'** (where
+   'my-app-dir' contains 'app.jar', 'data1.dat' and 'data2.csv'). For
    more details, this context directory will be recursively copied into
    a COMPSs base image. Specifically, it will create all the path down
    to the context directory inside the image.
 
 --image-name
    Specifies a name for the created image. It **MUST** have this format:
-   ’DOCKERHUB-USERNAME/image-name’.
+   'DOCKERHUB-USERNAME/image-name'.
    The *DOCKERHUB_USERNAME* must be the username of your personal
    Docker Hub account.
    The *image_name* can be whatever you want, and will be used as the
@@ -120,7 +120,7 @@ The **compss_docker_gen_image** script receives 2 parameters:
    context-directory and the absolute CLASSPATH (the absolute path to the
    executable jar). You will need it to run the application using
    ``runcompss-docker``. In addition, if you plan on distributing the
-   application, you can use the Docker Hub image’s information tab to
+   application, you can use the Docker Hub image's information tab to
    write them, so the application users can retrieve them.
 
 
@@ -148,19 +148,19 @@ arguments. The runcompss-docker additional arguments are:
 
 --s, --swarm-manager
     Specifies the Swarm manager IP and Port (format: IP:Port).
-    For example: ``--swarm-manager=’129.114.108.8:4000’``
+    For example: ``--swarm-manager='129.114.108.8:4000'``
 
 --i, --image-name
     Specify the image name of the application image in Docker Hub.
     Remember you must generate this with compss_docker_gen_image
     Remember as well that the format must be:
-    ’DOCKERHUB_USERNAME/APP_IMAGE_NAME:TAG’ (the :TAG is optional).
-    For example: ``--image-name=’john123/my-compss-application:1.9’``
+    'DOCKERHUB_USERNAME/APP_IMAGE_NAME:TAG' (the :TAG is optional).
+    For example: ``--image-name='john123/my-compss-application:1.9'``
 
 --c, --context-dir
     Specifies the **context directory** of the app. It must be specified
     by the application image provider.
-    For example: ``--context-dir=’/home/compss-user/my-app-context-dir’``
+    For example: ``--context-dir='/home/compss-user/my-app-context-dir'``
 
 As **optional** arguments:
 
@@ -229,13 +229,13 @@ Execution results
 The execution results will be retrieved from the master container of
 your application.
 
-If your context-directory name is **’matmul’**, then your results will
-be saved in the **’matmul-results’** directory, which will be located
+If your context-directory name is **'matmul'**, then your results will
+be saved in the **'matmul-results'** directory, which will be located
 in the same directory you executed runcompss-docker on.
 
-Inside the **’matmul-results’** directory you will have:
+Inside the **'matmul-results'** directory you will have:
 
--  A folder named **’matmul’** with all the result files that were in
+-  A folder named **'matmul'** with all the result files that were in
    the same directory as the executable when the application execution
    ended. More precisely, this will contain the context-directory state
    right after finishing your application execution.
@@ -244,8 +244,8 @@ Inside the **’matmul-results’** directory you will have:
    project.xml, resources.xml), in case you want to check for more
    complex errors or details.
 
--  A folder named **’debug’**, which (in case you used the runcompss
-   debug option (**-d**)), will contain the **’.COMPSs’** directory,
+-  A folder named **'debug'**, which (in case you used the runcompss
+   debug option (**-d**)), will contain the **'.COMPSs'** directory,
    which contains another directory in which there are the typical debug
    files runtime.log, jobs, etc.
    Remember **.COMPSs** is a **hidden** directory, take this into
@@ -272,7 +272,7 @@ application running with COMPSs and Docker.
 Imagine we have our Matmul application in ``/home/john/matmul`` and
 inside the ``matmul`` directory we only have the file ``matmul.jar``.
 
-We have created a Docker Hub account with username ’john123’.
+We have created a Docker Hub account with username 'john123'.
 
 The first step will be creating the image:
 
@@ -284,7 +284,7 @@ The first step will be creating the image:
 Now, we write down the context-dir (``/home/john/matmul``) and the
 CLASSPATH (``/home/john/matmul/matmul.jar``). We do this because they will be
 needed for future executions.
-Since the image is created and uploaded, we won’t need to do this step
+Since the image is created and uploaded, we won't need to do this step
 anymore.
 
 Now we are going to execute our Matmul application in a Docker cluster.
@@ -329,7 +329,7 @@ First step, create the image once:
                               --image-name='laura-67/my-kmeans'
 
 And now execute with 30 worker containers, and Swarm located in
-’110.3.14.159:26535’.
+'110.3.14.159:26535'.
 
 .. code-block:: console
 

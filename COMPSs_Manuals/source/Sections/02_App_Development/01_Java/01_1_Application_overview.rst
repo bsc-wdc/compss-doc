@@ -22,13 +22,13 @@ of the development environment.
 
 .. rubric:: Main application code
 
-In COMPSs, the user’s application code is kept unchanged, no API calls
+In COMPSs, the user's application code is kept unchanged, no API calls
 need to be included in the main application code in order to run the
 selected tasks on the nodes.
 
 The COMPSs runtime is in charge of replacing the invocations to the
 user-selected methods with the creation of remote tasks also taking care
-of the access to files where required. Let’s consider the Simple
+of the access to files where required. Let's consider the Simple
 application example that takes an integer as input parameter and
 increases it by one unit.
 

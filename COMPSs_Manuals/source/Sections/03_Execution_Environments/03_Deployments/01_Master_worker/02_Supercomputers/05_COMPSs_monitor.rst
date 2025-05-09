@@ -21,7 +21,7 @@ consider to download our Virtual Machine available at our webpage.
 
 Once the packages have been installed and configured, users need to
 mount the sshfs directory as follows. The ``SC_USER`` stands for your
-supercomputer’s user, the ``SC_ENDPOINT`` to the supercomputer’s public
+supercomputer's user, the ``SC_ENDPOINT`` to the supercomputer's public
 endpoint and the ``TARGET_LOCAL_FOLDER`` to the local folder where you
 wish to deploy the supercomputer files):
 

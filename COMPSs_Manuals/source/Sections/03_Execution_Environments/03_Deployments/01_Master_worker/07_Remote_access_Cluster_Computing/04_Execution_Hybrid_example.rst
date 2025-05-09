@@ -71,8 +71,8 @@ between the tasks.
 In the **first step**, we have to be sure that COMPSs and the application
 is available in MN5. For this example, we assume that the application will be
 deployed in the user home directory (``/home/bsc/bsc12345/simple``) which is
-shared among partitions and COMPSs is installed in ``/apps/GPP/COMPSs/3.3.2``
-in GPP and in ``/apps/ACC/COMPSs/3.3.2`` in ACC. The following command are used
+shared among partitions and COMPSs is installed in ``/apps/GPP/COMPSs/3.3.3``
+in GPP and in ``/apps/ACC/COMPSs/3.3.3`` in ACC. The following command are used
 to deploy the application and check the COMPSs installation:
 
 .. code-block:: bash
@@ -81,15 +81,15 @@ to deploy the application and check the COMPSs installation:
     $ scp -r /home/user/simple bsc12345@glogin1.bsc.es:/home/bsc/bsc12345/.
     $ ssh bsc12345@glogin1.bsc.es
     # Inside the remote machine within GPP, check where COMPSs is installed
-    $ module load COMPSs/3.3.2
+    $ module load COMPSs/3.3.3
     $ echo $(builtin cd $(dirname $(which runcompss))/../../..; pwd)
-    /apps/GPP/COMPSs/3.3.2
+    /apps/GPP/COMPSs/3.3.3
     $ exit
     $ ssh bsc12345@alogin1.bsc.es
     # Inside the remote machine within ACC, check where COMPSs is installed
-    $ module load COMPSs/3.3.2
+    $ module load COMPSs/3.3.3
     $ echo $(builtin cd $(dirname $(which runcompss))/../../..; pwd)
-    /apps/ACC/COMPSs/3.3.2
+    /apps/ACC/COMPSs/3.3.3
     $ exit
 
 In the **second step**, we create the required xml files and they will be
@@ -120,7 +120,7 @@ stored in ``/home/user/simple``. Next lines show the XML files for this example:
                     </SubmissionSystem>
                 </Adaptor>
             </Adaptors>
-            <InstallDir>/apps/GPP/COMPSs/3.3.2/</InstallDir>
+            <InstallDir>/apps/GPP/COMPSs/3.3.3/</InstallDir>
             <WorkingDir>/home/bsc/bsc12345/simple/gpp/</WorkingDir>
             <User>bsc12345</User>
             <LimitOfTasks>1000</LimitOfTasks>
@@ -150,7 +150,7 @@ stored in ``/home/user/simple``. Next lines show the XML files for this example:
                     </SubmissionSystem>
                 </Adaptor>
             </Adaptors>
-            <InstallDir>/apps/ACC/COMPSs/3.3.2/</InstallDir>
+            <InstallDir>/apps/ACC/COMPSs/3.3.3/</InstallDir>
             <WorkingDir>/home/bsc/bsc12345/simple/acc/</WorkingDir>
             <User>bsc12345</User>
             <LimitOfTasks>1000</LimitOfTasks>
@@ -242,14 +242,14 @@ and ``/home/bsc/bsc12345/simple/env_acc.sh``:
     :caption: env_gpp.sh
 
     export COMPSS_PYTHON_VERSION=3.12.1
-    module load COMPSs/3.3.2
+    module load COMPSs/3.3.3
 
 .. code-block:: text
     :name: env_mn_acc
     :caption: env_acc.sh
 
     export COMPSS_PYTHON_VERSION=3.12.1
-    module load COMPSs/3.3.2
+    module load COMPSs/3.3.3
 
 
 Finally, we launch the application in the **third step**.
@@ -278,8 +278,8 @@ In this section, we show how to execute the a Jupyter notebook in
 
 The **first step** requires to make sure that COMPSs is available in the remote
 machines (e.g. ``glogin1.bsc.es`` and ``alogin1.bsc.es``). For this example,
-we assume that COMPSs is installed in ``/apps/GPP/COMPSs/3.3.2`` within
-``glogin1.bsc.es``, and ``/apps/ACC/COMPSs/3.3.2`` within ``alogin1.bsc.es``.
+we assume that COMPSs is installed in ``/apps/GPP/COMPSs/3.3.3`` within
+``glogin1.bsc.es``, and ``/apps/ACC/COMPSs/3.3.3`` within ``alogin1.bsc.es``.
 
 .. IMPORTANT::
 

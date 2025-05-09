@@ -22,7 +22,7 @@ In the **first step**, we have to be sure that COMPSs and all the application
 files are available in MN5 (``glogin1.bsc.es``). For this example, we assume
 that the application will be deployed in the user home directory
 (``/home/bsc/bsc12345/kmeans``) and COMPSs is installed in
-``/apps/GPP/COMPSs/3.3.2``. The following command are used to deploy the
+``/apps/GPP/COMPSs/3.3.3``. The following command are used to deploy the
 application and check the COMPSs installation:
 
 .. code-block:: bash
@@ -31,9 +31,9 @@ application and check the COMPSs installation:
     $ scp -r /home/user/kmeans bsc12345@glogin1.bsc.es:/home/bsc/bsc12345/.
     $ ssh bsc12345@glogin1.bsc.es
     # Inside the remote machine, check where COMPSs is installed
-    $ module load COMPSs/3.3.2
+    $ module load COMPSs/3.3.3
     $ echo $(builtin cd $(dirname $(which runcompss))/../../..; pwd)
-    /apps/GPP/COMPSs/3.3.2
+    /apps/GPP/COMPSs/3.3.3
     $ exit
 
 In the **second step**, we create the required xml files and they will be
@@ -64,7 +64,7 @@ stored in ``/home/user/kmeans``. Next lines show the XML files for this example:
                     </SubmissionSystem>
                   </Adaptor>
             </Adaptors>
-            <InstallDir>/apps/GPP/COMPSs/3.3.2/</InstallDir>
+            <InstallDir>/apps/GPP/COMPSs/3.3.3/</InstallDir>
             <WorkingDir>/home/bsc/bsc12345/kmeans/tmp/</WorkingDir>
             <User>bsc12345</User>
             <LimitOfTasks>1000</LimitOfTasks>
@@ -112,7 +112,7 @@ And the environment script for MN5 (``/home/bsc/bsc12345/kmeans/env_mn.sh``):
     :caption: env_mn.sh
 
     export COMPSS_PYTHON_VERSION=3.12.1
-    module load COMPSs/3.3.2
+    module load COMPSs/3.3.3
 
 
 Finally, we launch the application in the **third step**.
@@ -140,7 +140,7 @@ In this section, we show how to execute the a Jupyter notebook in
 
 The **first step** requires to make sure that COMPSs is available in the remote
 machine (e.g. ``glogin1.bsc.es``). For this example, we assume that COMPSs is
-installed in ``/apps/GPP/COMPSs/3.3.2``.
+installed in ``/apps/GPP/COMPSs/3.3.3``.
 
 .. IMPORTANT::
 

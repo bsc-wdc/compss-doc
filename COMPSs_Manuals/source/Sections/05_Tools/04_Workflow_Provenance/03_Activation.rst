@@ -70,9 +70,9 @@ for a detailed description of its content).
 
         PROVENANCE | STARTING WORKFLOW PROVENANCE SCRIPT
         PROVENANCE | If needed, Provenance generation can be triggered by hand using the following commands:
-            /apps/GPP/COMPSs/3.3.1/Runtime/scripts/utils/compss_gengraph svg /home/bsc/bsc019057/.COMPSs/4471214//monitor/complete_graph.dot
-            export PYTHONPATH=/apps/GPP/COMPSs/3.3.1/Runtime/scripts/system/:$PYTHONPATH
-            python3 -O /apps/GPP/COMPSs/3.3.1/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py FULL_SINGULARITY.yaml /home/bsc/bsc019057/.COMPSs/4471214//dataprovenance.log
+            /apps/GPP/COMPSs/3.3.3/Runtime/scripts/utils/compss_gengraph svg /home/bsc/bsc019057/.COMPSs/4471214//monitor/complete_graph.dot
+            export PYTHONPATH=/apps/GPP/COMPSs/3.3.3/Runtime/scripts/system/:$PYTHONPATH
+            python3 -O /apps/GPP/COMPSs/3.3.3/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py FULL_SINGULARITY.yaml /home/bsc/bsc019057/.COMPSs/4471214//dataprovenance.log
         PROVENANCE | TIP for BSC cluster users: before triggering generation by hand, run first: salloc -p interactive
         ...
 
