@@ -178,7 +178,7 @@ Hecuba Configuration Parameters
     NODE_PORT (default value: 9042)
       Storage System listening port
 
-    EXECUTION_NAME (default value: ’my_app’)
+    EXECUTION_NAME (default value: 'my_app')
       Default name for the upper level in the app namespace hierarchy
 
     CREATE_SCHEMA (default value: False)

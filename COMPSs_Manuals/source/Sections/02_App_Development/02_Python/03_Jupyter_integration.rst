@@ -26,7 +26,7 @@ LD_LIBRARY_PATH
     The path where the ``libbindings-commons.so`` library is located
     (e.g. ``<COMPSS_INSTALLATION_PATH>/Bindings/bindings-common/lib/``)
     and the path where the ``libjvm.so`` library is located (e.g.
-    ``/usr/lib/jvm/java-8-openjdk/jre/lib/amd64/server/``).
+    ``/usr/lib/jvm/java-11-openjdk/jre/lib/amd64/server/``).
 
 API calls
 ~~~~~~~~~

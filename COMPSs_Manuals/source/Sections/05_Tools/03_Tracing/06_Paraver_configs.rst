@@ -133,9 +133,9 @@ to only see the task dependencies are needed to put in Filter > Communications
     +============================================+=============================================================================+========================+
     | ``communication_matrix.cfg``               | Table view of communications between each node                              | Runtime Communications |
     +--------------------------------------------+-----------------------------------------------------------------------------+------------------------+
-    | ``compss_data_transfers.cfg``              | Shows data transfers for each task’s parameter                              | Runtime Communications |
+    | ``compss_data_transfers.cfg``              | Shows data transfers for each task's parameter                              | Runtime Communications |
     +--------------------------------------------+-----------------------------------------------------------------------------+------------------------+
-    | ``compss_tasksID_transfers.cfg``           | Task’s transfers request for each task (task with its IDs are also shown)   | Runtime Communications |
+    | ``compss_tasksID_transfers.cfg``           | Task's transfers request for each task (task with its IDs are also shown)   | Runtime Communications |
     +--------------------------------------------+-----------------------------------------------------------------------------+------------------------+
     | ``process_bandwidth.cfg``                  | Send/Receive bandwidth table for each node                                  | Runtime Communications |
     +--------------------------------------------+-----------------------------------------------------------------------------+------------------------+

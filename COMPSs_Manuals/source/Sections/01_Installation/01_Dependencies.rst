@@ -392,7 +392,7 @@ As an example for some distributions and versions:
             $ brew install util-linux
             $ brew install boost
             $ brew install gradle
-            
+
 
         The package ``xdg-utils`` has to be installed by hand (after installing ``libxslt`` and ``xmlto``):
 
@@ -461,5 +461,3 @@ MPI processes instead of multiprocessing, it is necessary to have ``openmpi``,
     .. code-block:: console
 
         $ sudo apt-get install libopenmpi-dev  # Adapt for your OS package manager
-
-        

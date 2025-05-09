@@ -4,7 +4,7 @@ Executing COMPSs applications
 Prerequisites
 -------------
 
-Prerequisites vary depending on the application’s code language: for
+Prerequisites vary depending on the application's code language: for
 Java applications the users need to have a **jar archive** containing
 all the application classes, for Python applications there are no
 requirements and for C/C++ applications the code must have been

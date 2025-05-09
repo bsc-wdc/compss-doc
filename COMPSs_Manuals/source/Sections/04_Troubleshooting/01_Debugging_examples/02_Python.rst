@@ -142,14 +142,14 @@ the logs of the failed tasks:
     $HOME/.COMPSs
       └── error_in_task.py_01
             ├── jobs
-            │   ├── job1_NEW.err
-            │   ├── job1_NEW.out
-            │   ├── job1_RESUBMITTED.err
-            │   ├── job1_RESUBMITTED.out
-            │   ├── job2_NEW.err
-            │   ├── job2_NEW.out
-            │   ├── job2_RESUBMITTED.err
-            │   └── job2_RESUBMITTED.out
+            │   ├── job1_NEW.err
+            │   ├── job1_NEW.out
+            │   ├── job1_RESUBMITTED.err
+            │   ├── job1_RESUBMITTED.out
+            │   ├── job2_NEW.err
+            │   ├── job2_NEW.out
+            │   ├── job2_RESUBMITTED.err
+            │   └── job2_RESUBMITTED.out
             ├── resources.log
             ├── runtime.log
             ├── tmpFiles

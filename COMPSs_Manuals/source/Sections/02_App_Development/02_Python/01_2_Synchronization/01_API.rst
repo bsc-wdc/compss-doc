@@ -16,11 +16,11 @@ The main program of the application is a sequential code that contains
 calls to the selected tasks. In addition, when synchronizing for task
 data from the main program, there exist six API functions that can be invoked:
 
-compss_open(file_name, mode=’r’)
+compss_open(file_name, mode='r')
    Similar to the Python *open()* call.
    It synchronizes for the last version of file *file_name* and
    returns the file descriptor for that synchronized file. It can have
-   an optional parameter *mode*, which defaults to ’\ *r*\ ’, containing
+   an optional parameter *mode*, which defaults to '\ *r*\ ', containing
    the mode in which the file will be opened (the open modes are
    analogous to those of Python *open()*).
 
@@ -389,7 +389,7 @@ used in the main program of a COMPSs Python application.
     +-----------------+----------------------------------------------+-----------------------------------------------------------------------------------------+
     | Type            | API Function                                 | Description                                                                             |
     +=================+==============================================+=========================================================================================+
-    | Synchronization | compss_open(file_name, mode=’r’)             | Synchronizes for the last version of a file and returns its file descriptor.            |
+    | Synchronization | compss_open(file_name, mode='r')             | Synchronizes for the last version of a file and returns its file descriptor.            |
     |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+
     |                 | compss_wait_on_file(\*file_name)             | Synchronizes for the last version of the specified file/s.                              |
     |                 +----------------------------------------------+-----------------------------------------------------------------------------------------+

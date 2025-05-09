@@ -5,7 +5,7 @@ The *@binary* (or @Binary) decorator shall be used to define that a task is
 going to invoke a binary executable.
 
 In this context, the *@task* decorator parameters will be used
-as the binary invocation parameters (following their order in the
+as the binary invocation parameters automatically (following their order in the
 function definition). Since the invocation parameters can be of
 different nature, information on their type can be provided through the
 *@task* decorator.

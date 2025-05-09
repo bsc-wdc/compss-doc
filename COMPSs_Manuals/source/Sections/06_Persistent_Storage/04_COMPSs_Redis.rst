@@ -201,7 +201,7 @@ Python
 ``````
 
 Redis is also available for Python. As happens with Java, we
-first need to define a custom Storage Object. Let’s suppose that we want
+first need to define a custom Storage Object. Let's suppose that we want
 to write an application that multiplies two matrices :math:`A`, and
 :math:`B` by blocks. We can define a ``Block`` object that lets us store
 and write matrix blocks in our Redis backend:
@@ -223,7 +223,7 @@ and write matrix blocks in our Redis backend:
             self.block = new_block
 
 
-Let’s suppose that we are multiplying our matrices in the usual blocked
+Let's suppose that we are multiplying our matrices in the usual blocked
 way:
 
 .. code-block:: python
@@ -245,7 +245,7 @@ regular Python object (e.g: a Numpy matrix), then we can define
           c += a_object.block * b_object.block
 
 
-Let’s also suppose that we are interested to store the final result in
+Let's also suppose that we are interested to store the final result in
 our storage. A possible solution is the following:
 
 .. code-block:: python

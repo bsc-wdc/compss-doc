@@ -101,6 +101,6 @@ PAPI_FP_INS
 
 
 To further customize the tracked counters, modify the XML to suit your
-needs. For more information about Extrae’s XML
+needs. For more information about Extrae's XML
 configuration refer to
 https://www.bsc.es/computer-sciences/performance-tools/trace-generation/extrae/extrae-user-guide.

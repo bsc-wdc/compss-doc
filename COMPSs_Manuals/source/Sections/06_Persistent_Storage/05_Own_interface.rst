@@ -109,7 +109,7 @@ storage framework. It is only necessary if the target language is Python.
     |                           |         |                                                                                   | |     # Does not return                                                       |
     +---------------------------+---------+-----------------------------------------------------------------------------------+-------------------------------------------------------------------------------+
     | getByID(String id)        | Object  | | Retrieve an object from its identifier.                                         | | def getByID(id)                                                             |
-    |                           |         |                                                                                   | |     # Returns the object with Id ‘id’                                       |
+    |                           |         |                                                                                   | |     # Returns the object with Id ‘id'                                       |
     +---------------------------+---------+-----------------------------------------------------------------------------------+-------------------------------------------------------------------------------+
     | TaskContext               | Context | | Define a task context (task enter/exit actions).                                | | class TaskContext(object):                                                  |
     |                           |         |                                                                                   | |                                                                             |

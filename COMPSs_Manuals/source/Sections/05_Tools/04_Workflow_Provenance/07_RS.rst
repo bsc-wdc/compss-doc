@@ -67,7 +67,7 @@ This is an automatic reproducibility service designed to help reproduce COMPSs w
 
 If you're unsure how to create an instance on Chameleon, please refer to the official documentation: `Chameleon Documentation <https://chameleoncloud.readthedocs.io/en/latest/index.html>`_.
 
-To utilize this service or run any COMPSs experiments, you can create an instance of the Ubuntu 22.04 appliance with COMPSs 3.3.1 installed. You can find the appliance here: `Ubuntu 22.04 with COMPSs 3.3.1 <https://www.chameleoncloud.org/appliances/121/>`_.
+To utilize this service or run any COMPSs experiments, you can create an instance of the Ubuntu 22.04 appliance with COMPSs 3.3.3 installed. You can find the appliance here: `Ubuntu 22.04 with COMPSs 3.3.3 <https://www.chameleoncloud.org/appliances/121/>`_.
 
 After successfully creating an instance of the appliance, execute the following command to set up the environment:
 

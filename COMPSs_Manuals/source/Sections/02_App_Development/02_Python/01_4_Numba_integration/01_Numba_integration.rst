@@ -9,7 +9,7 @@ machine code.
 Basic usage
 ~~~~~~~~~~~
 
-PyCOMPSs’ tasks can be decorated with Numba’s ``@jit``/\ ``@njit`` decorator
+PyCOMPSs' tasks can be decorated with Numba's ``@jit``/\ ``@njit`` decorator
 (with the appropriate parameters) just below the @task decorator in order to
 apply Numba to the task.
 
@@ -31,7 +31,7 @@ to be recompiled in subsequent invocations).
 Advanced usage
 ~~~~~~~~~~~~~~
 
-PyCOMPSs can be also used in conjunction with the Numba’s
+PyCOMPSs can be also used in conjunction with the Numba's
 ``@vectorize``, ``@guvectorize``, ``@stencil`` and ``@cfunc``.
 But since these decorators do not preserve the original argument specification
 of the original function, their usage is done through the *numba* parameter
@@ -93,7 +93,7 @@ the key is the numba flag name, and the value, the numba flag value to use):
     def jit_func(a, b):
          ...
 
-Other Numba’s functionalities require the specification of the function
+Other Numba's functionalities require the specification of the function
 signature and declaration. In the next example a task that will use the
 *vectorize* with three parameters and a specific flag to target the CPU
 is shown:
@@ -214,5 +214,5 @@ the ``copy_to_host`` function and the task result is returned.
 
 
 More details about Numba and the specification of the signature, declaration
-and flags can be found in the Numba’s webpage
+and flags can be found in the Numba's webpage
 (http://numba.pydata.org/).

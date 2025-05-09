@@ -60,7 +60,11 @@ Create a new COMPSs environment in your development directory
             ``docker`` pip package is required for using docker environments in pycompss-cli.
             For Mac users:
             If command ``pycompss init docker`` is giving this error:
+
+            .. code-block:: console
+
                 "ERROR: Docker service is not running. Please, start docker service and try again"
+
             Despite having docker running fine could be caused by pycompss-cli not being able to find docker socket in the default path.
             Open **Docker Desktop** > **Settings** > **In the left panel scroll down to Advanced** > **Enable default Docker socket**
 
@@ -155,7 +159,7 @@ Create a new COMPSs environment in your development directory
         .. code-block:: text
 
             export ComputingUnits=1
-            export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+            export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
             module load COMPSs/3.0
             module load ANACONDA/5.1.0_py3
 

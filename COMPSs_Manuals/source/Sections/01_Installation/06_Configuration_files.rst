@@ -164,7 +164,7 @@ application, the user needs to set up the runtime and provide a
 description of the resources available on the node. For that purpose,
 the user describes within the ``<MasterNode>`` tag of the
 ``project.xml`` file the resources in the same way it describes other
-nodes’ resources on the using the ``resources.xml`` file. Since there is
+nodes' resources on the using the ``resources.xml`` file. Since there is
 no inter-process communication, adaptors description is not allowed. In
 the following example, the master will manage the execution of tasks on
 the MainProcessor CPU of the local node - a quad-core amd64 processor at
@@ -194,7 +194,7 @@ If no other nodes are available, the list of resources on the
 Otherwise, the user can define other nodes besides the master node as
 described in the following section, and the runtime system will
 orchestrate the task execution on both the local process and on the
-configured remote nodes.  
+configured remote nodes.
 
 .. code-block:: xml
 
@@ -222,7 +222,7 @@ The ``resources.xml`` and the ``project.xml`` files must be configured
 accordingly. Here we provide examples about configuration files for Grid
 and Cluster environments.
 
- 
+
 
 .. code-block:: xml
 
@@ -340,7 +340,7 @@ definitions and that the ``SharedDisks`` tag (either in the
 ``AttachedDisk`` children to mount several shared disks on the same
 worker or master.
 
- 
+
 
 Cloud configuration (dynamic resources)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -357,7 +357,7 @@ following steps have to be followed:
 
 The COMPSs runtime communicates with a cloud manager by means of
 connectors. Each connector implements the interaction of the runtime
-with a given provider’s API, supporting four basic operations: ask for
+with a given provider's API, supporting four basic operations: ask for
 the price of a certain VM in the provider, get the time needed to create
 a VM, create a new VM and terminate a VM. This design allows connectors
 to abstract the runtime from the particular API of each provider and

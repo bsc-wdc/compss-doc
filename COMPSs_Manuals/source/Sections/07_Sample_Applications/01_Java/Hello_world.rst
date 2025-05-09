@@ -6,7 +6,7 @@ Hello World! message. Its purpose is to clarify that the COMPSs tasks
 output is redirected to the job files and it is **not** available at the
 standard output.
 
-Next we provide the important parts of the application’s code.
+Next we provide the important parts of the application's code.
 
 .. code-block:: java
 
@@ -56,7 +56,7 @@ COMPSs, users will only see the message from the main code at the
 standard output. The message printed from the task will be stored inside
 the job log files.
 
-Let’s try it. First we proceed to compile the code by running the
+Let's try it. First we proceed to compile the code by running the
 following instructions:
 
 .. code-block:: console

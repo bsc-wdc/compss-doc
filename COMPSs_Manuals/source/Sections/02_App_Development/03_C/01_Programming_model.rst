@@ -101,7 +101,7 @@ Class Serialization
 In case of using an object as method parameter, as callee or as return
 of a call to a function, the object has to be serialized. The
 serialization method has to be provided inline in the header file of the
-object’s class by means of the "**boost**" library. The next listing
+object's class by means of the "**boost**" library. The next listing
 contains an example of serialization for two objects of the Block class.
 
 .. code-block:: C
@@ -157,7 +157,7 @@ finished.
 
 This is because the *this* object and the parameters can be accessed
 inside and outside the method, but for the variable where the returned
-value is copied to, it can’t be known inside the method.
+value is copied to, it can't be known inside the method.
 
 .. code-block:: C
 
@@ -213,7 +213,7 @@ task definition specified in the IDL file must be decorated/annotated
 with the *@Constraints*. Below, you can find and example of how to
 define a task with a constraint of using 4 cores. The list of
 constraints which can be defined for a task can be found in
-Section [sec:Constraints]
+Section [sec:Constraints]
 
 .. code-block:: text
 

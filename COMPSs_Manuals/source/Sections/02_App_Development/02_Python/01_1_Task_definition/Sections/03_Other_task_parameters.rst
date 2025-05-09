@@ -28,7 +28,7 @@ For instance, the programmer can mark a task as a high-priority task
 with the ``priority`` argument of the ``@task`` decorator (:numref:`task_priority_python`).
 In this way, when the task is free of dependencies, it will be scheduled before
 any of the available low-priority (regular) tasks. This functionality is
-useful for tasks that are in the critical path of the application’s task
+useful for tasks that are in the critical path of the application's task
 dependency graph.
 
 .. code-block:: python
@@ -66,12 +66,12 @@ In case a task fails, the whole application behavior can be defined
 using the *@on_failure* decorator on top of the *@task* decorator
 (:numref:`task_on_failure_python`).
 It has four possible values that can be defined with the **management**
-parameter: **'RETRY'**, **’CANCEL_SUCCESSORS’**, **’FAIL’** and **’IGNORE’**.
-*’RETRY’* is the default behavior, making the task to be executed again (on
+parameter: **'RETRY'**, **'CANCEL_SUCCESSORS'**, **'FAIL'** and **'IGNORE'**.
+*'RETRY'* is the default behavior, making the task to be executed again (on
 the same worker or in another worker if the failure remains).
-*’CANCEL_SUCCESSORS’* ignores the failed task and cancels the execution of the
-successor tasks, *’FAIL’* stops the whole execution once a task fails and
-*’IGNORE’* ignores the failure and continues with the normal execution.
+*'CANCEL_SUCCESSORS'* ignores the failed task and cancels the execution of the
+successor tasks, *'FAIL'* stops the whole execution once a task fails and
+*'IGNORE'* ignores the failure and continues with the normal execution.
 
 .. code-block:: python
     :name: task_on_failure_python
@@ -85,7 +85,7 @@ successor tasks, *’FAIL’* stops the whole execution once a task fails and
     def func():
         ...
 
-Since the **’CANCEL_SUCCESSORS’** and **’IGNORE’** policies enable to continue
+Since the **'CANCEL_SUCCESSORS'** and **'IGNORE'** policies enable to continue
 the execution accepting that tasks may have failed, it is possible to define
 the value for the objects and/or files produced by the failed tasks (INOUT,
 OUT, FILE_INOUT, FILE_OUT and return).

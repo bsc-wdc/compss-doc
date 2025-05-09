@@ -1,6 +1,6 @@
 
 The user command "**compss_build_app**" compiles both master and
-worker for a single architecture (e.g. x86-64, armhf, etc). Thus,
+worker for a single architecture (e.g. x86-64, armhf, etc). Thus,
 whether you want to run your application in Intel based machine or ARM
 based machine, this command is the tool you need.
 
@@ -10,7 +10,7 @@ very simple;
 .. code-block:: console
 
     $~/matmul_objects> compss_build_app Matmul
-    [ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-1.8.0-openjdk-amd64//jre/lib/amd64/server
+    [ INFO ] Java libraries are searched in the directory: /usr/lib/jvm/java-11.0-openjdk-amd64//jre/lib/amd64/server
     [ INFO ] Boost libraries are searched in the directory: /usr/lib/
 
     ...
