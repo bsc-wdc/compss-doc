@@ -1,0 +1,9 @@
+.. |qpybrr| raw:: html
+
+   <br />
+
+
+Let's write your first R application parallelized with PyCOMPSs. |qpybrr|
+Consider the following code:
+
+TBD

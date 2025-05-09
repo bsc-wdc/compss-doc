@@ -1,0 +1,13 @@
+R Binding
+=========
+
+COMPSs features a binding for R applications. The next
+subsections explain how to program a R application for COMPSs and a
+brief overview on how to execute it.
+
+.. toctree::
+    :maxdepth: 4
+    :caption: Table of Contents
+
+    04_R/01_Programming_model
+    04_R/02_Application_execution
