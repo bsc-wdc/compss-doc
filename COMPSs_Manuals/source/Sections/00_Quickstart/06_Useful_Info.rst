@@ -9,7 +9,7 @@ Choose your flavour:
 
         - Syntax detailed information -> :ref:`Sections/02_App_Development/01_Java:Java`
 
-        - Constraint definition -> :ref:`Sections/02_App_Development/04_Constraints:Constraints`
+        - Constraint definition -> :ref:`Sections/02_App_Development/05_Constraints:Constraints`
 
         - Execution details -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications`
 
@@ -29,7 +29,7 @@ Choose your flavour:
 
         - Syntax detailed information -> :ref:`Sections/02_App_Development/02_Python:Python Binding`
 
-        - Constraint definition -> :ref:`Sections/02_App_Development/04_Constraints:Constraints`
+        - Constraint definition -> :ref:`Sections/02_App_Development/05_Constraints:Constraints`
 
         - Execution details -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications`
 
@@ -49,7 +49,7 @@ Choose your flavour:
 
         - Syntax detailed information -> :ref:`Sections/02_App_Development/03_C:C/C++ Binding`
 
-        - Constraint definition -> :ref:`Sections/02_App_Development/04_Constraints:Constraints`
+        - Constraint definition -> :ref:`Sections/02_App_Development/05_Constraints:Constraints`
 
         - Execution details -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications`
 

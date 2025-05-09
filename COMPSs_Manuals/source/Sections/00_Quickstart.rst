@@ -22,5 +22,9 @@ Choose your flavour:
 
         .. INCLUDE:: ./00_Quickstart/04_C.rst
 
+    .. group-tab:: R
 
-.. include:: ./00_Quickstart/05_Useful_Info.rst
+        .. INCLUDE:: ./00_Quickstart/05_R.rst
+
+
+.. include:: ./00_Quickstart/06_Useful_Info.rst
