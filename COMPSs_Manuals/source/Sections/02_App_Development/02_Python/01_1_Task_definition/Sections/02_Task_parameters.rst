@@ -302,18 +302,66 @@ In addition to files, it is possible to define that a parameter is a directory
 
 The definition of a ``DIRECTORY`` parameter is shown in
 :numref:`task_example_python_directory`. The decorator specifies that ``foo``
-has a parameter called ``d``, of type ``DIRECTORY`` and ``INOUT`` direction.
+has a parameter called:
+
+* ``d_in``, of type ``DIRECTORY`` and ``IN`` direction
+* ``d_inout``, of type ``DIRECTORY`` and ``INOUT`` direction
+* ``d_out``, of type ``DIRECTORY`` and ``OUT`` direction
+
+And finally synchronizes the values of the ``d_inout`` and ``d_out`` directories.
 
 .. code-block:: python
     :name: task_example_python_directory
-    :caption: Python task example with input output directory (``DIRECTORY_INOUT``)
+    :caption: Python task example with directory (``DIRECTORY``)
+
+    import os
 
     from pycompss.api.task import task
+    from pycompss.api.parameter import DIRECTORY_IN
     from pycompss.api.parameter import DIRECTORY_INOUT
+    from pycompss.api.parameter import DIRECTORY_OUT
+    from pycompss.api.api import compss_wait_on_directory
 
-    @task(d=DIRECTORY_INOUT)
-    def foo(d):
-         ...
+    @task(d_in=DIRECTORY_IN, d_inout=DIRECTORY_INOUT, d_out=DIRECTORY_OUT)
+    def foo(d_in, d_inout, d_out):
+        # Read any file from d_in
+        for file in os.listdir(d_in):
+            with open(file, "r") as f:  # Open in read mode
+                content = f.read()
+            ...
+        ...
+        # Read and/or write files from/within d_inout
+        for file in os.listdir(d_in):
+            with open(file, "rw") as f:  # Open in read/write mode (could be "a" for append)
+                content = f.read()
+                # Update content
+                f.write(content)
+            ...
+        ...
+        # Write files to d_out
+        for file in os.listdir(d_in):
+            with open(file, "w") as f:  # Open in write mode
+                f.write(new_content)
+            ...
+        ...
+
+    def main():
+        d_in="/path/to/in_directory/"
+        d_inout="/path/to/inout_directory/"
+        d_out="/path/to/out_directory/"
+
+        foo(d_in, d_inout, d_out)
+
+        compss_wait_on_directory(d_inout)
+        # Now it is possible to access to 'd_inout' updated contents
+        ...
+
+        compss_wait_on_directory(d_out)
+        # Now it is possible to access to 'd_out' new contents
+        ...
+
+    if __name__=="__main__":
+        main()
 
 
 Collections
