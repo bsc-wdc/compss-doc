@@ -62,3 +62,21 @@ Choose your flavour:
         - Troubleshooting -> :ref:`Sections/04_Troubleshooting:Troubleshooting`
 
         - Sample applications -> :ref:`Sections/07_Sample_Applications/03_C:C/C++ Sample applications`
+
+    .. group-tab:: R
+
+        - Syntax detailed information -> :ref:`Sections/02_App_Development/04_R:R Binding`
+
+        - Constraint definition -> :ref:`Sections/02_App_Development/05_Constraints:Constraints`
+
+        - Execution details -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications`
+
+        - Graph, tracing and monitoring facilities -> :ref:`Sections/05_Tools:Tools`
+
+        - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/02_Supercomputers:Supercomputers`
+
+        - Performance analysis -> :ref:`Sections/05_Tools/03_Tracing:Tracing`
+
+        - Troubleshooting -> :ref:`Sections/04_Troubleshooting:Troubleshooting`
+
+        - Sample applications -> :ref:`Sections/07_Sample_Applications/04_R:R Sample applications`
