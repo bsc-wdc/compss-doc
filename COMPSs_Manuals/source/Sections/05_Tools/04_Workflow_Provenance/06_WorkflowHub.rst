@@ -13,12 +13,12 @@ site can be found in their `Documentation <https://about.workflowhub.eu/docs/>`_
 
 The steps to achieve the publication of a COMPSs execution are:
 
-- Pack the resulting crate sub-directory (i.e. ``COMPSs_RO-Crate_[uuid]/``) in a zip file. The ``ro-crate-metadata.json``
+- Pack the resulting crate sub-directory (i.e. ``COMPSs_RO-Crate_[timestamp]/``) in a zip file. The ``ro-crate-metadata.json``
   file must be at the root level of this zip file. Example:
 
 .. code-block:: console
 
-    $ cd COMPSs_RO-Crate_891540ad-18ca-4e19-aeb4-66a237193d07/
+    $ cd COMPSs_RO-Crate_20250514_153121/
     $ zip -r ~/Desktop/crate.zip *
 
 - `Login <https://workflowhub.eu/login?return_to=%2Fsignup>`_ or `create an account <https://workflowhub.eu/signup>`_
@@ -56,7 +56,7 @@ The steps to achieve the publication of a COMPSs execution are:
 
 .. TIP::
 
-    The crate (i.e. folder ``COMPSs_RO-Crate_[uuid]/``) can also be uploaded to GitHub, and then imported from
+    The crate (i.e. folder ``COMPSs_RO-Crate_[timestamp]/``) can also be uploaded to GitHub, and then imported from
     WorkflowHub using the second tab option ``Import Git Repository``. See an example here: https://workflowhub.eu/workflows/1076
 
 After these steps, the main summary page of your workflow will be shown, where three main tabs can be selected

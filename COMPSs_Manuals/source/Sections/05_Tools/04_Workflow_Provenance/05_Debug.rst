@@ -56,7 +56,7 @@ included.
     PROVENANCE | RO-Crate writing to disk TIME: 0.02508401870727539 s
     PROVENANCE | Workflow Provenance generation TOTAL EXECUTION TIME: 0.10874414443969727 s
     PROVENANCE | COMPSs Workflow Provenance successfully generated in sub-folder:
-        COMPSs_RO-Crate_db892d40-7929-461e-b06a-1b2120008f4f/
+        COMPSs_RO-Crate_20250514_153121/
     PROVENANCE | ENDED WORKFLOW PROVENANCE SCRIPT
 
 The fourth and final block states the time taken to record the ``ro-crate-metadata.json`` file to disk, the total
