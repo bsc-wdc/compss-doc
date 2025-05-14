@@ -3,7 +3,7 @@ Resulting crate
 ---------------
 
 Once the application has finished, a new sub-folder under the application's Working Directory
-will be created with the name ``COMPSs_RO-Crate_[uuid]/``, which is also known as *crate*. The contents of the
+will be created with the name ``COMPSs_RO-Crate_[timestamp]/``, which is also known as *crate*. The contents of the
 folder include all the elements needed to record a COMPSs application execution (this is, the application together with
 the datasets used for the run), and
 are:

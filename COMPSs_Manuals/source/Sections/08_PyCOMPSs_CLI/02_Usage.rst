@@ -1004,11 +1004,11 @@ has the ``ro-crate-metadata.json`` file in its root.
             $ pycompss run --provenance simple.py 1
 
         Once the application finishes, the workflow provenance information will be available
-        at a ``COMPSs_RO-Crate_[uuid]/`` folder. The metadata information can be visualized using:
+        at a ``COMPSs_RO-Crate_[timestamp]/`` folder. The metadata information can be visualized using:
 
         .. code-block:: console
 
-            $ pycompss inspect COMPSs_RO-Crate_[uuid]/
+            $ pycompss inspect COMPSs_RO-Crate_[timestamp]/
 
    .. group-tab:: Remote
 

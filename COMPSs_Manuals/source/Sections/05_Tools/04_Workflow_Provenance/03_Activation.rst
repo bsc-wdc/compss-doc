@@ -59,7 +59,7 @@ want it to be included in the crate, the command can be skipped. The second comm
 ``generate_COMPSs_RO-Crate.py`` Python script, that uses the information provided by the user
 in the ``my_yaml_file.yaml`` file (or ``ro-crate-info.yaml`` by default)
 combined with the file accesses information registered by the COMPSs runtime in the ``dataprovenance.log`` file. The
-result is a sub-directory ``COMPSs_RO-Crate_[uuid]/`` that contains the workflow provenance of the run (see next sub-section
+result is a sub-directory ``COMPSs_RO-Crate_[timestamp]/`` that contains the workflow provenance of the run (see next sub-section
 for a detailed description of its content).
 
 .. TIP::
