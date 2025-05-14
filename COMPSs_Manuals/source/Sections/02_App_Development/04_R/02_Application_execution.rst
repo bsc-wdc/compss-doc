@@ -17,7 +17,7 @@ Command
 ~~~~~~~
 
 In order to run a R application with COMPSs, the ``runcompss`` script
-can be used, like for Java and C/C++ applications. An example of an
+can be used, like for Java, C/C++ and Python applications. An example of an
 invocation of the script is:
 
 .. code-block:: console
@@ -26,10 +26,12 @@ invocation of the script is:
                     --lang=r \
                     $TEST_DIR/application.R arg1 arg2
 
-.. TIP::
+.. IMPORTANT::
 
-    The ``runcompss`` command is able to detect the application language.
-    Consequently, the ``--lang=r`` is not mandatory.
+    The ``runcompss`` command is able to detect the application language
+    for Java, C/C++ and Python applications, but not for R applications.
+
+    Consequently, the ``--lang=r`` is mandatory.
 
 
 For full description about the options available for the runcompss
