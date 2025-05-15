@@ -73,7 +73,7 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: /opt/COMPSs//Runtime/configuration/xml/projects/default_project.xml
         --resources=<path>                      Path to the resources XML file
                                                 Default: /opt/COMPSs//Runtime/configuration/xml/resources/default_resources.xml
-        --lang=<name>                           Language of the application (java/c/python)
+        --lang=<name>                           Language of the application (java/c/python/r)
                                                 Default: Inferred is possible. Otherwise: java
         --summary                               Displays a task execution summary at the end of the application execution
                                                 Default: false

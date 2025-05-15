@@ -297,7 +297,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Default: /apps/COMPSs/3.3//Runtime/configuration/xml/projects/default_project.xml
         --resources=<path>                      Path to the resources XML file
                                                 Default: /apps/COMPSs/3.3//Runtime/configuration/xml/resources/default_resources.xml
-        --lang=<name>                           Language of the application (java/c/python)
+        --lang=<name>                           Language of the application (java/c/python/r)
                                                 Default: Inferred is possible. Otherwise: java
         --summary                               Displays a task execution summary at the end of the application execution
                                                 Default: false
