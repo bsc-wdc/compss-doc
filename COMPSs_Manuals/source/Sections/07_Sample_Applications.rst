@@ -12,3 +12,4 @@ Source code of different sample applications are available in https://github.com
     07_Sample_Applications/01_Java
     07_Sample_Applications/02_Python
     07_Sample_Applications/03_C
+    07_Sample_Applications/04_R
