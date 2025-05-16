@@ -2,6 +2,15 @@
 Workflow Provenance
 ===================
 
+
+**Quickstart**
+
+- Submit your COMPSs computational experiment with ``-p`` flag (i.e. using ``runcompss``, ``enqueue_compss``, ``pycompss job run``).
+- When the application finishes, run ``pycompss inspect COMPSs_RO-Crate_*``
+
+
+**Introduction**
+
 The COMPSs runtime includes the capacity of recording details of the
 application's execution as metadata, also known as *Workflow Provenance*. With workflow provenance, you are able to share
 not only your workflow application (i.e. the source code) but also your workflow run (i.e. the datasets used as inputs, the outputs generated as
