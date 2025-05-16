@@ -5,7 +5,7 @@ Workflow Provenance
 
 **Quickstart**
 
-- Submit your COMPSs computational experiment with ``-p`` flag (i.e. using ``runcompss``, ``enqueue_compss``, ``pycompss job run``).
+- Submit your COMPSs computational experiment with ``-p`` flag (i.e. using ``runcompss``, ``enqueue_compss``, ``pycompss [run | job submit]``).
 - When the application finishes, run ``pycompss inspect COMPSs_RO-Crate_*``
 
 
