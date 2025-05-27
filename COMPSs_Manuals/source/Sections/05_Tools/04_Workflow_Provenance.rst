@@ -66,5 +66,6 @@ format is compliant with the `Workflow RO-Crate Profile v1.0 <https://w3id.org/w
     04_Workflow_Provenance/04_Result
     04_Workflow_Provenance/05_Debug
     04_Workflow_Provenance/06_WorkflowHub
-    04_Workflow_Provenance/07_RS
-    04_Workflow_Provenance/08_Examples
+    04_Workflow_Provenance/07_Zenodo
+    04_Workflow_Provenance/08_RS
+    04_Workflow_Provenance/09_Examples
