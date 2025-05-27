@@ -1,6 +1,6 @@
------------------
-Using WorkflowHub
------------------
+----------------------
+Publish at WorkflowHub
+----------------------
 
 Publish and cite your results with WorkflowHub
 ==============================================
@@ -164,10 +164,9 @@ page will contain different versions / executions of the same COMPSs application
 
 - Step 1: Update the code of your COMPSs application, and generate a new run with previous or new results, activating workflow
   provenance generation.
-
 - Step 2: Open the previously existing workflow at WorkflowHub.
-
 - Step 3: Select ``Actions`` -> ``New version``.
+
     - If your workflow was imported from RO-Crate, select ``Upload/Import Workflow RO-Crate`` to upload workflow provenance.
     - If you imported the workflow from GitHub, once you have committed your changes / results, select ``Import Git Repository``.
       This action will import the latest commit in the repository to WorkflowHub.
@@ -202,10 +201,13 @@ used to share large datasets are:
   ``data_persitence: False``.
 
     - See Section :ref:`Sections/05_Tools/04_Workflow_Provenance/02_YAML:YAML configuration file`.
+
 - Step 2: upload the workflow run in WorkflowHub.
+
     - As described in Section :ref:`Sections/05_Tools/04_Workflow_Provenance/06_WorkflowHub:Publish and cite your results with WorkflowHub`.
 
 - Step 3: add the remote file as a reference in the workflow files:
+
     - ``Files`` tab -> ``Add File`` -> ``Remote URL``.
     - Paste the remote URL (e.g. ``https://zenodo.org/records/10782431/files/lysozyme_datasets.zip``).
     - Specify the file path in the crate (e.g. ``remote_dataset/lysozyme_datasets.zip``).
