@@ -42,7 +42,7 @@ Configure rocrate-inveniordm
 
 Follow the steps specified at the `rocrate-inveniordm README <https://github.com/ResearchObject/ro-crate-inveniordm/blob/main/README.md>`_:
 
-- Configure your Zenodo access token at the Zenodo portal (Profile -> Applications -> Personal access tokens -> New token)
+- Configure your Zenodo access token at the Zenodo portal (``Profile`` -> ``Applications`` -> ``Personal access tokens`` -> ``New token``)
 
 - Setup environment variables ``INVENIORDM_BASE_URL`` (the Zenodo url), ``INVENIORDM_API_KEY`` (the API token created before).
 
@@ -69,7 +69,7 @@ The steps to achieve the publication of a COMPSs execution are:
     All 1 files uploaded.
     Successfully created record 15517563
 
-The ``-z`` flag will automatically zip the content of the folder, and upload it to your Dashboard in Zenodo.
+The ``-z`` flag will automatically zip the content of the folder, and upload it to your ``Dashboard`` in Zenodo.
 
 .. WARNING::
 
@@ -77,7 +77,7 @@ The ``-z`` flag will automatically zip the content of the folder, and upload it 
     Zenodo flattens the structure of the directory content in the upload, which may be dangerous for an RO-Crate package. 
 
 
-- Go to your Dashboard in Zenodo, review the record that has been just uploaded:
+- Go to your ``Dashboard`` in Zenodo, review the record that has been just uploaded:
 
 .. figure:: ./Figures/ZenodoRecord.png
    :name: Zenodo record created with the upload
@@ -97,8 +97,13 @@ The ``-z`` flag will automatically zip the content of the folder, and upload it 
   - Click ``Save draft`` if you want to continue editing later.
   - Click ``Publish`` to make your record publicly available.
 
-  The final record would look something like this example we provide: https://doi.org/10.5281/zenodo.15517083
+The final record would look something like this example we provide:
 
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.15517084.svg
+   :target: https://doi.org/10.5281/zenodo.15517084
+   :align: left
+   :width: 20.0%
+   
 
 .. figure:: ./Figures/ZenodoPublished.png
    :name: Zenodo published record
@@ -109,3 +114,8 @@ The ``-z`` flag will automatically zip the content of the folder, and upload it 
    Zenodo published record
 
 
+.. TIP::
+
+    For better compatibility with Zenodo, use the SPDX full URL when generating the metadata of your COMPSs experiment.
+    See the full list of licenses at: https://spdx.org/licenses/ Details on how to define the license for your COMPSs run
+    can be found at Section :ref:`yaml-config`.
