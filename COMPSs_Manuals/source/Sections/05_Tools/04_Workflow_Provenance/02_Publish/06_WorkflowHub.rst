@@ -2,8 +2,10 @@
 Publish at WorkflowHub
 ----------------------
 
-Publish and cite your results with WorkflowHub
-==============================================
+.. _publish_wfhub:
+
+Publish and cite your results
+=============================
 
 Once the provenance metadata for your COMPSs application has been generated, you have the possibility of publishing
 your results (i.e. both the workflow and the workflow run) in `WorkflowHub <https://workflowhub.eu/>`_, the FAIR
@@ -87,7 +89,7 @@ After these steps, the main summary page of your workflow will be shown, where t
   ``Teams``, ``Publications``, ``Presentations``, ``Collections``, ...)
 
 At this point, before freezing and generating a DOI for the workflow, you may consider if **remote datasets** need
-to be added to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance/02_Publish/06_WorkflowHub:Adding large dataset as remote in WorkflowHub`
+to be added to the workflow. See Section :ref:`large_dataset_wfhub`
 for a detailed guide on how to do that.
 
 If everything is correct, the next step is to **generate a DOI** (i.e. a persistent identifier) for your workflow.
@@ -153,8 +155,8 @@ You can see some examples on previous published workflows:
     `in this site <https://simplemde.com/markdown-guide>`_, and an example on how to write it at the YAML configuration files
     of the previously provided examples (i.e. in their included ``ro-crate-info.yaml`` files).
 
-Creating a new version of a Workflow
-------------------------------------
+New version of a Workflow
+-------------------------
 
 It is obvious that, as the development of a specific workflow progresses, new versions of what conceptually is the same workflow will be
 created. In addition, even if the code remains unchanged, new execution results of the application may also want to be shared
@@ -180,8 +182,10 @@ the ``Version History`` section of the page. An example can be seen here: https:
     be properly shared.
 
 
-Adding large dataset as remote in WorkflowHub
----------------------------------------------
+.. _large_dataset_wfhub:
+
+Large datasets
+--------------
 
 As mentioned earlier, whenever a workflow uses or produces a very large dataset, it should not include the data as persistent
 (i.e. directly included in the crate), but reference it as a **remote dataset**. A rule of thumb is that, if the workflow
@@ -204,7 +208,7 @@ used to share large datasets are:
 
 - Step 2: upload the workflow run in WorkflowHub.
 
-    - As described in Section :ref:`Sections/05_Tools/04_Workflow_Provenance/02_Publish/06_WorkflowHub:Publish and cite your results with WorkflowHub`.
+    - As described in previous Section :ref:`publish_wfhub`.
 
 - Step 3: add the remote file as a reference in the workflow files:
 
@@ -226,12 +230,12 @@ Examples on workflows with remote datasets can be found at:
     files), because that would invalidate the correctness of the metadata.
 
 
-Re-execute a COMPSs workflow published in WorkflowHub
-=====================================================
+Manual re-execution
+===================
 
-Apart from sharing workflow runs as shown in earlier sections, the workflow execution published in WorkflowHub can be also used by other
-individuals in order to **reproduce** the results (i.e. submit the same workflow with the same inputs, and obtain the same
-results), therefore, other peers can verify the results of your experiments. To illustrate this process, we will use different examples:
+While the standard way to re-execute a previously published workflow would be throught the Reproducibility Service (see Section :ref:`rs`),
+we here detail how to manually achieve the re-execution of a COMPSs workflow available at WorkflowHub (e.g. to **reproduce** the results: submit the same 
+workflow with the same inputs, and obtain the same results). To illustrate this process, we will use different examples:
 
 - **PyCOMPSs: Matrix multiplication with data persistence:** https://doi.org/10.48546/workflowhub.workflow.838.1
 
@@ -468,7 +472,7 @@ results), therefore, other peers can verify the results of your experiments. To 
 
     For large or extremely large datasets (e.g. hundreds of MBs, several GBs), the most convenient way is to upload them
     to a public dataset repository (e.g. `Zenodo <https://zenodo.org/>`_) and reference them as ``remote datasets`` related
-    to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance/02_Publish/06_WorkflowHub:Adding large dataset as remote in WorkflowHub`
+    to the workflow. See Section :ref:`large_dataset_wfhub`
     to learn this process more in detail.
 
     Remote datasets may be commonly included in applications that set ``data_persistence`` to ``False``. The idea is that the files
