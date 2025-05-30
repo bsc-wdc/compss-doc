@@ -1,3 +1,5 @@
+.. _metadata-examples:
+
 -----------------
 Metadata examples
 -----------------

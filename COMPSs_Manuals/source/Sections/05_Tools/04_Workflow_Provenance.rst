@@ -3,13 +3,13 @@ Workflow Provenance
 ===================
 
 
-**Quickstart**
+.. rubric:: Quickstart
 
 - Submit your COMPSs computational experiment with ``-p`` flag (i.e. using ``runcompss``, ``enqueue_compss``, ``pycompss [run | job submit]``).
 - When the application finishes, run ``pycompss inspect COMPSs_RO-Crate_*``
 
 
-**Introduction**
+.. rubric:: Introduction
 
 The COMPSs runtime includes the capacity of recording details of the
 application's execution as metadata, also known as *Workflow Provenance*. With workflow provenance, you are able to share
@@ -24,7 +24,7 @@ Provenance information can be useful for a number of things, including **Governa
 or Knowledge Extraction**, among others.
 In our case, we have initially targeted workflow provenance recording to enable users to **publish research results** obtained with COMPSs as
 artifacts that can be cited in scientific publications with their corresponding DOI as a persistent identifier.
-See Section :ref:`Sections/05_Tools/04_Workflow_Provenance/06_WorkflowHub:Publish and cite your results with WorkflowHub` to learn
+See Section :ref:`publish_experiment` to learn
 precisely how to do that. We see a growing number of scientific conferences requesting these reproducible artifacts, such as:
 
 - `The Reproducibility Initiative at the International Conference for High Performance Computing, Networking, Storage, and Analysis (SC) <https://sc24.supercomputing.org/program/papers/reproducibility-initiative/>`_
@@ -60,12 +60,6 @@ format is compliant with the `Workflow RO-Crate Profile v1.0 <https://w3id.org/w
     :maxdepth: 2
     :caption: Table of Contents
 
-    04_Workflow_Provenance/01_Dependencies
-    04_Workflow_Provenance/02_YAML
-    04_Workflow_Provenance/03_Activation
-    04_Workflow_Provenance/04_Result
-    04_Workflow_Provenance/05_Debug
-    04_Workflow_Provenance/06_WorkflowHub
-    04_Workflow_Provenance/07_Zenodo
-    04_Workflow_Provenance/08_RS
-    04_Workflow_Provenance/09_Examples
+    04_Workflow_Provenance/01_Run
+    04_Workflow_Provenance/02_Publish
+    04_Workflow_Provenance/09_RS

@@ -72,7 +72,7 @@ After these steps, the main summary page of your workflow will be shown, where t
 
    Overview tab information
 
-- **Files**: where you can browse the uploaded content of the crate (see :ref:`Sections/05_Tools/04_Workflow_Provenance/04_Result:Resulting crate`
+- **Files**: where you can browse the uploaded content of the crate (see :ref:`resulting-crate`
   for details on the crate structure).
 
 .. figure:: ./Figures/WH_files.png
@@ -87,7 +87,7 @@ After these steps, the main summary page of your workflow will be shown, where t
   ``Teams``, ``Publications``, ``Presentations``, ``Collections``, ...)
 
 At this point, before freezing and generating a DOI for the workflow, you may consider if **remote datasets** need
-to be added to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance/06_WorkflowHub:Adding large dataset as remote in WorkflowHub`
+to be added to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance/02_Publish/06_WorkflowHub:Adding large dataset as remote in WorkflowHub`
 for a detailed guide on how to do that.
 
 If everything is correct, the next step is to **generate a DOI** (i.e. a persistent identifier) for your workflow.
@@ -135,7 +135,7 @@ The necessary steps to achieve this are:
 .. WARNING::
 
     If no Authors are provided in the YAML configuration file, it won't be possible to generate a DOI.
-    See Section :ref:`Sections/05_Tools/04_Workflow_Provenance/02_YAML:YAML configuration file`
+    See Section :ref:`yaml-config`
 
 You can see some examples on previous published workflows:
 
@@ -148,7 +148,7 @@ You can see some examples on previous published workflows:
 
 .. TIP::
 
-    When writing the ``description`` term of your YAML configuration file (see Section :ref:`Sections/05_Tools/04_Workflow_Provenance/02_YAML:YAML configuration file`)
+    When writing the ``description`` term of your YAML configuration file (see Section :ref:`yaml-config`)
     you can use Markdown language to get a fancier description in WorkflowHub. You can find a Markdown language guide
     `in this site <https://simplemde.com/markdown-guide>`_, and an example on how to write it at the YAML configuration files
     of the previously provided examples (i.e. in their included ``ro-crate-info.yaml`` files).
@@ -200,11 +200,11 @@ used to share large datasets are:
   https URL reference such as ``https://zenodo.org/records/10782431/files/lysozyme_datasets.zip``), and most likely with
   ``data_persitence: False``.
 
-    - See Section :ref:`Sections/05_Tools/04_Workflow_Provenance/02_YAML:YAML configuration file`.
+    - See Section :ref:`yaml-config`.
 
 - Step 2: upload the workflow run in WorkflowHub.
 
-    - As described in Section :ref:`Sections/05_Tools/04_Workflow_Provenance/06_WorkflowHub:Publish and cite your results with WorkflowHub`.
+    - As described in Section :ref:`Sections/05_Tools/04_Workflow_Provenance/02_Publish/06_WorkflowHub:Publish and cite your results with WorkflowHub`.
 
 - Step 3: add the remote file as a reference in the workflow files:
 
@@ -468,7 +468,7 @@ results), therefore, other peers can verify the results of your experiments. To 
 
     For large or extremely large datasets (e.g. hundreds of MBs, several GBs), the most convenient way is to upload them
     to a public dataset repository (e.g. `Zenodo <https://zenodo.org/>`_) and reference them as ``remote datasets`` related
-    to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance/06_WorkflowHub:Adding large dataset as remote in WorkflowHub`
+    to the workflow. See Section :ref:`Sections/05_Tools/04_Workflow_Provenance/02_Publish/06_WorkflowHub:Adding large dataset as remote in WorkflowHub`
     to learn this process more in detail.
 
     Remote datasets may be commonly included in applications that set ``data_persistence`` to ``False``. The idea is that the files

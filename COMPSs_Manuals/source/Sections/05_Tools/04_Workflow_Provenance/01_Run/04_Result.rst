@@ -1,3 +1,5 @@
+.. _resulting-crate:
+
 ---------------
 Resulting crate
 ---------------
@@ -47,7 +49,7 @@ are:
 
 - **ro-crate-metadata.json:** the RO-Crate JSON main file describing the contents of
   this directory (crate) in the RO-Crate specification format. You can find examples at Section
-  :ref:`Sections/05_Tools/04_Workflow_Provenance/09_Examples:Metadata examples`.
+  :ref:`metadata-examples`.
 
 .. TIP::
     Since its version ``3.3.4``, the ``PyCOMPSs CLI`` includes the capacity of inspecting RO-Crates with the
