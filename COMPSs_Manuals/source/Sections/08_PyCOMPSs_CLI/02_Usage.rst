@@ -581,13 +581,13 @@ Running the COMPSs monitor
 
         .. IMPORTANT::
 
-            Include the ``--monitor=<REFRESH_RATE_MS>`` flag in the execution before
+            Include the ``--monitoring=<REFRESH_RATE_MS>`` flag in the execution before
             the binary to be executed.
 
         .. code-block:: console
 
             $ pycompss monitor start
-            $ pycompss run --monitor=1000 -g matmul_files.py 4 4
+            $ pycompss run --monitoring=1000 -g matmul_files.py 4 4
             $ # During the execution, go to the URL in your web browser
             $ pycompss monitor stop
 
@@ -607,13 +607,13 @@ Running the COMPSs monitor
 
         .. IMPORTANT::
 
-            Include the ``--monitor=<REFRESH_RATE_MS>`` flag in the execution before
+            Include the ``--monitoring=<REFRESH_RATE_MS>`` flag in the execution before
             the binary to be executed.
 
         .. code-block:: console
 
             $ pycompss monitor start
-            $ pycompss run --monitor=1000 -g matmul_files.py 4 4
+            $ pycompss run --monitoring=1000 -g matmul_files.py 4 4
             $ # During the execution, go to the URL in your web browser
             $ pycompss monitor stop
 
