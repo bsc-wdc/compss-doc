@@ -4,9 +4,9 @@ Publish at ROHub
 
 
 Similarly as with WorkflowHub and Zenodo, once the provenance metadata for your COMPSs application has been generated, you have the possibility of publishing
-your results (i.e. both the workflow and the workflow run) in `Research Object Hub <https://www.rohub.org>`_. ROHub is a Research Object management platform 
-supporting the preservation and lifecycle management of scientific investigations, research campaigns and operational processes. As the only existing platform 
-implementing natively the full research object model and paradigm, resources associated to a particular experiment are aggregated in a single digital entity 
+your results (i.e. both the workflow and the workflow run) in `Research Object Hub <https://www.rohub.org>`_. ROHub is a Research Object management platform
+supporting the preservation and lifecycle management of scientific investigations, research campaigns and operational processes. As the only existing platform
+implementing natively the full research object model and paradigm, resources associated to a particular experiment are aggregated in a single digital entity
 (Research Object), and metadata relevant to understand and interpret the content is represented as semantic metadata that are user and machine readable.
 
 A key feature of ROHub is that it natively supports importing RO-Crates, which is very convenient for the COMPSs workflow provenance recording mechanism.
@@ -50,7 +50,7 @@ In order to generate a DOI for your record, so you can reference it with a perma
 - Search for the ``Toolbox`` section and click the ``Evolution`` option. Select ``Snapshot``.
 - Optional: Choose if you want to share the record not only at ROHub but also at ``B2SHARE`` or ``Zenodo`` (you need to configure access tokens first in your user profile).
 - Select ``Generate DOI`` option.
-- Click ``Snapshot & Exit`` or ``Snapshot & Go to overview``, depending on your preference. 
+- Click ``Snapshot & Exit`` or ``Snapshot & Go to overview``, depending on your preference.
 
 The snapshot progress bar will appear as shown below:
 
@@ -82,6 +82,5 @@ Select ``View`` the snapshot and you will see the DOI available, like in the fol
 
    RO record example with DOI generated
 
-ROHub includes other interesting features for your execution, such as assesment of the completeness or FAIRness of your RO. We encourage you to
+ROHub includes other interesting features for your execution, such as assessment of the completeness or FAIRness of your RO. We encourage you to
 visit the `Research Object Hub <https://www.rohub.org>`_ and investigate further all its possibilities.
-

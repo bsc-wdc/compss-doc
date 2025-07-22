@@ -233,8 +233,8 @@ Examples on workflows with remote datasets can be found at:
 Manual re-execution
 ===================
 
-While the standard way to re-execute a previously published workflow would be throught the Reproducibility Service (see Section :ref:`rs`),
-we here detail how to manually achieve the re-execution of a COMPSs workflow available at WorkflowHub (e.g. to **reproduce** the results: submit the same 
+While the standard way to re-execute a previously published workflow would be through the Reproducibility Service (see Section :ref:`rs`),
+we here detail how to manually achieve the re-execution of a COMPSs workflow available at WorkflowHub (e.g. to **reproduce** the results: submit the same
 workflow with the same inputs, and obtain the same results). To illustrate this process, we will use different examples:
 
 - **PyCOMPSs: Matrix multiplication with data persistence:** https://doi.org/10.48546/workflowhub.workflow.838.1
@@ -512,4 +512,3 @@ workflow provenance with the COMPSs CLI (see Section :ref:`Sections/08_PyCOMPSs_
 executions in the same machine as the one in the published run (e.g. using the same supercomputer) should be quite straightforward,
 since the metadata may include references to the location of the inputs and outputs of the workflow. Therefore, the only
 requirement to reproduce a run would be to have access granted to the location where the inputs are.
-
