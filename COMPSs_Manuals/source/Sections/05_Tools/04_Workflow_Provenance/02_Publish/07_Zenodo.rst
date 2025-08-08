@@ -34,7 +34,11 @@ This would typically install the library in ``~/.local/``. Another option is to 
 
     $ pip install -t install_path rocrate-inveniordm
 
-COMPSs RO-Crates have been tested with ``rocrate-inveniordm`` version ``2.0.4`` or higher.
+
+.. WARNING::
+
+    The ro-crate-inveniordm package compatible with COMPSs has not been merged yet to the main branch, and can be found 
+    for now at https://github.com/rsirvent/ro-crate-inveniordm
 
 
 Configure rocrate-inveniordm
