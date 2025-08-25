@@ -269,7 +269,7 @@ We can quickly see that the first four `add` tasks have been executed in paralle
 all partial results at the end.
 
 Paraver is a very powerful tool for performance analysis. For more information,
-check the :ref:`Sections/05_Tools/03_Tracing:Tracing` Section.
+check the :ref:`Sections/04_Tools/03_Tracing:|:dart:| Tracing` Section.
 
 .. NOTE::
 

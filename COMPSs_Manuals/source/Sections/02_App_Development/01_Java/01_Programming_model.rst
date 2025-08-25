@@ -1,5 +1,5 @@
 Programming Model
------------------
+*****************
 
 This section shows how the COMPSs programming model is used to develop
 a Java task-based parallel application for distributed computing. First,
@@ -9,15 +9,16 @@ application tasks. Finally, we will show special API calls and other
 optimization hints.
 
 Application Overview
-~~~~~~~~~~~~~~~~~~~~
-.. include :: 01_1_Application_overview.rst
+====================
+
+.. include:: ./01_Programming_model/01_Java_application_overview_inc.rst
 
 The following sections show a detailed guide of how to implement complex
 applications.
 
 
 Task definition reference guide
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================
 
 The task definition interface is a Java annotated interface where developers
 define tasks as annotated methods in the interfaces. Annotations can be of
@@ -43,7 +44,8 @@ A complete and detailed explanation of the usage of the metadata
 includes:
 
 Task-definition Annotations
-***************************
+===========================
+
 For each declared methods, developers has to define a task type.
 The following list enumerates the possible task types:
 
@@ -154,7 +156,8 @@ For task which are not methods, a representative method has to be defined in an 
 
 
 Parameter-level annotations
-***************************
+---------------------------
+
 For each parameter of task (method declared in the interface), the user
 must include a **@Parameter** annotation. The properties
 
@@ -237,16 +240,18 @@ must include a **@Parameter** annotation. The properties
       reduce the overhead.
 
 Constraints annotations
-***********************
+-----------------------
 
    -  **@Constraints:** The user can specify the capabilities that a
       resource must have in order to run a method. For example, in a
       cloud execution the COMPSs runtime creates a VM that fulfills the
-      specified requirements in order to perform the execution. A full
-      description of the supported constraints can be found in :numref:`supported_constraints`.
+      specified requirements in order to perform the execution.
+
+.. include:: ./01_Programming_model/02_Java_constraints_inc.rst
+
 
 Prolog & Epilog annotations
-***************************
+---------------------------
 
    -  **@Prolog:** Defines a binary to be run right before the task execution.
 
@@ -264,7 +269,8 @@ Prolog & Epilog annotations
 
 
 Scheduler annotations
-*********************
+---------------------
+
    -  **@SchedulerHints:** It specifies hints for the scheduler about how to
       treat the task.
 
@@ -277,7 +283,7 @@ Scheduler annotations
             String not a Java boolean).
 
 Alternative method implementations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+==================================
 
 Since version 1.2, the COMPSs programming model allows developers to
 define sets of alternative implementations of the same method in the
@@ -290,10 +296,10 @@ sort and quick sort that are respectively hosted in the
     :name: alternative_implementations_java
     :caption: Alternative sorting method definition example
 
-    @Method(declaringClass = "packagepath.Mergesort")
-    @Method(declaringClass = "packagepath.Quicksort")
+    @Method(declaringClass - "packagepath.Mergesort")
+    @Method(declaringClass - "packagepath.Quicksort")
     void sort(
-        @Parameter(type = Type.OBJECT, direction = Direction.INOUT)
+        @Parameter(type - Type.OBJECT, direction - Direction.INOUT)
         int[] array
     );
 
@@ -316,11 +322,11 @@ one core is required to run the method of both sorting algorithms.
     :name: constraint_java
     :caption: Alternative sorting method definition with constraint example
 
-    @Constraints(computingUnits = "1")
-    @Method(declaringClass = "packagepath.Mergesort")
-    @Method(declaringClass = "packagepath.Quicksort")
+    @Constraints(computingUnits - "1")
+    @Method(declaringClass - "packagepath.Mergesort")
+    @Method(declaringClass - "packagepath.Quicksort")
     void sort(
-        @Parameter(type = Type.OBJECT, direction = Direction.INOUT)
+        @Parameter(type - Type.OBJECT, direction - Direction.INOUT)
         int[] array
     );
 
@@ -338,16 +344,16 @@ quicksort.
     :name: specific_implementation_constraints_java
     :caption: Alternative sorting method definition with specific constraints example
 
-    @Constraints(computingUnits = "1")
-    @Method(declaringClass = "packagepath.Mergesort", constraints = @Constraints(memorySize = "2.0"))
-    @Method(declaringClass = "packagepath.Quicksort", constraints = @Constraints(memorySize = "0.5"))
+    @Constraints(computingUnits - "1")
+    @Method(declaringClass - "packagepath.Mergesort", constraints - @Constraints(memorySize - "2.0"))
+    @Method(declaringClass - "packagepath.Quicksort", constraints - @Constraints(memorySize - "0.5"))
     void sort(
-        @Parameter(type = Type.OBJECT, direction = Direction.INOUT)
+        @Parameter(type - Type.OBJECT, direction - Direction.INOUT)
         int[] array
     );
 
 Java API calls
-~~~~~~~~~~~~~~
+==============
 
 COMPSs also provides a explicit synchronization call, namely *barrier*,
 which can be used through the COMPSs Java API. The use of *barrier*
@@ -392,9 +398,9 @@ shows a usage example of this API call.
 
     public class Main {
         public static void main(String[] args) {
-            final int ITERATIONS = 10;
-            for (int i = 0; i < ITERATIONS; ++i) {
-                Dummy d = new Dummy(d);
+            final int ITERATIONS - 10;
+            for (int i - 0; i < ITERATIONS; ++i) {
+                Dummy d - new Dummy(d);
                 TaskImpl.task(d);
                 /*Allows garbage collector to delete the
                   object from memory when the task is finished */
@@ -415,7 +421,7 @@ contains an example of its usage.
 
     public class Main {
         public static void main(String[] args) {
-            for (int i=0; i<1; i++) {
+            for (int i-0; i<1; i++) {
                 TaskImpl.task(FILE_NAME, i);
             }
             /*Waits until all tasks have finished and
@@ -425,7 +431,7 @@ contains an example of its usage.
     }
 
 Managing Failures in Tasks
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+==========================
 
 COMPSs provide mechanism to manage failures in tasks. Developers can specify two
 properties in the task definition what the runtime should do when a task is
@@ -449,13 +455,13 @@ Usage examples of these properties are shown in :numref:`failures_java`
     :caption: Failure example
 
     public interface FailuresItf{
-       @Method(declaringClass = "example.Example", timeOut = "3000", onFailure = OnFailure.IGNORE)
-       void task_example(@Parameter(type = Type.FILE, direction = Direction.OUT) String fileName);
+       @Method(declaringClass - "example.Example", timeOut - "3000", onFailure - OnFailure.IGNORE)
+       void task_example(@Parameter(type - Type.FILE, direction - Direction.OUT) String fileName);
     }
 
 
 Tasks Groups and COMPSs exceptions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+==================================
 
 COMPSs allows users to define task groups which can be combined with an special exception (``COMPSsException``) that the user can use
 to achieve parallel distributed try/catch blocks; :numref:`compss_exception_java`
@@ -472,8 +478,8 @@ Consequently, the *COMPSsException* must be combined with task groups.
     :caption: COMPSs Exception example
 
     ...
-        try (COMPSsGroup a = new COMPSsGroup("GroupA")) {
-            for (int j = 0; j < N; j++) {
+        try (COMPSsGroup a - new COMPSsGroup("GroupA")) {
+            for (int j - 0; j < N; j++) {
                 Test.taskWithCOMPSsException(FILE_NAME);
             }
         } catch (COMPSsException e) {
@@ -492,16 +498,16 @@ groups without retrieving data while other tasks are being executed.
     :caption: COMPSs Exception example
 
     ...
-    for (int i=0; i<10; i++){
-        try (COMPSsGroup a = new COMPSsGroup("Group" + i, false)) {
-            for (int j = 0; j < N; j++) {
+    for (int i-0; i<10; i++){
+        try (COMPSsGroup a - new COMPSsGroup("Group" + i, false)) {
+            for (int j - 0; j < N; j++) {
                 Test.taskWithCOMPSsException(FILE_NAME);
             }
         } catch (Exception e) {
             //This is just for compilation. Exception not catch here!
         }
     }
-    for (int i=0; i<10; i++){
+    for (int i-0; i<10; i++){
         // The group exception will be thrown from the barrier
         try {
             COMPSs.barrierGroup(""Group" + i");
@@ -520,8 +526,8 @@ shows an example of how to use this method.
     :caption: Programmatic task group cancellation example
 
     ...
-    try (COMPSsGroup a = new COMPSsGroup("Group_to_cancel", false)) {
-        for (int j = 0; j < N; j++) {
+    try (COMPSsGroup a - new COMPSsGroup("Group_to_cancel", false)) {
+        for (int j - 0; j < N; j++) {
             Test.taskWithCOMPSsException(FILE_NAME);
         }
     }
@@ -542,10 +548,10 @@ shows an example of how to use this method.
     public class TasksImpl {
 
       public static void cancellableTask(String fileName) throws Exception {
-        boolean condition = treu
+        boolean condition - true
         while (condition) {
             COMPSsWorker.cancellationPoint();
-            condition = computeIteration(...);
+            condition - computeIteration(...);
         }
       }
     }

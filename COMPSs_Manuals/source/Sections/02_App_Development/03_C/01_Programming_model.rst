@@ -1,7 +1,7 @@
 Programming Model
------------------
+*****************
 
-.. include :: 01_1_Application_overview.rst
+.. include:: ./01_Programming_model/01_C_application_overview_inc.rst
 
 The following sections provide a more detailed view of the C++ Binding. It will
 include the available API calls, how to deal with objects and having tasks as
@@ -9,7 +9,7 @@ method objects as well as how to define constraints
 and task versions.
 
 Binding API
-~~~~~~~~~~~
+===========
 
 Besides the aforementioned **compss_on**, **compss_off** and
 **compss_wait_on** functions, the C/C++ main program can make use of a
@@ -54,7 +54,7 @@ void compss_barrier()
    finished.
 
 Functions file
-~~~~~~~~~~~~~~
+==============
 
 The implementation of the tasks in a C or C++ program has to be provided
 in a functions file. Its name must be the same as the main file followed
@@ -80,7 +80,7 @@ value and we want to avoid the explicit synchronization when returning
 from the method.
 
 Additional source files
-~~~~~~~~~~~~~~~~~~~~~~~
+=======================
 
 Other source files needed by the user application must be placed under
 the directory "**src**". In this directory the programmer must provide a
@@ -96,7 +96,7 @@ directory where the binding will look for them when generating the
 master and worker applications.
 
 Class Serialization
-~~~~~~~~~~~~~~~~~~~
+===================
 
 In case of using an object as method parameter, as callee or as return
 of a call to a function, the object has to be serialized. The
@@ -145,7 +145,7 @@ For more information about serialization using "boost" visit the related
 documentation at `www.boost.org <www.boost.org>`.
 
 Method - Task
-~~~~~~~~~~~~~
+=============
 
 A task can be a C++ class method. A method can return a value, modify
 the *this* object, or modify a parameter.
@@ -205,15 +205,14 @@ value is copied to, it can't be known inside the method.
            }
     }
 
+
 Task Constraints
-~~~~~~~~~~~~~~~~
+================
 
 The C/C++ binding also supports the definition of task constraints. The
 task definition specified in the IDL file must be decorated/annotated
 with the *@Constraints*. Below, you can find and example of how to
-define a task with a constraint of using 4 cores. The list of
-constraints which can be defined for a task can be found in
-Section [sec:Constraints]
+define a task with a constraint of using 4 cores.
 
 .. code-block:: text
 
@@ -226,8 +225,11 @@ Section [sec:Constraints]
 
     };
 
+.. include:: ./01_Programming_model/02_C_constraints_inc.rst
+
+
 Task Versions
-~~~~~~~~~~~~~
+=============
 
 Another COMPSs functionality supported in the C/C++ binding is the
 definition of different versions for a tasks. The following code shows

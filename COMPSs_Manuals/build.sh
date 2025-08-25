@@ -24,3 +24,36 @@ make -b html spelling
 
 # End step: deactivate environment
 deactivate
+
+
+# the convention
+#
+# ####################################
+# Part -- Number Signs above and below
+# ####################################
+#
+# with overline, for parts
+#
+# ************************************
+# Chapter -- Asterisks above and below
+# ************************************
+#
+# with overline, for chapters
+#
+# Title -- Number Signs
+# #####################
+#
+# Suptitle -- Asterisks
+# *********************
+#
+# Section -- Equal Signs
+# ======================
+#
+# Subsection -- Hyphens
+# ---------------------
+#
+# Subsubsection -- Circumflex
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#
+# Paragraph -- Double Quotes
+# """"""""""""""""""""""""""
