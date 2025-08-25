@@ -1,30 +1,57 @@
-Quickstart
-==========
+***************************
+|:fast_forward:| Quickstart
+***************************
+
+Welcome to the guide for getting started with COMPSs!
+
+This section will walk you through the simple process of installing the
+COMPSs framework and creating your very first application.
+
+Following these steps, you will be able to quickly set up your environment,
+understand the basic structure of a COMPSs application, and see a working
+application in action.
+
+Let's dive in and get started!
+
+
+Install COMPSs
+##############
 
 .. include:: ./00_Quickstart/01_Install.rst
 
+
 Write your first app
---------------------
+####################
 
 Choose your flavour:
 
-.. tabs::
+.. tab-set::
+    :sync-group: flavour
 
-    .. group-tab:: Java
+    .. tab-item:: Java
+        :sync: java
 
-        .. INCLUDE:: ./00_Quickstart/02_Java.rst
+        .. include:: ./00_Quickstart/02_Java.rst
 
-    .. group-tab:: Python
+    .. tab-item:: Python
+        :sync: python
 
-        .. INCLUDE:: ./00_Quickstart/03_Python.rst
+        .. include:: ./00_Quickstart/03_Python.rst
 
-    .. group-tab:: C/C++
+    .. tab-item:: C/C++
+        :sync: c
 
-        .. INCLUDE:: ./00_Quickstart/04_C.rst
+        .. include:: ./00_Quickstart/04_C.rst
 
-    .. group-tab:: R
+    .. tab-item:: R
+        :sync: r
 
-        .. INCLUDE:: ./00_Quickstart/05_R.rst
+        .. include:: ./00_Quickstart/05_R.rst
 
+
+Useful information
+##################
+
+Choose your flavour:
 
 .. include:: ./00_Quickstart/06_Useful_Info.rst

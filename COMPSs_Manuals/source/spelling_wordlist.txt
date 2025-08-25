@@ -297,3 +297,9 @@ allocatable
 automake
 Zenodo
 natively
+HPCs
+Integrations
+openssh
+gradle
+jdk
+systemwide

@@ -5,13 +5,45 @@
 
 :gitlab_url: http://compss.bsc.es/gitlab/documents/documentation/tree/rtd-documentation/COMPSs_Manuals/rtd
 
-Welcome to COMPSs!
-==================
+###########################
+|:wave:| Welcome to COMPSs!
+###########################
 
 .. figure:: /Logos/COMPSs_logo.png
    :width: 30.0%
    :align: center
    :target: http://compss.bsc.es
+
+.. grid:: 4
+
+    .. grid-item::
+        .. button-ref:: app_development_java
+          :color: primary
+          :align: center
+          :ref-type: ref
+          :expand:
+
+    .. grid-item::
+        .. button-ref:: app_development_python
+          :color: primary
+          :align: center
+          :ref-type: ref
+          :expand:
+
+    .. grid-item::
+        .. button-ref:: app_development_c
+          :color: primary
+          :align: center
+          :ref-type: ref
+          :expand:
+
+    .. grid-item::
+        .. button-ref:: app_development_r
+          :color: primary
+          :align: center
+          :ref-type: ref
+          :expand:
+
 
 **COMP Superscalar (COMPSs)** is a **task-based programming model** which aims
 to ease the development of applications **for distributed infrastructures**,
@@ -37,8 +69,8 @@ following **characteristics**:
   transfers.
 
 - **Standard programming languages:** COMPSs is based on the popular programming
-  language Java, but also offers language bindings for Python (PyCOMPSs) and
-  C/C++ applications.
+  language Java, but also offers language bindings for Python (PyCOMPSs),
+  C/C++ and R applications.
   This makes it easier to learn the model since programmers can reuse most of
   their previous knowledge.
 
@@ -49,23 +81,21 @@ following **characteristics**:
   be used on the COMPSs applications.
 
 
-This manual is divided in 12 sections:
+This manual is divided in 10 sections:
 
 .. toctree::
    :maxdepth: 1
 
    Sections/0_Intro
    Sections/00_Quickstart
-   Sections/01_Installation
+   Sections/01_Installation_Configuration
    Sections/02_App_Development
-   Sections/03_Execution_Environments
-   Sections/05_Tools
-   Sections/06_Persistent_Storage
-   Sections/07_Sample_Applications
-   Sections/08_PyCOMPSs_CLI
-   Sections/09_PyCOMPSs_Notebooks
-   Sections/04_Troubleshooting
-   Sections/10_Tutorial
+   Sections/03_Execution
+   Sections/04_Tools
+   Sections/05_Sample_Applications
+   Sections/06_PyCOMPSs_Notebooks
+   Sections/07_Troubleshooting
+   Sections/08_Tutorial
 
 
 .. Indices and tables

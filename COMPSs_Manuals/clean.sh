@@ -7,5 +7,5 @@ if [ -f "documentation-builder/bin/activate" ]; then
   deactivate
 fi
 
-rm -rf documentation-builder
+#rm -rf documentation-builder
 rm -rf build

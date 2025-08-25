@@ -1,82 +1,80 @@
-Useful information
-------------------
+.. tab-set::
+    :sync-group: flavour
 
-Choose your flavour:
+    .. tab-item:: Java
+        :sync: java
 
-.. tabs::
+        - Syntax detailed information -> :ref:`Sections/02_App_Development/01_Java:|:coffee:| Java`
 
-    .. group-tab:: Java
+        - Constraint definition -> :ref:`Sections/02_App_Development/01_Java/01_Programming_model:Constraints annotations`
 
-        - Syntax detailed information -> :ref:`Sections/02_App_Development/01_Java:Java`
+        - Execution details -> :ref:`Sections/03_Execution/01_Local:Executing COMPSs applications`
 
-        - Constraint definition -> :ref:`Sections/02_App_Development/05_Constraints:Constraints`
+        - Graph, tracing and monitoring facilities -> :ref:`Sections/04_Tools:|:tools:| Tools`
 
-        - Execution details -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications`
+        - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution:|:rocket:| Execution`
 
-        - Graph, tracing and monitoring facilities -> :ref:`Sections/05_Tools:Tools`
+        - Performance analysis -> :ref:`Sections/04_Tools/03_Tracing:|:dart:| Tracing`
 
-        - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/02_Supercomputers:Supercomputers`
+        - Troubleshooting -> :ref:`Sections/07_troubleshooting:|:ambulance:| Troubleshooting`
 
-        - Performance analysis -> :ref:`Sections/05_Tools/03_Tracing:Tracing`
+        - Sample applications -> |:coffee:| :ref:`Java Sample applications <java_sample_applications>`:
 
-        - Troubleshooting -> :ref:`Sections/04_Troubleshooting:Troubleshooting`
+        - Using COMPSs with persistent storage frameworks (e.g. dataClay, Hecuba) -> :ref:`Sections/04_Tools/08_Persistent_Storage:|:file_cabinet:| Persistent Storage`
 
-        - Sample applications -> :ref:`Sections/07_Sample_Applications/01_Java:Java Sample applications`
+    .. tab-item:: Python
+        :sync: python
 
-        - Using COMPSs with persistent storage frameworks (e.g. dataClay, Hecuba) -> :ref:`Sections/06_Persistent_Storage:Persistent Storage`
+        - Syntax detailed information -> :ref:`Sections/02_App_Development/02_Python:|:snake:| Python`
 
-    .. group-tab:: Python
+        - Constraint definition -> :ref:`Sections/02_App_Development/02_Python/01_Programming_model/01_Decorators/03_Constraint_decorator:@constraint`
 
-        - Syntax detailed information -> :ref:`Sections/02_App_Development/02_Python:Python Binding`
+        - Execution details -> :ref:`Sections/03_Execution/01_Local:Executing COMPSs applications`
 
-        - Constraint definition -> :ref:`Sections/02_App_Development/05_Constraints:Constraints`
+        - Graph, tracing and monitoring facilities -> :ref:`Sections/04_Tools:|:tools:| Tools`
 
-        - Execution details -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications`
+        - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution:|:rocket:| Execution`
 
-        - Graph, tracing and monitoring facilities -> :ref:`Sections/05_Tools:Tools`
+        - Performance analysis -> :ref:`Sections/04_Tools/03_Tracing:|:dart:| Tracing`
 
-        - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/02_Supercomputers:Supercomputers`
+        - Troubleshooting -> :ref:`Sections/07_troubleshooting:|:ambulance:| Troubleshooting`
 
-        - Performance analysis -> :ref:`Sections/05_Tools/03_Tracing:Tracing`
+        - Sample applications -> |:snake:| :ref:`Python Sample applications <python_sample_applications>`:
 
-        - Troubleshooting -> :ref:`Sections/04_Troubleshooting:Troubleshooting`
+        - Using COMPSs with persistent storage frameworks (e.g. dataClay, Hecuba) -> :ref:`Sections/04_Tools/08_Persistent_Storage:|:file_cabinet:| Persistent Storage`
 
-        - Sample applications -> :ref:`Sections/07_Sample_Applications/02_Python:Python Sample applications`
+    .. tab-item:: C/C++
+        :sync: c
 
-        - Using COMPSs with persistent storage frameworks (e.g. dataClay, Hecuba) -> :ref:`Sections/06_Persistent_Storage:Persistent Storage`
+        - Syntax detailed information -> :ref:`Sections/02_App_Development/03_C:|:mage:| C/C++`
 
-    .. group-tab:: C/C++
+        - Constraint definition -> :ref:`Sections/02_App_Development/03_C/01_Programming_model:Task Constraints`
 
-        - Syntax detailed information -> :ref:`Sections/02_App_Development/03_C:C/C++ Binding`
+        - Execution details -> :ref:`Sections/03_Execution/01_Local:Executing COMPSs applications`
 
-        - Constraint definition -> :ref:`Sections/02_App_Development/05_Constraints:Constraints`
+        - Graph, tracing and monitoring facilities -> :ref:`Sections/04_Tools:|:tools:| Tools`
 
-        - Execution details -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications`
+        - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution:|:rocket:| Execution`
 
-        - Graph, tracing and monitoring facilities -> :ref:`Sections/05_Tools:Tools`
+        - Performance analysis -> :ref:`Sections/04_Tools/03_Tracing:|:dart:| Tracing`
 
-        - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/02_Supercomputers:Supercomputers`
+        - Troubleshooting -> :ref:`Sections/07_troubleshooting:|:ambulance:| Troubleshooting`
 
-        - Performance analysis -> :ref:`Sections/05_Tools/03_Tracing:Tracing`
+        - Sample applications -> |:mage:| :ref:`C/C++ Sample applications <c_sample_applications>`:
 
-        - Troubleshooting -> :ref:`Sections/04_Troubleshooting:Troubleshooting`
+    .. tab-item:: R
+        :sync: r
 
-        - Sample applications -> :ref:`Sections/07_Sample_Applications/03_C:C/C++ Sample applications`
+        - Syntax detailed information -> :ref:`Sections/02_App_Development/04_R:|:bar_chart:| R`
 
-    .. group-tab:: R
+        - Execution details -> :ref:`Sections/03_Execution/01_Local:Executing COMPSs applications`
 
-        - Syntax detailed information -> :ref:`Sections/02_App_Development/04_R:R Binding`
+        - Graph, tracing and monitoring facilities -> :ref:`Sections/04_Tools:|:tools:| Tools`
 
-        - Constraint definition -> :ref:`Sections/02_App_Development/05_Constraints:Constraints`
+        - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution:|:rocket:| Execution`
 
-        - Execution details -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications`
+        - Performance analysis -> :ref:`Sections/04_Tools/03_Tracing:|:dart:| Tracing`
 
-        - Graph, tracing and monitoring facilities -> :ref:`Sections/05_Tools:Tools`
+        - Troubleshooting -> :ref:`Sections/07_troubleshooting:|:ambulance:| Troubleshooting`
 
-        - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/02_Supercomputers:Supercomputers`
-
-        - Performance analysis -> :ref:`Sections/05_Tools/03_Tracing:Tracing`
-
-        - Troubleshooting -> :ref:`Sections/04_Troubleshooting:Troubleshooting`
-
-        - Sample applications -> :ref:`Sections/07_Sample_Applications/04_R:R Sample applications`
+        - Sample applications -> |:bar_chart:| :ref:`R Sample applications <r_sample_applications>`:

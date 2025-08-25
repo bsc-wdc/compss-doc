@@ -1,5 +1,5 @@
 Use of programming models inside tasks
---------------------------------------
+**************************************
 
 To improve COMPSs performance in some cases, C/C++ binding offers the
 possibility to use programming models inside tasks. This feature allows
@@ -7,7 +7,7 @@ the user to exploit the potential parallelism in their application's
 tasks.
 
 OmpSs
-~~~~~
+=====
 
 COMPSs C/C++ binding supports the use of the programming model OmpSs. To
 use OmpSs inside COMPSs tasks we have to annotate the implemented tasks.

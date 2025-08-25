@@ -1,11 +1,49 @@
-C/C++ Binding
-=============
+.. _app_development_c:
+
+|:mage:| C/C++
+##############
 
 COMPSs provides a binding for C and C++ applications. The new C++
 version in the current release comes with support for objects as task
 parameters and the use of class methods as tasks.
 
+.. grid:: 1 2 2 4
+    :gutter: 2
+
+    .. grid-item-card:: Programming model
+        :link: 03_C/01_Programming_model
+        :link-type: doc
+        :text-align: center
+
+        .. figure:: /Logos/COMPSs_logo.png
+            :width: 12.0%
+
+    .. grid-item-card:: Combining with OmpSs
+        :link: 03_C/02_Other_programming_models
+        :link-type: doc
+        :text-align: center
+
+
+        .. figure:: /Logos/COMPSs_OmpSs.png
+            :width: 26.0%
+
+    .. grid-item-card:: Application compilation
+        :link: 03_C/03_Application_compilation
+        :link-type: doc
+        :text-align: center
+
+        :material-twotone:`fact_check;3em;sd-text-success`
+
+    .. grid-item-card:: Application execution
+        :link: 03_C/04_Application_execution
+        :link-type: doc
+        :text-align: center
+
+        :material-twotone:`terminal;3em;sd-text-success`
+
+
 .. toctree::
+    :hidden:
     :maxdepth: 4
     :caption: Table of Contents
 
@@ -13,4 +51,3 @@ parameters and the use of class methods as tasks.
     03_C/02_Other_programming_models
     03_C/03_Application_compilation
     03_C/04_Application_execution
-    03_C/05_Task_dependency_graph

@@ -1,11 +1,11 @@
 Application Execution
----------------------
+*********************
 
 The next subsections describe how to execute applications with the
 COMPSs R binding.
 
 Environment
-~~~~~~~~~~~
+===========
 
 The following environment variables must be defined before executing a
 COMPSs Python application:
@@ -14,7 +14,7 @@ JAVA_HOME
     Java JDK installation directory (e.g. ``/usr/lib/jvm/java-11-openjdk/``)
 
 Command
-~~~~~~~
+=======
 
 In order to run a R application with COMPSs, the ``runcompss`` script
 can be used, like for Java, C/C++ and Python applications. An example of an
@@ -35,4 +35,4 @@ invocation of the script is:
 
 
 For full description about the options available for the runcompss
-command please check the :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications` Section.
+command please check the :ref:`Sections/03_Execution/01_Local:Executing COMPSs applications` Section.

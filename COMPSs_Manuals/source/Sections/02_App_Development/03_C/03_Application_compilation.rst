@@ -1,5 +1,5 @@
 Application Compilation
------------------------
+***********************
 
 To compile user's applications with the C/C++ binding two commands are
 used: The "\ **compss_build_app**\ ' command allows to compile
@@ -9,9 +9,9 @@ architectures. Both commands must be executed in the directory of the
 main application code.
 
 Single architecture
-~~~~~~~~~~~~~~~~~~~
+===================
 
-.. include:: 03_1_Single_application_compilation.rst
+.. include:: ./03_Application_compilation/01_Single_application_compilation_inc.rst
 
 In order to build an application for a different architecture e.g.
 *armhf*, an environment must be provided, indicating the compiler used
@@ -67,7 +67,7 @@ arguments are purely for linkage, where *$LD_LIBRARY_PATH* is used by
 want to avoid passing some environment arguments.
 
 Multiple architectures
-~~~~~~~~~~~~~~~~~~~~~~
+======================
 
 The user command "**compss_build_app_multi_arch**" allows a to
 compile an application for several architectures. Users are able to
@@ -177,7 +177,7 @@ master and one worker is expected per architecture.
     (Note than only directories are shown).
 
 Using OmpSs
-~~~~~~~~~~~
+===========
 
 As described in section [sec:ompss] applications can use OmpSs and
 OmpSs-2 programming models. The compilation process differs a little bit

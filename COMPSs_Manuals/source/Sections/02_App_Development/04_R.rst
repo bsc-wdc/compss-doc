@@ -1,11 +1,69 @@
-R Binding
-=========
+.. _app_development_r:
+
+|:bar_chart:| R
+###############
 
 COMPSs features a binding for R applications. The next
 subsections explain how to program a R application for COMPSs and a
 brief overview on how to execute it.
 
+
+.. grid:: 1 1 2 2
+    :gutter: 2
+
+    .. grid-item::
+        :columns: 12
+
+        .. grid:: 1 1 1 2
+            :gutter: 2
+
+            .. grid-item::
+
+                .. grid:: 1 1 1 1
+                    :gutter: 2
+                    :margin: 0
+                    :padding: 0
+
+                    .. grid-item-card:: Programming model
+                        :link: 04_R/01_Programming_model
+                        :link-type: doc
+                        :text-align: center
+
+                        .. figure:: /Logos/COMPSs_logo.png
+                            :width: 6.0%
+
+                    .. grid-item::
+
+                        .. grid:: 2 2 2 2
+                            :gutter: 2
+                            :margin: 1 0 0 0
+
+                            .. grid-item-card:: Decorators
+                                :link: 04_R/01_Programming_model/01_Decorators
+                                :link-type: doc
+                                :text-align: center
+                                :margin: 0
+
+                                :material-twotone:`alternate_email;3em;sd-text-success`
+
+                            .. grid-item-card:: API
+                                :link: 04_R/01_Programming_model/02_API
+                                :link-type: doc
+                                :text-align: center
+                                :margin: 0
+
+                                :material-twotone:`api;3em;sd-text-success`
+
+            .. grid-item-card:: Application execution
+                :link: 04_R/02_Application_execution
+                :link-type: doc
+                :text-align: center
+
+                :material-twotone:`terminal;3em;sd-text-success`
+
+
 .. toctree::
+    :hidden:
     :maxdepth: 4
     :caption: Table of Contents
 

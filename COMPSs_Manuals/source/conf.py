@@ -48,9 +48,14 @@ extensions = ['sphinx.ext.todo',
               'sphinx_copybutton',
               'sphinxcontrib.rsvgconverter',
               'sphinxcontrib.youtube',
-              'sphinx_tabs.tabs',
+              'sphinxemoji.sphinxemoji',
               'sphinx_toolbox.collapse',
-              'sphinxcontrib.spelling']
+              'sphinxcontrib.spelling',
+              'sphinx_tippy']
+
+# TODO: Finish reordering
+# TODO: Add asciinema animation
+# TODO: Fix all documentation card issues.
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -92,7 +97,7 @@ language = "en"
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ['_build', '**.ipynb_checkpoints']
+exclude_patterns = ['_build', '**.ipynb_checkpoints', '**/*_inc.rst']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'default' # 'sphinx'
@@ -112,7 +117,7 @@ numfig_format = {'figure':'Figure %s',
                  'code-block':'Code %s',
                  'section':'Section %s'}
 html_permalinks = False  # Disabled permalinks
-html_logo = './Logos/COMPSs_logo_small.png'
+html_logo = './Logos/COMPSs_slow_crop_effect_loop1.gif' # './Logos/COMPSs_logo_small.png'
 html_show_sourcelink = False
 html_show_copyright = True
 html_show_sphinx = True
@@ -131,9 +136,6 @@ nbsphinx_execute_arguments = [
 # Do not allow building if execution is enabled and a notebook fails
 nbsphinx_allow_errors = True
 nbsphinx_requirejs_path = ''
-
-# Disable tabs can be closed by selecting the open tab
-sphinx_tabs_disable_tab_closing = True
 
 # Spelling configuration
 spelling_lang='en'
@@ -166,7 +168,16 @@ html_theme = 'sphinx_rtd_theme' # 'alabaster'
 # documentation.
 #
 html_theme_options = {'logo_only': True,
-                      'navigation_depth': 8}
+                      #'style_nav_header_background': 'black',
+                      #'flyout_display': 'hidden',
+                      #'language_selector': True,
+                      # Toc options
+                      #'collapse_navigation': True,
+                      #'sticky_navigation': True,
+                      'navigation_depth': 8,
+                      #'includehidden': True,
+                      #'titles_only': False
+                      }
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -191,14 +202,69 @@ html_sidebars = {
     ]
 }
 
+# -- Options for nbgallery ---------------------------------------
+_sample_app = '_static/notebooks_gallery/Sample_App.jpeg'
+nbsphinx_thumbnails = {
+    'Sections/05_Sample_Applications/01_Java/Blast': _sample_app,
+    'Sections/05_Sample_Applications/01_Java/Hello_world': _sample_app,
+    'Sections/05_Sample_Applications/01_Java/Increment': _sample_app,
+    'Sections/05_Sample_Applications/01_Java/Matmul': _sample_app,
+    'Sections/05_Sample_Applications/01_Java/Simple': _sample_app,
+    'Sections/05_Sample_Applications/01_Java/SparseLU': _sample_app,
+    'Sections/05_Sample_Applications/02_Python/01_Simple': _sample_app,
+    'Sections/05_Sample_Applications/02_Python/02_Increment': _sample_app,
+    'Sections/05_Sample_Applications/02_Python/03_KMeans': _sample_app,
+    'Sections/05_Sample_Applications/02_Python/04_Matmul': _sample_app,
+    'Sections/05_Sample_Applications/02_Python/05_Lysozyme_in_water': _sample_app,
+    'Sections/05_Sample_Applications/02_Python/99_Persistent_Storage': _sample_app,
+    'Sections/05_Sample_Applications/03_C/Increment': _sample_app,
+    'Sections/05_Sample_Applications/03_C/Simple': _sample_app,
+    'Sections/05_Sample_Applications/04_R/01_Addition': _sample_app,
+    'Sections/05_Sample_Applications/04_R/02_Kmeans': _sample_app,
+    'Sections/05_Sample_Applications/04_R/03_Knn': _sample_app,
+    'Sections/05_Sample_Applications/04_R/04_Linear_regression': _sample_app,
+    'Sections/06_PyCOMPSs_Notebooks/syntax/1_Basic': '_static/notebooks_gallery/Syntax_1.jpeg',
+    'Sections/06_PyCOMPSs_Notebooks/syntax/2_Synchronization': '_static/notebooks_gallery/Syntax_2.jpeg',
+    'Sections/06_PyCOMPSs_Notebooks/syntax/3.0_Defining_classes_and_objects': '_static/notebooks_gallery/Syntax_3.0.jpeg',
+    'Sections/06_PyCOMPSs_Notebooks/syntax/3.1_Defining_classes_and_objects-with-reduce': '_static/notebooks_gallery/Syntax_3.1.jpeg',
+    'Sections/06_PyCOMPSs_Notebooks/syntax/3.2_Defining_classes_and_objects-with-collections': '_static/notebooks_gallery/Syntax_3.2.jpeg',
+    'Sections/06_PyCOMPSs_Notebooks/syntax/3.3_Defining_classes_and_objects-with-dictionary': '_static/notebooks_gallery/Syntax_3.3.jpeg',
+    'Sections/06_PyCOMPSs_Notebooks/syntax/3.4_Defining_classes_and_objects-with-fault-tolerance': '_static/notebooks_gallery/Syntax_3.4.jpeg',
+    'Sections/06_PyCOMPSs_Notebooks/syntax/4_Files': '_static/notebooks_gallery/Syntax_4.jpeg',
+    'Sections/06_PyCOMPSs_Notebooks/syntax/5_UsingConstraints': '_static/notebooks_gallery/Syntax_5.jpeg',
+    'Sections/06_PyCOMPSs_Notebooks/syntax/6_Polymorphism': '_static/notebooks_gallery/Syntax_6.jpeg',
+    'Sections/06_PyCOMPSs_Notebooks/syntax/7_Binary': '_static/notebooks_gallery/Syntax_7.jpeg',
+    'Sections/06_PyCOMPSs_Notebooks/syntax/8_Integration_with_Numba': '_static/notebooks_gallery/Syntax_8.jpeg',
+    'Sections/06_PyCOMPSs_Notebooks/syntax/9_Dislib': '_static/notebooks_gallery/Syntax_9.jpeg',
+    'Sections/06_PyCOMPSs_Notebooks/syntax/10_Dislib_estimators': '_static/notebooks_gallery/Syntax_10.jpeg',
+    'Sections/06_PyCOMPSs_Notebooks/hands-on/1_SortByKey': '_static/notebooks_gallery/HandsOn_1.png',
+    'Sections/06_PyCOMPSs_Notebooks/hands-on/2_KMeans-reduce-chunks': '_static/notebooks_gallery/HandsOn_2_1.png',
+    'Sections/06_PyCOMPSs_Notebooks/hands-on/2_KMeans': '_static/notebooks_gallery/HandsOn_2_2.png',
+    'Sections/06_PyCOMPSs_Notebooks/hands-on/3_Cholesky': '_static/notebooks_gallery/HandsOn_3.png',
+    'Sections/06_PyCOMPSs_Notebooks/hands-on/4_Wordcount_Exercise': '_static/notebooks_gallery/HandsOn_4_1.jpeg',
+    'Sections/06_PyCOMPSs_Notebooks/hands-on/4_Wordcount_Solution-with-reduce': '_static/notebooks_gallery/HandsOn_4_2.png',
+    'Sections/06_PyCOMPSs_Notebooks/hands-on/4_Wordcount_Solution': '_static/notebooks_gallery/HandsOn_4_3.png',
+    'Sections/06_PyCOMPSs_Notebooks/hands-on/5_Integral_PI_iterative': '_static/notebooks_gallery/HandsOn_5_1.png',
+    'Sections/06_PyCOMPSs_Notebooks/hands-on/5_Integral_PI_reduction': '_static/notebooks_gallery/HandsOn_5_2.png',
+    'Sections/06_PyCOMPSs_Notebooks/demos/Mandelbrot_numba': '_static/notebooks_gallery/Demo_1.jpeg',
+}
+
 
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'COMPSsdoc'
-
 html_scaled_image_link = False
 
+
+# -- Options for tippy HTML output -------------------------------
+tippy_tip_selector = "figure, table, img, p, aside, div.admonition, div.literal-block-wrapper"
+tippy_skip_anchor_classes = (
+    "headerlink",
+    "sd-stretched-link",
+)
+tippy_enable_doitips = False  # Disabled due to issues with workflowhub DOIs api (not in datacite nor crossref).
+tippy_doi_api = "https://api.datacite.org/dois/"
 
 # -- Options for Youtube in latex output ------------------------------------------
 youtube_cmd = r"\newcommand{\sphinxcontribyoutube}[3]{\begin{figure}\sphinxincludegraphics{{#2}.jpg}\caption{\url{#1#2#3}}\end{figure}}" + "\n"
