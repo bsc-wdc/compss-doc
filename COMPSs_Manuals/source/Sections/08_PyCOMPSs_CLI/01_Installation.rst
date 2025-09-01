@@ -113,4 +113,4 @@ environments.
 
              .. code:: bash
 
-                 $  conda install -c conda-forge/label/cf201901 docker-py
+                 $  python3 -m pip install docker
