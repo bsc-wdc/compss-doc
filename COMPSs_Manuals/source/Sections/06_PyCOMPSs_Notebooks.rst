@@ -86,7 +86,7 @@ Here you will find the PyCOMPSs demonstration notebooks used in the tutorials.
 
         * Using **PyCOMPSs CLI**:
 
-            * ``pycompss-cli`` (see :ref:`Sections/04_Tools/09_CLI/01_Installation:Requirements and Installation`)
+            * ``pycompss-cli`` (see :ref:`Sections/04_Ecosystem/09_CLI/01_Installation:Requirements and Installation`)
 
         * Using **Docker**:
 
@@ -116,7 +116,7 @@ Here you will find the PyCOMPSs demonstration notebooks used in the tutorials.
 
         * Using ``pycompss-cli``:
 
-            Check the ``pycompss-cli`` usage instructions (see :ref:`Sections/04_Tools/09_CLI/02_Usage:Usage`)
+            Check the ``pycompss-cli`` usage instructions (see :ref:`Sections/04_Ecosystem/09_CLI/02_Usage:Usage`)
 
             Get the notebooks:
 

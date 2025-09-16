@@ -155,6 +155,8 @@ spelling_ignore_importable_modules=True
 spelling_ignore_contributor_names=True
 spelling_filters=[]
 
+# Options for emoji
+sphinxemoji_style = 'twemoji'
 
 # -- Options for HTML output ----------------------------------------------
 

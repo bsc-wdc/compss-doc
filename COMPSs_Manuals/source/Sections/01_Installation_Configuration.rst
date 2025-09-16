@@ -16,39 +16,41 @@ and configure COMPSs for the best performance.
     .. grid-item::
         :padding: 4 1 1 1
 
-        .. grid:: 1 1 1 1
+        .. div:: sd-bg-light
 
-            .. grid-item::
+            .. grid:: 1 1 1 1
 
-                .. div:: sd-text-center sd-fs-5
+                .. grid-item::
 
-                    :material-twotone:`looks_one;3em` **st**
+                    .. div:: sd-text-center sd-fs-5
 
-        .. grid:: 1 1 1 1
+                        :material-twotone:`looks_one;3em` **st**
 
-            .. grid-item-card:: Dependencies
-                :link: 01_Installation_Configuration/01_Dependencies
-                :link-type: doc
-                :text-align: center
+            .. grid:: 1 1 1 1
 
-                :material-twotone:`library_add_check;3em;sd-text-warning`
+                .. grid-item-card:: Dependencies
+                    :link: 01_Installation_Configuration/01_Dependencies
+                    :link-type: doc
+                    :text-align: center
 
-        .. grid:: 2 2 2 2
-            :gutter: 1
+                    :material-twotone:`library_add_check;3em;sd-text-warning`
 
-            .. grid-item-card:: Laptops/PCs
-                :link: 01_Installation_Configuration/01_Dependencies/01_PC
-                :link-type: doc
-                :text-align: center
+            .. grid:: 2 2 2 2
+                :gutter: 1
 
-                :material-twotone:`computer;3em;sd-text-warning`
+                .. grid-item-card:: Laptops/PCs
+                    :link: 01_Installation_Configuration/01_Dependencies/01_PC
+                    :link-type: doc
+                    :text-align: center
 
-            .. grid-item-card:: Supercomputer
-                :link: 01_Installation_Configuration/01_Dependencies/02_Supercomputer
-                :link-type: doc
-                :text-align: center
+                    :material-twotone:`computer;3em;sd-text-warning`
 
-                :material-twotone:`storage;3em;sd-text-warning`
+                .. grid-item-card:: Supercomputer
+                    :link: 01_Installation_Configuration/01_Dependencies/02_Supercomputer
+                    :link-type: doc
+                    :text-align: center
+
+                    :material-twotone:`storage;3em;sd-text-warning`
 
     .. grid-item::
         :padding: 4 1 1 1
@@ -97,39 +99,48 @@ and configure COMPSs for the best performance.
     .. grid-item::
         :padding: 4 1 1 1
 
-        .. grid:: 1 1 1 1
+        .. div:: sd-bg-light
 
-            .. grid-item::
+            .. grid:: 1 1 1 1
 
-                .. div:: sd-text-center sd-fs-5
+                .. grid-item::
 
-                    :material-twotone:`looks_3;3em` **rd**
+                    .. div:: sd-text-center sd-fs-5
 
-        .. grid:: 1 1 1 1
+                        :material-twotone:`looks_3;3em` **rd**
 
-            .. grid-item-card:: Configuration
-                :link: 01_Installation_Configuration/03_Configuration
-                :link-type: doc
-                :text-align: center
+            .. grid:: 1 1 1 1
 
-                :material-twotone:`settings;3em;#5985E1`
+                .. grid-item-card:: Configuration
+                    :link: 01_Installation_Configuration/03_Configuration
+                    :link-type: doc
+                    :text-align: center
 
-        .. grid:: 2 2 2 2
-            :gutter: 1
+                    :material-twotone:`settings;3em;#5985E1`
 
-            .. grid-item-card:: General
-                :link: 01_Installation_Configuration/03_Configuration/01_General
-                :link-type: doc
-                :text-align: center
+            .. grid:: 3 3 3 3
+                :gutter: 1
 
-                :material-twotone:`all_inclusive;3em;#5985E1`
+                .. grid-item-card:: General
+                    :link: 01_Installation_Configuration/03_Configuration/01_General
+                    :link-type: doc
+                    :text-align: center
 
-            .. grid-item-card:: Supercomputer specific
-                :link: 01_Installation_Configuration/03_Configuration/02_Supercomputer
-                :link-type: doc
-                :text-align: center
+                    :material-twotone:`all_inclusive;3em;#5985E1`
 
-                :material-twotone:`storage;3em;#5985E1`
+                .. grid-item-card:: Supercomputer specific
+                    :link: 01_Installation_Configuration/03_Configuration/02_Supercomputer
+                    :link-type: doc
+                    :text-align: center
+
+                    :material-twotone:`storage;3em;#5985E1`
+
+                .. grid-item-card:: Cloud specific
+                    :link: 01_Installation_Configuration/03_Configuration/03_Cloud
+                    :link-type: doc
+                    :text-align: center
+
+                    :material-twotone:`cloud;3em;#5985E1`
 
 
 .. toctree::

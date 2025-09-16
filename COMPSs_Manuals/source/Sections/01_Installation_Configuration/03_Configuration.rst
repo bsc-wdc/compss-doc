@@ -23,6 +23,13 @@ architectures, deployments, and operational mechanisms.
 
         :material-twotone:`storage;3em;#5985E1`
 
+    .. grid-item-card:: Cloud
+        :link: 03_Configuration/03_Cloud
+        :link-type: doc
+        :text-align: center
+
+        :material-twotone:`cloud;3em;#5985E1`
+
 .. toctree::
     :hidden:
     :maxdepth: 2
@@ -30,3 +37,4 @@ architectures, deployments, and operational mechanisms.
 
     03_Configuration/01_General
     03_Configuration/02_Supercomputer
+    03_Configuration/03_Cloud

@@ -13,33 +13,6 @@ the packaging system, we also provide a **COMPSs zipped file**
 containing a :spelling:ignore:`pre`-build script to easily install COMPSs. Next subsections
 provide further information about this process.
 
-.. _install_for_supercomputer_prerequisites:
-
-Prerequisites
-=============
-
-In order to successfully run the installation script some dependencies
-must be present on the target machine. Administrators must provide the
-correct installation and environment of the following software:
-
--  Autotools
-
--  BOOST
-
--  Java 11 JRE
-
-The following environment variables must be defined:
-
--  JAVA_HOME
-
--  BOOST_CPPFLAGS
-
-The tracing system can be enhanced with:
-
--  PAPI, which provides support for hardware counters
-
--  MPI, which speeds up the tracing merge (and enables it for huge
-   traces)
 
 .. _install_for_supercomputer_installation:
 
@@ -90,6 +63,7 @@ after the installation process we recommend to source the
 Once done, remember to log out and back in again to end the
 installation process.
 
+
 .. _install_for_supercomputer_configuration:
 
 Configuration
@@ -120,6 +94,7 @@ to make them available to the users. The following paragraph describe more
 in detail the scripts and configuration files
 If you need help, contact support-compss@bsc.es.
 
+
 .. _install_for_supercomputer_queue_structure:
 
 COMPSs Queue structure overview
@@ -141,6 +116,7 @@ are located in ``queues/supercomputers``.
 
    Structure of COMPSs queue scripts. In Blue user scripts, in Green
    queue scripts and in Orange system dependent scripts
+
 
 
 .. _install_for_supercomputer_configuration_files:
@@ -324,6 +300,7 @@ variables to commands paths or values which are set in your system.
 If you find that some of this values are not available in your system,
 leave them empty or as they are in the MareNostrum IV.
 
+
 .. _install_for_supercomputer_cfgs_usage:
 
 How are cfg files used in scripts?
@@ -374,6 +351,7 @@ should create a new one for the new one.
 If you think that some of the features of your system are not supported in
 the current implementation, please contact us at support-compss@bsc.es.
 We will discuss how it should be incorporated in the scripts.
+
 
 .. _install_for_supercomputer_post_installation:
 

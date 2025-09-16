@@ -95,7 +95,7 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
   to ``False``.
 
 - ``trace_persistence`` value is ``False`` by default. Whenever a Paraver trace is generated when running an experiment
-  (see Section :ref:`Sections/04_Tools/03_Tracing/01_Apps_tracing:Activate Tracing`), the metadata of the resulting trace will be automatically
+  (see Section :ref:`Sections/04_Ecosystem/03_Tracing/01_Apps_tracing:Activate Tracing`), the metadata of the resulting trace will be automatically
   added to the crate. As with datasets, the user can decide if the trace files themselves must be physically added, or
   include only references to where they can be located. If trace files are included, a directory named ``trace/`` will
   be available from the root path of the crate.

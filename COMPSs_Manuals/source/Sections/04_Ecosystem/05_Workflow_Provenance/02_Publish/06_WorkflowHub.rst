@@ -507,7 +507,7 @@ simplicity, we will not go into the details on how to deal with this environment
 target environment has all software dependencies ready to be used.
 
 While the reproducibility process of a COMPSs workflow is quite manual at the moment, we plan to automate it using
-workflow provenance with the COMPSs CLI (see Section :ref:`Sections/04_Tools/09_CLI:|:magic_wand:| CLI`). Anyway, reproducing
+workflow provenance with the COMPSs CLI (see Section :ref:`Sections/04_Ecosystem/09_CLI:|:magic_wand:| CLI`). Anyway, reproducing
 executions in the same machine as the one in the published run (e.g. using the same supercomputer) should be quite straightforward,
 since the metadata may include references to the location of the inputs and outputs of the workflow. Therefore, the only
 requirement to reproduce a run would be to have access granted to the location where the inputs are.

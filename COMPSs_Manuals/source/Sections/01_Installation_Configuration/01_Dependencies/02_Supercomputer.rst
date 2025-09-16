@@ -2,6 +2,7 @@
 
    pre
 
+
 Supercomputer
 *************
 
@@ -12,10 +13,32 @@ There are 3 types:
  * *Build*: Extra packages to build COMPSs from sources.
  * *Optional*: Extra packages recommended for performance purposes.
 
+
 Essential Requirements
 ======================
 
-There are some systemwide packages required in order to install COMPSs.
+In order to successfully run the installation script some dependencies
+must be present on the target machine. Administrators must provide the
+correct installation and environment of the following software:
+
+-  Autotools
+
+-  BOOST
+
+-  Java 11 JRE
+
+The following environment variables must be defined:
+
+-  JAVA_HOME
+
+-  BOOST_CPPFLAGS
+
+The tracing system can be enhanced with:
+
+-  PAPI, which provides support for hardware counters
+
+-  MPI, which speeds up the tracing merge (and enables it for huge
+   traces)
 
 
 Build Dependencies

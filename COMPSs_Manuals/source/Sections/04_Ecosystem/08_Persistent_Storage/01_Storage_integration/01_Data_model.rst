@@ -127,7 +127,7 @@ followed by the attribute name and type:
 
     Methods inside the class are not supported by all storage backends.
     dataClay is currently the only backend that provides support for them
-    (see :ref:`Sections/04_Tools/08_Persistent_Storage/02_COMPSs_dataClay:Enabling COMPSs applications with dataClay`).
+    (see :ref:`Sections/04_Ecosystem/08_Persistent_Storage/02_COMPSs_dataClay:Enabling COMPSs applications with dataClay`).
 
 Then, the user can use the instantiated object normally:
 

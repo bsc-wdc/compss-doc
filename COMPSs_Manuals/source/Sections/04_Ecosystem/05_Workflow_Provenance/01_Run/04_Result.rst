@@ -32,7 +32,7 @@ are:
   It includes, for each resource and method executed: number of executions of the
   specific method, as well as maximum, average and minimum run time for the tasks.
   The name of the file can be customized using the ``--output_profile=<path>`` option. See also Section
-  :ref:`Sections/04_Tools/04_Scheduling:|:scroll:| Schedulers`.
+  :ref:`Sections/04_Ecosystem/04_Scheduling:|:scroll:| Schedulers`.
 
 - **compss_submission_command_line.txt:** stores the exact command line that was used to submit the application
   (i.e. ``runcompss`` or ``enqueue_compss``), including all the flags and parameters passed.
@@ -52,7 +52,7 @@ are:
 
 .. TIP::
     Since its version ``3.3.4``, the ``PyCOMPSs CLI`` includes the capacity of inspecting RO-Crates with the
-    ``pycompss inspect [crate_folder/ | crate.zip]`` command. Check the :ref:`Sections/04_Tools/09_CLI/02_Usage:Inspect Workflow Provenance`
+    ``pycompss inspect [crate_folder/ | crate.zip]`` command. Check the :ref:`Sections/04_Ecosystem/09_CLI/02_Usage:Inspect Workflow Provenance`
     Section for more details.
 
 .. TIP::

@@ -253,7 +253,7 @@ to :ref:`Sections/05_Sample_Applications:|:bulb:| sample applications`.
 
 .. TIP::
     For further information about applications scheduling refer to
-    :ref:`Sections/04_Tools/04_Scheduling:|:scroll:| Schedulers`.
+    :ref:`Sections/04_Ecosystem/04_Scheduling:|:scroll:| Schedulers`.
 
 Running Java applications
 """""""""""""""""""""""""

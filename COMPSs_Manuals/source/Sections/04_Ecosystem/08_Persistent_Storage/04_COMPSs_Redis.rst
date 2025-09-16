@@ -20,11 +20,11 @@ COMPSs + Redis Dependencies
 
 The required dependencies are:
 
-* :ref:`Sections/04_Tools/08_Persistent_Storage/04_COMPSs_Redis:Redis Server`
+* :ref:`Sections/04_Ecosystem/08_Persistent_Storage/04_COMPSs_Redis:Redis Server`
 
-* :ref:`Sections/04_Tools/08_Persistent_Storage/04_COMPSs_Redis:Redis Cluster script`
+* :ref:`Sections/04_Ecosystem/08_Persistent_Storage/04_COMPSs_Redis:Redis Cluster script`
 
-* :ref:`Sections/04_Tools/08_Persistent_Storage/04_COMPSs_Redis:COMPSs-Redis Bundle`
+* :ref:`Sections/04_Ecosystem/08_Persistent_Storage/04_COMPSs_Redis:COMPSs-Redis Bundle`
 
 
 Redis Server
