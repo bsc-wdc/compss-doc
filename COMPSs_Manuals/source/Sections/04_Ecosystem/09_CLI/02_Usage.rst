@@ -1006,7 +1006,7 @@ Removing existing nodes
 Inspect Workflow Provenance
 ===========================
 
-As explained in the :ref:`Sections/04_Tools/05_Workflow_Provenance:|:spy:| Workflow Provenance` Section,
+As explained in the :ref:`Sections/04_Ecosystem/05_Workflow_Provenance:|:spy:| Workflow Provenance` Section,
 COMPSs is able to generate the workflow
 provenance of an application execution as metadata stored using the RO-Crate specification. The PyCOMPSs CLI includes
 the option ``pycompss inspect`` to read an existing COMPSs generated RO-Crate and print its content by the screen.

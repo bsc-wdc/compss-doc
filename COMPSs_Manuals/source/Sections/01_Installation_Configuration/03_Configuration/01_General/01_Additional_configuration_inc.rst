@@ -1,10 +1,5 @@
 .. _additional_configuration:
 
-Additional Configuration
-************************
-
-[TODO]
-
 .. _additional_configuration_ssh_passwordless:
 
 Configure SSH passwordless
@@ -85,22 +80,3 @@ access between any pair of machines:
 
    Cluster example
 
-Configure the COMPSs Cloud Connectors
-=====================================
-
-This section provides information about the additional configuration
-needed for some Cloud Connectors.
-
-OCCI (Open Cloud Computing Interface) connector
------------------------------------------------
-
-In order to execute a COMPSs application using cloud resources, the
-rOCCI (Ruby OCCI) connector [1]_ has to be configured properly. The connector
-uses the rOCCI CLI client (upper versions from 4.2.5) which has to be
-installed in the node where the COMPSs main application runs. The client
-can be installed following the instructions detailed at
-http://appdb.egi.eu/store/software/rocci.cli
-
-
-.. [1]
-   https://appdb.egi.eu/store/software/rocci.cli

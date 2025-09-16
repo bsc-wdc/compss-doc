@@ -46,7 +46,7 @@ in the main window and select "File". The configuration files are under
 the following path for the default installation
 ``/opt/COMPSs/Dependencies/paraver/cfgs/``. A detailed list of all
 the available configurations can be found in
-:ref:`Sections/04_Tools/03_Tracing/06_Paraver_configs:Paraver: configurations`.
+:ref:`Sections/04_Ecosystem/03_Tracing/06_Paraver_configs:Paraver: configurations`.
 
 The following guide uses a kmeans trace (result from executing the
 :ref:`Sections/05_Sample_Applications/02_Python/03_kmeans:KMeans` sample code with

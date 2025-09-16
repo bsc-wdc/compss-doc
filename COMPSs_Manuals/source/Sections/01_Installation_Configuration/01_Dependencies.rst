@@ -11,7 +11,7 @@ for Laptops/PCs and for Supercomputers/HPCs/Clusters.
 .. grid::
     :gutter: 2
 
-    .. grid-item-card:: Laptops/PCs
+    .. grid-item-card:: Laptops/PCs/VM/Container
         :link: 01_Dependencies/01_PC
         :link-type: doc
         :text-align: center

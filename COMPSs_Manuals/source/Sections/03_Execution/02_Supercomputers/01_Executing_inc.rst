@@ -454,7 +454,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
 
 .. TIP::
     For further information about applications scheduling refer to
-    :ref:`Sections/04_Tools/04_Scheduling:|:scroll:| Schedulers`.
+    :ref:`Sections/04_Ecosystem/04_Scheduling:|:scroll:| Schedulers`.
 
 .. ATTENTION::
     From COMPSs 2.8 version, the ``worker_working_dir`` has changed its built-in

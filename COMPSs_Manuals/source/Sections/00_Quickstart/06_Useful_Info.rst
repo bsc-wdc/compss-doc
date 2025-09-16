@@ -10,17 +10,17 @@
 
         - Execution details -> :ref:`Sections/03_Execution/01_Local:Executing COMPSs applications`
 
-        - Graph, tracing and monitoring facilities -> :ref:`Sections/04_Tools:|:tools:| Tools`
+        - Graph, tracing and monitoring facilities -> :ref:`Sections/04_Ecosystem:|:tools:| Ecosystem`
 
         - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution:|:rocket:| Execution`
 
-        - Performance analysis -> :ref:`Sections/04_Tools/03_Tracing:|:dart:| Tracing`
+        - Performance analysis -> :ref:`Sections/04_Ecosystem/03_Tracing:|:dart:| Tracing`
 
         - Troubleshooting -> :ref:`Sections/07_troubleshooting:|:ambulance:| Troubleshooting`
 
         - Sample applications -> |:coffee:| :ref:`Java Sample applications <java_sample_applications>`:
 
-        - Using COMPSs with persistent storage frameworks (e.g. dataClay, Hecuba) -> :ref:`Sections/04_Tools/08_Persistent_Storage:|:file_cabinet:| Persistent Storage`
+        - Using COMPSs with persistent storage frameworks (e.g. dataClay, Hecuba) -> :ref:`Sections/04_Ecosystem/08_Persistent_Storage:|:file_cabinet:| Persistent Storage`
 
     .. tab-item:: Python
         :sync: python
@@ -31,17 +31,17 @@
 
         - Execution details -> :ref:`Sections/03_Execution/01_Local:Executing COMPSs applications`
 
-        - Graph, tracing and monitoring facilities -> :ref:`Sections/04_Tools:|:tools:| Tools`
+        - Graph, tracing and monitoring facilities -> :ref:`Sections/04_Ecosystem:|:tools:| Ecosystem`
 
         - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution:|:rocket:| Execution`
 
-        - Performance analysis -> :ref:`Sections/04_Tools/03_Tracing:|:dart:| Tracing`
+        - Performance analysis -> :ref:`Sections/04_Ecosystem/03_Tracing:|:dart:| Tracing`
 
         - Troubleshooting -> :ref:`Sections/07_troubleshooting:|:ambulance:| Troubleshooting`
 
         - Sample applications -> |:snake:| :ref:`Python Sample applications <python_sample_applications>`:
 
-        - Using COMPSs with persistent storage frameworks (e.g. dataClay, Hecuba) -> :ref:`Sections/04_Tools/08_Persistent_Storage:|:file_cabinet:| Persistent Storage`
+        - Using COMPSs with persistent storage frameworks (e.g. dataClay, Hecuba) -> :ref:`Sections/04_Ecosystem/08_Persistent_Storage:|:file_cabinet:| Persistent Storage`
 
     .. tab-item:: C/C++
         :sync: c
@@ -52,11 +52,11 @@
 
         - Execution details -> :ref:`Sections/03_Execution/01_Local:Executing COMPSs applications`
 
-        - Graph, tracing and monitoring facilities -> :ref:`Sections/04_Tools:|:tools:| Tools`
+        - Graph, tracing and monitoring facilities -> :ref:`Sections/04_Ecosystem:|:tools:| Ecosystem`
 
         - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution:|:rocket:| Execution`
 
-        - Performance analysis -> :ref:`Sections/04_Tools/03_Tracing:|:dart:| Tracing`
+        - Performance analysis -> :ref:`Sections/04_Ecosystem/03_Tracing:|:dart:| Tracing`
 
         - Troubleshooting -> :ref:`Sections/07_troubleshooting:|:ambulance:| Troubleshooting`
 
@@ -69,11 +69,11 @@
 
         - Execution details -> :ref:`Sections/03_Execution/01_Local:Executing COMPSs applications`
 
-        - Graph, tracing and monitoring facilities -> :ref:`Sections/04_Tools:|:tools:| Tools`
+        - Graph, tracing and monitoring facilities -> :ref:`Sections/04_Ecosystem:|:tools:| Ecosystem`
 
         - Other execution environments (Supercomputers, Docker, etc.) -> :ref:`Sections/03_Execution:|:rocket:| Execution`
 
-        - Performance analysis -> :ref:`Sections/04_Tools/03_Tracing:|:dart:| Tracing`
+        - Performance analysis -> :ref:`Sections/04_Ecosystem/03_Tracing:|:dart:| Tracing`
 
         - Troubleshooting -> :ref:`Sections/07_troubleshooting:|:ambulance:| Troubleshooting`
 

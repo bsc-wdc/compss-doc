@@ -250,7 +250,7 @@ We can quickly see that the four `increment` tasks have been executed in paralle
 computing time of the task represented by the ``time.sleep(value * 2)`` line).
 
 Paraver is a very powerful tool for performance analysis. For more information,
-check the :ref:`Sections/04_Tools/03_Tracing:|:dart:| Tracing` Section.
+check the :ref:`Sections/04_Ecosystem/03_Tracing:|:dart:| Tracing` Section.
 
 .. NOTE::
 

@@ -2,8 +2,8 @@
 
    pre
 
-Laptop or PC
-************
+Laptop/PC/VM/Container
+**********************
 
 This section shows you the pre-requisites to install the COMPSs framework.
 There are 3 types:

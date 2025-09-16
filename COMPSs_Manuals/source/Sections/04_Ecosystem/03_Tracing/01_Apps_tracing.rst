@@ -19,7 +19,7 @@ http://www.bsc.es/computer-sciences/performance-tools.
 Extrae keeps track of the events in an intermediate format file (with *.mpit*
 extension). At the end of the execution, all these files can bee gathered
 and merged with Extrae's ``mpi2prv`` command to create the final tracefile, a Paraver
-format file (.prv). See the :ref:`Sections/04_Tools/03_Tracing/02_Visualization:Visualization`
+format file (.prv). See the :ref:`Sections/04_Ecosystem/03_Tracing/02_Visualization:Visualization`
 Section for further information about the Paraver tool.
 
 For further information about Extrae, please visit the following site:
@@ -29,7 +29,7 @@ http://www.bsc.es/computer-science/extrae
 When tracing is enabled, Extrae instruments computing threads and some resources
 management operations to provide information about tasks' executions, data
 transfers, and, if PAPI is available (see
-:ref:`Sections/04_Tools/03_Tracing/05_Papi:PAPI: Hardware Counters` for more info),
+:ref:`Sections/04_Ecosystem/03_Tracing/05_Papi:PAPI: Hardware Counters` for more info),
 hardware counters.
 
 Activate Tracing
@@ -293,7 +293,7 @@ Communications
 
 Hardware counters
     Of the execution obtained with Performance API (see
-    :ref:`Sections/04_Tools/03_Tracing/05_Papi:PAPI: Hardware Counters`)
+    :ref:`Sections/04_Ecosystem/03_Tracing/05_Papi:PAPI: Hardware Counters`)
 
 
 Custom Threads

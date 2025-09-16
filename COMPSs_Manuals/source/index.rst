@@ -91,7 +91,7 @@ This manual is divided in 10 sections:
    Sections/01_Installation_Configuration
    Sections/02_App_Development
    Sections/03_Execution
-   Sections/04_Tools
+   Sections/04_Ecosystem
    Sections/05_Sample_Applications
    Sections/06_PyCOMPSs_Notebooks
    Sections/07_Troubleshooting
