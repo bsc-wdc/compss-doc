@@ -120,6 +120,6 @@ The final record would look something like this example we provide:
 
 .. TIP::
 
-    For better compatibility with Zenodo, use the SPDX full URL when generating the metadata of your COMPSs experiment.
+    For better compatibility with Zenodo, use the SPDX full URL when specifying the license metadata of your COMPSs experiment.
     See the full list of licenses at: https://spdx.org/licenses/ Details on how to define the license for your COMPSs run
     can be found at Section :ref:`yaml-config`.
