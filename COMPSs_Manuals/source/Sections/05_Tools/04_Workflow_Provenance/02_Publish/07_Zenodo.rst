@@ -61,11 +61,11 @@ Publication steps
 
 The steps to achieve the publication of a COMPSs execution are:
 
-- Submit the crate describing your run using the ``rocrate-inveniordm`` CLI:
+- Submit the crate describing your run using the ``rocrate_inveniordm`` CLI (note the underscore):
 
 .. code-block:: console
 
-    $ rocrate-inveniordm -z COMPSs_RO-Crate_20250526_113729/
+    $ rocrate_inveniordm -z COMPSs_RO-Crate_20250526_113729/
     ...
     Preparing to upload 1 files...
     Uploading 1 files...
