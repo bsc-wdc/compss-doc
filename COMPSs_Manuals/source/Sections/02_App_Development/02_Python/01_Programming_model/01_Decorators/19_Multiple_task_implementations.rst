@@ -38,10 +38,8 @@ Definition
         return resultList
 
 Please, note that if the implementation is used to define a binary,
-OmpSs, MPI, COMPSs, multinode or reduction task invocation (see
-:ref:`Sections/02_App_Development/02_Python/01_Programming_model/01_Decorators/XX_Other_task_types:Other task types`),
-the @implement decorator must be always on top of the decorators stack,
+OmpSs, MPI, COMPSs, multinode or reduction task invocation,
+the `@implement`` decorator must be always on top of the decorators stack,
 followed by the @constraint decorator, then the
-@binary/\ @ompss/\ @mpi/\ @compss/\ @multinode
-decorator, and finally, the @task decorator in the lowest
-level.
+`@binary` \ `@ompss` \ `@mpi` \ `@compss` \ `@multinode`
+decorator, and finally, the `@task` decorator in the lowest level.

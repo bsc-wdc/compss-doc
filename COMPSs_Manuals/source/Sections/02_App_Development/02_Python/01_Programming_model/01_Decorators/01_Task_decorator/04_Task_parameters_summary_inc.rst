@@ -1,5 +1,5 @@
 Task Parameters Summary
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 :numref:``task_arguments`` summarizes all arguments that can be found in the *@task* decorator.
 

@@ -1,7 +1,7 @@
 First steps
 ***********
 
-COMPSs relies on a Storage API to enable the interation with persistent storage
+COMPSs relies on a Storage API to enable the integration with persistent storage
 frameworks (:numref:`storage_architecture`), which is composed by two main
 modules: *Storage Object Interface* (SOI) and *Storage Runtime Interface* (SRI)
 

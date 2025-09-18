@@ -64,3 +64,16 @@ Then, the ``compss_wait_on`` retrieves the final result and it is printed.
     The task decorated with ``@reduction`` can have multiple parameters, but
     **ONLY ONE** ``COLLECTION_IN`` **parameter**, which will be split into
     chunks to perform the reduction.
+
+
+Summary
+-------
+
+Next table summarizes the parameters of this decorator. Please note that ``working_dir`` and ``args`` are the only decorator properties that can contain task parameters
+defined in curly braces.
+
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+| Parameter              | Description                                                                                                                       |
++========================+===================================================================================================================================+
+| **chunk_size**         |  Size of data fragments to be given as input parameter to the reduction function.                                                 |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+

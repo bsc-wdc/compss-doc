@@ -99,3 +99,28 @@ parameters that are defined inside ``produces`` string can be used in ``updates`
     **Disclaimer:** Due to serialization limitations, with the current implementation, outputs of regular PyCOMPSs ``tasks`` cannot be passed as input parameters to ``http`` tasks.
 
     **Disclaimer:** COLLECTION_* and DICTIONARY_* type of parameters are not supported within HTTP tasks. However, Python lists and dictionary objects can be used.
+
+
+Summary
+-------
+
+Next table summarizes the parameters of this decorator. Please note that ``working_dir`` and ``args`` are the only decorator properties that can contain task parameters
+defined in curly braces.
+
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+| Parameter              | Description                                                                                                                       |
++========================+===================================================================================================================================+
+| **service_name**       | (Mandatory) Name of the HTTP Service that included at least one HTTP resource in the resources file.                              |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+| **resource**           | (Mandatory) URL extension to be concatenated with HTTP resource's base URL.                                                       |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+| **request**            | (Mandatory) Type of the HTTP request (GET, POST, etc.).                                                                           |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+| **produces**           | In case of JSON responses, produces string defines where the return value(s) is (are) stored in the retrieved JSON string.        |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+| **payload**            | Payload string of POST requests if any.                                                                                           |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+| **payload_type**       | Payload type of POST requests (e.g: 'application/json').                                                                          |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+| **updates**            | To define INOUT parameter key to be updated with a value from HTTP response.                                                      |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+

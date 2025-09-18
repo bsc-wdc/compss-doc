@@ -1,5 +1,5 @@
 Task Parameters
-~~~~~~~~~~~~~~~
+---------------
 
 The metadata corresponding to a parameter is specified as an argument of
 the ``@task`` decorator, whose name is the formal parameter's name and whose
@@ -494,7 +494,7 @@ limited through the use of the ``depth`` parameter as with objects
 
     The current support for collections of files is also limited to a
     **static number of elements**, as with
-    :ref:`Sections/02_app_development/02_python/01_Programming_model/01_Decorators/01_Task_decorator/XX_Task_parameters:Collections`.
+    :ref:`Sections/02_app_development/02_python/01_Programming_model/01_Decorators/01_Task_decorator:Collections`.
 
 
 Dictionaries
@@ -535,7 +535,7 @@ whose sub-objects will be handled automatically by the runtime.
 
    The current support for dictionaries is also limited to a
    **static number of elements**, as with
-   :ref:`Sections/02_app_development/02_python/01_Programming_model/01_Decorators/01_Task_decorator/XX_Task_parameters:Collections`.
+   :ref:`Sections/02_app_development/02_python/01_Programming_model/01_Decorators/01_Task_decorator:Collections`.
 
 
 The sub-objects of the dictionary can be collections or dictionary of elements

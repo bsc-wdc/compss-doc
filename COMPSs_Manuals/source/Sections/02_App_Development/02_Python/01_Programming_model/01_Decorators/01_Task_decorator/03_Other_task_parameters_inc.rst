@@ -1,5 +1,5 @@
 Other Task Parameters
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 Task time out
 ^^^^^^^^^^^^^
@@ -60,7 +60,7 @@ main application. The default value for these parameters is False.
         ...
 
 On failure task behavior
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 In case a task fails, the whole application behavior can be defined
 using the *@on_failure* decorator on top of the *@task* decorator

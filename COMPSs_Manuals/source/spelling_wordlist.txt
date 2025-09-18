@@ -303,3 +303,5 @@ openssh
 gradle
 jdk
 systemwide
+ro-crate-inveniordm
+inveniordm

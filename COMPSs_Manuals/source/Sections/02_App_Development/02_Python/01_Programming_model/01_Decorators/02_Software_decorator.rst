@@ -163,6 +163,14 @@ Configuration file ("container_config.json"):
     }
 
 
+Summary
+-------
 
+Next table summarizes the parameters of this decorator. Please note that ``working_dir`` and ``args`` are the only decorator properties that can contain task parameters
+defined in curly braces.
 
-Please check :ref:`Sections/02_App_Development/02_Python/01_Programming_model/01_Decorators/XX_Other_task_types:Other task types summary` for the full list of the parameters for each decorator.
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+| Parameter              | Description                                                                                                                       |
++========================+===================================================================================================================================+
+| **config_file**        |  Path to the JSON configuration file.                                                                                             |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+

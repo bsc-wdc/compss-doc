@@ -1,20 +1,21 @@
 @binary
 =======
 
-The *@binary* (or @Binary) decorator shall be used to define that a task is
+The ``@binary`` (or ``@Binary``) decorator shall be used to define that a task is
 going to invoke a binary executable.
 
 Definition
 ----------
 
-In this context, the *@task* decorator parameters will be used
+In this context, the ``@task`` decorator parameters will be used
 as the binary invocation parameters automatically (following their order in the
 function definition). Since the invocation parameters can be of
 different nature, information on their type can be provided through the
-*@task* decorator.
+``@task`` decorator.
 
 :numref:`binary_task_python` shows the most simple binary task definition
-without/with constraints (without parameters); please note that @constraint decorator has to be provided on top of the others.
+without/with constraints (without parameters); please note that the ``@constraint``
+decorator has to be provided on top of the others.
 
 .. code-block:: python
     :name: binary_task_python
@@ -82,9 +83,9 @@ The invocation of the *grepper* task would be equivalent to:
 Please note that the *keyword* parameter is a string, and it is
 respected as is in the invocation call.
 Another way of passing task parameters to binary execution command
-is to use ```args``` parameter in the binary definition. In this case, task parameters should be defined
+is to use ``args`` parameter in the binary definition. In this case, task parameters should be defined
 between curly braces and the full string with parameter replacements will be added to the command. In the
-following example, value of 'param_1' is added to the execution command after '-d' arg:
+following example, value of ``param_1`` is added to the execution command after ``-d`` arg:
 
 .. code-block:: python
     :name: binary_task_python_print_date
@@ -103,19 +104,15 @@ following example, value of 'param_1' is added to the execution command after '-
     if __name__=='__main__':
         print_date("next Monday")
 
-
-
-The invocation of the *print_date* task would be equivalent to:
+The invocation of the ``print_date`` task would be equivalent to:
 
 .. code-block:: console
 
     $ # date -d param_1
     $ date -d "next Monday"
 
-
-
 Thus, PyCOMPSs can also deal with prefixes for the given parameters. :numref:`complex2_binary_task_python`
-performs a system call (ls) with specific prefixes:
+performs a system call (``ls``) with specific prefixes:
 
 .. code-block:: python
     :name: complex2_binary_task_python
@@ -144,11 +141,11 @@ The invocation of the *myLs* task would be equivalent to:
     $ ls -l --hide=fileToHide.txt --sort=time
 
 This particular case is intended to show all the power of the
-*@binary* decorator in conjunction with the *@task*
+``@binary`` decorator in conjunction with the ``@task``
 decorator. Please note that although the *hide* parameter is used as a
-prefix for the binary invocation, the *fileToHide.txt* would also be
+prefix for the binary invocation, the ``fileToHide.txt`` would also be
 transferred to the worker (if necessary) since its type is defined as
-FILE_IN. This feature enables to build more complex binary invocations.
+``FILE_IN``. This feature enables to build more complex binary invocations.
 
 In addition, the ``@binary`` decorator also supports the ``fail_by_exit_value``
 parameter to define the failure of the task by the exit value of the binary
@@ -169,3 +166,20 @@ necessary decisions based on this value.
     @task()
     def binary_func():
          pass
+
+
+Summary
+-------
+
+Next table summarizes the parameters of this decorator.
+Please note that ``working_dir`` and ``args`` are the only decorator properties that can contain task parameters defined in curly braces.
+
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| Parameter              | Description                                                                                                                             |
++========================+=========================================================================================================================================+
+| **binary**             | (Mandatory) String defining the full path of the binary that must be executed.                                                          |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| **working_dir**        | Full path of the binary working directory inside the COMPSs Worker.                                                                     |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| **args**               | Args string to be added to end of the execution command of the binary. It can contain python task parameters defined in curly braces.   |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+

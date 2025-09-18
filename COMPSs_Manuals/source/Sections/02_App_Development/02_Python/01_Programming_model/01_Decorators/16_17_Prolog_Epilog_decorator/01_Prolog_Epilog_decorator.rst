@@ -1,27 +1,30 @@
-@prolog
-=======
+:orphan:
 
-The ``@prolog`` decorator enables the definition of binaries to be executed **before** the ``task`` execution on the worker.
-All kind of PyCOMPSs tasks can have a ``@prolog``.
+@prolog and @epilog
+===================
+
+The ``@prolog`` and ``@epilog`` decorators are definitions of binaries to be executed before / after ``task`` execution on the worker.
+All kind of PyCOMPSs tasks can have a ``@prolog`` or an ``@epilog``, or both at the same time.
 A basic usage is shown in the example below.
 
-.. TIP::
-    There is a similar decorator to the define binaries to be executed **after** the ``task`` execution on the worker.
-    It is the :ref:`Sections/02_App_Development/02_Python/01_Programming_model/01_Decorators/17_Epilog_decorator:@epilog` decorator.
+.. IMPORTANT::
 
-    You can check the documentation of both decorators combined: :ref:`Sections/02_App_Development/02_Python/01_Programming_model/01_Decorators/16_17_Prolog_Epilog_decorator/01_Prolog_Epilog_decorator:@prolog and @epilog`
+    Please note that ``@prolog`` and ``@epilog`` definitions should be on top of ``@task`` decorators.
 
 Definition
 ----------
 
 .. code-block:: python
-    :name: prolog_basic
-    :caption: Prolog definition.
+    :name: prolog_epilog_basic
+    :caption: Prolog and Epilog definitions.
 
+    from pycompss.api.epilog import epilog
     from pycompss.api.prolog import prolog
     from pycompss.api.task import task
 
+
     @prolog(binary="/my_service/start.bin")
+    @epilog(binary="/my_service/stop.bin")
     @task()
     def run_simulation():
         ...
@@ -30,12 +33,7 @@ Definition
         run_simulation()
 
 
-.. IMPORTANT::
-
-    Please note that ``@prolog`` definition should be on top of ``@task`` decorator.
-
-
-The ``@prolog`` decorator has 3 parameters:
+Both decorators have the same syntax and have 3 parameters:
 
 ``binary``
     Defines the binary to be executed before the task.
@@ -52,42 +50,50 @@ The ``@prolog`` decorator has 3 parameters:
         Task parameters used in 'args' strings can be type of primitive types such as int, float, string, and boolean.
 
 ``fail_by_exit_value``
-    Is used to indicate the behavior when the prolog returns an exit value different than zero.
+    Is used to indicate the behavior when the prolog or epilog returns an exit value different than zero.
     Users can set the ``fail_by_exit_value`` to *True*, if they want to consider the exit value as a task failure.
     If set to *False*, failure of the prolog will be ignored and task execution will start as usual.
-    Default value of 'fail_by_exit_value' is *True* for Prolog.
+    Default value of 'fail_by_exit_value' is *True* for Prolog and *False* for Epilog.
     **Optional**
 
 
 These parameters can be results of previous tasks and PyCOMPSs will handle data dependencies between tasks:
 
 .. code-block:: python
-    :name: prolog_task_with_param
-    :caption: Task parameter in Prolog definition.
+    :name: prolog_epilog_task_with_param
+    :caption: Task parameter in Prolog/Epilog definition.
+
 
     from pycompss.api.prolog import prolog
+    from pycompss.api.epilog import epilog
     from pycompss.api.task import task
 
     @prolog(binary="mkdir", args="/tmp/{{working_dir}}")
+    @epilog(binary="tar", args="zcvf {{out_tgz}} /tmp/{{working_dir}}")
     @task(returns=1)
-    def run_simulation(working_dir):
+    def run_simulation(working_dir, out_tgz):
         ...
 
     def main():
         # call to the task function
-        run_simulation("my_logs")
+        run_simulation("my_logs", "my_logs_compressed")
 
 
 In the next example, the task execution won't start at all if the creation of the 'sandbox_path' fails, and task will be considered as failed.
+However, removing the sandbox is not crucial and can be ignored, so ``fail_by_exit_value`` in the Epilog can be set to *False*.
+
 
 .. code-block:: python
-    :name: prolog_fail
-    :caption: Prolog with 'fail_by_exit_value'.
+    :name: prolog_epilog_fail
+    :caption: Prolog & Epilog with 'fail_by_exit_value'.
 
+
+    from pycompss.api.epilog import epilog
     from pycompss.api.prolog import prolog
     from pycompss.api.task import task
 
     @prolog(binary="mkdir", args="-p {{sandbox_path}}", fail_by_exit_value=True)
+    @epilog(binary="rm", args="-r {{sandbox_path}}", fail_by_exit_value=False)
     @task()
     def run_simulation(sandbox_path):
         ...
@@ -95,4 +101,3 @@ In the next example, the task execution won't start at all if the creation of th
 
     # call to the task function
     run_simulation("/tmp/my_task_sandbox")
-

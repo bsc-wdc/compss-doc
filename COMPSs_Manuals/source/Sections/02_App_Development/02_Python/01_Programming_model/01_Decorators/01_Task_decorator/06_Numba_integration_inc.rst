@@ -7,7 +7,7 @@ decorators and functionalities to translate Python functions to optimized
 machine code.
 
 Basic usage
-~~~~~~~~~~~
+^^^^^^^^^^^
 
 PyCOMPSs' tasks can be decorated with Numba's ``@jit``/\ ``@njit`` decorator
 (with the appropriate parameters) just below the @task decorator in order to
@@ -29,7 +29,7 @@ compilation cache -- any task that has already been compiled does not need
 to be recompiled in subsequent invocations).
 
 Advanced usage
-~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^
 
 PyCOMPSs can be also used in conjunction with the Numba's
 ``@vectorize``, ``@guvectorize``, ``@stencil`` and ``@cfunc``.
@@ -111,7 +111,7 @@ is shown:
 
 
 Using Numba with GPUs
-^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""
 
 In addition, Numba is also able to optimize python code for GPUs that can be
 used within PyCOMPSs' tasks. :ref:`numba_gpus` shows an example of a task
@@ -209,8 +209,8 @@ the ``copy_to_host`` function and the task result is returned.
     As example, the following ``project.xml`` and ``resources.xml`` shall be
     used with the ``--project`` and ``--resources`` correspondingly:
 
-    * :download:`project.xml <Resources/project.xml>`
-    * :download:`resources.xml <Resources/resources.xml>`
+    * :download:`project.xml <./01_Task_decorator/Resources/project.xml>`
+    * :download:`resources.xml <./01_Task_decorator/Resources/resources.xml>`
 
 
 More details about Numba and the specification of the signature, declaration

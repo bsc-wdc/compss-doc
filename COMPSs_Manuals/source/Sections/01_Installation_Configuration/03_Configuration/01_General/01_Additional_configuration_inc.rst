@@ -1,5 +1,3 @@
-.. _additional_configuration:
-
 .. _additional_configuration_ssh_passwordless:
 
 Configure SSH passwordless
