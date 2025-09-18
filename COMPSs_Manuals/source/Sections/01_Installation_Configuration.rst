@@ -35,23 +35,6 @@ and configure COMPSs for the best performance.
 
                     :material-twotone:`library_add_check;3em;sd-text-warning`
 
-            .. grid:: 2 2 2 2
-                :gutter: 1
-
-                .. grid-item-card:: Laptops/PCs/VM/Container
-                    :link: 01_Installation_Configuration/01_Dependencies/01_PC
-                    :link-type: doc
-                    :text-align: center
-
-                    :material-twotone:`computer;3em;sd-text-warning`
-
-                .. grid-item-card:: Supercomputer
-                    :link: 01_Installation_Configuration/01_Dependencies/02_Supercomputer
-                    :link-type: doc
-                    :text-align: center
-
-                    :material-twotone:`storage;3em;sd-text-warning`
-
     .. grid-item::
         :padding: 4 1 1 1
 
@@ -71,30 +54,6 @@ and configure COMPSs for the best performance.
                 :text-align: center
 
                 :material-twotone:`install_desktop;3em;sd-text-success`
-
-        .. grid:: 3 3 3 3
-            :gutter: 1
-
-            .. grid-item-card:: Building from sources
-                :link: 01_Installation_Configuration/02_Installation/01_Building_from_sources
-                :link-type: doc
-                :text-align: center
-
-                :material-twotone:`source;3em;sd-text-success`
-
-            .. grid-item-card:: Using `pip`
-                :link: 01_Installation_Configuration/02_Installation/02_Pip
-                :link-type: doc
-                :text-align: center
-
-                :material-twotone:`precision_manufacturing;3em;sd-text-success`
-
-            .. grid-item-card:: In Supercomputer
-                :link: 01_Installation_Configuration/02_Installation/03_Supercomputers
-                :link-type: doc
-                :text-align: center
-
-                :material-twotone:`storage;3em;sd-text-success`
 
     .. grid-item::
         :padding: 4 1 1 1
@@ -118,30 +77,6 @@ and configure COMPSs for the best performance.
 
                     :material-twotone:`settings;3em`
 
-            .. grid:: 3 3 3 3
-                :gutter: 1
-
-                .. grid-item-card:: General
-                    :link: 01_Installation_Configuration/03_Configuration/01_General
-                    :link-type: doc
-                    :text-align: center
-
-                    :material-twotone:`all_inclusive;3em`
-
-                .. grid-item-card:: Supercomputer specific
-                    :link: 01_Installation_Configuration/03_Configuration/02_Supercomputer
-                    :link-type: doc
-                    :text-align: center
-
-                    :material-twotone:`storage;3em`
-
-                .. grid-item-card:: Cloud specific
-                    :link: 01_Installation_Configuration/03_Configuration/03_Cloud
-                    :link-type: doc
-                    :text-align: center
-
-                    :material-twotone:`cloud;3em`
-
     .. grid-item::
         :padding: 4 1 1 1
 
@@ -162,22 +97,141 @@ and configure COMPSs for the best performance.
 
                 :material-twotone:`library_add_check;3em;sd-text-primary`
 
-        .. grid:: 2 2 2 2
-            :gutter: 1
 
-            .. grid-item-card:: Laptops/PCs/VM/Container
-                :link: 01_Installation_Configuration/04_PostInstallation/01_PC
-                :link-type: doc
-                :text-align: center
+.. dropdown:: * Advanced (direct links to specific subsections)
 
-                :material-twotone:`computer;3em;sd-text-primary`
+    .. grid:: 1 1 1 4
+        :gutter: 2
 
-            .. grid-item-card:: Supercomputer
-                :link: 01_Installation_Configuration/04_PostInstallation/02_Supercomputer
-                :link-type: doc
-                :text-align: center
+        .. grid-item::
+            :padding: 4 1 1 1
 
-                :material-twotone:`storage;3em;sd-text-primary`
+            .. div:: sd-bg-light
+
+                .. grid:: 1 1 1 1
+
+                    .. grid-item::
+
+                        .. div:: sd-text-center
+
+                            **Dependencies**
+
+                .. grid:: 2 2 2 2
+                    :gutter: 1
+
+                    .. grid-item-card:: Laptops/PCs/VM/Container
+                        :link: 01_Installation_Configuration/01_Dependencies/01_PC
+                        :link-type: doc
+                        :text-align: center
+
+                        :material-twotone:`computer;3em;sd-text-warning`
+
+                    .. grid-item-card:: Supercomputer
+                        :link: 01_Installation_Configuration/01_Dependencies/02_Supercomputer
+                        :link-type: doc
+                        :text-align: center
+
+                        :material-twotone:`storage;3em;sd-text-warning`
+
+        .. grid-item::
+            :padding: 4 1 1 1
+
+            .. grid:: 1 1 1 1
+
+                .. grid-item::
+
+                    .. div:: sd-text-center
+
+                        **Installation**
+
+            .. grid:: 3 3 3 3
+                :gutter: 1
+
+                .. grid-item-card:: Building from sources
+                    :link: 01_Installation_Configuration/02_Installation/01_Building_from_sources
+                    :link-type: doc
+                    :text-align: center
+
+                    :material-twotone:`source;3em;sd-text-success`
+
+                .. grid-item-card:: Using `pip`
+                    :link: 01_Installation_Configuration/02_Installation/02_Pip
+                    :link-type: doc
+                    :text-align: center
+
+                    :material-twotone:`precision_manufacturing;3em;sd-text-success`
+
+                .. grid-item-card:: In Supercomputer
+                    :link: 01_Installation_Configuration/02_Installation/03_Supercomputers
+                    :link-type: doc
+                    :text-align: center
+
+                    :material-twotone:`storage;3em;sd-text-success`
+
+        .. grid-item::
+            :padding: 4 1 1 1
+
+            .. div:: sd-bg-light
+
+                .. grid:: 1 1 1 1
+
+                    .. grid-item::
+
+                        .. div:: sd-text-center
+
+                            **Configuration**
+
+                .. grid:: 3 3 3 3
+                    :gutter: 1
+
+                    .. grid-item-card:: General
+                        :link: 01_Installation_Configuration/03_Configuration/01_General
+                        :link-type: doc
+                        :text-align: center
+
+                        :material-twotone:`all_inclusive;3em`
+
+                    .. grid-item-card:: Supercomputer specific
+                        :link: 01_Installation_Configuration/03_Configuration/02_Supercomputer
+                        :link-type: doc
+                        :text-align: center
+
+                        :material-twotone:`storage;3em`
+
+                    .. grid-item-card:: Cloud specific
+                        :link: 01_Installation_Configuration/03_Configuration/03_Cloud
+                        :link-type: doc
+                        :text-align: center
+
+                        :material-twotone:`cloud;3em`
+
+        .. grid-item::
+            :padding: 4 1 1 1
+
+            .. grid:: 1 1 1 1
+
+                .. grid-item::
+
+                    .. div:: sd-text-center
+
+                        **Post-Install**
+
+            .. grid:: 2 2 2 2
+                :gutter: 1
+
+                .. grid-item-card:: Laptops/PCs/VM/Container
+                    :link: 01_Installation_Configuration/04_PostInstallation/01_PC
+                    :link-type: doc
+                    :text-align: center
+
+                    :material-twotone:`computer;3em;sd-text-primary`
+
+                .. grid-item-card:: Supercomputer
+                    :link: 01_Installation_Configuration/04_PostInstallation/02_Supercomputer
+                    :link-type: doc
+                    :text-align: center
+
+                    :material-twotone:`storage;3em;sd-text-primary`
 
 
 .. toctree::
