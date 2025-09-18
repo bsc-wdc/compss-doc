@@ -10,9 +10,13 @@
 ###########################
 
 .. figure:: /Logos/COMPSs_logo.png
-   :width: 30.0%
-   :align: center
-   :target: http://compss.bsc.es
+    :width: 30.0%
+    :align: center
+    :target: http://compss.bsc.es
+
+
+.. raw:: html
+     :file: _static/badges.html
 
 .. grid:: 4
 
