@@ -1,7 +1,7 @@
 .. _configuration_files:
 
 Configuration Files
-*******************
+===================
 
 The COMPSs runtime has two configuration files: ``resources.xml`` and
 ``project.xml`` . These files contain information about the execution
@@ -20,7 +20,7 @@ Next sections describe in detail the ``resources.xml`` and the
 .. _resources_file:
 
 Resources file
-==============
+--------------
 
 The ``resources`` file provides information about all the available
 resources that can be used for an execution. This file should normally
@@ -84,7 +84,7 @@ physical resource.
 .. _project_file:
 
 Project file
-============
+------------
 
 The project file provides information about the resources used in a
 specific execution. Consequently, the resources that appear in this file
@@ -154,14 +154,14 @@ LimitOfTasks
 .. _configuration_files_examples:
 
 Configuration examples
-======================
+----------------------
 
 In the next subsections we provide specific information about the
 services, shared disks, cluster and cloud configurations and several
 ``project.xml`` and ``resources.xml`` examples.
 
 Parallel execution on one single process configuration
-------------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The most basic execution that COMPSs supports is using no remote workers
 and running all the tasks internally within the same process that hosts
@@ -209,7 +209,7 @@ configured remote nodes.
     </ResourcesList>
 
 Cluster and grid configuration (static resources)
--------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In order to use external resources to execute the applications, the
 following steps have to be followed:
@@ -282,7 +282,7 @@ and Cluster environments.
     </Project>
 
 Shared Disks configuration example
-----------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Configuring shared disks might reduce the amount of data transfers
 improving the application performance. To configure a shared disk the

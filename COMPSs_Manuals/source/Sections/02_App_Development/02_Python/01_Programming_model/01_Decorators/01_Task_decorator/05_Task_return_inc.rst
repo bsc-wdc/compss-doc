@@ -1,5 +1,5 @@
 Task Return
-~~~~~~~~~~~
+-----------
 
 If the function or method returns a value, the programmer can use the
 *returns* argument within the *@task* decorator. In this

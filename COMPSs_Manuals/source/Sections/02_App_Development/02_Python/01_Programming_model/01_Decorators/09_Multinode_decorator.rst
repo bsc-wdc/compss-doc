@@ -81,3 +81,16 @@ we show a more practical example of usage of multinode tasks running a MPI binar
          process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
          stdout, stderr = process.communicate()
          return stdout.decode()
+
+
+Summary
+-------
+
+Next table summarizes the parameters of this decorator. Please note that ``working_dir`` and ``args`` are the only decorator properties that can contain task parameters
+defined in curly braces.
+
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+| Parameter              | Description                                                                                                                       |
++========================+===================================================================================================================================+
+| **computing_nodes**    | Integer defining the number of computing nodes reserved for the task execution (only a single node is reserved by default).       |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+

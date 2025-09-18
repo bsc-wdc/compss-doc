@@ -101,3 +101,27 @@ To ensure that the correct arguments are passed to the runner, users can define 
 ``impi`` for Intel MPI and `ompi` for OpenMPI. Other MPI implementation can be
 supported by adding its corresponding properties file in the folder
 ``$COMPSS_HOME/Runtime/configuration/mpi``.
+
+
+Summary
+-------
+
+Next table summarizes the parameters of this decorator. Please note that ``working_dir`` and ``args`` are the only decorator properties that can contain task parameters
+defined in curly braces.
+
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| Parameter              | Description                                                                                                                             |
++========================+=========================================================================================================================================+
+| **binary**             | String defining the full path of the binary that must be executed. Empty indicates python MPI code.                                     |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| **working_dir**        | Full path of the binary working directory inside the COMPSs Worker.                                                                     |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| **runner**             | (Mandatory) String defining the MPI runner command.                                                                                     |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| **processes**          | Integer defining the number of MPI processes spawned by the task. (Default 1)                                                           |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| **processes_per_node** | Integer defining the number of co-allocated MPI processes per node. The ``processes`` value should be multiple of this value            |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| **args**               | Args string to be added to end of the execution command of the binary. It can contain python task parameters defined in curly braces.   |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+

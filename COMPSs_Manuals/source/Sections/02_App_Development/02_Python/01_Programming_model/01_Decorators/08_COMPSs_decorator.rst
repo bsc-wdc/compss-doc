@@ -1,9 +1,9 @@
 @compss
 =======
 
-The *@compss* (or @COMPSs) decorator shall be used to define that a task is
+The ``@compss`` (or ``@COMPSs``) decorator shall be used to define that a task is
 going to be a COMPSs application (:numref:`compss_task_python`).
-It enables to have nested PyCOMPSs/COMPSs applications.
+It enables to have nested COMPSs applications.
 
 Definition
 ----------
@@ -23,3 +23,22 @@ Definition
 The COMPSs application invocation can also be enriched with the flags
 accepted by the *runcompss* executable. Please, check execution manual
 for more details about the supported flags.
+
+
+Summary
+-------
+
+Next table summarizes the parameters of this decorator. Please note that ``working_dir`` and ``args`` are the only decorator properties that can contain task parameters
+defined in curly braces.
+
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+| Parameter              | Description                                                                                                                       |
++========================+===================================================================================================================================+
+| **runcompss**          | (Mandatory) String defining the full path of the runcompss binary that must be executed.                                          |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+| **flags**              | String defining the flags needed for the runcompss execution.                                                                     |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+| **app_name**           | (Mandatory) String defining the application that must be executed.                                                                |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+| **computing_nodes**    | Integer defining the number of computing nodes reserved for the COMPSs execution (only a single node is reserved by default).     |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------+

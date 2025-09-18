@@ -111,3 +111,18 @@ This will execute the binary/ompss/mpi binary within the container.
         infile = "infile.txt"
         outfile = "outfile.txt"
         grepper("Hi", infile, outfile)
+
+
+Summary
+-------
+
+Next table summarizes the parameters of this decorator. Please note that ``working_dir`` and ``args`` are the only decorator properties that can contain task parameters
+defined in curly braces.
+
++------------------------+------------------------------------------------------------------+
+| Parameter              | Description                                                      |
++========================+==================================================================+
+| **engine**             |  Container engine to use (e.g. DOCKER or SINGULARITY).           |
++------------------------+------------------------------------------------------------------+
+| **image**              |  Container image to be deployed and used for the task execution. |
++------------------------+------------------------------------------------------------------+

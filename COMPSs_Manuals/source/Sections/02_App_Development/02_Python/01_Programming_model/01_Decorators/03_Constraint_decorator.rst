@@ -2,13 +2,16 @@
 ===========
 
 It is possible to define constraints for each task.
-To this end, the *@constraint* (or @Constraint) decorator followed
-by the desired constraints needs to be placed ON TOP of the @task
+To this end, the ``@constraint`` (or ``@Constraint``) decorator followed
+by the desired constraints needs to be placed **ON TOP** of the ``@task``
 decorator (:numref:`constraint_task_python`).
 
 .. IMPORTANT::
 
-    Please note the the order of *@constraint* and *@task* decorators is important.
+    Please note the the order of ``@constraint`` and ``@task`` decorators is important.
+
+Definition
+----------
 
 .. code-block:: python
     :name: constraint_task_python
@@ -71,7 +74,7 @@ order to use the GPU.
 
 Please, take into account that in order to respect the constraints,
 the peculiarities of the infrastructure must be defined in the
-*resources.xml* file.
+``resources.xml`` file.
 
 Supported constraints
 ---------------------
@@ -196,8 +199,82 @@ the global variable value between task calls, in order to have different constra
         MS = a + b * c
         func(a, b, c)
 
-It is possible to define dynamic constraints using alternative syntax
-(:ref:`Sections/02_App_Development/02_Python/01_Programming_model/01_Decorators/03_Constraint_decorator/Alternative_dynamic_constraints:Alternative ways to define dynamic constraints`).
+
+.. TIP::
+
+    It is possible to define dynamic constraints using alternative syntax.
+
+    .. dropdown:: Variable from the arguments
+        :animate: fade-in
+        :color: secondary
+
+        The constraint name needs to match a name of a parameter in the arguments of the function,
+        this can be useful if you can easily add a new parameter to the function, or if you already pass the desired constraint value to the function.
+
+        .. code-block:: python
+            :name: dynamic_constraint_argument_task_python
+            :caption: dynamic_constraint argument task example
+
+            from pycompss.api.task import task
+            from pycompss.api.constraint import constraint
+
+            @constraint(computing_units="comp")
+            @task()
+            def func(a, b, c, comp):
+                c += a + b
+                ...
+
+        The way you pass the argument can change between function calls including its value.
+
+        .. code-block:: python
+            :name: dynamic_constraint_argument_task_call_python
+            :caption: dynamic_constraint argument task call example
+
+            def main():
+                {...}
+                func(a, b, c, 2)
+                comp = 4
+                func(a, b, c, comp)
+                func(a, b, c, comp=1)
+
+
+    .. dropdown:: Evaluation of a regular expression
+        :animate: fade-in
+        :color: secondary
+
+        All the variable names used in the expression need to match the ones from the function definition.
+        This way there is no need to add an extra parameter to the function or create a new global variable,
+        but is only useful if you can get the constraint value you want from the parameters.
+
+        .. code-block:: python
+            :name: dynamic_constraint_eval_task_python
+            :caption: dynamic_constraint eval task example
+
+            from pycompss.api.task import task
+            from pycompss.api.constraint import constraint
+
+            @constraint(computing_units="int((a * 2) / c)")
+            @task()
+            def func(a, b, c):
+                c += a + b
+                ...
+
+        .. code-block:: python
+            :name: dynamic_constraint_eval_task_call_python
+            :caption: dynamic_constraint eval task call example
+
+            def main():
+                {...}
+                func(a, b, c)
+                a = 2
+                func(a, b, c)
+                c = 4
+                func(a, b, c)
+
+        .. IMPORTANT::
+
+            When using evaluation of variables, it is very important the evaluation of the expression returns a usable value for the constraint,
+            also be careful when using Future Objects because they cannot be evaluated.
 
 
 Special constraints
@@ -206,7 +283,7 @@ Special constraints
 There is a special constraint when **considering the COMPSs agents deployment**
 (:ref:`Sections/03_Execution/03_Agents:Agents Deployments`)
 to specify that the task MUST be executed in the node that received the task.
-This constraint is indicated in the *@constraint* decorator with the
+This constraint is indicated in the ``@constraint`` decorator with the
 ``is_local`` argument equal a boolean (``True`` or ``False``) (:numref:`is_local_task_python`)
 in addition to other constraints.
 
@@ -229,9 +306,3 @@ in addition to other constraints.
      (:ref:`Sections/03_Execution/99_Deployment_models:Deployment Models`).
 
 
-.. toctree::
-   :hidden:
-   :maxdepth: 1
-   :caption: Table of Contents
-
-   03_Constraint_decorator/Alternative_dynamic_constraints

@@ -2,6 +2,7 @@
 ===========
 
 Failures and Exceptions
+-----------------------
 
 COMPSs is able to deal with failures and exceptions raised during the execution of the
 applications. In this case, if a user/python defined exception happens, the

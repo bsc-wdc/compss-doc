@@ -38,7 +38,7 @@ and configure COMPSs for the best performance.
             .. grid:: 2 2 2 2
                 :gutter: 1
 
-                .. grid-item-card:: Laptops/PCs
+                .. grid-item-card:: Laptops/PCs/VM/Container
                     :link: 01_Installation_Configuration/01_Dependencies/01_PC
                     :link-type: doc
                     :text-align: center

@@ -5,7 +5,7 @@
 @dt
 ===
 
-The *@data_transformation* (or just *@dt*) decorator is used for the execution of a data transformation function that should be applied on a given
+The ``@data_transformation`` (or just ``@dt``) decorator is used for the execution of a data transformation function that should be applied on a given
 ```PyCOMPSs task``` parameter. It means, by specifying the parameter name and a python function, users can assure that the parameter will go through
 transformation process by the given function. Then the result of the data transformation function will be used in the task instead of the initial
 value of the parameter.
@@ -14,8 +14,8 @@ Definition
 ----------
 
 Data transformation decorator has a simple order for the definition. The first argument of the decorator is a string name of the parameter we want to
-transform. The second argument is the data transformation function (NOT as a string, but actual reference) that expects at least one input which will
-the transformation will be applied to. If the transformation function needs more parameters, they can be added to the *@dt* definition as ```kwargs```.
+transform. The second argument is the data transformation function (**NOT as a string**, but actual reference) that expects at least one input which will
+the transformation will be applied to. If the transformation function needs more parameters, they can be added to the ``@dt`` definition as ``kwargs``.
 
 .. code-block:: python
     :name: dt_syntax
@@ -29,11 +29,11 @@ the transformation will be applied to. If the transformation function needs more
 
 .. IMPORTANT::
 
-    Please note that data transformation definitions should be on top of the *@task* (or *@software*) decorator.
+    Please note that data transformation definitions should be on top of the ``@task`` (or ``@software``) decorator.
 
 
-Adding data transformation on top of the ```@software``` or ```@task``` decorator allows the PyCOMPSs Runtime generate an intermediate task. This task method applies the given DT
-to the given input and the output is sent to the *original* task as the input. Following code snippet is an example of basic usage of the *@dt* decorator:
+Adding data transformation on top of the ``@software`` or ``@task`` decorator allows the PyCOMPSs Runtime generate an intermediate task. This task method applies the given DT
+to the given input and the output is sent to the *original* task as the input. Following code snippet is an example of basic usage of the ``@dt`` decorator:
 
 
 .. code-block:: python
@@ -67,34 +67,35 @@ to the given input and the output is sent to the *original* task as the input. F
         print(result)
 
 
-As we can see in the example, the result of "some_task" function is assigned to the parameter A. In the next line when "dt_example" is called, before the task execution,
-parameter A will go through the "dt_function" where "new_x" and "new_y" will be 10 and 100 respectively. Once the execution of the Data Transformation task is finished, the result
-will be passed to the "dt_example" task as input.
+As we can see in the example, the result of ``some_task`` function is assigned to the parameter ``A``.
+In the next line when ``dt_example`` is called, before the task execution,
+parameter ``A`` will go through the ``dt_function`` where ``new_x`` and ``new_y`` will be 10 and 100 respectively.
+Once the execution of the Data Transformation task is finished, the result will be passed to the ``dt_example`` task as input.
 
-
-PyCOMPSs also supports inter-types data transformations which allows the conversion of the input data to another object type. For example, if the user wants to use
-a object's serialized file as an input for a task, but the task function expects the object itself, then ```@dt``` can take care of it. So far PyCOMPSs supports this kind
-of data transformations only for the ```FILE```, ```OBJECT``` and ```COLLECTION``` types.
+PyCOMPSs also supports inter-types data transformations which allows the conversion of the input data to another object type.
+For example, if the user wants to use a object's serialized file as an input for a task,
+but the task function expects the object itself, then ``@dt`` can take care of it. So far PyCOMPSs supports this kind
+of data transformations only for the ``FILE``, ``OBJECT`` and ``COLLECTION`` types.
 
 For the cases where type conversions happen, there are some mandatory and optional parameters:
 
-    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-    | Parameter              | Description                                                                                                                             |
-    +========================+=========================================================================================================================================+
-    | **target**             | (Mandatory) Name of the input parameter that DT will be applied to.                                                                     |
-    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-    | **function**           | (Mandatory) The data transformation function.                                                                                           |
-    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-    | **type**               | (Mandatory) Type of the DT (e.g. FILE_TO_OBJECT)                                                                                        |
-    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-    | **destination**        | If the output of the DT is a file, then output file name can be specified as "destination".                                             |
-    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-    | **size**               | (Mandatory only if the output of the DT is a COLLECTION) Size of the output COLLECTION.                                                 |
-    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+    +------------------------+-------------------------------------------------------------------------------------------------+
+    | Parameter              | Description                                                                                     |
+    +========================+=================================================================================================+
+    | **target**             | (Mandatory) Name of the input parameter that DT will be applied to.                             |
+    +------------------------+-------------------------------------------------------------------------------------------------+
+    | **function**           | (Mandatory) The data transformation function.                                                   |
+    +------------------------+-------------------------------------------------------------------------------------------------+
+    | **type**               | (Mandatory) Type of the DT (e.g. ``FILE_TO_OBJECT``)                                            |
+    +------------------------+-------------------------------------------------------------------------------------------------+
+    | **destination**        | If the output of the DT is a file, then output file name can be specified as destination.       |
+    +------------------------+-------------------------------------------------------------------------------------------------+
+    | **size**               | (Mandatory only if the output of the DT is a ``COLLECTION``) Size of the output ``COLLECTION``. |
+    +------------------------+-------------------------------------------------------------------------------------------------+
 
 
-In the example below we can see a code snippet where the Data Transformation task deserializes a file and assigns it to the input parameter. That's why it's *type* is
-```FILE_TO_OBJECT```:
+In the example below we can see a code snippet where the Data Transformation task deserializes a file and assigns it to the input parameter.
+That's why it's ``type`` is ``FILE_TO_OBJECT``:
 
 
 .. code-block:: python
@@ -128,12 +129,13 @@ In the example below we can see a code snippet where the Data Transformation tas
         result = compss_wait_on(result)
 
 
-If the user wants to use a workflow as a data transformation function and thus avoid the intermediate task creation, PyCOMPSs provides the ```is_workflow```
-argument to do so (by default *False*). This gives the flexibility of importing workflow from different libraries.
+If the user wants to use a workflow as a data transformation function and thus avoid the intermediate task creation,
+PyCOMPSs provides the ``is_workflow`` argument to do so (by default ``False``).
+This gives the flexibility of importing workflow from different libraries.
 
-
-It is possible to define multiple data transformations for the same parameter, as well as for the multiple parameters of the same task. In both
-cases each data transformation with "is_workflow=False" will take place in a different task (in the order of the definition from top to bottom):
+It is possible to define multiple data transformations for the same parameter, as well as for the multiple parameters of the same task.
+In both cases each data transformation with ``is_workflow=False`` will take place in a different task
+(in the order of the definition from top to bottom):
 
 
 .. code-block:: python
@@ -176,10 +178,10 @@ cases each data transformation with "is_workflow=False" will take place in a dif
         ...
 
 
-PyCOMPSs API also provides Data Transformation Object class which gives the flexibility of the data transformation definitions. Any task function can be
-decorated with an empty **@dt** and simply by passing *DTO*\(s) as a task parameter the user can achieve the same behavior. Same as the decorator itself, DTO
-accepts the arguments in the same order (*"<parameter_name>", "<dt_function>", "<kwargs_of_dt_function>"*). A list of DTO objects is also accepted for the same or
-various parameters:
+PyCOMPSs API also provides **Data Transformation Object class** which gives the flexibility of the data transformation definitions
+Any task function can be decorated with an empty ``@dt`` and simply by passing *DTO*\(s) as a task parameter the user can achieve the same behavior.
+Same as the decorator itself, DTO accepts the arguments in the same order (*"<parameter_name>", "<dt_function>", "<kwargs_of_dt_function>"*).
+A list of DTO objects is also accepted for the same or various parameters:
 
 
 .. code-block:: python

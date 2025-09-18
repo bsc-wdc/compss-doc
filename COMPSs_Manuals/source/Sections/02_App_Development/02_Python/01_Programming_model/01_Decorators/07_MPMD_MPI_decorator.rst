@@ -84,3 +84,24 @@ an ``FILE_OUT_STDOUT`` param:
         grep_multiple(kw, file_1, file_2, "errors.txt")
 
 Other parameters of *@mpmd_mpi* decorator such as ``working_dir``, ``fail_by_exit_value``, ``processes_per_node``, have the same behaviors as in *@mpi*.
+
+
+Summary
+-------
+
+Next table summarizes the parameters of this decorator. Please note that ``working_dir`` and ``args`` are the only decorator properties that can contain task parameters
+defined in curly braces.
+
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| Parameter              | Description                                                                                                                             |
++========================+=========================================================================================================================================+
+| **runner**             | (Mandatory) String defining the MPMD MPI runner command.                                                                                |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| **working_dir**        | Defines mpi job's working directory.                                                                                                    |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| **processes_per_node** | Integer defining the number of co-allocated MPI processes per node. The ``processes`` value should be multiple of this value            |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| **fail_by_exit_value** | If set to 'False', and ``returns`` value of the 'task' definition is 'int', exit code of the MPI command will be returned.              |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| **programs**           | List of single MPI program dictionaries where program specific parameters (``binary``, ``processes``, ``args``) are defined.            |
++------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+

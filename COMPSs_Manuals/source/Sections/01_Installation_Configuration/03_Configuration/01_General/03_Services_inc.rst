@@ -1,10 +1,10 @@
 Services
-********
+========
 
 This section will show you how to configure the COMPSs framework to use web services.
 
 Configuration
-=============
+-------------
 
 To allow COMPSs applications to use WebServices as tasks, the
 ``resources.xml`` can include a special type of resource called
@@ -47,7 +47,7 @@ and the limit of tasks as shown in the following example:
 .. _http_configuration:
 
 HTTP configuration
-------------------
+^^^^^^^^^^^^^^^^^^
 
 To enable execution of HTTP tasks, *Http* resources must be included in the
 ``resources`` file as shown in the following example. Please note that the *BaseUrl*

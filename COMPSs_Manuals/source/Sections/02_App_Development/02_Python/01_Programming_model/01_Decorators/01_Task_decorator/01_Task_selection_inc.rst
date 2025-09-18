@@ -1,5 +1,7 @@
+.. _task_selection:
+
 Task Selection
-~~~~~~~~~~~~~~
+--------------
 
 As in the case of Java, a COMPSs Python application is a Python
 sequential program that contains calls to tasks. In particular, the user
