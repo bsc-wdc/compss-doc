@@ -10,7 +10,7 @@ how to configure COMPSs for different computing environments
 Following this section, you will be able to quickly set up your environment
 and configure COMPSs for the best performance.
 
-.. grid:: 1 1 1 3
+.. grid:: 1 1 1 4
     :gutter: 2
 
     .. grid-item::
@@ -116,7 +116,7 @@ and configure COMPSs for the best performance.
                     :link-type: doc
                     :text-align: center
 
-                    :material-twotone:`settings;3em;#5985E1`
+                    :material-twotone:`settings;3em`
 
             .. grid:: 3 3 3 3
                 :gutter: 1
@@ -126,21 +126,58 @@ and configure COMPSs for the best performance.
                     :link-type: doc
                     :text-align: center
 
-                    :material-twotone:`all_inclusive;3em;#5985E1`
+                    :material-twotone:`all_inclusive;3em`
 
                 .. grid-item-card:: Supercomputer specific
                     :link: 01_Installation_Configuration/03_Configuration/02_Supercomputer
                     :link-type: doc
                     :text-align: center
 
-                    :material-twotone:`storage;3em;#5985E1`
+                    :material-twotone:`storage;3em`
 
                 .. grid-item-card:: Cloud specific
                     :link: 01_Installation_Configuration/03_Configuration/03_Cloud
                     :link-type: doc
                     :text-align: center
 
-                    :material-twotone:`cloud;3em;#5985E1`
+                    :material-twotone:`cloud;3em`
+
+    .. grid-item::
+        :padding: 4 1 1 1
+
+        .. grid:: 1 1 1 1
+
+            .. grid-item::
+
+                .. div:: sd-text-center sd-fs-5
+
+                    :material-twotone:`looks_4;3em` **th**
+
+        .. grid:: 1 1 1 1
+
+            .. grid-item-card:: Post-Install
+                :link: 01_Installation_Configuration/04_PostInstallation
+                :link-type: doc
+                :text-align: center
+
+                :material-twotone:`library_add_check;3em;sd-text-primary`
+
+        .. grid:: 2 2 2 2
+            :gutter: 1
+
+            .. grid-item-card:: Laptops/PCs/VM/Container
+                :link: 01_Installation_Configuration/04_PostInstallation/01_PC
+                :link-type: doc
+                :text-align: center
+
+                :material-twotone:`computer;3em;sd-text-primary`
+
+            .. grid-item-card:: Supercomputer
+                :link: 01_Installation_Configuration/04_PostInstallation/02_Supercomputer
+                :link-type: doc
+                :text-align: center
+
+                :material-twotone:`storage;3em;sd-text-primary`
 
 
 .. toctree::
@@ -151,3 +188,4 @@ and configure COMPSs for the best performance.
     01_Installation_Configuration/01_Dependencies
     01_Installation_Configuration/02_Installation
     01_Installation_Configuration/03_Configuration
+    01_Installation_Configuration/04_PostInstallation
