@@ -22,9 +22,9 @@ and configure COMPSs for the best performance.
 
                 .. grid-item::
 
-                    .. div:: sd-text-center sd-fs-5
+                    .. div:: sd-text-center sd-fs-7
 
-                        :material-twotone:`looks_one;3em` **st**
+                        :material-twotone:`battery_1_bar;3em`
 
             .. grid:: 1 1 1 1
 
@@ -42,9 +42,9 @@ and configure COMPSs for the best performance.
 
             .. grid-item::
 
-                .. div:: sd-text-center sd-fs-5
+                .. div:: sd-text-center sd-fs-7
 
-                    :material-twotone:`looks_two;3em` **nd**
+                    :material-twotone:`battery_4_bar;3em`
 
         .. grid:: 1 1 1 1
 
@@ -64,9 +64,9 @@ and configure COMPSs for the best performance.
 
                 .. grid-item::
 
-                    .. div:: sd-text-center sd-fs-5
+                    .. div:: sd-text-center sd-fs-7
 
-                        :material-twotone:`looks_3;3em` **rd**
+                        :material-twotone:`battery_6_bar;3em`
 
             .. grid:: 1 1 1 1
 
@@ -84,9 +84,9 @@ and configure COMPSs for the best performance.
 
             .. grid-item::
 
-                .. div:: sd-text-center sd-fs-5
+                .. div:: sd-text-center sd-fs-7
 
-                    :material-twotone:`looks_4;3em` **th**
+                    :material-twotone:`battery_charging_full;3em`
 
         .. grid:: 1 1 1 1
 
@@ -99,6 +99,7 @@ and configure COMPSs for the best performance.
 
 
 .. dropdown:: * Advanced (direct links to specific subsections)
+    :color: info
 
     .. grid:: 1 1 1 4
         :gutter: 2
