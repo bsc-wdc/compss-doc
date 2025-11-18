@@ -91,10 +91,10 @@ Create a new COMPSs environment in your development directory
             $ pycompss init docker -w /home/user/replace/path/
             $
             $ # Or the COMPSs docker image to use
-            $ pycompss init docker -i compss/compss-tutorial:3.0
+            $ pycompss init docker -i compss/compss-tutorial:3.3
             $
             $ # Or both
-            $ pycompss init docker -w /home/user/replace/path/ -i compss/compss-tutorial:3.0
+            $ pycompss init docker -w /home/user/replace/path/ -i compss/compss-tutorial:3.3
 
    .. group-tab:: Local
 
@@ -120,10 +120,10 @@ Create a new COMPSs environment in your development directory
             $ pycompss init local -w /home/user/replace/path/
             $
             $ # Or a list of modules to load automatically before every command
-            $ pycompss init local -m COMPSs/3.0 ANACONDA/5.1.0_py3
+            $ pycompss init local -m COMPSs/3.3 ANACONDA/5.1.0_py3
             $
             $ # Or both
-            $ pycompss init local -w /home/user/replace/path/ -m COMPSs/3.0 ANACONDA/5.1.0_py3
+            $ pycompss init local -w /home/user/replace/path/ -m COMPSs/3.3 ANACONDA/5.1.0_py3
 
    .. group-tab:: Remote
 
@@ -142,7 +142,7 @@ Create a new COMPSs environment in your development directory
             $ pycompss init remote -l username@mn1.bsc.es
             $
             $ # Or with list of modules
-            $ pycompss init remote -l username@mn1.bsc.es -m COMPSs/3.0 ANACONDA/5.1.0_py3
+            $ pycompss init remote -l username@mn1.bsc.es -m COMPSs/3.3 ANACONDA/5.1.0_py3
 
         .. NOTE::
 
@@ -160,7 +160,7 @@ Create a new COMPSs environment in your development directory
 
             export ComputingUnits=1
             export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-            module load COMPSs/3.0
+            module load COMPSs/3.3
             module load ANACONDA/5.1.0_py3
 
         .. code-block:: console
@@ -697,7 +697,7 @@ Running Jupyter notebooks
           .. dropdown:: **1st Step (to be done in your laptop)**
               :open:
 
-              Create the MN4 environment in the PyCOMPSs CLI:
+              Create the MN5 environment in the PyCOMPSs CLI:
 
               .. code-block:: console
 
