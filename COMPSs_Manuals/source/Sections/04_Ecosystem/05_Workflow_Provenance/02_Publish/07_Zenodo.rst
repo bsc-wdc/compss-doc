@@ -36,7 +36,7 @@ This would typically install the library in ``~/.local/``. Another option is to 
 
 .. WARNING::
 
-    The ro-crate-inveniordm package version well-integrated with COMPSs is version ``2.1.0`` or higher.
+    The ``rocrate-inveniordm`` package version well-integrated with COMPSs is version ``2.1.0`` or higher.
 
 
 Configure rocrate-inveniordm
