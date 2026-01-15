@@ -50,10 +50,48 @@ are:
   this directory (crate) in the RO-Crate specification format. You can find examples at Section
   :ref:`metadata-examples`.
 
+
+Workflow provenance profiles
+============================
+
+The ``ro-crate-metadata.json`` file is the central descriptor of the crate, written in the `RO-Crate specification <https://www.researchobject.org/ro-crate/>`_. 
+COMPSs crates support two different levels of the Workflow Run RO-Crate profile collection, each with different levels of detail:
+
+1. Workflow Run Crate (already supported in previous versions)
+--------------------------------------------------------------
+This was the original profile supported by COMPSs. It provides a
+**high-level description of the workflow execution**, and it focuses on the workflow as a single entity.
+
+It contains:
+
+- Information about the application, input datasets, and output datasets
+- Execution context (e.g. submission command line, output profiles, job logs)
+
+It is useful if you only need a broad overview of the workflow and its datasets without details of each internal step.
+
+
+2. Provenance Run Crate (default, new in current version)
+---------------------------------------------------------
+The new **Provenance Run Crate** profile extends the metadata with detailed information about each executed task. 
+
+In addition to the elements from the Workflow Run Crate, it now includes detailed
+descriptions of:
+
+- **Workflow steps**: each executed task is represented explicitly
+- **Inputs and outputs of each step**: which files and datasets were consumed and produced
+- **Task parameters**: the parameter values passed to each method
+- **Output log files**: per-task output logs (stored only in debug mode or if the task fails)
+- **Resource usage**: CPU time, memory, and other performance metrics per task
+
+# TODO: this aint really true rn 
+- Error logs are included in the crate 
+- Users can debug more easily and identify the root cause of the failure
+
+
 .. TIP::
     Since its version ``3.3.4``, the ``PyCOMPSs CLI`` includes the capacity of inspecting RO-Crates with the
-    ``pycompss inspect [crate_folder/ | crate.zip]`` command. Check the :ref:`Sections/04_Ecosystem/09_CLI/02_Usage:Inspect Workflow Provenance`
-    Section for more details.
+    ``pycompss inspect <crate_folder/ | crate.zip> [-v/--verbose]`` command. Check the :ref:`Sections/04_Ecosystem/09_CLI/02_Usage:Inspect Workflow Provenance`
+    Section for more details. The `--verbose` option makes it easier to explore the workflow execution in more detail. The `--tasks` option lists information about each task individually.
 
 .. TIP::
 

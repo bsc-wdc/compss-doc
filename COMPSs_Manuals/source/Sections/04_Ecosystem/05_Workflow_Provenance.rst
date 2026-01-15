@@ -52,7 +52,11 @@ not only to register correctly the Provenance of a COMPSs application run, but
 also compatibility with some existing portals that already embrace
 RO-Crate as their core format for representing metadata, such as `WorkflowHub <https://workflowhub.eu/>`_. Our RO-Crate
 format is compliant with the `Workflow RO-Crate Profile v1.0 <https://w3id.org/workflowhub/workflow-ro-crate/1.0>`_ and the
-`Workflow Run Crate Profile v0.5 <https://w3id.org/ro/wfrun/workflow/0.5>`_.
+`Provenance Run Crate Profile v0.5 <https://w3id.org/ro/wfrun/provenance/0.5>`_. The Provenance Run Crate Profile is the most detailed one 
+in the `Workflow Run RO-Crate Profile Collection <https://www.researchobject.org/workflow-run-crate/profiles/>`_ that supports the recording of the
+internal details of the workflow execution steps, such as the resource usage and the input/output parameters of each task. In case the user wants to
+opt out from this detailed registration of provenance data, the simpler `Workflow Run Crate Profile v0.5 <https://w3id.org/ro/wfrun/workflow/0.5>`_ 
+can be selected instead (see Section :ref:`yaml-config`).
 
 .. toctree::
     :maxdepth: 2

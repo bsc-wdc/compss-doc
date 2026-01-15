@@ -21,6 +21,8 @@ are commonly used, and the rest of terms are for special cases only):
       sources: [/absolute_path_to/dir_1/, relative_path_to/dir_2/, main_file.py, relative_path/aux_file_1.py, /abs_path/aux_file_2.py]
       data_persistence: False
       trace_persistence: False
+      provenance_run: True
+      param_size_limit: 200
       software:
         - name: Software 1 name
           version: 1.1.1
@@ -71,6 +73,61 @@ COMPSs Workflow Information section
 
 More specifically, in the **COMPSs Workflow Information** section, the most commonly used terms are:
 
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 15 45
+
+   * - **Field**
+     - **Type**
+     - **Default**
+     - **Description**
+
+   * - ``name``
+     - string
+     - —
+     - Descriptive workflow name.
+
+   * - ``description``
+     - string
+     - —
+     - Free-text description of the application.
+
+   * - ``sources``
+     - string or list
+     - main file only
+     - Files or directories to include in the crate.
+
+   * - ``license``
+     - string / URL
+     - —
+     - SPDX identifier or URL to license text.
+
+   * - ``data_persistence``
+     - boolean
+     - False
+     - Whether input/output datasets are copied into the crate.
+
+   * - ``trace_persistence``
+     - boolean
+     - False
+     - Whether trace files are included in the crate.
+
+   * - ``provenance_run``
+     - boolean
+     - True
+     - Whether to include task-level provenance.
+
+   * - ``param_size_limit``
+     - integer
+     - 200
+     - Maximum characters stored per parameter in provenance.
+
+   * - ``software``
+     - list of entries
+     - —
+     - Software dependencies (name required; version and URL optional).
+
+
 - The ``name`` and ``description`` fields are free text, where a long name and long description of
   the application can be provided.
 
@@ -99,6 +156,15 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
   added to the crate. As with datasets, the user can decide if the trace files themselves must be physically added, or
   include only references to where they can be located. If trace files are included, a directory named ``trace/`` will
   be available from the root path of the crate.
+
+- ``provenance_run`` value is ``True`` by default. It is a boolean to indicate whether the crate must include
+  detailed provenance information about the individual task executions and hence correspond to the Provenance Run Crate profile. 
+  If set to ``False``, the crate will only include high-level information about the main workflow execution (corresponding to the Workflow Run Crate profile).
+
+- ``param_size_limit`` value is ``200`` by default. It indicates the maximum number of characters that will be
+  recorded for each task's parameter value. This is useful to avoid including very large
+  arrays in the metadata file. If a task's output exceeds this limit, it will be truncated to
+  the first ``param_size_limit`` characters. It should only be used when ``provenance_run`` is set to ``True``.
 
 - ``software`` is used to manually describe the list of software dependencies (i.e. ``softwareRequirements`` in RO-Crate
   specification) this application

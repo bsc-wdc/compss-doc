@@ -1033,7 +1033,9 @@ has the ``ro-crate-metadata.json`` file in its root.
 
         .. code-block:: console
 
-            $ pycompss inspect COMPSs_RO-Crate_[timestamp]/
+            $ pycompss inspect [-v/--verbose] COMPSs_RO-Crate_[timestamp]/ [-t/--tasks [TASK_ID...]] 
+
+        The ``-t/--tasks`` flag can be used to print detailed information about each task individually (what method did they execute, their parameters, success status, logs, etc).
 
    .. tab-item:: Remote
         :sync: remote
