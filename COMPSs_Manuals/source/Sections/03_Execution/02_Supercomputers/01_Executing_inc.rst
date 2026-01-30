@@ -352,8 +352,11 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                       ├── es.bsc.compss.scheduler.lookahead.successors.lifo.LifoTS
                                                       ├── es.bsc.compss.scheduler.lookahead.mt.successors.lifo.LifoTS
                                                       ├── es.bsc.compss.scheduler.lookahead.successors.locality.LocalityTS
-                                                      └── es.bsc.compss.scheduler.lookahead.mt.successors.locality.LocalityTS
-                                                Default: es.bsc.compss.scheduler.lookahead.locality.LocalityTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.mt.successors.locality.LocalityTS
+                                                      └── es.bsc.compss.scheduler.predefined.PredefinedTS
+                                                Default in runcompss: es.bsc.compss.scheduler.lookahead.locality.LocalityTS
+                                                Default in enqueue_compss shared disk: es.bsc.compss.scheduler.lookahead.mt.successors.fifo.FifoTS
+                                                Default in enqueue_compss local disk: es.bsc.compss.scheduler.lookahead.mt.successors.locality.LocalityTS
         --scheduler_config_file=<path>          Path to the file which contains the scheduler configuration.
                                                 Default: Empty
         --checkpoint=<className>                Class that implements the Checkpoint Management policy

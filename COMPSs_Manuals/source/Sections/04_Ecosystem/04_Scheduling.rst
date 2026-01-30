@@ -113,6 +113,27 @@ Full graph schedulers take a global view of the entire application's task graph.
 **Use Cases:**
 Full graph schedulers are best suited for complex workflows where a global optimization can yield significant improvements. Their comprehensive approach is ideal in scenarios where trade-offs between execution time, energy, and cost are critical, although this may come at the expense of higher computational overhead during scheduling.
 
+Predefined Scheduler
+====================
+
+The **Predefined Scheduler** is a specialized task scheduler for COMPSs that allows users to specify a predetermined execution plan for their tasks. Instead
+of relying on dynamic scheduling decisions, this scheduler follows a predefined configuration that specifies exactly which tasks should run on which resources
+and in what order.
+
+**Key Characteristics**
+  * Follow a predefined plan: Follows exactly the predefined plan set by the user at ``scheduler_config_file``.
+  * Scheduling dependencies: A new type of dependency can be added in this scheduler.
+  * Flag: ``scheduler=es.bsc.compss.scheduler.predefined.PredefinedTS scheduler_config_file=path/to/config.json``
+
+**Use Cases**
+  * **Reproducibility**: Ensure tasks execute in the exact same order across multiple runs.
+  * **Performance Optimization**: Apply a pre-computed optimal scheduling plan.
+  * **Testing and Debugging**: Validate specific execution scenarios.
+  * **Resource-Constrained Environments**: Explicitly control task placement on specific resources.
+.. Note::
+    Only resource-level scheduling is suported, **not** thread-level scheduling, therefore the traces may vary between executions, but the execution pattern stays the same.
+    To see extended information about this scheduler and how to use it check (:ref:`Sections/04_Ecosystem/10_Predefined_Scheduler:Predefined Scheduler Guide`)
+
 Table with the provided schedulers within the COMPSs release:
 
 .. table:: Schedulers
@@ -151,10 +172,13 @@ Table with the provided schedulers within the COMPSs release:
     | es.bsc.compss.scheduler.lookahead.successors.constraintsfifo.ConstraintsFifoTS     | lookahead       | Prioritizes the successors of the ended task, then the task      |                                           |
     |                                                                                    | - successors    | constraints (computing_units) and then generation order (FIFO).  |                                           |
     +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
-    | es.bsc.compss.scheduler.lookahead.mt.successors.constraintsfifo.ConstraintsFifoTS  | lookahead       | Prioritizes the successors of the ended task, then the task      | Multi-threaded implementation             |
+    | es.bsc.compss.scheduler.lookahead.mt.successors.constraintsfifo.ConstraintsFifoTS  | lookahead       | Prioritizes the successors of the ended task, then the task      | Multi-threaded implementation.            |
     |                                                                                    | - successors    | constraints (computing_units) and then generation order (FIFO).  |                                           |
     +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
     | es.bsc.compss.scheduler.fullgraph.multiobjective.MOScheduler                       | full graph      | Based on a multi-objective function (time, energy, cost).        |                                           |
+    +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
+    | es.bsc.compss.scheduler.predefined.PredefinedTS                                    | predefined      | Allows users to specify a predetermined execution plan for their | Users need to create their own scheduling |
+    |                                                                                    |                 | tasks. The scheduler follows this exact configuration.           | plan.                                     |
     +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
 
 
