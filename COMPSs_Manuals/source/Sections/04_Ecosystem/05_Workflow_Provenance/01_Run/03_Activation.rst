@@ -2,13 +2,9 @@ Recording activation
 ====================
 
 The way of activating the recording of workflow provenance with COMPSs is very simple.
-One must only enable the ``-p`` or ``--provenance`` flag when using ``runcompss``,
-``enqueue_compss``, or ``pycompss [run | job submit]`` to run or submit a COMPSs application. It is important to highlight that the
-``--provenance`` flag accepts a custom name for the YAML file with the application's details (see previous
-Section :ref:`yaml-config`). This is
-specified using the ``--provenance=my_yaml_file.yaml`` option, as shown in the ``runcompss`` help. Also the
-``--provenance-folder=<path>`` flag can be used to give a specific name to the folder where the experiment's provenance
-is going to be generated:
+One must only enable the ``-p`` or ``--provenance`` flag when using ``runcompss``, ``enqueue_compss``, or ``pycompss [run | job submit]`` to run or submit a COMPSs application. It is important to highlight that the ``--provenance`` flag accepts a custom name for the YAML file with the application's details (see previous Section :ref:`yaml-config`). 
+This is specified using the ``--provenance=my_yaml_file.yaml`` option, as shown in the ``runcompss`` help.  
+Also, the ``-z`` or ``--zip_provenance`` flag can be used to specify that the provenance RO-Crate will be yielded in .zip format and the ``--provenance-folder=<path>`` flag can be used to give a specific name to the folder where the experiment's provenance is going to be generated:
 
 .. code-block:: console
 
@@ -19,13 +15,15 @@ is going to be generated:
                                             Default: ro-crate-info.yaml
     --provenance-folder=<path>              Path where the workflow provenance will be generated
                                             Default: COMPSs_RO-Crate_[timestamp]
+    --zip_provenance, -z                    Zip the resulting COMPSs RO-Crate
+                                            Default: COMPSs_RO-Crate_[timestamp].zip
 
 
 .. WARNING::
 
     As stated in the help, provenance automatically activates both ``--graph`` and ``--output_profile`` options.
     Consider that the graph diagram generation can take some extra time at the end of the execution of your
-    application, therefore, adjust the ``--exec_time`` accordingly.
+    application, therefore, adjust the ``--exec_time`` accordingly. 
 
 In the case of extremely large workflows (e.g. a workflow
 with tenths of thousands of task nodes, or tenths of thousands of files used as inputs or outputs), the extra time
@@ -77,3 +75,7 @@ for a detailed description of its content).
             python3 -O /apps/GPP/COMPSs/3.3.3/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py FULL_SINGULARITY.yaml /home/bsc/bsc019057/.COMPSs/4471214//dataprovenance.log
         PROVENANCE | TIP for BSC cluster users: before triggering generation by hand, run first: salloc -p interactive
         ...
+
+.. WARNING::
+
+    Another tool that provenance automatically activates is the profiling of the resource usage during the execution. The profiler will monitor periodiaclly the status of the resources on every machine used during the execution, and this may also add some extra time in the execution of the application. The profiler uses a environment variable called ``COMPSS_PROFILING_INTERVAL`` that by default is set to **5 seconds**. It is possible to adjust this variable to a higher value to reduce the profiling overhead, but be aware that this will reduce the granularity of the resource usage information in the provenance.

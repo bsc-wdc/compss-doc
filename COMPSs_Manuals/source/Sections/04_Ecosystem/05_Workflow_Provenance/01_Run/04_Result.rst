@@ -50,6 +50,8 @@ are:
   this directory (crate) in the RO-Crate specification format. You can find examples at Section
   :ref:`metadata-examples`.
 
+- **profiling folder:** contains the plots of the resource usage of the nodes involved in the exeution of the application. In this directory the user can find a folder for every node, which contains the plots of the CPU and memory usage of the tasks executed in that node. Also, when more than one node is involved in the execution, in the folder the user can find the CPU and memory usage plots aggregated for all the nodes.
+
 
 Workflow provenance profiles
 ============================

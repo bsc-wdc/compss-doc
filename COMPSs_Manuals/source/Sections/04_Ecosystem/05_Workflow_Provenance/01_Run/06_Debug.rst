@@ -23,6 +23,7 @@ be triggered to avoid large generation times.
 .. code-block:: console
 
     PROVENANCE | STARTING RO-CRATE GENERATION SCRIPT
+    PROVENANCE | Profiling plots generation TIME: 3.24 s.
     PROVENANCE | COMPSs version: 3.3.rc2402, out_profile: App_Profile.json, main_entity: /Users/rsirvent/COMPSs-DP/matmul_files/matmul_files.py
     PROVENANCE | COMPSs runtime detected inputs (12)
     PROVENANCE | COMPSs runtime detected outputs (4)
@@ -52,8 +53,11 @@ included.
 
 .. code-block:: console
 
-    PROVENANCE | RO-Crate writing to disk TIME: 0.02508401870727539 s
-    PROVENANCE | Workflow Provenance generation TOTAL EXECUTION TIME: 0.10874414443969727 s
+    PROVENANCE | RO-Crate adding statistical data
+    PROVENANCE | Added resource profiling information TIME: 0.011184930801391602 s
+    PROVENANCE | RO-Crate adding CreateAction TIME: 0.01937699317932129 s
+    PROVENANCE | RO-Crate writing to disk TIME: 0.03759169578552246 s
+    PROVENANCE | Workflow Provenance generation TOTAL EXECUTION TIME: 3.3400003910064697 s
     PROVENANCE | COMPSs Workflow Provenance successfully generated in sub-folder:
         COMPSs_RO-Crate_20250514_153121/
     PROVENANCE | ENDED WORKFLOW PROVENANCE SCRIPT
