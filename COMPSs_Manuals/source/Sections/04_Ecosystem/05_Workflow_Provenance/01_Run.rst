@@ -10,6 +10,4 @@ Configure and run
     01_Run/02_YAML
     01_Run/03_Activation
     01_Run/04_Result
-    01_Run/05_Profiling
-    01_Run/06_Debug
-    01_Run/10_Examples
+    01_Run/05_Debug
