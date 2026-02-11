@@ -40,13 +40,10 @@ are:
   :ref:`metadata-examples`.
 
 
-Workflow provenance profiles
-============================
-
 The ``ro-crate-metadata.json`` file is the central descriptor of the crate, written in the `RO-Crate specification <https://www.researchobject.org/ro-crate/>`_. 
 COMPSs crates support two different levels of the Workflow Run RO-Crate profile collection, each with different levels of detail:
 
-1. Workflow Run Crate (already supported in previous versions)
+Workflow Run Crate
 --------------------------------------------------------------
 This was the original profile supported by COMPSs. It provides a
 **high-level description of the workflow execution**, and it focuses on the workflow as a single entity.
@@ -59,7 +56,7 @@ It contains:
 It is useful if you only need a broad overview of the workflow and its datasets without details of each internal step.
 
 
-2. Provenance Run Crate (default, new in current version)
+Provenance Run Crate
 ---------------------------------------------------------
 The new **Provenance Run Crate** profile extends the metadata with detailed information about each executed task. 
 
@@ -90,7 +87,7 @@ descriptions of:
     edges are larger than 6500, to avoid large generation times. If you want to generate the diagram anyway, you can
     trigger the diagram generation manually with ``compss_gengraph`` or ``pycompss gengraph``.
 
-1. Profiling tool
+Profiling tool
 ---------------------------------------------------------
 When the provenance is enabled, the profiling tool is automatically activated. This tool collects the information about the CPU and memory usage during the execution of the application. 
 
