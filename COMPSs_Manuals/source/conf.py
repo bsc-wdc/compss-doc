@@ -117,7 +117,7 @@ numfig_format = {'figure':'Figure %s',
                  'code-block':'Code %s',
                  'section':'Section %s'}
 html_permalinks = False  # Disabled permalinks
-html_logo = './Logos/COMPSs_slow_crop_effect_loop1.gif' # './Logos/COMPSs_logo_small.png'
+# html_logo = './Logos/COMPSs_slow_crop_effect_loop1.gif' # './Logos/COMPSs_logo_small.png'
 html_show_sourcelink = False
 html_show_copyright = True
 html_show_sphinx = True

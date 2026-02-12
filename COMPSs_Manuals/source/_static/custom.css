@@ -3,3 +3,8 @@
   font-weight: bold;
   color: #333;
 }
+
+.wy-side-nav-search .logo {
+    max-width: 150px;
+    max-height: 200px;
+}

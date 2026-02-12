@@ -1,0 +1,17 @@
+{% extends "!layout.html" %}
+
+{% block sidebartitle %}
+
+  <a href="{{ pathto(master_doc) }}">
+    {% if pagename == master_doc %}
+      <img src="{{ pathto('_static/COMPSs_logo.gif', 1) }}"
+           class="logo"
+           alt="COMPSs"/>
+    {% else %}
+      <img src="{{ pathto('_static/COMPSs_logo.png', 1) }}"
+           class="logo"
+           alt="COMPSs"/>
+    {% endif %}
+  </a>
+
+{% endblock %}
