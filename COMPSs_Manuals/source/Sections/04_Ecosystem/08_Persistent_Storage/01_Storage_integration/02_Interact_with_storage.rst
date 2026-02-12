@@ -18,7 +18,7 @@ and Python applications.
 Java
 ----
 
-Import the ``getByID`` function from the storage api and use it:
+Import the ``getByID`` function from the storage API and use it:
 
 .. code-block:: java
 
@@ -38,7 +38,7 @@ Import the ``getByID`` function from the storage api and use it:
 Python
 ------
 
-Import the ``getByID`` function from the storage api and use it:
+Import the ``getByID`` function from the storage API and use it:
 
 .. code-block:: python
 

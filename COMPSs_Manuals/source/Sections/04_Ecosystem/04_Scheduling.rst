@@ -1,3 +1,11 @@
+.. spelling:word-list::
+
+   pre
+   pre-computed
+   pre-requisites
+   PredefinedTS
+
+
 |:scroll:| Schedulers
 #####################
 
@@ -130,56 +138,56 @@ and in what order.
   * **Performance Optimization**: Apply a pre-computed optimal scheduling plan.
   * **Testing and Debugging**: Validate specific execution scenarios.
   * **Resource-Constrained Environments**: Explicitly control task placement on specific resources.
+
 .. Note::
-    Only resource-level scheduling is suported, **not** thread-level scheduling, therefore the traces may vary between executions, but the execution pattern stays the same.
-    To see extended information about this scheduler and how to use it check (:ref:`Sections/04_Ecosystem/10_Predefined_Scheduler:Predefined Scheduler Guide`)
+    Only resource-level scheduling is supported, **NOT** thread-level scheduling, therefore the traces may vary between executions, but the execution pattern stays the same.
+    To see extended information about this scheduler and how to use it check :ref:`predefined_scheduler_how_it_works` and subsequent sections.
 
 Table with the provided schedulers within the COMPSs release:
 
 .. table:: Schedulers
     :name: schedulers description
 
-
-    +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
-    | **Class name**                                                                     | **Family**      | **Description**                                                  | **Comments**                              |
-    +====================================================================================+=================+==================================================================+===========================================+
-    | es.bsc.compss.scheduler.orderstrict.fifo.FifoTS                                    | order-strict    | Prioritizes task generation order (FIFO).                        |                                           |
-    +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
-    | es.bsc.compss.scheduler.lookahead.fifo.FifoTS                                      | lookahead       | Prioritizes task generation order (FIFO).                        |                                           |
-    +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
-    | es.bsc.compss.scheduler.lookahead.lifo.LifoTS                                      | lookahead       | Prioritizes task generation order (LIFO).                        |                                           |
-    +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
-    | es.bsc.compss.scheduler.lookahead.locality.LocalityTS                              | lookahead       | Prioritizes data location and then (FIFO) task generation.       | Default on runcompss executions           |
-    +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
-    | es.bsc.compss.scheduler.lookahead.successors.locality.LocalityTS                   | lookahead       | Prioritizes the successors of the ended task, then the data      |                                           |
-    |                                                                                    | - successors    | locality on the worker and then the generation order.            |                                           |
-    +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
-    | es.bsc.compss.scheduler.lookahead.mt.successors.locality.LocalityTS                | lookahead       | Prioritizes the successors of the ended task, then the data      | Multi-threaded implementation.            |
-    |                                                                                    | - successors    | locality on the worker and then the generation order.            | Default for local disk executions on SCs  |
-    +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
-    | es.bsc.compss.scheduler.lookahead.successors.fifo.FifoTS                           | lookahead       | Prioritizes the successors of the ended task, and then the       |                                           |
-    |                                                                                    | - successors    | generation order.                                                |                                           |
-    +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
-    | es.bsc.compss.scheduler.lookahead.mt.successors.fifo.FifoTS                        | lookahead       | Prioritizes the successors of the ended task, and then the       | Multi-threaded implementation.            |
-    |                                                                                    | - successors    | generation order.                                                | Default for shared disk executions on SCs |
-    +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
-    | es.bsc.compss.scheduler.lookahead.successors.lifo.LifoTS                           | lookahead       | Prioritizes the successors of the ended task, and then the       |                                           |
-    |                                                                                    | - successors    | inverse generation order.                                        |                                           |
-    +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
-    | es.bsc.compss.scheduler.lookahead.mt.successors.lifo.LifoTS                        | lookahead       | Prioritizes the successors of the ended task, and then the       | Multi-threaded implementation.            |
-    |                                                                                    | - successors    | inverse generation order.                                        |                                           |
-    +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
-    | es.bsc.compss.scheduler.lookahead.successors.constraintsfifo.ConstraintsFifoTS     | lookahead       | Prioritizes the successors of the ended task, then the task      |                                           |
-    |                                                                                    | - successors    | constraints (computing_units) and then generation order (FIFO).  |                                           |
-    +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
-    | es.bsc.compss.scheduler.lookahead.mt.successors.constraintsfifo.ConstraintsFifoTS  | lookahead       | Prioritizes the successors of the ended task, then the task      | Multi-threaded implementation.            |
-    |                                                                                    | - successors    | constraints (computing_units) and then generation order (FIFO).  |                                           |
-    +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
-    | es.bsc.compss.scheduler.fullgraph.multiobjective.MOScheduler                       | full graph      | Based on a multi-objective function (time, energy, cost).        |                                           |
-    +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
-    | es.bsc.compss.scheduler.predefined.PredefinedTS                                    | predefined      | Allows users to specify a predetermined execution plan for their | Users need to create their own scheduling |
-    |                                                                                    |                 | tasks. The scheduler follows this exact configuration.           | plan.                                     |
-    +------------------------------------------------------------------------------------+-----------------+------------------------------------------------------------------+-------------------------------------------+
+    +------------------------------------------------------------------------------------+-----------------+---------------------------------------------------------------------+-------------------------------------------+
+    | **Class name**                                                                     | **Family**      | **Description**                                                     | **Comments**                              |
+    +====================================================================================+=================+=====================================================================+===========================================+
+    | es.bsc.compss.scheduler.orderstrict.fifo.FifoTS                                    | order-strict    | Prioritizes task generation order (FIFO).                           |                                           |
+    +------------------------------------------------------------------------------------+-----------------+---------------------------------------------------------------------+-------------------------------------------+
+    | es.bsc.compss.scheduler.lookahead.fifo.FifoTS                                      | lookahead       | Prioritizes task generation order (FIFO).                           |                                           |
+    +------------------------------------------------------------------------------------+-----------------+---------------------------------------------------------------------+-------------------------------------------+
+    | es.bsc.compss.scheduler.lookahead.lifo.LifoTS                                      | lookahead       | Prioritizes task generation order (LIFO).                           |                                           |
+    +------------------------------------------------------------------------------------+-----------------+---------------------------------------------------------------------+-------------------------------------------+
+    | es.bsc.compss.scheduler.lookahead.locality.LocalityTS                              | lookahead       | Prioritizes data location and then (FIFO) task generation.          | Default on runcompss executions           |
+    +------------------------------------------------------------------------------------+-----------------+---------------------------------------------------------------------+-------------------------------------------+
+    | es.bsc.compss.scheduler.lookahead.successors.locality.LocalityTS                   | lookahead       | Prioritizes the successors of the ended task, then the data         | Default for local disk executions on SCs  |
+    |                                                                                    | - successors    | locality on the worker and then the generation order.               |                                           |
+    +------------------------------------------------------------------------------------+-----------------+---------------------------------------------------------------------+-------------------------------------------+
+    | es.bsc.compss.scheduler.lookahead.mt.successors.locality.LocalityTS                | lookahead       | Prioritizes the successors of the ended task, then the data         | Multi-threaded implementation.            |
+    |                                                                                    | - successors    | locality on the worker and then the generation order.               |                                           |
+    +------------------------------------------------------------------------------------+-----------------+---------------------------------------------------------------------+-------------------------------------------+
+    | es.bsc.compss.scheduler.lookahead.successors.fifo.FifoTS                           | lookahead       | Prioritizes the successors of the ended task, and then the          |                                           |
+    |                                                                                    | - successors    | generation order.                                                   |                                           |
+    +------------------------------------------------------------------------------------+-----------------+---------------------------------------------------------------------+-------------------------------------------+
+    | es.bsc.compss.scheduler.lookahead.mt.successors.fifo.FifoTS                        | lookahead       | Prioritizes the successors of the ended task, and then the          | Multi-threaded implementation.            |
+    |                                                                                    | - successors    | generation order.                                                   | Default for shared disk executions on SCs |
+    +------------------------------------------------------------------------------------+-----------------+---------------------------------------------------------------------+-------------------------------------------+
+    | es.bsc.compss.scheduler.lookahead.successors.lifo.LifoTS                           | lookahead       | Prioritizes the successors of the ended task, and then the          |                                           |
+    |                                                                                    | - successors    | inverse generation order.                                           |                                           |
+    +------------------------------------------------------------------------------------+-----------------+---------------------------------------------------------------------+-------------------------------------------+
+    | es.bsc.compss.scheduler.lookahead.mt.successors.lifo.LifoTS                        | lookahead       | Prioritizes the successors of the ended task, and then the          | Multi-threaded implementation.            |
+    |                                                                                    | - successors    | inverse generation order.                                           |                                           |
+    +------------------------------------------------------------------------------------+-----------------+---------------------------------------------------------------------+-------------------------------------------+
+    | es.bsc.compss.scheduler.lookahead.successors.constraintsfifo.ConstraintsFifoTS     | lookahead       | Prioritizes the successors of the ended task, then the task         |                                           |
+    |                                                                                    | - successors    | constraints (``computing_units``) and then generation order (FIFO). |                                           |
+    +------------------------------------------------------------------------------------+-----------------+---------------------------------------------------------------------+-------------------------------------------+
+    | es.bsc.compss.scheduler.lookahead.mt.successors.constraintsfifo.ConstraintsFifoTS  | lookahead       | Prioritizes the successors of the ended task, then the task         | Multi-threaded implementation.            |
+    |                                                                                    | - successors    | constraints (``computing_units``) and then generation order (FIFO). |                                           |
+    +------------------------------------------------------------------------------------+-----------------+---------------------------------------------------------------------+-------------------------------------------+
+    | es.bsc.compss.scheduler.fullgraph.multiobjective.MOScheduler                       | full graph      | Based on a multi-objective function (time, energy, cost).           |                                           |
+    +------------------------------------------------------------------------------------+-----------------+---------------------------------------------------------------------+-------------------------------------------+
+    | es.bsc.compss.scheduler.predefined.PredefinedTS                                    | predefined      | Allows users to specify a predetermined execution plan for their    | Users need to create their own scheduling |
+    |                                                                                    |                 | tasks. The scheduler follows this exact configuration.              | plan.                                     |
+    +------------------------------------------------------------------------------------+-----------------+---------------------------------------------------------------------+-------------------------------------------+
 
 
 Specifying the ``--scheduler=<class>`` option when launching a COMPSs execution with
@@ -192,13 +200,21 @@ setting up a different policy on each agent.
 
 COMPSs leverages task execution profiles and configurable parameters to optimize scheduling decisions throughout an application's lifecycle. These profiles capture key performance metrics (such as average, minimum, and maximum execution times) for each task implementation, enabling the scheduler to estimate resource usage and execution duration accurately. At startup, users can provide an input profile file using the ``--input_profile=<path>`` option, which allows the scheduler to utilize historical performance data from the very beginning, thereby improving early task assignment decisions. As tasks are executed, the scheduler dynamically updates these profiles and incorporates this information into its scoring functions, which penalize slower implementations. Upon completion, the updated profiles are saved via the ``--output_profile=<path>`` option, creating a continuous learning loop that adapts to changes in resource performance and workload characteristics over time. This integration of execution profiles not only enhances scheduling accuracy but also improves load balancing and overall resource utilization, leading to more predictable and efficient distributed execution of tasks.
 
-.. rubric:: Controling the number of tasks to schedule
+.. rubric:: Controlling the number of tasks to schedule
 
-Schedulers and other objects of the runtime may suffer some overload if the number of tasks grows uncrontollably. As a consequence of this overload, the performance of the runtime may be impacted in some cases. This only occurs in a small amount of applications with very specific characteristics. However, the runtime incorporates a tool to control and limit the number of tasks waiting to be scheduled. The control of the number of tasks can be done through the usage of two environment variables.
+Schedulers and other objects of the runtime may suffer some overload if the number of tasks grows uncontrollably. As a consequence of this overload, the performance of the runtime may be impacted in some cases. This only occurs in a small amount of applications with very specific characteristics. However, the runtime incorporates a tool to control and limit the number of tasks waiting to be scheduled. The control of the number of tasks can be done through the usage of two environment variables.
 
 **Environment Variables**
   * COMPSS_TRHOTTLE_MAX_TASKS: This environment variable defines the maximum number of tasks that the runtime can have in the queue for scheduling. Once the number of waiting tasks reaches this number the runtime stops the task generation. This environment variable must be defined as an integer.
   * COMPSS_THROTTLE_INTERVAL: This environment variable defines the number of tasks that must be scheduled when the number of tasks reaches the limit before the runtime starts to generate new tasks again. This environment variable must be an integer.
 
 In order to clarify, for example, if the COMPSS_TRHOTTLE_MAX_TASKS is defined to 100000 and the COMPSS_TRHOTTLE_MAX_TASKS variable is set to 10000, the runtime will create tasks until it has 100000 tasks that are not scheduled and are pending to be scheduled. The task generation will not stop if the runtime never reaches the number of 100000 tasks waiting to be scheduled. Once this number is reached, the runtime has to execute 10000 tasks before it again generates tasks, this means that the number of pending tasks is going to be reduced down to 90000.
-By default, this is, when these environment variables are not defined, the runtime generates any number of tasks that it finds in the application being executed. This default behaviour is usually the best option. Only few applications with very specific characteristics, for example, applications with a huge number of tasks (near a million or more) can be benefitted from limiting the number of generated tasks.
+By default, this is, when these environment variables are not defined, the runtime generates any number of tasks that it finds in the application being executed. This default behavior is usually the best option. Only few applications with very specific characteristics, for example, applications with a huge number of tasks (near a million or more) can benefit from limiting the number of generated tasks.
+
+
+.. toctree::
+    :hidden:
+    :maxdepth: 2
+    :caption: Table of Contents
+
+    04_Scheduling/01_Predefined_Scheduler.rst

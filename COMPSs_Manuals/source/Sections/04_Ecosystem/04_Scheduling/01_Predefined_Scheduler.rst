@@ -1,14 +1,20 @@
-Predefined Scheduler Guide
-##########################
+.. spelling:word-list::
 
-How it works 
+   COMPSsWorker
+
+.. _predefined_scheduler_how_it_works:
+
+How it works
 ************
+
 The Predefined Scheduler reads a JSON configuration file that defines:
     * 1. **Task execution order** - Which tasks to execute
     * 2. **Implementation selection** - Which implementation to use for tasks with multiple options
     * 3. **Task dependencies** - Which tasks must complete before others can start
     * 4. **Resource assignments** - Which worker should execute each task
+
 The scheduler then enforces this plan during execution, ensuring tasks are scheduled exactly as specified.
+
 
 Configuration Format
 ********************
@@ -21,7 +27,7 @@ The configuration is a JSON file containing an array of task definitions:
 .. code-block:: json
     :name: predefined_json_structure
     :caption: Predefined JSON structure.
-    
+
     [
         {
             "taskId": 1,
@@ -66,6 +72,7 @@ Field Descriptions
     * Example: ["COMPSsWorker01", "COMPSsWorker02", "COMPSsWorker03"]
     * Note: Use this instead of resource for tasks that require multiple nodes
 
+
 Usage
 *****
 
@@ -73,7 +80,7 @@ Usage
 Create a JSON file (e.g., schedule_config.json) with your task scheduling plan:
 
 .. code-block:: json
-    
+
     [
         {
             "taskId": 1,
@@ -105,6 +112,7 @@ Use the ``--scheduler`` and ``--scheduler_config_file`` flags:
 **Step 3: Verify execution**
 Check the traces to see your scheduling.
 
+
 Complete Example
 ****************
 
@@ -128,7 +136,7 @@ Application Code (example.py)
         for i in range(1, 6):
             result = compute(i)
             results.append(result)
-        
+
         # Wait for results
         for i, result in enumerate(results):
             final = compss_wait_on(result)
@@ -136,7 +144,6 @@ Application Code (example.py)
 
     if __name__ == "__main__":
         main()
-
 
 Configuration File (config.json)
 ================================
@@ -176,14 +183,12 @@ Configuration File (config.json)
     }
     ]
 
-
 Execution
 =========
 
 .. code-block:: console
 
     $ runcompss --scheduler=es.bsc.compss.scheduler.predefined.PredefinedTS --scheduler_config_file=config.json example.py
-
 
 
 Advanced Features
@@ -206,7 +211,6 @@ For tasks that require multiple nodes (e.g., MPI tasks), use the **resources** f
         "COMPSsWorker03"
     ]
     }
-
 
 Multiple Implementations
 ========================
@@ -250,18 +254,17 @@ Resource Name Mapping (SLURM)
 
 When running on SLURM clusters, the Predefined Scheduler automatically maps logical resource names to actual SLURM nodes.
 
-How It Works
-============
+Design and operation
+====================
 
 1. You specify logical names in your config:
 
 .. code-block:: json
-    
+
     {
         "taskId": 1,
         "resource": "COMPSsWorker01"
     }
-   
 
 2. The scheduler reads `SLURM_NODELIST` and maps:
 
@@ -270,7 +273,6 @@ How It Works
    COMPSsWorker01 → gs10r3b01-ib0
    COMPSsWorker02 → gs10r3b03-ib0
    COMPSsWorker03 → gs10r3b68-ib0
-
 
 3. The mapping is **cyclic** if you have more logical workers than physical nodes
 
@@ -286,7 +288,6 @@ If `SLURM_NODELIST=node[01-03]` and your config has 5 workers:
     COMPSsWorker03 → node03-ib0
     COMPSsWorker04 → node01-ib0  (cycles back)
     COMPSsWorker05 → node02-ib0
-    
 
 Limitations
 ===========
@@ -306,7 +307,7 @@ Troubleshooting
 Configuration Not Loaded
 ========================
 
-**Symptom**: Scheduler doesn't use your configuration
+**Symptom**: Scheduler does not use your configuration
 
 **Solutions**:
 - Check file path is absolute or relative to execution directory
@@ -339,12 +340,14 @@ Invalid JSON
 **Symptom**: Parser error when loading configuration
 
 **Solutions**:
-- Validate JSON: `python3 -m json.tool config.json`
-- Check for:
-  - Missing commas
-  - Trailing commas (not allowed in JSON)
-  - Unquoted strings
-  - Mismatched brackets
+* Validate JSON: `python3 -m json.tool config.json`
+* Check for:
+
+  * Missing commas
+  * Trailing commas (not allowed in JSON)
+  * Unquoted strings
+  * Mismatched brackets
+
 
 FAQ
 ***
@@ -379,6 +382,7 @@ FAQ
 
 **A**: It supports regular tasks, multi-node tasks, and tasks with multiple implementations, but does **NOT** support reduce tasks.
 
+
 Performance Considerations
 **************************
 
@@ -402,6 +406,6 @@ Overhead
 
 The Predefined Scheduler has minimal overhead:
 - Configuration is loaded once at startup
-- Scheduling decisions are O(1) lookups
+- Scheduling decisions are :math:`O(1)` lookups
 - No runtime optimization computations
 

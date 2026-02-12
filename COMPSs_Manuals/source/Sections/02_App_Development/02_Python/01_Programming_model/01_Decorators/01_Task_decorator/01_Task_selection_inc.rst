@@ -87,7 +87,7 @@ library (:numref:`task_import_python`).
 
 .. TIP::
 
-    The PyCOMPSs task api also provides the ``@task`` decorator in camelcase
+    The PyCOMPSs task API also provides the ``@task`` decorator in camelcase
     (``@Task``) with the same functionality.
 
     The rationale of providing both ``@task`` and ``@Task`` relies on following
