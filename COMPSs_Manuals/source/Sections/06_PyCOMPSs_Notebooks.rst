@@ -130,6 +130,9 @@ Here you will find the PyCOMPSs demonstration notebooks used in the tutorials.
             .. code-block:: bash
 
                 $ git clone https://github.com/bsc-wdc/notebooks.git
+                $ # Now use the pycompss or compss command.
+                $ pycompss -h
+                $ compss -h
 
         .. tab-item:: **Docker**
             :sync: docker
@@ -139,18 +142,11 @@ Here you will find the PyCOMPSs demonstration notebooks used in the tutorials.
             .. code-block:: bash
 
                 $ git clone https://github.com/bsc-wdc/notebooks.git
-                $ docker pull compss/compss-tutorial:3.4
-                $ # Update the path to the notebooks path in the next command before running it
-                $ docker run --name mycompss -p 8888:8888 -p 8080:8080 -v /PATH/TO/notebooks:/home/notebooks -itd compss/compss-tutorial:3.4
-                $ docker exec -it mycompss /bin/bash
-
-            Now that docker is running and you are connected:
-
-            .. code-block:: bash
-
-                $ cd /home/notebooks
-                $ /etc/init.d/compss-monitor start
-                $ jupyter-notebook --no-browser --allow-root --ip=172.17.0.2 --NotebookApp.token=
+                $ cd notebooks
+                $ pycompss init docker -i compss/compss-tutorial:3.4
+                $ pycompss env change docker
+                $ pycompss monitor start
+                $ pycompss jupyter
 
             From local web browser:
 
@@ -177,7 +173,7 @@ Here you will find the PyCOMPSs demonstration notebooks used in the tutorials.
 
                     * Open COMPSs monitor: http://localhost:8080/compss-monitor/index.zul
                     * Open Jupyter notebook interface: http://localhost:8888/
-                    * Look for the application.ipynb of interest.
+                    * Look for the ``application.ipynb`` of interest.
 
 
     .. IMPORTANT::
