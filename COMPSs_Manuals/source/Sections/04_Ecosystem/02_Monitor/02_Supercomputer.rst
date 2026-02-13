@@ -14,8 +14,6 @@ To do so, please install the following packages in your local machine:
 
 For further details about the COMPSs packages installation and
 configuration please refer to :ref:`Sections/01_Installation_Configuration:|:gear:| Installation and Configuration` Section.
-If you are not willing to install COMPSs in your local machine please
-consider to download our Virtual Machine available at our webpage.
 
 Once the packages have been installed and configured, users need to
 mount the *sshfs directory* as follows. The ``SC_USER`` stands for your

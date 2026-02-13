@@ -15,11 +15,6 @@ that require working with big files, allowing to transfer data only
 once, at the beginning of the execution, and to enable the application
 to access the data directly during the rest of the execution.
 
-The Virtual Machine available at our webpage (http://compss.bsc.es/)
-provides a development environment with all the applications listed in
-the following sections. The codes of all the applications can be found
-under the ``/home/compss/tutorial_apps/python/`` folder.
-
 
 .. nbgallery::
     :name: python_sample_apps

@@ -249,7 +249,7 @@ The next three sections provide specific information for launching
 COMPSs applications developed in different code languages (Java, Python
 and C/C++). For clarity purposes, we will use the *Simple*
 application (developed in Java, Python and C++) available in the
-COMPSs Virtual Machine or at https://compss.bsc.es/projects/bar webpage.
+https://github.com/bsc-wdc/tutorial_apps repository.
 This application takes an integer as input parameter and increases it by
 one unit using a task. For further details about the codes please refer
 to :ref:`Sections/05_Sample_Applications:|:bulb:| sample applications`.

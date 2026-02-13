@@ -72,11 +72,14 @@ Here you will find the PyCOMPSs demonstration notebooks used in the tutorials.
 
 .. HINT::
 
-    These notebooks can be used within **MyBinder**, with the **PyCOMPSs CLI**,
-    within **Docker**, within **Virtual Machine** (recommended for Windows) provided by BSC, or locally.
+    These notebooks can be used within **MyBinder**, with the **PyCOMPSs CLI**, within **Docker**, or **locally**.
 
-    Prerequisites
-        * Using *MyBinder*:
+    **Prerequisites**
+
+    .. tab-set::
+
+        .. tab-item:: **MyBinder**
+            :sync: mybinder
 
             * Open |Binder|
 
@@ -84,20 +87,19 @@ Here you will find the PyCOMPSs demonstration notebooks used in the tutorials.
 
                 Sometimes it may take a while to deploy the COMPSs infrastructure.
 
-        * Using **PyCOMPSs CLI**:
+        .. tab-item:: **PyCOMPSs CLI**
+            :sync: pycompss_cli
 
             * ``pycompss-cli`` (see :ref:`Sections/04_Ecosystem/09_CLI/01_Installation:Requirements and Installation`)
 
-        * Using **Docker**:
+        .. tab-item:: **Docker**
+            :sync: docker
 
             * Docker
             * Git
 
-        * Using **Virtual Machine**:
-
-            * VirtualBox
-
-        * For **local** execution:
+        .. tab-item:: **Locally**
+            :sync: local
 
             * Python 3
             * Install COMPSs requirements described in :ref:`Sections/01_Installation_Configuration/01_Dependencies:Dependencies`.
@@ -109,12 +111,17 @@ Here you will find the PyCOMPSs demonstration notebooks used in the tutorials.
             * numba (only for some notebooks)
             * Git
 
-    Instructions
-        * Using **MyBinder**:
+    **Instructions**
+
+    .. tab-set::
+
+        .. tab-item:: **MyBinder**
+            :sync: mybinder
 
             Just explore the folders and run the examples (they have the same structure as this documentation).
 
-        * Using ``pycompss-cli``:
+        .. tab-item:: **PyCOMPSs CLI**
+            :sync: pycompss_cli
 
             Check the ``pycompss-cli`` usage instructions (see :ref:`Sections/04_Ecosystem/09_CLI/02_Usage:Usage`)
 
@@ -124,8 +131,8 @@ Here you will find the PyCOMPSs demonstration notebooks used in the tutorials.
 
                 $ git clone https://github.com/bsc-wdc/notebooks.git
 
-
-        * Using **Docker**:
+        .. tab-item:: **Docker**
+            :sync: docker
 
             Run in your machine:
 
@@ -152,33 +159,8 @@ Here you will find the PyCOMPSs demonstration notebooks used in the tutorials.
                 Open COMPSs monitor: http://localhost:8080/compss-monitor/index.zul
                 Open Jupyter notebook interface: http://localhost:8888/
 
-        * Using **Virtual Machine**:
-
-            * Download the OVA from: https://www.bsc.es/research-and-development/software-and-apps/software-list/comp-superscalar/downloads  (*Look for Virtual Appliances section*)
-            * Import the OVA from VirtualBox
-            * Start the Virtual Machine
-
-                * User: **compss**
-                * Password: **compss2019**
-
-            * Open a console and run:
-
-                .. code-block:: bash
-
-                    $ git clone https://github.com/bsc-wdc/notebooks.git
-                    $ cd notebooks
-                    $ /etc/init.d/compss-monitor start
-                    $ jupyter-notebook
-
-            * Open the web browser:
-
-                .. code-block:: text
-
-                    * Open COMPSs monitor: http://localhost:8080/compss-monitor/index.zul
-                    * Open Jupyter notebook interface: http://localhost:8888/
-
-
-        * Using local installation
+        .. tab-item:: **Locally**
+            :sync: local
 
             * Get the notebooks and start jupyter
 
@@ -203,69 +185,70 @@ Here you will find the PyCOMPSs demonstration notebooks used in the tutorials.
         It is necessary to **RESTART the python kernel from Jupyter** after the execution of any notebook.
 
 
-    Troubleshooting
-        * ISSUE 1: Cannot connect using docker pull.
+    **Troubleshooting**
 
-            REASON: *The docker service is not running*:
+    .. dropdown:: ISSUE 1: Cannot connect using docker pull.
 
-            .. code-block:: bash
+        **REASON:** *The docker service is not running*:
 
-                $ # Error messsage:
-                $ Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
-                $ # SOLUTION: Restart the docker service:
-                $ sudo service docker start
+        .. code-block:: bash
 
-        * ISSUE 2: The notebooks folder is empty or contains other data using docker.
+            $ # Error message:
+            $ Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+            $ # SOLUTION: Restart the docker service:
+            $ sudo service docker start
 
-            REASON: *The notebooks path in the docker run command is wrong*.
+    .. dropdown:: ISSUE 2: The notebooks folder is empty or contains other data using docker.
 
-            .. code-block:: bash
+        **REASON:** *The notebooks path in the docker run command is wrong*.
 
-                $ # Remove the docker instance and reinstantiate with the appropriate notebooks path
-                $ exit
-                $ docker stop mycompss
-                $ docker rm mycompss
-                $ # Pay attention and UPDATE: /PATH/TO in the next command
-                $ docker run --name mycompss -p 8888:8888 -p 8080:8080 -v /PATH/TO/notebooks:/home/notebooks -itd compss/compss:3.3
-                $ # Continue as normal
+        .. code-block:: bash
+
+            $ # Remove the docker instance and reinstantiate with the appropriate notebooks path
+            $ exit
+            $ docker stop mycompss
+            $ docker rm mycompss
+            $ # Pay attention and UPDATE: /PATH/TO in the next command
+            $ docker run --name mycompss -p 8888:8888 -p 8080:8080 -v /PATH/TO/notebooks:/home/notebooks -itd compss/compss:3.3
+            $ # Continue as normal
 
 
-        * ISSUE 3: COMPSs does not start in Jupyter.
+    .. dropdown:: ISSUE 3: COMPSs does not start in Jupyter.
 
-            REASON: *The python kernel has not been restarted between COMPSs start, or some processes from previous failed execution may exist.*
+        **REASON:** *The python kernel has not been restarted between COMPSs start, or some processes from previous failed execution may exist.*
 
-            .. code-block:: bash
+        .. code-block:: bash
 
-                $ # SOLUTION: Restart the python kernel from Jupyter and check that there are no COMPSs' python/java processes running.
+            $ # SOLUTION: Restart the python kernel from Jupyter and check that there are no COMPSs' python/java processes running.
 
-        * ISSUE 4: Numba is not working with the VM or Docker.
+    .. dropdown:: ISSUE 4: Numba is not working with Docker.
 
-            REASON: *Numba is not installed in the VM or docker*
+        **REASON:** *Numba is not installed in the docker container*
 
-            .. code-block:: bash
+        .. code-block:: bash
 
-                $ # SOLUTION: Install Numba in the VM/Docker
-                $ #           Open a console in the VM/Docker and follow the next steps.
-                $ # For Python 2:
-                $ sudo python2 -m pip install numba
-                $ # For Python 3:
-                $ sudo python3 -m pip install numba
+            $ # SOLUTION: Install Numba in the Docker container
+            $ #           Open a console in the Docker container and follow the next steps.
+            $ # For Python 2:
+            $ sudo python2 -m pip install numba
+            $ # For Python 3:
+            $ sudo python3 -m pip install numba
 
-        * ISSUE 5: Matplotlib is not working with the VM or Docker.
+    .. dropdown:: ISSUE 5: Matplotlib is not working with Docker.
 
-            REASON: *Matplotlib is not installed in the VM or docker*
+        **REASON:** *Matplotlib is not installed in the docker container*
 
-            .. code-block:: bash
+        .. code-block:: bash
 
-                $ # SOLUTION: Install Matplotlib in the VM/Docker
-                $ #           Open a console in the VM/Docker and follow the next steps.
-                $ # For Python 2:
-                $ sudo python2 -m pip install matplotlib
-                $ # For Python 3:
-                $ sudo python3 -m pip install matplotlib
+            $ # SOLUTION: Install Matplotlib in the Docker container
+            $ #           Open a console in the Docker container and follow the next steps.
+            $ # For Python 2:
+            $ sudo python2 -m pip install matplotlib
+            $ # For Python 3:
+            $ sudo python3 -m pip install matplotlib
 
-    Contact
-        support-compss@bsc.es
+    **Contact**
+        |:e-mail:| support-compss@bsc.es
 
 
 .. |Binder| image:: https://mybinder.org/badge_logo.svg
