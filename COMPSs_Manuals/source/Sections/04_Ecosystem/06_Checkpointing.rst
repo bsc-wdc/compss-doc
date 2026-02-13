@@ -3,7 +3,8 @@
 
 COMPSs and PyCOMPSs allow for task-level checkpointing. This feature allows the user to combine different checkpointing mechanisms to save the progress of an application execution (i.e., completed tasks and their output values) to recover it in the case of a failure. This section provides information on how to use the checkpointing recovery system.
 
-Application developers can request the COMPSs runtime to checkpoint the application progress with the snapshot method of the API. When this method is invoked, the final version of each data value produced by any task of the application will be checkpointed. Upcoming executions will be able to resume the execution from that point with no additional development effort.
+Application developers can request the COMPSs runtime to checkpoint the application progress with the snapshot method of the API. When this method is invoked, the final version of each data value produced by any **PREVIOUSLY INVOKED** task will be checkpointed. Upcoming executions will be able to resume the execution from that point with no additional development effort.
+
 
 .. code-block:: java
 
