@@ -1,10 +1,7 @@
 Programming Model
 *****************
 
-The programming model for R is structured in the following sections:
-
-[PROGRAMMING MODEL EXPLANATION]
-
+The programming model for Python is structured in the following sections:
 
 .. grid:: 1 1 2 2
     :gutter: 2
@@ -22,6 +19,14 @@ The programming model for R is structured in the following sections:
         :text-align: center
 
         :material-twotone:`api;3em;sd-text-success`
+
+
+.. raw:: html
+
+   <iframe src="../../../_static/pdfs/COMPSs_Cheat_Sheet_Advanced_Features_v3.4.pdf" width="100%" height="600px">
+       This web browser does not support PDF visualization.
+       You can <a href="../../../_static/pdfs/COMPSs_Cheat_Sheet_Advanced_Features_v3.4.pdf" target="_blank">download the pdf here</a>.
+   </iframe>
 
 
 .. toctree::

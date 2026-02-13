@@ -227,7 +227,7 @@ ProjectName
     *Optional* ; *Default: computing cluster's user default project name*
 
 The following code snippet shows an example for the batch submission system
-of *nord3* cluster:
+of *MN5* cluster:
 
 .. code-block:: xml
 
@@ -241,7 +241,7 @@ of *nord3* cluster:
                         <MaxExecTime>30</MaxExecTime>
                         <Reservation>myReservation</Reservation>
                         <QOS>debug</QOS>
-                        <FileCFG>nord3.cfg</FileCFG>
+                        <FileCFG>mn5.cfg</FileCFG>
                         <ProjectName>bsc</ProjectName>
                     </BatchProperties>
                 </Batch>
