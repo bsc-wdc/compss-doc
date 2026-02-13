@@ -48,6 +48,14 @@ Examples
         - Local Disks
         - CPUs + GPUs
 
+    .. grid-item::
+        :columns: 4
+
+        - **Do you need help configuring COMPSs in your Supercomputer?**
+        - **Do you want to include your Supercomputer?**
+
+        Contact us: |:e-mail:| support-compss@bsc.es
+
 
 .. toctree::
     :hidden:

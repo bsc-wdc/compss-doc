@@ -257,7 +257,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Default: /opt/COMPSs
         --container_opts="<string>"             Options to pass to the container engine
                                                 Default: empty
-        --elasticity=<max_extra_nodes>          Activate elasticity specifiying the maximum extra nodes (ONLY AVAILABLE FORM SLURM CLUSTERS WITH NIO ADAPTOR)
+        --elasticity=<max_extra_nodes>          Activate elasticity specifying the maximum extra nodes (ONLY AVAILABLE FORM SLURM CLUSTERS WITH NIO ADAPTOR)
                                                 Default: 0
         --automatic_scaling=<bool>              Enable or disable the runtime automatic scaling (for elasticity)
                                                 Default: true
@@ -311,7 +311,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --extrae_config_file_python=<path>      Sets a custom extrae config file for python. Must be in a shared disk between all COMPSs workers.
                                                 Default: null
         --trace_label=<string>                  Add a label in the generated trace file. Only used in the case of tracing is activated.
-                                                Default: Applicacion name
+                                                Default: Application name
         --tracing_task_dependencies=<bool>      Adds communication lines for the task dependencies (true/false)
                                                 Default: false
         --generate_trace=<bool>                 Converts the events register into a trace file. Only used in the case of activated tracing.
@@ -509,12 +509,12 @@ PyCOMPSs within interactive jobs
 
 PyCOMPSs can be used in interactive jobs through the use of ipython. To this
 end, the first thing is to request an interactive job. For example, an
-interactive job with Slurm for one node with 48 cores (as in MareNostrum 4)
+interactive job with Slurm for one node with 112 cores (as in *MareNostrum 5*)
 can be requested as follows:
 
 .. code-block:: console
 
-    $ salloc --qos=debug -N1 -n48
+    $ salloc --qos=debug -N1 -n112
 
     salloc: Pending job allocation 12189081
     salloc: job 12189081 queued and waiting for resources
@@ -526,26 +526,26 @@ can be requested as follows:
 When the job starts running, the terminal directly opens within the given node.
 
 Then, it is necessary to start the COMPSs infrastructure in the given nodes.
-To this end, the following command will start one worker with 24 cores
-(default worker in master), and then launch the *ipython* interpreter:
+To this end, the following command will start one worker with 100 cores
+(default worker in master), and then launch the ``ipython`` interpreter:
 
 .. code-block:: console
 
     $ launch_compss \
-      --sc_cfg=mn.cfg \
+      --sc_cfg=mn5.cfg \
       --master_node="$SLURMD_NODENAME" \
       --worker_nodes="" \
       --ipython \
       --pythonpath=$(pwd) \
       "dummy"
 
-Note that the *launch_compss* command requires the supercomputing configuration
-file, which in the MareNostrum 4 case is *mn.cfg* (more information about the
+Note that the ``launch_compss`` command requires the supercomputing configuration
+file, which in the *MareNostrum 5* case is ``mn5.cfg`` (more information about the
 supercomputer configuration can be found in
 :ref:`install_for_supercomputer_configuration_files`).
 In addition, requires to define which node is going to be the master, and
 which ones the workers (if none, takes the default worker in master).
-Finally, the *--ipython* flag indicates that use ipython is expected.
+Finally, the ``--ipython`` flag indicates that use ipython is expected.
 
 When ipython is started, the COMPSs infrastructure is ready, and the user can
 start running interactive commands considering the PyCOMPSs API for jupyter

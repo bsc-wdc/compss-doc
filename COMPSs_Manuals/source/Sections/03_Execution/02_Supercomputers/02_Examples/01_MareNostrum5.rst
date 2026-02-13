@@ -77,7 +77,7 @@ job information. For example:
     ...
 
 .. CAUTION::
-    Since MN4 has different partitions in shared disk (gpfs): ``/gpfs/scratch``,
+    Since MN5 has different partitions in shared disk (gpfs): ``/gpfs/scratch``,
     ``/gpfs/projects`` and ``/gpfs/home``, it is **recommended** to set the
     ``log_dir`` and ``master_working_dir`` flags in the same partition as the
     ``worker_working_dir`` to avoid performance drop.
