@@ -158,7 +158,7 @@ Configuration file ("container_config.json"):
       },
       "container":{
         "engine": "DOCKER",
-        "image": "compss/compss"
+        "image": "compss/compss:3.4"
       }
     }
 

@@ -79,7 +79,7 @@ you can pull it using the following command:
 
 .. code-block:: console
 
-    $ docker pull compss/compss
+    $ docker pull compss/compss:3.4
 
 The **compss_docker_gen_image** script receives 2 parameters:
 

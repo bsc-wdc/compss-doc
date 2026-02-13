@@ -17,7 +17,7 @@ Definition
     from pycompss.api.api import compss_wait_on
 
     @container(engine="DOCKER",
-               image="compss/compss")
+               image="compss/compss:3.4")
     @task(returns=1, num=IN, in_str=IN, fin=FILE_IN)
     def container_fun(num, in_str, fin):
         # Sample task body:
@@ -37,7 +37,7 @@ Definition
 
 
 The ``container_fun`` task will be executed within the container defined in the
-``@container`` decorator using the **DOCKER** engine with the **compss/compss** ``image``.
+``@container`` decorator using the **DOCKER** engine with the **compss/compss:3.4** ``image``.
 This task is pure python and you can import and use any library available in
 the container. In addition, to these ``@container`` parameters, it is possible
 to use the ``options`` parameter with a string containing the desired container
@@ -87,7 +87,7 @@ In addition, the ``@container`` decorator can be placed on top of the
 ``@binary``, ``@ompss`` or ``@mpi`` decorators. :numref:`container_task_python_binary`
 shows how to execute the same example described in the
 :ref:`Sections/02_App_Development/02_Python/01_Programming_model/01_Decorators/04_Binary_decorator:@binary`
-section, but within the ``compss/compss`` container using Docker.
+section, but within the ``compss/compss:3.4`` container using Docker.
 This will execute the binary/ompss/mpi binary within the container.
 
 
@@ -101,7 +101,7 @@ This will execute the binary/ompss/mpi binary within the container.
     from pycompss.api.parameter import *
 
     @container(engine="DOCKER",
-               image="compss/compss")
+               image="compss/compss:3.4")
     @binary(binary="grep", working_dir=".")
     @task(infile={Type:FILE_IN_STDIN}, result={Type:FILE_OUT_STDOUT})
     def grepper():

@@ -92,10 +92,10 @@ Create a new COMPSs environment in your development directory
             $ pycompss init docker -w /home/user/replace/path/
             $
             $ # Or the COMPSs docker image to use
-            $ pycompss init docker -i compss/compss-tutorial:3.3
+            $ pycompss init docker -i compss/compss-tutorial:3.4
             $
             $ # Or both
-            $ pycompss init docker -w /home/user/replace/path/ -i compss/compss-tutorial:3.3
+            $ pycompss init docker -w /home/user/replace/path/ -i compss/compss-tutorial:3.4
 
    .. tab-item:: Local
         :sync: local
@@ -1033,7 +1033,7 @@ has the ``ro-crate-metadata.json`` file in its root.
 
         .. code-block:: console
 
-            $ pycompss inspect [-v/--verbose] COMPSs_RO-Crate_[timestamp]/ [-t/--tasks [TASK_ID...]] 
+            $ pycompss inspect [-v/--verbose] COMPSs_RO-Crate_[timestamp]/ [-t/--tasks [TASK_ID...]]
 
         The ``-t/--tasks`` flag can be used to print detailed information about each task individually (what method did they execute, their parameters, success status, logs, etc).
 

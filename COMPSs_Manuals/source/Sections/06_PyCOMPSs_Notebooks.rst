@@ -139,9 +139,9 @@ Here you will find the PyCOMPSs demonstration notebooks used in the tutorials.
             .. code-block:: bash
 
                 $ git clone https://github.com/bsc-wdc/notebooks.git
-                $ docker pull compss/compss-tutorial:latest
+                $ docker pull compss/compss-tutorial:3.4
                 $ # Update the path to the notebooks path in the next command before running it
-                $ docker run --name mycompss -p 8888:8888 -p 8080:8080 -v /PATH/TO/notebooks:/home/notebooks -itd compss/compss-tutorial:latest
+                $ docker run --name mycompss -p 8888:8888 -p 8080:8080 -v /PATH/TO/notebooks:/home/notebooks -itd compss/compss-tutorial:3.4
                 $ docker exec -it mycompss /bin/bash
 
             Now that docker is running and you are connected:
@@ -209,7 +209,7 @@ Here you will find the PyCOMPSs demonstration notebooks used in the tutorials.
             $ docker stop mycompss
             $ docker rm mycompss
             $ # Pay attention and UPDATE: /PATH/TO in the next command
-            $ docker run --name mycompss -p 8888:8888 -p 8080:8080 -v /PATH/TO/notebooks:/home/notebooks -itd compss/compss:3.3
+            $ docker run --name mycompss -p 8888:8888 -p 8080:8080 -v /PATH/TO/notebooks:/home/notebooks -itd compss/compss:3.4
             $ # Continue as normal
 
 
