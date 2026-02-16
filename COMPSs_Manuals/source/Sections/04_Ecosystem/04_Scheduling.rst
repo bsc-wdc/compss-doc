@@ -143,6 +143,12 @@ and in what order.
     Only resource-level scheduling is supported, **NOT** thread-level scheduling, therefore the traces may vary between executions, but the execution pattern stays the same.
     To see extended information about this scheduler and how to use it check :ref:`predefined_scheduler_how_it_works` and subsequent sections.
 
+.. include:: ./04_Scheduling/01_Predefined_Scheduler_inc.rst
+
+
+Schedulers Summary
+==================
+
 Table with the provided schedulers within the COMPSs release:
 
 .. table:: Schedulers
@@ -196,25 +202,23 @@ In the case of having an agents deployment, the option indicates the scheduler u
 that agent; agents deployment allows combining different scheduling strategies by
 setting up a different policy on each agent.
 
-.. rubric:: Optimizing using previous task profiles
+Optimizing using previous task profiles
+***************************************
 
 COMPSs leverages task execution profiles and configurable parameters to optimize scheduling decisions throughout an application's lifecycle. These profiles capture key performance metrics (such as average, minimum, and maximum execution times) for each task implementation, enabling the scheduler to estimate resource usage and execution duration accurately. At startup, users can provide an input profile file using the ``--input_profile=<path>`` option, which allows the scheduler to utilize historical performance data from the very beginning, thereby improving early task assignment decisions. As tasks are executed, the scheduler dynamically updates these profiles and incorporates this information into its scoring functions, which penalize slower implementations. Upon completion, the updated profiles are saved via the ``--output_profile=<path>`` option, creating a continuous learning loop that adapts to changes in resource performance and workload characteristics over time. This integration of execution profiles not only enhances scheduling accuracy but also improves load balancing and overall resource utilization, leading to more predictable and efficient distributed execution of tasks.
 
-.. rubric:: Controlling the number of tasks to schedule
+Controlling the number of tasks to schedule
+*******************************************
 
 Schedulers and other objects of the runtime may suffer some overload if the number of tasks grows uncontrollably. As a consequence of this overload, the performance of the runtime may be impacted in some cases. This only occurs in a small amount of applications with very specific characteristics. However, the runtime incorporates a tool to control and limit the number of tasks waiting to be scheduled. The control of the number of tasks can be done through the usage of two environment variables.
 
-**Environment Variables**
-  * COMPSS_TRHOTTLE_MAX_TASKS: This environment variable defines the maximum number of tasks that the runtime can have in the queue for scheduling. Once the number of waiting tasks reaches this number the runtime stops the task generation. This environment variable must be defined as an integer.
-  * COMPSS_THROTTLE_INTERVAL: This environment variable defines the number of tasks that must be scheduled when the number of tasks reaches the limit before the runtime starts to generate new tasks again. This environment variable must be an integer.
 
-In order to clarify, for example, if the COMPSS_TRHOTTLE_MAX_TASKS is defined to 100000 and the COMPSS_TRHOTTLE_MAX_TASKS variable is set to 10000, the runtime will create tasks until it has 100000 tasks that are not scheduled and are pending to be scheduled. The task generation will not stop if the runtime never reaches the number of 100000 tasks waiting to be scheduled. Once this number is reached, the runtime has to execute 10000 tasks before it again generates tasks, this means that the number of pending tasks is going to be reduced down to 90000.
+Environment Variables
+*********************
+
+  * **COMPSS_TRHOTTLE_MAX_TASKS**: This environment variable defines the maximum number of tasks that the runtime can have in the queue for scheduling. Once the number of waiting tasks reaches this number the runtime stops the task generation. This environment variable must be defined as an integer.
+  * **COMPSS_THROTTLE_INTERVAL**: This environment variable defines the number of tasks that must be scheduled when the number of tasks reaches the limit before the runtime starts to generate new tasks again. This environment variable must be an integer.
+
+In order to clarify, for example, if the ``COMPSS_TRHOTTLE_MAX_TASKS`` is defined to 100000 and the ``COMPSS_TRHOTTLE_MAX_TASKS`` variable is set to 10000, the runtime will create tasks until it has 100000 tasks that are not scheduled and are pending to be scheduled. The task generation will not stop if the runtime never reaches the number of 100000 tasks waiting to be scheduled. Once this number is reached, the runtime has to execute 10000 tasks before it again generates tasks, this means that the number of pending tasks is going to be reduced down to 90000.
 By default, this is, when these environment variables are not defined, the runtime generates any number of tasks that it finds in the application being executed. This default behavior is usually the best option. Only few applications with very specific characteristics, for example, applications with a huge number of tasks (near a million or more) can benefit from limiting the number of generated tasks.
 
-
-.. toctree::
-    :hidden:
-    :maxdepth: 2
-    :caption: Table of Contents
-
-    04_Scheduling/01_Predefined_Scheduler.rst

@@ -5,7 +5,7 @@
 .. _predefined_scheduler_how_it_works:
 
 How it works
-************
+------------
 
 The Predefined Scheduler reads a JSON configuration file that defines:
     * 1. **Task execution order** - Which tasks to execute
@@ -17,10 +17,10 @@ The scheduler then enforces this plan during execution, ensuring tasks are sched
 
 
 Configuration Format
-********************
+--------------------
 
 Basic Structure
-===============
+^^^^^^^^^^^^^^^
 
 The configuration is a JSON file containing an array of task definitions:
 
@@ -44,7 +44,7 @@ The configuration is a JSON file containing an array of task definitions:
     ]
 
 Field Descriptions
-==================
+^^^^^^^^^^^^^^^^^^
 
 **taskId** (required)
     * Type: Integer
@@ -74,7 +74,7 @@ Field Descriptions
 
 
 Usage
-*****
+-----
 
 **Step 1: Create Configuration File**
 Create a JSON file (e.g., schedule_config.json) with your task scheduling plan:
@@ -114,10 +114,10 @@ Check the traces to see your scheduling.
 
 
 Complete Example
-****************
+----------------
 
 Application Code (example.py)
-=============================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
     :name: python_app_example
@@ -146,7 +146,7 @@ Application Code (example.py)
         main()
 
 Configuration File (config.json)
-================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: json
 
@@ -184,7 +184,7 @@ Configuration File (config.json)
     ]
 
 Execution
-=========
+^^^^^^^^^
 
 .. code-block:: console
 
@@ -192,10 +192,10 @@ Execution
 
 
 Advanced Features
-*****************
+-----------------
 
 Multi-Node Tasks
-================
+^^^^^^^^^^^^^^^^
 
 For tasks that require multiple nodes (e.g., MPI tasks), use the **resources** field:
 
@@ -213,7 +213,7 @@ For tasks that require multiple nodes (e.g., MPI tasks), use the **resources** f
     }
 
 Multiple Implementations
-========================
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 If a task has multiple implementations (e.g., CPU and GPU versions), specify which one to use:
 
@@ -234,7 +234,7 @@ If a task has multiple implementations (e.g., CPU and GPU versions), specify whi
 
 
 Generating Configuration from Logs
-**********************************
+----------------------------------
 
 You can generate a configuration file from a previous execution's `runtime.log`:
 
@@ -250,12 +250,12 @@ You can find script examples on how to reproduce executions at the test suite:
 
 
 Resource Name Mapping (SLURM)
-*****************************
+-----------------------------
 
 When running on SLURM clusters, the Predefined Scheduler automatically maps logical resource names to actual SLURM nodes.
 
 Design and operation
-====================
+^^^^^^^^^^^^^^^^^^^^
 
 1. You specify logical names in your config:
 
@@ -277,7 +277,7 @@ Design and operation
 3. The mapping is **cyclic** if you have more logical workers than physical nodes
 
 Example
-=======
+^^^^^^^
 
 If `SLURM_NODELIST=node[01-03]` and your config has 5 workers:
 
@@ -290,7 +290,7 @@ If `SLURM_NODELIST=node[01-03]` and your config has 5 workers:
     COMPSsWorker05 → node02-ib0
 
 Limitations
-===========
+^^^^^^^^^^^
 
 1. **Task ID Assignment**: Task IDs must match the order COMPSs assigns them (based on task creation order in your application)
 
@@ -302,10 +302,10 @@ Limitations
 
 
 Troubleshooting
-***************
+---------------
 
 Configuration Not Loaded
-========================
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Symptom**: Scheduler does not use your configuration
 
@@ -315,7 +315,7 @@ Configuration Not Loaded
 - Check `runtime.log` for error messages
 
 Tasks Not Scheduled as Expected
-===============================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Symptom**: Tasks execute in different order or on different resources
 
@@ -325,7 +325,7 @@ Tasks Not Scheduled as Expected
 - Ensure all dependencies are satisfied
 
 Resource Not Found
-==================
+^^^^^^^^^^^^^^^^^^
 
 **Symptom**: Error about unknown resource
 
@@ -335,7 +335,7 @@ Resource Not Found
 - Ensure workers are actually available
 
 Invalid JSON
-============
+^^^^^^^^^^^^
 
 **Symptom**: Parser error when loading configuration
 
@@ -350,44 +350,44 @@ Invalid JSON
 
 
 FAQ
-***
+---
 
 **Q**: Can I use this with any COMPSs application?
-==================================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **A**: Yes, but it works best with applications that have predictable task creation patterns.
 
 **Q**: How do I know what task IDs will be assigned?
-====================================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **A**: Task IDs are assigned sequentially in the order tasks are created. You can run your application once with a default scheduler and extract the task IDs from the logs.
 
 **Q**: Can I mix predefined scheduling with dynamic scheduling?
-===============================================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **A**: No, the Predefined Scheduler controls all task scheduling decisions.
 
 **Q**: What happens if a task fails?
-====================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **A**: Standard COMPSs error handling applies. Failed tasks can be retried according to your COMPSs configuration.
 
 **Q**: Can I update the configuration during execution?
-=======================================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **A**: No, the configuration is loaded once at startup and cannot be modified during execution.
 
 **Q**: Does this work with all task types?
-==========================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **A**: It supports regular tasks, multi-node tasks, and tasks with multiple implementations, but does **NOT** support reduce tasks.
 
 
 Performance Considerations
-**************************
+--------------------------
 
 When to Use Predefined Scheduler
-================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Good for**:
     * Reproducible experiments
@@ -402,7 +402,7 @@ When to Use Predefined Scheduler
     * Load balancing across heterogeneous resources
 
 Overhead
-========
+^^^^^^^^
 
 The Predefined Scheduler has minimal overhead:
 - Configuration is loaded once at startup
