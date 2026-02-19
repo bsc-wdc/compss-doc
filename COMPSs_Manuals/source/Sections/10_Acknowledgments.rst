@@ -1,0 +1,88 @@
+.. spelling:word-list::
+
+   Catalunya
+   Generalitat
+   Programme
+   Optimis
+   transPLANT
+   Euroserver
+   MuG
+   mf
+   Landsupport
+   BiDaaS
+   eFlows
+   HPC
+   Abdullah
+   Thuwal
+
+
+************************
+|:pray:| Acknowledgments
+************************
+
+The development of this software has been supported by the following institutions:
+
+|:flag_es:| Spanish Government under contracts
+##############################################
+
+* SEV2015-0493
+* TIN2015-65316
+* PID2019-107255G
+* PID2023-147979NB-C21
+* CEX2021-001148-S
+* PCI2021-12195
+* PCI2022-134996-2
+* TED2021-130351B-C22
+
+|:rose:| Generalitat de Catalunya under contracts
+#################################################
+
+* 2014-SGR-1051
+* 2017-SGR-01414
+* 2021-SGR-00412
+* CECH project, co-funded with 50% by the European Regional Development Fund under the framework of the ERFD Operative Programme for Catalunya 2014-2020.
+
+|:flag_es:| Spanish Ministry for the Digital Processing and Civil Service and the European Union - NextGenerationEU (PRTR and MRR)
+##################################################################################################################################
+
+* UNICO I+D Cloud COLMENA project
+
+|:flag_eu:| European Commission's through the following R&D projects
+####################################################################
+
+* FP6 CoreGrid Network of Excellence (Contract IST-2002-004265)
+* FP7 Optimis Project (Contract 257115)
+* FP7 Venus-C Project (Contract 261565)
+* FP7 transPLANT (contract 283496)
+* FP7 EUBrazilOpenBio (Contract 288754)
+* FP7 Euroserver Project (Contract 610456)
+* FP7 Ascetic Project (Contract 610874)
+* FP7 EUBrazilCC (Contract 614048)
+* H2020 NextGenIO (Contract 671951)
+* H2020 MuG Project (Contract 676556)
+* H2020 TANGO Project (Contract 687584)
+* H2020 EUBra-BIGSEA (Contract 690116)
+* H2020 EXPERTISE European Training Network (Contract 721865)
+* H2020 mf2c Project (Contract 730929)
+* H2020 Landsupport Project (Contract 774234)
+* H2020 CLASS Project (Contract 780622)
+* H2020 I-BiDaaS project (Contract 780787)
+* H2020 ExaQute Project (Contract 800898)
+* H2020 BioExcel Center of Excellence (Contracts 823830, and 675728)
+* H2020 EuroHPC Joint Undertaking MEEP Project (Contract 946002)
+* H2020 EuroHPC Joint Undertaking eFlows4HPC Project (Contract 955558)
+* H2020 AI-Sprint project (Contract 101016577)
+* H2020 PerMedCoE Center of Excellence (Contract 951773)
+* Horizon Europe CAELESTIS project (Contract 101056886)
+* Horizon Europe DT-GEO project (Contract 101058129)
+* Horizon Europe ICOS project (Contract 101070177)
+* Horizon Europe ODISSEE project (Contract 101188332)
+* Horizon Europe CyclOps project (Contract 101135513)
+* Horizon EuroHPC JU CEEC project (Contract 101093393)
+* Horizon EuroHPC JU DARE project (Contract 101202459)
+* Horizon EuroHPC JU SEANERGYS (Contract 101177590)
+
+|:classical_building:| Other entities
+#####################################
+
+* Computer, Electrical and Mathematical Sciences and Engineering (CEMSE) Division, King Abdullah University of Science and Technology (KAUST), Thuwal, Saudi Arabia.

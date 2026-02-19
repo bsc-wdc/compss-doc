@@ -101,6 +101,7 @@ This manual is divided in 10 sections:
    Sections/07_Troubleshooting
    Sections/08_Tutorial
    Sections/09_Success_stories
+   Sections/10_Acknowledgments
 
 
 .. Indices and tables

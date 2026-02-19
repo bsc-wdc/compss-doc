@@ -8,3 +8,16 @@
     max-width: 150px;
     max-height: 200px;
 }
+
+.logo-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    transition: transform 0.3s;
+}
+
+.logo-cell img:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
