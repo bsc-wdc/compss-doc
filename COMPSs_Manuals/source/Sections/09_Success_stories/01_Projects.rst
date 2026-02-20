@@ -23,7 +23,7 @@ European Projects
 
 .. rubric:: Active projects
 
-.. grid:: 5
+.. grid:: 1 2 3 5
 
   .. grid-item::
 
@@ -68,7 +68,7 @@ European Projects
 
 .. rubric:: Completed projects
 
-.. grid:: 5
+.. grid:: 1 2 3 5
 
   .. grid-item::
 
@@ -266,7 +266,7 @@ European Projects
 National projects
 *****************
 
-.. grid:: 3
+.. grid:: 1 2 2 3
 
   .. grid-item::
 
@@ -286,7 +286,7 @@ National projects
 
 .. rubric:: Active projects
 
-.. grid:: 5
+.. grid:: 1 2 3 5
 
   .. grid-item::
 
@@ -334,7 +334,7 @@ National projects
 
 .. rubric:: Completed projects
 
-.. grid:: 5
+.. grid:: 1 2 3 5
 
   .. grid-item::
 
@@ -374,7 +374,7 @@ Centers of Excellence
 
 .. rubric:: Active CoEs
 
-.. grid:: 4
+.. grid:: 1 2 2 4
 
   .. grid-item::
 
@@ -395,7 +395,7 @@ Centers of Excellence
 
 .. rubric:: Past CoEs
 
-.. grid:: 4
+.. grid:: 1 2 2 4
 
   .. grid-item::
 

@@ -14,7 +14,7 @@ Collaborations
 
 Here you will find the collaborations where PyCOMPSs is or has been involved.
 
-.. grid:: 4
+.. grid:: 1 2 3 4
 
   .. grid-item::
 
@@ -39,7 +39,7 @@ Here you will find the collaborations where PyCOMPSs is or has been involved.
 COMPSs is being actively used within BSC's tools and applications to boost all research areas
 (e.g. Earth Sciences, Life Sciences, AI, Quantum):
 
-.. grid:: 5
+.. grid:: 1 2 3 5
 
   .. grid-item-card:: MONARCH (Earth Sciences)
 
@@ -86,7 +86,7 @@ We have collaborated with several research centers, projects and Centers of Exce
 in order to parallelize existing research applications and to extend COMPSs with new features
 or supported languages:
 
-.. grid:: 3
+.. grid:: 1 2 2 3
 
   .. grid-item-card:: BackTrackBB (ChEESE CoE)
 
@@ -118,7 +118,7 @@ or supported languages:
 We have collaborated with several companies, where COMPSs has been used to parallelize existing code,
 use it in conjunction with COMPSs, integrate their tool within COMPSs, or to evaluate infrastructures:
 
-.. grid:: 5
+.. grid:: 1 2 3 5
 
   .. grid-item-card:: Fujitsu
 
