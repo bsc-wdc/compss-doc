@@ -1,8 +1,22 @@
 {% extends "!footer.html" %}
 
 {% block extrafooter %} {{super}}
-    <br>
-    <a href="http://www.bsc.es">
-    <img src="{{ pathto('_static/bsc_logo.jpg', 1) }}" alt="Barcelona Supercomputing Center (BSC)" width="300">
-    </a>
+
+    <div class="custom-footer-logos">
+      <div class="footer-left">
+        <a href="http://www.bsc.es">
+        <img src="{{ pathto('_static/bsc_logo.jpg', 1) }}" alt="Barcelona Supercomputing Center (BSC)" width="300">
+        </a>
+      </div>
+
+    {% if show_extra_logo %}
+      <div class="footer-right">
+        <a href="https://www.kaust.edu.sa/">
+        <img src="{{ pathto('_static/logos/other/external/KAUST.png', 1) }}" alt="KAUST: King Abdullah University of Science and Technology">
+        </a>
+      </div>
+    {% endif %}
+
+    </div>
+
 {% endblock %}

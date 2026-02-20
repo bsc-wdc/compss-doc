@@ -1,3 +1,8 @@
+.. spelling:word-list::
+
+    Thuwal
+    Abdullah
+
 .. _app_development_r:
 
 |:bar_chart:| R
@@ -6,6 +11,12 @@
 COMPSs features a binding for R applications. The next
 subsections explain how to program a R application for COMPSs and a
 brief overview on how to execute it.
+
+RCOMPSs has been developed in collaboration with the Computer, Electrical
+and Mathematical Sciences and Engineering (CEMSE) Division of the
+King Abdullah University of Science and Technology (KAUST), Thuwal, Saudi Arabia.
+
+The code can be found in: https://github.com/stsds/RCOMPSs
 
 
 .. grid:: 1 1 2 2

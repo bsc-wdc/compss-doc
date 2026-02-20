@@ -21,3 +21,32 @@
     transform: scale(1.1);
     cursor: pointer;
 }
+
+.custom-footer-logos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    width: auto;
+    margin-top: 20px;
+    padding-top: 15px;
+}
+
+.footer-left {
+    text-align: left;
+}
+
+.footer-right {
+    text-align: right;
+}
+
+@media (max-width: 768px) {
+    .custom-footer-logos {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .footer-right {
+        text-align: center;
+    }
+}

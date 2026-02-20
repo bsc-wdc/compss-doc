@@ -471,3 +471,16 @@ texinfo_documents = [
      author, 'COMPSs', 'COMPSs Manuals.',
      'Programming Model'),
 ]
+
+
+# -- Foot banners ---------------------------------------------------------
+
+def setup(app):
+    def add_section_flag(app, pagename, templatename, context, doctree):
+        # Detect if we are within R section
+        if pagename.startswith("Sections/02_App_Development/04_R"):
+            context["show_extra_logo"] = True
+        else:
+            context["show_extra_logo"] = False
+
+    app.connect("html-page-context", add_section_flag)
