@@ -2,7 +2,7 @@ Task Return
 ===========
 
 If the function or method returns a value, the programmer can use the
-*returns* argument within the *task* decorator. In this
+``return_value`` argument within the ``task`` decorator. In this
 argument, the programmer can specify the type of that value
 (:numref:`task_returns_r`).
 

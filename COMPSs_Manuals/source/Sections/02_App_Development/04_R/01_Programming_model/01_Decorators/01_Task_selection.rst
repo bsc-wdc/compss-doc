@@ -10,27 +10,9 @@ instead of an annotated interface. In particular, the user needs to add
 a ``task`` decorator that describes the task before the
 definition of the function.
 
-As an example (:numref:`code_r`), let us assume that the application calls
-a function **add**, which receives two integer parameters (``x`` and ``y``).
-The code of **add** adds the value of ``x`` and ``y``.
-
-.. code-block:: r
-    :name: code_r
-    :caption: R application example
-
-    def foo(file_path, value):
-        """ Update the file 'file_path' with the 'value'"""
-        with open(file_path, "a") as fd:
-            fd.write(value)
-
-    def main():
-        my_file = "sample_file.txt"
-        with open(my_file, "w") as fd:
-            fd.write("Hello")
-        foo(my_file, "World")
-
-    if __name__ == '__main__':
-        main()
+As an example (:numref:`code_r_main`), let us assume that the application calls
+a function **add** (:numref:`code_r_task`), which receives two integer parameters
+(``x`` and ``y``). The code of **add** adds the value of ``x`` and ``y``.
 
 
 .. code-block:: r
