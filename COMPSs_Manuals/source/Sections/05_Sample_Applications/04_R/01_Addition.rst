@@ -95,7 +95,7 @@ The following lines provide an example of its execution.
       ----------------- Executing addition.R --------------------------
 
       WARNING: COMPSs Properties file is null. Setting default values
-      [(763)    API]  -  Starting COMPSs Runtime v3.3.3.post2505 (build 20250513-0839.rfcc8f551ada00b095448810eee6b34a1baca40f8)
+      [(763)    API]  -  Starting COMPSs Runtime v3.4 (build 20250513-0839.rfcc8f551ada00b095448810eee6b34a1baca40f8)
       The result is: 44
       [(9528)    API]  -  Execution Finished
 

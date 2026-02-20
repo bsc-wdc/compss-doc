@@ -11,7 +11,7 @@ situations.
 COMPSs Environment Script
 """""""""""""""""""""""""
 After a successful installation from the supercomputers package, users can find
-the *compssenv* script in the folder where COMPSs was installed. This script can
+the ``compssenv`` script in the folder where COMPSs was installed. This script can
 be used to load the COMPSs environment in the system as indicated below.
 
 .. code-block:: console
@@ -47,14 +47,18 @@ supported COMPSs modules in the supercomputer. The users can also execute the
     COMPSs/3.1
     COMPSs/3.2
     COMPSs/3.3
+    COMPSs/3.3.1
+    COMPSs/3.3.2
+    COMPSs/3.3.3
+    COMPSs/3.4
     COMPSs/release(default)
     COMPSs/trunk
 
 
     $ module load COMPSs/release
-    load java/8u131 (PATH, MANPATH, JAVA_HOME, JAVA_ROOT, JAVA_BINDIR, SDK_HOME, JDK_HOME, JRE_HOME)
-    load papi/5.5.1 (PATH, LD_LIBRARY_PATH, C_INCLUDE_PATH)
-    load PYTHON/3.7.4 (PATH, MANPATH, LD_LIBRARY_PATH, LIBRARY_PATH, PKG_CONFIG_PATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, PYTHONHOME, PYTHONPATH)
+    load java/21.0.3+9 (PATH, MANPATH, JAVA_HOME, JAVA_ROOT, JAVA_BINDIR, SDK_HOME, JDK_HOME, JRE_HOME)
+    load papi/7.0.1 (PATH, LD_LIBRARY_PATH, C_INCLUDE_PATH)
+    load PYTHON/3.12.1 (PATH, MANPATH, LD_LIBRARY_PATH, LIBRARY_PATH, PKG_CONFIG_PATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, PYTHONHOME, PYTHONPATH)
     load COMPSs/release (PATH, CLASSPATH, MANPATH, GAT_LOCATION, COMPSS_HOME, JAVA_TOOL_OPTIONS, LDFLAGS, CPPFLAGS)
 
 The following command can be run to check if the correct COMPSs version
@@ -93,9 +97,9 @@ well loaded COMPSs installation.
 
     $ exit
     $ ssh USER@SC
-    load java/8u131 (PATH, MANPATH, JAVA_HOME, JAVA_ROOT, JAVA_BINDIR, SDK_HOME, JDK_HOME, JRE_HOME)
-    load papi/5.5.1 (PATH, LD_LIBRARY_PATH, C_INCLUDE_PATH)
-    load PYTHON/3.7.4 (PATH, MANPATH, LD_LIBRARY_PATH, LIBRARY_PATH, PKG_CONFIG_PATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, PYTHONHOME, PYTHONPATH)
+    load java/21.0.3+9 (PATH, MANPATH, JAVA_HOME, JAVA_ROOT, JAVA_BINDIR, SDK_HOME, JDK_HOME, JRE_HOME)
+    load papi/7.0.1 (PATH, LD_LIBRARY_PATH, C_INCLUDE_PATH)
+    load PYTHON/3.12.1 (PATH, MANPATH, LD_LIBRARY_PATH, LIBRARY_PATH, PKG_CONFIG_PATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, PYTHONHOME, PYTHONPATH)
     load COMPSs/release (PATH, CLASSPATH, MANPATH, GAT_LOCATION, COMPSS_HOME, JAVA_TOOL_OPTIONS, LDFLAGS, CPPFLAGS)
 
     USER@SC$ enqueue_compss --version
@@ -124,7 +128,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
 
     $ enqueue_compss -h
 
-    Usage: /apps/COMPSs/3.3/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
+    Usage: /apps/GPP/COMPSs/3.4/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
 
     * Options:
       General:
@@ -161,12 +165,15 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Default:
         --constraints=<constraints>             Constraints to pass to queue system.
                                                 Default: disabled
+
+        --project_name=<name>                   Project name to pass to queue system.
+                                                Default: Empty.
         --qos=<qos>                             Quality of Service to pass to the queue system.
                                                 Default: default
         --forward_cpus_per_node=<true|false>    Flag to indicate if number to cpus per node must be forwarded to the worker process.
                                                 The number of forwarded cpus will be equal to the cpus_per_node in a worker node and
                                                 equal to the worker_in_master_cpus in a master node.
-                                                Default: false
+                                                Default: true
         --job_dependency=<jobID>                Postpone job execution until the job dependency has ended.
                                                 Default: None
         --forward_time_limit=<true|false>       Forward the queue system time limit to the runtime.
@@ -207,7 +214,7 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 (Node type descriptions are provided in the --type_cfg flag)
       Launch configuration:
         --cpus_per_node=<int>                   Available CPU computing units on each node
-                                                Default: 48
+                                                Default: 112
         --gpus_per_node=<int>                   Available GPU computing units on each node
                                                 Default: 0
         --fpgas_per_node=<int>                  Available FPGA computing units on each node
@@ -242,10 +249,10 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Default: local_disk
 
         --worker_in_master_cpus=<int>           Maximum number of CPU computing units that the master node can run as worker. Cannot exceed cpus_per_node.
-                                                Default: 24
+                                                Default: 100
         --worker_in_master_memory=<int> MB      Maximum memory in master node assigned to the worker. Cannot exceed the node_memory.
                                                 Mandatory if worker_in_master_cpus is specified.
-                                                Default: 50000
+                                                Default: 200
         --worker_port_range=<min>,<max>         Port range used by the NIO adaptor at the worker side
                                                 Default: 43001,43005
         --jvm_worker_in_master_opts="<string>"  Extra options for the JVM of the COMPSs Worker in the Master Node.
@@ -273,12 +280,22 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
       Runcompss configuration:
 
 
+    ----------------- Executing  --------------------------
+
+
+    ------------------------------------------------------------
+
       Tools enablers:
         --graph=<bool>, --graph, -g             Generation of the complete graph (true/false)
                                                 When no value is provided it is set to true
                                                 Default: false
-        --tracing=<bool>, --tracing, -t         Set generation of traces.
+        -t, --tracing[=<value>]                 Set generation of traces.
                                                 Default: false
+                                                When no value is provided, tracing is enabled with the default backend ("extrae").
+                                                Supported values:
+                                                  - true|false                Enable tracing using extrae's backend or disable.
+                                                  - <backend>[,<backend>...]  Comma-separated list of tracing backends
+                                                      (e.g., "extrae,monitor").
         --monitoring=<int>, --monitoring, -m    Period between monitoring samples (milliseconds)
                                                 When no value is provided it is set to 2000
                                                 Default: 0
@@ -294,9 +311,11 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --storage_conf=<path>                   Path to the storage configuration file
                                                 Default: null
         --project=<path>                        Path to the project XML file
-                                                Default: /apps/COMPSs/3.3//Runtime/configuration/xml/projects/default_project.xml
+                                                Default: /apps/GPP/COMPSs/3.4//Runtime/configuration/xml/projects/default_project.xml
         --resources=<path>                      Path to the resources XML file
-                                                Default: /apps/COMPSs/3.3//Runtime/configuration/xml/resources/default_resources.xml
+                                                Default:/apps/GPP/COMPSs/3.4//Runtime/configuration/xml/resources/default_resources.xml
+        --socket=<string>, --socket             Run the application in client mode. Optional socket path to bind.
+        --socket=<string>, --socket             Run the application in client mode. Optional socket path to bind.
         --lang=<name>                           Language of the application (java/c/python/r)
                                                 Default: Inferred is possible. Otherwise: java
         --summary                               Displays a task execution summary at the end of the application execution
@@ -307,11 +326,11 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
 
       Advanced options:
         --extrae_config_file=<path>             Sets a custom extrae config file. Must be in a shared disk between all COMPSs workers.
-                                                Default: /apps/COMPSs/3.3//Runtime/configuration/xml/tracing/extrae_basic.xml
+                                                Default: /apps/GPP/COMPSs/3.4/Runtime/configuration/xml/tracing/extrae_basic.xml
         --extrae_config_file_python=<path>      Sets a custom extrae config file for python. Must be in a shared disk between all COMPSs workers.
                                                 Default: null
         --trace_label=<string>                  Add a label in the generated trace file. Only used in the case of tracing is activated.
-                                                Default: Application name
+                                                Default: Applicacion name
         --tracing_task_dependencies=<bool>      Adds communication lines for the task dependencies (true/false)
                                                 Default: false
         --generate_trace=<bool>                 Converts the events register into a trace file. Only used in the case of activated tracing.
@@ -375,9 +394,9 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --classpath=<path>                      Path for the application classes / modules
                                                 Default: Working Directory
         --appdir=<path>                         Path for the application class folder.
-                                                Default: /home/bscXX/bscXXYYY
+                                                Default: /home/bsc/bsc019234
         --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
-                                                Default: /home/bscXX/bscXXYYY
+                                                Default: /home/bsc/bsc019234
         --env_script=<path>                     Path to the script file where the application environment variables are defined.
                                                 COMPSs sources this script before running the application.
                                                 Default: Empty
@@ -443,13 +462,18 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
                                                 Default: 0
         --shutdown_in_node_failure=<bool>       Stop the whole execution in case of Node Failure.
                                                 Default: false
-        --provenance, -p                        Generate COMPSs workflow provenance data in RO-Crate format from YAML file. Automatically activates --graph and --output_profile.
-                                                Default: false
+        --provenance=<yaml>, --provenance, -p   Generate COMPSs workflow provenance data in RO-Crate format using a YAML configuration file. Automatically activates --graph.
+                                                Default: ro-crate-info.yaml
+        --provenance_folder=<path>              Path where the workflow provenance will be generated
+                                                Default: COMPSs_RO-Crate_[timestamp]
+        --zip_provenance, -z                    Zip the resulting COMPSs RO-Crate
+                                                Default: COMPSs_RO-Crate_[timestamp].zip
 
     * Application name:
         For Java applications:   Fully qualified name of the application
         For C applications:      Path to the master binary
         For Python applications: Path to the .py file containing the main program
+        For R applications:      Path to the .R file containing the main program
 
     * Application arguments:
         Command line arguments to pass to the application. Can be empty.

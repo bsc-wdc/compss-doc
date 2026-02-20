@@ -21,7 +21,7 @@ Users can check the available options by running:
 
     $ enqueue_compss -h
 
-    Usage: /apps/GPP/COMPSs/3.3.3/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
+    Usage: /apps/GPP/COMPSs/3.4/Runtime/scripts/user/enqueue_compss [queue_system_options] [COMPSs_options] application_name application_arguments
 
     * Options:
       General:
@@ -58,6 +58,7 @@ Users can check the available options by running:
                                                 Default:
         --constraints=<constraints>             Constraints to pass to queue system.
                                                 Default: disabled
+
         --project_name=<name>                   Project name to pass to queue system.
                                                 Default: Empty.
         --qos=<qos>                             Quality of Service to pass to the queue system.
@@ -76,7 +77,6 @@ Users can check the available options by running:
                                                 Default: null
         --storage_props=<string>                Absolute path of the storage properties file
                                                 Mandatory if storage_home is defined
-
       Agents deployment arguments:
         --agents=<string>                       Hierarchy of agents for the deployment. Accepted values: plain|tree
                                                 Default: tree
@@ -90,7 +90,6 @@ Users can check the available options by running:
                                                 Maximum nodes per switch: 18
                                                 Only available for at least 4 nodes.
                                                 Default: 0
-
       Heterogeneous submission arguments:
         --type_cfg=<file_location>              Location of the file with the descriptions of node type requests
                                                 File should follow the following format:
@@ -106,7 +105,6 @@ Users can check the available options by running:
                                                 (Node type descriptions are provided in the --type_cfg flag)
         --workers=type_X:nodes,type_Y:nodes     Node type and number of nodes per type for the workers
                                                 (Node type descriptions are provided in the --type_cfg flag)
-
       Launch configuration:
         --cpus_per_node=<int>                   Available CPU computing units on each node
                                                 Default: 112
@@ -125,8 +123,10 @@ Users can check the available options by running:
                                                 Default: disabled
         --node_storage_bandwidth=<MB>           Maximum node storage bandwidth: <int> (MB)
                                                 Default: 450
+
         --network=<name>                        Communication network for transfers: default | ethernet | infiniband | data.
                                                 Default: infiniband
+
         --prolog="<string>"                     Task to execute before launching COMPSs (Notice the quotes)
                                                 If the task has arguments split them by "," rather than spaces.
                                                 This argument can appear multiple times for more than one prolog action
@@ -135,10 +135,12 @@ Users can check the available options by running:
                                                 If the task has arguments split them by "," rather than spaces.
                                                 This argument can appear multiple times for more than one epilog action
                                                 Default: Empty
+
         --master_working_dir=<name | path>      Working directory of the application local_disk | shared_disk | <path>
                                                 Default:
         --worker_working_dir=<name | path>      Worker directory. Use: local_disk | shared_disk | <path>
                                                 Default: local_disk
+
         --worker_in_master_cpus=<int>           Maximum number of CPU computing units that the master node can run as worker. Cannot exceed cpus_per_node.
                                                 Default: 100
         --worker_in_master_memory=<int> MB      Maximum memory in master node assigned to the worker. Cannot exceed the node_memory.
@@ -147,7 +149,7 @@ Users can check the available options by running:
         --worker_port_range=<min>,<max>         Port range used by the NIO adaptor at the worker side
                                                 Default: 43001,43005
         --jvm_worker_in_master_opts="<string>"  Extra options for the JVM of the COMPSs Worker in the Master Node.
-                                                Each option separed by "," and without blank spaces (Notice the quotes)
+                                                Each option separated by "," and without blank spaces (Notice the quotes)
                                                 Default:
         --container_image=<path>                Runs the application by means of a container engine image
                                                 Default: Empty
@@ -155,7 +157,7 @@ Users can check the available options by running:
                                                 Default: /opt/COMPSs
         --container_opts="<string>"             Options to pass to the container engine
                                                 Default: empty
-        --elasticity=<max_extra_nodes>          Activate elasticity specifiying the maximum extra nodes (ONLY AVAILABLE FORM SLURM CLUSTERS WITH NIO ADAPTOR)
+        --elasticity=<max_extra_nodes>          Activate elasticity specifying the maximum extra nodes (ONLY AVAILABLE FORM SLURM CLUSTERS WITH NIO ADAPTOR)
                                                 Default: 0
         --automatic_scaling=<bool>              Enable or disable the runtime automatic scaling (for elasticity)
                                                 Default: true
@@ -167,14 +169,26 @@ Users can check the available options by running:
                                                 The value of string are the parameter to be used with EAR.
                                                 Default: false
 
+
       Runcompss configuration:
+
+
+    ----------------- Executing  --------------------------
+
+
+    ------------------------------------------------------------
 
       Tools enablers:
         --graph=<bool>, --graph, -g             Generation of the complete graph (true/false)
                                                 When no value is provided it is set to true
                                                 Default: false
-        --tracing=<bool>, --tracing, -t         Set generation of traces.
+        -t, --tracing[=<value>]                 Set generation of traces.
                                                 Default: false
+                                                When no value is provided, tracing is enabled with the default backend ("extrae").
+                                                Supported values:
+                                                  - true|false                Enable tracing using extrae's backend or disable.
+                                                  - <backend>[,<backend>...]  Comma-separated list of tracing backends
+                                                      (e.g., "extrae,monitor").
         --monitoring=<int>, --monitoring, -m    Period between monitoring samples (milliseconds)
                                                 When no value is provided it is set to 2000
                                                 Default: 0
@@ -190,10 +204,12 @@ Users can check the available options by running:
         --storage_conf=<path>                   Path to the storage configuration file
                                                 Default: null
         --project=<path>                        Path to the project XML file
-                                                Default: /apps/GPP/COMPSs/3.3.3//Runtime/configuration/xml/projects/default_project.xml
+                                                Default: /apps/GPP/COMPSs/3.4//Runtime/configuration/xml/projects/default_project.xml
         --resources=<path>                      Path to the resources XML file
-                                                Default: /apps/GPP/COMPSs/3.3.3//Runtime/configuration/xml/resources/default_resources.xml
-        --lang=<name>                           Language of the application (java/c/python)
+                                                Default:/apps/GPP/COMPSs/3.4//Runtime/configuration/xml/resources/default_resources.xml
+        --socket=<string>, --socket             Run the application in client mode. Optional socket path to bind.
+        --socket=<string>, --socket             Run the application in client mode. Optional socket path to bind.
+        --lang=<name>                           Language of the application (java/c/python/r)
                                                 Default: Inferred is possible. Otherwise: java
         --summary                               Displays a task execution summary at the end of the application execution
                                                 Default: false
@@ -203,11 +219,11 @@ Users can check the available options by running:
 
       Advanced options:
         --extrae_config_file=<path>             Sets a custom extrae config file. Must be in a shared disk between all COMPSs workers.
-                                                Default: /apps/GPP/COMPSs/3.3.3//Runtime/configuration/xml/tracing/extrae_basic.xml
+                                                Default: /apps/GPP/COMPSs/3.4/Runtime/configuration/xml/tracing/extrae_basic.xml
         --extrae_config_file_python=<path>      Sets a custom extrae config file for python. Must be in a shared disk between all COMPSs workers.
                                                 Default: null
         --trace_label=<string>                  Add a label in the generated trace file. Only used in the case of tracing is activated.
-                                                Default: Applicacion name
+                                                Default: Application name
         --tracing_task_dependencies=<bool>      Adds communication lines for the task dependencies (true/false)
                                                 Default: false
         --generate_trace=<bool>                 Converts the events register into a trace file. Only used in the case of activated tracing.
@@ -288,9 +304,9 @@ Users can check the available options by running:
         --master_port=<int>                     Port to run the COMPSs master communications.
                                                 Only for NIO adaptor
                                                 Default: [43000,44000]
-        --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed by "," and without blank spaces (Notice the quotes)
+        --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separated by "," and without blank spaces (Notice the quotes)
                                                 Default: Empty
-        --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Notice the quotes)
+        --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separated by "," and without blank spaces (Notice the quotes)
                                                 Default: -Xms256m,-Xmx1024m,-Xmn100m
         --cpu_affinity="<string>"               Sets the CPU affinity for the workers
                                                 Supported options: disabled, automatic, dlb or user defined map of the form "0-8/9,10,11/12-14,15,16"
@@ -339,20 +355,22 @@ Users can check the available options by running:
                                                 Default: 0
         --shutdown_in_node_failure=<bool>       Stop the whole execution in case of Node Failure.
                                                 Default: false
-        --provenance=<yaml>,
-        --provenance, -p                        Generate COMPSs workflow provenance data in RO-Crate format using a YAML configuration file. Automatically activates --graph and --output_profile.
+        --provenance=<yaml>, --provenance, -p   Generate COMPSs workflow provenance data in RO-Crate format using a YAML configuration file. Automatically activates --graph.
                                                 Default: ro-crate-info.yaml
-        --provenance-folder=<path>              Path where the workflow provenance will be generated
+        --provenance_folder=<path>              Path where the workflow provenance will be generated
                                                 Default: COMPSs_RO-Crate_[timestamp]
-
+        --zip_provenance, -z                    Zip the resulting COMPSs RO-Crate
+                                                Default: COMPSs_RO-Crate_[timestamp].zip
 
     * Application name:
         For Java applications:   Fully qualified name of the application
         For C applications:      Path to the master binary
         For Python applications: Path to the .py file containing the main program
+        For R applications:      Path to the .R file containing the main program
 
     * Application arguments:
         Command line arguments to pass to the application. Can be empty.
+
 
 
 If none of the :spelling:ignore:`pre`-build queue configurations adapts to your

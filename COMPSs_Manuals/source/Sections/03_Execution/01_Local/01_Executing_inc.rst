@@ -37,7 +37,7 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
 
 .. code-block:: console
 
-    compss@bsc:~$ runcompss -h
+    $ runcompss -h
 
     Usage: /opt/COMPSs/Runtime/scripts/user/runcompss [options] application_name application_arguments
 
@@ -53,8 +53,13 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
         --graph=<bool>, --graph, -g             Generation of the complete graph (true/false)
                                                 When no value is provided it is set to true
                                                 Default: false
-        --tracing=<bool>, --tracing, -t         Set generation of traces.
+        -t, --tracing[=<value>]                 Set generation of traces.
                                                 Default: false
+                                                When no value is provided, tracing is enabled with the default backend ("extrae").
+                                                Supported values:
+                                                  - true|false                Enable tracing using extrae's backend or disable.
+                                                  - <backend>[,<backend>...]  Comma-separated list of tracing backends
+                                                        (e.g., "extrae,monitor").
         --monitoring=<int>, --monitoring, -m    Period between monitoring samples (milliseconds)
                                                 When no value is provided it is set to 2000
                                                 Default: 0
@@ -73,6 +78,8 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: /opt/COMPSs//Runtime/configuration/xml/projects/default_project.xml
         --resources=<path>                      Path to the resources XML file
                                                 Default: /opt/COMPSs//Runtime/configuration/xml/resources/default_resources.xml
+        --socket=<string>, --socket             Run the application in client mode. Optional socket path to bind.
+        --socket=<string>, --socket             Run the application in client mode. Optional socket path to bind.
         --lang=<name>                           Language of the application (java/c/python/r)
                                                 Default: Inferred is possible. Otherwise: java
         --summary                               Displays a task execution summary at the end of the application execution
@@ -87,7 +94,7 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
         --extrae_config_file_python=<path>      Sets a custom extrae config file for python. Must be in a shared disk between all COMPSs workers.
                                                 Default: null
         --trace_label=<string>                  Add a label in the generated trace file. Only used in the case of tracing is activated.
-                                                Default: Applicacion name
+                                                Default: Application name
         --tracing_task_dependencies=<bool>      Adds communication lines for the task dependencies (true/false)
                                                 Default: false
         --generate_trace=<bool>                 Converts the events register into a trace file. Only used in the case of activated tracing.
@@ -99,13 +106,13 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: true
         --comm=<ClassName>                      Class that implements the adaptor for communications
                                                 Supported adaptors:
-                                                    ├── es.bsc.compss.nio.master.NIOAdaptor
-                                                    └── es.bsc.compss.gat.master.GATAdaptor
+                                                      ├── es.bsc.compss.nio.master.NIOAdaptor
+                                                      └── es.bsc.compss.gat.master.GATAdaptor
                                                 Default: es.bsc.compss.nio.master.NIOAdaptor
         --conn=<className>                      Class that implements the runtime connector for the cloud
                                                 Supported connectors:
-                                                    ├── es.bsc.compss.connectors.DefaultSSHConnector
-                                                    └── es.bsc.compss.connectors.DefaultNoSSHConnector
+                                                      ├── es.bsc.compss.connectors.DefaultSSHConnector
+                                                      └── es.bsc.compss.connectors.DefaultNoSSHConnector
                                                 Default: es.bsc.compss.connectors.DefaultSSHConnector
         --streaming=<type>                      Enable the streaming mode for the given type.
                                                 Supported types: FILES, OBJECTS, PSCOS, ALL, NONE
@@ -116,20 +123,20 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: Empty
         --scheduler=<className>                 Class that implements the Scheduler for COMPSs
                                                 Supported schedulers:
-                                                    ├── es.bsc.compss.components.impl.TaskScheduler
-                                                    ├── es.bsc.compss.scheduler.orderstrict.fifo.FifoTS
-                                                    ├── es.bsc.compss.scheduler.lookahead.fifo.FifoTS
-                                                    ├── es.bsc.compss.scheduler.lookahead.lifo.LifoTS
-                                                    ├── es.bsc.compss.scheduler.lookahead.locality.LocalityTS
-                                                    ├── es.bsc.compss.scheduler.lookahead.successors.constraintsfifo.ConstraintsFifoTS
-                                                    ├── es.bsc.compss.scheduler.lookahead.mt.successors.constraintsfifo.ConstraintsFifoTS
-                                                    ├── es.bsc.compss.scheduler.lookahead.successors.fifo.FifoTS
-                                                    ├── es.bsc.compss.scheduler.lookahead.mt.successors.fifo.FifoTS
-                                                    ├── es.bsc.compss.scheduler.lookahead.successors.lifo.LifoTS
-                                                    ├── es.bsc.compss.scheduler.lookahead.mt.successors.lifo.LifoTS
-                                                    ├── es.bsc.compss.scheduler.lookahead.successors.locality.LocalityTS
-                                                    ├── es.bsc.compss.scheduler.lookahead.mt.successors.locality.LocalityTS
-                                                    └── es.bsc.compss.scheduler.predefined.PredefinedTS
+                                                      ├── es.bsc.compss.components.impl.TaskScheduler
+                                                      ├── es.bsc.compss.scheduler.orderstrict.fifo.FifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.fifo.FifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.lifo.LifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.locality.LocalityTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.successors.constraintsfifo.ConstraintsFifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.mt.successors.constraintsfifo.ConstraintsFifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.successors.fifo.FifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.mt.successors.fifo.FifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.successors.lifo.LifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.mt.successors.lifo.LifoTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.successors.locality.LocalityTS
+                                                      ├── es.bsc.compss.scheduler.lookahead.mt.successors.locality.LocalityTS
+                                                      └── es.bsc.compss.scheduler.predefined.PredefinedTS
                                                 Default in runcompss: es.bsc.compss.scheduler.lookahead.locality.LocalityTS
                                                 Default in enqueue_compss shared disk: es.bsc.compss.scheduler.lookahead.mt.successors.fifo.FifoTS
                                                 Default in enqueue_compss local disk: es.bsc.compss.scheduler.lookahead.mt.successors.locality.LocalityTS
@@ -137,10 +144,10 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: Empty
         --checkpoint=<className>                Class that implements the Checkpoint Management policy
                                                 Supported checkpoint policies:
-                                                    ├── es.bsc.compss.checkpoint.policies.CheckpointPolicyInstantiatedGroup
-                                                    ├── es.bsc.compss.checkpoint.policies.CheckpointPolicyPeriodicTime
-                                                    ├── es.bsc.compss.checkpoint.policies.CheckpointPolicyFinishedTasks
-                                                    └── es.bsc.compss.checkpoint.policies.NoCheckpoint
+                                                      ├── es.bsc.compss.checkpoint.policies.CheckpointPolicyInstantiatedGroup
+                                                      ├── es.bsc.compss.checkpoint.policies.CheckpointPolicyPeriodicTime
+                                                      ├── es.bsc.compss.checkpoint.policies.CheckpointPolicyFinishedTasks
+                                                      └── es.bsc.compss.checkpoint.policies.NoCheckpoint
                                                 Default: es.bsc.compss.checkpoint.policies.NoCheckpoint
         --checkpoint_params=<string>            Checkpoint configuration parameter.
                                                 Default: Empty
@@ -151,9 +158,9 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
         --classpath=<path>                      Path for the application classes / modules
                                                 Default: Working Directory
         --appdir=<path>                         Path for the application class folder.
-                                                Default: /home/user
+                                                Default: /home/user/gitlab/documentation/COMPSs_Manuals
         --pythonpath=<path>                     Additional folders or paths to add to the PYTHONPATH
-                                                Default: /home/user
+                                                Default: /home/user/gitlab/documentation/COMPSs_Manuals
         --env_script=<path>                     Path to the script file where the application environment variables are defined.
                                                 COMPSs sources this script before running the application.
                                                 Default: Empty
@@ -209,7 +216,7 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: false
         --python_memory_profile                 Generate a memory profile of the master.
                                                 Default: false
-        --python_worker_cache=<string>          Python worker cache (true/size/false).
+        --python_worker_cache=<string>          Python worker CPU and GPU cache (false/cpu:10GB/gpu:25%).
                                                 Only for NIO without mpi worker and python >= 3.8.
                                                 Default: false
         --python_cache_profiler=<bool>          Python cache profiler (true/false).
@@ -219,15 +226,20 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
                                                 Default: 0
         --shutdown_in_node_failure=<bool>       Stop the whole execution in case of Node Failure.
                                                 Default: false
-        --provenance, -p                        Generate COMPSs workflow provenance data in RO-Crate format from YAML file. Automatically activates -graph and -output_profile.
-                                                Default: false
+        --provenance=<yaml>, --provenance, -p   Generate COMPSs workflow provenance data in RO-Crate format using a YAML configuration file. Automatically activates --graph.
+                                                Default: ro-crate-info.yaml
+        --provenance_folder=<path>              Path where the workflow provenance will be generated
+                                                Default: COMPSs_RO-Crate_[timestamp]
+        --zip_provenance, -z                    Zip the resulting COMPSs RO-Crate
+                                                Default: COMPSs_RO-Crate_[timestamp].zip
 
-    * Application name:
+      * Application name:
         For Java applications:   Fully qualified name of the application
         For C applications:      Path to the master binary
         For Python applications: Path to the .py file containing the main program
+        For R applications:      Path to the .R file containing the main program
 
-    * Application arguments:
+      * Application arguments:
         Command line arguments to pass to the application. Can be empty.
 
 

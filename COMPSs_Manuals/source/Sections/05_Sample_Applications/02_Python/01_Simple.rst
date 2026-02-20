@@ -71,7 +71,7 @@ The following lines provide an example of its execution.
     ----------------- Executing simple.py --------------------------
 
     WARNING: COMPSs Properties file is null. Setting default values
-    [(983)    API]  -  Starting COMPSs Runtime v3.3 (build 20231107-1626.rfd920cb7d4a03b1e84725271049e91f5de261e8c)
+    [(983)    API]  -  Starting COMPSs Runtime v3.4(build 20231107-1626.rfd920cb7d4a03b1e84725271049e91f5de261e8c)
     Initial counter value is 1
     Final counter value is 2
     [(9286)    API]  -  Execution Finished

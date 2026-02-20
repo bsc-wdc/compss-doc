@@ -299,7 +299,7 @@ number of iterations set to 10.
     ----------------- Executing kmeans.py --------------------------
 
     WARNING: COMPSs Properties file is null. Setting default values
-    [(1027)    API]  -  Starting COMPSs Runtime v3.3 (build 20231107-1626.rfd920cb7d4a03b1e84725271049e91f5de261e8c)
+    [(1027)    API]  -  Starting COMPSs Runtime v3.4(build 20231107-1626.rfd920cb7d4a03b1e84725271049e91f5de261e8c)
     Generation/Load done
     Starting kmeans
     Doing iteration #1/10

@@ -32,8 +32,13 @@ Users can check the available options by running:
         --graph=<bool>, --graph, -g             Generation of the complete graph (true/false)
                                                 When no value is provided it is set to true
                                                 Default: false
-        --tracing=<bool>, --tracing, -t         Set generation of traces.
+        -t, --tracing[=<value>]                 Set generation of traces.
                                                 Default: false
+                                                When no value is provided, tracing is enabled with the default backend ("extrae").
+                                                Supported values:
+                                                  - true|false                Enable tracing using extrae's backend or disable.
+                                                  - <backend>[,<backend>...]  Comma-separated list of tracing backends
+                                                        (e.g., "extrae,monitor").
         --monitoring=<int>, --monitoring, -m    Period between monitoring samples (milliseconds)
                                                 When no value is provided it is set to 2000
                                                 Default: 0
@@ -52,6 +57,8 @@ Users can check the available options by running:
                                                 Default: /opt/COMPSs//Runtime/configuration/xml/projects/default_project.xml
         --resources=<path>                      Path to the resources XML file
                                                 Default: /opt/COMPSs//Runtime/configuration/xml/resources/default_resources.xml
+        --socket=<string>, --socket             Run the application in client mode. Optional socket path to bind.
+        --socket=<string>, --socket             Run the application in client mode. Optional socket path to bind.
         --lang=<name>                           Language of the application (java/c/python/r)
                                                 Default: Inferred is possible. Otherwise: java
         --summary                               Displays a task execution summary at the end of the application execution
@@ -66,7 +73,7 @@ Users can check the available options by running:
         --extrae_config_file_python=<path>      Sets a custom extrae config file for python. Must be in a shared disk between all COMPSs workers.
                                                 Default: null
         --trace_label=<string>                  Add a label in the generated trace file. Only used in the case of tracing is activated.
-                                                Default: Applicacion name
+                                                Default: Application name
         --tracing_task_dependencies=<bool>      Adds communication lines for the task dependencies (true/false)
                                                 Default: false
         --generate_trace=<bool>                 Converts the events register into a trace file. Only used in the case of activated tracing.
@@ -147,9 +154,9 @@ Users can check the available options by running:
         --master_port=<int>                     Port to run the COMPSs master communications.
                                                 Only for NIO adaptor
                                                 Default: [43000,44000]
-        --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separed by "," and without blank spaces (Notice the quotes)
+        --jvm_master_opts="<string>"            Extra options for the COMPSs Master JVM. Each option separated by "," and without blank spaces (Notice the quotes)
                                                 Default: Empty
-        --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separed by "," and without blank spaces (Notice the quotes)
+        --jvm_workers_opts="<string>"           Extra options for the COMPSs Workers JVMs. Each option separated by "," and without blank spaces (Notice the quotes)
                                                 Default: -Xms256m,-Xmx1024m,-Xmn100m
         --cpu_affinity="<string>"               Sets the CPU affinity for the workers
                                                 Supported options: disabled, automatic, dlb or user defined map of the form "0-8/9,10,11/12-14,15,16"
@@ -198,17 +205,19 @@ Users can check the available options by running:
                                                 Default: 0
         --shutdown_in_node_failure=<bool>       Stop the whole execution in case of Node Failure.
                                                 Default: false
-        --provenance=<yaml>, --provenance, -p   Generate COMPSs workflow provenance data in RO-Crate format using a YAML configuration file. Automatically activates --graph and --output_profile.
+        --provenance=<yaml>, --provenance, -p   Generate COMPSs workflow provenance data in RO-Crate format using a YAML configuration file. Automatically activates --graph.
                                                 Default: ro-crate-info.yaml
-        --provenance-folder=<path>              Path where the workflow provenance will be generated
+        --provenance_folder=<path>              Path where the workflow provenance will be generated
                                                 Default: COMPSs_RO-Crate_[timestamp]
+        --zip_provenance, -z                    Zip the resulting COMPSs RO-Crate
+                                                Default: COMPSs_RO-Crate_[timestamp].zip
 
-
-    * Application name:
+      * Application name:
         For Java applications:   Fully qualified name of the application
         For C applications:      Path to the master binary
         For Python applications: Path to the .py file containing the main program
         For R applications:      Path to the .R file containing the main program
 
-    * Application arguments:
+      * Application arguments:
         Command line arguments to pass to the application. Can be empty.
+

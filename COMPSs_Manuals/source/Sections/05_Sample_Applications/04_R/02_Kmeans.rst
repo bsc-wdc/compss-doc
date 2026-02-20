@@ -764,7 +764,7 @@ number of iterations set to 10.
     ----------------- Executing kmeans.R --------------------------
 
     Welcome to Extrae 3.8.3
-    [(1352)    API]  -  Starting COMPSs Runtime v3.3.3.post2505 (build 20250513-0839.rfcc8f551ada00b095448810eee6b34a1baca40f8)
+    [(1352)    API]  -  Starting COMPSs Runtime v3.4 (build 20250513-0839.rfcc8f551ada00b095448810eee6b34a1baca40f8)
     COMPSs started!
     Doing iteration #1/10. Iteration time: 44,889
     Doing iteration #2/10. Iteration time: 32,095

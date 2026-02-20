@@ -10,7 +10,7 @@ the output log of the application using the ``PROVENANCE`` expression.
 
     PROVENANCE | Generating graph for Workflow Provenance
     PROVENANCE | Number of edges in the graph:        8
-    Output file: /Users/rsirvent/.COMPSs/matmul_files.py_01//monitor/complete_graph.svg
+    Output file: /Users/user/.COMPSs/matmul_files.py_01//monitor/complete_graph.svg
     INFO: Generating Graph with legend
     DONE
     PROVENANCE | Ended generating graph for Workflow Provenance. TIME: 1 s
@@ -24,7 +24,7 @@ be triggered to avoid large generation times.
 
     PROVENANCE | STARTING RO-CRATE GENERATION SCRIPT
     PROVENANCE | Profiling plots generation TIME: 3.24 s.
-    PROVENANCE | COMPSs version: 3.3.rc2402, out_profile: App_Profile.json, main_entity: /Users/rsirvent/COMPSs-DP/matmul_files/matmul_files.py
+    PROVENANCE | COMPSs version: 3.4, out_profile: App_Profile.json, main_entity: /Users/user/COMPSs-DP/matmul_files/matmul_files.py
     PROVENANCE | COMPSs runtime detected inputs (12)
     PROVENANCE | COMPSs runtime detected outputs (4)
     PROVENANCE | dataprovenance.log processing TIME: 0.0001647472381591797 s
@@ -72,8 +72,8 @@ so the user should double check if the decision taken is correct. Some examples 
 
 .. code-block:: console
 
-    PROVENANCE | WARNING: A parent directory of a previously added sub-directory is being added. Some files will be traversed twice in: /Users/rsirvent/COMPSs-DP/matmul_files/in
-    PROVENANCE | WARNING: A file addition was attempted twice: /Users/rsirvent/COMPSs-DP/matmul_files/in/A/A.0.0 in /Users/rsirvent/COMPSs-DP/matmul_files/in
+    PROVENANCE | WARNING: A parent directory of a previously added sub-directory is being added. Some files will be traversed twice in: /Users/user/COMPSs-DP/matmul_files/in
+    PROVENANCE | WARNING: A file addition was attempted twice: /Users/user/COMPSs-DP/matmul_files/in/A/A.0.0 in /Users/user/COMPSs-DP/matmul_files/in
     PROVENANCE | WARNING: 'Agent' not specified in TEST_DUPLICATED_SOURCES.yaml. First author selected by default.
 
 .. TIP::

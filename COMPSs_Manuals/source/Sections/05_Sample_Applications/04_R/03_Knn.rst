@@ -598,7 +598,7 @@ generate the final graph at the end of the execution.
 
     ----------------- Executing knn.R --------------------------
 
-    [(951)    API]  -  Starting COMPSs Runtime v3.3.3.post2505 (build 20250515-0858.rb6a767530b0120119c45956d05fa3a1578cad401)
+    [(951)    API]  -  Starting COMPSs Runtime v3.4 (build 20250515-0858.rb6a767530b0120119c45956d05fa3a1578cad401)
     COMPSs started!
     -----------------------------------------
     -------------- RESULTS ------------------
