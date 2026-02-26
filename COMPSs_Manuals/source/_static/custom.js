@@ -1,4 +1,4 @@
-// PARTICLES
+// PARTICLES (multiplatform)
 
 document.addEventListener("DOMContentLoaded", () => {
   const today = new Date();
@@ -8,31 +8,40 @@ document.addEventListener("DOMContentLoaded", () => {
   function createParticle(symbol) {
     const particle = document.createElement("span");
     particle.className = "particle";
-    particle.style.left = Math.random() * 100 + "vw"; // random horizontal position
-    particle.style.fontSize = (Math.random() * 20 + 12) + "px"; // random size
-    particle.style.animationDuration = (Math.random() * 3 + 3) + "s"; // random speed
+    particle.style.left = Math.random() * 100 + "vw";
+    particle.style.fontSize = (Math.random() * 20 + 12) + "px";
+    particle.style.animationDuration = (Math.random() * 3 + 3) + "s";
     particle.innerText = symbol;
     document.body.appendChild(particle);
-
-    // Remove DOM when the animation finishes
     particle.addEventListener("animationend", () => particle.remove());
   }
 
   // Christmas: 24-25 december
   if ((month === 12 && day === 24) || (month === 12 && day === 25)) {
-    const interval = setInterval(() => createParticle("❄️"), 300); // every 0.3s
+    setInterval(() => createParticle("❄️"), 300);
   }
 
   // Sant Jordi: 23 april
   if (month === 4 && day === 23) {
-    const interval = setInterval(() => createParticle("🌹"), 400); // every 0.4s
+    setInterval(() => createParticle("🌹"), 400);
   }
 
-  // Activate roses with Ctrl + Alt + R
+  // Detect if Mac
+  let isMac = false;
+  if (navigator.userAgentData) {
+    isMac = navigator.userAgentData.platform === "Mac OS X";
+  } else {
+    isMac = /Mac/.test(navigator.userAgent);
+  }
+
+  // Activate Roses with Ctrl/Cmd + Alt/Option + R
   document.addEventListener("keydown", (e) => {
-    if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "r") {
+    const key = e.key.toLowerCase();
+    const pressedMac = isMac && e.metaKey && e.altKey && key === "r";
+    const pressedWin = !isMac && e.ctrlKey && e.altKey && key === "r";
+
+    if (pressedMac || pressedWin) {
       const interval = setInterval(() => createParticle("🌹"), 300);
-      // Stop after 5 seconds
       setTimeout(() => clearInterval(interval), 5000);
     }
   });
