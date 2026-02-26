@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     particle.addEventListener("animationend", () => particle.remove());
   }
 
-  // Christmas: 24-25 december
+  // Navidad: 24-25 december
   if ((month === 12 && day === 24) || (month === 12 && day === 25)) {
     setInterval(() => createParticle("❄️"), 300);
   }
@@ -26,21 +26,17 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(() => createParticle("🌹"), 400);
   }
 
-  // Detect if Mac
-  let isMac = false;
-  if (navigator.userAgentData) {
-    isMac = navigator.userAgentData.platform === "Mac OS X";
-  } else {
-    isMac = /Mac/.test(navigator.userAgent);
-  }
-
-  // Activate Roses with Ctrl/Cmd + Alt/Option + R
+  // Shortcut Ctrl+Alt+R o Ctrl+Option+R (Mac)
   document.addEventListener("keydown", (e) => {
     const key = e.key.toLowerCase();
-    const pressedMac = isMac && e.metaKey && e.altKey && key === "r";
-    const pressedWin = !isMac && e.ctrlKey && e.altKey && key === "r";
+    const isMac = /Mac/.test(navigator.userAgent);
 
-    if (pressedMac || pressedWin) {
+    // Windows/Linux: Ctrl+Alt+R
+    const winLinux = !isMac && e.ctrlKey && e.altKey && key === "r";
+    // Mac: Ctrl+Option+R
+    const mac = isMac && e.ctrlKey && e.altKey && key === "r";
+
+    if (winLinux || mac) {
       const interval = setInterval(() => createParticle("🌹"), 300);
       setTimeout(() => clearInterval(interval), 5000);
     }
