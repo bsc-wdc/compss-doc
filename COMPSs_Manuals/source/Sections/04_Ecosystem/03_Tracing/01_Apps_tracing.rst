@@ -186,6 +186,11 @@ As with ``runcompss`` and ``enqueue_compss``, the ``compss_gentrace`` script
 merges the trace while ``enqueue_compss_gentrace`` enqueues a job on a queue
 system that will do the same.
 
+.. TIP::
+    When using ``enqueue_compss``, you can use ``--generate_trace=true`` for small traces so
+    they are generated automatically and you don't need to call ``compss_gentrace`` or 
+    ``enqueue_compss_gentrace`` afterwards.
+
 
 .. code-block:: console
 
