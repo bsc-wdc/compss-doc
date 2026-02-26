@@ -116,7 +116,7 @@ numfig_format = {'figure':'Figure %s',
                  'code-block':'Code %s',
                  'section':'Section %s'}
 html_permalinks = False  # Disabled permalinks
-# html_logo = './Logos/COMPSs_slow_crop_effect_loop1.gif' # './Logos/COMPSs_logo_small.png'
+html_logo = '_static/COMPSs_logo.png'  # './Logos/COMPSs_slow_crop_effect_loop1.gif' # './Logos/COMPSs_logo_small.png'
 html_show_sourcelink = False
 html_show_copyright = True
 html_show_sphinx = True
@@ -185,6 +185,7 @@ html_theme_options = {'logo_only': True,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 html_css_files = ['custom.css']
+html_js_files = ['custom.js']
 # html_extra_path = ['']
 
 # html_context = {
