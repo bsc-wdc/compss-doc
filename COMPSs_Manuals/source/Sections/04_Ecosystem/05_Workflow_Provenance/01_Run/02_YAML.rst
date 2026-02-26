@@ -3,7 +3,7 @@
 YAML configuration file
 =======================
 
-There are certain pieces of information which must be included when registering the provenance of a workflow that
+There are certain pieces of information which should be included when registering the provenance of a workflow that
 the COMPSs runtime cannot automatically infer, such as the authors of an application. For specifying all these
 fields that are needed to generate an RO-Crate but cannot be automatically obtained, we have created a simple YAML
 structure where the user can specify them. By default, a YAML file named ``ro-crate-info.yaml`` will be expected in the
@@ -17,7 +17,7 @@ are commonly used, and the rest of terms are for special cases only):
     COMPSs Workflow Information:
       name: Name of your COMPSs application
       description: Detailed description of your COMPSs application
-      license: YourLicense-1.0
+      license: https://spdx.org/licenses/YourLicense-1.0
       sources: [/absolute_path_to/dir_1/, relative_path_to/dir_2/, main_file.py, relative_path/aux_file_1.py, /abs_path/aux_file_2.py]
       data_persistence: False
       trace_persistence: False
@@ -57,8 +57,9 @@ are commonly used, and the rest of terms are for special cases only):
 
 .. WARNING::
 
-    If no YAML file is provided, the runtime will fail to generate provenance, and will automatically generate an
-    ``ro-crate-info_TEMPLATE.yaml`` file that the user can edit to add their details.
+    If no YAML file is provided, COMPSs will generate provenance using as 'name' a generated uuid for the experiment.
+    Also, it will automatically generate an
+    ``ro-crate-info_TEMPLATE.yaml`` file that the user can edit to add their details for next time.
 
 As you can see, there are three main blocks in the YAML:
 
@@ -84,48 +85,48 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
 
    * - ``name``
      - string
-     - —
-     - Descriptive workflow name.
+     - COMPSs experiment [uuid]
+     - Descriptive workflow name
 
    * - ``description``
      - string
      - —
-     - Free-text description of the application.
+     - Free-text description of the application. Markup language recommended when using WorkflowHub
 
    * - ``sources``
      - string or list
-     - main file only
-     - Files or directories to include in the crate.
+     - Application's main file only
+     - Application source files (individually or in directories) to be included in the crate
 
    * - ``license``
      - string / URL
      - —
-     - SPDX identifier or URL to license text.
+     - SPDX identifier or URL to license text
 
    * - ``data_persistence``
      - boolean
      - False
-     - Whether input/output datasets are copied into the crate.
+     - Whether input/output datasets are copied into the crate
 
    * - ``trace_persistence``
      - boolean
      - False
-     - Whether trace files are included in the crate.
+     - Whether Paraver trace files are included in the crate
 
    * - ``provenance_run``
      - boolean
      - True
-     - Whether to include task-level provenance.
+     - Whether to include detailed task-level provenance
 
    * - ``param_size_limit``
      - integer
      - 200
-     - Maximum characters stored per parameter in provenance.
+     - Maximum characters stored per parameter in provenance
 
    * - ``software``
      - list of entries
      - —
-     - Software dependencies (name required; version and URL optional).
+     - Software dependencies (name required; version and URL are optional)
 
 
 - The ``name`` and ``description`` fields are free text, where a long name and long description of
@@ -142,8 +143,10 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
   relative and absolute paths can be used. If the term ``sources`` is not specified, only the application's main file
   will be added as the corresponding source code if it can be found in the current working directory.
 
-- The ``license`` field is preferred to be specified by providing an URL to the license, but a set of
-  predefined strings are also supported, and can be found at the `SPDX License list site <https://spdx.org/licenses/>`_.
+- The ``license`` field is preferred to be specified by providing an URL to the specific license from 
+  the `SPDX License list site <https://spdx.org/licenses/>`_., but also the URL to the direct description of the license
+  content is a good choice. In addition, the ``Identifier`` fields listed in the previous list are also supported when exporting 
+  the information to WorkflowHub. 
 
 - ``data_persistence`` value is ``False`` by default. It is a boolean to indicate whether the workflow provenance
   generation should copy the workflow's input and output datasets to the crate (i.e. must be set to ``True``).
@@ -177,10 +180,10 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
         This should commonly include the output of ``tool --version`` command.
       - ``url`` where the software can be found.
 
-From all these terms described, only ``name`` is  mandatory, since the rest are not strictly required to generate workflow provenance with COMPSs.
-However, it is important to include as much information as possible in order to correctly share your application and
-results. Besides, missing information can lead to reduced features when using workflow provenance (e.g. if no ``Authors``
-are specified, WorkflowHub will not allow to generate a DOI for the workflow execution).
+Although providing a YAML is not required, it is highly recommended to provide one that includes as much information as possible 
+in order to correctly share your application and results. Besides, missing information can lead to reduced features when using 
+workflow provenance (e.g. if no ``name`` is provided metadata won't be imported from WorkflowHub, if no ``Authors``
+are specified, WorkflowHub will not allow to generate a DOI for the workflow execution, etc...).
 
 .. TIP::
 
@@ -188,27 +191,27 @@ are specified, WorkflowHub will not allow to generate a DOI for the workflow exe
     runtime will only register information for the list of source files defined under this term.
 
 .. TIP::
-    Large datasets (i.e. hundreds of MBs) should be uploaded to public
+    Large datasets (i.e. hundreds of MBs) can be uploaded to public
     data repositories (e.g. `Zenodo <https://zenodo.org/>`_ up to 50 GB per dataset, `FigShare <https://figshare.com/>`_
-    up to 5 TB per dataset) and included as ``https`` references with the ``inputs`` or ``outputs`` terms.
+    up to 5 TB per dataset) and can be included as ``https`` references with the ``inputs`` or ``outputs`` terms.
 
 .. WARNING::
 
     When ``data_persistence`` is True, application datasets will be stored in a ``dataset/`` sub-directory in the resulting
     crate. The sub-folder structure will be build starting at the largest possible common path among files (e.g. if ``/path_1/inputs/A/A.txt``
     and ``/path_1/inputs/B/B.txt`` are used, they will be located at ``dataset/inputs/A/A.txt`` and ``dataset/inputs/B/B.txt``
-    respectively. However, if ``/path_1/inputs/A/A.txt`` and ``/path_2/inputs/B/B.txt`` are used, the location will be
+    respectively. However, if ``/path_1/inputs/A/A.txt`` and ``/path_2/inputs/B/B.txt`` are used (i.e. different root paths), the location will be
     ``dataset/A.txt`` and ``dataset/B.txt``, since files do not share a common path and are considered to be at different
-    locations.
+    locations. This will also happen if the folders are declared as COMPSs DIRECTORY parameters.
 
-Also, some more optional terms are available, but less commonly used:
+In the YAML configuration file, some more optional terms are available, but less commonly used:
 
 - ``inputs`` to manually include input parameters (files or directories) to the application, in addition to the ones
-  detected. In order to include very large files in the crate without actually copying them, files from remote
+  detected. In order to include very large files in the crate without actually copying them in the package, files from remote
   repositories can be referenced (e.g. ``https://zenodo.org/records/10782431/files/lysozyme_datasets.zip``)
 
 - ``outputs`` to manually include output parameters (files or directories) to the application, in addition to the ones
-  detected. In order to include very large files in the crate without actually copying them, files from remote
+  detected. In order to include very large files in the crate without actually copying them in the package, files from remote
   repositories can be referenced (e.g. ``https://zenodo.org/records/10783183/files/results_2003_0521_boumardes_BS.tar.gz``)
 
 - ``sources_main_file`` is an advanced feature very rarely used, to override the detected main file for the application.
@@ -226,7 +229,7 @@ Also, some more optional terms are available, but less commonly used:
 Authors section
 ---------------
 
-In the **Authors** section (the whole section is optional), a single author or a list of authors can be provided. They
+In the **Authors** section, a single author or a list of authors can be provided. They
 describe the individuals that wrote the source code of the application. For each Author:
 
 - ``name``, ``e-mail`` and ``organisation_name`` are strings corresponding to the author's name, e-mail and their
@@ -239,21 +242,21 @@ describe the individuals that wrote the source code of the application. For each
 
 .. WARNING::
 
-    If no ``orcid`` is found online or specified for an Author, they will not be listed as such. Their corresponding
+    If no ``orcid`` is found online or specified for an Author, a plain string will be used to identify the author. Their corresponding
     Organization information will only be included if the Organization's ``ror`` is found online or specified directly
     in the YAML configuration file.
 
 .. TIP::
 
     It is very important that the ``orcid`` and ``ror`` terms are correctly defined, since they are
-    used as unique identifiers for Persons and Organizations in the RO-Crate specification. The ``orcid`` id is the
+    used as unique identifiers for Persons and Organizations in the RO-Crate specification. The ``name`` string is the
     minimum information needed to be able to add a person as an Author.
 
 Agent section
 -------------
 
 The **Agent** section has the same terms as the Authors section, but it specifically provides the details of the sole
-person running the workflow, that can be different from the Authors. The whole section is optional and only a single
+person running the workflow, that can be different from the Authors. Only a single
 individual can be provided.
 
 .. WARNING::
@@ -348,7 +351,7 @@ the following lines:
     PROVENANCE | ORGANISATION 'https://ror.org/03mb6wj31': Searching for Name and URL
     PROVENANCE | Fetched data. Organisation: Universitat Politècnica de Catalunya, ROR: https://ror.org/03mb6wj31, URL: https://www.upc.edu
 
-When the search is successful, and some update happens in any of the persons referenced (i.e. when a non-existing field
+When the search is successful, and some update happens in any of the persons specified (i.e. when a non-existing field
 is added), a new ``GENERATED_[your_YAML].yaml`` file is produced. This newly generated file can be used in future runs
 of the experiment, either to avoid searching again for all the details of the Authors and Agent, or because the
 machine does not have outbound connectivity, so all details need to be added in advance. An example of an automatically
@@ -440,7 +443,7 @@ term is set to ``True``, to indicate the datasets should be included in the resu
     COMPSs Workflow Information:
       name: COMPSs Matrix Multiplication, out-of-core using files
       description: Hypermatrix size 2x2 blocks, block size 2x2 elements
-      license: Apache-2.0
+      license: https://spdx.org/licenses/Apache-2.0
       sources: [matmul_directory.py, matmul_tasks.py]
       data_persistence: True
 

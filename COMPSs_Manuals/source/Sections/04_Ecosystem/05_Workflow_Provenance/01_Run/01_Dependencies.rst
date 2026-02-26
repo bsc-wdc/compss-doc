@@ -23,10 +23,16 @@ This would typically install the library in ``~/.local/``. Another option is to 
 
     $ pip install -t install_path rocrate
 
-Our current implementation needs ``ro-crate-py`` version ``0.9.0`` or higher.
+Our current implementation needs ``ro-crate-py`` version ``0.13.0`` or higher.
 
 .. WARNING::
 
     If you are using a BSC cluster (MareNostrum, CTE-POWER, ...), ro-crate-py is already installed for a number of
     python versions at ``/apps/COMPSs/LIBRARIES/``, and COMPSs is configured to use it. Thus, you don't need
     to install ro-crate-py.
+
+.. TIP::
+
+    If you installed the COMPSs CLI (:ref:`Sections/04_Ecosystem/09_CLI/01_Installation:Requirements and Installation`),
+    the ro-crate-py library dependency will have been already solved, since the CLI also relays on ro-crate-py to open
+    and process crates.

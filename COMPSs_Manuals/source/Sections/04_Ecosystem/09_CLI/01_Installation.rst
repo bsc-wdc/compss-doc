@@ -5,6 +5,7 @@ Requirements
 ============
 
 - Python 3
+- ro-crate-py (at least version 0.13)
 
 Optional Requirements
 ---------------------

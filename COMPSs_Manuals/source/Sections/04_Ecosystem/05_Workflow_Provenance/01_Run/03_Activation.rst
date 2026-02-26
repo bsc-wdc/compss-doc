@@ -2,7 +2,7 @@ Recording activation
 ====================
 
 The way of activating the recording of workflow provenance with COMPSs is very simple.
-One must only enable the ``-p`` or ``--provenance`` flag when using ``runcompss``, ``enqueue_compss``, or ``pycompss [run | job submit]`` to run or submit a COMPSs application. It is important to highlight that the ``--provenance`` flag accepts a custom name for the YAML file with the application's details (see previous Section :ref:`yaml-config`). 
+One must only enable the ``-p`` or ``-z`` flags (or their verbose versions ``--provenance`` or ``-zip_provenance``) when using ``runcompss``, ``enqueue_compss``, or ``pycompss [run | job submit]`` to run or submit a COMPSs application. It is important to highlight that the ``--provenance`` flag accepts a custom name for the YAML file with the application's details (see previous Section :ref:`yaml-config`). 
 This is specified using the ``--provenance=my_yaml_file.yaml`` option, as shown in the ``runcompss`` help.  
 Also, the ``-z`` or ``--zip_provenance`` flag can be used to specify that the provenance RO-Crate will be yielded in .zip format and the ``--provenance-folder=<path>`` flag can be used to give a specific name to the folder where the experiment's provenance is going to be generated:
 

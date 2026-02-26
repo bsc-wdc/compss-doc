@@ -3,7 +3,7 @@
 
 .. rubric:: Quickstart
 
-- Submit your COMPSs computational experiment with ``-p`` flag (i.e. using ``runcompss``, ``enqueue_compss``, ``pycompss [run | job submit]``).
+- Submit your COMPSs computational experiment with ``-p`` or ``-z`` flags (i.e. using ``runcompss``, ``enqueue_compss``, ``pycompss [run | job submit]``).
 - When the application finishes, run ``pycompss inspect COMPSs_RO-Crate_*``
 
 
