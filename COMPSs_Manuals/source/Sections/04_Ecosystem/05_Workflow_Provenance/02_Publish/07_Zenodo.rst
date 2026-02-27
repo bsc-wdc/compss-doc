@@ -1,6 +1,7 @@
+.. _publish_zenodo:
+
 Publish at Zenodo
 =================
-
 
 Similarly as with WorkflowHub, once the provenance metadata for your COMPSs application has been generated, you have the possibility of publishing
 your results (i.e. both the workflow and the workflow run) in `Zenodo <https://zenodo.org>`_, the Open Science portal.

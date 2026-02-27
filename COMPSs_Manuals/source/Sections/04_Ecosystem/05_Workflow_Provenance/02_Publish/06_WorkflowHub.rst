@@ -14,7 +14,8 @@ site can be found in their `Documentation <https://about.workflowhub.eu/docs/>`_
 
 The steps to achieve the publication of a COMPSs execution are:
 
-- Pack the resulting crate sub-directory (i.e. ``COMPSs_RO-Crate_[timestamp]/``) in a zip file. The ``ro-crate-metadata.json``
+- If you didn't use the ``-z`` flag to generate the provenance, you need to pack the resulting crate 
+  sub-directory (i.e. ``COMPSs_RO-Crate_[timestamp]/``) in a zip file. The ``ro-crate-metadata.json``
   file must be at the root level of this zip file. Example:
 
 .. code-block:: console
@@ -58,7 +59,7 @@ The steps to achieve the publication of a COMPSs execution are:
 .. TIP::
 
     The crate (i.e. folder ``COMPSs_RO-Crate_[timestamp]/``) can also be uploaded to GitHub, and then imported from
-    WorkflowHub using the second tab option ``Import Git Repository``. See an example here: https://workflowhub.eu/workflows/1076
+    WorkflowHub using the second tab option ``Import Git Repository``. See an example here: https://doi.org/10.48546/workflowhub.workflow.1076.2
 
 After these steps, the main summary page of your workflow will be shown, where three main tabs can be selected
 (see https://doi.org/10.48546/workflowhub.workflow.484.1 to check out an example directly at WorkflowHub):
@@ -135,7 +136,7 @@ The necessary steps to achieve this are:
 
 .. WARNING::
 
-    If no Authors are provided in the YAML configuration file, it won't be possible to generate a DOI.
+    If no ``Authors`` are provided in the YAML configuration file, it won't be possible to generate a DOI.
     See Section :ref:`yaml-config`
 
 You can see some examples on previous published workflows:
@@ -173,7 +174,7 @@ page will contain different versions / executions of the same COMPSs application
       This action will import the latest commit in the repository to WorkflowHub.
 
 Once these steps are finished, the ``Overview`` tab of the workflow will show a new entry at the bottom of the page, in
-the ``Version History`` section of the page. An example can be seen here: https://workflowhub.eu/workflows/1076
+the ``Version History`` section of the page. An example can be seen here: https://doi.org/10.48546/workflowhub.workflow.1076.2
 
 .. TIP::
 
@@ -186,8 +187,10 @@ the ``Version History`` section of the page. An example can be seen here: https:
 Large datasets
 ^^^^^^^^^^^^^^
 
-As mentioned earlier, whenever a workflow uses or produces a very large dataset, it should not include the data as persistent
-(i.e. directly included in the crate), but reference it as a **remote dataset**. A rule of thumb is that, if the workflow
+As mentioned earlier, whenever a workflow uses or produces a very large dataset, it should commonly not include the data as persistent
+(i.e. directly included in the crate). If you are keen to include your large datasets, consider using Zenodo to share
+your crate (see :ref:`publish_zenodo` ). WorkflowHub was not designed to host large datasets, therefore they need to
+be referenced as **remote datasets**. A rule of thumb is that, if the workflow
 includes less than ~100 MB of files, it can be included as a persistent dataset. However, for cases where data assets
 are hundreds of MBs or even several GBs, the remote dataset option must be used. Some external repositories commonly
 used to share large datasets are:
