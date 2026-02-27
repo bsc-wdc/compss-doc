@@ -1009,7 +1009,7 @@ Inspect Workflow Provenance
 As explained in the :ref:`Sections/04_Ecosystem/05_Workflow_Provenance:|:spy:| Workflow Provenance` Section,
 COMPSs is able to generate the workflow
 provenance of an application execution as metadata stored using the RO-Crate specification. The PyCOMPSs CLI includes
-the option ``pycompss inspect`` to read an existing COMPSs generated RO-Crate and print its content by the screen.
+the option ``pycompss inspect`` to read an existing WMS's generated RO-Crate and print its content by the screen in a friendly way.
 The RO-Crate passed as a parameter can be either a subdirectory or a zip file with all the crate content, and which
 has the ``ro-crate-metadata.json`` file in its root.
 
@@ -1023,20 +1023,123 @@ has the ``ro-crate-metadata.json`` file in its root.
    .. tab-item:: Local
         :sync: local
 
-        .. code-block:: console
-
-            $ cd tutorial_apps/python/simple/src
-            $ pycompss run --provenance simple.py 1
-
-        Once the application finishes, the workflow provenance information will be available
-        at a ``COMPSs_RO-Crate_[timestamp]/`` folder. The metadata information can be visualized using:
+        The ``inspect`` option has several specific flags that can be used:
 
         .. code-block:: console
 
-            $ pycompss inspect [-v/--verbose] COMPSs_RO-Crate_[timestamp]/ [-t/--tasks [TASK_ID...]]
+            $ pycompss inspect -h
+            usage: pycompss inspect ro_crate [ro_crate ...] [-v] [-d] [-f] [-m [METHODS ...]] [-t [TASKS]]
 
-        The ``-t/--tasks`` flag can be used to print detailed information about each task individually (what method did they execute, their parameters, success status, logs, etc).
+            positional arguments:
+            ro_crate              Folder or zip file(s) containing the RO-Crate(s)
 
+            options:
+            -h, --help            show this help message and exit
+            -v, --verbose         Print extra information about tasks
+            -d, --data_assets     Print data assets
+            -f, --failing_tasks   Print info about failing tasks only
+            -t [TASKS ...], --tasks [TASKS ...]
+                                    Print all information about one or more tasks (e.g. 4 7 10-11 15-18
+            -m [METHODS ...], --methods [METHODS ...]
+                                    Print all tasks executing the specified method(s)
+
+        If no extra flags are used, the standard output is like shown in the next Figure. It shows the ``Name`` and ``Description`` provided for the application,
+        who are their ``Authors`` (printing name, organisation and e-mail when available), the ``License`` of the code and the ``Date Published`` refering to
+        the moment when the crate was generated. Additionally, the ``Main entity`` identifies the main file of the application, and the ``Programming language`` field
+        shows the WMS used for programming, with its specific version. Regarding the ``Execution details``, the ``Status`` of the run is shown, with a
+        summary of the executed tasks' status in ``Executed Tasks``, the total ``Execution Time``, the ``Host`` where the application ran (showing the 
+        hostname, the number of nodes used for the run, and if a queuing system was used also the captured job id of the run). The ``Resource Usage`` field
+        is an average of the CPU and Memory percentage used by the nodes (not considering the master). The field ``Agent`` refers to the individual that
+        executed the application (organisation and e-mail also included when available), and the ``Environment`` and ``Data assets`` fields provide a count 
+        of the details captured in those matters.
+
+        .. figure:: ./Figures/inspect.png
+            :name: Inspect without flags
+            :alt: Inspect without flags
+            :align: center
+            :width: 50.0%
+
+            Inspect without flags
+
+
+        **Verbose mode:**
+
+        The ``-v/--verbose`` flag can be used to print detailed general information about a run. In particular, when used,
+        the fields ``Software Requirements`` and ``RO-Crate compliance`` will appear in the general description. They list the
+        application's software dependencies, and the RO-Crate specifications that the metadata complies, respectively. On the other hand,
+        in the ``Execution details`` much richer information will be printed, showing ``Start Time`` and ``End Time`` of the
+        application (in Coordinated Universal Time (UTC) format), the ``Submission`` field that contains the command that 
+        was used to run the experiment and the ``Environment``
+        field that has some relevant environment variables captured during the execution. Moreover, the ``Resource Usage`` section is
+        largely expanded showing resource and method statistics per node used in the computation, and a summary in the
+        ``Overall Statistics`` field.
+
+        .. figure:: ./Figures/soft_req.png
+            :name: Inspect extra details
+            :alt: Inspect extra details
+            :align: center
+            :width: 30.0%
+
+            Inspect extra details
+
+
+        .. figure:: ./Figures/verbose.png
+            :name: Inspect verbose
+            :alt: Inspect verbose
+            :align: center
+            :width: 50.0%
+
+            Inspect verbose
+
+        .. figure:: ./Figures/submission.png
+            :name: Submission
+            :alt: Submission and environment variables
+            :align: center
+            :width: 70.0%
+
+            Detail on submission command and environment variables
+
+        **List data assets:**
+
+        A ``-d/--data_assets`` flag is available to get details on the inputs used and outputs generated by the workflow execution. Each data asset
+        can be specified either with a relative path inside the crate ``REL_PATH`` when data is persisted in the crate, or a URL with a reference on
+        where to find the file ``URL_PATH`` when data is not persisted. For directories, only the root name is listed, and in the case of individual files
+        the size of the file is also shown.
+
+        **Get details of the tasks that failed:**
+
+        The function of the ``-f/--failing_tasks`` flag is to provide a way to list only the details of the tasks that have failed during the execution.
+        Since the provenance is generated even when failures occur, this information can help the user to debug the application run and easily identify
+        the source of the problem. Failing tasks always include their related execution logs, where failures can be tracked down. Besides, provenance
+        records the inputs used to call the invoked method, which is also a very nice way to clarify to the user how the method was used and if it was
+        as it was expected.
+
+        **Get details of tasks by number:**
+
+        The ``-t/--tasks`` flag can be used to print detailed information about each selected task individually. The flag accepts individual numbers
+        sepparated by spaces (e.g. ``3 4 10``) and ranges of tasks (e.g. ``20-30``), and combinations of both.
+        Details such as its status,
+        what method was executed, the execution time, the host where the task ran, what parameters were used (together with their type and value)
+        and the task's related log files (if the task failed or debug mode is used). For tasks that failed or were canceled, we do not capture 
+        output parameters since they cannot be relied upon. This means that, when listing
+        their details, no ``Outputs`` will be listed. In case of failure, the ``Execution Time`` will correspond to the run time the task was running ok
+        before reaching the failure.
+
+        .. TIP::
+
+            We STRONGLY recommend to use the workflow diagram (i.e. ``complete_graph.svg``) to easily understand task id numbers for later selection with ``-t``.
+
+
+        **Get details of tasks by method name:**
+
+        Simlarly to the previous flag, the ``-m/--methods`` flag provides a way to filter all the tasks executed but this time using a pattern to filter
+        them by the name of the method the tasks have executed. In this case, only a single pattern can be passed to the flag.
+
+        **Compatibility with other WMSs:**
+
+        ASDF
+
+        
    .. tab-item:: Remote
         :sync: remote
 
