@@ -14,7 +14,7 @@ A key feature of ROHub is that it natively supports importing RO-Crates, which i
 Preliminary steps
 -----------------
 
-- Create your account at ROHub using the `Sing up <https://login.rohub.org>`_ interface.
+- Create your account at ROHub using the `Sign up <https://login.rohub.org>`_ interface.
 
 - Log in to your account from the same interface.
 

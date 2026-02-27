@@ -74,13 +74,18 @@ The steps to achieve the publication of a COMPSs execution are:
 
 The ``-z`` flag will automatically zip the content of the folder, and upload it to your ``Dashboard`` in Zenodo.
 
+.. TIP::
+
+    Right now ``rocrate-inveniordm`` cannot deal directly with zipped crates, thus consider using ``-p`` instead of ``-z``
+    when generating the workflow provenance of your COMPSs run if you plan to share it with Zenodo.
+
 .. WARNING::
 
-    It is STRONGLY recommended to always use the ``-z`` flag. Although the content could be uploaded without being zipped,
+    It is STRONGLY recommended to always use the rocrate_inveniordm ``-z`` flag. Although the content could be uploaded without being zipped,
     Zenodo flattens the structure of the directory content in the upload, which may be dangerous for an RO-Crate package.
 
 
-- Go to your ``Dashboard`` in Zenodo, review the record that has been just uploaded:
+- Go to ``My dashboard`` in Zenodo, review the record that has been just uploaded:
 
 .. figure:: ./Figures/ZenodoRecord.png
    :name: Zenodo record created with the upload
