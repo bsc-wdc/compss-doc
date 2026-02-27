@@ -10,7 +10,9 @@ Reproducibility Service
 
     Reproducibility Service welcome message
 
-This is an automatic reproducibility service designed to help reproduce COMPSs workflows on your local machine or on a cluster. Below are the prerequisites and instructions for proper functioning.
+The Reproducibility Service (RS) is a Proof of Concept (PoC) implementation of a tool to automatically reproduce COMPSs workflows on your local machine or on a cluster.
+This was developed for COMPSs version 3.3.1, therefore, using different versions of the runtime may cause some malfunction.
+Below are the prerequisites and instructions for proper functioning.
 
 **Pre-requisites**
 
@@ -60,7 +62,7 @@ This is an automatic reproducibility service designed to help reproduce COMPSs w
 
 **Experiment Requirements**
 
-1. If a folder path is provided in the ``compss_submission_command_line.txt``, the path should end with a ``/``.
+1. If a folder path is provided in the ``pycompss inspect -v`` term ``Submission``, the path should end with a ``/``.
 2. The service does not support experiments with file paths hardcoded inside the original source code of the application, as these paths cannot be easily mapped.
 3. The ``data_persistence = False`` examples are only supposed to work on the original cluster where paths related to the experiment are accessible (i.e., the new Agent may need to request access permissions).
 
@@ -68,7 +70,7 @@ This is an automatic reproducibility service designed to help reproduce COMPSs w
 
 If you're unsure how to create an instance on Chameleon, please refer to the official documentation: `Chameleon Documentation <https://chameleoncloud.readthedocs.io/en/latest/index.html>`_.
 
-To utilize this service or run any COMPSs experiments, you can create an instance of the Ubuntu 22.04 appliance with COMPSs 3.3.3 installed. You can find the appliance here: `Ubuntu 22.04 with COMPSs 3.3.3 <https://www.chameleoncloud.org/appliances/121/>`_.
+To utilize this service or run any COMPSs experiments, you can create an instance of the Ubuntu 22.04 appliance with COMPSs 3.3.1 installed. You can find the appliance here: `Ubuntu 22.04 with COMPSs 3.3.1 <https://www.chameleoncloud.org/appliances/121/>`_.
 
 After successfully creating an instance of the appliance, execute the following command to set up the environment:
 
