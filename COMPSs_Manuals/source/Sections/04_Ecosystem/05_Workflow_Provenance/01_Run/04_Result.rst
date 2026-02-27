@@ -170,7 +170,7 @@ default is set to **5 seconds**.
 
 .. TIP::
 
-    The user can export the value of ``COMPSS_PROFILING_INTERVAL`` environment variable to a higher value to
+    Users can export the value of ``COMPSS_PROFILING_INTERVAL`` environment variable to a higher value to
     reduce the profiling overhead, based on the needs of the application and the system. The value expected is
     an integer, in seconds.
 
