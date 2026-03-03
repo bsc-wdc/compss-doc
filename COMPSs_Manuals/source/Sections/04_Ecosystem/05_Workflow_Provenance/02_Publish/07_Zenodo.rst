@@ -1,3 +1,8 @@
+.. spelling:word-list::
+
+   rocrate
+
+
 .. _publish_zenodo:
 
 Publish at Zenodo

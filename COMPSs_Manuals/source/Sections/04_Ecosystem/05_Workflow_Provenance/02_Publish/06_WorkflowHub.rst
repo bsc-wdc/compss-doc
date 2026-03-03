@@ -1,3 +1,8 @@
+.. spelling:word-list::
+
+   didn
+
+
 Publish at WorkflowHub
 ======================
 

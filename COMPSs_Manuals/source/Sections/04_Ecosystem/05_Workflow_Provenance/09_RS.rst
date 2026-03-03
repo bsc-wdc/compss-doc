@@ -1,3 +1,8 @@
+.. spelling:word-list::
+
+   PoC
+
+
 .. _rs:
 
 Reproducibility Service

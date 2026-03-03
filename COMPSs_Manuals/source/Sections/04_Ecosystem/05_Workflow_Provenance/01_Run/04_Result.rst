@@ -69,7 +69,7 @@ It is useful if you only need a broad overview of the workflow and its datasets 
 Provenance Run Crate
 --------------------
 
-The newly supported **Provenance Run Crate** profile extends the metadata with detailed information about each executed task. 
+The newly supported **Provenance Run Crate** profile extends the metadata with detailed information about each executed task.
 
 In addition to the elements from the Workflow Run Crate, it now includes detailed
 descriptions of:
@@ -78,10 +78,10 @@ descriptions of:
 - **Inputs and outputs of each step**: which files and datasets were consumed and produced
 - **Task parameters**: the parameter values passed to each method
 - **Output log files**: per task output and error logs (stored only in debug mode or if the task fails)
-- **Resource usage**: overall and per computing node resource usage statistics (CPU and memory usage %, average and maximum), 
-  and detailed method statistics per resource (number of invokations, average, maximum and minimum execution time).
+- **Resource usage**: overall and per computing node resource usage statistics (CPU and memory usage %, average and maximum),
+  and detailed method statistics per resource (number of invocations, average, maximum and minimum execution time).
 - **Enhanced Debugging**: Users can quickly diagnose issues combining the workflow diagram (``complete_graph.svg``) with
-  the ``pycompss inspect`` tool that enables a quick search for information on the crate, together with the included 
+  the ``pycompss inspect`` tool that enables a quick search for information on the crate, together with the included
   error logs (both main application and task specific), which detail failures and their underlying causes.
 
 .. TIP::

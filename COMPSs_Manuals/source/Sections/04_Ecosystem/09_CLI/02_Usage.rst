@@ -1,3 +1,9 @@
+.. spelling:word-list::
+
+   Autosubmit
+   Streamflow
+
+
 Usage
 *****
 
@@ -1044,13 +1050,13 @@ has the ``ro-crate-metadata.json`` file in its root.
                                     Print all tasks executing the specified method(s)
 
         If no extra flags are used, the standard output is like shown in the next Figure. It shows the ``Name`` and ``Description`` provided for the application,
-        who are their ``Authors`` (printing their name, organisation and e-mail when available), the ``License`` of the code and the ``Date Published`` refering to
+        who are their ``Authors`` (printing their name, organization and e-mail when available), the ``License`` of the code and the ``Date Published`` referring to
         the moment when the crate was generated. Additionally, the ``Main entity`` identifies the main file of the application, and the ``Programming language`` field
         shows the WMS used for programming, with its specific version. Regarding the ``Execution details``, the ``Status`` of the run is shown, with a
-        summary of the executed tasks' status in ``Executed Tasks``, the total ``Execution Time``, the ``Host`` where the application ran (showing the 
+        summary of the executed tasks' status in ``Executed Tasks``, the total ``Execution Time``, the ``Host`` where the application ran (showing the
         hostname, the number of nodes used for the run, and if a queuing system was used also the captured job id of the run). The ``Resource Usage`` field
         is an average of the CPU and Memory percentage used by the nodes (not considering the master). The field ``Agent`` refers to the individual that
-        executed the application (organisation and e-mail also included when available), and the ``Environment`` and ``Data assets`` fields provide a count 
+        executed the application (organization and e-mail also included when available), and the ``Environment`` and ``Data assets`` fields provide a count
         of the details captured in those matters.
 
         .. TIP::
@@ -1073,21 +1079,21 @@ has the ``ro-crate-metadata.json`` file in its root.
         the fields ``Software Requirements`` and ``RO-Crate compliance`` will appear in the general description. They list the
         application's software dependencies, and the RO-Crate specifications that the metadata complies with, respectively. On the other hand,
         in the ``Execution details`` much richer information will be printed, showing ``Start Time`` and ``End Time`` of the
-        application (in Coordinated Universal Time (UTC) format), the ``Submission`` field that contains the command that 
+        application (in Coordinated Universal Time (UTC) format), the ``Submission`` field that contains the command that
         was used to run the experiment and the ``Environment``
-        field that has some relevant environment variables captured during the execution. 
-        
+        field that has some relevant environment variables captured during the execution.
+
         Moreover, the ``Resource Usage`` section is
         largely expanded showing resource and method statistics per node used in the computation, and a summary in the
         ``Overall Statistics`` field. In detail, the ``Overall Statistics`` section includes statistics on all the methods executed during
-        the experiment: for each method, number of invocations, average, maximum and minimum execution times are also recorded in miliseconds;
+        the experiment: for each method, number of invocations, average, maximum and minimum execution times are also recorded in milliseconds;
         a general calculation of resource usage is also done by providing the average % CPU and memory usage, obtained from averaging all the worker nodes
         involved in the computation (excluding the master). After that, details per node are provided, first providing the hostname (and if it is the
         master of the computation) together with the total number of tasks the node executed. Then, inside each node, statistics per method are provided (again
-        number of invocations, average, maximum and minimum execution times in miliseconds) together with CPU and memory statistics, this time including
+        number of invocations, average, maximum and minimum execution times in milliseconds) together with CPU and memory statistics, this time including
         average and maximum % of use of the CPU, and average, maximum and minimum % for the memory. This information can be very useful to do a quick
         assessment on the usage of resources during the computation, where methods taking too much time to execute can be identified, or even also large
-        load balance differences betwen the nodes can be discovered.
+        load balance differences between the nodes can be discovered.
 
         .. figure:: ./Figures/soft_req.png
             :name: Inspect extra details
@@ -1145,20 +1151,18 @@ has the ``ro-crate-metadata.json`` file in its root.
         **Get details of tasks by number:**
 
         The ``-t/--tasks`` flag can be used to print detailed information about each selected task individually. The flag accepts individual numbers
-        sepparated by spaces (e.g. ``3 4 10``), ranges of tasks (e.g. ``20-30``) and combinations of both.
-        Details such as its status,
-        what specific method was executed, the execution time, the host where the task ran, what parameters were used (together with their type and value and a brief
-        generated description for complex types)
-        and the task's related log files (if the task failed or debug mode is used). The ``Type`` field shows first the corresponding ``schema.org`` type 
-        mapped for the parameter, and later any other type captured from the original programming model (e.g. ``float64``, ``dict``, ...)
-        For tasks that failed or were canceled, we do not capture 
-        output parameters since they cannot be relied upon. This means that, when listing
+        separated by spaces (e.g. ``3 4 10``), ranges of tasks (e.g. ``20-30``) and combinations of both.
+        Details such as its status, what specific method was executed, the execution time, the host where the task ran, what parameters were used
+        (together with their type and value and a brief generated description for complex types) and the task's related log files (if the task
+        failed or debug mode is used). The ``Type`` field shows first the corresponding ``schema.org`` type mapped for the parameter, and later any
+        other type captured from the original programming model (e.g. ``float64``, ``dict``, etc.).
+        For tasks that failed or were canceled, we do not capture output parameters since they cannot be relied upon. This means that, when listing
         their details, no ``Outputs`` will be listed. In case of failure, the ``Execution Time`` will correspond to the run time the task was running ok
         before reaching the failure.
 
         .. TIP::
 
-            We STRONGLY recommend to use the workflow diagram (i.e. ``complete_graph.svg``) to easily understand task id numbers for later selection with ``-t``.
+            We **STRONGLY** recommend to use the workflow diagram (i.e. ``complete_graph.svg``) to easily understand task id numbers for later selection with ``-t``.
 
 
         .. figure:: ./Figures/task_details_1.png
@@ -1180,7 +1184,7 @@ has the ``ro-crate-metadata.json`` file in its root.
 
         **Get details of tasks by method name:**
 
-        Simlarly to the previous flag ``-t``, the ``-m/--methods`` flag provides a way to filter all the tasks executed but this time using a pattern to filter
+        Similarly to the previous flag ``-t``, the ``-m/--methods`` flag provides a way to filter all the tasks executed but this time using a pattern to filter
         them by the name of the method the tasks have executed. In this case, only a single pattern can be passed to the flag.
 
         **Get details of the tasks that failed:**
@@ -1202,7 +1206,7 @@ has the ``ro-crate-metadata.json`` file in its root.
 
         **Compatibility with other WMSs:**
 
-        Thanks to being compliant with RO-Crate, and especifically with the Workflow Run RO-Crate collection of profiles (Workflow Run and Provenance Run),
+        Thanks to being compliant with RO-Crate, and specifically with the Workflow Run RO-Crate collection of profiles (Workflow Run and Provenance Run),
         the pycompss inspect functionality is **interoperable with other Workflow Management Systems (WMSs)** that generate metadata in this format.
         Some examples are: **CWL, nextflow, Galaxy, Autosubmit, WfExS, Streamflow, Snakemake, Sapporo, and more**. Each WMS generates a certain level of 
         metadata details, that is the reason why the level of details printed with pycompss inspect can vary from one system to another.
