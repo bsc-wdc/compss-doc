@@ -49,6 +49,7 @@ Checkpoint policy implementation
                 this.closeGroup(String.valueOf(countingGroup));
                 countingGroup += 1;
             }
+        }
 
     }
 
@@ -70,8 +71,11 @@ COMPSs release contains three predefined policies, each leveraging on only one o
     +-----------------------------------+------------------------------------------------------------------------------------+-------------------------+------------------------------------------+
 
 In order to use checkpointing it is needed to specify three flags in the ``enqueue_compss`` and ``runcompss``. These are:
+
 * ``--checkpoint``: This parameter lets you choose the checkpointing policy, and assign one of the class names.
-* ``--checkpoint_params``: This parameter lets you choose the checkpointing span, depending on the policy the user has to choose the corresponding param from the table (in the time case the user has to define the time in either s (seconds), m (minutes) or h (hours), and other options that will be explained later on.
+
+* ``--checkpoint_params``: This parameter lets you choose the checkpointing span. Parameters are passed using the format ``paramName:value``, and multiple parameters can be combined with commas: ``param1:value1,param2:value2``,  depending on the policy the user has to choose the corresponding param from the table (in case of ``period.time``, specify a value followed by a single time unit: ``s`` (seconds), ``m`` (minutes), or ``h`` (hours)).
+
 * ``--checkpoint_folder``: This parameter defines the folder where the checkpoints will be saved.
 
 As an additional feature the user can avoid checkpointing a specific task, that may have a big overhead on the filesystem by passing the list of signature names in the ``checkpoint_params`` flag using the following parameter ``avoid.checkpoint``
@@ -80,6 +84,6 @@ An example of usage would be the following:
 
 ::
 
-    --checkpoint_params=period.time:s,avoid.checkpoint:[checkpoint_file_test.increment] \
+    --checkpoint_params=period.time:30s,avoid.checkpoint:[checkpoint_file_test.increment] \
     --checkpoint=es.bsc.compss.checkpoint.policies.CheckpointPolicyPeriodicTime \
     --checkpoint_folder=/tmp/checkpointing/ \
