@@ -29,7 +29,6 @@ the inherent parallelism of applications at execution time.
 This repository contains the COMPSs documentation ready to be built into
 html (with/for the readTheDocs format).
 
-
 <!-- SECTIONS -->
 
 <!-- BUILDING COMPSS -->
@@ -47,26 +46,28 @@ The dependencies **MUST** be installed before building, and it is only necessary
 * System dependencies
 
   * For Ubuntu:
-    ```
+
+    ```bash
     sudo apt-get install python3 pandoc myspell-en
     python3 -m pip install virtualenv
     ```
+
   * For OpenSuse:
 
-    ```
+    ```bash
     sudo zypper install python3 pandoc myspell-en
     python3 -m pip install virtualenv
     ```
 
 ## 2. Clone the current repository
 
-```
+```bash
 git clone https://gitlab.bsc.es/wdc/documents/documentation.git
 ```
 
 ## 3. Go to the documentation folder
 
-```
+```bash
 cd documentation/COMPSs_documentation
 ```
 
@@ -75,7 +76,8 @@ cd documentation/COMPSs_documentation
 ### 4.1. Create a new branch
 
 First, create a git branch with a name describing the work:
-```
+
+```bash
 git checkout -b "BRANCH_NAME"
 ```
 
@@ -95,25 +97,58 @@ git checkout -b "BRANCH_NAME"
     2. Delete the file
     3. Remove the reference to the file on its section index.
 
+**The structure convention:**
+
+```markdown
+####################################
+Part -- Number Signs above and below
+####################################
+
+************************************
+Chapter -- Asterisks above and below
+************************************
+
+Title -- Number Signs
+#####################
+
+Subtitle -- Asterisks
+*********************
+
+Section -- Equal Signs
+======================
+
+Subsection -- Hyphens
+---------------------
+
+Subsubsection -- Circumflex
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Paragraph -- Double Quotes
+""""""""""""""""""""""""""
+```
+
 ### 4.2 Build the documentation
 
 This step builds the documentation so that it can be checked locally.
 Execute:
-```
+
+```bash
 ./build.sh
 ```
 
 **IMPORTANT:** The building output remarks any issue with **RED** lines. Please, **MAKE SURE TO FIX ALL OF THEM BEFORE CONTINUING**.
 
 And visualize the output:
-```
+
+```bash
 firefox build/html/index.html
 ```
 
 ### 4.3 Commit the changes
 
 Now add the changes, commit them, and push it to gitlab:
-```
+
+```bash
 git add ./sources/path/to/modifications
 git commit -m "Message describing the changes"
 git push -u origin BRANCH_NAME
@@ -127,12 +162,15 @@ a specific action on the documentation.
 
 Once all modifications have been committed, it is time to rebase the branch
 to ensure that all changes do not have conflict when merging.
-```
+
+```bash
 git pull --rebase origin master
 ```
+
 If the rebase ends successfully, go to step 4.5.
 Otherwise, if conflicts appear, please, fix them and iterate over:
-```
+
+```bash
 git add ./path/to/modified/files
 git rebase --continue
 ```
@@ -167,7 +205,8 @@ wiki) and look into `Compilations`.
 ## 6. Clean local files
 
 Once the whole process is finished, you can clean all your local folder (removes the virtual environment, built documentation and temporary files):
-```
+
+```bash
 ./clean.sh
 ```
 
@@ -181,6 +220,5 @@ Department of Computer Science (CS)
 
 Barcelona Supercomputing Center (BSC)
 
-
 <!-- LINKS -->
-[1]: http://compss.bsc.es
+[1](http://compss.bsc.es)

@@ -1,11 +1,12 @@
-===============
-What is COMPSs?
-===============
+****************************
+|:thinking:| What is COMPSs?
+****************************
 
 **COMP Superscalar (COMPSs)** is a **task-based programming model** which aims
 to ease the development of applications **for distributed infrastructures**,
 such as large High-Performance clusters (HPC), clouds and container managed
 clusters.
+
 COMPSs  provides a **programming interface for** the development of the
 **applications** **and a runtime system that exploits the inherent parallelism**
 of applications **at execution time**.
@@ -33,10 +34,40 @@ following **characteristics**:
   transfers.
 
 - **Standard programming languages:** COMPSs is based on the popular programming
-  language Java, but also offers language bindings for Python (PyCOMPSs) and
-  C/C++ applications.
+  language Java, but also offers language bindings for Python (PyCOMPSs),
+  C/C++ and R applications.
   This makes it easier to learn the model since programmers can reuse most of
   their previous knowledge.
+
+  .. grid:: 4
+
+    .. grid-item::
+        .. button-ref:: app_development_java
+            :color: primary
+            :align: center
+            :ref-type: ref
+            :expand:
+
+    .. grid-item::
+        .. button-ref:: app_development_python
+            :color: primary
+            :align: center
+            :ref-type: ref
+            :expand:
+
+    .. grid-item::
+        .. button-ref:: app_development_c
+            :color: primary
+            :align: center
+            :ref-type: ref
+            :expand:
+
+    .. grid-item::
+        .. button-ref:: app_development_r
+            :color: primary
+            :align: center
+            :ref-type: ref
+            :expand:
 
 - **No APIs:** In the case of COMPSs applications in Java, the model does not
   require to use any special API call, pragma or construct in the application;
@@ -68,10 +99,11 @@ These functionalities, offer the possibility of designing a **new category of
 workflows with very dynamic behavior**, that can change their configuration
 at execution time upon the occurrence of given events.
 
------------------
-More information:
------------------
 
-- Project website: http://compss.bsc.es
+.. TIP::
 
-- Project repository: https://github.com/bsc-wdc/compss
+    **More information:**
+
+        - Project website: http://compss.bsc.es
+
+        - Project repository: https://github.com/bsc-wdc/compss

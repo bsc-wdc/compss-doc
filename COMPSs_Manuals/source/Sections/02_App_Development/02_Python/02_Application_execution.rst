@@ -62,4 +62,4 @@ Or alternatively, use the ``pycompss`` module:
 
 
 For full description about the options available for the runcompss
-command please check the :ref:`Sections/03_Execution_Environments/03_Deployments/01_Master_worker/01_Local/01_Executing:Executing COMPSs applications` Section.
+command please check the :ref:`Sections/03_Execution/01_Local:Executing COMPSs applications` Section.

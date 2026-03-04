@@ -1,0 +1,252 @@
+.. # define a hard line break for HTML
+.. |br| raw:: html
+
+   <br />
+
+*****************************************************
+|:notebook_with_decorative_cover:| PyCOMPSs Notebooks
+*****************************************************
+
+This section contains all PyCOMPSs related tutorial notebooks (sources available in https://github.com/bsc-wdc/notebooks).
+
+It is divided into three main folders: |br|
+* **Syntax**: Contains the main tutorial notebooks. They cover the syntax and main functionalities of PyCOMPSs. |br|
+* **Hands-On**: Contains example applications and hands-on exercises. |br|
+* **Demos**: Contains demonstration notebooks.
+
+
+Syntax
+######
+
+Here you will find the PyCOMPSs programming model syntax notebooks used in the tutorials.
+
+.. nbgallery::
+    :name: syntax-nb-gallery
+
+    06_PyCOMPSs_Notebooks/syntax/1_Basic
+    06_PyCOMPSs_Notebooks/syntax/2_Synchronization
+    06_PyCOMPSs_Notebooks/syntax/3.0_Defining_classes_and_objects
+    06_PyCOMPSs_Notebooks/syntax/3.1_Defining_classes_and_objects-with-reduce
+    06_PyCOMPSs_Notebooks/syntax/3.2_Defining_classes_and_objects-with-collections
+    06_PyCOMPSs_Notebooks/syntax/3.3_Defining_classes_and_objects-with-dictionary
+    06_PyCOMPSs_Notebooks/syntax/3.4_Defining_classes_and_objects-with-fault-tolerance
+    06_PyCOMPSs_Notebooks/syntax/4_Files
+    06_PyCOMPSs_Notebooks/syntax/5_UsingConstraints
+    06_PyCOMPSs_Notebooks/syntax/6_Polymorphism
+    06_PyCOMPSs_Notebooks/syntax/7_Binary
+    06_PyCOMPSs_Notebooks/syntax/8_Integration_with_Numba
+    06_PyCOMPSs_Notebooks/syntax/9_Dislib
+    06_PyCOMPSs_Notebooks/syntax/10_Dislib_estimators
+
+
+Hands-on
+########
+
+Here you will find the PyCOMPSs hands on notebooks used in the tutorials.
+
+.. nbgallery::
+    :name: handson-nb-gallery
+
+    06_PyCOMPSs_Notebooks/hands-on/1_SortByKey
+    06_PyCOMPSs_Notebooks/hands-on/2_KMeans
+    06_PyCOMPSs_Notebooks/hands-on/2_KMeans-reduce-chunks
+    06_PyCOMPSs_Notebooks/hands-on/3_Cholesky
+    06_PyCOMPSs_Notebooks/hands-on/4_Wordcount_Exercise
+    06_PyCOMPSs_Notebooks/hands-on/4_Wordcount_Solution
+    06_PyCOMPSs_Notebooks/hands-on/4_Wordcount_Solution-with-reduce
+    06_PyCOMPSs_Notebooks/hands-on/5_Integral_PI_iterative
+    06_PyCOMPSs_Notebooks/hands-on/5_Integral_PI_reduction
+
+
+Demos
+#####
+
+Here you will find the PyCOMPSs demonstration notebooks used in the tutorials.
+
+.. nbgallery::
+    :name: demos-nb-gallery
+
+    06_PyCOMPSs_Notebooks/demos/Mandelbrot_numba
+
+
+
+.. HINT::
+
+    These notebooks can be used within **MyBinder**, with the **PyCOMPSs CLI**, within **Docker**, or **locally**.
+
+    **Prerequisites**
+
+    .. tab-set::
+
+        .. tab-item:: **MyBinder**
+            :sync: mybinder
+
+            * Open |Binder|
+
+            .. CAUTION::
+
+                Sometimes it may take a while to deploy the COMPSs infrastructure.
+
+        .. tab-item:: **PyCOMPSs CLI**
+            :sync: pycompss_cli
+
+            * ``pycompss-cli`` (see :ref:`Sections/04_Ecosystem/09_CLI/01_Installation:Requirements and Installation`)
+
+        .. tab-item:: **Docker**
+            :sync: docker
+
+            * Docker
+            * Git
+
+        .. tab-item:: **Locally**
+            :sync: local
+
+            * Python 3
+            * Install COMPSs requirements described in :ref:`Sections/01_Installation_Configuration/01_Dependencies:Dependencies`.
+            * Install COMPSs (See :ref:`install_from_sources`)
+            * Jupyter (with the desired ipykernel)
+            * ipywidgets (only for some hands-on notebooks)
+            * numpy (only for some notebooks)
+            * dislib (only for some notebooks)
+            * numba (only for some notebooks)
+            * Git
+
+    **Instructions**
+
+    .. tab-set::
+
+        .. tab-item:: **MyBinder**
+            :sync: mybinder
+
+            Just explore the folders and run the examples (they have the same structure as this documentation).
+
+        .. tab-item:: **PyCOMPSs CLI**
+            :sync: pycompss_cli
+
+            Check the ``pycompss-cli`` usage instructions (see :ref:`Sections/04_Ecosystem/09_CLI/02_Usage:Usage`)
+
+            Get the notebooks:
+
+            .. code-block:: bash
+
+                $ git clone https://github.com/bsc-wdc/notebooks.git
+                $ # Now use the pycompss or compss command.
+                $ pycompss -h
+                $ compss -h
+
+        .. tab-item:: **Docker**
+            :sync: docker
+
+            Run in your machine:
+
+            .. code-block:: bash
+
+                $ git clone https://github.com/bsc-wdc/notebooks.git
+                $ cd notebooks
+                $ pycompss init docker -i compss/compss-tutorial:3.4
+                $ pycompss env change docker
+                $ pycompss monitor start
+                $ pycompss jupyter
+
+            From local web browser:
+
+            .. code-block:: text
+
+                Open COMPSs monitor: http://localhost:8080/compss-monitor/index.zul
+                Open Jupyter notebook interface: http://localhost:8888/
+
+        .. tab-item:: **Locally**
+            :sync: local
+
+            * Get the notebooks and start jupyter
+
+                .. code-block:: bash
+
+                    $ git clone https://github.com/bsc-wdc/notebooks.git
+                    $ cd notebooks
+                    $ /etc/init.d/compss-monitor start
+                    $ jupyter-notebook
+
+            * Then
+
+                .. code-block:: text
+
+                    * Open COMPSs monitor: http://localhost:8080/compss-monitor/index.zul
+                    * Open Jupyter notebook interface: http://localhost:8888/
+                    * Look for the ``application.ipynb`` of interest.
+
+
+    .. IMPORTANT::
+
+        It is necessary to **RESTART the python kernel from Jupyter** after the execution of any notebook.
+
+
+    **Troubleshooting**
+
+    .. dropdown:: ISSUE 1: Cannot connect using docker pull.
+
+        **REASON:** *The docker service is not running*:
+
+        .. code-block:: bash
+
+            $ # Error message:
+            $ Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+            $ # SOLUTION: Restart the docker service:
+            $ sudo service docker start
+
+    .. dropdown:: ISSUE 2: The notebooks folder is empty or contains other data using docker.
+
+        **REASON:** *The notebooks path in the docker run command is wrong*.
+
+        .. code-block:: bash
+
+            $ # Remove the docker instance and reinstantiate with the appropriate notebooks path
+            $ exit
+            $ docker stop mycompss
+            $ docker rm mycompss
+            $ # Pay attention and UPDATE: /PATH/TO in the next command
+            $ docker run --name mycompss -p 8888:8888 -p 8080:8080 -v /PATH/TO/notebooks:/home/notebooks -itd compss/compss:3.4
+            $ # Continue as normal
+
+
+    .. dropdown:: ISSUE 3: COMPSs does not start in Jupyter.
+
+        **REASON:** *The python kernel has not been restarted between COMPSs start, or some processes from previous failed execution may exist.*
+
+        .. code-block:: bash
+
+            $ # SOLUTION: Restart the python kernel from Jupyter and check that there are no COMPSs' python/java processes running.
+
+    .. dropdown:: ISSUE 4: Numba is not working with Docker.
+
+        **REASON:** *Numba is not installed in the docker container*
+
+        .. code-block:: bash
+
+            $ # SOLUTION: Install Numba in the Docker container
+            $ #           Open a console in the Docker container and follow the next steps.
+            $ # For Python 2:
+            $ sudo python2 -m pip install numba
+            $ # For Python 3:
+            $ sudo python3 -m pip install numba
+
+    .. dropdown:: ISSUE 5: Matplotlib is not working with Docker.
+
+        **REASON:** *Matplotlib is not installed in the docker container*
+
+        .. code-block:: bash
+
+            $ # SOLUTION: Install Matplotlib in the Docker container
+            $ #           Open a console in the Docker container and follow the next steps.
+            $ # For Python 2:
+            $ sudo python2 -m pip install matplotlib
+            $ # For Python 3:
+            $ sudo python3 -m pip install matplotlib
+
+    **Contact**
+        |:e-mail:| support-compss@bsc.es
+
+
+.. |Binder| image:: https://mybinder.org/badge_logo.svg
+    :alt: MyBinder
+    :target: https://mybinder.org/v2/gh/bsc-wdc/notebooks/master?urlpath=/tree/home/jovyan

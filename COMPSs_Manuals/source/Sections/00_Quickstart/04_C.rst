@@ -1,16 +1,12 @@
 
 .. rubric:: Application Overview
 
-.. include:: /Sections/02_App_Development/03_C/01_1_Application_overview.rst
+.. include:: /Sections/02_App_Development/03_C/01_Programming_model/01_C_application_overview_inc.rst
 
 .. rubric:: Application Compilation
 
-.. include:: /Sections/02_App_Development/03_C/03_1_Single_application_compilation.rst
+.. include:: /Sections/02_App_Development/03_C/03_Application_compilation/01_Single_application_compilation_inc.rst
 
-.. rubric :: Application Execution
+.. rubric:: Application Execution
 
-.. include:: /Sections/02_App_Development/03_C/04_1_Application_execution_inc.rst
-
-.. rubric :: Task Dependency Graph
-
-.. include:: /Sections/02_App_Development/03_C/05_1_Task_dependency_graph_inc.rst
+.. include:: /Sections/02_App_Development/03_C/04_Application_execution/01_Application_execution_inc.rst

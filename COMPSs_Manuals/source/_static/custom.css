@@ -1,7 +1,127 @@
+/* Rubric style */
+
 .rubric {
   font-size: 150%;
   font-weight: bold;
   color: #333;
 }
 
+/* ---------------------------------------------------------- */
 
+/* Logos for projects parameters */
+
+.wy-side-nav-search .logo {
+    max-width: 150px;
+    max-height: 200px;
+}
+
+.logo-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    transition: transform 0.3s;
+}
+
+.logo-cell img:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+/* ---------------------------------------------------------- */
+
+/* Footer style */
+
+.custom-footer-logos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    width: auto;
+    margin-top: 20px;
+    padding-top: 15px;
+}
+
+.footer-left {
+    text-align: left;
+}
+
+.footer-right {
+    text-align: right;
+}
+
+@media (max-width: 768px) {
+    .custom-footer-logos {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .footer-right {
+        text-align: center;
+    }
+}
+
+/* Logo container */
+.wy-side-nav-search .logo {
+  transform-origin: center center;
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+/* Logo on hover animation */
+.wy-side-nav-search .logo:hover {
+  animation: heartbeat-ultrasoft 2.8s ease-in-out infinite;
+}
+
+/* Keyframes heartbeat in the logo */
+@keyframes heartbeat-ultrasoft {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(255,0,0,0));
+  }
+  7% {
+    transform: scale(1.05); /* solo 5% de aumento */
+    filter: drop-shadow(0 0 2px rgba(255,0,0,0.15));
+  }
+  14% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(255,0,0,0));
+  }
+  21% {
+    transform: scale(1.03); /* segundo latido más sutil aún */
+    filter: drop-shadow(0 0 1px rgba(255,0,0,0.1));
+  }
+  28% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(255,0,0,0));
+  }
+  /* Soft pause between heartbeats */
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(255,0,0,0));
+  }
+}
+
+/* ---------------------------------------------------------- */
+
+/* Particle container */
+
+.particle {
+  position: fixed;
+  top: -2em;
+  font-size: 1.2em;
+  pointer-events: none;
+  z-index: 9999;
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+}
+
+/* Fall animation */
+@keyframes fall {
+  0% { transform: translateY(-2em) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+/* ---------------------------------------------------------- */
