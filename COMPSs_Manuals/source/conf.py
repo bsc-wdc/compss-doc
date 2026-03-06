@@ -51,7 +51,8 @@ extensions = ['sphinx.ext.todo',
               'sphinxemoji.sphinxemoji',
               'sphinx_toolbox.collapse',
               'sphinxcontrib.spelling',
-              'sphinx_tippy']
+              'sphinx_tippy',
+              'sphinx_reredirects']
 
 # TODO: Add asciinema animation
 # TODO: Fix all documentation card issues.
@@ -156,6 +157,12 @@ spelling_filters=[]
 
 # Options for emoji
 sphinxemoji_style = 'twemoji'
+
+# Redirects
+
+redirects = {
+    "Sections/08_PyCOMPSs_CLI/02_Usage": "../04_Ecosystem/09_CLI/02_Usage.html",
+}
 
 # -- Options for HTML output ----------------------------------------------
 
