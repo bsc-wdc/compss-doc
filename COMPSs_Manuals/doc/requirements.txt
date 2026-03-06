@@ -13,6 +13,7 @@ ipywidgets>=8.1.5
 sphinxcontrib-spelling<=8.0.1
 sphinx-tippy
 sphinxemoji
+sphinx-reredirects
 # notebook
 # myst-nb>=1.1.1
 # sphinx-simplepdf>=1.6.0
