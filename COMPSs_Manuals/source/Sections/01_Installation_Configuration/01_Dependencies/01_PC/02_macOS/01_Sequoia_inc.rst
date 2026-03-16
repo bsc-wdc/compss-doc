@@ -8,8 +8,8 @@ have post-installation instructions that require adding environment variables to
 
 .. code-block:: console
 
-    $ brew install openjdk@11
-    $ sudo ln -sfn /opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
+    $ brew install openjdk@21
+    $ sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk
     $ brew install graphviz
     $ brew install libxslt
     $ brew install xmlto
@@ -36,6 +36,10 @@ The package ``xdg-utils`` has to be installed by hand (after installing ``libxsl
     $ cd xdg-utils
     $ ./configure --prefix=/usr/local
     $ make ; make install
+
+
+You can download the following script for your reference, but we **STRONGLY** recommend to run it command by
+command, since every installation step with ``brew`` usually includes post-installation instructions.
 
 .. literalinclude:: ./01_PC/02_macOS/01_Sequoia/COMPSs_deps_Sequoia_15_4.sh
     :language: bash

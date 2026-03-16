@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sudo apt-get install -y openjdk-11-jdk graphviz xdg-utils libtool automake build-essential \
+sudo apt-get install -y openjdk-21-jdk graphviz xdg-utils libtool automake build-essential \
                         pkgconf python3 python3-dev python3-pip libboost-serialization-dev \
                         libboost-iostreams-dev libxml2 libxml2-dev csh gfortran libgmp3-dev \
                         flex bison texinfo libpapi-dev

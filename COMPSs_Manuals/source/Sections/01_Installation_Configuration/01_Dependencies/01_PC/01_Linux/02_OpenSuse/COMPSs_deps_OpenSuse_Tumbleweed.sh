@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 sudo zypper install --type pattern -y devel_basis
-sudo zypper install -y java-1_11_0-openjdk-headless java-1_11_0-openjdk java-1_11_0-openjdk-devel \
+sudo zypper install -y java-1_21_0-openjdk-headless java-1_21_0-openjdk java-1_21_0-openjdk-devel \
                        graphviz xdg-utils python python-devel python3 python3-devel python3-decorator \
                        libtool automake libboost_headers1_71_0-devel libboost_serialization1_71_0 \
                        libboost_iostreams1_71_0  libxml2-2 libxml2-devel tcsh gcc-fortran papi libpapi \
