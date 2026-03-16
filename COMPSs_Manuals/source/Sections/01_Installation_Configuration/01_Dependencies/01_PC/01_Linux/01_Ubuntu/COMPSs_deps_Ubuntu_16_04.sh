@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sudo apt-get install -y openjdk-11-jdk graphviz xdg-utils libtool automake build-essential \
+sudo apt-get install -y openjdk-21-jdk graphviz xdg-utils libtool automake build-essential \
                         libboost-serialization-dev libboost-iostreams-dev libxml2 libxml2-dev \
                         csh gfortran python-pip libpapi-dev
 sudo wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /opt/gradle-8.7-bin.zip

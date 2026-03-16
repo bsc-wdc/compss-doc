@@ -22,7 +22,7 @@ are commonly used, and the rest of terms are for special cases only):
       data_persistence: False
       trace_persistence: False
       provenance_run: True
-      param_size_limit: 200
+      param_size_limit: 1500
       software:
         - name: Software 1 name
           version: 1.1.1
@@ -120,7 +120,7 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
 
    * - ``param_size_limit``
      - integer
-     - 200
+     - 1500
      - Maximum characters stored per parameter in provenance
 
    * - ``software``
@@ -164,7 +164,7 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
   detailed provenance information about the individual task executions and hence correspond to the Provenance Run Crate profile. 
   If set to ``False``, the crate will only include high-level information about the main workflow execution (corresponding to the Workflow Run Crate profile).
 
-- ``param_size_limit`` value is ``200`` by default. It indicates the maximum number of characters that will be
+- ``param_size_limit`` value is ``1500`` by default. It indicates the maximum number of characters that will be
   recorded for each task's parameter value. This is useful to avoid including very large
   arrays in the metadata file. If a task's output exceeds this limit, it will be truncated to
   the first ``param_size_limit`` characters. It should only be used when ``provenance_run`` is set to ``True``.
