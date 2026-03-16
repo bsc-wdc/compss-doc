@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sudo dnf install -y java-1.11.0-openjdk java-1.11.0-openjdk-devel graphviz xdg-utils libtool automake \
+sudo dnf install -y java-1.21.0-openjdk java-1.21.0-openjdk-devel graphviz xdg-utils libtool automake \
                     python3 python3-devel boost-devel boost-serialization boost-iostreams libxml2 \
                     libxml2-devel gcc gcc-c++ gcc-gfortran tcsh @development-tools bison flex texinfo \
                     papi papi-devel gmp-devel

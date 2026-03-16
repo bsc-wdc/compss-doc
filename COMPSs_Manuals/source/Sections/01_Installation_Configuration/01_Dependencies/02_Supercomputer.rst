@@ -25,7 +25,7 @@ correct installation and environment of the following software:
 
 -  BOOST
 
--  Java 11 JRE
+-  Java 21 JRE
 
 The following environment variables must be defined:
 
@@ -60,7 +60,10 @@ For the Python binding it is recommended to have ``dill`` (`dill project <https:
 * The ``guppy3`` package is needed to use the ``@local`` decorator.
 * The ``numpy`` package is useful to improve the serialization/deserialization performance since its internal mechanisms are used by the Python binding.
 
-These packages can be found in PyPI and can be installed via ``pip``.
+For the Workflow Provenance generation, some distributions may not have installed ``yaml`` and ``pytz``, so you
+will have to install them manually.
+
+All these packages can be found in PyPI and can be installed via ``pip``.
 
 Since it is possible to execute python applications using workers spawning
 MPI processes instead of multiprocessing, it is necessary to have ``openmpi``,

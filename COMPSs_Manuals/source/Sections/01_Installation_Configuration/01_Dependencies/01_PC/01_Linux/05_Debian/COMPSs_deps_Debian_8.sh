@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 su -
-echo "deb http://ppa.launchpad.net/webupd11team/java/ubuntu xenial main" | tee /etc/apt/sources.list.d/webupd11team-java.list
-echo "deb-src http://ppa.launchpad.net/webupd11team/java/ubuntu xenial main" | tee -a /etc/apt/sources.list.d/webupd11team-java.list
+echo "deb http://ppa.launchpad.net/webupd21team/java/ubuntu xenial main" | tee /etc/apt/sources.list.d/webupd21team-java.list
+echo "deb-src http://ppa.launchpad.net/webupd21team/java/ubuntu xenial main" | tee -a /etc/apt/sources.list.d/webupd21team-java.list
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
 apt-get update
-apt-get install oracle-java11-installer
+apt-get install oracle-java21-installer
 apt-get install graphviz xdg-utils libtool automake build-essential python3 python3-decorator \
                 python3-pip python3-dev libboost-serialization1.55.0 libboost-iostreams1.55.0 \
                 libxml2 libxml2-dev libboost-dev csh gfortran papi-tools
