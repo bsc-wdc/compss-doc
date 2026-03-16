@@ -65,3 +65,4 @@ can be selected instead (see Section :ref:`yaml-config`).
     05_Workflow_Provenance/01_Run
     05_Workflow_Provenance/02_Publish
     05_Workflow_Provenance/09_RS
+    05_Workflow_Provenance/10_Examples

@@ -31,6 +31,11 @@ Our current implementation needs ``ro-crate-py`` version ``0.13.0`` or higher.
     python versions at ``/apps/COMPSs/LIBRARIES/``, and COMPSs is configured to use it. Thus, you don't need
     to install ro-crate-py.
 
+.. WARNING::
+
+    Some Python versions at some Linux distributions do not have installed by default ``yaml`` and ``pytz``, thus
+    you will need to install them too using ``pip``.
+
 .. TIP::
 
     If you installed the COMPSs CLI (:ref:`Sections/04_Ecosystem/09_CLI/01_Installation:Requirements and Installation`),
