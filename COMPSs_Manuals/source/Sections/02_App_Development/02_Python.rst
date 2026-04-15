@@ -29,7 +29,7 @@ brief overview on how to execute it.
                         :link-type: doc
                         :text-align: center
 
-                        .. figure:: /Logos/COMPSs_logo.png
+                        .. figure:: /Logos/logo-color.svg
                             :width: 6.0%
 
                     .. grid-item::

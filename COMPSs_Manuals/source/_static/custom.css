@@ -103,6 +103,152 @@
   }
 }
 
+/* Left sidebar separation line */
+.wy-body-for-nav .wy-nav-content-wrap {
+  border-left: 1px solid #d9d9d9;
+}
+
+/* ---------------------------------------------------------- */
+
+/* Light sidebar background */
+
+.wy-nav-side {
+  background: #fffaf6;
+}
+
+/* Sidebar scroll area background */
+.wy-side-scroll {
+  background: #fffaf6;
+}
+
+/* Sidebar menu container */
+.wy-menu-vertical {
+  background: #fffaf6;
+  padding: 10px 10px 16px;
+}
+
+/* Sidebar menu links */
+.wy-menu-vertical a {
+  color: #3a312b;
+  background: transparent;
+  border-radius: 12px;
+  margin: 4px 0;
+  padding: 10px 14px;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+/* Sidebar menu hover state */
+.wy-menu-vertical a:hover {
+  background: #f6e8dc;
+  color: #231d19;
+  transform: translateX(2px);
+}
+
+/* Active top-level menu link */
+.wy-menu-vertical li.current > a,
+.wy-menu-vertical li.current > a:hover,
+.wy-menu-vertical li.current > a:visited {
+  background: #ffe7db;
+  color: #d9653d;
+  font-weight: 700;
+  border-top: 2px solid #ffe7db;
+  border-bottom: 2px solid #ffe7db;
+  box-shadow: none;
+  outline: none;
+}
+
+/* Remove default current item background */
+.wy-menu-vertical li.current {
+  background: transparent;
+}
+
+/* Active menu link shape */
+.wy-menu-vertical li.current > a {
+  border-radius: 12px 12px 12px 12px;
+  margin-bottom: 0;
+  border: 2px solid #ffe7db;
+  border-right: none !important;
+  box-shadow: none;
+}
+
+/* Expanded submenu container */
+.wy-menu-vertical li.current > ul {
+  background: #efefef;
+  border-radius: 12px 12px 12px 12px;
+  overflow: hidden;
+  margin-top: 0;
+}
+
+/* Expanded submenu links */
+.wy-menu-vertical li.current > ul li > a {
+  border: 0;
+  border-right: none !important;
+  box-shadow: none;
+}
+
+/* Remove theme right border on active items */
+.wy-menu-vertical li.current a {
+  border-right: none !important;
+}
+
+/* Deeper sidebar levels text color */
+.wy-menu-vertical li.toctree-l2 > a,
+.wy-menu-vertical li.toctree-l3 > a,
+.wy-menu-vertical li.toctree-l4 > a {
+  color: #5a4b42;
+}
+
+/* Search box wrapper */
+.wy-side-nav-search {
+  background: #fffaf6 !important;
+  border-bottom: 1px solid #ffe7db;
+  padding-bottom: 18px;
+}
+
+/* Search input style */
+.wy-side-nav-search input[type="text"] {
+  background: #ffffff;
+  border: 1px solid #d8c5b6;
+  border-radius: 999px;
+  box-shadow: none;
+  color: #3a312b;
+}
+
+/* Search input focus state */
+.wy-side-nav-search input[type="text"]:focus {
+  border-color: #ff7a4d;
+  box-shadow: 0 0 0 3px rgba(255, 122, 77, 0.12);
+}
+
+/* Home primary buttons */
+
+.sd-btn.sd-btn-primary {
+  background: linear-gradient(135deg, #ff8a5f 0%, #f06f45 100%) !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 10px 22px rgba(240, 111, 69, 0.18);
+  color: #ffffff !important;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  padding: 0.9rem 1.25rem !important;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+/* Home primary buttons hover state */
+.sd-btn.sd-btn-primary:hover,
+.sd-btn.sd-btn-primary:focus {
+  background: linear-gradient(135deg, #ff946d 0%, #f47a51 100%) !important;
+  box-shadow: 0 14px 28px rgba(240, 111, 69, 0.24);
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  text-decoration: none !important;
+}
+
+/* Keep button text color inherited */
+.sd-btn.sd-btn-primary .std.std-ref {
+  color: inherit !important;
+}
+
 /* ---------------------------------------------------------- */
 
 /* Particle container */

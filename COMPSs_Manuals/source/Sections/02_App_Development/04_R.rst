@@ -40,7 +40,7 @@ The code can be found in: https://github.com/stsds/RCOMPSs
                         :link-type: doc
                         :text-align: center
 
-                        .. figure:: /Logos/COMPSs_logo.png
+                        .. figure:: /Logos/logo-color.svg
                             :width: 6.0%
 
                     .. grid-item::
