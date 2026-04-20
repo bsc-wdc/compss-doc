@@ -74,6 +74,11 @@
   animation: heartbeat-ultrasoft 2.8s ease-in-out infinite;
 }
 
+/* Remove default background hover for the logo link */
+.wy-side-nav-search > a:hover {
+  background: transparent !important;
+}
+
 /* Keyframes heartbeat in the logo */
 @keyframes heartbeat-ultrasoft {
   0% {
@@ -113,25 +118,25 @@
 /* Light sidebar background */
 
 .wy-nav-side {
-  background: #fffaf6;
+  background: #fafafa;
 }
 
 /* Sidebar scroll area background */
 .wy-side-scroll {
-  background: #fffaf6;
+  background: #fafafa;
 }
 
 /* Sidebar menu container */
 .wy-menu-vertical {
-  background: #fffaf6;
+  background: #fafafa;
   padding: 10px 10px 16px;
 }
 
 /* Sidebar menu links */
 .wy-menu-vertical a {
-  color: #3a312b;
+  color: #000000;
   background: transparent;
-  border-radius: 12px;
+  border-radius: 4px;
   margin: 4px 0;
   padding: 10px 14px;
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
@@ -139,8 +144,8 @@
 
 /* Sidebar menu hover state */
 .wy-menu-vertical a:hover {
-  background: #f6e8dc;
-  color: #231d19;
+  background: #e0e0e0;
+  color: #000000;
   transform: translateX(2px);
 }
 
@@ -148,11 +153,10 @@
 .wy-menu-vertical li.current > a,
 .wy-menu-vertical li.current > a:hover,
 .wy-menu-vertical li.current > a:visited {
-  background: #ffe7db;
-  color: #d9653d;
+  background: #d7d7d7;
+  border-color: #d7d7d7;
+  color: #000000;
   font-weight: 700;
-  border-top: 2px solid #ffe7db;
-  border-bottom: 2px solid #ffe7db;
   box-shadow: none;
   outline: none;
 }
@@ -162,19 +166,12 @@
   background: transparent;
 }
 
-/* Active menu link shape */
-.wy-menu-vertical li.current > a {
-  border-radius: 12px 12px 12px 12px;
-  margin-bottom: 0;
-  border: 2px solid #ffe7db;
-  border-right: none !important;
-  box-shadow: none;
-}
+
 
 /* Expanded submenu container */
 .wy-menu-vertical li.current > ul {
-  background: #efefef;
-  border-radius: 12px 12px 12px 12px;
+  background: #e0e0e0;
+  border-radius: 4px 4px 4px 4px;
   overflow: hidden;
   margin-top: 0;
 }
@@ -182,51 +179,52 @@
 /* Expanded submenu links */
 .wy-menu-vertical li.current > ul li > a {
   border: 0;
-  border-right: none !important;
+  background: transparent;
   box-shadow: none;
 }
 
 /* Remove theme right border on active items */
 .wy-menu-vertical li.current a {
-  border-right: none !important;
+  background: #d7d7d7;
 }
 
 /* Deeper sidebar levels text color */
 .wy-menu-vertical li.toctree-l2 > a,
 .wy-menu-vertical li.toctree-l3 > a,
 .wy-menu-vertical li.toctree-l4 > a {
-  color: #5a4b42;
+  color: #363636;
+  background: transparent;
 }
 
 /* Search box wrapper */
 .wy-side-nav-search {
-  background: #fffaf6 !important;
-  border-bottom: 1px solid #ffe7db;
+  background: #0071BC !important;
+  border-bottom: 1px solid #d9d9d9;
   padding-bottom: 18px;
 }
 
 /* Search input style */
 .wy-side-nav-search input[type="text"] {
   background: #ffffff;
-  border: 1px solid #d8c5b6;
+  border: 1px solid #d2d2d2;
   border-radius: 999px;
   box-shadow: none;
-  color: #3a312b;
+  color: #000000;
 }
 
 /* Search input focus state */
 .wy-side-nav-search input[type="text"]:focus {
-  border-color: #ff7a4d;
-  box-shadow: 0 0 0 3px rgba(255, 122, 77, 0.12);
+  border-color: #4d6bff;
+  box-shadow: 0 0 0 3px rgba(77, 80, 255, 0.12);
 }
 
 /* Home primary buttons */
 
 .sd-btn.sd-btn-primary {
-  background: linear-gradient(135deg, #ff8a5f 0%, #f06f45 100%) !important;
+  background: linear-gradient(135deg, #0071BC 0%, #0166a9 100%) !important;
   border: 0 !important;
   border-radius: 14px !important;
-  box-shadow: 0 10px 22px rgba(240, 111, 69, 0.18);
+  box-shadow: 0 10px 22px rgba(69, 129, 240, 0.24);
   color: #ffffff !important;
   font-weight: 700;
   letter-spacing: 0.01em;
@@ -237,8 +235,8 @@
 /* Home primary buttons hover state */
 .sd-btn.sd-btn-primary:hover,
 .sd-btn.sd-btn-primary:focus {
-  background: linear-gradient(135deg, #ff946d 0%, #f47a51 100%) !important;
-  box-shadow: 0 14px 28px rgba(240, 111, 69, 0.24);
+  background: linear-gradient(135deg, #015d9a 0%, #014674 100%) !important;
+  box-shadow: 0 14px 28px rgba(69, 129, 240, 0.24);
   color: #ffffff !important;
   transform: translateY(-2px);
   text-decoration: none !important;
@@ -271,3 +269,254 @@
 }
 
 /* ---------------------------------------------------------- */
+
+/* Theme toggle button */
+
+/* Toggle wrapper below the search box. */
+.theme-toggle-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* Toggle button base style in light mode. */
+.theme-toggle-button {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(4px);
+}
+
+/* Toggle button hover state in light mode. */
+.theme-toggle-button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Toggle keyboard focus ring in light mode. */
+.theme-toggle-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(77, 107, 255, 0.12);
+}
+
+/* Toggle icon alignment. */
+.theme-toggle-icon {
+  line-height: 1;
+}
+
+/* Nested submenu normalization */
+
+/* Active nested submenu item in light mode. */
+.wy-menu-vertical li.current ul li.current > a,
+.wy-menu-vertical li.current ul li.current > a:hover,
+.wy-menu-vertical li.current ul li.current > a:visited {
+  background: #C9C9C9;
+  color: #000000;
+  box-shadow: none;
+}
+
+/* Second nested submenu container in light mode. */
+.wy-menu-vertical li.current ul li.current > ul {
+  background: transparent;
+}
+
+/* Dark theme colors */
+
+/* Page background and default text in dark mode. */
+html[data-theme="dark"] body,
+html[data-theme="dark"] .wy-body-for-nav,
+html[data-theme="dark"] .wy-nav-content-wrap,
+html[data-theme="dark"] .wy-nav-content,
+html[data-theme="dark"] .rst-content {
+  background: #1E1E1E;
+  color: #efeeee;
+}
+
+/* Main content panel background in dark mode. */
+html[data-theme="dark"] .wy-nav-content {
+  background: #1E1E1E;
+}
+
+/* Divider between sidebar and content in dark mode. */
+html[data-theme="dark"] .wy-body-for-nav .wy-nav-content-wrap {
+  border-left: 1px solid #2c2c2b;
+}
+
+/* Documentation text color in dark mode. */
+html[data-theme="dark"] .rst-content,
+html[data-theme="dark"] .rst-content p,
+html[data-theme="dark"] .rst-content li,
+html[data-theme="dark"] .rst-content dd,
+html[data-theme="dark"] .rst-content dt,
+html[data-theme="dark"] .rst-content table,
+html[data-theme="dark"] .rst-content h1,
+html[data-theme="dark"] .rst-content h2,
+html[data-theme="dark"] .rst-content h3,
+html[data-theme="dark"] .rst-content h4,
+html[data-theme="dark"] .rst-content h5,
+html[data-theme="dark"] .rst-content h6,
+html[data-theme="dark"] .rubric {
+  color: #efeeee;
+}
+
+/* Link color in dark mode. */
+html[data-theme="dark"] .rst-content a,
+html[data-theme="dark"] .wy-breadcrumbs a,
+html[data-theme="dark"] .wy-breadcrumbs-aside a {
+  color: #91a3ff;
+}
+
+/* Breadcrumb text color in dark mode. */
+html[data-theme="dark"] .wy-breadcrumbs,
+html[data-theme="dark"] .wy-breadcrumbs li,
+html[data-theme="dark"] .wy-breadcrumbs li a,
+html[data-theme="dark"] .wy-breadcrumbs-aside a {
+  color: #b0b8cf;
+}
+
+/* Horizontal rules in dark mode. */
+html[data-theme="dark"] .rst-content hr {
+  border-color: #4a4949;
+}
+
+/* Sidebar and search backgrounds in dark mode. */
+html[data-theme="dark"] .wy-nav-side,
+html[data-theme="dark"] .wy-side-scroll,
+html[data-theme="dark"] .wy-menu-vertical,
+html[data-theme="dark"] .wy-side-nav-search {
+  background: #252526 !important;
+}
+
+/* Bottom divider inside the search area in dark mode. */
+html[data-theme="dark"] .wy-side-nav-search {
+  border-bottom: 1px solid #353535;
+}
+
+/* Sidebar link text in dark mode. */
+html[data-theme="dark"] .wy-menu-vertical a {
+  color: #ffffff;
+  background: transparent;
+}
+
+/* Sidebar link hover state in dark mode. */
+html[data-theme="dark"] .wy-menu-vertical a:hover {
+  background: #404040;
+  color: #ffffff;
+}
+
+/* Active top-level menu item in dark mode. d borde*/
+html[data-theme="dark"] .wy-menu-vertical li.current > a,
+html[data-theme="dark"] .wy-menu-vertical li.current > a:hover,
+html[data-theme="dark"] .wy-menu-vertical li.current > a:visited {
+  background: #404040;
+  color: #ffffff;
+  border-color: transparent;
+}
+
+/* Expanded submenu container in dark mode. */
+html[data-theme="dark"] .wy-menu-vertical li.current > ul {
+  background: #2e2e2e;
+}
+
+
+/* Non-active links inside expanded submenus in dark mode. */
+html[data-theme="dark"] .wy-menu-vertical li.current ul li:not(.current) > a,
+html[data-theme="dark"] .wy-menu-vertical li.current ul li:not(.current) > a:hover,
+html[data-theme="dark"] .wy-menu-vertical li.current ul li:not(.current) > a:visited {
+  background: transparent !important;
+  color: #ffffff;
+}
+
+/* Nested submenu text color in dark mode. d*/
+html[data-theme="dark"] .wy-menu-vertical li.current > ul li > a,
+html[data-theme="dark"] .wy-menu-vertical li.toctree-l2 > a,
+html[data-theme="dark"] .wy-menu-vertical li.toctree-l3 > a,
+html[data-theme="dark"] .wy-menu-vertical li.toctree-l4 > a {
+  background: transparent;
+  color: #ffffff;
+}
+
+/* Active nested submenu item in dark mode. d*/
+html[data-theme="dark"] .wy-menu-vertical li.current ul li.current > a,
+html[data-theme="dark"] .wy-menu-vertical li.current ul li.current > a:hover,
+html[data-theme="dark"] .wy-menu-vertical li.current ul li.current > a:visited {
+  background: #404040;
+  color: #ffffff;
+}
+
+/* Second nested submenu container in dark mode. d*/ 
+html[data-theme="dark"] .wy-menu-vertical li.current ul li.current > ul {
+  background: transparent;
+}
+
+/* Search input background and border in dark mode. */
+html[data-theme="dark"] .wy-side-nav-search input[type="text"] {
+  background: #1d1c1c;
+  border-color: #3a3a3a;
+  color: #ffffff;
+}
+
+/* Search placeholder color in dark mode. */
+html[data-theme="dark"] .wy-side-nav-search input[type="text"]::placeholder {
+  color: #b0b0b0;
+}
+
+/* Focus ring for search and toggle in dark mode. */
+html[data-theme="dark"] .wy-side-nav-search input[type="text"]:focus,
+html[data-theme="dark"] .theme-toggle-button:focus-visible {
+  box-shadow: 0 0 0 3px rgba(192, 192, 192, 0.18);
+}
+
+/* Toggle button base style in dark mode. */
+html[data-theme="dark"] .theme-toggle-button {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #e2e2e2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Toggle button hover state in dark mode. */
+html[data-theme="dark"] .theme-toggle-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* Homepage primary buttons in dark mode. */
+html[data-theme="dark"] .sd-btn.sd-btn-primary {
+  background: linear-gradient(135deg, #0071BC 0%, #0166a9 100%) !important;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.28);
+}
+
+/* Homepage primary buttons hover state in dark mode. */
+html[data-theme="dark"] .sd-btn.sd-btn-primary:hover,
+html[data-theme="dark"] .sd-btn.sd-btn-primary:focus {
+  background: linear-gradient(135deg, #017cce 0%, #0172bd 100%) !important;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.34);
+}
+
+/* Mobile top navigation background in dark mode. */
+html[data-theme="dark"] .wy-nav-top {
+  background: #181512 !important;
+}
+
+/* Mobile top navigation text and icon color in dark mode. */
+html[data-theme="dark"] .wy-nav-top a,
+html[data-theme="dark"] .wy-nav-top i {
+  color: #e2e2e2 !important;
+}
