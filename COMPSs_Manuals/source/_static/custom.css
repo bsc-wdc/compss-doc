@@ -11,21 +11,21 @@
 /* Logos for projects parameters */
 
 .wy-side-nav-search .logo {
-    max-width: 150px;
-    max-height: 200px;
+  max-width: 150px;
+  max-height: 200px;
 }
 
 .logo-cell {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    transition: transform 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  transition: transform 0.3s;
 }
 
 .logo-cell img:hover {
-    transform: scale(1.1);
-    cursor: pointer;
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
 /* ---------------------------------------------------------- */
@@ -33,32 +33,32 @@
 /* Footer style */
 
 .custom-footer-logos {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 60px;
-    width: auto;
-    margin-top: 20px;
-    padding-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  width: auto;
+  margin-top: 20px;
+  padding-top: 15px;
 }
 
 .footer-left {
-    text-align: left;
+  text-align: left;
 }
 
 .footer-right {
-    text-align: right;
+  text-align: right;
 }
 
 @media (max-width: 768px) {
-    .custom-footer-logos {
-        flex-direction: column;
-        gap: 10px;
-    }
+  .custom-footer-logos {
+    flex-direction: column;
+    gap: 10px;
+  }
 
-    .footer-right {
-        text-align: center;
-    }
+  .footer-right {
+    text-align: center;
+  }
 }
 
 /* Logo container */
@@ -75,7 +75,7 @@
 }
 
 /* Remove default background hover for the logo link */
-.wy-side-nav-search > a:hover {
+.wy-side-nav-search>a:hover {
   background: transparent !important;
 }
 
@@ -83,28 +83,35 @@
 @keyframes heartbeat-ultrasoft {
   0% {
     transform: scale(1);
-    filter: drop-shadow(0 0 0 rgba(255,0,0,0));
+    filter: drop-shadow(0 0 0 rgba(255, 0, 0, 0));
   }
+
   7% {
-    transform: scale(1.05); /* solo 5% de aumento */
-    filter: drop-shadow(0 0 2px rgba(255,0,0,0.15));
+    transform: scale(1.05);
+    /* solo 5% de aumento */
+    filter: drop-shadow(0 0 2px rgba(255, 0, 0, 0.15));
   }
+
   14% {
     transform: scale(1);
-    filter: drop-shadow(0 0 0 rgba(255,0,0,0));
+    filter: drop-shadow(0 0 0 rgba(255, 0, 0, 0));
   }
+
   21% {
-    transform: scale(1.03); /* segundo latido más sutil aún */
-    filter: drop-shadow(0 0 1px rgba(255,0,0,0.1));
+    transform: scale(1.03);
+    /* segundo latido más sutil aún */
+    filter: drop-shadow(0 0 1px rgba(255, 0, 0, 0.1));
   }
+
   28% {
     transform: scale(1);
-    filter: drop-shadow(0 0 0 rgba(255,0,0,0));
+    filter: drop-shadow(0 0 0 rgba(255, 0, 0, 0));
   }
+
   /* Soft pause between heartbeats */
   100% {
     transform: scale(1);
-    filter: drop-shadow(0 0 0 rgba(255,0,0,0));
+    filter: drop-shadow(0 0 0 rgba(255, 0, 0, 0));
   }
 }
 
@@ -150,9 +157,9 @@
 }
 
 /* Active top-level menu link */
-.wy-menu-vertical li.current > a,
-.wy-menu-vertical li.current > a:hover,
-.wy-menu-vertical li.current > a:visited {
+.wy-menu-vertical li.current>a,
+.wy-menu-vertical li.current>a:hover,
+.wy-menu-vertical li.current>a:visited {
   background: #d7d7d7;
   border-color: #d7d7d7;
   color: #000000;
@@ -169,7 +176,7 @@
 
 
 /* Expanded submenu container */
-.wy-menu-vertical li.current > ul {
+.wy-menu-vertical li.current>ul {
   background: #e0e0e0;
   border-radius: 4px 4px 4px 4px;
   overflow: hidden;
@@ -177,7 +184,7 @@
 }
 
 /* Expanded submenu links */
-.wy-menu-vertical li.current > ul li > a {
+.wy-menu-vertical li.current>ul li>a {
   border: 0;
   background: transparent;
   box-shadow: none;
@@ -189,9 +196,9 @@
 }
 
 /* Deeper sidebar levels text color */
-.wy-menu-vertical li.toctree-l2 > a,
-.wy-menu-vertical li.toctree-l3 > a,
-.wy-menu-vertical li.toctree-l4 > a {
+.wy-menu-vertical li.toctree-l2>a,
+.wy-menu-vertical li.toctree-l3>a,
+.wy-menu-vertical li.toctree-l4>a {
   color: #363636;
   background: transparent;
 }
@@ -264,8 +271,15 @@
 
 /* Fall animation */
 @keyframes fall {
-  0% { transform: translateY(-2em) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  0% {
+    transform: translateY(-2em) rotate(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
 }
 
 /* ---------------------------------------------------------- */
@@ -320,16 +334,16 @@
 /* Nested submenu normalization */
 
 /* Active nested submenu item in light mode. */
-.wy-menu-vertical li.current ul li.current > a,
-.wy-menu-vertical li.current ul li.current > a:hover,
-.wy-menu-vertical li.current ul li.current > a:visited {
+.wy-menu-vertical li.current ul li.current>a,
+.wy-menu-vertical li.current ul li.current>a:hover,
+.wy-menu-vertical li.current ul li.current>a:visited {
   background: #C9C9C9;
   color: #000000;
   box-shadow: none;
 }
 
 /* Second nested submenu container in light mode. */
-.wy-menu-vertical li.current ul li.current > ul {
+.wy-menu-vertical li.current ul li.current>ul {
   background: transparent;
 }
 
@@ -418,47 +432,47 @@ html[data-theme="dark"] .wy-menu-vertical a:hover {
 }
 
 /* Active top-level menu item in dark mode. d borde*/
-html[data-theme="dark"] .wy-menu-vertical li.current > a,
-html[data-theme="dark"] .wy-menu-vertical li.current > a:hover,
-html[data-theme="dark"] .wy-menu-vertical li.current > a:visited {
+html[data-theme="dark"] .wy-menu-vertical li.current>a,
+html[data-theme="dark"] .wy-menu-vertical li.current>a:hover,
+html[data-theme="dark"] .wy-menu-vertical li.current>a:visited {
   background: #404040;
   color: #ffffff;
   border-color: transparent;
 }
 
 /* Expanded submenu container in dark mode. */
-html[data-theme="dark"] .wy-menu-vertical li.current > ul {
+html[data-theme="dark"] .wy-menu-vertical li.current>ul {
   background: #2e2e2e;
 }
 
 
 /* Non-active links inside expanded submenus in dark mode. */
-html[data-theme="dark"] .wy-menu-vertical li.current ul li:not(.current) > a,
-html[data-theme="dark"] .wy-menu-vertical li.current ul li:not(.current) > a:hover,
-html[data-theme="dark"] .wy-menu-vertical li.current ul li:not(.current) > a:visited {
+html[data-theme="dark"] .wy-menu-vertical li.current ul li:not(.current)>a,
+html[data-theme="dark"] .wy-menu-vertical li.current ul li:not(.current)>a:hover,
+html[data-theme="dark"] .wy-menu-vertical li.current ul li:not(.current)>a:visited {
   background: transparent !important;
   color: #ffffff;
 }
 
 /* Nested submenu text color in dark mode. d*/
-html[data-theme="dark"] .wy-menu-vertical li.current > ul li > a,
-html[data-theme="dark"] .wy-menu-vertical li.toctree-l2 > a,
-html[data-theme="dark"] .wy-menu-vertical li.toctree-l3 > a,
-html[data-theme="dark"] .wy-menu-vertical li.toctree-l4 > a {
+html[data-theme="dark"] .wy-menu-vertical li.current>ul li>a,
+html[data-theme="dark"] .wy-menu-vertical li.toctree-l2>a,
+html[data-theme="dark"] .wy-menu-vertical li.toctree-l3>a,
+html[data-theme="dark"] .wy-menu-vertical li.toctree-l4>a {
   background: transparent;
   color: #ffffff;
 }
 
 /* Active nested submenu item in dark mode. d*/
-html[data-theme="dark"] .wy-menu-vertical li.current ul li.current > a,
-html[data-theme="dark"] .wy-menu-vertical li.current ul li.current > a:hover,
-html[data-theme="dark"] .wy-menu-vertical li.current ul li.current > a:visited {
+html[data-theme="dark"] .wy-menu-vertical li.current ul li.current>a,
+html[data-theme="dark"] .wy-menu-vertical li.current ul li.current>a:hover,
+html[data-theme="dark"] .wy-menu-vertical li.current ul li.current>a:visited {
   background: #404040;
   color: #ffffff;
 }
 
-/* Second nested submenu container in dark mode. d*/ 
-html[data-theme="dark"] .wy-menu-vertical li.current ul li.current > ul {
+/* Second nested submenu container in dark mode. d*/
+html[data-theme="dark"] .wy-menu-vertical li.current ul li.current>ul {
   background: transparent;
 }
 
@@ -519,4 +533,135 @@ html[data-theme="dark"] .wy-nav-top {
 html[data-theme="dark"] .wy-nav-top a,
 html[data-theme="dark"] .wy-nav-top i {
   color: #e2e2e2 !important;
+}
+
+/* Fix Admonitions (Warnings, Important, Note) background in dark mode */
+html[data-theme="dark"] .rst-content .admonition {
+  background: #252526;
+}
+
+html[data-theme="dark"] .rst-content .admonition.warning {
+  background: #3b2e21;
+  /* Dark orange */
+}
+
+html[data-theme="dark"] .rst-content .admonition.important {
+  background: #1a332d;
+  /* Dark teal */
+}
+
+html[data-theme="dark"] .rst-content .admonition.note {
+  background: #1c2b3a;
+  /* Dark blue */
+}
+
+html[data-theme="dark"] .rst-content .admonition .admonition-title {
+  color: #ffffff;
+}
+
+/* Fix Code blocks background in dark mode */
+html[data-theme="dark"] .rst-content div[class^='highlight'] {
+  background: #1e1e1e;
+  border: 1px solid #3a3a3a;
+}
+
+html[data-theme="dark"] .rst-content .highlight pre,
+html[data-theme="dark"] .rst-content pre.literal-block {
+  background: transparent;
+  color: #d4d4d4;
+}
+
+/* Fix Inline code background and text color in dark mode */
+html[data-theme="dark"] .rst-content code.literal,
+html[data-theme="dark"] .rst-content tt.literal {
+  background: #2d2d30;
+  border: 1px solid #3f3f46;
+  color: #ff9d9d;
+  /* Brighter red for contrast on dark background */
+}
+
+/* Fix sphinx-design cards and backgrounds in dark mode */
+html[data-theme="dark"] .rst-content .sd-bg-light {
+  background-color: #222223 !important;
+  border-radius: 12px;
+  padding-bottom: 10px;
+}
+
+html[data-theme="dark"] .rst-content .sd-card {
+  background-color: #28282a !important;
+  border-color: #3a3a3a !important;
+  border-radius: 10px;
+}
+
+html[data-theme="dark"] .rst-content .sd-card:hover {
+  border-color: #5a5a5a !important;
+  background-color: #2e2e30 !important;
+}
+
+html[data-theme="dark"] .rst-content .sd-card-header,
+html[data-theme="dark"] .rst-content .sd-card-footer {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+  border-color: #3a3a3a !important;
+}
+
+/* Fix unreadable dark blue Pygments syntax highlighting in dark mode */
+html[data-theme="dark"] .rst-content .highlight .nn,
+/* Namespace/Package */
+html[data-theme="dark"] .rst-content .highlight .nc,
+/* Class */
+html[data-theme="dark"] .rst-content .highlight .nf,
+/* Function/Method */
+html[data-theme="dark"] .rst-content .highlight .na,
+/* Attribute */
+html[data-theme="dark"] .rst-content .highlight .nt,
+/* Tag */
+html[data-theme="dark"] .rst-content .highlight .nv,
+/* Variable */
+html[data-theme="dark"] .rst-content .highlight .ni,
+/* Name Entity */
+html[data-theme="dark"] .rst-content .highlight .gp
+
+/* Generic Prompt ($) */
+  {
+  color: #61afef !important;
+  /* Lighter, readable blue */
+}
+
+/* Improve visibility of decorators/annotations in dark mode */
+html[data-theme="dark"] .rst-content .highlight .nd {
+  color: #c678dd !important;
+  /* Light purple */
+}
+
+/* Fix alternating table row backgrounds in dark mode */
+html[data-theme="dark"] .rst-content table.docutils tbody tr:nth-child(odd) td,
+html[data-theme="dark"] .rst-content table.docutils tbody tr:nth-child(odd) th,
+html[data-theme="dark"] .rst-content table.docutils tbody tr.row-odd td,
+html[data-theme="dark"] .rst-content table.docutils tbody tr.row-odd th {
+  background-color: #252526 !important;
+}
+
+html[data-theme="dark"] .rst-content table.docutils tbody tr:nth-child(even) td,
+html[data-theme="dark"] .rst-content table.docutils tbody tr:nth-child(even) th,
+html[data-theme="dark"] .rst-content table.docutils tbody tr.row-even td,
+html[data-theme="dark"] .rst-content table.docutils tbody tr.row-even th {
+  background-color: #1e1e1e !important;
+}
+
+html[data-theme="dark"] .rst-content table.docutils th {
+  background-color: #2d2d30 !important;
+  border-color: #3a3a3a !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .rst-content table.docutils td {
+  border-color: #3a3a3a !important;
+}
+
+/* Fix invisible dark captions (tables and figures) in dark mode */
+html[data-theme="dark"] .rst-content .caption,
+html[data-theme="dark"] .rst-content .caption-text,
+html[data-theme="dark"] .rst-content caption,
+html[data-theme="dark"] .rst-content figcaption {
+  color: #b0b8cf !important;
 }
