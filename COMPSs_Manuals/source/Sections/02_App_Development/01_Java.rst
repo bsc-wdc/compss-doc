@@ -17,7 +17,7 @@ available resources.
         :link-type: doc
         :text-align: center
 
-        .. figure:: /Logos/COMPSs_logo.png
+        .. figure:: /Logos/logo-color.svg
             :width: 12.0%
 
     .. grid-item-card:: Application compilation

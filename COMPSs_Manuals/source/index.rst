@@ -9,7 +9,7 @@
 |:wave:| Welcome to COMPSs!
 ###########################
 
-.. figure:: /Logos/COMPSs_logo.png
+.. figure:: /_static/logo-color.png
     :width: 30.0%
     :align: center
     :target: http://compss.bsc.es

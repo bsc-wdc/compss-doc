@@ -117,13 +117,13 @@ numfig_format = {'figure':'Figure %s',
                  'code-block':'Code %s',
                  'section':'Section %s'}
 html_permalinks = False  # Disabled permalinks
-html_logo = '_static/COMPSs_logo.png'  # './Logos/COMPSs_slow_crop_effect_loop1.gif' # './Logos/COMPSs_logo_small.png'
+html_logo = '_static/logo-color.svg'
 html_show_sourcelink = False
 html_show_copyright = True
 html_show_sphinx = True
-html_favicon = './Logos/COMPSs_logo.ico'
+html_favicon = '_static/logo-color.png'
 nitpicky = True
-latex_logo = './Logos/COMPSs_logo.png'
+latex_logo = '_static/logo-color.png'
 
 # Disable notebooks Building
 nb_execution_mode = 'off'
@@ -176,7 +176,7 @@ html_theme = 'sphinx_rtd_theme' # 'alabaster'
 # documentation.
 #
 html_theme_options = {'logo_only': True,
-                      #'style_nav_header_background': 'black',
+                      'style_nav_header_background': 'white',
                       #'flyout_display': 'hidden',
                       #'language_selector': True,
                       # Toc options
@@ -406,7 +406,7 @@ latex_elements = {
             \vspace{0mm}
             \begin{figure}[!h]
              \centering
-             \includegraphics[scale=0.4]{COMPSs_logo.png}
+             \includegraphics[scale=0.4]{logo-color.png}
             \end{figure}
 
             \vspace{0mm}
