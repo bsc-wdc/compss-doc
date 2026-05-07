@@ -23,3 +23,11 @@ sphinx:
 python:
   install:
     - requirements: COMPSs_Manuals/doc/requirements.txt
+
+# Show a warning banner on non-latest/stable versions
+addons:
+  non_latest_version_warning:
+    enabled: true
+    versions:
+      - latest
+      - stable
