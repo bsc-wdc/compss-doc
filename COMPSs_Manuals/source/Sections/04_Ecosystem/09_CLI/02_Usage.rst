@@ -1241,7 +1241,7 @@ The tool streamlines your post-run analysis by automatically generating three pr
 - **Aggregated Cluster Plots:** Multinodes charts designed to show the big picture and immediately highlight statistical outliers across your infrastructure.
 - **Statistical Health Reports:** Deep-dive cluster analytics that provide automatic outlier detection, execution-phase inference, and load-imbalance warnings.
 
-To fit seamlessly into different workflows, the tool operates in two distinct modes. If you prefer a guided experience, the **Interactive Wizard** takes you through configuration step-by-step. Alternatively, if you are automating your infrastructure, the **Silent Mode** bypasses all prompts using command-line flags, making it a perfect fit for shell scripts and CI/CD pipelines.
+To fit seamlessly into different workflows, the tool operates in two distinct modes. If you prefer a guided experience, the **Interactive Mode** takes you through configuration step-by-step. Alternatively, for automatic scripts such as the Workflow Provenance, the **Silent Mode** bypasses all the user interaction using command-line flags.
 
 
 Input Data Requirements
@@ -1272,7 +1272,7 @@ enhancements:
 Operating Modes
 ---------------
 
-1. The Interactive Wizard
+1. The Interactive Mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For a hands-on, user-friendly approach, simply execute the command
@@ -1286,17 +1286,20 @@ without any arguments:
 
    compss_genprofiling
 
-This launches a 4-step configuration wizard:
+This launches a 4-step configuration interaction that guides you through the analysis setup:
 
 1. **Data Location:** You will be prompted to provide the path to your
    CSV files. As a convenience, if the tool detects a
    ``profiling/stats`` folder in your current working directory, it will
    select it by default.
 2. **Action Scope:** You can tailor the rendering workload depending on
-   your needs. Choose **All Nodes** for a complete sweep, **Outliers
-   Only** to isolate problematic machines, **Only Aggregated Plots** to
-   skip individual node charts entirely, or **Only Stats Analysis** to
-   output a quick terminal report without writing any image files.
+   your needs.
+
+   * **All Nodes:** Generation of all the plots of every node.
+   * **Outliers Only:** Generation of the plots of the nodes that have been detected as outliers.
+   * **Only Aggregated Plots:** Only generate the aggregated cluster-level plots.
+   * **Only Stats Analysis:** To output a quick terminal report without generating plots.
+
 3. **Metrics Selection:** Select which metrics you want to plot. While
    CPU and Memory are always available, GPU options will dynamically
    appear here if the underlying data supports them.
@@ -1333,7 +1336,7 @@ where:
 
 -  ``--dir DIRECTORY``: *(Required)* The target path holding your source
    CSV statistics.
--  ``--silent``: Disables the interactive wizard to run entirely in the
+-  ``--silent``: Disables the interactive mode to run entirely in the
    background.
 -  ``--scope SCOPE``: Defines the plotting boundaries. Accepts ``all``
    (default), ``outliers``, or ``aggregated``.
@@ -1346,26 +1349,31 @@ where:
    the tool writes directly to a folder inside your input data
    directory.
 
-Output Architecture
+Output Architecture Structure
 -------------------
 
-By default, the tool creates a structured ``plots/`` folder inside your
+By default, the tool creates a structured ``profiling/`` folder inside your
 data directory (or your specified custom ``--output_dir``). The
 directory tree organizes files systematically to prevent clutter:
 
 .. code:: text
 
-   <data_dir>/
-   └── plots/
-       ├── <MASTER_NODE>/
-       │   ├── cpu.svg
-       │   └── mem.svg
-       ├── outliers_cpu/<worker_node>/
-       ├── outliers_memory/<worker_node>/
-       ├── outliers_cpu_memory/<worker_node>/
-       ├── other_workers/<worker_node>/
-       ├── cpu_aggregated.svg
-       └── mem_aggregated.svg
+  profiling/
+    ├── <MASTER_NODE>/
+    │   ├── cpu.svg
+    │   └── mem.svg
+    # Folders containing the worker nodes
+    ├── outliers_cpu/<worker_node>/
+    ├── outliers_memory/<worker_node>/
+    ├── outliers_cpu_memory/<worker_node>/
+    ├── outliers_gpu/<worker_node>/ (if GPU metrics are present)
+    ├── outliers_gpu_memory/<worker_node>/ (if GPU metrics are present)
+    ├── other_workers/<worker_node>/
+    # Aggregated plots for the entire cluster
+    ├── cpu_aggregated.svg
+    ├── mem_aggregated.svg
+    ├── gpu_usage_aggregated.svg (if GPU metrics are present)
+    └── gpu_mem_aggregated.svg (if GPU metrics are present)
 
 The output hierarchy is governed by a few predictable rules:
 
@@ -1390,7 +1398,7 @@ Example of Analysis Report
 .. TIP::
     If you run ``compss_genprofiling`` command in a folder that contains a ``profiling/stats`` subfolder, it will be automatically selected as the input data directory. Ideally, this tool is supposed to be run in the RO-Crate folder generated by the workflow provenance, which contains the ``profiling/stats`` subfolder with the CSV files.
 
-Here is an example of the output generated by the tool when running in interactive mode. The report is printed in the console and it is also saved in a text file inside the ``plots`` folder.
+Here is an example of the output generated by the tool when running in interactive mode.
 
 .. figure:: ./Figures/genprofiling_analysis.png
     :name: Analytics Report
@@ -1411,6 +1419,8 @@ The possible status of the stages are:
 -  *Hanging / Prolonged Teardown* (nodes refusing to release or exit)
 
 The report also includes a summary of the number of nodes that were detected as outliers for each metric, and the total number of nodes analyzed. It provides a quick overview of the overall health and performance of the cluster during the COMPSs run.
+
+The analysis shows the global execution warings that are some feedback about the overall performance of the cluster during the COMPSs run. This messages are based on the statistical analysis, the stage and outliers detection and they provide suggestions about a possible improvement of the performance of the cluster. 
 
 .. TIP::
     The tool automatically detects if the GPU metrics are present in the CSV files and includes them in the analysis if available. 
