@@ -202,7 +202,8 @@ are specified, WorkflowHub will not allow to generate a DOI for the workflow exe
     and ``/path_1/inputs/B/B.txt`` are used, they will be located at ``dataset/inputs/A/A.txt`` and ``dataset/inputs/B/B.txt``
     respectively. However, if ``/path_1/inputs/A/A.txt`` and ``/path_2/inputs/B/B.txt`` are used (i.e. different root paths), the location will be
     ``dataset/A.txt`` and ``dataset/B.txt``, since files do not share a common path and are considered to be at different
-    locations. This will also happen if the folders are declared as COMPSs DIRECTORY parameters.
+    locations. Similarly, if the folders are declared as COMPSs DIRECTORY parameters, they will also be considered different locations
+    and no common paths will be searched among them.
 
 In the YAML configuration file, some more optional terms are available, but less commonly used:
 
