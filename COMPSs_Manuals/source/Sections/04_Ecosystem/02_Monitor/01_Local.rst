@@ -1,18 +1,112 @@
 Local
 *****
 
-COMPSs Monitor is installed as a service and can be easily managed by running any of the
-following commands:
+The local deployment runs the complete **COMPSs Monitor** stack with Docker
+Compose. The installation provides commands to start and stop all the required
+services from the terminal.
+
+Requirements
+============
+
+Before installing the monitor, make sure the following dependencies are
+available:
+
+-  **Docker**.
+-  **curl**.
+-  **jq**.
+-  **Python 3**.
+
+The Docker daemon must be running, and the current user must have permission to
+use it.
+
+Installation
+============
+
+The COMPSs Monitor repository is not public yet.
 
 .. code-block:: console
 
-    compss@bsc:~$ /etc/init.d/compss-monitor usage
-    Usage: compss-monitor {start | stop | reload | restart | try-restart | force-reload | status}
+    git clone <MONITOR_REPOSITORY_URL> compss-monitor
+    cd compss-monitor
+    ./install.sh
+
+The installation script:
+
+#. Checks that the required host tools are available.
+#. Creates the backend configuration from the provided example.
+#. Builds the Docker images.
+#. Installs ``compss_monitor_start`` and ``compss_monitor_stop`` in
+   ``$HOME/.local/bin``.
+
+If the commands are not found after the installation, add that directory to
+your ``PATH``:
+
+.. code-block:: console
+
+    export PATH="$HOME/.local/bin:$PATH"
+
+Add this line to your shell configuration file to make the change permanent.
+
+Start the monitor
+=================
+
+Start the complete monitoring stack before launching the COMPSs application:
+
+.. code-block:: console
+
+    compss_monitor_start
+
+On the first startup, the command starts Grafana, creates the service-account
+token required by the backend, and then starts the remaining services. This
+initial startup may take longer while the containers are created.
+
+Once the services are ready, open the web interface:
+
+.. code-block:: text
+
+    http://localhost:5173
+
+.. figure:: ./Figures/start_log.png
+   :name: compss_monitor_start_log
+   :alt: Command line showing that COMPSs Monitor have started succesfuly
+   :align: center
+   :width: 40%
+
+   COMPSs Monitor start command output.
+
+
+Run a monitored application
+===========================
+
+Enable metric and event export when launching the COMPSs application:
+
+.. code-block:: console
+
+    $ runcompss --tracing=monitor <APPLICATION> [APPLICATION_ARGUMENTS]
+
+
+The **Monitor** view displays CPU and memory usage, Runtime and API events, and
+the tasks being executed. The **Graph** view shows tasks and dependencies as
+they are created and executed.
+
+Stop the monitor
+================
+
+Stop the stack when it is no longer needed:
+
+.. code-block:: console
+
+    $ compss_monitor_stop
 
 .. WARNING::
 
-    The monitor is **NOT supported using agents**.
+   Always run ``compss_monitor_stop`` after using the monitor. Otherwise, its
+   containers remain active in the background and may continue consuming CPU,
+   memory, and storage resources.
 
+Monitoring data persists while the monitor is running. Stopping it resets this
+persistence, so the next session starts without the data collected during the
+previous one.
 
 Service configuration
 =====================
@@ -55,70 +149,5 @@ And use a web browser to open the specific URL:
 
 .. code-block:: console
 
-    compss@bsc:~$ firefox http://localhost:8080/compss-monitor &
-
-The COMPSs Monitor allows to monitor applications from different users
-and thus, users need to first login to access their applications. As
-shown in :numref:`monitoring_interface`, the users can select any of
-their executed or running COMPSs applications and display it.
-
-.. figure:: ./Figures/compss_monitor.jpeg
-   :name: monitoring_interface
-   :alt: COMPSs monitoring interface
-   :align: center
-   :width: 95.0%
-
-   COMPSs monitoring interface
-
-To enable **all** the COMPSs Monitor features, applications must run the
-``runcompss`` command with the ``--log_level=debug`` and ``-m`` flag.
-These flags allows the COMPSs Runtime to store special information inside
-inside the ``log_base_folder`` under the ``monitor`` folder (see
-:numref:`monitoring_interface` and :numref:`simple_logs_monitor`).
-Only advanced users should modify or delete any of these files. If the
-application that a user is trying to monitor has not been executed with
-this flag, some of the COMPSs Monitor features will be disabled.
-
-.. code-block:: console
-
-    compss@bsc:~/tutorial_apps/java/simple/jar$ runcompss --log_level=debug -m simple.Simple 1
-    [  INFO] Using default execution type: compss
-    [  INFO] Using default location for project file: /opt/COMPSs/Runtime/configuration/xml/projects/default_project.xml
-    [  INFO] Using default location for resources file: /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml
-    [  INFO] Using default language: java
-
-    ----------------- Executing simple.Simple --------------------------
-
-    WARNING: COMPSs Properties file is null. Setting default values
-    [(799)    API]  -  Deploying COMPSs Runtime v<version>
-    [(801)    API]  -  Starting COMPSs Runtime v<version>
-    [(801)    API]  -  Initializing components
-    [(1290)    API]  -  Ready to process tasks
-    [(1293)    API]  -  Opening /home/compss/tutorial_apps/java/simple/jar/counter in mode OUT
-    [(1338)    API]  -  File target Location: /home/compss/tutorial_apps/java/simple/jar/counter
-    Initial counter value is 1
-    [(1340)    API]  -  Creating task from method increment in simple.SimpleImpl
-    [(1340)    API]  -  There is 1 parameter
-    [(1341)    API]  -    Parameter 1 has type FILE_T
-    Final counter value is 2
-    [(4307)    API]  -  No more tasks for app 1
-    [(4311)    API]  -  Getting Result Files 1
-    [(4340)    API]  -  Stop IT reached
-    [(4344)    API]  -  Stopping Graph generation...
-    [(4344)    API]  -  Stopping Monitor...
-    [(6347)    API]  -  Stopping AP...
-    [(6348)    API]  -  Stopping TD...
-    [(6509)    API]  -  Stopping Comm...
-    [(6510)    API]  -  Runtime stopped
-    [(6510)    API]  -  Execution Finished
-
-    ------------------------------------------------------------
-
-
-.. figure:: ./Figures/logs_with_monitor.jpeg
-   :name: simple_logs_monitor
-   :alt: Logs generated by the Simple java application with the monitoring flag enabled
-   :align: center
-   :width: 25.0%
-
-   Logs generated by the Simple java application with the monitoring flag enabled
+    $ ./scripts/start.sh
+    $ ./scripts/stop.sh
