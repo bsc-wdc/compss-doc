@@ -117,7 +117,7 @@ numfig_format = {'figure':'Figure %s',
                  'code-block':'Code %s',
                  'section':'Section %s'}
 html_permalinks = False  # Disabled permalinks
-html_logo = '_static/logo-color.svg'
+html_logo = '_static/logo-color2.png'
 html_show_sourcelink = False
 html_show_copyright = True
 html_show_sphinx = True
