@@ -11,10 +11,9 @@ Requirements
 Before installing the monitor, make sure the following dependencies are
 available:
 
--  **Docker**.
--  **curl**.
--  **jq**.
--  **Python 3**.
+-  **Docker** to open the containerized tool.
+-  **curl** to make a request to Grafana.
+-  **jq** or **Python 3** to process Grafana JSON.
 
 The Docker daemon must be running, and the current user must have permission to
 use it.
