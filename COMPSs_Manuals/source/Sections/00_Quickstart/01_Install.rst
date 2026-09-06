@@ -168,9 +168,3 @@
             $ python3 -m pip install pycompss-cli
 
       A complete guide about the PyCOMPSs CLI installation and usage can be found in the :ref:`Sections/04_Ecosystem/09_CLI:|:magic_wand:| CLI` Section.
-
-      .. TIP::
-
-          Please, check the PyCOMPSs CLI :ref:`Sections/04_Ecosystem/09_CLI/01_Installation:Installation` Section for the further information with regard to the requirements installation and troubleshooting.
-
-

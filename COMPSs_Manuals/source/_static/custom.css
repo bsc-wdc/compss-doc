@@ -665,3 +665,89 @@ html[data-theme="dark"] .rst-content caption,
 html[data-theme="dark"] .rst-content figcaption {
   color: #b0b8cf !important;
 }
+
+/* ---------------------------------------------------------- */
+
+/* Main page toast */
+
+/* 1. TOAST CONTAINER: Floats and centers */
+#toast-container {
+    position: fixed;
+    top: 50%;
+    right: 30px;
+    transform: translateY(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column; /* Toasts in column */
+    gap: 15px;              /* Space between toasts */
+    pointer-events: none;   /* Click across the container */
+}
+
+/* 2. TOASTS: Boxes within the container */
+.floating-toast {
+    pointer-events: auto;    /* Reactivate clicks for the advert content */
+    width: 320px;
+    background-color: #ffffff;
+    color: #333;
+    border-left: 6px solid #ffcc00;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    font-family: sans-serif;
+    animation: slideInCenter 0.5s ease-out;
+}
+
+/* Contenido interno (Se mantiene igual) */
+.toast-content {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+
+.toast-icon {
+    font-size: 24px;
+    margin-right: 15px;
+}
+
+.toast-text {
+    flex-grow: 1;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.toast-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    margin-top: 5px;
+}
+
+.toast-link:hover {
+    text-decoration: underline;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #aaa;
+    margin-left: 10px;
+    line-height: 1;
+}
+
+.toast-close:hover {
+    color: #333;
+}
+
+/* Animación de entrada ajustada */
+@keyframes slideInCenter {
+    from {
+        transform: translateX(110%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

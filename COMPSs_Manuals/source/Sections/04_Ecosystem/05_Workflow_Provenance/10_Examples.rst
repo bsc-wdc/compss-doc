@@ -1,3 +1,20 @@
+.. spelling:word-list::
+
+   HPC
+   Kfold
+   kNN
+   Kos
+   Bodrum
+   Kos-Bodrum
+   Boumerdes
+   dataset
+   nct
+   factorisation
+   Lanczos
+   Marenostrum
+   eFlows
+
+
 Metadata examples
 *****************
 

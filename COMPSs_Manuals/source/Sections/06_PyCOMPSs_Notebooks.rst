@@ -90,7 +90,7 @@ Here you will find the PyCOMPSs demonstration notebooks used in the tutorials.
         .. tab-item:: **PyCOMPSs CLI**
             :sync: pycompss_cli
 
-            * ``pycompss-cli`` (see :ref:`Sections/04_Ecosystem/09_CLI/01_Installation:Requirements and Installation`)
+            * ``pycompss-cli`` (see :ref:`Sections/04_Ecosystem/09_CLI:|:magic_wand:| CLI`)
 
         .. tab-item:: **Docker**
             :sync: docker
@@ -123,7 +123,7 @@ Here you will find the PyCOMPSs demonstration notebooks used in the tutorials.
         .. tab-item:: **PyCOMPSs CLI**
             :sync: pycompss_cli
 
-            Check the ``pycompss-cli`` usage instructions (see :ref:`Sections/04_Ecosystem/09_CLI/02_Usage:Usage`)
+            Check the ``pycompss-cli`` usage instructions (see :ref:`Sections/04_Ecosystem/09_CLI/03_Usage_CLI:Usage`)
 
             Get the notebooks:
 
