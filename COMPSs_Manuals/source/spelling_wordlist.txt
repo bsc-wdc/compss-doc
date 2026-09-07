@@ -305,3 +305,6 @@ jdk
 systemwide
 ro-crate-inveniordm
 inveniordm
+Dockerized
+unicore
+Apptainer

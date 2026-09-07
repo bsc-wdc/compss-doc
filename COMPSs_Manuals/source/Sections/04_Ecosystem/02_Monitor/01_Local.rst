@@ -49,7 +49,7 @@ shown in :numref:`monitor_start`.
 
     The monitor can be started and stopped in multiple environments (local,
     docker and supercomputer) automatically using the CLI.
-    Please check: :ref:`Sections/04_Ecosystem/09_CLI/02_Usage:Running the COMPSs monitor`
+    Please check: :ref:`Sections/04_Ecosystem/09_CLI/03_Usage_CLI:COMPSs monitor`
 
 And use a web browser to open the specific URL:
 

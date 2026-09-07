@@ -86,7 +86,7 @@ descriptions of:
 
 .. TIP::
     Since its version ``3.4``, the ``PyCOMPSs CLI`` includes the capacity of inspecting RO-Crates with the
-    ``pycompss inspect <crate_folder/ | crate.zip>`` command. Check the :ref:`Sections/04_Ecosystem/09_CLI/02_Usage:Inspect Workflow Provenance`
+    ``pycompss inspect <crate_folder/ | crate.zip>`` command. Check the :ref:`Sections/04_Ecosystem/09_CLI/03_Usage_CLI:Inspect Workflow Provenance`
     Section for more details. The ``--verbose`` option makes it easier to explore the workflow execution in more detail.
     The ``--tasks`` option lists information about each task individually. The ``--data_assets`` option lists all the workflow's needed and generated
     datasets or files. The ``--failing_tasks`` option provides details on tasks that failed. The ``--methods`` option outputs task details

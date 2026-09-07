@@ -9,11 +9,40 @@
 |:wave:| Welcome to COMPSs!
 ###########################
 
+.. raw:: html
+
+   <div id="toast-container">
+       <!-- Toast 1: New CLI -->
+       <div class="floating-toast">
+           <div class="toast-content">
+               <span class="toast-icon">🚀</span>
+               <div class="toast-text">
+                   <strong>New CLI version!</strong><br>
+                   Ready to be used (v3.4.8)
+                   <a href="Sections/04_Ecosystem/09_CLI.html" class="toast-link">See documentation →</a>
+               </div>
+               <button class="toast-close" onclick="this.parentElement.parentElement.style.display='none'">&times;</button>
+           </div>
+       </div>
+
+       <!-- Toast 2: Qdislib -->
+       <div class="floating-toast">
+           <div class="toast-content">
+               <span class="toast-icon">📚</span>
+               <div class="toast-text">
+                   <strong>New Qdislib!</strong><br>
+                   Check out the new Quantum Distributed Library (powered with PyCOMPSs)
+                   <a href="https://qdislib.readthedocs.io" class="toast-link">See Qdislib →</a>
+               </div>
+               <button class="toast-close" onclick="this.parentElement.parentElement.style.display='none'">&times;</button>
+           </div>
+       </div>
+   </div>
+
 .. figure:: /_static/logo-color.png
     :width: 30.0%
     :align: center
     :target: http://compss.bsc.es
-
 
 .. raw:: html
      :file: _static/badges.html

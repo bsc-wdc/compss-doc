@@ -21,6 +21,77 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+# -- Own data models ------------------------------------------------
+
+from docutils import nodes
+from docutils.parsers.rst import Directive
+from sphinx.util.docutils import SphinxDirective
+
+class CLIElementDirective(SphinxDirective):
+    has_content = True
+    required_arguments = 1
+    optional_arguments = 0
+    final_argument_whitespace = False
+    option_spec = {
+        'name': str,
+        'action': str,
+        'help': str,
+        'type': str,
+        'default': str,
+        'choices': str,
+        'aliases': str,
+        'nargs': str,
+    }
+
+class CommandDirective(CLIElementDirective):
+    def run(self):
+        container = nodes.container(classes=['cli-command-block'])
+        title = nodes.strong(text=f"Command: {self.arguments[0]}")
+        container += title
+        container += nodes.paragraph(text=" ")
+        self.state.nested_parse(self.content, self.content_offset, container)
+        return [container]
+
+class SubcommandDirective(CLIElementDirective):
+    def run(self):
+        container = nodes.container(classes=['cli-subcommand-block'])
+        title = nodes.emphasis(text=f"Subcommand: {self.arguments[0]}")
+        container += title
+        container += nodes.paragraph(text=" ")
+        self.state.nested_parse(self.content, self.content_offset, container)
+        return [container]
+
+class SubSubcommandDirective(CLIElementDirective):
+    def run(self):
+        container = nodes.container(classes=['cli-subsubcommand-block'])
+        title = nodes.literal(text=f"Sub-subcommand: {self.arguments[0]}")
+        container += title
+        container += nodes.paragraph(text=" ")
+        self.state.nested_parse(self.content, self.content_offset, container)
+        return [container]
+
+class ArgumentDirective(CLIElementDirective):
+    def run(self):
+        container = nodes.container(classes=['cli-argument-block'])
+        arg_id = self.arguments[0]
+        # Recolectamos todas las opciones disponibles
+        name = self.options.get('name', 'N/A')
+        help_text = self.options.get('help', '')
+        extra_info = []
+        for opt in ['type', 'default', 'choices', 'action', 'nargs']:
+            val = self.options.get(opt)
+            if val: extra_info.append(f"{opt}: {val}")
+        # Línea principal: ID | Flag
+        header_text = f"ID: {arg_id} | Flag: {name}"
+        if extra_info:
+            header_text += f" ({', '.join(extra_info)})"
+        title = nodes.literal(text=header_text)
+        container += title
+        if help_text:
+            help_node = nodes.paragraph(text=help_text)
+            container += help_node
+        return [container]
+
 
 # -- General configuration ------------------------------------------------
 
@@ -117,7 +188,7 @@ numfig_format = {'figure':'Figure %s',
                  'code-block':'Code %s',
                  'section':'Section %s'}
 html_permalinks = False  # Disabled permalinks
-html_logo = '_static/logo-color.svg'
+html_logo = '_static/logo-color2.png'
 html_show_sourcelink = False
 html_show_copyright = True
 html_show_sphinx = True
@@ -483,7 +554,17 @@ texinfo_documents = [
 
 # -- Foot banners ---------------------------------------------------------
 
+
+# -- Main function ---------------------------------------------------------
+
 def setup(app):
+
+    app.add_directive('pycompss-command', CommandDirective)
+    app.add_directive('pycompss-subcommand', SubcommandDirective)
+    app.add_directive('pycompss-subsubcommand', SubSubcommandDirective)
+    app.add_directive('pycompss-argument', ArgumentDirective)
+    app.add_css_file('cli_styles.css')
+
     def add_section_flag(app, pagename, templatename, context, doctree):
         # Detect if we are within R section
         if pagename.startswith("Sections/02_App_Development/04_R"):

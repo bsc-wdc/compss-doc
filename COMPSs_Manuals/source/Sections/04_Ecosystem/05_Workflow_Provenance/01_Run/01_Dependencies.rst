@@ -38,6 +38,6 @@ Our current implementation needs ``ro-crate-py`` version ``0.13.0`` or higher.
 
 .. TIP::
 
-    If you installed the COMPSs CLI (:ref:`Sections/04_Ecosystem/09_CLI/01_Installation:Requirements and Installation`),
-    the ro-crate-py library dependency will have been already solved, since the CLI also relays on ro-crate-py to open
-    and process crates.
+    If you installed the COMPSs CLI (:ref:`Sections/04_Ecosystem/09_CLI:|:magic_wand:| CLI`),
+    the ro-crate-py library dependency will have been already solved, since the CLI also relies
+    on ro-crate-py to open and process crates.
