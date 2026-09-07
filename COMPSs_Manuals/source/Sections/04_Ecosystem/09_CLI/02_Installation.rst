@@ -49,8 +49,8 @@ If you use Anaconda or Miniconda, you can create a dedicated environment to keep
 
 .. code-block:: console
 
-  # Create a new conda environment with Python 3.10
-  conda create -n pycompss-env python=3.10
+  # Create a new conda environment with Python 3.12
+  conda create -n pycompss-env python=3.12
   # Activate the environment
   conda activate pycompss-env
   # Install the package via pip
