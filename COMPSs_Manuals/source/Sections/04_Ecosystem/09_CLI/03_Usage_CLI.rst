@@ -939,3 +939,203 @@ Examples include: **CWL, Nextflow, Galaxy, Autosubmit, WfExS, Streamflow, Snakem
     :width: 90.0%
 
     WfExS pipeline details obtained with pycompss inspect
+
+
+Profiling Analytics Tool
+------------------------
+
+Introduction & Core Capabilities
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When running distributed applications with COMPSs, understanding how your cluster utilizes resources is crucial for optimizing performance and uncovering bottlenecks. The **COMPSs Resource Usage Analysis & Plotting Tool** is a command-line utility designed to ingest per-node CSV statistics from a COMPSs run and automatically transform raw data into actionable visual and statistical insights.
+
+The tool streamlines your post-run analysis by automatically generating three primary outputs:
+
+- **Individual Node Plots:** Time-series plots mapped per metric (CPU, Memory, GPU, and GPU Memory) to give you a granular look at how specific machines behaved.
+- **Aggregated Cluster Plots:** Multinode charts designed to show the big picture and immediately highlight statistical outliers across your infrastructure.
+- **Statistical Health Reports:** Deep-dive cluster analytics that provide automatic outlier detection, execution-phase inference, and load-imbalance warnings.
+
+To fit seamlessly into different workflows, the tool operates in two distinct modes. If you prefer a guided experience, the **Interactive Mode** takes you through configuration step-by-step. Alternatively, for automatic scripts such as the Workflow Provenance, the **Silent Mode** bypasses all the user interaction using command-line flags.
+
+
+Input Data Requirements
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Before running the tool, ensure your data directory is structured
+correctly. The utility expects one CSV file per node. To identify which
+machine is which, the tool parses the filename, extracting the machine
+name from the string following the very last underscore and before the
+``.csv`` extension.
+
+Column Specifications
+"""""""""""""""""""""
+
+The data parsing logic distinguishes between mandatory data and optional
+enhancements:
+
+-  **Required Columns:** Every CSV must contain ``TIME`` (parsed as a
+   datetime timestamp), ``CPU`` (usage percentage), and ``MEM`` (memory
+   usage percentage). If a file lacks any of these three core columns,
+   it will be silently skipped.
+-  **Optional Columns:** If your cluster tracks accelerators, you can
+   include ``GPU_USAGE`` and ``GPU_MEM`` columns. The tool dynamically
+   looks for these and will include them in the analysis only if they
+   are present.
+
+
+Operating Modes
+^^^^^^^^^^^^^^^
+
+1. The Interactive Mode
+"""""""""""""""""""""""
+
+For a hands-on, user-friendly approach, simply execute the command
+without any arguments:
+
+.. WARNING::
+
+  So far the command is not yet integrated into the PyCOMPSs CLI. You must run it directly using the command line. Future releases will include it as a subcommand of the CLI.
+
+.. code-block:: bash
+
+   compss_genprofiling
+
+This launches a 4-step configuration interaction that guides you through the analysis setup:
+
+1. **Data Location:** You will be prompted to provide the path to your
+   CSV files. As a convenience, if the tool detects a
+   ``profiling/stats`` folder in your current working directory, it will
+   select it by default.
+2. **Action Scope:** You can tailor the rendering workload depending on
+   your needs.
+
+   * **All Nodes:** Generation of all the plots of every node.
+   * **Outliers Only:** Generation of the plots of the nodes that have been detected as outliers.
+   * **Only Aggregated Plots:** Only generate the aggregated cluster-level plots.
+   * **Only Stats Analysis:** To output a quick terminal report without generating plots.
+
+3. **Metrics Selection:** Select which metrics you want to plot. While
+   CPU and Memory are always available, GPU options will dynamically
+   appear here if the underlying data supports them.
+4. **Advanced Analytics:** Finally, you can opt to generate the cluster
+   health and statistical report, which is highly recommended for an
+   algorithmic breakdown of your run.
+
+2. Silent Mode (Automation & Scripting)
+"""""""""""""""""""""""""""""""""""""""
+
+This mode is integrated in the Provenance Workflow and it does not require neither ``rich`` nor ``questionary`` libraries. It is designed for automated pipelines and scripting, allowing you to specify all parameters directly via command-line flags.   
+If you are running automated pipelines or already know your target
+configuration, you can suppress the user interface entirely by combining
+the ``--silent`` and ``--dir`` flags:
+
+.. code-block:: bash
+
+   compss_genprofiling --dir=/path/to/data --silent
+
+For advanced automation, you can explicitly pass optional parameters to
+fine-tune the execution:
+
+.. code-block:: bash
+
+   compss_genprofiling \
+       --dir=/path/to/data \
+       --silent \
+       --scope=all \
+       --metrics=cpu,mem \
+       --format=svg \
+       --output_dir=/path/to/output
+
+where:
+
+-  ``--dir DIRECTORY``: *(Required)* The target path holding your source
+   CSV statistics.
+-  ``--silent``: Disables the interactive mode to run entirely in the
+   background.
+-  ``--scope SCOPE``: Defines the plotting boundaries. Accepts ``all``
+   (default), ``outliers``, or ``aggregated``.
+-  ``--metrics LIST``: A comma-separated list of target metrics
+   (``cpu``, ``mem``, ``gpu``, ``gpu_mem``). Defaults to evaluating
+   everything it can find.
+-  ``--format FORMAT``: Sets the graphic output format. Choose between
+   ``svg`` (default), ``png``, or ``jpg``. This allows you to balance quality and file size based on your needs.
+-  ``--output_dir DIR``: Overrides the default save path. If omitted,
+   the tool writes directly to a folder inside your input data
+   directory.
+
+Output Architecture Structure
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+By default, the tool creates a structured ``profiling/`` folder inside your
+data directory (or your specified custom ``--output_dir``). The
+directory tree organizes files systematically to prevent clutter:
+
+.. code-block:: bash
+
+  profiling/
+    ├── <MASTER_NODE>/
+    │   ├── cpu.svg
+    │   └── mem.svg
+    # Folders containing the worker nodes
+    ├── outliers_cpu/<worker_node>/
+    ├── outliers_memory/<worker_node>/
+    ├── outliers_cpu_memory/<worker_node>/
+    ├── outliers_gpu/<worker_node>/ (if GPU metrics are present)
+    ├── outliers_gpu_memory/<worker_node>/ (if GPU metrics are present)
+    ├── other_workers/<worker_node>/
+    # Aggregated plots for the entire cluster
+    ├── cpu_aggregated.svg
+    ├── mem_aggregated.svg
+    ├── gpu_usage_aggregated.svg (if GPU metrics are present)
+    └── gpu_mem_aggregated.svg (if GPU metrics are present)
+
+The output hierarchy is governed by a few predictable rules:
+
+-  **The Master Node** is given its own dedicated folder at the top
+   level.
+-  **Outlier Workers** are categorized into directories named strictly
+   after the specific metric they breached (e.g., ``outliers_cpu``,
+   ``outliers_cpu_memory``), letting you see instantly *why* a node
+   flagged a warning.
+-  **Healthy Workers** that behave within normal bounds are grouped
+   cleanly under ``other_workers/``.
+-  **Aggregated Plots** reside at the root of the output directory for
+   quick macro-level viewing.
+
+Example of Analysis Report
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. WARNING::
+
+  To run the analysis report, you must have the ``rich`` and ``questionary`` libraries installed and it is only available in the interactive mode.
+
+.. TIP::
+    If you run ``compss_genprofiling`` command in a folder that contains a ``profiling/stats`` subfolder, it will be automatically selected as the input data directory. Ideally, this tool is supposed to be run in the RO-Crate folder generated by the workflow provenance, which contains the ``profiling/stats`` subfolder with the CSV files.
+
+Here is an example of the output generated by the tool when running in interactive mode.
+
+.. figure:: ./Figures/genprofiling_analysis.png
+    :name: Analytics Report
+    :alt: Analytics Report
+    :align: center
+    :width: 90.0%
+
+    Example of Analysis Report
+
+The possible status of the stages are:
+
+-  *Idle / I/O Wait* (stalled performance)
+-  *Ramping / Moderate Load* (normal initialization phases)
+-  *Peak Compute* (sustained high utilization)
+-  *Unstable / Highly Fluctuating* (erratic scheduling or thrashing)
+-  *Underperforming / Tailing Off* (gradual drop in workload efficiency)
+   gracefully)
+-  *Hanging / Prolonged Teardown* (nodes refusing to release or exit)
+
+The report also includes a summary of the number of nodes that were detected as outliers for each metric, and the total number of nodes analyzed. It provides a quick overview of the overall health and performance of the cluster during the COMPSs run.
+
+The analysis shows the global execution warnings that are some feedback about the overall performance of the cluster during the COMPSs run. This messages are based on the statistical analysis, the stage and outliers detection and they provide suggestions about a possible improvement of the performance of the cluster. 
+
+.. TIP::
+
+    The tool automatically detects if the GPU metrics are present in the CSV files and includes them in the analysis if available.

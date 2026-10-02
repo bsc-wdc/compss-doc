@@ -309,3 +309,5 @@ Dockerized
 unicore
 Apptainer
 Grafana
+interquartile
+Analytics
