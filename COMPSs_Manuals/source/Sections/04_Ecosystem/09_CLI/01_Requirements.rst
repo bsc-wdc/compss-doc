@@ -87,12 +87,14 @@ To run and deploy Docker-based environments, the following installations are req
           3. **Verify installation**:
 
              .. code-block:: console
+
                  $ docker --version
                  $ docker ps # this should be empty as no docker processes are yet running.
 
           4. **Install the Python docker library**:
 
              .. code-block:: console
+
                  $ python3 -m pip install docker
 
              .. TIP::

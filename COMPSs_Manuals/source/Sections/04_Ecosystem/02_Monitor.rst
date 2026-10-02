@@ -69,7 +69,7 @@ submitting an execution to a supercomputer.
 .. IMPORTANT::
 
    **COMPSs Monitor runs separately from the COMPSs application.** Start the
-   monitor before launching your application in order to recieve all exported metrics and events.
+   monitor before launching your application in order to receive all exported metrics and events.
 
    Monitoring data is persisted for as long as the monitor remains running.
    When the monitor is stopped, its persistence is reset; the next monitoring
