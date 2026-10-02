@@ -192,7 +192,7 @@ html_logo = '_static/logo-color2.png'
 html_show_sourcelink = False
 html_show_copyright = True
 html_show_sphinx = True
-html_favicon = '_static/logo-color.png'
+html_favicon = '_static/compss-favicon.png'
 nitpicky = True
 latex_logo = '_static/logo-color.png'
 
