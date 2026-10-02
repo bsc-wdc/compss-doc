@@ -23,10 +23,7 @@ the datasets used for the run, logs, profiling, ...), and are:
   structure will be respected. If more than a single *root* path is detected, a set of folders will be
   provided inside the ``dataset/`` folder.
 
-- **Profiling folder:** contains the plots of the resource usage of the nodes involved in the execution of the application.
-  In this directory, the user can find a folder for every node, which contains the plots of the CPU and memory usage of the
-  tasks executed in that node. When more than one node is involved in the execution,  the user can also find
-  the CPU and memory usage plots aggregated for all the nodes.
+- **Profiling folder:** contains the plots of the resource usage of the nodes involved in the execution of the application and the statistical data about the resource usage of the nodes. In this directory, the user can find the ``stats/`` folder, which contains a ``csv`` file for every node involved in the execution of the application, with the CPU and memory usage information during the execution in that node. By default, the ``profiling/`` folder contains only the aggregated CPU and memory plots for the run. Users can invoke the ``compss_genprofiling`` command to generate plots for additional profiling metrics.
 
 - **Trace folder:** if a Paraver trace file is generated during the run, and ``trace_persistence: True`` is specified in the
   YAML file, this folder will contain the trace files that correspond to the run.
@@ -107,42 +104,13 @@ descriptions of:
     or ``pycompss gengraph``.
 
 
-Profiling tool
+Profiling Tool
 --------------
 
 When workflow provenance capture is enabled, the profiling tool is automatically activated. This tool collects the information
 about the CPU and memory usage during the execution of the application, as well as detailed statistics on the methods run.
 
-The profiling tool implements a fallback mechanism that allows to use different technologies based on the
-architecture of the machine. By default, it uses ``psutil``, which is a cross-platform library for retrieving
-information of the system utilization in Python. If on the machine it is not installed, the profiling tool
-will try to use the ``top`` command, available on most Unix-like operating systems.
-Finally, for some legacy systems, such as `Nord 4 <https://www.bsc.es/supportkc/docs/Nord4/overview/>`_, the
-previous tools may not work properly, so the profiling tool will use a ``cgroup``-based approach to collect
-the performance information. The selection of the right tool for the right architecture can be configured in
-the ``profiler_config.json`` file, which is located in the COMPSs installation directory
-``$COMPSS_HOME/Runtime/scripts/system/profiling/profiler_config.json``.
-By default this is the content of the file:
-
-.. code-block:: json
-  :caption: Default profiler configuration file
-
-    {
-        "psutil": [
-            "mn5",
-            "darwin",
-            "linux"
-        ],
-        "top": [
-            "mn5",
-            "darwin",
-            "linux"
-        ],
-        "cgroup": [
-            "mn5",
-            "nord4"
-        ]
-    }
+The profiling tool is implemented in Python and it checks the files located in the ``/proc`` directory to collect the information about the resource usage of the system. This is a standard way to collect information about the system in Linux-based operating systems. However, for some architectures, such as macOS, the ``/proc`` directory is not available, so the profiling tool uses ``psutil`` to collect the information about the resource usage of the system. The profiling tool is designed to be lightweight and to have a minimal impact on the execution of the application, so it is important to use the most efficient technology available for the architecture of the machine. The profiler automatically identifies the architecture of the machine and selects the appropriate technology to collect the information about the resource usage of the system.
 
 The profiling tool generates a set of ``csv`` files in a new folder called ``stats/`` of the log directory
 (see Section :ref:`Sections/03_Execution/01_Local:Logs` for more details on where to locate these logs).
@@ -174,30 +142,66 @@ default is set to **5 seconds**.
     reduce the profiling overhead, based on the needs of the application and the system. The value expected is
     an integer, in seconds.
 
-Finally, in the ``stats/`` folder, the Workflow Provenance uses the ``csv`` file to generate the plots of the
-resource usage of CPU and memory of the application during its execution. These plots are included in the
-RO-Crate and can be found in the ``profiling/`` folder of the crate. In this directory the user can find a
-folder for every node, which contains the plots of the CPU and memory usage of the tasks executed in that node.
-Also, when more than one node is involved in the execution, CPU and memory usage plots aggregated for all the
-nodes are included. The profiling plots can be useful to detect potential bottlenecks in the application,
-inefficient resource usage, and to quickly understand the resource usage of the application during its execution.
+Finally, in the ``stats/`` folder, the Workflow Provenance uses the ``csv`` file to generate the plots of the resource usage of CPU and memory of the application during its execution. By default, only the aggregated plots are generated and included in the ``profiling/`` folder of the RO-Crate. Users can invoke the ``compss_genprofiling`` command to generate plots for additional profiling metrics. The profiling plots can be useful to detect potential bottlenecks in the application, inefficient resource usage, and to quickly understand the resource usage of the application during its execution.
+
+.. WARNING::
+
+  More details about the ``compss_genprofiling`` command are explained in the :ref:`Sections/04_Ecosystem/09_CLI/03_Usage_CLI:Profiling Analytics Tool` section.
+
+This is the list of the plots generated by the profiling.
+
+Aggregated plots in the ``profiling/`` folder of the RO-Crate:
+  - ``cpu_aggregated.svg``: aggregated CPU usage plot of all the nodes involved in the execution of the application.
+  - ``mem_aggregated.svg``: aggregated memory usage plot of all the nodes involved in the execution of the application.
+  - ``gpu_aggregated.svg``: aggregated GPU usage plot of all the nodes involved in the execution of the application.
+  - ``gpu_mem_aggregated.svg``: aggregated GPU memory usage plot of all the nodes involved in the execution of the application.
+
+Individual plots in every node folder of the RO-Crate:
+  - ``cpu.svg``: CPU usage plot of each node involved in the execution of the application.
+  - ``mem.svg``: memory usage plot of each node involved in the execution of the application.
+  - ``gpu.svg``: GPU usage plot of each node involved in the execution of the application.
+  - ``gpu_mem.svg``: GPU memory usage plot of each node involved in the execution of the application.
+
 This is an example of the tree structure of the profiling folder that the user can find in the crate:
 
 .. code-block:: console
   :caption: Example of the tree structure of the profiling folder in the crate
 
   profiling/
-  ├── gs09r1b04-MASTER
+  ├── cpu_aggregated.svg
+  ├── gs23r1b03-MASTER
   │   ├── cpu.svg
   │   └── mem.svg
-  ├── gs09r1b36
-  │   ├── cpu.svg
-  │   └── mem.svg
-  ├── gs09r1b55
-  │   ├── cpu.svg
-  │   └── mem.svg
-  ├── cpu_nodes.svg
-  └── mem_nodes.svg
+  ├── mem_aggregated.svg
+  ├── other_workers
+  │   ├── gs23r1b04
+  │   │   ├── cpu.svg
+  │   │   └── mem.svg
+  ...
+  │   │   ├── cpu.svg
+  │   │   └── mem.svg
+  │   └── gs23r1b19
+  │       ├── cpu.svg
+  │       └── mem.svg
+  ├── outliers_memory
+  │   └── gs23r1b05
+  │       ├── cpu.svg
+  │       └── mem.svg
+  └── stats
+      ├── static_resource_profiling_gs23r1b03-MASTER.csv
+      ├── static_resource_profiling_gs23r1b04.csv
+      ├── static_resource_profiling_gs23r1b05.csv
+      ├── static_resource_profiling_gs23r1b06.csv
+      ├── static_resource_profiling_gs23r1b07.csv
+      ├── static_resource_profiling_gs23r1b12.csv
+      ├── static_resource_profiling_gs23r1b13.csv
+      ├── static_resource_profiling_gs23r1b14.csv
+      ├── static_resource_profiling_gs23r1b15.csv
+      ├── static_resource_profiling_gs23r1b16.csv
+      ├── static_resource_profiling_gs23r1b17.csv
+      ├── static_resource_profiling_gs23r1b18.csv
+      └── static_resource_profiling_gs23r1b19.csv
+
 
 Here is an example of the aggregated CPU and memory usage plots:
 
@@ -209,6 +213,12 @@ Here is an example of the aggregated CPU and memory usage plots:
 
     CPU usage plot
 
+In this plot example, it is possible to recognize the stages of the application. There is an initial idle stage correspondent to the preparation of the workload, where the CPU usage is low, followed by a stage of high CPU usage, where the application is running and consuming resources. Later there is an intermediate stage where the nodes are terminating the computation, and finally a final idle stage, where the application has finished and the CPU usage is low again. 
+
+.. TIP::
+
+    This stage analysis is leveraged by the analytics tool that you can invoke with the ``compss_genanalytics`` command, which provides a detailed analysis of the stages of the application based on the profiling information. In :ref:`Sections/04_Ecosystem/09_CLI/03_Usage_CLI:Profiling Analytics Tool` section you can see more details.
+
 .. figure:: ./Figures/Profiling_memory.png
     :name: Memory usage plot
     :align: center
@@ -216,3 +226,5 @@ Here is an example of the aggregated CPU and memory usage plots:
     :scale: 75%
 
     Memory usage plot
+
+The profiling plots highlights in the legend the outlier nodes of the execution based on their resource usage. The outlier nodes are the nodes that have a resource usage that over-performed or under-performed the average of the other nodes. The outlier nodes are detected based on the interquartile range (IQR) of the resource usage of the nodes. The IQR is a measure of statistical dispersion, or how spread out the values are. 
