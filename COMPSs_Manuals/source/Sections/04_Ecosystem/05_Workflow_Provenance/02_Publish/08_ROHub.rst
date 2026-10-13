@@ -24,11 +24,11 @@ Publication steps
 
 The steps to achieve the publication of a COMPSs execution at ROHub are:
 
-- Pack the resulting crate sub-directory (i.e. ``COMPSs_RO-Crate_[timestamp]/``) in a zip file. Example:
+- Pack the resulting crate sub-directory (i.e. ``COMPSs_RO_Crate_[timestamp]/``) in a zip file. Example:
 
 .. code-block:: console
 
-    $ cd COMPSs_RO-Crate_20250514_153121/
+    $ cd COMPSs_RO_Crate_20250514_153121/
     $ zip -r ~/Desktop/crate.zip *
 
 - Navigate to ``MY ROS`` -> ``Import RO``. Select the zip file created in the previous step and click ``Import``.

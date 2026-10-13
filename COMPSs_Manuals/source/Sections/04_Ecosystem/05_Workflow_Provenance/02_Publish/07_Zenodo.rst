@@ -69,11 +69,11 @@ The steps to achieve the publication of a COMPSs execution are:
 
 .. code-block:: console
 
-    $ rocrate_inveniordm -z COMPSs_RO-Crate_20250526_113729/
+    $ rocrate_inveniordm -z COMPSs_RO_Crate_20250526_113729/
     ...
     Preparing to upload 1 files...
     Uploading 1 files...
-    COMPSs_RO-Crate_20250526_113729.zip
+    COMPSs_RO_Crate_20250526_113729.zip
     All 1 files uploaded.
     Successfully created record 15517563
 

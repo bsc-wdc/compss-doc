@@ -465,9 +465,9 @@ Next, we provide detailed information about the ``enqueue_compss`` command:
         --provenance=<yaml>, --provenance, -p   Generate COMPSs workflow provenance data in RO-Crate format using a YAML configuration file. Automatically activates --graph.
                                                 Default: ro-crate-info.yaml
         --provenance_folder=<path>              Path where the workflow provenance will be generated
-                                                Default: COMPSs_RO-Crate_[timestamp]
+                                                Default: COMPSs_RO_Crate_[timestamp]
         --zip_provenance, -z                    Zip the resulting COMPSs RO-Crate
-                                                Default: COMPSs_RO-Crate_[timestamp].zip
+                                                Default: COMPSs_RO_Crate_[timestamp].zip
 
     * Application name:
         For Java applications:   Fully qualified name of the application
