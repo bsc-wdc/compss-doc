@@ -18,9 +18,9 @@ going to be generated:
     --provenance=<yaml>, --provenance, -p   Generate COMPSs workflow provenance data in RO-Crate format using a YAML configuration file. Automatically activates --graph.
                                             Default: ro-crate-info.yaml
     --provenance_folder=<path>              Path where the workflow provenance will be generated
-                                            Default: COMPSs_RO-Crate_[timestamp]
+                                            Default: COMPSs_RO_Crate_[timestamp]
     --zip_provenance, -z                    Zip the resulting COMPSs RO-Crate
-                                            Default: COMPSs_RO-Crate_[timestamp].zip
+                                            Default: COMPSs_RO_Crate_[timestamp].zip
 
 
 .. WARNING::
@@ -63,7 +63,7 @@ want it to be included in the crate, the command can be skipped. The second comm
 ``generate_COMPSs_RO-Crate.py`` Python script, that uses the information provided by the user
 in the ``my_yaml_file.yaml`` file (or ``ro-crate-info.yaml`` by default)
 combined with the workflow provenance information the COMPSs runtime has recorded. The
-result is a sub-directory ``COMPSs_RO-Crate_[timestamp]/`` that contains the workflow provenance of the run (see next sub-section
+result is a sub-directory ``COMPSs_RO_Crate_[timestamp]/`` that contains the workflow provenance of the run (see next sub-section
 for a detailed description of its content).
 
 .. TIP::

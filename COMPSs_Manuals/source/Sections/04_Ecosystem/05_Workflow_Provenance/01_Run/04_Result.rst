@@ -4,7 +4,7 @@ Resulting crate
 ===============
 
 Once the application has finished, a new sub-folder or zip file under the application's Working Directory
-will be created with the name ``COMPSs_RO-Crate_[timestamp]/`` or ``COMPSs_RO-Crate_[timestamp].zip``, which is also known as *crate*. The contents of the
+will be created with the name ``COMPSs_RO_Crate_[timestamp]/`` or ``COMPSs_RO_Crate_[timestamp].zip``, which is also known as *crate*. The contents of the
 folder / zip file include detailed information of a COMPSs application execution (this is, the application together with
 the datasets used for the run, logs, profiling, ...), and are:
 
