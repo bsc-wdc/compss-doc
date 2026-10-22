@@ -53,7 +53,7 @@ following commands can be used:
 
     $ export PYTHONPATH=$COMPSS_HOME/Runtime/scripts/system/:$PYTHONPATH
 
-    $ python3 $COMPSS_HOME/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py my_yaml_file.yaml $BASE_LOG_DIR/dataprovenance.log
+    $ python3 $COMPSS_HOME/Runtime/scripts/system/provenance/generate_COMPSs_RO-Crate.py my_yaml_file.yaml $BASE_LOG_DIR/ COMPSs_RO_Crate_my_run/ false
 
 In these commands, ``COMPSS_HOME`` is where your COMPSs installation is located, and ``BASE_LOG_DIR`` points to the path where the
 application run logs are stored (see Section :ref:`Sections/03_Execution/01_Local:Logs`
@@ -62,8 +62,14 @@ generates the workflow diagram to be added to the crate, but if its generation t
 want it to be included in the crate, the command can be skipped. The second command runs the
 ``generate_COMPSs_RO-Crate.py`` Python script, that uses the information provided by the user
 in the ``my_yaml_file.yaml`` file (or ``ro-crate-info.yaml`` by default)
-combined with the workflow provenance information the COMPSs runtime has recorded. The
-result is a sub-directory ``COMPSs_RO_Crate_[timestamp]/`` that contains the workflow provenance of the run (see next sub-section
+combined with the workflow provenance information the COMPSs runtime has recorded. The script needs four arguments:
+
+- The YAML configuration file (e.g. ``my_yaml_file.yaml`` or ``ro-crate-info.yaml``).
+- The log directory of the run (``BASE_LOG_DIR``), which contains the ``dataprovenance.log`` file.
+- The destination folder of the crate (e.g. ``COMPSs_RO_Crate_my_run/``).
+- ``true`` to generate a zip file (the same as ``--zip_provenance``), or ``false`` to generate a folder.
+
+The result is a sub-directory (or zip file) with the given name that contains the workflow provenance of the run (see next sub-section
 for a detailed description of its content).
 
 .. TIP::
