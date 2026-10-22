@@ -21,6 +21,7 @@ are commonly used, and the rest of terms are for special cases only):
       sources: [/absolute_path_to/dir_1/, relative_path_to/dir_2/, main_file.py, relative_path/aux_file_1.py, /abs_path/aux_file_2.py]
       data_persistence: False
       trace_persistence: False
+      runtime_logs_persistence: True
       provenance_run: True
       param_size_limit: 1500
       software:
@@ -113,6 +114,11 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
      - False
      - Whether Paraver trace files are included in the crate
 
+   * - ``runtime_logs_persistence``
+     - boolean
+     - True
+     - Whether COMPSs runtime log files are included in the crate
+
    * - ``provenance_run``
      - boolean
      - True
@@ -159,6 +165,12 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
   added to the crate. As with datasets, the user can decide if the trace files themselves must be physically added, or
   include only references to where they can be located. If trace files are included, a directory named ``trace/`` will
   be available from the root path of the crate.
+
+- ``runtime_logs_persistence`` value is ``True`` by default. It is a boolean to indicate whether the COMPSs runtime
+  log files of the run (including the resource usage ``csv`` files of the profiling) must be included in the crate, in
+  a directory named ``runtime_logs/``. They are useful to debug the run, but in executions with many nodes they can
+  add a large number of files to the crate. If set to ``False``, runtime log files are neither included nor referenced
+  in the crate.
 
 - ``provenance_run`` value is ``True`` by default. It is a boolean to indicate whether the crate must include
   detailed provenance information about the individual task executions and hence correspond to the Provenance Run Crate profile. 
