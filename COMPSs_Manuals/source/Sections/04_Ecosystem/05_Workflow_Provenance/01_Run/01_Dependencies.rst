@@ -33,8 +33,23 @@ Our current implementation needs ``ro-crate-py`` version ``0.13.0`` or higher.
 
 .. WARNING::
 
-    Some Python versions at some Linux distributions do not have installed by default ``yaml`` and ``pytz``, thus
+    Some Python versions at some Linux distributions do not have installed by default ``yaml``, ``pytz`` and
+    ``requests`` (used for the automatic search of Authors and Agent details, see Section :ref:`yaml-config`), thus
     you will need to install them too using ``pip``.
+
+Besides, the ``pandas`` package is recommended. It is used to add the resource usage of each node (from the profiling
+``csv`` files) and the energy data to the metadata, and to generate the profiling plots. If it is not installed,
+these parts are skipped and a warning is printed:
+
+.. code-block:: console
+
+    $ pip install pandas
+
+.. WARNING::
+
+    In COMPSs versions from ``3.3.3.post2511`` up to ``3.4.post2610``, the workflow provenance generation fails completely
+    (``PROVENANCE | WORKFLOW PROVENANCE GENERATION HAS FAILED``) if ``pandas`` is not installed. Make sure to
+    install it when using those versions.
 
 .. TIP::
 
