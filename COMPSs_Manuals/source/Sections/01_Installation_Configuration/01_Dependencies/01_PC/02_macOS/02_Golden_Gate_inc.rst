@@ -29,6 +29,14 @@ have post-installation instructions that require adding environment variables to
     echo 'export PATH="$GRADLE_HOME/bin:$PATH"' >> ~/.bashrc
     export PATH="$GRADLE_HOME/bin:$PATH"
 
+.. WARNING::
+
+    After ``brew install coreutils``, Homebrew suggests adding ``/opt/homebrew/opt/coreutils/libexec/gnubin``
+    to your ``PATH``. **DO NOT** follow that suggestion. The COMPSs scripts rely on the macOS versions of
+    ``stat`` and ``mktemp``, and having the GNU versions first in your ``PATH`` makes ``runcompss`` fail with
+    ``ERROR: Can't create temporary file for JVM options``. The same applies to other ``gnubin`` folders
+    (e.g. ``gnu-sed``).
+
 
 The package ``xdg-utils`` has to be installed by hand (after installing ``libxslt``, ``xmlto`` and ``lynx``):
 
