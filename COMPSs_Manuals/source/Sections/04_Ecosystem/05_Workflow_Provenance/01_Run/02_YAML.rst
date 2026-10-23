@@ -132,7 +132,7 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
    * - ``software``
      - list of entries
      - —
-     - Software dependencies (name required; version and URL are optional)
+     - Software dependencies (name and version required; URL is optional)
 
 
 - The ``name`` and ``description`` fields are free text, where a long name and long description of
@@ -170,11 +170,14 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
   log files of the run (including the resource usage ``csv`` files of the profiling) must be included in the crate, in
   a directory named ``runtime_logs/``. They are useful to debug the run, but in executions with many nodes they can
   add a large number of files to the crate. If set to ``False``, runtime log files are neither included nor referenced
-  in the crate.
+  in the crate. The only exception are the task log files of the `jobs/`` sub-folder (only generated in debug
+  mode or for tasks that failed), which are always included in ``runtime_logs/jobs/`` to help diagnose the run.`
 
 - ``provenance_run`` value is ``True`` by default. It is a boolean to indicate whether the crate must include
-  detailed provenance information about the individual task executions and hence correspond to the Provenance Run Crate profile. 
+  detailed provenance information about the individual task executions and hence correspond to the Provenance Run Crate profile.
   If set to ``False``, the crate will only include high-level information about the main workflow execution (corresponding to the Workflow Run Crate profile).
+  Even if set to `True``, the crate falls back to the Workflow Run Crate profile when the worker provenance log
+  files of the run (``static_binding_dp.out`` and ``static_worker_dp.out``) are missing, and a warning is printed.`
 
 - ``param_size_limit`` value is ``1500`` by default. It indicates the maximum number of characters that will be
   recorded for each task's parameter value. This is useful to avoid including very large
@@ -190,7 +193,10 @@ More specifically, in the **COMPSs Workflow Information** section, the most comm
       - ``name`` is the full name of the external software used.
       - ``version`` can be a canonical version only (i.e. ``3.2.1``), or a much larger description (text).
         This should commonly include the output of ``tool --version`` command.
-      - ``url`` where the software can be found.
+      - ``url`` where the software can be found (optional).
+
+  Both ``name`` and ``version`` are mandatory: a ``software`` entry that lacks any of them is ignored, and a warning
+  is printed.
 
 Although providing a YAML is not required, it is highly recommended to provide one that includes as much information as possible 
 in order to correctly share your application and results. Besides, missing information can lead to reduced features when using 
@@ -255,9 +261,10 @@ describe the individuals that wrote the source code of the application. For each
 
 .. WARNING::
 
-    If no ``orcid`` is found online or specified for an Author, a plain string will be used to identify the author. Their corresponding
-    Organization information will only be included if the Organization's ``ror`` is found online or specified directly
-    in the YAML configuration file.
+    If no ``orcid`` is found online or specified for an Author, only the author's ``name`` will be added, as a plain
+    string, and their ``e-mail`` and Organization details will not be included in the metadata, even if a ``ror`` is
+    specified. For authors with an ``orcid``, their corresponding Organization information will only be included if
+    the Organization's ``ror`` is found online or specified directly in the YAML configuration file.
 
 .. TIP::
 
@@ -274,8 +281,8 @@ individual can be provided.
 
 .. WARNING::
 
-    If no Agent section is provided, the first Author will be considered by default as the agent executing the
-    workflow.
+    If no Agent section is provided, or if no ``orcid`` is specified or found online for the Agent, the first Author
+    will be considered by default as the agent executing the workflow.
 
 Automatic search of Authors and Agent
 -------------------------------------

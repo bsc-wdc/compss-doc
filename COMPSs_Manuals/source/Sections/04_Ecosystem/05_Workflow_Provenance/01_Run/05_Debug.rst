@@ -30,7 +30,7 @@ in seconds will be reported. As mentioned earlier, complex workflows can lead to
 is why the number of edges in the graph is also reported.
 
 .. WARNING::
-    If the number of edges is larger than 6500, the graph diagram generation won't
+    If the number of edges is 6500 or more, the graph diagram generation won't
     be triggered to avoid large generation times.
 
 .. code-block:: console
@@ -94,9 +94,10 @@ so the user should double check if the decision taken is correct. Some examples 
 
     PROVENANCE | WARNING: A parent directory of a previously added sub-directory is being added. Some files will be traversed twice in: /Users/user/COMPSs-DP/matmul_files/in
     PROVENANCE | WARNING: A file addition was attempted twice: /Users/user/COMPSs-DP/matmul_files/in/A/A.0.0 in /Users/user/COMPSs-DP/matmul_files/in
-    PROVENANCE | WARNING: 'Agent' not specified in TEST_DUPLICATED_SOURCES.yaml. First author selected by default.
+    PROVENANCE | WARNING: 'Agent' missing or not correctly specified in TEST_DUPLICATED_SOURCES.yaml. First author selected by default
 
 .. TIP::
     In case of need for debugging the workflow provenance generation, an environment variable called ``COMPSS_PROV_DEBUG``
     has been defined to enable a larger amount of provenance generation output messages in order to detect any possible issues.
     Before the execution, users must define the variable using the command ``export COMPSS_PROV_DEBUG=True``.
+    Any non-empty value enables the debug messages (even `False``), so use ``unset COMPSS_PROV_DEBUG`` to disable them.`

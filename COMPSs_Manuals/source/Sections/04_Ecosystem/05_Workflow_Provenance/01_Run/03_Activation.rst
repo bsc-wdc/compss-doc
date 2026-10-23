@@ -7,8 +7,9 @@ One must only enable the ``-p`` or ``-z`` flags (or their verbose versions ``--p
 that the ``--provenance`` flag accepts a custom name for the YAML file with the application's details (see previous Section :ref:`yaml-config`). 
 This is specified using the ``--provenance=my_yaml_file.yaml`` option, as shown in the ``runcompss`` help.  
 Also, the ``-z`` or ``--zip_provenance`` flag can be used to specify that the provenance RO-Crate will be yielded in .zip format and 
-the ``--provenance_folder=<path>`` flag can be used to give a specific name to the folder or zip file where the experiment's provenance is 
-going to be generated:
+the ``--provenance_folder=<path>`` flag can be used to give a specific name to the folder or zip file where the experiment's provenance is
+going to be generated. Any of these flags activates provenance on its own (e.g. using only `--provenance_folder=<path>`` or ``-z``
+is equivalent to adding ``-p`` as well):`
 
 .. code-block:: console
 
@@ -39,7 +40,7 @@ provenance may be larger than the specified execution time limit. This means tha
 generating the provenance, therefore it won't be created correctly.
 
 .. WARNING::
-    As a failsafe, we automatically disable workflow diagram generation for workflows with more than 6500 edges.
+    As a failsafe, we automatically disable workflow diagram generation for workflows with 6500 edges or more.
     If you want to generate the diagram anyway, you can
     trigger the diagram generation manually with ``compss_gengraph`` or ``pycompss gengraph``.
 
