@@ -243,12 +243,6 @@ parameters are grouped in *Runtime configuration*, *Tools enablers* and
         Command line arguments to pass to the application. Can be empty.
 
 
-
-.. WARNING::
-
-    The ``cpu_affinity`` feature is not available in macOS distributions. Then, for all macOS executions the flag
-    ``--cpu_affinity=disabled`` must be specified, no matter if they are Java, Python or C/C++.
-
 Running a COMPSs application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
