@@ -66,7 +66,7 @@ The main help output displays the supported flags and available commands:
         jupyter (n)         Start Jupyter notebook.
         gengraph (gg)       Convert graph to PDF.
         gentrace (gt)       Merge traces to Paraver trace.
-        inspect (i)         Inspect RO-Crate(s) from a COMPSs application run.
+        inspect (i)         Inspect RO-Crate(s) in tree-colored text format.
 
     options:
     -h, --help            show this help message and exit
@@ -309,7 +309,7 @@ The following table summarizes the available actions and their compatibility wit
 +-----------------------------------------------+---------+---------+---------+---------+
 | Add/Remove COMPSs workers (``components``)    |         |    ✔    |         |         |
 +-----------------------------------------------+---------+---------+---------+---------+
-| Inspect workflow provenance (``inspect``)     |    ✔    |    ✔    |         |         |
+| Inspect workflow provenance (``inspect``)     |    ✔    |         |         |         |
 +-----------------------------------------------+---------+---------+---------+---------+
 
 Checking COMPSs Dependencies
@@ -776,18 +776,22 @@ The ``inspect`` option supports several specific flags:
 .. code-block:: console
 
     $ pycompss inspect -h
-    usage: pycompss inspect ro_crate [ro_crate ...] [-v] [-d] [-f] [-m [METHODS ...]] [-t [TASKS]]
+    usage: pycompss inspect <ro_crate> [<ro_crate> ...] [flags]
+
     positional arguments:
-    ro_crate              Folder or zip file(s) containing the RO-Crate(s)
+      ro_crate              Folder or zip file(s) containing the RO-Crate(s).
+
     options:
-    -h, --help            show this help message and exit
-    -v, --verbose         Print extra information about tasks
-    -d, --data_assets     Print data assets
-    -f, --failing_tasks   Print info about failing tasks only
-    -t [TASKS ...], --tasks [TASKS ...]
-                            Print all information about one or more tasks (e.g. 4 7 10-11 15-18
-    -m [METHODS ...], --methods [METHODS ...]
-                            Print all tasks executing the specified method(s)
+      -h, --help            show this help message and exit
+      -v, --verbose         Print extra information about tasks.
+      -d, --data_assets     Print data assets.
+      -f, --failing_tasks   Print info about failing tasks only.
+      -t [TASKS], --tasks [TASKS]
+                            Print info about one or more tasks, comma-separated (e.g. 4,7,10-11,15-18). Without a value, print all tasks.
+      -m [METHODS], --methods [METHODS]
+                            Print all tasks executing the specified method(s), comma-separated (e.g. multiply,add). Without a value, print all tasks.
+      --order_time          With -m/-t/-f, print tasks in chronological order (start time).
+      --order_host          With -m/-t/-f, print tasks grouped by host, in chronological order (start time) within each host (already includes --order_time).
 
 By default, the output displays the application's **Name**, **Description**, **Authors** (name, organization, and email), **License**, and **Date Published**. It also identifies the **Main entity** (main file) and the **Programming language** and version used.
 
@@ -867,7 +871,12 @@ The ``-d/--data_assets`` flag provides details on the inputs used and outputs ge
 **Task Details by ID**
 ^^^^^^^^^^^^^^^^^^^^^^
 
-The ``-t/--tasks`` flag prints detailed information for specific tasks. It accepts individual IDs (e.g., ``3 4 10``), ranges (e.g., ``20-30``), or combinations of both.
+The ``-t/--tasks`` flag prints detailed information for specific tasks. It accepts a comma-separated list of individual IDs (e.g., ``-t 3,4,10``), ranges (e.g., ``-t 20-30``), or combinations of both (e.g., ``-t 3,4,20-30``). Without a value, all tasks are printed. The RO-Crate path can be given before or after the flags:
+
+.. code-block:: console
+
+    $ pycompss inspect my_crate.zip -t 3,4,20-30
+    $ pycompss inspect -t 3,4,20-30 my_crate.zip
 
 Details include status, the method executed, execution time, the host, and parameters (with their type and value). The **Type** field shows the ``schema.org`` mapping followed by the original programming model type (e.g., ``float64``, ``dict``). For failed or canceled tasks, output parameters are not listed as they are unreliable. In these cases, the **Execution Time** represents the time elapsed before the failure occurred.
 
@@ -894,7 +903,19 @@ Details include status, the method executed, execution time, the host, and param
 **Task Details by Method Name**
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Similarly to the ``-t`` flag, the ``-m/--methods`` flag filters tasks by the name of the method they executed. This flag accepts a single pattern.
+Similarly to the ``-t`` flag, the ``-m/--methods`` flag filters tasks by the name of the method they executed. It accepts a comma-separated list of method names or regular expressions (e.g., ``-m multiply,add``), and prints the tasks whose method name contains any of them (e.g., ``multiply`` matches ``matmul_tasks.multiply``). Without a value, all tasks are printed.
+
+**Task Order**
+^^^^^^^^^^^^^^
+
+By default, the tasks selected with ``-t``, ``-m`` or ``-f`` are printed in the order in which they appear in the RO-Crate. Two flags change this order:
+
+- ``--order_time``: prints the tasks in chronological order (by start time).
+- ``--order_host``: groups the tasks by host and, within each host, prints them in chronological order (it already includes ``--order_time``).
+
+.. code-block:: console
+
+    $ pycompss inspect my_crate.zip -m multiply --order_host
 
 **Failing Tasks**
 ^^^^^^^^^^^^^^^^^
@@ -1004,8 +1025,9 @@ This launches a 4-step configuration interaction that guides you through the ana
 
 1. **Data Location:** You will be prompted to provide the path to your
    CSV files. As a convenience, if the tool detects a
-   ``profiling/stats`` folder in your current working directory, it will
-   select it by default.
+   ``runtime_logs/stats`` folder in your current working directory (the
+   folder of the CSV files in a provenance RO-Crate), it will select it
+   by default.
 2. **Action Scope:** You can tailor the rendering workload depending on
    your needs.
 
@@ -1024,7 +1046,7 @@ This launches a 4-step configuration interaction that guides you through the ana
 2. Silent Mode (Automation & Scripting)
 """""""""""""""""""""""""""""""""""""""
 
-This mode is integrated in the Provenance Workflow and it does not require neither ``rich`` nor ``questionary`` libraries. It is designed for automated pipelines and scripting, allowing you to specify all parameters directly via command-line flags.   
+This mode is integrated in the Workflow Provenance and requires neither the ``rich`` nor the ``questionary`` libraries. It is designed for automated pipelines and scripting, allowing you to specify all parameters directly via command-line flags. It only generates plots: the statistical analysis report is not printed in silent mode.
 If you are running automated pipelines or already know your target
 configuration, you can suppress the user interface entirely by combining
 the ``--silent`` and ``--dir`` flags:
@@ -1060,15 +1082,20 @@ where:
 -  ``--format FORMAT``: Sets the graphic output format. Choose between
    ``svg`` (default), ``png``, or ``jpg``. This allows you to balance quality and file size based on your needs.
 -  ``--output_dir DIR``: Overrides the default save path. If omitted,
-   the tool writes directly to a folder inside your input data
-   directory.
+   the tool writes the plots directly in the input data directory
+   (see below).
 
 Output Architecture Structure
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-By default, the tool creates a structured ``profiling/`` folder inside your
-data directory (or your specified custom ``--output_dir``). The
-directory tree organizes files systematically to prevent clutter:
+By default, the tool writes the plots directly in your data directory
+(or in your specified custom ``--output_dir``). The only exception is the
+``runtime_logs/stats`` folder of a provenance RO-Crate: when it is the data
+directory (auto-detected in interactive mode, or given exactly as
+``--dir=runtime_logs/stats`` in silent mode), the plots
+are written to a ``profiling/`` folder in the current working directory, which
+is the layout of the RO-Crate. The directory tree organizes files
+systematically to prevent clutter:
 
 .. code-block:: bash
 
@@ -1107,10 +1134,10 @@ Example of Analysis Report
 
 .. WARNING::
 
-  To run the analysis report, you must have the ``rich`` and ``questionary`` libraries installed and it is only available in the interactive mode.
+  The analysis report is only available in the interactive mode, which requires the ``questionary`` library (``rich`` is optional and improves the output format).
 
 .. TIP::
-    If you run ``compss_genprofiling`` command in a folder that contains a ``profiling/stats`` subfolder, it will be automatically selected as the input data directory. Ideally, this tool is supposed to be run in the RO-Crate folder generated by the workflow provenance, which contains the ``profiling/stats`` subfolder with the CSV files.
+    If you run the ``compss_genprofiling`` command in a folder that contains a ``runtime_logs/stats`` subfolder, it will be automatically selected as the input data directory. Ideally, this tool is supposed to be run in the RO-Crate folder generated by the Workflow Provenance, which contains the ``runtime_logs/stats`` subfolder with the CSV files.
 
 Here is an example of the output generated by the tool when running in interactive mode.
 
@@ -1129,12 +1156,13 @@ The possible status of the stages are:
 -  *Peak Compute* (sustained high utilization)
 -  *Unstable / Highly Fluctuating* (erratic scheduling or thrashing)
 -  *Underperforming / Tailing Off* (gradual drop in workload efficiency)
-   gracefully)
 -  *Hanging / Prolonged Teardown* (nodes refusing to release or exit)
+
+GPU metrics use equivalent stages with GPU-specific names (e.g., *Idle / Waiting for Data*, *Underperforming / GPU Starvation*).
 
 The report also includes a summary of the number of nodes that were detected as outliers for each metric, and the total number of nodes analyzed. It provides a quick overview of the overall health and performance of the cluster during the COMPSs run.
 
-The analysis shows the global execution warnings that are some feedback about the overall performance of the cluster during the COMPSs run. This messages are based on the statistical analysis, the stage and outliers detection and they provide suggestions about a possible improvement of the performance of the cluster. 
+The analysis shows the global execution warnings that are some feedback about the overall performance of the cluster during the COMPSs run. These messages are based on the statistical analysis, the stage and outliers detection and they provide suggestions about a possible improvement of the performance of the cluster. 
 
 .. TIP::
 
