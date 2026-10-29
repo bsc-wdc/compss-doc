@@ -905,18 +905,6 @@ Details include status, the method executed, execution time, the host, and param
 
 Similarly to the ``-t`` flag, the ``-m/--methods`` flag filters tasks by the name of the method they executed. It accepts a comma-separated list of method names or regular expressions (e.g., ``-m multiply,add``), and prints the tasks whose method name contains any of them (e.g., ``multiply`` matches ``matmul_tasks.multiply``). Without a value, all tasks are printed.
 
-**Task Order**
-^^^^^^^^^^^^^^
-
-By default, the tasks selected with ``-t``, ``-m`` or ``-f`` are printed in the order in which they appear in the RO-Crate. Two flags change this order:
-
-- ``--order_time``: prints the tasks in chronological order (by start time).
-- ``--order_host``: groups the tasks by host and, within each host, prints them in chronological order (it already includes ``--order_time``).
-
-.. code-block:: console
-
-    $ pycompss inspect my_crate.zip -m multiply --order_host
-
 **Failing Tasks**
 ^^^^^^^^^^^^^^^^^
 
@@ -929,6 +917,18 @@ The ``-f/--failing_tasks`` flag lists only the tasks that failed during executio
     :width: 70.0%
 
     Details on Task 385 that failed. We can see that both Inputs and execution logs are indicated so the user can check them to look for errors
+
+**Task Order**
+^^^^^^^^^^^^^^
+
+By default, the tasks selected with ``-t``, ``-m`` or ``-f`` are printed in the order in which they appear in the RO-Crate. Two flags change this order:
+
+- ``--order_time``: prints the tasks in chronological order (by start time).
+- ``--order_host``: groups the tasks by host and, within each host, prints them in chronological order (it already includes ``--order_time``).
+
+.. code-block:: console
+
+    $ pycompss inspect my_crate.zip -m multiply --order_host
 
 **Compatibility with other WMSs**
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
