@@ -126,6 +126,22 @@ the execution environment:
   ``I_MPI_``, ``MV2_``, ``MKL_`` or ``CUDA_``, and any other whose name contains ``MPI`` or ``THREADS``.
 - The status of the run (``actionStatus``), as detailed in the following table.
 
+Since the crate is meant to be published, possible secrets are redacted from the submission command line and the
+environment variables before they are recorded:
+
+- An environment variable whose name contains a sensitive word (e.g. ``PASSWORD``, ``PASS``, ``SECRET``, ``TOKEN``,
+  ``API_KEY``, ``PRIVATE_KEY``, ``ACCESS_KEY``, ``CREDENTIAL`` or ``AUTH``) is recorded with the value
+  ``***REDACTED***``.
+- In the other values and in the command line, the values of options and assignments with a sensitive name (e.g.
+  ``--token VALUE``, ``--password=VALUE``, ``-Dx.password=VALUE``) and the passwords of URLs with credentials (e.g.
+  ``postgres://user:***REDACTED***@host/db``) are masked.
+
+A warning lists the names of what has been redacted (never the values):
+
+.. code-block:: text
+
+    PROVENANCE | WARNING: Possible secrets have been redacted from the environment variables and the submission command recorded in the metadata: token, COMPSS_DB_TOKEN
+
 .. list-table::
    :header-rows: 1
    :widths: 30 70
@@ -149,10 +165,11 @@ are not available, and the status is determined only from the exit code of the a
 .. TIP::
 
     The crate records the submission command line, a set of environment variables, host names and file paths. This
-    information is needed to reproduce the run, and is usually safe to publish. However, if your application receives
-    passwords, tokens or other credentials as command-line arguments, through environment variables, or prints them to
-    its output, they will be included in the crate: review ``ro-crate-metadata.json`` and the log files before
-    publishing it.
+    information is needed to reproduce the run, and is usually safe to publish. The redaction described above only
+    detects secrets by their name or their form (e.g. a URL with credentials): a secret passed with a name that does not
+    look sensitive is not masked. Besides, secrets passed as task parameters, written in the source files, or printed by
+    the application to its output (included in the log files of the crate) are never redacted. Review
+    ``ro-crate-metadata.json`` and the log files before publishing the crate.
 
 
 Profiling Tool
