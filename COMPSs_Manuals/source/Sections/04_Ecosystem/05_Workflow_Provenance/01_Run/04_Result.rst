@@ -121,9 +121,10 @@ the execution environment:
 - The command line used to submit the application (``runcompss`` or ``enqueue_compss`` with all their flags).
 - The start and end times of the run, and the machine where it was run (the SLURM cluster name, the BSC machine name, or
   the host name).
-- The value of a set of environment variables: ``PATH``, ``CLASSPATH``, ``PYTHONPATH``, ``LD_LIBRARY_PATH``, and the ones
-  starting with ``COMPSS``, ``SLURM_JOB``, ``SLURM_MEM``, ``SLURM_SUBMIT``, ``SRUN_``, ``JAVA_``, ``OMP_``, ``OMPI_``,
-  ``I_MPI_``, ``MV2_``, ``MKL_`` or ``CUDA_``, and any other whose name contains ``MPI`` or ``THREADS``.
+- The value of a set of environment variables: ``PATH``, ``CLASSPATH``, ``PYTHONPATH``, ``LD_LIBRARY_PATH``,
+  ``BSC_MACHINE`` (the machine name at BSC clusters), and the ones starting with ``COMPSS``, ``SLURM_JOB``,
+  ``SLURM_MEM``, ``SLURM_SUBMIT``, ``SRUN_``, ``JAVA_``, ``OMP_``, ``OMPI_``, ``I_MPI_``, ``MV2_``, ``MKL_`` or
+  ``CUDA_``, and any other whose name contains ``MPI`` or ``THREADS``.
 - The status of the run (``actionStatus``), as detailed in the following table.
 
 Since the crate is meant to be published, possible secrets are redacted from the submission command line and the
