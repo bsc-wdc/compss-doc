@@ -48,14 +48,19 @@ The package ``xdg-utils`` has to be installed by hand (after installing ``libxsl
     ./configure --prefix=/usr/local
     make && make install
 
+.. NOTE::
+
+    On a fresh macOS installation ``/usr/local`` is owned by ``root``, so ``make install`` may fail with
+    a ``Permission denied`` error. In that case, run ``sudo make install`` instead.
+
 
 You can download the following script for your reference, but we **STRONGLY** recommend to run it command by
 command, since every installation step with ``brew`` usually includes post-installation instructions.
 
-.. literalinclude:: ./01_PC/02_macOS/02_Golden_Gate/COMPSs_deps_Golden_Gate_27_0.sh
+.. literalinclude:: ./01_PC/02_macOS/02_Golden_Gate/COMPSs_deps_Golden_Gate_27_2.sh
     :language: bash
 
-:download:`this example script <./01_PC/02_macOS/02_Golden_Gate/COMPSs_deps_Golden_Gate_27_0.sh>`
+:download:`this example script <./01_PC/02_macOS/02_Golden_Gate/COMPSs_deps_Golden_Gate_27_2.sh>`
 
 .. WARNING::
 

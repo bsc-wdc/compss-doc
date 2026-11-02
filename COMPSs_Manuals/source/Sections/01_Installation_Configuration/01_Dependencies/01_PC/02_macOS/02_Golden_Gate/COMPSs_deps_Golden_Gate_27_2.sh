@@ -24,3 +24,4 @@ git clone --branch v1.2.1 https://gitlab.freedesktop.org/xdg/xdg-utils.git
 cd xdg-utils
 ./configure --prefix=/usr/local
 make && make install
+# If "make install" fails with "Permission denied" (/usr/local owned by root), run "sudo make install" instead
