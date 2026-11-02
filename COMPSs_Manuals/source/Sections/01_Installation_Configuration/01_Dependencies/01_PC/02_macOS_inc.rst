@@ -13,7 +13,7 @@
             installation, **PAY ATTENTION** to the messages reported by Homebrew, since extra steps may be required to complete
             each installation (e.g. add variables to your .bash_profile, etc...)
 
-    .. tab-item:: Golden Gate 27.0
+    .. tab-item:: Golden Gate 27.2
 
         .. include:: ./01_PC/02_macOS/02_Golden_Gate_inc.rst
 

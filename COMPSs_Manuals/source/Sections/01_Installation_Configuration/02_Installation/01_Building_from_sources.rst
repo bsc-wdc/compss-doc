@@ -28,7 +28,7 @@ Then, you need to download the embedded dependencies from the git submodules (fr
             $ alias readlink=/opt/homebrew/bin/greadlink
             $ export LIBTOOL=`which glibtool`
             $ export LIBTOOLIZE=`which glibtoolize`
-            $ export JAVA_HOME=/opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk/Contents/Home
+            $ export JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home
 
 
 Finally you just need to run the installation script. You have two options:
