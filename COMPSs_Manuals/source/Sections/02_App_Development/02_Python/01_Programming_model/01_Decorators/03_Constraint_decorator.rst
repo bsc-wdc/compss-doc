@@ -76,6 +76,12 @@ Please, take into account that in order to respect the constraints,
 the peculiarities of the infrastructure must be defined in the
 ``resources.xml`` file.
 
+.. NOTE::
+
+    *computingUnits* counts **cores** for a CPU processor, but whole
+    **devices** for a GPU or FPGA processor (see :ref:`resources_file`).
+    In the previous example, the task requests one CPU core and one entire GPU.
+
 Supported constraints
 ---------------------
 
