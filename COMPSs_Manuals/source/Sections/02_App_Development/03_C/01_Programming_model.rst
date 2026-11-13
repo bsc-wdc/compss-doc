@@ -259,3 +259,10 @@ managing the offloading of the computation to the GPU.
                                     in Block block3);
 
     };
+
+.. NOTE::
+
+    *ComputingUnits* counts **cores** for a CPU processor, but whole
+    **devices** for a GPU or FPGA processor (see :ref:`resources_file`).
+    In the previous example, the GPU implementation requests one CPU core
+    and one entire GPU.

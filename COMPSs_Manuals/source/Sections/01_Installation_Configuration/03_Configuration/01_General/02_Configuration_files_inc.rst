@@ -39,6 +39,29 @@ it is used to schedule the correct number of tasks. Thus, it becomes
 essential to define it accordingly to the number of cores in the
 physical resource.
 
+.. IMPORTANT::
+
+    The meaning of **ComputingUnits** depends on the type of the processor:
+
+    - ``<Type>CPU</Type>`` (default): number of **cores**.
+    - ``<Type>GPU</Type>`` and ``<Type>FPGA</Type>``: number of whole
+      **devices** (e.g. the GPUs listed by ``nvidia-smi`` or requested with
+      the SLURM option ``--gres gpu:N``), not the number of cores inside
+      each device.
+
+    For example, a MareNostrum 5 ACC node has 80 CPU cores and 4 GPUs, so it
+    is described as follows:
+
+    .. code-block:: xml
+
+        <Processor Name="MainProcessor">
+            <ComputingUnits>80</ComputingUnits>
+        </Processor>
+        <Processor Name="GPU">
+            <Type>GPU</Type>
+            <ComputingUnits>4</ComputingUnits>
+        </Processor>
+
 .. code-block:: xml
 
     compss@bsc:~$ cat /opt/COMPSs/Runtime/configuration/xml/resources/default_resources.xml

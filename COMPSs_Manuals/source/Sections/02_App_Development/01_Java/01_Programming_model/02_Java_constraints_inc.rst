@@ -79,3 +79,8 @@ of @Processor annotations that must be defined as shown in :numref:`java_process
     +----------------------+--------------------------------+---------------------+---------------------------------------------+
     | internalMemorySize   | :math:`<`\ string\ :math:`>`   | "[unassigned]"      | Required internal device memory             |
     +----------------------+--------------------------------+---------------------+---------------------------------------------+
+
+.. NOTE::
+
+    *computingUnits* counts **cores** for a CPU processor, but whole
+    **devices** for a GPU or FPGA processor (see :ref:`resources_file`).
