@@ -36,9 +36,36 @@ This would typically install the libraries in ``~/.local/``. Another option is t
 
 .. WARNING::
 
-    If you are using a BSC cluster (e.g. MareNostrum 5), ro-crate-py is already installed for a number of
-    python versions at ``/apps/COMPSs/LIBRARIES/``, and COMPSs is configured to use it. Thus, you don't need
-    to install ro-crate-py.
+    If you are using a BSC cluster (e.g. MareNostrum 5), you don't need to install ro-crate-py: it is already
+    installed, and the COMPSs module adds it to your environment, **but only if** the ``COMPSS_PYTHON_VERSION``
+    environment variable is exported **before** loading the module. Starting at COMPSs 4.0, it must be set to one
+    of the Python versions that include ro-crate-py:
+
+    - ``3.12.1-rocrate``
+    - ``3.10.15-rocrate``
+
+    For example, for COMPSs 4.0 or later:
+
+    .. code-block:: console
+
+        $ export COMPSS_PYTHON_VERSION=3.12.1-rocrate
+        $ module load COMPSs/<version>
+
+    In previous COMPSs versions, the ``-rocrate`` suffix is not needed (e.g. ``export COMPSS_PYTHON_VERSION=3.12.1``).
+
+    You can check that ro-crate-py is available with:
+
+    .. code-block:: console
+
+        $ python3 -c "import rocrate"
+
+    If the command prints no error, ro-crate-py is ready. When submitting with ``enqueue_compss``, run both
+    commands before it (e.g. in your submission script): the queue system forwards this environment to the
+    job (see :ref:`Sections/03_Execution/02_Supercomputer:Loading the COMPSs Environment`).
+
+    If ``COMPSS_PYTHON_VERSION`` is not defined (or, starting at COMPSs 4.0, is set to a version without the
+    ``-rocrate`` suffix), ro-crate-py may not be loaded: the application runs normally, but the crate is not generated, and the error
+    ``ModuleNotFoundError: No module named 'rocrate'`` only appears in the job ``.err`` file.
 
 .. TIP::
 
